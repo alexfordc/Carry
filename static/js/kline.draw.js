@@ -8864,7 +8864,7 @@ var RequestData = function(showLoading) {
                     }
                 }
                 //自循环请求点，测试用，页面启动后会每隔8秒请求一次后台点数据（一个点）
-                GLOBAL_VAR.TimeOutId = setTimeout(TwoSecondThread, 60 * 1000);
+                GLOBAL_VAR.TimeOutId = setTimeout(TwoSecondThread, 60 * 1000); //60秒
                 $("#chart_loading").removeClass("activated");
                 ChartManager.getInstance().redraw("All", false);
             }

@@ -78,8 +78,8 @@ def index(rq):
     record_from(rq)
     return render(rq, 'index.html')
 
-def page_not_found(rq):
-    return render(rq,'page/404page.html')
+# def page_not_found(rq):  # 404页面
+#     return render(rq,'page/404page.html')
 
 
 def stockData(rq):
@@ -399,17 +399,18 @@ def kline(rq):
 
 def getList(ts):
     # 时间,开盘价,最高价,最低价,收盘价,成交量
-    size_show=100  # 今天开盘之前要显示的分钟数据数量
     conn=HSD.get_conn('carry_investment')
     cur=conn.cursor()
-    cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
-    count=cur.fetchall()[0][0]
     str_time=str(datetime.datetime.now())[:10]+' 09:00:00'
     cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min WHERE datetime>="%s" ORDER BY datetime'%str_time)
     res=list(cur.fetchall())
-    if not res and count>-size_show:
-        cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show))
-        res=list(cur.fetchall())
+    if not res:
+        size_show=100  # 今天开盘之前要显示的分钟数据数量
+        cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
+        count=cur.fetchall()[0][0]
+        if count>-size_show:
+            cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show))
+            res=list(cur.fetchall())
     conn.commit()
     conn.close()
     if len(res)>0:
@@ -518,3 +519,11 @@ def getkline(rq):
                         data=json.dumps(data).encode()
                         rq.websocket.send(data)
                     #time.sleep(1)
+
+def zhangting(rq):
+    limit = HSD.Limit_up()
+    zt=limit.read_code()
+    zt=sorted(zt,key=lambda x:x[2]) # 以第二个参数排序
+    zt.reverse()
+    return render(rq,'zhangting.html',{'zt':zt})
+

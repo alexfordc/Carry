@@ -1,2 +1,5 @@
 *.conf
 *.sqlite3
+*.m
+*.txt
+*.log

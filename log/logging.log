@@ -1,0 +1,44 @@
+base.py[2018-03-07 16:35:00][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-07 18:16:24][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-03-08 11:47:49][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:01][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:11][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:14][ERROR]：list indices must be integers or slices, not str
+HSD.py[2018-03-08 11:48:33][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:34][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:36][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:44][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:50][ERROR]：list indices must be integers or slices, not str
+HSD.py[2018-03-08 11:48:50][ERROR]：list index out of range
+HSD.py[2018-03-08 11:48:57][ERROR]：list index out of range
+exception.py[2018-03-08 11:48:57][ERROR]：Internal Server Error: /jyzt/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 530, in jyzt
+    zt = ZT.yanzen()
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 495, in yanzen
+    with open('log\\jyzt_gp.txt') as f: # 保存
+FileNotFoundError: [Errno 2] No such file or directory: 'log\\jyzt_gp.txt'
+HSD.py[2018-03-08 11:50:58][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:06][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:16][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:19][ERROR]：list indices must be integers or slices, not str
+HSD.py[2018-03-08 11:51:33][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:35][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:37][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:45][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:50][ERROR]：list indices must be integers or slices, not str
+HSD.py[2018-03-08 11:51:50][ERROR]：list index out of range
+HSD.py[2018-03-08 11:51:55][ERROR]：list index out of range
+base.py[2018-03-08 12:05:45][WARNING]：Not Found: /zhangting/jyzt
+base.py[2018-03-08 12:05:57][WARNING]：Not Found: /zyzt
+base.py[2018-03-08 12:06:11][WARNING]：Not Found: /zyzt/
+base.py[2018-03-08 12:06:16][WARNING]：Not Found: /zyzt
+base.py[2018-03-08 13:33:22][WARNING]：Not Found: /jyzt/
