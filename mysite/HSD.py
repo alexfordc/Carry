@@ -437,6 +437,6 @@ class Limit_up:
                      ] for i in html
                     if round((float(i[33]) - float(i[4])) / float(i[4]), 2) >= 0.1]  # 计算是否涨停
             stock_up += html
-        statistics = [[i[0],i[1]] for i in stock_up if i[10] > 0]
+        statistics = [[i[0],i[1],i[10]] for i in stock_up]
         return statistics
 
