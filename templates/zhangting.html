@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% block center_cen %}
+    <div align="center">
+<table border="1" width="500" align="center">
+    {% if zt %}
+        <caption style="color:red">今天涨停股票</caption>
+    <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>当前涨停</th></tr>
+    {% endif %}
+    {% for z in zt %}
+    <tr bgcolor="{% cycle '#00cc00' '#cccc33' %}"><td>{{ forloop.counter }}<td>{{ z.1 }}</td><td>{{ z.0 }}</td>
+        <td>
+            {% if z.2 == 1 %}
+                Yes
+                {% else %}
+                No
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    </div>
+{% endblock %}
