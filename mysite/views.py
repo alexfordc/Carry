@@ -434,6 +434,7 @@ def GetRealTimeData(times,price,amount):
                     amount+objArr[5] #量
                 ]
         cache.set("objArr",objArr,60)
+        #print('if................')
     else:
         objArr = [
                     times*1000, #时间
@@ -445,6 +446,7 @@ def GetRealTimeData(times,price,amount):
                 ]
         cache.set('is_time',times,60)
         cache.set("objArr",objArr,60)
+        print('else...............')
 
 @accept_websocket
 @csrf_exempt #取消csrf验证

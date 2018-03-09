@@ -1454,9 +1454,11 @@ Chart.prototype.setTitle = function() {
     var b = ChartManager.getInstance().getLanguage();
     var a = GLOBAL_VAR.market_from_name;
     a += " ";
-    a += this.strIsLine ? Chart.strPeriod[b]["line"] : Chart.strPeriod[b][this._time];
+    //a += this.strIsLine ? Chart.strPeriod[b]["line"] : Chart.strPeriod[b][this._time];
+    //a += Chart.strPeriod[b][this._time];
+    a+=typeof(GLOBAL_VAR.KLineData[0])=="object" ? '( '+GLOBAL_VAR.KLineData[0][4]+' )' : '';
     //a += (this._contract_unit + "/" + this._money_type).toUpperCase();
-    a += ' K线图'; //a现在的值为：凯瑞投资(1分钟)K线图
+    a += ' 恒生指数'; //a现在的值为：凯瑞投资(1分钟)K线图
     ChartManager.getInstance().setTitle("frame0.k0", a);
     kline.title = a;
     kline.setTitle()

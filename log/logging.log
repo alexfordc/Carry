@@ -130,3 +130,4 @@ Traceback (most recent call last):
     times,opens,high,low,close,vol=objArr #if objArr else (ticker.TickerTime*1000,ticker.Price,ticker.Price,ticker.Price,ticker.Price,ticker.Qty)
 TypeError: 'NoneType' object is not iterable
 base.py[2018-03-08 17:44:08][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-03-09 09:54:06][WARNING]£ºNot Found: /favicon.ico
