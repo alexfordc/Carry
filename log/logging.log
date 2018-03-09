@@ -42,3 +42,91 @@ base.py[2018-03-08 12:05:57][WARNING]：Not Found: /zyzt
 base.py[2018-03-08 12:06:11][WARNING]：Not Found: /zyzt/
 base.py[2018-03-08 12:06:16][WARNING]：Not Found: /zyzt
 base.py[2018-03-08 13:33:22][WARNING]：Not Found: /jyzt/
+base.py[2018-03-08 15:20:08][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-08 15:20:09][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-08 15:20:09][WARNING]：Not Found: /favicon.ico
+views.py[2018-03-08 15:28:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-08 15:45:50][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:45:50][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:45:50][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:45:50][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:04][ERROR]：name 'cache' is not defined
+exception.py[2018-03-08 15:46:04][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 526, in getkline
+    times,opens,high,low,close,vol=objArr #if objArr else (ticker.TickerTime*1000,ticker.Price,ticker.Price,ticker.Price,ticker.Price,ticker.Qty)
+TypeError: 'NoneType' object is not iterable
+views.py[2018-03-08 15:46:16][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:17][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:17][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:17][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:17][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:46:17][ERROR]：name 'cache' is not defined
+exception.py[2018-03-08 15:46:17][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 526, in getkline
+    times,opens,high,low,close,vol=objArr #if objArr else (ticker.TickerTime*1000,ticker.Price,ticker.Price,ticker.Price,ticker.Price,ticker.Qty)
+TypeError: 'NoneType' object is not iterable
+views.py[2018-03-08 15:47:05][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:05][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:05][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:05][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:08][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:09][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:09][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:09][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:09][ERROR]：name 'cache' is not defined
+views.py[2018-03-08 15:47:09][ERROR]：name 'cache' is not defined
+exception.py[2018-03-08 15:47:09][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 527, in getkline
+    times,opens,high,low,close,vol=objArr #if objArr else (ticker.TickerTime*1000,ticker.Price,ticker.Price,ticker.Price,ticker.Price,ticker.Qty)
+TypeError: 'NoneType' object is not iterable
+base.py[2018-03-08 17:44:08][WARNING]：Not Found: /favicon.ico

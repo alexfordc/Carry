@@ -10,9 +10,7 @@ import pandas as pd
 import logging
 import configparser
 import requests
-import h5py
-from sklearn import svm
-from sklearn.externals import joblib
+
 
 config=configparser.ConfigParser()
 config.read('log\\conf.conf')

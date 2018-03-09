@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/Carry.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/kline.draw.js" afterPath="$PROJECT_DIR$/static/js/kline.draw.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/HSD.py" afterPath="$PROJECT_DIR$/mysite/HSD.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Carry/urls.py" afterPath="$PROJECT_DIR$/Carry/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
@@ -44,52 +35,7 @@
     <favorites_list name="Carry" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysite/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32960895" vertical-offset="9605" max-vertical-offset="10500">
-              <caret line="505" column="45" selection-start-line="505" selection-start-column="45" selection-end-line="505" selection-end-column="45" />
-              <folding>
-                <marker date="1520491168190" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
-                <marker date="1520491168190" expanded="true" signature="5315:5422" placeholder="select date,..." />
-                <marker date="1520491168190" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
-                <marker date="1520491168190" expanded="true" signature="6657:6745" placeholder="select date,..." />
-                <marker date="1520491168190" expanded="true" signature="13475:13570" placeholder="SELECT datet..." />
-                <marker date="1520491168190" expanded="true" signature="13690:13725" placeholder="SELECT COUNT..futures_min..." />
-                <marker date="1520491168190" expanded="true" signature="13827:13911" placeholder="SELECT datet..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7998" max-vertical-offset="8960">
-              <caret line="440" column="25" selection-start-line="440" selection-start-column="25" selection-end-line="440" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <marker date="1520490074532" expanded="true" signature="10385:10443" placeholder="select numbe..." />
-                <marker date="1520490074532" expanded="true" signature="13072:13320" placeholder="select F.`da..." />
-                <marker date="1520490074532" expanded="true" signature="15673:15933" placeholder="select F.`da..." />
-                <marker date="1520490074532" expanded="true" signature="17921:17983" placeholder="select bazaa..stock_code..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zhangting.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/zhangting.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.724138" vertical-offset="0" max-vertical-offset="540">
-              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -186,12 +132,15 @@
         <option value="$PROJECT_DIR$/templates/jyzt.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/zhangting.html" />
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/mysite/views.py" />
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/templates/zhangting.html" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="F:/MyData/g工作/2018-3-7/data_37.py" />
+        <option value="$PROJECT_DIR$/../../2018-3-9/xunlian.py" />
+        <option value="$PROJECT_DIR$/../../2018-3-9/data_37.py" />
       </list>
     </option>
   </component>
@@ -229,6 +178,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -247,37 +197,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mysite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -769,7 +690,13 @@
       <option name="project" value="LOCAL" />
       <updated>1520492106235</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="功能添加">
+      <created>1520492201157</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1520492201157</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -797,26 +724,26 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.122068234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12100213" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -852,36 +779,22 @@
     <MESSAGE value="增加功能，修复一些不足" />
     <MESSAGE value="涨停板块股票" />
     <MESSAGE value="涨停板" />
-    <option name="LAST_COMMIT_MESSAGE" value="涨停板" />
+    <MESSAGE value="功能添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="功能添加" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/../../2018-3-9/xunlian.py</url>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../2018-1-22/spAPI/a.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/stock_min.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jquery-1.7.1.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/jquery.prettyPhoto.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1023,13 +936,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/logging.log">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5820" max-vertical-offset="9640">
           <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
         </state>
-      </provider>
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/yesterday_close_price.txt">
@@ -1057,14 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42203987" vertical-offset="0" max-vertical-offset="960">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44134727" vertical-offset="120" max-vertical-offset="2400">
-          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1149,17 +1054,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4157044" vertical-offset="3300" max-vertical-offset="4360">
           <caret line="183" column="76" selection-start-line="183" selection-start-column="76" selection-end-line="183" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../2018-3-8/data_37.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.024390243" vertical-offset="623" max-vertical-offset="1800">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1174,7 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0" vertical-offset="13" max-vertical-offset="860">
           <caret line="39" column="42" selection-start-line="39" selection-start-column="42" selection-end-line="39" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1182,12 +1075,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.72789115" vertical-offset="7998" max-vertical-offset="9780">
           <caret line="446" column="25" selection-start-line="446" selection-start-column="25" selection-end-line="446" selection-end-column="25" />
-          <folding>
-            <marker date="1520491697754" expanded="true" signature="-1:-1" placeholder="select numbe..." />
-            <marker date="1520491697754" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
-            <marker date="1520491697754" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
-            <marker date="1520491697754" expanded="true" signature="-1:-1" placeholder="select bazaa..stock_code..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1195,15 +1082,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7318436" vertical-offset="9665" max-vertical-offset="10560">
           <caret line="526" column="16" selection-start-line="526" selection-start-column="16" selection-end-line="526" selection-end-column="16" />
-          <folding>
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..STOCK_CODE..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="select date,..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="select COUNT..moment_hours..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="select date,..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="SELECT datet..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..futures_min..." />
-            <marker date="1520491757732" expanded="true" signature="-1:-1" placeholder="SELECT datet..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1211,10 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6650718" vertical-offset="1024" max-vertical-offset="1860">
           <caret line="79" column="53" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="53" />
-          <folding>
-            <element signature="e#1340#1389#0#HTML" expanded="true" />
-            <element signature="e#1909#1929#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1222,46 +1096,87 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="866">
           <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#caption#0;n#table#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5139665" vertical-offset="1200" max-vertical-offset="2400">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/zhangting.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.724138" vertical-offset="0" max-vertical-offset="540">
+        <state vertical-scroll-proportion="0.3926097" vertical-offset="0" max-vertical-offset="866">
           <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-7/data_37.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.54189944" vertical-offset="485" max-vertical-offset="1740">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+    <entry file="file://$PROJECT_DIR$/../../2018-3-8/data_37.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7998" max-vertical-offset="8960">
-          <caret line="440" column="25" selection-start-line="440" selection-start-column="25" selection-end-line="440" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1520490074532" expanded="true" signature="10385:10443" placeholder="select numbe..." />
-            <marker date="1520490074532" expanded="true" signature="13072:13320" placeholder="select F.`da..." />
-            <marker date="1520490074532" expanded="true" signature="15673:15933" placeholder="select F.`da..." />
-            <marker date="1520490074532" expanded="true" signature="17921:17983" placeholder="select bazaa..stock_code..." />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1980">
+          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32960895" vertical-offset="9605" max-vertical-offset="10500">
-          <caret line="505" column="45" selection-start-line="505" selection-start-column="45" selection-end-line="505" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.47486034" vertical-offset="7555" max-vertical-offset="10700">
+          <caret line="399" column="16" selection-start-line="399" selection-start-column="16" selection-end-line="399" selection-end-column="16" />
           <folding>
-            <marker date="1520491168190" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
-            <marker date="1520491168190" expanded="true" signature="5315:5422" placeholder="select date,..." />
-            <marker date="1520491168190" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
-            <marker date="1520491168190" expanded="true" signature="6657:6745" placeholder="select date,..." />
-            <marker date="1520491168190" expanded="true" signature="13475:13570" placeholder="SELECT datet..." />
-            <marker date="1520491168190" expanded="true" signature="13690:13725" placeholder="SELECT COUNT..futures_min..." />
-            <marker date="1520491168190" expanded="true" signature="13827:13911" placeholder="SELECT datet..." />
+            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..STOCK_CODE..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="select date,..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="select COUNT..moment_hours..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="select date,..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="SELECT datet..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..futures_min..." />
+            <marker date="1520498282409" expanded="true" signature="-1:-1" placeholder="SELECT datet..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="8920">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select numbe..." />
+            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
+            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
+            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select bazaa..stock_code..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-9/data_37.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4748603" vertical-offset="1860" max-vertical-offset="4220">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-9/xunlian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19553073" vertical-offset="465" max-vertical-offset="1360">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
