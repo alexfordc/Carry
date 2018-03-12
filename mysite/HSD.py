@@ -336,6 +336,9 @@ def calculate_earn(dates):
         sql += f" and F.`datetime`>'{dates}' and F.`datetime`<'{dates1}'"
     cur.execute(sql)
     com = cur.fetchall()
+    cur.execute('SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL')
+    id_name=cur.fetchall()
+    id_name={i:j for i,j in id_name}
     conn.commit()
     conn.close()
     result = []
@@ -361,7 +364,7 @@ def calculate_earn(dates):
             # 开仓时间，单号，ID，平仓时间，价格，做多0做空1，赚得金额，正向跟单，反向跟单
             result.append(list(com[in1][:3]) + [com[in2][0],com[in1][4],com[in1][6],com[in1][-1], price_z, price_f])
     IDS=ids
-    return result
+    return result,id_name
 
 class Limit_up:
     def __init__(self):
