@@ -424,7 +424,7 @@ def GetRealTimeData(times,price,amount):
     is_time=cache.get('is_time')
     objArr = cache.get("objArr")
     objArr = objArr if objArr else [times*1000,price,price,price,price,0]
-    if is_time and int(times/60)==int(is_time/60): #若不满一分钟,返回空
+    if is_time and int(times/60)==int(is_time/60): #若不满一分钟,修改数据
         objArr = [
                     times*1000, #时间
                     objArr[1], #开盘价
@@ -455,9 +455,6 @@ def getkline(rq):
     size=int(size) if size else 0
     #types=rq.POST.get('type') # 获取分钟类型
     if rq.is_ajax() and size>0:
-        # if cache.get('closePrice') == None:
-        #     closePrice=random.randint(32000,32010)
-        #     cache.set('closePrice',closePrice,60*3) #把数据缓存起来
         lists=getList(int(time.time()))
         data={
             'des' : "注释",
@@ -509,6 +506,7 @@ def getkline(rq):
             sub_socket.connect(f'tcp://{tcp}:6868')
             sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, '')
             poller.register(sub_socket, zmq.POLLIN)
+
             for message in rq.websocket:
                 while 1:  # 循环推送数据
                     ticker=sub_socket.recv_pyobj()
