@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/kline.draw.js" afterPath="$PROJECT_DIR$/static/js/kline.draw.js" />
+      <change type="DELETED" beforePath="D:\tools\Tools\2018年3月5日\Carry\static\js\kline.css" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/kline.html" afterPath="$PROJECT_DIR$/templates/kline.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tongji.html" afterPath="$PROJECT_DIR$/templates/tongji.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -40,28 +42,58 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.933332" vertical-offset="8352" max-vertical-offset="10740">
-              <caret line="449" column="0" selection-start-line="449" selection-start-column="0" selection-end-line="449" selection-end-column="0" />
+            <state vertical-scroll-proportion="-54.933334" vertical-offset="5732" max-vertical-offset="10660">
+              <caret line="369" column="23" selection-start-line="369" selection-start-column="23" selection-end-line="369" selection-end-column="23" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
-                <marker date="1520562322178" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
-                <marker date="1520562322178" expanded="true" signature="5315:5422" placeholder="select date,..." />
-                <marker date="1520562322178" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
-                <marker date="1520562322178" expanded="true" signature="6657:6745" placeholder="select date,..." />
-                <marker date="1520562322178" expanded="true" signature="13475:13570" placeholder="SELECT datet..." />
-                <marker date="1520562322178" expanded="true" signature="13690:13725" placeholder="SELECT COUNT..futures_min..." />
-                <marker date="1520562322178" expanded="true" signature="13827:13911" placeholder="SELECT datet..." />
+                <marker date="1520855551565" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
+                <marker date="1520855551565" expanded="true" signature="5315:5422" placeholder="select date,..." />
+                <marker date="1520855551565" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
+                <marker date="1520855551565" expanded="true" signature="6657:6745" placeholder="select date,..." />
+                <marker date="1520855551565" expanded="true" signature="13501:13596" placeholder="SELECT datet..." />
+                <marker date="1520855551565" expanded="true" signature="13716:13751" placeholder="SELECT COUNT..futures_min..." />
+                <marker date="1520855551565" expanded="true" signature="13853:13937" placeholder="SELECT datet..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kline.draw.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
+      <file leaf-file-name="tongji.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tongji.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5680751" vertical-offset="28796" max-vertical-offset="188900">
-              <caret line="1464" column="2" selection-start-line="1464" selection-start-column="2" selection-end-line="1464" selection-end-column="2" />
+            <state vertical-scroll-proportion="-7.7288136" vertical-offset="1064" max-vertical-offset="1920">
+              <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
+              <folding>
+                <element signature="e#1435#1484#0#HTML" expanded="true" />
+                <element signature="e#2049#2069#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mvote.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mysite/templatetags/mvote.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22346368" vertical-offset="0" max-vertical-offset="895">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-42.8" vertical-offset="5236" max-vertical-offset="8980">
+              <caret line="326" column="14" selection-start-line="326" selection-start-column="14" selection-end-line="326" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <marker date="1520853483656" expanded="true" signature="10313:10371" placeholder="select numbe..." />
+                <marker date="1520853483656" expanded="true" signature="13000:13248" placeholder="select F.`da..." />
+                <marker date="1520853483656" expanded="true" signature="15601:15861" placeholder="select F.`da..." />
+                <marker date="1520853483656" expanded="true" signature="16176:16245" placeholder="SELECT id,tr..account_info..." />
+                <marker date="1520853483656" expanded="true" signature="18010:18072" placeholder="select bazaa..stock_code..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -126,7 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/mysite/models.py" />
         <option value="$PROJECT_DIR$/../../Tools/2017年12月11日/Macd.py" />
         <option value="$PROJECT_DIR$/../../start_day.py" />
         <option value="$PROJECT_DIR$/../../Tools/2017年12月13日/get_min.py" />
@@ -146,7 +177,6 @@
         <option value="$PROJECT_DIR$/templates/earn.html" />
         <option value="$PROJECT_DIR$/templates/zhutu.html" />
         <option value="$PROJECT_DIR$/templates/zhexian.html" />
-        <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/aaa.ini" />
         <option value="$PROJECT_DIR$/log/logging.log" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
@@ -156,7 +186,6 @@
         <option value="$PROJECT_DIR$/serv.py" />
         <option value="$PROJECT_DIR$/mysite/sub_client.py" />
         <option value="$PROJECT_DIR$/../../2018-3-7/a.html" />
-        <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/../../2018-3-8/data_37.py" />
         <option value="$PROJECT_DIR$/templates/jyzt.html" />
@@ -166,12 +195,17 @@
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/mysite/views.py" />
         <option value="$PROJECT_DIR$/../../2018-3-8/Carry/templates/zhangting.html" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="F:/MyData/g工作/2018-3-7/data_37.py" />
         <option value="$PROJECT_DIR$/../../2018-3-9/xunlian.py" />
         <option value="$PROJECT_DIR$/../../2018-3-9/data_37.py" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
+        <option value="$PROJECT_DIR$/templates/kline.html" />
+        <option value="$PROJECT_DIR$/mysite/models.py" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/core.py" />
+        <option value="$PROJECT_DIR$/mysite/templatetags/mvote.py" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/templates/tongji.html" />
       </list>
     </option>
   </component>
@@ -209,7 +243,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,7 +271,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -255,13 +288,10 @@
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -765,7 +795,31 @@
       <option name="project" value="LOCAL" />
       <updated>1520559291383</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="标题数据显示">
+      <created>1520565533930</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1520565533930</updated>
+    </task>
+    <task id="LOCAL-00022" summary="成交量改动">
+      <created>1520824639297</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1520824639297</updated>
+    </task>
+    <task id="LOCAL-00023" summary="统计表名称增加">
+      <created>1520856369777</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1520856369777</updated>
+    </task>
+    <task id="LOCAL-00024" summary="自定义标签，处理名称字典">
+      <created>1520856423467</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1520856423467</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -793,26 +847,26 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.124200426" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.122068234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -850,7 +904,11 @@
     <MESSAGE value="涨停板" />
     <MESSAGE value="功能添加" />
     <MESSAGE value="功能调整" />
-    <option name="LAST_COMMIT_MESSAGE" value="功能调整" />
+    <MESSAGE value="标题数据显示" />
+    <MESSAGE value="成交量改动" />
+    <MESSAGE value="统计表名称增加" />
+    <MESSAGE value="自定义标签，处理名称字典" />
+    <option name="LAST_COMMIT_MESSAGE" value="自定义标签，处理名称字典" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -865,20 +923,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/js/jquery.prettyPhoto.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/mosaic.1.0.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/jquery.flexslider-min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1006,13 +1050,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/logging.log">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5820" max-vertical-offset="9640">
           <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/yesterday_close_price.txt">
@@ -1078,13 +1122,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/kline.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
-          <caret line="0" column="31" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/kline.assistant.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12910798" vertical-offset="30" max-vertical-offset="6700">
@@ -1103,14 +1140,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4047619" vertical-offset="0" max-vertical-offset="1680">
           <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/kline.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3985932" vertical-offset="10140" max-vertical-offset="11360">
-          <caret line="524" column="15" selection-start-line="524" selection-start-column="15" selection-end-line="524" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1149,13 +1178,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6650718" vertical-offset="1024" max-vertical-offset="1860">
-          <caret line="79" column="53" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../2018-3-8/Carry/templates/zhangting.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="866">
@@ -1182,7 +1204,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.54189944" vertical-offset="485" max-vertical-offset="1740">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1190,21 +1211,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1980">
           <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="8920">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select numbe..." />
-            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
-            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
-            <marker date="1520496859611" expanded="true" signature="-1:-1" placeholder="select bazaa..stock_code..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1212,9 +1218,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.4748603" vertical-offset="1860" max-vertical-offset="4220">
           <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1223,32 +1226,90 @@
         <state vertical-scroll-proportion="0.19553073" vertical-offset="465" max-vertical-offset="1360">
           <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.933332" vertical-offset="8352" max-vertical-offset="10740">
-          <caret line="449" column="0" selection-start-line="449" selection-start-column="0" selection-end-line="449" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <marker date="1520562322178" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
-            <marker date="1520562322178" expanded="true" signature="5315:5422" placeholder="select date,..." />
-            <marker date="1520562322178" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
-            <marker date="1520562322178" expanded="true" signature="6657:6745" placeholder="select date,..." />
-            <marker date="1520562322178" expanded="true" signature="13475:13570" placeholder="SELECT datet..." />
-            <marker date="1520562322178" expanded="true" signature="13690:13725" placeholder="SELECT COUNT..futures_min..." />
-            <marker date="1520562322178" expanded="true" signature="13827:13911" placeholder="SELECT datet..." />
+            <element signature="e#0#11#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5680751" vertical-offset="28796" max-vertical-offset="188900">
-          <caret line="1464" column="2" selection-start-line="1464" selection-start-column="2" selection-end-line="1464" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="176476" max-vertical-offset="188900">
+          <caret line="8838" column="24" selection-start-line="8838" selection-start-column="22" selection-end-line="8838" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/kline.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31591737" vertical-offset="60" max-vertical-offset="11360">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3575419" vertical-offset="0" max-vertical-offset="895">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-9/ztyc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33519554" vertical-offset="60" max-vertical-offset="1520">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-54.933334" vertical-offset="5732" max-vertical-offset="10660">
+          <caret line="369" column="23" selection-start-line="369" selection-start-column="23" selection-end-line="369" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1520855551565" expanded="true" signature="3364:3388" placeholder="SELECT * FRO..STOCK_CODE..." />
+            <marker date="1520855551565" expanded="true" signature="5315:5422" placeholder="select date,..." />
+            <marker date="1520855551565" expanded="true" signature="6118:6165" placeholder="select COUNT..moment_hours..." />
+            <marker date="1520855551565" expanded="true" signature="6657:6745" placeholder="select date,..." />
+            <marker date="1520855551565" expanded="true" signature="13501:13596" placeholder="SELECT datet..." />
+            <marker date="1520855551565" expanded="true" signature="13716:13751" placeholder="SELECT COUNT..futures_min..." />
+            <marker date="1520855551565" expanded="true" signature="13853:13937" placeholder="SELECT datet..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.7288136" vertical-offset="1064" max-vertical-offset="1920">
+          <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
+          <folding>
+            <element signature="e#1435#1484#0#HTML" expanded="true" />
+            <element signature="e#2049#2069#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-42.8" vertical-offset="5236" max-vertical-offset="8980">
+          <caret line="326" column="14" selection-start-line="326" selection-start-column="14" selection-end-line="326" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1520853483656" expanded="true" signature="10313:10371" placeholder="select numbe..." />
+            <marker date="1520853483656" expanded="true" signature="13000:13248" placeholder="select F.`da..." />
+            <marker date="1520853483656" expanded="true" signature="15601:15861" placeholder="select F.`da..." />
+            <marker date="1520853483656" expanded="true" signature="16176:16245" placeholder="SELECT id,tr..account_info..." />
+            <marker date="1520853483656" expanded="true" signature="18010:18072" placeholder="select bazaa..stock_code..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/templatetags/mvote.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22346368" vertical-offset="0" max-vertical-offset="895">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>

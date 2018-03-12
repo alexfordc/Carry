@@ -350,7 +350,7 @@ def tongji(rq, xz=None):
     rq_date = rq.GET.get('datetimes')
     rq_id=rq.GET.get('id')
     if rq_date:
-        results=HSD.calculate_earn(rq_date)
+        results,id_name=HSD.calculate_earn(rq_date)
         huizong=[]
         if results:
             for i in HSD.IDS:
@@ -368,7 +368,7 @@ def tongji(rq, xz=None):
                     ind-=1
                     ind1-=1
                 ind1+=1
-        return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong})
+        return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name})
     if not xz:
         xz = '3'
     herys = None
@@ -446,7 +446,6 @@ def GetRealTimeData(times,price,amount):
                 ]
         cache.set('is_time',times,60)
         cache.set("objArr",objArr,60)
-        print('else...............')
 
 @accept_websocket
 @csrf_exempt #取消csrf验证
@@ -506,7 +505,6 @@ def getkline(rq):
             sub_socket.connect(f'tcp://{tcp}:6868')
             sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, '')
             poller.register(sub_socket, zmq.POLLIN)
-
             for message in rq.websocket:
                 while 1:  # 循环推送数据
                     ticker=sub_socket.recv_pyobj()
