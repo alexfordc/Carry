@@ -6,5 +6,5 @@ register=template.Library()
 def names(d,i):
     name=d.get(i)
     if not name:
-        name='暂无'
+        name=''
     return name

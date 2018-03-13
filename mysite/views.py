@@ -358,17 +358,24 @@ def tongji(rq, xz=None):
                 hz2 = sum([j[7] for j in results if j[2] == i])
                 hz3 = sum([j[8] for j in results if j[2] == i])
                 huizong.append([rq_date,i,hz1,hz2,hz3])
+
+            results=np.array(results)
+            id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+            results=list(results)
         if rq_id and rq_id.isdecimal() and rq_id is not '1':
             ind=len(results)
             ind1=0
             rq_id=int(rq_id)
             while ind1<ind:
                 if rq_id != results[ind1][2]:
-                    results.remove(results[ind1])
+                    try:
+                        results.remove(results[ind1])
+                    except: pass
                     ind-=1
                     ind1-=1
                 ind1+=1
-        return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name})
+
+        return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count})
     if not xz:
         xz = '3'
     herys = None
@@ -376,18 +383,18 @@ def tongji(rq, xz=None):
         herys = HSD.tongji(xz)
     except Exception as exc:
         logging.error(exc)
-    if herys is None:
+    if not herys:
         return redirect('index')
-    herys.tickerprice = round(herys.tickerprice, 2)
-    herys['isnull'] = herys['isnull'].astype('int')
-    herys.hsi = round(herys.hsi, 2)
-    herys.mhi = round(herys.mhi, 2)
-    if xz == '8':
-        try:
-            del herys['tickertime']
-        except Exception as exc:
-            logging.error(exc)
-    return render(rq, 'tongji.html', {'herys': herys.to_html(), 'xz': xz,'dates':dates,'ids':HSD.IDS})
+    # herys.tickerprice = round(herys.tickerprice, 2)
+    # herys['isnull'] = herys['isnull'].astype('int')
+    # herys.hsi = round(herys.hsi, 2)
+    # herys.mhi = round(herys.mhi, 2)
+    # if xz == '8':
+    #     try:
+    #         del herys['tickertime']
+    #     except Exception as exc:
+    #         logging.error(exc)
+    return render(rq, 'tongji.html', {'herys': herys,'dates':dates,'ids':HSD.IDS})
 
 
 def tools(rq):

@@ -759,3 +759,340 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 207, in render
     .format(num_loopvars, len_item),
 ValueError: Need 2 values to unpack in for loop; got 1. 
+base.py[2018-03-13 09:54:40][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+exception.py[2018-03-13 10:16:41][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 510, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+AttributeError: Can't get attribute 'SPApiTicker' on <module 'sp_struct' from 'D:\\tools\\Tools\\2018年3月5日\\Carry\\sp_struct.py'>
+views.py[2018-03-13 10:45:40][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-03-13 11:55:31][ERROR]：Internal Server Error: /tj/4
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 376, in tongji
+    return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 68, in render_to_string
+    return template.render(context, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 66, in render
+    return self.template.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 207, in render
+    return self._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 199, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 957, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 177, in render
+    return compiled_parent._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 199, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 957, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 72, in render
+    result = block.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 957, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 72, in render
+    result = block.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 990, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 957, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 321, in render
+    if match:
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+exception.py[2018-03-13 13:28:01][ERROR]：Internal Server Error: /tj/4
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in <dictcomp>
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+IndexError: too many indices for array
+exception.py[2018-03-13 13:28:22][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in <dictcomp>
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+IndexError: too many indices for array
+exception.py[2018-03-13 13:28:31][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in <dictcomp>
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+IndexError: too many indices for array
+exception.py[2018-03-13 13:28:48][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in <dictcomp>
+    id_count={i:len(results[np.where(results[:,2]==i)]) for i in HSD.IDS}
+IndexError: too many indices for array
+exception.py[2018-03-13 13:30:39][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 371, in tongji
+    results.remove(results[ind1])
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+exception.py[2018-03-13 13:35:07][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    results.remove(results[ind1])
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+exception.py[2018-03-13 13:35:10][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 373, in tongji
+    results.remove(results[ind1])
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+exception.py[2018-03-13 13:36:56][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 370, in tongji
+    if results[ind1] in results and rq_id != results[ind1][2]:
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+exception.py[2018-03-13 13:37:19][ERROR]：Internal Server Error: /tj/1
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 372, in tongji
+    results.remove(results[ind1])
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()

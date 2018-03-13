@@ -246,78 +246,86 @@ def get_price():
     return jjres, times
 
 
-def investement():
-    conn = get_conn('carry_investment')
-    cur = conn.cursor()
-    sql = "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid` from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Symbol like 'HSENG%';"
-    com = pd.read_sql(sql, con=conn)
-    conn.commit()
-    conn.close()
-    com['isnull'] = (com['openclose'] + com['longshort']) % 2
-    com['hsi'] = (com['tickerprice'] - com['HSI_bid']).where(com['isnull'] == 0, com['HSI_ask'] - com['tickerprice'])
-    com['mhi'] = (com['tickerprice'] - com['MHI_bid']).where(com['isnull'] == 0, com['MHI_ask'] - com['tickerprice'])
-
-    com2 = pd.DataFrame(
-        [com.Account_ID, com['datetime'].apply(lambda x: datetime.datetime.strftime(x, '%y-%m-%d')), com.tickerprice,
-         com['isnull'], com.hsi, com.mhi])
-    com2 = com2.T.copy()
-    com2['Account_ID'].astype = np.int
-    '''
-    it = ['datetime', 'Account_ID', 'isnull']
-    dic = {}
-    for i in range(1, len(it) + 1):
-        u = len(dic)
-        # 获得所有组合列表，并以数字为key存储到字典dic
-        for c, j in enumerate(combinations(it, i)):
-            dic[u + c + 1] = [v for v in j]
-    '''
-
-    dic = {'1': ['datetime'],
-           '2': ['Account_ID'],
-           '3': ['isnull'],
-           '4': ['datetime', 'Account_ID'],
-           '5': ['datetime', 'isnull'],
-           '6': ['Account_ID', 'isnull'],
-           '7': ['datetime', 'Account_ID', 'isnull']}
-    herys = None
-    while 1:
-        myj = yield herys
-        if myj in dic:
-            si = com2.groupby(dic[myj]).size()
-            herys = com2.groupby(dic[myj]).apply(lambda x: np.mean(x))
-            herys['count'] = si.values
-        elif myj is '8':
-            herys = com
-        else:
-            herys = None
-
-
-def get_inv():
-    '''用来更新investement生成器'''
-    inv = investement()
-    inv.send(None)
-    return inv
-
-
-inv_times = datetime.datetime.now()  # 初始化时间
-inv = investement()
-inv.send(None)  # 初始化生成器
+# def investement():
+#     conn = get_conn('carry_investment')
+#     cur = conn.cursor()
+#     sql = "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid` from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Symbol like 'HSENG%';"
+#     com = pd.read_sql(sql, con=conn)
+#     conn.commit()
+#     conn.close()
+#     com['isnull'] = (com['openclose'] + com['longshort']) % 2
+#     com['hsi'] = (com['tickerprice'] - com['HSI_bid']).where(com['isnull'] == 0, com['HSI_ask'] - com['tickerprice'])
+#     com['mhi'] = (com['tickerprice'] - com['MHI_bid']).where(com['isnull'] == 0, com['MHI_ask'] - com['tickerprice'])
+#
+#     com2 = pd.DataFrame(
+#         [com.Account_ID, com['datetime'].apply(lambda x: datetime.datetime.strftime(x, '%y-%m-%d')), com.tickerprice,
+#          com['isnull'], com.hsi, com.mhi])
+#     com2 = com2.T.copy()
+#     com2['Account_ID'].astype = np.int
+#     '''
+#     it = ['datetime', 'Account_ID', 'isnull']
+#     dic = {}
+#     for i in range(1, len(it) + 1):
+#         u = len(dic)
+#         # 获得所有组合列表，并以数字为key存储到字典dic
+#         for c, j in enumerate(combinations(it, i)):
+#             dic[u + c + 1] = [v for v in j]
+#     '''
+#
+#     dic = {'1': ['datetime'],
+#            '2': ['Account_ID'],
+#            '3': ['isnull'],
+#            '4': ['datetime', 'Account_ID'],
+#            '5': ['datetime', 'isnull'],
+#            '6': ['Account_ID', 'isnull'],
+#            '7': ['datetime', 'Account_ID', 'isnull']}
+#     herys = None
+#     while 1:
+#         myj = yield herys
+#         if myj in dic:
+#             si = com2.groupby(dic[myj]).size()
+#             herys = com2.groupby(dic[myj]).apply(lambda x: np.mean(x))
+#             herys['count'] = si.values
+#         elif myj is '8':
+#             herys = com
+#         else:
+#             herys = None
+#
+#
+# def get_inv():
+#     '''用来更新investement生成器'''
+#     inv = investement()
+#     inv.send(None)
+#     return inv
+#
+#
+# inv_times = datetime.datetime.now()  # 初始化时间
+# inv = investement()
+# inv.send(None)  # 初始化生成器
 IDS = []  # 初始化账号列表
 
 
 def tongji(xz):
     '''用来调用生成器'''
-    global inv_times
-    global inv
     global IDS
-    dates = datetime.datetime.now()  # 当前时间
-    if int(str(dates - inv_times)[2:4]) >= 10:  # 如果生成器执行时间有10分钟，则更新生成器
-        inv_times = dates
-        inv = get_inv()
-    results = inv.send(xz)
-    if results is not None:
-        results.Account_ID = results.Account_ID.astype('int')
-        IDS = list(set(results.Account_ID))  # 账号列表
+    # global inv_times
+    # global inv
+    # dates = datetime.datetime.now()  # 当前时间
+    # if int(str(dates - inv_times)[2:4]) >= 10:  # 如果生成器执行时间有10分钟，则更新生成器
+    #     inv_times = dates
+    #     inv = get_inv()
+    # results = inv.send(xz)
+    # if results is not None:
+    #     results.Account_ID = results.Account_ID.astype('int')
+    #     IDS = list(set(results.Account_ID))  # 账号列表
+    conn = get_conn('carry_investment')
+    cur = conn.cursor()
+    sql = "select id,trader_name,available,origin_asset,remain_asset from account_info"
+    cur.execute(sql)
+    results=list(cur.fetchall())
+    conn.commit()
+    conn.close()
+    IDS = [i[0] for i in results]
     return results
 
 

@@ -3,29 +3,52 @@
 {% block center_cen %}
     <div align="center">
     {% include 'base/form.html' %}
-        <h3>
-            {% if xz == '1' %}
-                时间分组
-            {% elif xz == '2' %}
-                ID  分组
-            {% elif xz == '3' %}
-                多空分组
-            {% elif xz == '4' %}
-                时间与ID分组
-            {% elif xz == '5' %}
-                时间与多空分组
-            {% elif xz == '6' %}
-                ID 与 空分组
-            {% elif xz == '7' %}
-                时间、ID与多空三者结合分组
-            {% elif xz == '8' %}
-                详细数据
-            {% endif %}
-        </h3>
+    {% load mvote %}
+{#        <h3>#}
+{#            {% if xz == '1' %}#}
+{#                时间分组#}
+{#            {% elif xz == '2' %}#}
+{#                ID  分组#}
+{#            {% elif xz == '3' %}#}
+{#                多空分组#}
+{#            {% elif xz == '4' %}#}
+{#                时间与ID分组#}
+{#            {% elif xz == '5' %}#}
+{#                时间与多空分组#}
+{#            {% elif xz == '6' %}#}
+{#                ID 与 空分组#}
+{#            {% elif xz == '7' %}#}
+{#                时间、ID与多空三者结合分组#}
+{#            {% elif xz == '8' %}#}
+{#                详细数据#}
+{#            {% endif %}#}
+{#        </h3>#}
     {% if herys %}
-        {{ herys|safe }}</div>
+{#        {{ herys|safe }}</div>#}
+         <table border="1" class="dataframe">
+    <tr>
+      <th>ID号</th>
+      <th>名称</th>
+      <th>是否使用</th>
+      <th>开户金额</th>
+      <th>当前余额</th>
+
+    </tr>
+            {% for i in herys %}
+    <tr>
+      <td>{{ i.0 }}</td>
+      <td>
+          {% if i.1 %}{{ i.1 }}{% endif %}
+      </td>
+      <td>{{ i.2|yesno:"Yes,No,未知" }}</td>
+      <td>{{ i.3 }}</td>
+      <td>{{ i.4 }}</td>
+
+    </tr>
+        {% endfor %}
+
+        </table>
     {% elif results %}
-        {% load mvote %}
         <table border="1" class="dataframe">
     <tr>
       <th>开仓时间</th>
@@ -62,7 +85,7 @@
         <th>赚得金额</th>
         <th>正向跟单</th>
         <th>反向跟单</th>
-            <th></th><th></th><th></th><th></th><th>名  称</th>
+            <th>下单数量</th><th></th><th></th><th></th><th>名  称</th>
         </tr>
         {% for i in huizong %}
         <tr>
@@ -71,7 +94,7 @@
         <td>{{ i.2|floatformat:1 }}</td>
         <td>{{ i.3 }}</td>
         <td>{{ i.4 }}</td>
-        <td></td><td></td><td></td><td></td><td>{{ id_name|names:i.1 }}</td>
+        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td>{{ id_name|names:i.1 }}</td>
         </tr>
         {% endfor %}
         </table>
