@@ -1096,3 +1096,38 @@ Traceback (most recent call last):
   File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 372, in tongji
     results.remove(results[ind1])
 ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+base.py[2018-03-13 17:08:27][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-14 08:45:18][ERROR]：Internal Server Error: /tj/2
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 378, in tongji
+    return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count})
+UnboundLocalError: local variable 'id_count' referenced before assignment
+base.py[2018-03-14 08:45:18][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-14 08:45:53][ERROR]：Internal Server Error: /tj/2
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 378, in tongji
+    return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count})
+UnboundLocalError: local variable 'id_count' referenced before assignment
+base.py[2018-03-14 08:49:22][WARNING]：Not Found: /favicon.ico
+views.py[2018-03-14 09:19:14][ERROR]：name 'cache' is not defined
+views.py[2018-03-14 09:19:15][ERROR]：name 'cache' is not defined
+views.py[2018-03-14 09:19:15][ERROR]：name 'cache' is not defined
+views.py[2018-03-14 09:19:15][ERROR]：name 'cache' is not defined
+views.py[2018-03-14 09:21:03][ERROR]：name 'cache' is not defined
+views.py[2018-03-14 09:21:03][ERROR]：name 'cache' is not defined

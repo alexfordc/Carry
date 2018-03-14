@@ -3,7 +3,6 @@ from django.http import JsonResponse
 import pymysql, json, urllib, h5py
 import numpy as np
 from django.conf import settings
-from django.core.cache import cache
 from dwebsocket.decorators import accept_websocket,require_websocket
 from django.http import HttpResponse
 from django.core.cache import cache
@@ -374,8 +373,9 @@ def tongji(rq, xz=None):
                     ind-=1
                     ind1-=1
                 ind1+=1
-
-        return render(rq,'tongji.html',{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count})
+        ids=HSD.IDS
+        #{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count}
+        return render(rq,'tongji.html',locals())
     if not xz:
         xz = '3'
     herys = None
