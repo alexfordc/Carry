@@ -1,9 +1,14 @@
 <form action="" method="GET">
 时间：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;
- ID： <select name="id">
+ ID 或 名称： <select name="id">
+    {% load mvote %}
         {% for id in ids %}
-            {% if forloop.first %}<option value="1">全部ID</option>{% endif %}
-            <option value="{{ id }}">{{ id }}</option>
+            {% if forloop.first %}
+                {% if rq_id == '1' %}<option value="{{ rq_id }}">全  部</option>{% else %}
+                    <option value="{{ rq_id }}">{{ id_name|name_option:rq_id }}</option>
+                    <option value="1">全  部</option>{% endif %}
+                {% endif %}
+            <option value="{{ id }}">{{ id_name|name_option:id }}</option>
         {% endfor %}
     </select>&nbsp;&nbsp;
  <input type="submit" name=""><br/><br/>

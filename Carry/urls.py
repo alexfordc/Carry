@@ -27,14 +27,14 @@ urlpatterns = [
     url(r'^getData/$',views.getData,name='getData'),
     url(r'^zt/$',views.zhutu,name='zhutu'),
     url(r'^zx/$',views.zhexian,name='zhexian'),
-    url(r'^tj/(\d*)$',views.tongji,name='tongji'),
+    url(r'^tj/$',views.tongji,name='tongji'),
     url(r'^ts/$',views.tools,name='tools'),
 
     url(r'^zhutu2/$',views.zhutu2,name='zhutu2'),
 
     url(r'^kline/$',views.kline,name='kline'),
     url(r'^getkline$',views.getkline),
-    url(r'^zhangting/$',views.zhangting,name='zhangting'),
+    url(r'^zhangting/([a-z]*)/$',views.zhangting,name='zhangting'),
 ]
 
 # handler404 = views.page_not_found #404页面

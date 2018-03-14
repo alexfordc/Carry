@@ -168,20 +168,16 @@ var $container = $('#works-container');
                     </li>
                     <li><a href="{% url 'index' %}">资料</a>
                     <ul>
-                        <li class="no-border-top"><a href="{% url 'tongji' 1 %}">时间分组</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 2 %}">ID  分组</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 3 %}">多空分组</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 4 %}">时间与ID</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 5 %}">时间与空</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 6 %}">ID 与 空</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 7 %}">时间ID空</a></li>
-                        <li class="no-border-top"><a href="{% url 'tongji' 8 %}">详细数据</a></li>
+                        <li class="no-border-top"><a href="{% url 'tongji' %}">交易统计表</a></li>
+
                     </ul>
                     </li>
                     <li><a href="{% url 'index' %}">产品介绍</a>
                     <ul>
                         <li class="no-border-top"><a href="{% url 'tools' %}">友情链接</a></li>
-                        <li class="no-border-top"><a href="{% url 'zhangting' %}">涨停股票</a></li>
+                        <li class="no-border-top"><a href="{% url 'zhangting' 'today' %}">今天涨停</a></li>
+                        <li class="no-border-top"><a href="{% url 'zhangting' 'tomorrow' %}">明天涨停</a></li>
+
                         <!--<li><a href="portfolio2.html">Portfolio 2 Column</a></li>-->
 
                     </ul>

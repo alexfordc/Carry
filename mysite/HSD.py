@@ -10,9 +10,11 @@ import pandas as pd
 import logging
 import configparser
 import requests
+from sklearn.externals import joblib
+from collections import Counter
 
 
-config=configparser.ConfigParser()
+config = configparser.ConfigParser()
 config.read('log\\conf.conf')
 
 logging.basicConfig(
@@ -101,11 +103,24 @@ CODE_PRODUCT = {'hk00001': 27.006, 'hk00002': 18.945, 'hk00003': 83.928, 'hk0000
                 'hk02319': 27.489, 'hk02382': 7.1305, 'hk02388': 37.0055, 'hk02628': 74.41, 'hk03328': 87.53,
                 'hk03988': 794.409}
 
+SQL = {
+    'get_history': 'select number,name,time from weight where name in {}',
+    'tongji': 'select id,trader_name,available,origin_asset,remain_asset from account_info order by available desc',
+    "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
+	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
+    'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
+    'limit_init': 'select bazaar,code from stock_code where bazaar in ("sz","sh")',
+}
+
+
 def get_conn(dataName):
-    return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],charset='utf8')
+    return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
+                           charset='utf8')
+
 
 def get_tcp():
     return config['U']['hs']
+
 
 def get_data(url=None):
     '''获取恒生指数成分股数据，格式为：
@@ -172,7 +187,7 @@ def get_min_history():
 def get_history(conn):
     '''返回数据格式为：(点数，名称，时间)...'''
     cur = conn.cursor()
-    cur.execute(f'select number,name,time from weight where name in {WEIGHT}')
+    cur.execute(SQL['get_history'].format(WEIGHT))
     result = cur.fetchall()
     conn.commit()
     conn.close()
@@ -188,7 +203,7 @@ def read_changes(url='http://qt.gtimg.cn/q'):
     times = str(datetime.datetime.now()).split('.')[0]
     codes = ','.join(['r_' + i for i in CODE_NAME])
     # urls=f'http://web.sqt.gtimg.cn/q={codes}'
-    urls = f'{url}={codes}'
+    urls = '{}={}'.format(url,codes)
     data = requests.get(urls).text
     if data:
         data = data.replace('\n', '').split(';')[:-1]
@@ -214,9 +229,9 @@ def get_yesterday_price():
         p = p.replace(',', '')
         return (float(p), this_time)
     except:
-        data=requests.get('http://web.sqt.gtimg.cn/q=hkHSI').text
-        data=data.split('=')[1].split('~')[3:6]
-        return (float(data[1]),this_time)
+        data = requests.get('http://web.sqt.gtimg.cn/q=hkHSI').text
+        data = data.split('=')[1].split('~')[3:6]
+        return (float(data[1]), this_time)
 
 
 def get_price():
@@ -247,8 +262,8 @@ def get_price():
 
 
 # def investement():
-#     conn = get_conn('carry_investment')
-#     cur = conn.cursor()
+# conn = get_conn('carry_investment')
+# cur = conn.cursor()
 #     sql = "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid` from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Symbol like 'HSENG%';"
 #     com = pd.read_sql(sql, con=conn)
 #     conn.commit()
@@ -305,7 +320,14 @@ def get_price():
 IDS = []  # 初始化账号列表
 
 
-def tongji(xz):
+def get_idName(cur):
+    cur.execute(SQL['get_idName'])
+    id_name = cur.fetchall()
+    id_name = {i: j for i, j in id_name}
+    return id_name
+
+
+def tongji():
     '''用来调用生成器'''
     global IDS
     # global inv_times
@@ -320,13 +342,14 @@ def tongji(xz):
     #     IDS = list(set(results.Account_ID))  # 账号列表
     conn = get_conn('carry_investment')
     cur = conn.cursor()
-    sql = "select id,trader_name,available,origin_asset,remain_asset from account_info"
+    sql = SQL['tongji']
     cur.execute(sql)
-    results=list(cur.fetchall())
+    results = cur.fetchall()
+    id_name = get_idName(cur)
     conn.commit()
     conn.close()
     IDS = [i[0] for i in results]
-    return results
+    return results, id_name
 
 
 def calculate_earn(dates):
@@ -335,24 +358,21 @@ def calculate_earn(dates):
     global IDS
     conn = get_conn('carry_investment')
     cur = conn.cursor()
-    sql = "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
-	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Symbol like 'HSENG%'"
+    sql = SQL['calculate_earn']
     if dates:
         asd = dates.split('-')
         asd = datetime.datetime(int(asd[0]), int(asd[1]), int(asd[2])) + datetime.timedelta(days=1)
         dates1 = str(asd)[:10]
-        sql += f" and F.`datetime`>'{dates}' and F.`datetime`<'{dates1}'"
+        sql += " and F.`datetime`>'{}' and F.`datetime`<'{}'".format(dates,dates1)
     cur.execute(sql)
     com = cur.fetchall()
-    cur.execute('SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL')
-    id_name=cur.fetchall()
-    id_name={i:j for i,j in id_name}
+    id_name = get_idName(cur)
     conn.commit()
     conn.close()
     result = []
     ticket = [i[1] for i in com]
     dt_tk = [(datetime.datetime.strftime(i[0], '%y-%m-%d'), i[1]) for i in com]
-    ids=[]
+    ids = []
     for inz, i in enumerate(com):
         if ticket.count(i[1]) == 2:
             in1 = dt_tk.index((datetime.datetime.strftime(i[0], '%y-%m-%d'), i[1]))
@@ -368,16 +388,18 @@ def calculate_earn(dates):
             else:
                 price_z = com[in1][8] - com[in2][7]
                 price_f = com[in2][8] - com[in1][7]
-            ids.append(com[in1][2]) if com[in1][2] not in ids else 0 # 账号列表
+            ids.append(com[in1][2]) if com[in1][2] not in ids else 0  # 账号列表
             # 开仓时间，单号，ID，平仓时间，价格，做多0做空1，赚得金额，正向跟单，反向跟单
-            result.append(list(com[in1][:3]) + [com[in2][0],com[in1][4],com[in1][6],com[in1][-1], price_z, price_f])
-    IDS=ids
-    return result,id_name
+            result.append(list(com[in1][:3]) + [com[in2][0], com[in1][4], com[in1][6], com[in1][-1], price_z, price_f])
+    IDS = ids
+    return result, id_name
+
 
 class Limit_up:
     def __init__(self):
         '''初始化，从数据库更新所有股票代码'''
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
+        self.this_up = False
         try:
             self.conn = get_conn('stock_data')
             cur = self.conn.cursor()
@@ -390,7 +412,7 @@ class Limit_up:
             time1 = time.localtime(times)[2]
         # 若不是在同一天修改的，则重新写入
         if time.localtime()[2] != time1:
-            cur.execute('select bazaar,code from stock_code where bazaar in ("sz","sh")')
+            cur.execute(SQL['limit_init'])
             codes = cur.fetchall()
             self.conn.close()
             # 获取股票代码
@@ -404,6 +426,11 @@ class Limit_up:
                         f.write('\n')
                     else:
                         f.write(',')
+        if os.path.isfile('log\\dict_data.txt'):
+            times = time.localtime(os.path.getmtime('log\\dict_data.txt'))
+            this_t=time.localtime()
+            if this_t.tm_mday == times.tm_mday and ((times.tm_hour<=9 and this_t.tm_hour<15 and times.tm_min<=15) or (times.tm_hour>=15)):
+                self.this_up = True
         self.codes = []
         try:
             with open('log\\codes_gp.txt', 'r') as f:
@@ -421,7 +448,62 @@ class Limit_up:
         M = int(s_date[10:12]) if int(s_date[10]) > 0 else int(s_date[11])
         return datetime.datetime(y, m, d, h, M)
 
+    def getData(self):
+        '''获取指定股票的开盘收盘数据，返回格式：
+        dict{'code':[2.46, 2.54, 2.48, 2.41, 2.36, 2.34, 2.33, 2.35, 2.35, 2.47, 2.47, 2.38, 2.27, 2.29, 2.29, 2.29, 2.29, 2.19],...}'''
+        with open('log\\dict_data.txt') as f:
+            dict_data=f.read()
+            dict_data=json.loads(dict_data)
+        if self.this_up:
+            with open('log\\dict_name.txt') as f:
+                dict_name=f.read()
+                dict_name=json.loads(dict_name)
+            return dict_data,dict_name
+
+        codes=self.codes
+        dict_name={}
+        dict_data1={}
+        for code1 in codes:
+            try:
+                html = requests.get('http://qt.gtimg.cn/q=%s' % code1).text
+                html = html.replace('\n', '').split(';')
+                html = [i.split('~') for i in html[:-1]]
+                html = [i for i in html if 0 < float(i[3])]
+                html = [[i[0][2:10],    # 市场加代码
+                        i[1],              # 中文名称
+                        float(i[5]),       # 开盘价
+                        float(i[3]),       # 收盘价
+                        ] for i in html
+                ]
+                for ht in html:
+                    d = dict_data.get(ht[0])
+                    if d and len(d)>=16:
+                        dict_data[ht[0]]=d[-16:]+[ht[2],ht[3]]
+                        dict_name[ht[0]]=ht[1]
+                    elif d:
+                        dict_data1[ht[0]]=d+[ht[2],ht[3]]
+                    else:
+                        dict_data1[ht[0]]=[ht[2],ht[3]]
+            except:
+                continue
+        with open('log\\dict_data.txt','w') as f:
+            # 合并2个字典并保存
+            f.write(json.dumps(dict(dict_data,**dict_data1)))
+        with open('log\\dict_name.txt','w') as f:
+            f.write(json.dumps(dict_name))
+
+        return dict_data,dict_name
+
     def read_code(self):
+        jtzt=[]
+        if os.path.isfile('log\\jtzt_gp.txt'):
+            times = time.localtime(os.path.getmtime('log\\jtzt_gp.txt'))
+            this_t=time.localtime()
+            if this_t.tm_mday == times.tm_mday and (times.tm_hour>=3 or times.tm_hour<9):
+                with open('log\\jtzt_gp.txt','r') as f:
+                    jtzt=f.read()
+                    jtzt=json.loads(jtzt)
+                return jtzt
         codes = self.codes
         rou = lambda f: round((f * 1.1) - f, 2)
         #while 1:
@@ -443,9 +525,55 @@ class Limit_up:
                      self.f_date(i[30]),  # 涨停时间
                      1 if float(i[31]) >= rou(float(i[4])) else 0,  # 当前是否涨停(1是，0否)
                      self.cdate  # 创建的日期
-                     ] for i in html
+                    ] for i in html
                     if round((float(i[33]) - float(i[4])) / float(i[4]), 2) >= 0.1]  # 计算是否涨停
             stock_up += html
-        statistics = [[i[0],i[1],i[10]] for i in stock_up]
+        statistics = [[i[0], i[1], i[10]] for i in stock_up]
+        with open('log\\jtzt_gp.txt','w') as f:
+            f.write(json.dumps(statistics))
         return statistics
 
+    def yanzen(self):
+        jyzt = []
+        mx={}
+        #mx_n={}
+        with open('log\\codes_gp.txt') as f:
+            codes=f.read()
+        codes=codes.split(',')[:-1]
+        try:
+            data,dict_name=self.getData()
+        except Exception as exc:
+            logging.error(exc)
+            return
+        if os.path.isfile('log\\jyzt_gp.txt'):
+            times = time.localtime(os.path.getmtime('log\\jyzt_gp.txt'))
+            this_t=time.localtime()
+            if this_t.tm_mday == times.tm_mday and this_t.tm_hour-times.tm_hour<=4:
+                with open('log\\jyzt_gp.txt','r') as f:
+                    jyzt=f.read()
+                    jyzt=json.loads(jyzt)
+                jyzt=jyzt[:10]
+                jyzt=[[i[0],dict_name.get(i[0]),i[1]] for i in jyzt]
+                return jyzt
+        for m in os.listdir('log\\models'):
+            if m[-2:] == '.m':
+                mx[m[:-2]]=joblib.load('log\\models\\'+m)
+                #mx_n[m[:-2]]=[]
+
+
+        for code in codes:
+            if not data.get(code):
+                continue
+            for i in mx.keys():
+                r=mx[i].predict([data[code]])[0]
+                if r==1:
+                    jyzt.append(code)
+                    #mx_n[i].append(code)
+        jyzt=Counter(jyzt).most_common()
+
+        with open('log\\jyzt_gp.txt','w') as f: # 保存
+            f.write(json.dumps(jyzt))
+        jyzt=jyzt[:10]
+        jyzt=[[i[0],dict_name.get(i[0]),i[1]] for i in jyzt]
+
+        return jyzt  # mx_n

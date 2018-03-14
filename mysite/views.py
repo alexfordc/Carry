@@ -344,7 +344,7 @@ def zhutu2(rq):
     return render(rq, 'zhutu2.html')
 
 
-def tongji(rq, xz=None):
+def tongji(rq):
     dates = str(datetime.datetime.now())[:10]
     rq_date = rq.GET.get('datetimes')
     rq_id=rq.GET.get('id')
@@ -365,22 +365,25 @@ def tongji(rq, xz=None):
             ind=len(results)
             ind1=0
             rq_id=int(rq_id)
+            results1=[]
             while ind1<ind:
-                if rq_id != results[ind1][2]:
-                    try:
-                        results.remove(results[ind1])
-                    except: pass
-                    ind-=1
-                    ind1-=1
+                if rq_id == results[ind1][2]:
+                    results1.append(results[ind1])
+                    #ind-=1
+                    #ind1-=1
                 ind1+=1
+            results=results1
+        else:
+            rq_id='1'
         ids=HSD.IDS
+        dates=rq_date
         #{'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count}
         return render(rq,'tongji.html',locals())
-    if not xz:
-        xz = '3'
+    else:
+        rq_id='1'
     herys = None
     try:
-        herys = HSD.tongji(xz)
+        herys,id_name = HSD.tongji()
     except Exception as exc:
         logging.error(exc)
     if not herys:
@@ -394,7 +397,9 @@ def tongji(rq, xz=None):
     #         del herys['tickertime']
     #     except Exception as exc:
     #         logging.error(exc)
-    return render(rq, 'tongji.html', {'herys': herys,'dates':dates,'ids':HSD.IDS})
+    # {'herys': herys,'dates':dates,'ids':HSD.IDS,'id_name':id_name}
+    ids=HSD.IDS
+    return render(rq, 'tongji.html', locals())
 
 
 def tools(rq):
@@ -525,10 +530,21 @@ def getkline(rq):
                         rq.websocket.send(data)
                     #time.sleep(1)
 
-def zhangting(rq):
-    limit = HSD.Limit_up()
-    zt=limit.read_code()
-    zt=sorted(zt,key=lambda x:x[2]) # 以第二个参数排序
-    zt.reverse()
-    return render(rq,'zhangting.html',{'zt':zt})
+def zhangting(rq,t):
+    ZT = HSD.Limit_up()
+    if t == 'today':
+        zt=ZT.read_code()
+        zt=sorted(zt,key=lambda x:x[2]) # 以第3个参数排序
+        zt.reverse()
+        return render(rq,'zhangting.html',{'zt_today':zt})
+    if t == 'tomorrow':
+        zt_tomorrow = ZT.yanzen()
+        print(zt_tomorrow)
+        for i in range(len(zt_tomorrow)):
+            zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
+            zt_tomorrow[i][2]=['★' for j in range(zt_tomorrow[i][2])]
+        return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow})
+
+    return redirect('index')
+
 
