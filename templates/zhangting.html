@@ -1,10 +1,11 @@
 {% extends 'base/base.html' %}
+{% block title %}股票{% endblock %}
 {% block center_cen %}
     <div align="center">
 <table border="1" width="500" align="center">
     {% if zt_today %}
-        <caption style="color:red">今天涨停股票</caption>
-    <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>当前涨停</th></tr>
+        <caption style="color:red">已经涨停股票</caption>
+    <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>当前是否涨停</th></tr>
     {% for z in zt_today %}
     <tr bgcolor="{% cycle '#00cc00' '#cccc33' %}"><td>{{ forloop.counter }}<td>{{ z.1 }}</td><td>{{ z.0 }}</td>
         <td>
@@ -18,11 +19,11 @@
     {% endfor %}
     {% endif %}
     {% if zt_tomorrow %}
-        <caption style="color:red">明天涨停股票</caption>
+        <caption style="color:red">将要上涨股票</caption>
     <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>推荐指数</th></tr>
     {% for z in zt_tomorrow %}
     <tr bgcolor="{% cycle '#00cc00' '#cccc33' %}"><td>{{ forloop.counter }}<td>{{ z.1|default:'' }}</td><td>{{ z.0 }}</td>
-        <td style="color:red;">{% for zs in z.2 %}{{ zs }}{% endfor %}</td>
+        <td style="color:red;">{% for zs in z.2 %}★{% endfor %}</td>
     </tr>
     {% endfor %}
     {% endif %}

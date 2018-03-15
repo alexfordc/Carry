@@ -1624,3 +1624,139 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'zhangting' with arguments '('today',)' not found. 1 pattern(s) tried: ['zhangting/([A-z])/$']
 HSD.py[2018-03-14 17:28:06][ERROR]：too many values to unpack (expected 2)
+base.py[2018-03-14 20:34:56][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-03-15 08:37:31][ERROR]：Expecting property name enclosed in double quotes: line 1 column 447009 (char 447008)
+exception.py[2018-03-15 08:37:31][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 542, in zhangting
+    for i in range(len(zt_tomorrow)):
+TypeError: object of type 'NoneType' has no len()
+base.py[2018-03-15 08:37:31][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-03-15 08:38:58][ERROR]：Expecting property name enclosed in double quotes: line 1 column 447009 (char 447008)
+HSD.py[2018-03-15 08:42:01][ERROR]：local variable 'dict_data' referenced before assignment
+HSD.py[2018-03-15 08:48:37][ERROR]：local variable 'dict_data' referenced before assignment
+HSD.py[2018-03-15 08:55:05][ERROR]：Expecting value: line 1 column 1 (char 0)
+HSD.py[2018-03-15 08:56:09][ERROR]：Expecting value: line 1 column 1 (char 0)
+exception.py[2018-03-15 09:46:39][ERROR]：Internal Server Error: /zhangting/today/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\util\connection.py", line 83, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "D:\ProgramFiles\Anaconda3\lib\http\client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "D:\ProgramFiles\Anaconda3\lib\http\client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "D:\ProgramFiles\Anaconda3\lib\http\client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "D:\ProgramFiles\Anaconda3\lib\http\client.py", line 1026, in _send_output
+    self.send(msg)
+  File "D:\ProgramFiles\Anaconda3\lib\http\client.py", line 964, in send
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connection.py", line 166, in connect
+    conn = self._new_conn()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000026079BBF198>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\adapters.py", line 440, in send
+    timeout=timeout
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\urllib3\util\retry.py", line 388, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='qt.gtimg.cn', port=80): Max retries exceeded with url: /q=sh600084,sh603843,sh603488,sz300052,sh600729,sz300526,sz300575,sh600279,sh600939,sz300315,sh600138,sh600106,sh600132,sh600917,sh601158,sz300333,sz000506,sh600088,sz000024,sz000758,sz002883,sz000685,sz002511,sh603018,sh603601,sz300684,sh601872,sz002771,sh600633,sh600036,sz000798,sz002317,sh600999,sh601878,sz000906,sh600158,sh601877,sz002197,sz300435,sh603559,sh600528,sz002092,sz000540,sz000957,sh600522,sh600856,sz000980,sh600373,sz300270,sz000657,sz300364,sh600517,sz002915,sz000839,sz002256,sz000099,sz002772,sh603996,sz300101,sz002707%0A (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000026079BBF198>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 536, in zhangting
+    zt=ZT.read_code()
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 520, in read_code
+    html = requests.get('http://qt.gtimg.cn/q=%s' % code).text
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 508, in request
+    resp = self.send(prep, **send_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 618, in send
+    r = adapter.send(request, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='qt.gtimg.cn', port=80): Max retries exceeded with url: /q=sh600084,sh603843,sh603488,sz300052,sh600729,sz300526,sz300575,sh600279,sh600939,sz300315,sh600138,sh600106,sh600132,sh600917,sh601158,sz300333,sz000506,sh600088,sz000024,sz000758,sz002883,sz000685,sz002511,sh603018,sh603601,sz300684,sh601872,sz002771,sh600633,sh600036,sz000798,sz002317,sh600999,sh601878,sz000906,sh600158,sh601877,sz002197,sz300435,sh603559,sh600528,sz002092,sz000540,sz000957,sh600522,sh600856,sz000980,sh600373,sz300270,sz000657,sz300364,sh600517,sz002915,sz000839,sz002256,sz000099,sz002772,sh603996,sz300101,sz002707%0A (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000026079BBF198>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。',))
+base.py[2018-03-15 13:01:40][WARNING]：Not Found: /favicon.ico
+views.py[2018-03-15 13:35:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-15 13:36:11][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-03-15 14:00:54][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 541, in zhangting
+    zt_tomorrow = ZT.yanzen()
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 579, in yanzen
+    r=mx[i].predict([data[code]])[0]
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 548, in predict
+    y = super(BaseSVC, self).predict(X)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 308, in predict
+    X = self._validate_for_predict(X)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 459, in _validate_for_predict
+    (n_features, self.shape_fit_[1]))
+ValueError: X.shape[1] = 2 should be equal to 18, the number of features at training time
+exception.py[2018-03-15 14:03:46][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 541, in zhangting
+    zt_tomorrow = ZT.yanzen()
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 579, in yanzen
+    r=mx[i].predict([data[code]])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 548, in predict
+    y = super(BaseSVC, self).predict(X)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 308, in predict
+    X = self._validate_for_predict(X)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 459, in _validate_for_predict
+    (n_features, self.shape_fit_[1]))
+ValueError: X.shape[1] = 2 should be equal to 18, the number of features at training time

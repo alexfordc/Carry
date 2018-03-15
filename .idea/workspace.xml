@@ -4,10 +4,7 @@
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/HSD.py" afterPath="$PROJECT_DIR$/mysite/HSD.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/form.html" afterPath="$PROJECT_DIR$/templates/base/form.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/templatetags/mvote.py" afterPath="$PROJECT_DIR$/mysite/templatetags/mvote.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Carry/urls.py" afterPath="$PROJECT_DIR$/Carry/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/zhangting.html" afterPath="$PROJECT_DIR$/templates/zhangting.html" />
@@ -46,31 +43,17 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.824581" vertical-offset="10202" max-vertical-offset="11120">
-              <caret line="547" column="28" selection-start-line="547" selection-start-column="28" selection-end-line="547" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.48554912" vertical-offset="0" max-vertical-offset="10940">
+              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
-                <marker date="1521023991565" expanded="true" signature="3328:3352" placeholder="SELECT * FRO..STOCK_CODE..." />
-                <marker date="1521023991565" expanded="true" signature="5279:5386" placeholder="select date,..." />
-                <marker date="1521023991565" expanded="true" signature="6082:6129" placeholder="select COUNT..moment_hours..." />
-                <marker date="1521023991565" expanded="true" signature="6621:6709" placeholder="select date,..." />
-                <marker date="1521023991565" expanded="true" signature="13828:13923" placeholder="SELECT datet..." />
-                <marker date="1521023991565" expanded="true" signature="14043:14078" placeholder="SELECT COUNT..futures_min..." />
-                <marker date="1521023991565" expanded="true" signature="14180:14264" placeholder="SELECT datet..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zhangting.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/zhangting.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="720">
-              <caret line="23" column="117" selection-start-line="23" selection-start-column="117" selection-end-line="23" selection-end-column="117" />
-              <folding>
-                <element signature="e#164#181#0#HTML" expanded="true" />
-                <element signature="e#637#654#0#HTML" expanded="true" />
-                <element signature="e#904#922#0#HTML" expanded="true" />
+                <marker date="1521095000121" expanded="true" signature="3303:3327" placeholder="SELECT * FRO..STOCK_CODE..." />
+                <marker date="1521095000121" expanded="true" signature="5254:5361" placeholder="select date,..." />
+                <marker date="1521095000121" expanded="true" signature="6057:6104" placeholder="select COUNT..moment_hours..." />
+                <marker date="1521095000121" expanded="true" signature="6596:6684" placeholder="select date,..." />
+                <marker date="1521095000121" expanded="true" signature="13803:13898" placeholder="SELECT datet..." />
+                <marker date="1521095000121" expanded="true" signature="14018:14053" placeholder="SELECT COUNT..futures_min..." />
+                <marker date="1521095000121" expanded="true" signature="14155:14239" placeholder="SELECT datet..." />
               </folding>
             </state>
           </provider>
@@ -79,15 +62,15 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="9948" max-vertical-offset="11700">
-              <caret line="532" column="43" selection-start-line="532" selection-start-column="43" selection-end-line="532" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="11058" max-vertical-offset="11940">
+              <caret line="432" column="35" selection-start-line="432" selection-start-column="35" selection-end-line="432" selection-end-column="35" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1521021824139" expanded="true" signature="7665:7717" placeholder="select numbe..." />
-                <marker date="1521021824139" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
-                <marker date="1521021824139" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
-                <marker date="1521021824139" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
-                <marker date="1521021824139" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
+                <marker date="1521093953890" expanded="true" signature="7665:7717" placeholder="select numbe..." />
+                <marker date="1521093953890" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
+                <marker date="1521093953890" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
+                <marker date="1521093953890" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
+                <marker date="1521093953890" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
               </folding>
             </state>
           </provider>
@@ -173,7 +156,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../start_day.py" />
         <option value="$PROJECT_DIR$/../../Tools/2017年12月13日/get_min.py" />
         <option value="$PROJECT_DIR$/../../Tools/2017年12月13日/test1.py" />
         <option value="$PROJECT_DIR$/../../Tools/2017年12月14日/this_get_min.py" />
@@ -214,12 +196,13 @@
         <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/../spAPI/sub_client.py" />
-        <option value="$PROJECT_DIR$/../../EveryDay/test_models.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/data_38.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/base/form.html" />
         <option value="$PROJECT_DIR$/mysite/templatetags/mvote.py" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
+        <option value="$PROJECT_DIR$/../../EveryDay/test_models.py" />
+        <option value="$PROJECT_DIR$/../../EveryDay/ztyc.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/templates/zhangting.html" />
@@ -927,7 +910,13 @@
       <option name="project" value="LOCAL" />
       <updated>1520990506716</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="2018-3-14">
+      <created>1521026075778</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1521026075778</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -951,11 +940,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12739871" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13059701" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1034,13 +1023,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/css/prettyPhoto.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/tipsy.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1126,13 +1108,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/logging.log">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5820" max-vertical-offset="9640">
           <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
         </state>
-      </provider>
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log/yesterday_close_price.txt">
@@ -1153,13 +1135,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="870">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42203987" vertical-offset="0" max-vertical-offset="960">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1328,20 +1303,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/test_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17216642" vertical-offset="1800" max-vertical-offset="3060">
-          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16166282" vertical-offset="3240" max-vertical-offset="4360">
-          <caret line="169" column="24" selection-start-line="169" selection-start-column="24" selection-end-line="169" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/templatetags/mvote.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.424581" vertical-offset="0" max-vertical-offset="895">
@@ -1356,21 +1317,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="400">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5311778" vertical-offset="3000" max-vertical-offset="4280">
-          <caret line="173" column="25" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Carry/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="860">
@@ -1379,46 +1325,94 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="400">
+          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/test_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.2513967" vertical-offset="1365" max-vertical-offset="3640">
+          <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/ztyc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5028902" vertical-offset="300" max-vertical-offset="2160">
+          <caret line="80" column="42" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#11#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42203987" vertical-offset="0" max-vertical-offset="960">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.586605" vertical-offset="1140" max-vertical-offset="4360">
+          <caret line="169" column="24" selection-start-line="169" selection-start-column="24" selection-end-line="169" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43879908" vertical-offset="3180" max-vertical-offset="4280">
+          <caret line="178" column="108" selection-start-line="178" selection-start-column="108" selection-end-line="178" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9948" max-vertical-offset="11700">
-          <caret line="532" column="43" selection-start-line="532" selection-start-column="43" selection-end-line="532" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="11058" max-vertical-offset="11940">
+          <caret line="432" column="35" selection-start-line="432" selection-start-column="35" selection-end-line="432" selection-end-column="35" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1521021824139" expanded="true" signature="7665:7717" placeholder="select numbe..." />
-            <marker date="1521021824139" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
-            <marker date="1521021824139" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
-            <marker date="1521021824139" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
-            <marker date="1521021824139" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
+            <marker date="1521093953890" expanded="true" signature="7665:7717" placeholder="select numbe..." />
+            <marker date="1521093953890" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
+            <marker date="1521093953890" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
+            <marker date="1521093953890" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
+            <marker date="1521093953890" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/zhangting.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="460" max-vertical-offset="720">
-          <caret line="23" column="117" selection-start-line="23" selection-start-column="117" selection-end-line="23" selection-end-column="117" />
-          <folding>
-            <element signature="e#164#181#0#HTML" expanded="true" />
-            <element signature="e#637#654#0#HTML" expanded="true" />
-            <element signature="e#904#922#0#HTML" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.5773672" vertical-offset="0" max-vertical-offset="866">
+          <caret line="25" column="68" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.824581" vertical-offset="10202" max-vertical-offset="11120">
-          <caret line="547" column="28" selection-start-line="547" selection-start-column="28" selection-end-line="547" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.48554912" vertical-offset="0" max-vertical-offset="10940">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
-            <marker date="1521023991565" expanded="true" signature="3328:3352" placeholder="SELECT * FRO..STOCK_CODE..." />
-            <marker date="1521023991565" expanded="true" signature="5279:5386" placeholder="select date,..." />
-            <marker date="1521023991565" expanded="true" signature="6082:6129" placeholder="select COUNT..moment_hours..." />
-            <marker date="1521023991565" expanded="true" signature="6621:6709" placeholder="select date,..." />
-            <marker date="1521023991565" expanded="true" signature="13828:13923" placeholder="SELECT datet..." />
-            <marker date="1521023991565" expanded="true" signature="14043:14078" placeholder="SELECT COUNT..futures_min..." />
-            <marker date="1521023991565" expanded="true" signature="14180:14264" placeholder="SELECT datet..." />
+            <marker date="1521095000121" expanded="true" signature="3303:3327" placeholder="SELECT * FRO..STOCK_CODE..." />
+            <marker date="1521095000121" expanded="true" signature="5254:5361" placeholder="select date,..." />
+            <marker date="1521095000121" expanded="true" signature="6057:6104" placeholder="select COUNT..moment_hours..." />
+            <marker date="1521095000121" expanded="true" signature="6596:6684" placeholder="select date,..." />
+            <marker date="1521095000121" expanded="true" signature="13803:13898" placeholder="SELECT datet..." />
+            <marker date="1521095000121" expanded="true" signature="14018:14053" placeholder="SELECT COUNT..futures_min..." />
+            <marker date="1521095000121" expanded="true" signature="14155:14239" placeholder="SELECT datet..." />
           </folding>
         </state>
       </provider>

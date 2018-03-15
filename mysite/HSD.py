@@ -429,7 +429,7 @@ class Limit_up:
         if os.path.isfile('log\\dict_data.txt'):
             times = time.localtime(os.path.getmtime('log\\dict_data.txt'))
             this_t=time.localtime()
-            if this_t.tm_mday == times.tm_mday and ((times.tm_hour<=9 and this_t.tm_hour<15 and times.tm_min<=15) or (times.tm_hour>=15)):
+            if this_t.tm_mday == times.tm_mday and (1502>int(str(this_t[3])+str(this_t[4]))>901 or times.tm_hour>=15):
                 self.this_up = True
         self.codes = []
         try:
@@ -451,17 +451,15 @@ class Limit_up:
     def getData(self):
         '''获取指定股票的开盘收盘数据，返回格式：
         dict{'code':[2.46, 2.54, 2.48, 2.41, 2.36, 2.34, 2.33, 2.35, 2.35, 2.47, 2.47, 2.38, 2.27, 2.29, 2.29, 2.29, 2.29, 2.19],...}'''
+
         with open('log\\dict_data.txt') as f:
-            dict_data=f.read()
-            dict_data=json.loads(dict_data)
+            dict_data=json.loads(f.read())
+        with open('log\\dict_name.txt') as f:
+            dict_name=json.loads(f.read())
         if self.this_up:
-            with open('log\\dict_name.txt') as f:
-                dict_name=f.read()
-                dict_name=json.loads(dict_name)
             return dict_data,dict_name
 
         codes=self.codes
-        dict_name={}
         dict_data1={}
         for code1 in codes:
             try:
@@ -473,18 +471,28 @@ class Limit_up:
                         i[1],              # 中文名称
                         float(i[5]),       # 开盘价
                         float(i[3]),       # 收盘价
+                        i[30][:8],             # 时间20180314
                         ] for i in html
                 ]
+                last_date=dict_data.get('last_date')
                 for ht in html:
                     d = dict_data.get(ht[0])
                     if d and len(d)>=16:
-                        dict_data[ht[0]]=d[-16:]+[ht[2],ht[3]]
-                        dict_name[ht[0]]=ht[1]
+                        if last_date==ht[4]:
+                            dict_data[ht[0]][-2:]=[ht[2],ht[3]]
+                        else:
+                            dict_data[ht[0]]=d[-16:]+[ht[2],ht[3]]
+                            dict_name[ht[0]]=ht[1]
                     elif d:
-                        dict_data1[ht[0]]=d+[ht[2],ht[3]]
+                        if last_date==ht[4]:
+                            dict_data1[ht[0]][-2:]=[ht[2],ht[3]]
+                        else:
+                            dict_data1[ht[0]]=d+[ht[2],ht[3]]
                     else:
                         dict_data1[ht[0]]=[ht[2],ht[3]]
-            except:
+                else:
+                    dict_data['last_date']=ht[4]
+            except Exception as exc:
                 continue
         with open('log\\dict_data.txt','w') as f:
             # 合并2个字典并保存
@@ -499,7 +507,7 @@ class Limit_up:
         if os.path.isfile('log\\jtzt_gp.txt'):
             times = time.localtime(os.path.getmtime('log\\jtzt_gp.txt'))
             this_t=time.localtime()
-            if this_t.tm_mday == times.tm_mday and (times.tm_hour>=3 or times.tm_hour<9):
+            if this_t.tm_mday == times.tm_mday and (times.tm_hour>=15 or times.tm_hour<9):
                 with open('log\\jtzt_gp.txt','r') as f:
                     jtzt=f.read()
                     jtzt=json.loads(jtzt)
@@ -509,7 +517,10 @@ class Limit_up:
         #while 1:
         stock_up = []
         for code in codes:
-            html = requests.get('http://qt.gtimg.cn/q=%s' % code).text
+            try:
+                html = requests.get('http://qt.gtimg.cn/q=%s' % code).text
+            except:
+                continue
             html = html.replace('\n', '').split(';')
             html = [i.split('~') for i in html[:-1]]
             html = [i for i in html if 0 < float(i[3])]
@@ -562,10 +573,11 @@ class Limit_up:
 
 
         for code in codes:
-            if not data.get(code):
+            data2=data.get(code)
+            if not data2 or len(data2)!=18:
                 continue
             for i in mx.keys():
-                r=mx[i].predict([data[code]])[0]
+                r=mx[i].predict([data[code]])
                 if r==1:
                     jyzt.append(code)
                     #mx_n[i].append(code)

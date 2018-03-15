@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-import pymysql, json, urllib, h5py
+import json, urllib, h5py
 import numpy as np
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket,require_websocket
@@ -88,7 +88,7 @@ def stockData(rq):
     if not data:
         '''
         conn = get_conn('stockDate')
-        #conn = pymysql.connect(db='stockDate', user='root', passwd='123')
+        #conn = pymysql.connect(db='', user='', passwd='')
         cur = conn.cursor()
         cur.execute('select date,open,close,low,high from transaction_data WHERE code="%s" ORDER BY DATE' % code)
         data = np.array(cur.fetchall())
@@ -96,7 +96,7 @@ def stockData(rq):
         data[:, 0] = [i.strftime('%Y/%m/%d') for i in data[:, 0]]
         data=data.tolist()
         '''
-        h5 = h5py.File(r'D:\tools\Tools\stock_data.hdf5', 'r') #r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5'
+        h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r') #r'D:\tools\Tools\stock_data.hdf5'
         data1 = h5['stock/' + code + '.day'][:].tolist()
         data = []
         for i in range(len(data1)):
@@ -500,21 +500,12 @@ def getkline(rq):
         }
         return HttpResponse(json.dumps(data),content_type="application/json")
     else:
-        #这段是时间到时的即时请求点数据（一个点数据）
-        #表示请求一个点数据
-        #if types == "1min": #1分钟线即时数据
-        #data=GetRealTimeData() #一个点数据
-        #return HttpResponse(json.dumps(data),content_type="application/json")
-        # else: #其他分钟类型
-        #     data=GetRealTimeData() #一个点数据
-        #     return HttpResponse(json.dumps(data),content_type="application/json")
-
         if rq.is_websocket():
             tcp=HSD.get_tcp()
             poller = zmq.Poller()
             ctx1 = Context()
             sub_socket = ctx1.socket(zmq.SUB)
-            sub_socket.connect(f'tcp://{tcp}:6868')
+            sub_socket.connect('tcp://{}:6868'.format(tcp))
             sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, '')
             poller.register(sub_socket, zmq.POLLIN)
             for message in rq.websocket:
@@ -539,10 +530,10 @@ def zhangting(rq,t):
         return render(rq,'zhangting.html',{'zt_today':zt})
     if t == 'tomorrow':
         zt_tomorrow = ZT.yanzen()
-        print(zt_tomorrow)
-        for i in range(len(zt_tomorrow)):
-            zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
-            zt_tomorrow[i][2]=['★' for j in range(zt_tomorrow[i][2])]
+        if zt_tomorrow:
+            for i in range(len(zt_tomorrow)):
+                zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
+                zt_tomorrow[i][2]=range(zt_tomorrow[i][2])#['★' for j in range(zt_tomorrow[i][2])]
         return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow})
 
     return redirect('index')
