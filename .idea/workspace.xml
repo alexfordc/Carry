@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/HSD.py" afterPath="$PROJECT_DIR$/mysite/HSD.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tongji.html" afterPath="$PROJECT_DIR$/templates/tongji.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/zhangting.html" afterPath="$PROJECT_DIR$/templates/zhangting.html" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +18,10 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Carry$data_38.coverage" NAME="data_38 Coverage Results" MODIFIED="1520931501782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../EveryDay" />
+    <SUITE FILE_PATH="coverage/Carry$Mytensorflow.coverage" NAME="Mytensorflow Coverage Results" MODIFIED="1521117274927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../EveryDay" />
     <SUITE FILE_PATH="coverage/Carry$Macd.coverage" NAME="Macd Coverage Results" MODIFIED="1512983522525" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月11日" />
     <SUITE FILE_PATH="coverage/Carry$get_min.coverage" NAME="get_min Coverage Results" MODIFIED="1513138848938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月13日" />
+    <SUITE FILE_PATH="coverage/Carry$read_new_HSI.coverage" NAME="read_new_HSI Coverage Results" MODIFIED="1521429950442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../2018-3-19" />
     <SUITE FILE_PATH="coverage/Carry$this_get_min.coverage" NAME="this_get_min Coverage Results" MODIFIED="1513218888585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月14日" />
     <SUITE FILE_PATH="coverage/Carry$data_37.coverage" NAME="data_37 Coverage Results" MODIFIED="1520476437204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../2018-3-8" />
   </component>
@@ -39,64 +39,7 @@
     <favorites_list name="Carry" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysite/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48554912" vertical-offset="0" max-vertical-offset="10940">
-              <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-                <marker date="1521095000121" expanded="true" signature="3303:3327" placeholder="SELECT * FRO..STOCK_CODE..." />
-                <marker date="1521095000121" expanded="true" signature="5254:5361" placeholder="select date,..." />
-                <marker date="1521095000121" expanded="true" signature="6057:6104" placeholder="select COUNT..moment_hours..." />
-                <marker date="1521095000121" expanded="true" signature="6596:6684" placeholder="select date,..." />
-                <marker date="1521095000121" expanded="true" signature="13803:13898" placeholder="SELECT datet..." />
-                <marker date="1521095000121" expanded="true" signature="14018:14053" placeholder="SELECT COUNT..futures_min..." />
-                <marker date="1521095000121" expanded="true" signature="14155:14239" placeholder="SELECT datet..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="11058" max-vertical-offset="11940">
-              <caret line="432" column="35" selection-start-line="432" selection-start-column="35" selection-end-line="432" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <marker date="1521093953890" expanded="true" signature="7665:7717" placeholder="select numbe..." />
-                <marker date="1521093953890" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
-                <marker date="1521093953890" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
-                <marker date="1521093953890" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
-                <marker date="1521093953890" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="form.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="400">
-              <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Carry/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="860">
-              <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -156,9 +99,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../Tools/2017年12月13日/get_min.py" />
-        <option value="$PROJECT_DIR$/../../Tools/2017年12月13日/test1.py" />
-        <option value="$PROJECT_DIR$/../../Tools/2017年12月14日/this_get_min.py" />
         <option value="$PROJECT_DIR$/templates/dinamic_market.html" />
         <option value="$PROJECT_DIR$/templates/stock_min.html" />
         <option value="$PROJECT_DIR$/templates/stockDatas.html" />
@@ -194,7 +134,6 @@
         <option value="$PROJECT_DIR$/mysite/models.py" />
         <option value="$PROJECT_DIR$/mysite/core.py" />
         <option value="$PROJECT_DIR$/templates/kline.html" />
-        <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/../spAPI/sub_client.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/data_38.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
@@ -204,9 +143,13 @@
         <option value="$PROJECT_DIR$/../../EveryDay/test_models.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/ztyc.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/templates/zhangting.html" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/../../EveryDay/xunlian.py" />
+        <option value="$PROJECT_DIR$/../../EveryDay/Mytensorflow.py" />
+        <option value="$PROJECT_DIR$/../../2018-3-19/read_new_HSI.py" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/templates/tongji.html" />
       </list>
     </option>
   </component>
@@ -253,108 +196,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mysite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mysite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templatetags" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -365,7 +206,7 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../demo/Carry" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EveryDay/demo" />
     <property name="nodejs_interpreter_path" value="D:/ProgramFiles/nodejs/node" />
     <property name="js-jscs-nodeInterpreter" value="D:\ProgramFiles\nodejs\node.exe" />
     <property name="recentsLimit" value="5" />
@@ -380,45 +221,7 @@
       <console-settings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.data_38">
-    <configuration default="false" name="Get_weight" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mysite" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Carry" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mysite/Get_weight.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="sub_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mysite" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Carry" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mysite/sub_client.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.read_new_HSI">
     <configuration default="false" name="a (1)" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true" singleton="true" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -473,6 +276,46 @@
       <module name="Carry" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../EveryDay/data_38.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Mytensorflow" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../EveryDay" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Carry" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../EveryDay/Mytensorflow.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="read_new_HSI" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../2018-3-19" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Carry" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../2018-3-19/read_new_HSI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
@@ -715,19 +558,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Django server.Carry" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Get_weight" />
-      <item index="2" class="java.lang.String" itemvalue="Python.sub_client" />
-      <item index="3" class="java.lang.String" itemvalue="Python.a (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.data_37" />
-      <item index="5" class="java.lang.String" itemvalue="Python.data_38" />
+      <item index="1" class="java.lang.String" itemvalue="Python.a (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.data_37" />
+      <item index="3" class="java.lang.String" itemvalue="Python.data_38" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Mytensorflow" />
+      <item index="5" class="java.lang.String" itemvalue="Python.read_new_HSI" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.data_38" />
-        <item index="1" class="java.lang.String" itemvalue="Python.data_37" />
-        <item index="2" class="java.lang.String" itemvalue="Python.a (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.sub_client" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Get_weight" />
+        <item index="0" class="java.lang.String" itemvalue="Python.read_new_HSI" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Mytensorflow" />
+        <item index="2" class="java.lang.String" itemvalue="Python.data_38" />
+        <item index="3" class="java.lang.String" itemvalue="Python.data_37" />
+        <item index="4" class="java.lang.String" itemvalue="Python.a (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -916,7 +759,13 @@
       <option name="project" value="LOCAL" />
       <updated>1521026075778</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="2018-3-15">
+      <created>1521095022621</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1521095022621</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -940,11 +789,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13059701" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10341151" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -959,7 +808,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1482684" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284055" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1008,7 +857,8 @@
     <MESSAGE value="优化功能" />
     <MESSAGE value="统计表更改" />
     <MESSAGE value="2018-3-14" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-3-14" />
+    <MESSAGE value="2018-3-15" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-3-15" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1023,41 +873,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/css/tipsy.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/modernizr-1.7.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/flexslider.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/jcarousel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/mosaic.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/css3-mediaqueries.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -1310,36 +1125,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7852194" vertical-offset="0" max-vertical-offset="2380">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Carry/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="860">
-          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="100" max-vertical-offset="400">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../EveryDay/test_models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.2513967" vertical-offset="1365" max-vertical-offset="3640">
           <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1347,9 +1136,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.5028902" vertical-offset="300" max-vertical-offset="2160">
           <caret line="80" column="42" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1357,7 +1143,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42203987" vertical-offset="0" max-vertical-offset="960">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1365,7 +1150,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.586605" vertical-offset="1140" max-vertical-offset="4360">
           <caret line="169" column="24" selection-start-line="169" selection-start-column="24" selection-end-line="169" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1373,22 +1157,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.43879908" vertical-offset="3180" max-vertical-offset="4280">
           <caret line="178" column="108" selection-start-line="178" selection-start-column="108" selection-end-line="178" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="11058" max-vertical-offset="11940">
-          <caret line="432" column="35" selection-start-line="432" selection-start-column="35" selection-end-line="432" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1521093953890" expanded="true" signature="7665:7717" placeholder="select numbe..." />
-            <marker date="1521093953890" expanded="true" signature="7735:7834" placeholder="select id,tr..account_info..." />
-            <marker date="1521093953890" expanded="true" signature="7860:8135" placeholder="select F.`da..." />
-            <marker date="1521093953890" expanded="true" signature="8157:8226" placeholder="SELECT id,tr..account_info..." />
-            <marker date="1521093953890" expanded="true" signature="8248:8310" placeholder="select bazaa..stock_code..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1396,23 +1164,88 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5773672" vertical-offset="0" max-vertical-offset="866">
           <caret line="25" column="68" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Carry/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5586592" vertical-offset="0" max-vertical-offset="895">
+          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11547344" vertical-offset="0" max-vertical-offset="866">
+          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48554912" vertical-offset="0" max-vertical-offset="10940">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+        <state vertical-scroll-proportion="-10.537572" vertical-offset="9835" max-vertical-offset="10940">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ProgramFiles/Anaconda3/Lib/site-packages/tensorflow/python/training/gradient_descent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.93306285" vertical-offset="420" max-vertical-offset="1400">
+          <caret line="53" column="48" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ProgramFiles/Anaconda3/Lib/site-packages/tensorflow/python/platform/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21095334" vertical-offset="1956" max-vertical-offset="2640">
+          <caret line="112" column="4" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/Mytensorflow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6594427" vertical-offset="2474" max-vertical-offset="3340">
+          <caret line="145" column="27" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/xunlian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68111455" vertical-offset="180" max-vertical-offset="1400">
+          <caret line="31" column="21" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-19/read_new_HSI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6332454" vertical-offset="0" max-vertical-offset="1920">
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-41.37931" vertical-offset="0" max-vertical-offset="2420">
+          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <marker date="1521095000121" expanded="true" signature="3303:3327" placeholder="SELECT * FRO..STOCK_CODE..." />
-            <marker date="1521095000121" expanded="true" signature="5254:5361" placeholder="select date,..." />
-            <marker date="1521095000121" expanded="true" signature="6057:6104" placeholder="select COUNT..moment_hours..." />
-            <marker date="1521095000121" expanded="true" signature="6596:6684" placeholder="select date,..." />
-            <marker date="1521095000121" expanded="true" signature="13803:13898" placeholder="SELECT datet..." />
-            <marker date="1521095000121" expanded="true" signature="14018:14053" placeholder="SELECT COUNT..futures_min..." />
-            <marker date="1521095000121" expanded="true" signature="14155:14239" placeholder="SELECT datet..." />
+            <element signature="e#1339#1388#0#HTML" expanded="true" />
+            <element signature="e#1876#1919#0#HTML" expanded="true" />
+            <element signature="e#2076#2125#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4285715" vertical-offset="540" max-vertical-offset="11680">
+          <caret line="90" column="35" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1521433230369" expanded="true" signature="-1:-1" placeholder="select numbe..." />
+            <marker date="1521433230369" expanded="true" signature="-1:-1" placeholder="select id,tr..account_info..." />
+            <marker date="1521433230369" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
+            <marker date="1521433230369" expanded="true" signature="-1:-1" placeholder="SELECT id,tr..account_info..." />
+            <marker date="1521433230369" expanded="true" signature="-1:-1" placeholder="select bazaa..stock_code..." />
           </folding>
         </state>
       </provider>

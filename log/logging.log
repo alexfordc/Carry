@@ -1760,3 +1760,28 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\sklearn\svm\base.py", line 459, in _validate_for_predict
     (n_features, self.shape_fit_[1]))
 ValueError: X.shape[1] = 2 should be equal to 18, the number of features at training time
+exception.py[2018-03-15 15:22:42][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 532, in zhangting
+    zt_tomorrow = ZT.yanzen()
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 565, in yanzen
+    jyzt=json.loads(jyzt)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "D:\ProgramFiles\Anaconda3\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "D:\ProgramFiles\Anaconda3\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+base.py[2018-03-16 10:15:16][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-16 16:58:14][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-19 11:34:42][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-20 10:14:38][WARNING]：Not Found: /favicon.ico

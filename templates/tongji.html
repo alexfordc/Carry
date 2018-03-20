@@ -50,6 +50,26 @@
         </table>
     {% elif results %}
         <table border="1" class="dataframe">
+        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
+        <tr>
+            <th>日期</th>
+      <th>ID</th>
+        <th>赚得金额</th>
+        <th>正向跟单</th>
+        <th>反向跟单</th>
+            <th>下单数量</th><th></th><th></th><th></th><th>名  称</th>
+        </tr>
+        {% for i in huizong %}
+        <tr>
+            <td>{{ i.0 }}</td>
+        <td>{{ i.1 }}</td>
+        <td>{{ i.2|floatformat:1 }}</td>
+        <td>{{ i.3 }}</td>
+        <td>{{ i.4 }}</td>
+        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?datetimes={{ i.0 }}&id={{ i.1 }}">{{ id_name|names:i.1 }}</a></td>
+        </tr>
+        {% endfor %}
+        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
       <th>开仓时间</th>
       <th>单号</th>
@@ -78,25 +98,7 @@
         <td>{{ id_name|names:i.2 }}</td>
     </tr>
         {% endfor %}
-        <tr><th colspan="9" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
-        <tr>
-            <th>日期</th>
-      <th>ID</th>
-        <th>赚得金额</th>
-        <th>正向跟单</th>
-        <th>反向跟单</th>
-            <th>下单数量</th><th></th><th></th><th></th><th>名  称</th>
-        </tr>
-        {% for i in huizong %}
-        <tr>
-            <td>{{ i.0 }}</td>
-        <td>{{ i.1 }}</td>
-        <td>{{ i.2|floatformat:1 }}</td>
-        <td>{{ i.3 }}</td>
-        <td>{{ i.4 }}</td>
-        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td>{{ id_name|names:i.1 }}</td>
-        </tr>
-        {% endfor %}
+
         </table>
     {% else %}
         <h3 style="color:green;">暂无数据</h3>
