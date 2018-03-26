@@ -120,7 +120,7 @@ def get_data(url=None):
     com = re.compile('contribution="([+|-]*\d+)".*?<name>.*?</name><cname>(.*?)</cname></stock>')
     s = re.findall(com, req)
     rq = str(datetime.datetime.now())[:11]
-    ti = re.findall('datetime="(.*?)"current', req)[0][-8:]
+    ti = re.findall('datetime="(.*?)"current', req)[0][-10:]
     s1 = rq + ti  # 时间
     # print(s)
     result = [(int(i[0]), i[1].replace('\'', '').replace('A', '')) for i in s if i[0] != '0']
@@ -196,7 +196,7 @@ def read_changes(url='http://qt.gtimg.cn/q'):
         data = data.replace('\n', '').split(';')[:-1]
         for d in data:
             da = d.split('=')
-            cod = da[0][-7:] if 'hk' in da[0] else da[0][-8:]
+            cod = da[0][-7:] if 'hk' in da[0] else da[0][-10:]
             res = da[1].split('~')
             result[cod] = [float(res[3]), float(res[4]), float(res[32])]
         else:
@@ -576,3 +576,150 @@ class Limit_up:
         jyzt = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt]
 
         return jyzt  # mx_n
+
+
+class Zbjs(object):
+    def get_data(self,dates):
+        conn=get_conn('stock_data')
+        cur=conn.cursor()
+        sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}'".format(dates)
+        cur.execute(sql)
+        da=cur.fetchall()
+        #df.columns=['date','open','high','low','close','vol']
+        conn.close()
+        return da
+
+
+
+    def macd2(self,da,ma=6,short=13,long=27):
+        # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
+        dc=[]
+        co=0
+        for i in range(len(da)):
+            dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':da[i][0],'open':da[i][1],'close':da[i][4]})
+            if i == 1:
+                ac = da[i - 1][4]
+                this_c = da[i][4]
+                dc[i]['ema_short'] = ac + (this_c - ac) * 2 / 13
+                dc[i]['ema_long'] = ac + (this_c - ac) * 2 / 27
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i]['diff'] * 2 / 10
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+                co=1 if dc[i]['macd']>=0 else 0
+            elif i>1:
+                n_c = da[i][4]
+                dc[i]['ema_short'] = dc[i-1]['ema_short'] * 11 / 13 + n_c * 2 / 13
+                dc[i]['ema_long'] = dc[i-1]['ema_long'] * 25 / 27 + n_c * 2 / 27
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i-1]['dea'] * 8 / 10 + dc[i]['diff'] * 2 / 10
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+
+            if i>=ma-1:
+                dc[i]['ma']=sum(da[i-j][4] for j in range(i-ma+1,i+1))/ma # 移动平均值
+                dc[i]['var']=sum((da[i-j][4]-dc[i]['ma'])**2 for j in range(i-ma+1,i+1))/ma # 方差
+                dc[i]['std']=np.sqrt(dc[i]['var']) # 标准差
+
+            if i>=ma-1:
+                if dc[i]['macd']>=0 and dc[i-1]['macd']<0:
+                    co+=1
+                elif dc[i]['macd']<0 and dc[i-1]['macd']>=0:
+                    co+=1
+                dc[i]['reg']=co
+                price=dc[i]['close']-dc[i]['open']
+                std=dc[i]['std']
+                if std:
+                    dc[i]['mul']=round(price/std,2)
+
+        data=None
+        while 1:
+            data=yield dc[-1:]
+            ind=len(dc)
+            if isinstance(data,tuple):
+                dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'close':data[4]})
+
+                dc[ind]['ema_short'] = dc[ind-1]['ema_short'] * 11 / 13 + dc[ind]['close'] * 2 / 13  # 当日EMA(12)
+                dc[ind]['ema_long'] = dc[ind-1]['ema_long'] * 25 / 27 + dc[ind]['close'] * 2 / 27  # 当日EMA(26)
+                dc[ind]['diff'] = dc[ind]['ema_short'] - dc[ind]['ema_long']
+                dc[ind]['dea'] = dc[ind-1]['dea'] * 8 / 10 + dc[ind]['diff'] * 2 / 10
+                dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
+
+                dc[ind]['ma']=sum(dc[ind-j]['close'] for j in range(ma))/ma # 移动平均值
+                dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind]['ma'])**2 for j in range(ma))/ma # 方差
+                dc[ind]['std']=np.sqrt(dc[ind]['var']) # 标准差
+
+                if dc[ind]['macd']>=0 and dc[ind-1]['macd']<0:
+                    co+=1
+                elif dc[ind]['macd']<0 and dc[ind-1]['macd']>=0:
+                    co+=1
+                dc[ind]['reg']=co
+                price=dc[ind]['close']-dc[ind]['open']
+                std=dc[ind]['std']
+                if std:
+                    dc[ind]['mul']=round(price/std,2)
+
+    def main2(self,_ma,_dates, _ts):
+        res={}
+        is_d=0
+        is_k=0
+        i=0
+        send_nan=0
+        while i<_ts:
+            dates=datetime.datetime.strptime(_dates,'%Y-%m-%d')+datetime.timedelta(days=i)
+            if dates>datetime.datetime.now():
+                break
+            dates=str(dates)[:10]
+            da=self.get_data(dates)
+            if len(da)<1:
+                i+=1
+                send_nan+=1
+                continue
+
+            res[dates]={'duo':0,'kong':0,'mony':0,'datetimes':[],'dy':0,'xy':0}
+            str_time1=None if is_d==0 else str_time1
+            str_time2=None if is_k==0 else str_time2
+            jg_d=0 if is_d==0 else jg_d
+            jg_k=0 if is_k==0 else jg_k
+            i+=1
+            if i-send_nan==1:
+                data2=self.macd2(da=da[:_ma+1],ma=_ma)
+                dt2=data2.send(None)
+                da=da[_ma+1:]
+            for df2 in da:
+                # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
+                dt2=data2.send(df2)[0]
+                datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['ma'],dt2['std'],dt2['reg'],dt2['mul']
+                if mul>1.5:
+                    res[dates]['dy']+=1
+                if mul<-1.5:
+                    res[dates]['xy']+=1
+                if clo>mas and mul>1.5 and is_d==0:
+                    jg_d=clo
+                    str_time1=str(datetimes)
+                    is_d=1
+                if clo<mas and mul<-1.5 and is_k==0:
+                    jg_k=clo
+                    str_time2=str(datetimes)
+                    is_k=-1
+                if is_d==1 and macd<0 and clo<mas:
+                    res[dates]['duo']+=1
+                    res[dates]['mony']+=(clo-jg_d)
+                    res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
+                    is_d=0
+                if is_k==-1 and macd>0 and clo>mas:
+                    res[dates]['kong']+=1
+                    res[dates]['mony']+=(jg_k-clo)
+                    res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
+                    is_k=0
+
+        # for i in res:
+        #     print('标准差大于收盘价1.5倍：',res[i]['dy'],'\t','标准差小于收盘价1.5倍：',res[i]['xy'],)
+        #     print('多单：',res[i]['duo'],'  ','空单：',res[i]['kong'],'  ','盈亏：',res[i]['mony'],'  ','详细：%s'%i,res[i]['datetimes'])
+        #     print()
+        return res
+
+# if __name__=='__main__':
+#     ma=60 # 设置均线时长
+#     dates='2018-03-19' # 开始时间，这天必须有数据
+#     ts=5 # 要测试的天数
+#     main2(_ma=ma, _dates=dates, _ts=ts)
+

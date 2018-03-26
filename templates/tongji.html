@@ -24,7 +24,7 @@
 {#            {% endif %}#}
 {#        </h3>#}
     {% if herys %}
-{#        {{ herys|safe }}</div>#}
+{#        {{ herys|safe }}#}
          <table border="1" class="dataframe">
     <tr>
       <th>ID号</th>
@@ -103,6 +103,7 @@
     {% else %}
         <h3 style="color:green;">暂无数据</h3>
     {% endif %}
+    </div>
     <script type="text/javascript">
         $('table').css({'width': '900px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
         $("tr:odd").css({"background-color": "#cccc33"});

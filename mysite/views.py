@@ -241,7 +241,8 @@ def is_time(data):
 def getData(rq):
     '''ajax请求数据'''
     record_from(rq)
-    # print(rq.META)
+    types=rq.GET.get('types')
+    print('types.......................................',types)
     if rq.method == 'GET' and rq.is_ajax():
         data = read_from_cache('weight')
         if is_time(data):
@@ -280,15 +281,22 @@ def getData(rq):
                               'color': "green"
                           }
                       }
-                  } if d[0] < 0 else d[0],
-                  "ZD": d[1],
-                  "NM": d[-1]
+                  } if d[0] < 0 else d[0]
               } for d in data]
+
         counts = 0
         for i in data:
             counts += i[0]
         # logging.info(counts)
-        dt = {"jinJian": dt, 'times': times[10:], 'counts': counts}
+        dt = {"jinJian": dt, 'times': times[10:], 'counts': counts}  # "dt1":dt1,
+        if types=='2':
+            conn=HSD.get_conn('stock_data')
+            cur=conn.cursor()
+            cur.execute('SELECT TIME,SUM(number) FROM weight GROUP BY TIME')
+            wei_sum=cur.fetchall()
+            conn.close()
+            dt1=[{'ZX':str(i[0])[10:],'ZY':i[1]} for i in wei_sum]
+            dt['dt1']=dt1
         return JsonResponse(dt, safe=False)
 
 
@@ -537,5 +545,16 @@ def zhangting(rq,t):
         return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow})
 
     return redirect('index')
+
+def moni(rq):
+    dates=rq.POST.get('dates')
+    ts=rq.POST.get('ts')
+    ma=60
+    if dates and ts:
+        res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts})
+    dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
+    ts=6
+    return render(rq,'moni.html',{'dates':dates,'ts':ts})
 
 

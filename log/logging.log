@@ -1785,3 +1785,300 @@ base.py[2018-03-16 10:15:16][WARNING]：Not Found: /favicon.ico
 base.py[2018-03-16 16:58:14][WARNING]：Not Found: /favicon.ico
 base.py[2018-03-19 11:34:42][WARNING]：Not Found: /favicon.ico
 base.py[2018-03-20 10:14:38][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-21 16:40:56][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-21 17:56:29][WARNING]：Not Found: /zt2
+views.py[2018-03-21 18:20:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-21 18:20:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-21 18:53:20][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-03-21 19:04:12][ERROR]：Internal Server Error: /getData/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 291, in getData
+    dt1=[{i}]
+UnboundLocalError: local variable 'i' referenced before assignment
+views.py[2018-03-21 19:13:02][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-03-21 19:13:09][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-22 10:42:01][WARNING]：Not Found: /favicon.ico
+views.py[2018-03-22 10:57:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-22 11:05:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-22 11:23:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-22 11:25:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-03-26 14:19:32][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-03-26 14:19:34][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-26 15:04:52][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=ts)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 678, in main2
+    while i<_ts:
+TypeError: '<' not supported between instances of 'int' and 'str'
+exception.py[2018-03-26 15:05:41][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 680, in main2
+    df=get_data(dates)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 117, in get_data
+    req = requests.get(url).text
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 305, in prepare
+    self.prepare_url(url, params)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 379, in prepare_url
+    raise MissingSchema(error)
+requests.exceptions.MissingSchema: Invalid URL '2018-03-21': No schema supplied. Perhaps you meant http://2018-03-21?
+exception.py[2018-03-26 15:06:02][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 680, in main2
+    df=get_data(dates)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 117, in get_data
+    req = requests.get(url).text
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 305, in prepare
+    self.prepare_url(url, params)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 379, in prepare_url
+    raise MissingSchema(error)
+requests.exceptions.MissingSchema: Invalid URL '2018-03-21': No schema supplied. Perhaps you meant http://2018-03-21?
+exception.py[2018-03-26 15:08:05][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 680, in main2
+    df=get_data(dates)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 117, in get_data
+    req = requests.get(url).text
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 305, in prepare
+    self.prepare_url(url, params)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 379, in prepare_url
+    raise MissingSchema(error)
+requests.exceptions.MissingSchema: Invalid URL '2018-03-19': No schema supplied. Perhaps you meant http://2018-03-19?
+exception.py[2018-03-26 15:09:00][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 555, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 680, in main2
+    df=get_data(dates)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 117, in get_data
+    req = requests.get(url).text
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 494, in request
+    prep = self.prepare_request(req)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\sessions.py", line 437, in prepare_request
+    hooks=merge_hooks(request.hooks, self.hooks),
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 305, in prepare
+    self.prepare_url(url, params)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\models.py", line 379, in prepare_url
+    raise MissingSchema(error)
+requests.exceptions.MissingSchema: Invalid URL '2018-03-19': No schema supplied. Perhaps you meant http://2018-03-19?
+csrf.py[2018-03-26 15:26:44][WARNING]：Forbidden (CSRF token missing or incorrect.): /moni/
+base.py[2018-03-26 15:39:36][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-26 16:23:04][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 692, in main2
+    dt2=data2.send(None)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 641, in macd2
+    dc[i]['mul']=round(price/std,1)
+ZeroDivisionError: float division by zero
+exception.py[2018-03-26 16:24:48][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 701, in main2
+    datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['mas'],dt2['std'],dt2['reg'],dt2['mul']
+TypeError: list indices must be integers or slices, not str
+exception.py[2018-03-26 16:26:11][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 701, in main2
+    datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['mas'],dt2['std'],dt2['reg'],dt2['mul']
+TypeError: list indices must be integers or slices, not str
+exception.py[2018-03-26 16:27:44][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 701, in main2
+    dt2=dict(dt2)
+ValueError: dictionary update sequence element #0 has length 13; 2 is required
+exception.py[2018-03-26 16:28:13][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 702, in main2
+    datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['mas'],dt2['std'],dt2['reg'],dt2['mul']
+TypeError: list indices must be integers or slices, not str
+exception.py[2018-03-26 16:28:54][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 700, in main2
+    dt2=dict(data2.send(df2))
+ValueError: dictionary update sequence element #0 has length 13; 2 is required
+exception.py[2018-03-26 16:30:01][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 701, in main2
+    datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['mas'],dt2['std'],dt2['reg'],dt2['mul']
+KeyError: 'mas'
+exception.py[2018-03-26 16:43:02][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 700, in main2
+    dt2=data2.send(df2)[0]
+UnboundLocalError: local variable 'data2' referenced before assignment
+exception.py[2018-03-26 16:45:21][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 554, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 693, in main2
+    dt2=data2.send(df2)[0]
+UnboundLocalError: local variable 'data2' referenced before assignment

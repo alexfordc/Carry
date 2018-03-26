@@ -161,6 +161,7 @@ var $container = $('#works-container');
                     	<ul>
                         	<li class="no-border-top"><a href="{% url 'stockDatas' %}">股票信息</a></li>
                             <li class="no-border-top"><a href="{% url 'zhutu' %}">柱状图</a></li>
+                            <li class="no-border-top"><a href="{% url 'zhutu2' %}">柱状图（点数折线图）</a></li>
                             <li class="no-border-top"><a href="{% url 'zhexian' %}">折线图</a></li>
                             <li class="no-border-top"><a href="{% url 'zhexian' %}?s=1">折线图（慢而细）</a></li>
                             <li class="no-border-top"><a href="{% url 'kline' %}">K线图</a></li>
@@ -169,7 +170,7 @@ var $container = $('#works-container');
                     <li><a href="{% url 'index' %}">资料</a>
                     <ul>
                         <li class="no-border-top"><a href="{% url 'tongji' %}">交易统计表</a></li>
-
+                        <li class="no-border-top"><a href="{% url 'moni' %}">模拟测试表</a></li>
                     </ul>
                     </li>
                     <li><a href="{% url 'index' %}">产品介绍</a>

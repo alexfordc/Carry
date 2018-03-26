@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% block title %}模拟表{% endblock %}
+{% block center_cen %}
+    <div align="center">
+    <form action="" method="POST">
+        {% csrf_token %}
+        开始时间：<input type="date" name="dates" value="{{ dates }}"/>&nbsp;&nbsp;
+        交易天数：<input type="number" name="ts" value="{{ ts }}"/>&nbsp;
+                <input type="submit" />
+    </form><br/>
+    <table border="1">
+    {% for k,v in res.items %}
+        {% if forloop.first %}
+            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>详细数据</th></tr>
+        {% endif %}
+        <tr><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td>
+            <td>
+                <table border="1"  style="width:650px;">
+                    {% for i in v.datetimes %}
+                        {% if forloop.first %}<tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>{% endif %}
+                        <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td></tr>
+                        {% endfor %}
+                </table>
+            </td></tr>
+    {% endfor %}
+    </table>
+    </div>
+    <script type="text/javascript">
+        $('div>table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
+        $("tr:odd").css({"background-color": "#cccc33"});
+        $('tr:even').css({'background-color': '#00cc00'});
+        $('tr').css({'height': '30'});
+    </script>
+{% endblock %}
