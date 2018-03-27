@@ -640,7 +640,8 @@ class Zbjs(object):
 
             if i>=ma-1:
                 dc[i]['ma']=sum(da[i-j][4] for j in range(ma))/ma # 移动平均值 i-ma+1,i+1
-                dc[i]['var']=sum((da[i-j][4]-dc[i]['ma'])**2 for j in range(ma))/ma # 方差 i-ma+1,i+1
+                std_pj=sum(da[i-j][4]-da[i-j][1] for j in range(ma))/ma
+                dc[i]['var']=sum((da[i-j][4]-da[i-j][1]-std_pj)**2 for j in range(ma))/ma  # 方差 i-ma+1,i+1
                 dc[i]['std']=float(np.sqrt(dc[i]['var'])) # 标准差
 
             if i>=ma-1:
@@ -668,8 +669,10 @@ class Zbjs(object):
                 dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
 
                 dc[ind]['ma']=sum(dc[ind-j]['close'] for j in range(ma))/ma # 移动平均值
-                dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind]['ma'])**2 for j in range(ma))/ma # 方差
+                std_pj=sum(dc[ind-j]['close']-dc[ind-j]['open']  for j in range(ma))/ma
+                dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind-j]['open']-std_pj)**2 for j in range(ma))/ma # 方差
                 dc[ind]['std']=float(np.sqrt(dc[ind]['var'])) # 标准差
+
 
                 if dc[ind]['macd']>=0 and dc[ind-1]['macd']<0:
                     co+=1
@@ -774,18 +777,18 @@ class Zbjs(object):
                     jg_k=clo
                     str_time2=str(datetimes)
                     is_k=-1
-                if is_d==1 and macd<0 and clo<mas:
+                if is_d==1 and macd<0 or (is_d==1 and datetimes.minute==45):
                     res[dates]['duo']+=1
                     res[dates]['mony']+=(clo-jg_d)
                     res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
                     is_d=0
-                if is_k==-1 and macd>0 and clo>mas:
+                if is_k==-1 and macd>0 or (is_d==-1 and datetimes.minute==45):
                     res[dates]['kong']+=1
                     res[dates]['mony']+=(jg_k-clo)
                     res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
                     is_k=0
-        if dt3:
-            self.macd_to_sql(dt3) # 存储到数据库
+        # if dt3:
+        #     self.macd_to_sql(dt3) # 存储到数据库
 
         return res
 

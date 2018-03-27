@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/HSD.py" afterPath="$PROJECT_DIR$/mysite/HSD.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/kline.draw.js" afterPath="$PROJECT_DIR$/static/js/kline.draw.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
@@ -135,19 +133,19 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5680751" vertical-offset="11716" max-vertical-offset="16060">
-              <caret line="610" column="26" selection-start-line="610" selection-start-column="26" selection-end-line="610" selection-end-column="26" />
+            <state vertical-scroll-proportion="-0.07981221" vertical-offset="14368" max-vertical-offset="16120">
+              <caret line="715" column="24" selection-start-line="715" selection-start-column="24" selection-end-line="715" selection-end-column="24" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1522143804736" expanded="true" signature="6145:6197" placeholder="select numbe..." />
-                <marker date="1522143804736" expanded="true" signature="6215:6314" placeholder="select id,tr..account_info..." />
-                <marker date="1522143804736" expanded="true" signature="6340:6615" placeholder="select F.`da..." />
-                <marker date="1522143804736" expanded="true" signature="6637:6706" placeholder="SELECT id,tr..account_info..." />
-                <marker date="1522143804736" expanded="true" signature="6728:6790" placeholder="select bazaa..stock_code..." />
-                <marker date="1522143804736" expanded="true" signature="24693:24808" placeholder="SELECT datet..." />
-                <marker date="1522143804736" expanded="true" signature="25254:25370" placeholder="insert into ..." />
-                <marker date="1522143804736" expanded="true" signature="29728:29898" placeholder="SELECT a.dat..futures_min..." />
-                <marker date="1522143804736" expanded="true" signature="29805:29871" placeholder="SELECT DATET..futures_min..." />
+                <marker date="1522152317666" expanded="true" signature="6145:6197" placeholder="select numbe..." />
+                <marker date="1522152317666" expanded="true" signature="6215:6314" placeholder="select id,tr..account_info..." />
+                <marker date="1522152317666" expanded="true" signature="6340:6615" placeholder="select F.`da..." />
+                <marker date="1522152317666" expanded="true" signature="6637:6706" placeholder="SELECT id,tr..account_info..." />
+                <marker date="1522152317666" expanded="true" signature="6728:6790" placeholder="select bazaa..stock_code..." />
+                <marker date="1522152317666" expanded="true" signature="24693:24808" placeholder="SELECT datet..." />
+                <marker date="1522152317666" expanded="true" signature="25254:25370" placeholder="insert into ..." />
+                <marker date="1522152317666" expanded="true" signature="29907:30077" placeholder="SELECT a.dat..futures_min..." />
+                <marker date="1522152317666" expanded="true" signature="29984:30050" placeholder="SELECT DATET..futures_min..." />
               </folding>
             </state>
           </provider>
@@ -975,7 +973,13 @@
       <option name="project" value="LOCAL" />
       <updated>1522065031079</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="2018-3-27">
+      <created>1522145197720</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1522145197720</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1005,6 +1009,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09808102" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1014,7 +1019,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1043,7 +1047,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="减少一行" />
     <MESSAGE value="加入gitignore" />
     <MESSAGE value="增加K线图，完善了之前的一些功能" />
     <MESSAGE value="交易量数据正确处理" />
@@ -1068,7 +1071,8 @@
     <MESSAGE value="2018-3-15" />
     <MESSAGE value="2018-3-20" />
     <MESSAGE value="2018-3-26" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-3-26" />
+    <MESSAGE value="2018-3-27" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-3-27" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1465,19 +1469,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5680751" vertical-offset="11716" max-vertical-offset="16060">
-          <caret line="610" column="26" selection-start-line="610" selection-start-column="26" selection-end-line="610" selection-end-column="26" />
+        <state vertical-scroll-proportion="-0.07981221" vertical-offset="14368" max-vertical-offset="16120">
+          <caret line="715" column="24" selection-start-line="715" selection-start-column="24" selection-end-line="715" selection-end-column="24" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <marker date="1522143804736" expanded="true" signature="6145:6197" placeholder="select numbe..." />
-            <marker date="1522143804736" expanded="true" signature="6215:6314" placeholder="select id,tr..account_info..." />
-            <marker date="1522143804736" expanded="true" signature="6340:6615" placeholder="select F.`da..." />
-            <marker date="1522143804736" expanded="true" signature="6637:6706" placeholder="SELECT id,tr..account_info..." />
-            <marker date="1522143804736" expanded="true" signature="6728:6790" placeholder="select bazaa..stock_code..." />
-            <marker date="1522143804736" expanded="true" signature="24693:24808" placeholder="SELECT datet..." />
-            <marker date="1522143804736" expanded="true" signature="25254:25370" placeholder="insert into ..." />
-            <marker date="1522143804736" expanded="true" signature="29728:29898" placeholder="SELECT a.dat..futures_min..." />
-            <marker date="1522143804736" expanded="true" signature="29805:29871" placeholder="SELECT DATET..futures_min..." />
+            <marker date="1522152317666" expanded="true" signature="6145:6197" placeholder="select numbe..." />
+            <marker date="1522152317666" expanded="true" signature="6215:6314" placeholder="select id,tr..account_info..." />
+            <marker date="1522152317666" expanded="true" signature="6340:6615" placeholder="select F.`da..." />
+            <marker date="1522152317666" expanded="true" signature="6637:6706" placeholder="SELECT id,tr..account_info..." />
+            <marker date="1522152317666" expanded="true" signature="6728:6790" placeholder="select bazaa..stock_code..." />
+            <marker date="1522152317666" expanded="true" signature="24693:24808" placeholder="SELECT datet..." />
+            <marker date="1522152317666" expanded="true" signature="25254:25370" placeholder="insert into ..." />
+            <marker date="1522152317666" expanded="true" signature="29907:30077" placeholder="SELECT a.dat..futures_min..." />
+            <marker date="1522152317666" expanded="true" signature="29984:30050" placeholder="SELECT DATET..futures_min..." />
           </folding>
         </state>
       </provider>
