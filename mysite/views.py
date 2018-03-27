@@ -472,6 +472,8 @@ def GetRealTimeData(times,price,amount):
 def getkline(rq):
     size=rq.POST.get('size')
     size=int(size) if size else 0
+    zbjs=HSD.Zbjs().main()
+    zs=zbjs.send(None)
     #types=rq.POST.get('type') # 获取分钟类型
     if rq.is_ajax() and size>0:
         lists=getList(int(time.time()))
@@ -523,8 +525,17 @@ def getkline(rq):
                     objArr = cache.get("objArr")
                     times,opens,high,low,close,vol=objArr if objArr else (ticker.TickerTime*1000,ticker.Price,ticker.Price,ticker.Price,ticker.Price,ticker.Qty)
                     GetRealTimeData(ticker.TickerTime,ticker.Price,ticker.Qty)
+                    #print(times,opens,high,low,close)
+                    zs=0
+                    if time.localtime(this_time).tm_min!=time.localtime(times/1000).tm_min:
+                        tm=time.localtime(times/1000)
+                        tm=datetime.datetime(tm.tm_year,tm.tm_mon,tm.tm_mday,tm.tm_hour,tm.tm_min)
+                        zs=zbjs.send((tm,opens,high,low,close))
+                        zs=zs[tm]['datetimes'][-1][1] if zs[tm]['datetimes'] else 0
+                    #print('zs.............',zs)
                     if this_time*1000!=times:
-                        data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol)}
+
+                        data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs)}
                         data=json.dumps(data).encode()
                         rq.websocket.send(data)
                     #time.sleep(1)

@@ -33,15 +33,15 @@ WEIGHT = ('腾讯控股', '汇丰控股', '建设银行', '友邦保险', '工�
 COLORS = ['#FF0000', '#00FF00', '#003300', '#FF6600', '#99CC33', '#663366', '#009966', '#0000FF', '#FF0080', '#00FFFF']
 
 # 代码：名称
-CODE_NAME = {'hk00700': '腾讯控股', 'hk00005': '汇丰控股', 'hk00939': '建设银行', 'hk01299': '友邦保险', 'hk01398': '工 商银行',
+CODE_NAME = {'hk00700': '腾讯控股', 'hk00005': '汇丰控股', 'hk00939': '建设银行', 'hk01299': '友邦保险', 'hk01398': '工商银行',
              'hk00941': '中国移动', 'hk02318': '中国平安', 'hk03988': '中国银行', 'hk00388': '香港交易所', 'hk00001': '长和',
-             'hk00883': '中国海洋石油', 'hk01113': '长实集团', 'hk02628': '中国人寿', 'hk00016': '新鸿基地 产', 'hk00027': '银河娱乐',
+             'hk00883': '中国海洋石油', 'hk01113': '长实集团', 'hk02628': '中国人寿', 'hk00016': '新鸿基地产', 'hk00027': '银河娱乐',
              'hk00386': '中国石油化工股份', 'hk00002': '中电控股', 'hk00011': '恒生银行', 'hk00823': '领展房产基金', 'hk02388': '中银香港',
              'hk00175': '吉利汽车', 'hk00003': '香港中华煤气', 'hk00857': '中国石油股份', 'hk02018': '瑞声科技', 'hk01928': '金沙中国有限公司',
              'hk00688': '中国海外发展', 'hk02007': '碧桂园', 'hk02382': '舜宇光学科技', 'hk00006': '电能实业', 'hk00288': '万洲国际',
              'hk01109': '华润置地', 'hk01088': '中国神华', 'hk00066': '港铁公司', 'hk00762': '中国联通', 'hk02319': '蒙牛乳业',
              'hk00017': '新世界发展', 'hk00267': '中信股份', 'hk01997': '九龙仓置业', 'hk00012': '恒基地产', 'hk01044': '恒安国际',
-             'hk03328': '交通银行', 'hk00023': '东亚银行', 'hk00083': '信和置业', 'hk01038': '长江基建集团', 'hk00151': '中国旺 旺',
+             'hk03328': '交通银行', 'hk00023': '东亚银行', 'hk00083': '信和置业', 'hk01038': '长江基建集团', 'hk00151': '中国旺旺',
              'hk00019': '太古股份公司', 'hk00101': '恒隆地产', 'hk00004': '九龙仓集团', 'hk00836': '华润电力', 'hk00992': '联想集团',
              'hk00144': '招商局港口'}
 # 代码：股本，亿
@@ -589,35 +589,59 @@ class Zbjs(object):
         conn.close()
         return da
 
+    def macd_to_sql(self,data):
+        '''
+        :param data: macd data
+        :return: None,Write data to the database
+        '''
+        conn=get_conn('stock_data')
+        cur=conn.cursor()
+        cur.execute('TRUNCATE TABLE macd')
+        conn.commit()
+        sql="insert into macd(code,date,open,close,diff,dea,macd,ma,var,std,reg,mul) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        count=0
+        for d in data:
+            #print('HSIc1',str(d['datetimes']),d['open'],d['close'],d['diff'],d['dea'],d['macd'],d['ma'],d['var'],d['std'],d['reg'],d['mul'])
+            try:
+                cur.execute(sql,('HSIc1',str(d['datetimes']),d['open'],d['close'],d['diff'],d['dea'],d['macd'],d['ma'],d['var'],d['std'],d['reg'],d['mul']))
+                count+=1
+                if not count%10000:
+                    conn.commit()
+            except Exception as exc:
+                print(exc)
+                continue
+        conn.commit()
+        conn.close()
 
-
-    def macd2(self,da,ma=6,short=13,long=27):
+    def macd2(self,da,ma=60,short=12,long=26,phyd=9):
         # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
         dc=[]
         co=0
         for i in range(len(da)):
             dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':da[i][0],'open':da[i][1],'close':da[i][4]})
-            if i == 1:
+            if i == long-1:
                 ac = da[i - 1][4]
                 this_c = da[i][4]
-                dc[i]['ema_short'] = ac + (this_c - ac) * 2 / 13
-                dc[i]['ema_long'] = ac + (this_c - ac) * 2 / 27
+                dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
+                dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
+                #dc[i]['ema_short'] = sum([(short-j)*da[i-j][4] for j in range(short)])/(3*short)
+                #dc[i]['ema_long'] = sum([(long-j)*da[i-j][4] for j in range(long)])/(3*long)
                 dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
-                dc[i]['dea'] = dc[i]['diff'] * 2 / 10
+                dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
                 dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
                 co=1 if dc[i]['macd']>=0 else 0
-            elif i>1:
+            elif i>long-1:
                 n_c = da[i][4]
-                dc[i]['ema_short'] = dc[i-1]['ema_short'] * 11 / 13 + n_c * 2 / 13
-                dc[i]['ema_long'] = dc[i-1]['ema_long'] * 25 / 27 + n_c * 2 / 27
+                dc[i]['ema_short'] = dc[i-1]['ema_short'] * (short-2) / short + n_c * 2 / short
+                dc[i]['ema_long'] = dc[i-1]['ema_long'] * (long-2) / long + n_c * 2 / long
                 dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
-                dc[i]['dea'] = dc[i-1]['dea'] * 8 / 10 + dc[i]['diff'] * 2 / 10
+                dc[i]['dea'] = dc[i-1]['dea'] * (phyd-2) / phyd + dc[i]['diff'] * 2 / phyd
                 dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
 
             if i>=ma-1:
-                dc[i]['ma']=sum(da[i-j][4] for j in range(i-ma+1,i+1))/ma # 移动平均值
-                dc[i]['var']=sum((da[i-j][4]-dc[i]['ma'])**2 for j in range(i-ma+1,i+1))/ma # 方差
-                dc[i]['std']=np.sqrt(dc[i]['var']) # 标准差
+                dc[i]['ma']=sum(da[i-j][4] for j in range(ma))/ma # 移动平均值 i-ma+1,i+1
+                dc[i]['var']=sum((da[i-j][4]-dc[i]['ma'])**2 for j in range(ma))/ma # 方差 i-ma+1,i+1
+                dc[i]['std']=float(np.sqrt(dc[i]['var'])) # 标准差
 
             if i>=ma-1:
                 if dc[i]['macd']>=0 and dc[i-1]['macd']<0:
@@ -632,20 +656,20 @@ class Zbjs(object):
 
         data=None
         while 1:
-            data=yield dc[-1:]
+            data=yield dc
             ind=len(dc)
             if isinstance(data,tuple):
                 dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'close':data[4]})
 
-                dc[ind]['ema_short'] = dc[ind-1]['ema_short'] * 11 / 13 + dc[ind]['close'] * 2 / 13  # 当日EMA(12)
-                dc[ind]['ema_long'] = dc[ind-1]['ema_long'] * 25 / 27 + dc[ind]['close'] * 2 / 27  # 当日EMA(26)
+                dc[ind]['ema_short'] = dc[ind-1]['ema_short'] * (short-2) / short + dc[ind]['close'] * 2 / short  # 当日EMA(12)
+                dc[ind]['ema_long'] = dc[ind-1]['ema_long'] * (long-2) / long + dc[ind]['close'] * 2 / long  # 当日EMA(26)
                 dc[ind]['diff'] = dc[ind]['ema_short'] - dc[ind]['ema_long']
-                dc[ind]['dea'] = dc[ind-1]['dea'] * 8 / 10 + dc[ind]['diff'] * 2 / 10
+                dc[ind]['dea'] = dc[ind-1]['dea'] * (phyd-2) / phyd + dc[ind]['diff'] * 2 / phyd
                 dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
 
                 dc[ind]['ma']=sum(dc[ind-j]['close'] for j in range(ma))/ma # 移动平均值
                 dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind]['ma'])**2 for j in range(ma))/ma # 方差
-                dc[ind]['std']=np.sqrt(dc[ind]['var']) # 标准差
+                dc[ind]['std']=float(np.sqrt(dc[ind]['var'])) # 标准差
 
                 if dc[ind]['macd']>=0 and dc[ind-1]['macd']<0:
                     co+=1
@@ -657,12 +681,61 @@ class Zbjs(object):
                 if std:
                     dc[ind]['mul']=round(price/std,2)
 
+    def main(self,_ma=60):
+        res={}
+        is_d=0
+        is_k=0
+        conn=get_conn('carry_investment')
+        cur=conn.cursor()
+        cur.execute('SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(_ma))
+        data=cur.fetchall()
+        data2=self.macd2(da=data,ma=_ma)
+        dt2=data2.send(None)
+        data=None
+        while 1:
+            data=yield res
+            dates=data[0]
+            res[dates]={'duo':0,'kong':0,'mony':0,'datetimes':[],'dy':0,'xy':0}
+            str_time1=None if is_d==0 else str_time1
+            str_time2=None if is_k==0 else str_time2
+            jg_d=0 if is_d==0 else jg_d
+            jg_k=0 if is_k==0 else jg_k
+
+            # data格式：(datetime.datetime(2018, 3, 26, 20, 19), 30606.0, 30610.0, 30592.0, 30597.0)
+            dt2=data2.send(data)[-1:][0]
+
+            datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['ma'],dt2['std'],dt2['reg'],dt2['mul']
+            if mul>1.5:
+                res[dates]['dy']+=1
+            if mul<-1.5:
+                res[dates]['xy']+=1
+            if clo>mas and mul>1.5 and is_d==0:
+                jg_d=clo
+                res[dates]['datetimes'].append([str_time1,1])
+                is_d=1
+            if clo<mas and mul<-1.5 and is_k==0:
+                jg_k=clo
+                res[dates]['datetimes'].append([str_time1,-1])
+                is_k=-1
+            if is_d==1 and macd<0 and clo<mas:
+                res[dates]['duo']+=1
+                res[dates]['mony']+=(clo-jg_d)
+                res[dates]['datetimes'].append([str_time1,2])
+                is_d=0
+            if is_k==-1 and macd>0 and clo>mas:
+                res[dates]['kong']+=1
+                res[dates]['mony']+=(jg_k-clo)
+                res[dates]['datetimes'].append([str_time1,-2])
+                is_k=0
+
+
     def main2(self,_ma,_dates, _ts):
         res={}
         is_d=0
         is_k=0
         i=0
         send_nan=0
+        dt3=None
         while i<_ts:
             dates=datetime.datetime.strptime(_dates,'%Y-%m-%d')+datetime.timedelta(days=i)
             if dates>datetime.datetime.now():
@@ -681,12 +754,13 @@ class Zbjs(object):
             jg_k=0 if is_k==0 else jg_k
             i+=1
             if i-send_nan==1:
-                data2=self.macd2(da=da[:_ma+1],ma=_ma)
+                data2=self.macd2(da=da[:_ma],ma=_ma)
                 dt2=data2.send(None)
-                da=da[_ma+1:]
+                da=da[_ma:]
             for df2 in da:
                 # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
-                dt2=data2.send(df2)[0]
+                dt3=data2.send(df2)
+                dt2=dt3[-1:][0]
                 datetimes,clo,macd,mas,std,reg,mul=dt2['datetimes'],dt2['close'],dt2['macd'],dt2['ma'],dt2['std'],dt2['reg'],dt2['mul']
                 if mul>1.5:
                     res[dates]['dy']+=1
@@ -710,11 +784,9 @@ class Zbjs(object):
                     res[dates]['mony']+=(jg_k-clo)
                     res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
                     is_k=0
+        if dt3:
+            self.macd_to_sql(dt3) # 存储到数据库
 
-        # for i in res:
-        #     print('标准差大于收盘价1.5倍：',res[i]['dy'],'\t','标准差小于收盘价1.5倍：',res[i]['xy'],)
-        #     print('多单：',res[i]['duo'],'  ','空单：',res[i]['kong'],'  ','盈亏：',res[i]['mony'],'  ','详细：%s'%i,res[i]['datetimes'])
-        #     print()
         return res
 
 # if __name__=='__main__':
