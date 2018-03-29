@@ -11,7 +11,6 @@ var GLOBAL_VAR = {
     TimeOutId: null,
     button_down: false,
     init: false,
-    zs:0,
     url: klineUrl //"http://localhost:8083/KlineTest/GetKline"//表示请求的数据地址
 };
 GLOBAL_VAR.periodMap = {
@@ -4513,18 +4512,8 @@ var DarkTheme = create_class(Theme);
 //黑色背景
 DarkTheme.prototype.__construct = function() {
     this._colors = [];
-
-    if(GLOBAL_VAR.zs==1){
-        this._colors[Theme.Color.Positive] = "#ffff00";
-        this._colors[Theme.Color.Negative] = "#ffff00";
-    }else if(GLOBAL_VAR.zs==-1){
-        this._colors[Theme.Color.Positive] = "#0000ff";
-        this._colors[Theme.Color.Negative] = "#0000ff";
-    }else{
-        this._colors[Theme.Color.Positive] = "#FF3232";//涨价 红色
-        this._colors[Theme.Color.Negative] = "#00ba53";//跌价 绿色
-    }
-
+    this._colors[Theme.Color.Positive] = "#FF3232";//涨价 红色
+    this._colors[Theme.Color.Negative] = "#00ba53";//跌价 绿色
     this._colors[Theme.Color.PositiveDark] = "#004718";
     this._colors[Theme.Color.NegativeDark] = "#3b0e08";
     this._colors[Theme.Color.Unchanged] = "#fff";
@@ -4560,18 +4549,8 @@ var LightTheme = create_class(Theme);
 //白色背景
 LightTheme.prototype.__construct = function() {
     this._colors = [];
-
-    if(GLOBAL_VAR.zs==1){
-        this._colors[Theme.Color.Positive] = "#ffff00";
-        this._colors[Theme.Color.Negative] = "#ffff00";
-    }else if(GLOBAL_VAR.zs==-1){
-        this._colors[Theme.Color.Positive] = "#0000ff";
-        this._colors[Theme.Color.Negative] = "#0000ff";
-    }else{
-        this._colors[Theme.Color.Positive] = "#db5542";//红色，涨价
-        this._colors[Theme.Color.Negative] = "#53b37b";//绿色，跌价
-    }
-
+    this._colors[Theme.Color.Positive] = "#db5542";//红色，涨价
+    this._colors[Theme.Color.Negative] = "#53b37b";//绿色，跌价
     this._colors[Theme.Color.PositiveDark] = "#66d293";
     this._colors[Theme.Color.NegativeDark] = "#ffadaa";
     this._colors[Theme.Color.Unchanged] = "#fff";
@@ -8908,16 +8887,26 @@ var RequestData = function(showLoading) {
         }
     }));
 };
+//关闭操作提示框
+function closeCzts(){
+    document.getElementById("czts_div").style.display="none";
+}
+//打开操作提示框
+function openCzts(){
+    document.getElementById("czts_div").style.display="";
+};
+
 function websockets(showLoading){
     if (showLoading == true) {
         $("#chart_loading").addClass("activated")
     }
-    var socket = new WebSocket("ws://"+window.location.host+"/getkline");
+    var socket = new WebSocket("ws://"+window.location.host+"/getwebsocket");  //+window.location.host
     socket.onopen = function(){
         socket.send("1");
     };
     socket.onmessage = function(e){
         var d= $.parseJSON(e.data);
+        //alert(window.location.host);
         //d=d.split(", ");
         //for(var i=0;i<d.length;i++)
         //    d[i]=parseInt(d[i]);
@@ -8931,17 +8920,21 @@ function websockets(showLoading){
                 //kline.setTopTickers(json.datas.topTickers);
                 //GLOBAL_VAR.KLineData = eval(json.datas.data);
                 GLOBAL_VAR.KLineData = [[parseInt(d.times),parseInt(d.opens),parseInt(d.high),parseInt(d.low),parseInt(d.close),parseInt(d.vol)]];
-                GLOBAL_VAR.zs=parseInt(d.zs);
+
                 var myDate=new Date();
                 var times=myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds();
                 if (d.zs=='1'){
-                    alert("做多"+"  "+times);
+                    openCzts();
+                    document.getElementById("czts_span").innerHTML="<span style='color:red;font-size:28px;'>做多  </span><br/>"+times;
                 }else if(d.zs=='2'){
-                    alert("平多仓"+"  "+times);
+                    openCzts();
+                    document.getElementById("czts_span").innerHTML="<span style='color:green;font-size:28px;'>平多仓  </span><br/>"+times;
                 }else if(d.zs=='-1'){
-                    alert("做空"+"  "+times);
+                    openCzts();
+                    document.getElementById("czts_span").innerHTML="<span style='color:green;font-size:28px;'>做空  </span><br/>"+times;
                 }else if(d.zs=='-2'){
-                    alert("平空仓"+"  "+times);
+                    openCzts();
+                    document.getElementById("czts_span").innerHTML="<span style='color:red;font-size:28px;'>平空仓  </span><br/>"+times;
                 }
                 if (!GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData)) {
                         //GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);

@@ -2334,3 +2334,1903 @@ Traceback (most recent call last):
   File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 783, in main2
     res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
 TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+base.py[2018-03-28 08:46:18][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-28 08:51:22][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 565, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 788, in main2
+    res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+exception.py[2018-03-28 08:52:11][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 565, in moni
+    res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\HSD.py", line 788, in main2
+    res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+views.py[2018-03-28 09:43:17][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-03-28 09:44:07][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-28 10:08:33][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-28 11:46:16][WARNING]：Not Found: /favicon.ico
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:02:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:08:08][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:09:35][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 16:19:20][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 523, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+base.py[2018-03-28 17:04:16][WARNING]：Not Found: /favicon.ico
+base.py[2018-03-28 17:04:16][WARNING]：Not Found: /favicon.ico
+wsgi.py[2018-03-28 17:06:28][INFO]：200 GET / (127.0.0.1) 197.55ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/style.css (127.0.0.1) 143.38ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/flexslider.css (127.0.0.1) 0.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/jcarousel.css (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/mosaic.css (127.0.0.1) 1.03ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/prettyPhoto.css (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/css/tipsy.css (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/css3-mediaqueries.js (127.0.0.1) 0.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/modernizr-1.7.min.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/ddsmoothmenu.js (127.0.0.1) 2.04ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/jquery.flexslider-min.js (127.0.0.1) 1.97ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/jquery.jcarousel.min.js (127.0.0.1) 2.03ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/jquery-1.7.1.min.js (127.0.0.1) 2.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/mosaic.1.0.1.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/jquery.prettyPhoto.js (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/jquery.tipsy.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/js/grayscale-image.js (127.0.0.1) 1.03ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-facebook-32x32.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-twitter-32x32.png (127.0.0.1) 3.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-dribbble-32x32.png (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-linkedin-32x32.png (127.0.0.1) 2.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-flickr-32x32.png (127.0.0.1) 2.03ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-wordpress-32x32.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-skype-32x32.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/social-rss-32x32.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/featured/featured-1.jpg (127.0.0.1) 4.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/featured/featured-2.jpg (127.0.0.1) 10.03ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/featured/featured-3.jpg (127.0.0.1) 6.02ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/work/work-1.jpg (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/work/work-2.jpg (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/work/work-3.jpg (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/work/work-4.jpg (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/header-bg.jpg (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/logo.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/load-indicator.gif (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/hover-magnify.png (127.0.0.1) 2.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/footer-bg.jpg (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/down.gif (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/kairui.ico (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:28][INFO]：200 GET /static/images/bg_control_nav.png (127.0.0.1) 0.98ms
+wsgi.py[2018-03-28 17:06:30][INFO]：200 GET /kline/ (127.0.0.1) 3.04ms
+web.py[2018-03-28 17:06:30][INFO]：200 GET /static/css/kline.css (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:30][INFO]：200 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:06:31][INFO]：200 GET /static/js/kline.assistant.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:31][INFO]：200 GET /static/js/jquery.mousewheel.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:31][INFO]：200 GET /static/js/kline.draw.js (127.0.0.1) 4.01ms
+web.py[2018-03-28 17:06:31][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 0.00ms
+web.py[2018-03-28 17:06:31][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 17:06:31][INFO]：200 POST /getkline (127.0.0.1) 74.20ms
+wsgi.py[2018-03-28 17:06:31][INFO]：302 GET /getkline (127.0.0.1) 35.09ms
+web.py[2018-03-28 17:06:31][WARNING]：404 GET /favicon.ico (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:06:39][WARNING]：404 GET /static/css/js/img/dropup_w.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 17:06:48][INFO]：200 GET / (127.0.0.1) 7.02ms
+wsgi.py[2018-03-28 17:06:52][INFO]：200 GET /stockDatas/ (127.0.0.1) 1234.17ms
+wsgi.py[2018-03-28 17:06:55][INFO]：200 GET /tj/ (127.0.0.1) 50.53ms
+wsgi.py[2018-03-28 17:06:57][INFO]：200 GET /moni/ (127.0.0.1) 5.01ms
+wsgi.py[2018-03-28 17:07:01][INFO]：200 POST /moni/ (127.0.0.1) 1233.61ms
+web.py[2018-03-28 17:07:01][INFO]：200 GET /static/css/style.css (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:07:01][INFO]：200 GET /static/css/flexslider.css (127.0.0.1) 3.01ms
+wsgi.py[2018-03-28 17:07:12][INFO]：200 GET / (127.0.0.1) 7.02ms
+wsgi.py[2018-03-28 17:07:14][INFO]：200 GET /ts/ (127.0.0.1) 9.03ms
+wsgi.py[2018-03-28 17:07:16][INFO]：200 GET / (127.0.0.1) 6.04ms
+views.py[2018-03-28 17:07:20][ERROR]：Object of type 'datetime' is not JSON serializable
+wsgi.py[2018-03-28 17:07:20][INFO]：200 GET /zx/ (127.0.0.1) 270.98ms
+web.py[2018-03-28 17:07:20][INFO]：200 GET /static/js/echarts.min.js (127.0.0.1) 8.02ms
+wsgi.py[2018-03-28 17:07:24][INFO]：200 GET / (127.0.0.1) 5.04ms
+web.py[2018-03-28 17:07:24][INFO]：200 GET /static/css/style.css (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:07:24][INFO]：200 GET /static/css/flexslider.css (127.0.0.1) 2.01ms
+wsgi.py[2018-03-28 17:07:26][INFO]：200 GET /kline/ (127.0.0.1) 2.01ms
+web.py[2018-03-28 17:07:26][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 0.00ms
+web.py[2018-03-28 17:07:26][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 17:07:26][INFO]：200 POST /getkline (127.0.0.1) 165.43ms
+wsgi.py[2018-03-28 17:07:26][INFO]：302 GET /getkline (127.0.0.1) 35.09ms
+wsgi.py[2018-03-28 17:07:40][INFO]：200 GET / (127.0.0.1) 6.02ms
+web.py[2018-03-28 17:07:55][INFO]：200 GET /static/images/prev-horizontal.png (127.0.0.1) 4.01ms
+web.py[2018-03-28 17:07:55][INFO]：200 GET /static/images/next-horizontal.png (127.0.0.1) 4.01ms
+wsgi.py[2018-03-28 17:09:22][INFO]：200 GET / (127.0.0.1) 6.04ms
+web.py[2018-03-28 17:09:22][INFO]：200 GET /static/css/style.css (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 17:09:24][INFO]：200 GET /kline/ (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:09:25][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 17:09:25][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 17:09:25][INFO]：200 POST /getkline (127.0.0.1) 66.17ms
+wsgi.py[2018-03-28 17:09:25][INFO]：302 GET /getkline (127.0.0.1) 44.16ms
+wsgi.py[2018-03-28 17:09:26][INFO]：200 GET / (127.0.0.1) 6.02ms
+web.py[2018-03-28 17:09:26][INFO]：200 GET /static/css/prettyPhoto.css (127.0.0.1) 3.01ms
+web.py[2018-03-28 17:09:26][INFO]：200 GET /static/css/tipsy.css (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 17:09:28][INFO]：200 GET / (127.0.0.1) 5.01ms
+wsgi.py[2018-03-28 17:16:07][INFO]：200 GET /kline/ (127.0.0.1) 3.04ms
+web.py[2018-03-28 17:16:07][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 0.50ms
+web.py[2018-03-28 17:16:07][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.50ms
+wsgi.py[2018-03-28 17:16:07][INFO]：200 POST /getkline (127.0.0.1) 147.42ms
+wsgi.py[2018-03-28 17:16:07][INFO]：302 GET /getkline (127.0.0.1) 36.10ms
+exception.py[2018-03-28 17:17:15][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 524, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 17:18:15][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 524, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 17:25:02][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 524, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+exception.py[2018-03-28 17:26:02][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\2018年3月5日\Carry\mysite\views.py", line 524, in getkline
+    ticker=sub_socket.recv_pyobj()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 492, in recv_pyobj
+    return self._deserialize(msg, pickle.loads)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\zmq\sugar\socket.py", line 419, in _deserialize
+    return load(recvd)
+ModuleNotFoundError: No module named 'spapi'
+wsgi.py[2018-03-28 18:14:18][INFO]：200 GET /kline/ (127.0.0.1) 210.56ms
+web.py[2018-03-28 18:14:18][INFO]：304 GET /static/css/kline.css (127.0.0.1) 139.40ms
+web.py[2018-03-28 18:14:18][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:14:18][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:14:18][INFO]：304 GET /static/js/kline.draw.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:14:18][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:14:18][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:14:18][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:14:18][INFO]：200 POST /getkline (127.0.0.1) 86.92ms
+wsgi.py[2018-03-28 18:14:18][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:15:19][INFO]：200 POST /getkline (127.0.0.1) 180.60ms
+wsgi.py[2018-03-28 18:17:58][INFO]：200 GET /kline/ (127.0.0.1) 203.54ms
+web.py[2018-03-28 18:17:58][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 179.48ms
+web.py[2018-03-28 18:17:58][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:17:58][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:17:58][INFO]：304 GET /static/js/kline.draw.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:17:58][INFO]：304 GET /static/css/kline.css (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:17:58][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:17:58][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:17:58][INFO]：200 POST /getkline (127.0.0.1) 71.19ms
+wsgi.py[2018-03-28 18:17:58][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:18:59][INFO]：200 POST /getkline (127.0.0.1) 161.43ms
+wsgi.py[2018-03-28 18:18:59][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:21:15][INFO]：200 GET /kline/ (127.0.0.1) 208.55ms
+web.py[2018-03-28 18:21:15][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 145.39ms
+web.py[2018-03-28 18:21:15][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:21:15][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 1.01ms
+web.py[2018-03-28 18:21:15][INFO]：304 GET /static/js/kline.draw.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:21:15][INFO]：200 GET /static/css/kline.css (127.0.0.1) 2.00ms
+web.py[2018-03-28 18:21:15][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:21:15][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:21:15][INFO]：200 POST /getkline (127.0.0.1) 81.22ms
+wsgi.py[2018-03-28 18:21:15][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:21:56][INFO]：200 GET /kline/ (127.0.0.1) 192.51ms
+web.py[2018-03-28 18:21:56][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 136.39ms
+web.py[2018-03-28 18:21:56][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 1.98ms
+web.py[2018-03-28 18:21:56][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:21:56][INFO]：304 GET /static/js/kline.draw.js (127.0.0.1) 2.03ms
+web.py[2018-03-28 18:21:56][INFO]：200 GET /static/css/kline.css (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:21:56][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:21:56][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:21:56][INFO]：200 POST /getkline (127.0.0.1) 78.68ms
+wsgi.py[2018-03-28 18:21:56][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:22:57][INFO]：200 POST /getkline (127.0.0.1) 182.92ms
+wsgi.py[2018-03-28 18:22:57][WARNING]：400 GET /getkline (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:27:15][INFO]：200 GET /kline/ (127.0.0.1) 191.51ms
+web.py[2018-03-28 18:27:16][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 203.54ms
+web.py[2018-03-28 18:27:16][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 4.01ms
+web.py[2018-03-28 18:27:16][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:27:16][INFO]：200 GET /static/js/kline.draw.js (127.0.0.1) 6.02ms
+web.py[2018-03-28 18:27:16][INFO]：304 GET /static/css/kline.css (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:27:16][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:27:16][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:27:16][INFO]：200 POST /getkline (127.0.0.1) 72.19ms
+wsgi.py[2018-03-28 18:27:16][INFO]：200 GET / (127.0.0.1) 8.02ms
+wsgi.py[2018-03-28 18:28:35][INFO]：200 POST /getkline (127.0.0.1) 328.87ms
+wsgi.py[2018-03-28 18:28:35][INFO]：200 GET / (127.0.0.1) 24.06ms
+wsgi.py[2018-03-28 18:28:38][INFO]：200 GET /kline/ (127.0.0.1) 3.01ms
+web.py[2018-03-28 18:28:38][INFO]：304 GET /static/css/kline.css (127.0.0.1) 145.39ms
+web.py[2018-03-28 18:28:38][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 0.00ms
+web.py[2018-03-28 18:28:38][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 0.00ms
+web.py[2018-03-28 18:28:38][INFO]：200 GET /static/js/kline.draw.js (127.0.0.1) 3.01ms
+web.py[2018-03-28 18:28:38][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:28:42][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 0.00ms
+web.py[2018-03-28 18:28:42][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:28:42][INFO]：200 POST /getkline (127.0.0.1) 67.18ms
+web.py[2018-03-28 18:28:42][INFO]：101 GET /ws (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:29:36][INFO]：200 GET /kline/ (127.0.0.1) 193.51ms
+web.py[2018-03-28 18:29:36][INFO]：304 GET /static/css/kline.css (127.0.0.1) 152.41ms
+web.py[2018-03-28 18:29:36][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:29:36][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:29:36][INFO]：200 GET /static/js/kline.draw.js (127.0.0.1) 5.01ms
+web.py[2018-03-28 18:29:36][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:29:36][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 2.01ms
+web.py[2018-03-28 18:29:36][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:29:36][INFO]：200 POST /getkline (127.0.0.1) 70.19ms
+web.py[2018-03-28 18:29:36][INFO]：101 GET /ws (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:30:15][INFO]：200 GET /kline/ (127.0.0.1) 204.54ms
+web.py[2018-03-28 18:30:15][INFO]：304 GET /static/css/kline.css (127.0.0.1) 133.38ms
+web.py[2018-03-28 18:30:15][INFO]：304 GET /static/js/jquery-1.11.1.min.js (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:30:15][INFO]：304 GET /static/js/jquery.mousewheel.js (127.0.0.1) 2.04ms
+web.py[2018-03-28 18:30:15][INFO]：304 GET /static/js/kline.assistant.js (127.0.0.1) 0.00ms
+web.py[2018-03-28 18:30:15][INFO]：200 GET /static/js/kline.draw.js (127.0.0.1) 6.02ms
+web.py[2018-03-28 18:30:15][WARNING]：404 GET /static/css/img/dropdown_w.png (127.0.0.1) 1.00ms
+web.py[2018-03-28 18:30:15][WARNING]：404 GET /static/js/img/common/bg_klie.png (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:30:15][INFO]：200 POST /getkline (127.0.0.1) 70.19ms
+web.py[2018-03-28 18:30:15][INFO]：101 GET /ws (127.0.0.1) 0.00ms
+wsgi.py[2018-03-28 18:31:40][INFO]：200 POST /getkline (127.0.0.1) 258.71ms
+web.py[2018-03-28 18:31:40][INFO]：101 GET /ws (127.0.0.1) 1.00ms
+wsgi.py[2018-03-28 18:35:25][INFO]：200 GET / (192.168.2.204) 218.58ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/style.css (192.168.2.204) 141.37ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.02ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/jquery.tipsy.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/featured/featured-2.jpg (192.168.2.204) 9.02ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 4.02ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 0.97ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/kairui.ico (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/down.gif (192.168.2.204) 0.98ms
+web.py[2018-03-28 18:35:25][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:35:34][INFO]：200 GET / (::1) 6.02ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/style.css (::1) 2.01ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/flexslider.css (::1) 2.01ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/jcarousel.css (::1) 0.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/mosaic.css (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/prettyPhoto.css (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/css/tipsy.css (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/jquery-1.7.1.min.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/css3-mediaqueries.js (::1) 0.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/modernizr-1.7.min.js (::1) 0.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/ddsmoothmenu.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/jquery.flexslider-min.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/jquery.prettyPhoto.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/jquery.jcarousel.min.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/mosaic.1.0.1.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/jquery.tipsy.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/js/grayscale-image.js (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-twitter-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-linkedin-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-dribbble-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-facebook-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-wordpress-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-skype-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-rss-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/featured/featured-1.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/featured/featured-2.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/featured/featured-3.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/social-flickr-32x32.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/work/work-1.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/work/work-2.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/work/work-3.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/work/work-4.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/header-bg.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/load-indicator.gif (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/logo.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/hover-magnify.png (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/footer-bg.jpg (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/down.gif (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/kairui.ico (::1) 1.00ms
+web.py[2018-03-28 18:35:34][INFO]：200 GET /static/images/bg_control_nav.png (::1) 1.00ms
+wsgi.py[2018-03-28 18:35:44][INFO]：200 GET / (192.168.2.204) 8.02ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/style.css (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.01ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:35:44][INFO]：200 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:38:36][INFO]：200 GET / (192.168.2.204) 226.38ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/style.css (192.168.2.204) 143.41ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 4.01ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.02ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.01ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:38:36][INFO]：200 GET /static/js/grayscale-image.js (192.168.2.204) 2.04ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/featured/featured-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/featured/featured-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/footer-bg.jpg (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/down.gif (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:38:36][INFO]：304 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:38:39][INFO]：200 GET /kline/ (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:38:39][INFO]：200 GET /static/css/kline.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:38:39][INFO]：200 GET /static/js/kline.assistant.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:38:39][INFO]：200 GET /static/js/kline.draw.js (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:38:39][INFO]：200 GET /static/js/jquery.mousewheel.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:38:39][INFO]：200 GET /static/js/jquery-1.11.1.min.js (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:38:39][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:38:39][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:38:39][INFO]：200 POST /getkline (192.168.2.204) 80.24ms
+web.py[2018-03-28 18:38:39][INFO]：101 GET /ws (192.168.2.204) 0.00ms
+wsgi.py[2018-03-28 18:45:08][INFO]：200 GET / (192.168.2.204) 196.52ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/css/style.css (192.168.2.204) 167.45ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:08][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 0.00ms
+wsgi.py[2018-03-28 18:45:11][INFO]：200 GET /kline/ (192.168.2.204) 2.03ms
+web.py[2018-03-28 18:45:11][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:45:11][INFO]：200 GET /static/css/kline.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:11][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:11][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:45:11][INFO]：200 POST /getkline (192.168.2.204) 138.59ms
+base.py[2018-03-28 18:45:11][WARNING]：Not Found: /ws
+wsgi.py[2018-03-28 18:45:11][WARNING]：404 GET /ws (192.168.2.204) 5.01ms
+wsgi.py[2018-03-28 18:45:48][INFO]：200 GET / (192.168.2.204) 6.02ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:45:48][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:46:38][WARNING]：404 GET / (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:46:43][WARNING]：404 GET /admin (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:47:00][INFO]：301 GET /admin (192.168.2.204) 203.61ms
+web.py[2018-03-28 18:47:00][WARNING]：404 GET /admin/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:47:02][WARNING]：404 GET /admin/ (192.168.2.204) 1.04ms
+web.py[2018-03-28 18:48:22][WARNING]：404 GET /admin/ (192.168.2.204) 1.03ms
+wsgi.py[2018-03-28 18:48:25][INFO]：200 GET / (192.168.2.204) 196.52ms
+web.py[2018-03-28 18:48:25][INFO]：200 GET /static/css/style.css (192.168.2.204) 162.43ms
+web.py[2018-03-28 18:48:25][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:48:28][WARNING]：404 GET /stockDatas/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:48:30][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 4.01ms
+wsgi.py[2018-03-28 18:49:13][INFO]：200 GET / (192.168.2.204) 217.58ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 139.37ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/css/mosaic.css (192.168.2.204) 1.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 2.03ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.97ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 4.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/logo.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:13][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 4.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/down.gif (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:49:13][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:49:18][INFO]：302 GET /admin/ (192.168.2.204) 22.09ms
+web.py[2018-03-28 18:49:18][WARNING]：404 GET /admin/login/?next=/admin/ (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:49:22][INFO]：302 GET /admin/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:22][WARNING]：404 GET /admin/login/?next=/admin/ (192.168.2.204) 0.00ms
+wsgi.py[2018-03-28 18:49:27][INFO]：302 GET /admin/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:27][WARNING]：404 GET /admin/login/?next=/admin/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:47][WARNING]：404 GET /admin/ (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:49:49][WARNING]：404 GET /admin/ (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:50:50][INFO]：302 GET /admin/ (192.168.2.204) 198.00ms
+wsgi.py[2018-03-28 18:50:50][INFO]：200 GET /admin/login/?next=/admin/ (192.168.2.204) 83.22ms
+web.py[2018-03-28 18:50:50][INFO]：200 GET /static/admin/css/base.css (192.168.2.204) 145.39ms
+web.py[2018-03-28 18:50:50][INFO]：200 GET /static/admin/css/login.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:50:50][INFO]：200 GET /static/admin/css/fonts.css (192.168.2.204) 2.03ms
+web.py[2018-03-28 18:50:50][INFO]：200 GET /static/admin/fonts/Roboto-Regular-webfont.woff (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:50:50][INFO]：200 GET /static/admin/fonts/Roboto-Light-webfont.woff (192.168.2.204) 3.01ms
+wsgi.py[2018-03-28 18:50:53][INFO]：302 GET /admin/ (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:50:53][INFO]：200 GET /admin/login/?next=/admin/ (192.168.2.204) 11.03ms
+wsgi.py[2018-03-28 18:50:56][INFO]：200 GET / (192.168.2.204) 8.02ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:50:56][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:53:21][INFO]：200 GET / (192.168.2.204) 235.63ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 142.41ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/css/jcarousel.css (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 0.99ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/css/mosaic.css (192.168.2.204) 1.01ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 2.02ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.01ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-facebook-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/featured/featured-1.jpg (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/featured/featured-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/load-indicator.gif (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：304 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:22][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:53:25][INFO]：302 GET /admin/ (192.168.2.204) 7.05ms
+wsgi.py[2018-03-28 18:53:25][INFO]：200 GET /admin/login/?next=/admin/ (192.168.2.204) 65.70ms
+web.py[2018-03-28 18:53:25][INFO]：200 GET /static/admin/css/base.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:53:26][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:56:32][INFO]：200 GET / (192.168.2.204) 226.60ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 139.37ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.03ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/css/mosaic.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.98ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 3.01ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:32][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.03ms
+views.py[2018-03-28 18:56:36][ERROR]：Object of type 'datetime' is not JSON serializable
+wsgi.py[2018-03-28 18:56:36][INFO]：200 GET /zx/ (192.168.2.204) 1325.65ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/js/echarts.min.js (192.168.2.204) 16.04ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:36][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:56:38][INFO]：200 GET / (192.168.2.204) 5.04ms
+web.py[2018-03-28 18:56:38][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 18:56:40][INFO]：200 GET /kline/ (192.168.2.204) 2.00ms
+web.py[2018-03-28 18:56:40][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:40][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 18:56:40][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 18:56:40][WARNING]：404 POST /getkline (192.168.2.204) 0.99ms
+web.py[2018-03-28 18:56:40][INFO]：101 GET /ws (192.168.2.204) 0.00ms
+wsgi.py[2018-03-28 19:08:55][INFO]：200 GET / (192.168.2.204) 237.66ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 143.41ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.99ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/css/flexslider.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/css/jcarousel.css (192.168.2.204) 3.98ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：304 GET /static/css/prettyPhoto.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:08:55][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:08:55][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:55][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/work/work-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/work/work-2.jpg (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/work/work-4.jpg (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:08:56][INFO]：304 GET /static/images/bg_control_nav.png (192.168.2.204) 1.01ms
+wsgi.py[2018-03-28 19:09:01][INFO]：200 GET /kline/ (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:09:01][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:09:01][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:09:01][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:09:01][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:09:01][INFO]：101 GET /ws (192.168.2.204) 1.00ms
+base.py[2018-03-28 19:11:21][WARNING]：Not Found: /ws
+base.py[2018-03-28 19:12:23][WARNING]：Not Found: /ws
+wsgi.py[2018-03-28 19:21:09][INFO]：200 GET / (192.168.2.204) 193.53ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/style.css (192.168.2.204) 148.39ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/jquery.tipsy.js (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/js/grayscale-image.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/featured/featured-2.jpg (192.168.2.204) 6.02ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 6.02ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 5.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/kairui.ico (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:10][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:21:14][INFO]：200 GET /stockDatas/ (192.168.2.204) 1211.03ms
+views.py[2018-03-28 19:21:16][ERROR]：Object of type 'datetime' is not JSON serializable
+wsgi.py[2018-03-28 19:21:16][INFO]：200 GET /zx/ (192.168.2.204) 265.34ms
+web.py[2018-03-28 19:21:16][INFO]：200 GET /static/js/echarts.min.js (192.168.2.204) 9.02ms
+wsgi.py[2018-03-28 19:21:20][INFO]：200 GET /kline/ (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:21:20][INFO]：200 GET /static/css/kline.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:20][INFO]：200 GET /static/js/kline.draw.js (192.168.2.204) 4.01ms
+web.py[2018-03-28 19:21:20][INFO]：200 GET /static/js/kline.assistant.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:20][INFO]：200 GET /static/js/jquery.mousewheel.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:20][INFO]：200 GET /static/js/jquery-1.11.1.min.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /favicon.ico (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /favicon.ico (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:21][WARNING]：404 GET /static/css/js/img/dropup_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:22][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:22][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:23][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:23][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:24][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:24][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:25][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:25][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:26][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:27][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:27][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:28][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:29][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:21:29][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:30][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:21:31][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:32][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:21:33][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:21:33][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:34][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:35][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:21:36][WARNING]：404 POST /getkline (192.168.2.204) 2.06ms
+web.py[2018-03-28 19:21:37][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:21:38][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:39][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:39][WARNING]：404 GET /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:21:40][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:41][WARNING]：404 POST /getkline (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:21:42][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:21:44][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:45][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:21:46][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:47][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:48][WARNING]：404 POST /getkline (192.168.2.204) 0.98ms
+web.py[2018-03-28 19:21:49][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:21:49][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:50][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:51][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:52][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:21:53][WARNING]：404 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:21:54][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:21:55][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:21:56][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:21:57][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:21:58][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:21:59][WARNING]：404 POST /getkline (192.168.2.204) 1.98ms
+web.py[2018-03-28 19:22:00][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:01][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:02][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:02][WARNING]：404 GET /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:22:03][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:04][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:05][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:06][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:07][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:08][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:09][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:10][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:11][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:12][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:13][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:22:14][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:22:15][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:22:16][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:17][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:18][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:19][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:22:20][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:22:21][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:22][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:22:23][WARNING]：404 GET /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:22:23][WARNING]：404 POST /getkline (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:22:24][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:25][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:22:26][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:22:27][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:28][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:29][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:30][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:31][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:22:32][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:22:33][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:22:34][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:35][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:36][WARNING]：404 POST /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:22:37][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:38][WARNING]：404 POST /getkline (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:22:39][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:22:40][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:22:41][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:22:42][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:22:43][WARNING]：404 POST /getkline (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:22:44][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:45][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:46][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:47][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:22:51][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:52][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:53][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:53][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:54][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:55][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:22:56][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:22:57][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+wsgi.py[2018-03-28 19:22:57][INFO]：200 GET / (192.168.2.204) 194.52ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/css/style.css (192.168.2.204) 163.43ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:58][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:22:59][INFO]：200 GET / (192.168.2.204) 10.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 7.02ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/down.gif (192.168.2.204) 5.01ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 2.01ms
+wsgi.py[2018-03-28 19:22:59][INFO]：200 GET / (192.168.2.204) 7.02ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/style.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/tipsy.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/flexslider.css (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-flickr-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-twitter-32x32.png (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-skype-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/social-rss-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/featured/featured-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/featured/featured-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/load-indicator.gif (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/hover-magnify.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/header-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：304 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:22:59][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 2.01ms
+wsgi.py[2018-03-28 19:23:01][INFO]：200 GET /kline/ (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:23:01][INFO]：200 GET /static/css/kline.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:01][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:01][INFO]：200 GET /static/js/jquery.mousewheel.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:01][INFO]：200 GET /static/js/jquery-1.11.1.min.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:01][INFO]：200 GET /static/js/kline.assistant.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:01][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:01][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:01][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:02][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:03][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:23:04][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:05][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:06][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:23:07][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:23:08][WARNING]：404 POST /getkline (192.168.2.204) 1.98ms
+web.py[2018-03-28 19:23:09][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:10][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:11][WARNING]：404 POST /getkline (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:23:12][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:23:13][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:23:14][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:15][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:23:16][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:17][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:23:18][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:23:19][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:23:20][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:21][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:23:22][WARNING]：404 POST /getkline (192.168.2.204) 0.98ms
+web.py[2018-03-28 19:23:23][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:24][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:25][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:26][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:23:27][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:28][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:29][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:30][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:31][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:23:32][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:33][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:34][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:35][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:36][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:37][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:38][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:23:39][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:39][WARNING]：404 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:23:41][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:42][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:23:43][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:44][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:23:45][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:49][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:23:50][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:51][WARNING]：405 POST /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:23:52][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:23:53][INFO]：200 GET / (192.168.2.204) 196.52ms
+web.py[2018-03-28 19:23:53][INFO]：200 GET /static/kairui.ico (192.168.2.204) 136.36ms
+wsgi.py[2018-03-28 19:23:54][INFO]：200 GET / (192.168.2.204) 7.02ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-twitter-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/logo.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:54][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:23:56][INFO]：200 GET /kline/ (192.168.2.204) 2.98ms
+web.py[2018-03-28 19:23:56][INFO]：200 GET /static/css/kline.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:23:56][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:23:56][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:56][WARNING]：405 POST /getkline (192.168.2.204) 0.98ms
+web.py[2018-03-28 19:23:57][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:23:58][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:23:59][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:00][WARNING]：405 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:24:01][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:02][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:03][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:04][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:05][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:06][WARNING]：405 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:24:07][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:24:08][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:09][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:24:10][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:24:11][WARNING]：405 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:24:12][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:13][WARNING]：405 POST /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:24:14][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:15][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:16][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:17][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:18][WARNING]：405 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:24:19][WARNING]：405 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:24:20][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:21][WARNING]：405 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:24:22][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:23][WARNING]：405 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:24:24][WARNING]：405 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:24:25][WARNING]：405 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:24:26][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:27][WARNING]：405 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:24:28][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:29][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:30][WARNING]：405 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:24:31][WARNING]：405 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:24:32][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:33][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:34][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:35][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:36][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:37][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:38][WARNING]：405 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:24:39][WARNING]：405 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:24:39][INFO]：101 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:08][WARNING]：404 POST /getkline (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:25:09][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:09][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:10][WARNING]：404 POST /getkline (192.168.2.204) 1.99ms
+web.py[2018-03-28 19:25:11][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:25:11][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:12][WARNING]：404 POST /getkline (192.168.2.204) 2.06ms
+wsgi.py[2018-03-28 19:25:13][INFO]：200 GET / (192.168.2.204) 195.55ms
+web.py[2018-03-28 19:25:13][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:13][INFO]：200 GET /static/kairui.ico (192.168.2.204) 136.36ms
+wsgi.py[2018-03-28 19:25:15][INFO]：200 GET / (192.168.2.204) 12.03ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/jquery-1.7.1.min.js (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/css3-mediaqueries.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/modernizr-1.7.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/ddsmoothmenu.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/jquery.flexslider-min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/jquery.jcarousel.min.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/jquery.prettyPhoto.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/jquery.tipsy.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/grayscale-image.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/js/mosaic.1.0.1.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/jcarousel.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/prettyPhoto.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/css/tipsy.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/images/social-twitter-32x32.png (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-linkedin-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/images/work/work-3.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/images/work/work-4.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/images/social-skype-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-dribbble-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-facebook-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/work/work-1.jpg (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-flickr-32x32.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-wordpress-32x32.png (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/social-rss-32x32.png (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/featured/featured-1.jpg (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/featured/featured-3.jpg (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/work/work-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/header-bg.jpg (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:15][INFO]：304 GET /static/images/featured/featured-2.jpg (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/logo.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/load-indicator.gif (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/hover-magnify.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/footer-bg.jpg (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/down.gif (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:15][INFO]：200 GET /static/images/bg_control_nav.png (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:25:17][INFO]：200 GET /kline/ (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:17][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:17][INFO]：200 GET /static/css/kline.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:17][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:25:17][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:25:17][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:17][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:18][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:19][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:25:20][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:22][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:23][WARNING]：404 GET /getkline (192.168.2.204) 1.97ms
+web.py[2018-03-28 19:25:24][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:26][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:25:28][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:30][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:31][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:32][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:34][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:36][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:38][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:25:40][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:42][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:44][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:44][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:25:46][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:48][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:25:50][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:52][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:25:54][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:56][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:25:58][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:00][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:26:02][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:26:02][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:04][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:26:06][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:26:08][WARNING]：404 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:26:10][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:26:12][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:14][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:16][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:26:18][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:26:20][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:22][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:26:24][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:26:26][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:27][WARNING]：404 POST /getkline (192.168.2.204) 2.05ms
+web.py[2018-03-28 19:26:29][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:30][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:26:31][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:33][WARNING]：404 POST /getkline (192.168.2.204) 2.06ms
+web.py[2018-03-28 19:26:35][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:26:37][WARNING]：404 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:26:38][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:40][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:26:42][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:26:44][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:26:46][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:26:48][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:26:50][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:26:52][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:26:54][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:26:56][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:26:58][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:27:00][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:27:01][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:03][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:27:05][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:07][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:09][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:27:11][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:12][WARNING]：404 GET /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:27:13][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:15][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:17][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:27:19][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:27:21][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:27:23][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:25][WARNING]：404 POST /getkline (192.168.2.204) 2.06ms
+web.py[2018-03-28 19:27:27][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:27:29][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:27:31][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:33][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:35][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:27:37][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:27:39][WARNING]：404 POST /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:27:41][WARNING]：404 POST /getkline (192.168.2.204) 1.02ms
+web.py[2018-03-28 19:27:43][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:27:45][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:47][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:27:49][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:51][WARNING]：404 POST /getkline (192.168.2.204) 1.05ms
+web.py[2018-03-28 19:27:53][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:27:55][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:27:57][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:27:59][WARNING]：404 POST /getkline (192.168.2.204) 1.99ms
+web.py[2018-03-28 19:28:00][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:02][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:28:04][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:06][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:28:08][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:10][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:28:12][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:28:12][WARNING]：404 GET /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:28:14][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:28:15][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:28:16][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:18][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:28:20][WARNING]：404 POST /getkline (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:28:22][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:24][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:26][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:28:28][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:28:30][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:28:32][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:34][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:28:36][WARNING]：404 POST /getkline (192.168.2.204) 1.96ms
+web.py[2018-03-28 19:28:38][WARNING]：404 POST /getkline (192.168.2.204) 2.06ms
+web.py[2018-03-28 19:28:40][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:28:42][WARNING]：404 POST /getkline (192.168.2.204) 1.97ms
+web.py[2018-03-28 19:28:44][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:28:46][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:28:48][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:28:50][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:28:52][WARNING]：404 POST /getkline (192.168.2.204) 1.04ms
+web.py[2018-03-28 19:28:54][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:28:56][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:28:58][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:00][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:00][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:02][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:04][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:29:06][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:08][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:10][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:29:12][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:29:12][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:13][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:14][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:15][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:16][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:29:17][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:18][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:29:19][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:20][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:29:21][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+web.py[2018-03-28 19:29:22][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:23][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:24][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:25][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:26][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:29:27][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:29:28][WARNING]：404 POST /getkline (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:29:29][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:30][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:32][WARNING]：404 POST /getkline (192.168.2.204) 0.97ms
+web.py[2018-03-28 19:29:33][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:34][WARNING]：404 POST /getkline (192.168.2.204) 1.99ms
+web.py[2018-03-28 19:29:35][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:36][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:38][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:40][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:29:42][WARNING]：404 POST /getkline (192.168.2.204) 2.02ms
+web.py[2018-03-28 19:29:44][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:46][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:29:48][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:29:50][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:52][WARNING]：404 POST /getkline (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:29:54][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:56][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:57][WARNING]：404 POST /getkline (192.168.2.204) 2.04ms
+web.py[2018-03-28 19:29:58][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:29:59][WARNING]：404 POST /getkline (192.168.2.204) 1.03ms
+wsgi.py[2018-03-28 19:29:59][INFO]：200 GET / (192.168.2.204) 7.02ms
+web.py[2018-03-28 19:29:59][INFO]：200 GET /static/css/style.css (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:29:59][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 0.00ms
+wsgi.py[2018-03-28 19:37:51][INFO]：200 GET /zt/ (192.168.2.204) 6.02ms
+web.py[2018-03-28 19:37:51][INFO]：200 GET /static/css/mosaic.css (192.168.2.204) 2.00ms
+wsgi.py[2018-03-28 19:37:52][INFO]：200 GET /getData/ (192.168.2.204) 1133.87ms
+wsgi.py[2018-03-28 19:38:01][INFO]：200 GET / (192.168.2.204) 6.02ms
+web.py[2018-03-28 19:38:01][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:38:03][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 3.01ms
+wsgi.py[2018-03-28 19:38:06][INFO]：200 GET / (192.168.2.204) 6.04ms
+wsgi.py[2018-03-28 19:41:31][INFO]：200 GET / (192.168.2.204) 6.02ms
+web.py[2018-03-28 19:41:31][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.00ms
+web.py[2018-03-28 19:41:31][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:41:33][INFO]：200 GET /kline/ (192.168.2.204) 2.03ms
+web.py[2018-03-28 19:41:33][INFO]：200 GET /static/css/kline.css (192.168.2.204) 3.01ms
+web.py[2018-03-28 19:41:33][INFO]：304 GET /static/js/kline.draw.js (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:33][WARNING]：404 GET /static/css/img/dropdown_w.png (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:33][WARNING]：404 GET /static/js/img/common/bg_klie.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:33][WARNING]：404 POST /getkline (192.168.2.204) 1.01ms
+web.py[2018-03-28 19:41:33][WARNING]：404 GET /getkline (192.168.2.204) 0.99ms
+web.py[2018-03-28 19:41:34][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:34][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:35][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:35][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:36][WARNING]：404 GET /static/css/js/img/dropup_w.png (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:36][WARNING]：404 POST /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:36][WARNING]：404 GET /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:37][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+web.py[2018-03-28 19:41:37][WARNING]：404 GET /getkline (192.168.2.204) 0.00ms
+web.py[2018-03-28 19:41:38][WARNING]：404 POST /getkline (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:41:38][INFO]：200 GET / (192.168.2.204) 6.05ms
+web.py[2018-03-28 19:41:38][INFO]：200 GET /static/css/style.css (192.168.2.204) 2.01ms
+web.py[2018-03-28 19:41:38][INFO]：200 GET /static/css/flexslider.css (192.168.2.204) 1.00ms
+wsgi.py[2018-03-28 19:59:26][INFO]：200 GET / (::1) 197.55ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/style.css (::1) 145.41ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/flexslider.css (::1) 5.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/jcarousel.css (::1) 3.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/mosaic.css (::1) 0.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/prettyPhoto.css (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/css/tipsy.css (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/css3-mediaqueries.js (::1) 2.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/modernizr-1.7.min.js (::1) 3.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/ddsmoothmenu.js (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/jquery.flexslider-min.js (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/jquery.jcarousel.min.js (::1) 3.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/jquery-1.7.1.min.js (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/mosaic.1.0.1.js (::1) 2.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/jquery.prettyPhoto.js (::1) 1.03ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/jquery.tipsy.js (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/js/grayscale-image.js (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-facebook-32x32.png (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-twitter-32x32.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-dribbble-32x32.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-linkedin-32x32.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-flickr-32x32.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-wordpress-32x32.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-skype-32x32.png (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/social-rss-32x32.png (::1) 2.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/featured/featured-1.jpg (::1) 4.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/featured/featured-2.jpg (::1) 8.02ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/featured/featured-3.jpg (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/work/work-1.jpg (::1) 2.01ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/work/work-2.jpg (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/work/work-3.jpg (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/work/work-4.jpg (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/header-bg.jpg (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/down.gif (::1) 0.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/logo.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/hover-magnify.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/footer-bg.jpg (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/load-indicator.gif (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/images/bg_control_nav.png (::1) 1.00ms
+web.py[2018-03-28 19:59:26][INFO]：200 GET /static/kairui.ico (::1) 1.00ms
+wsgi.py[2018-03-28 19:59:29][INFO]：200 GET /kline/ (::1) 2.03ms
+web.py[2018-03-28 19:59:29][INFO]：200 GET /static/css/kline.css (::1) 1.00ms
+web.py[2018-03-28 19:59:29][INFO]：200 GET /static/js/jquery-1.11.1.min.js (::1) 2.01ms
+web.py[2018-03-28 19:59:29][INFO]：200 GET /static/js/kline.assistant.js (::1) 2.01ms
+web.py[2018-03-28 19:59:29][INFO]：200 GET /static/js/kline.draw.js (::1) 2.00ms
+web.py[2018-03-28 19:59:29][INFO]：200 GET /static/js/jquery.mousewheel.js (::1) 0.00ms
+web.py[2018-03-28 19:59:29][WARNING]：404 GET /static/css/img/dropdown_w.png (::1) 0.00ms
+web.py[2018-03-28 19:59:29][WARNING]：404 GET /static/js/img/common/bg_klie.png (::1) 1.00ms
+web.py[2018-03-28 19:59:29][WARNING]：405 POST /getkline (::1) 0.00ms
+web.py[2018-03-28 19:59:29][INFO]：101 GET /getkline (::1) 0.00ms
+wsgi.py[2018-03-28 20:07:40][INFO]：200 GET / (::1) 195.52ms
+web.py[2018-03-28 20:07:40][INFO]：200 GET /static/css/style.css (::1) 167.45ms
+web.py[2018-03-28 20:07:40][INFO]：200 GET /static/css/flexslider.css (::1) 1.00ms
+web.py[2018-03-28 20:07:40][INFO]：200 GET /static/css/jcarousel.css (::1) 1.00ms
+wsgi.py[2018-03-28 20:07:42][INFO]：200 GET /kline/ (::1) 2.03ms
+web.py[2018-03-28 20:07:42][INFO]：200 GET /static/js/kline.draw.js (::1) 3.01ms
+web.py[2018-03-28 20:07:42][INFO]：200 GET /static/css/kline.css (::1) 2.01ms
+web.py[2018-03-28 20:07:43][WARNING]：404 GET /static/css/img/dropdown_w.png (::1) 1.00ms
+web.py[2018-03-28 20:07:43][WARNING]：404 GET /static/js/img/common/bg_klie.png (::1) 1.00ms
+web.py[2018-03-28 20:07:43][WARNING]：404 POST /getkline (::1) 1.00ms
+web.py[2018-03-28 20:07:43][INFO]：101 GET /getwebsocket (::1) 0.00ms
+base.py[2018-03-29 08:37:57][WARNING]：Not Found: /favicon.ico

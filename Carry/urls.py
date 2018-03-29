@@ -34,6 +34,7 @@ urlpatterns = [
 
     url(r'^kline/$',views.kline,name='kline'),
     url(r'^getkline$',views.getkline),
+    url(r'^getwebsocket$',views.getwebsocket),
     url(r'^zhangting/([a-z]*)/$',views.zhangting,name='zhangting'),
     url(r'^moni/$',views.moni,name='moni'),
 ]

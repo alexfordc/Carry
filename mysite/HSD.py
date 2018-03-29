@@ -106,7 +106,7 @@ def get_conn(dataName):
 
 
 def get_tcp():
-    return config['U']['hs']
+    return '192.168.2.204'#config['U']['hs']
 
 
 def get_data(url=None):
@@ -734,8 +734,10 @@ class Zbjs(object):
 
     def main2(self,_ma,_dates, _ts):
         res={}
-        is_d=0
-        is_k=0
+        is_d=0 # 做多为1，平仓为0
+        is_k=0 # 做空为-1，平仓为0
+        last_d=1 # 做多平仓前上一次的盈亏
+        last_k=1 # 做空平仓前上一次的盈亏
         i=0
         send_nan=0
         dt3=None
@@ -751,10 +753,10 @@ class Zbjs(object):
                 continue
 
             res[dates]={'duo':0,'kong':0,'mony':0,'datetimes':[],'dy':0,'xy':0}
-            str_time1=None if is_d==0 else str_time1
-            str_time2=None if is_k==0 else str_time2
-            jg_d=0 if is_d==0 else jg_d
-            jg_k=0 if is_k==0 else jg_k
+            str_time1='' if is_d==0 else str_time1 # 做多开仓的时间
+            str_time2='' if is_k==0 else str_time2 # 做空开仓的时间
+            jg_d=0 if is_d==0 else jg_d # 做多开仓的收盘价
+            jg_k=0 if is_k==0 else jg_k # 做空开仓的收盘价
             i+=1
             if i-send_nan==1:
                 data2=self.macd2(da=da[:_ma],ma=_ma)
@@ -777,16 +779,21 @@ class Zbjs(object):
                     jg_k=clo
                     str_time2=str(datetimes)
                     is_k=-1
-                if is_d==1 and macd<0 or (is_d==1 and datetimes.minute==45):
+                if is_d==1 and macd<0:#(clo-jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-jg_d<-100) (clo-jg_d>80 and (last_d-(clo-jg_d))/last_d<0.8)
                     res[dates]['duo']+=1
                     res[dates]['mony']+=(clo-jg_d)
                     res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
                     is_d=0
-                if is_k==-1 and macd>0 or (is_d==-1 and datetimes.minute==45):
+                if is_k==-1 and macd>0:#(jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or jg_k-clo<-100) (jg_k-clo>80 and (last_k-(jg_k-clo))/last_k<0.8)
                     res[dates]['kong']+=1
                     res[dates]['mony']+=(jg_k-clo)
                     res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
                     is_k=0
+
+                if is_d==1:
+                    last_d=clo-jg_d
+                if is_k==-1:
+                    last_k=jg_k-clo
         # if dt3:
         #     self.macd_to_sql(dt3) # 存储到数据库
 
