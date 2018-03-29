@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/HSD.py" afterPath="$PROJECT_DIR$/mysite/HSD.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/kline.css" afterPath="$PROJECT_DIR$/static/css/kline.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/kline.draw.js" afterPath="$PROJECT_DIR$/static/js/kline.draw.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/kline.html" afterPath="$PROJECT_DIR$/templates/kline.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/logging.log" afterPath="$PROJECT_DIR$/log/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serv.py" afterPath="$PROJECT_DIR$/serv.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Carry/urls.py" afterPath="$PROJECT_DIR$/Carry/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysite/views.py" afterPath="$PROJECT_DIR$/mysite/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
@@ -68,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kline.draw.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="kline.draw.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.166667" vertical-offset="26175" max-vertical-offset="189420">
-              <caret line="1321" column="32" selection-start-line="1321" selection-start-column="32" selection-end-line="1321" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.685446" vertical-offset="177816" max-vertical-offset="189980">
+              <caret line="8920" column="0" selection-start-line="8920" selection-start-column="0" selection-end-line="8920" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -81,29 +76,11 @@
       <file leaf-file-name="kline.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/kline.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.9322033" vertical-offset="270" max-vertical-offset="11440">
-              <caret line="31" column="118" selection-start-line="31" selection-start-column="118" selection-end-line="31" selection-end-column="118" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kline.assistant.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/kline.assistant.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5666666" vertical-offset="1223" max-vertical-offset="6700">
-              <caret line="65" column="37" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kline.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static/css/kline.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
-              <caret line="0" column="2718" selection-start-line="0" selection-start-column="2718" selection-end-line="0" selection-end-column="2718" />
-              <folding />
+            <state vertical-scroll-proportion="-9.152542" vertical-offset="60" max-vertical-offset="11440">
+              <caret line="30" column="49" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,7 +88,7 @@
       <file leaf-file-name="serv.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serv.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2390" max-vertical-offset="3080">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2185" max-vertical-offset="3080">
               <caret line="139" column="49" selection-start-line="139" selection-start-column="49" selection-end-line="139" selection-end-column="49" />
               <folding>
                 <element signature="e#0#63#0" expanded="true" />
@@ -180,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../2018-1-23/zhexiantu.html" />
         <option value="$PROJECT_DIR$/mysite/Get_weight.py" />
         <option value="$PROJECT_DIR$/templates/clj.html" />
         <option value="$PROJECT_DIR$/static/js/ddsmoothmenu.js" />
@@ -228,9 +204,10 @@
         <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/serv.py" />
+        <option value="$PROJECT_DIR$/static/css/kline.css" />
+        <option value="$PROJECT_DIR$/../../2018-3-29/Carry/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
-        <option value="$PROJECT_DIR$/static/css/kline.css" />
       </list>
     </option>
   </component>
@@ -312,92 +289,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mysite" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Carry" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -994,7 +885,13 @@
       <option name="project" value="LOCAL" />
       <updated>1522152765230</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="2018-3-29">
+      <created>1522284640644</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1522284640644</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1024,6 +921,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17430703" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18939394" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1033,7 +931,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16233766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1062,7 +959,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="加入gitignore" />
     <MESSAGE value="增加K线图，完善了之前的一些功能" />
     <MESSAGE value="交易量数据正确处理" />
     <MESSAGE value="功能完善" />
@@ -1087,7 +983,8 @@
     <MESSAGE value="2018-3-20" />
     <MESSAGE value="2018-3-26" />
     <MESSAGE value="2018-3-27" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-3-27" />
+    <MESSAGE value="2018-3-29" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-3-29" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1102,27 +999,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/log/conf.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="895">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../2018-3-7/a.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25692695" vertical-offset="356" max-vertical-offset="11360">
-          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.055020634" vertical-offset="0" max-vertical-offset="727">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../2018-3-8/Carry/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.72789115" vertical-offset="7998" max-vertical-offset="9780">
@@ -1414,15 +1290,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5376662" vertical-offset="1796" max-vertical-offset="16260">
           <caret line="108" column="25" selection-start-line="108" selection-start-column="25" selection-end-line="108" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2390" max-vertical-offset="3080">
-          <caret line="139" column="49" selection-start-line="139" selection-start-column="49" selection-end-line="139" selection-end-column="49" />
           <folding>
-            <element signature="e#0#63#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1453,34 +1322,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.166667" vertical-offset="26175" max-vertical-offset="189420">
-          <caret line="1321" column="32" selection-start-line="1321" selection-start-column="32" selection-end-line="1321" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/kline.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.9322033" vertical-offset="270" max-vertical-offset="11440">
-          <caret line="31" column="118" selection-start-line="31" selection-start-column="118" selection-end-line="31" selection-end-column="118" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/kline.assistant.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5666666" vertical-offset="1223" max-vertical-offset="6700">
-          <caret line="65" column="37" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/static/kairui.ico">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/kline.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
           <caret line="0" column="2718" selection-start-line="0" selection-start-column="2718" selection-end-line="0" selection-end-column="2718" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/kline.assistant.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09037559" vertical-offset="1223" max-vertical-offset="6700">
+          <caret line="65" column="37" selection-start-line="65" selection-start-column="37" selection-end-line="65" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2390" max-vertical-offset="3080">
+          <caret line="139" column="49" selection-start-line="139" selection-start-column="49" selection-end-line="139" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-29/Carry/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61451244" vertical-offset="13738" max-vertical-offset="16000">
+          <caret line="727" column="50" selection-start-line="727" selection-start-column="50" selection-end-line="727" selection-end-column="50" />
+          <folding>
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="select numbe..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="select id,tr..account_info..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="select F.`da..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="SELECT id,tr..account_info..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="select bazaa..stock_code..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="SELECT datet..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="insert into ..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="SELECT a.dat..futures_min..." />
+            <marker date="1522285769749" expanded="true" signature="-1:-1" placeholder="SELECT DATET..futures_min..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../2018-3-29/Carry/static/css/kline.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
+          <caret line="0" column="3043" selection-start-line="0" selection-start-column="3040" selection-end-line="0" selection-end-column="3043" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/kline.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.152542" vertical-offset="60" max-vertical-offset="11440">
+          <caret line="30" column="49" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.685446" vertical-offset="177816" max-vertical-offset="189980">
+          <caret line="8920" column="0" selection-start-line="8920" selection-start-column="0" selection-end-line="8920" selection-end-column="0" />
           <folding />
         </state>
       </provider>

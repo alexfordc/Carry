@@ -8895,6 +8895,29 @@ function closeCzts(){
 function openCzts(){
     document.getElementById("czts_div").style.display="";
 };
+//标题栏提示
+var newMessageRemind = function () {
+ var i = 0,
+ //title = document.title,
+ loop;var chart = ChartManager.getInstance().getChart();
+ return {
+ show: function (dk,times) {
+  loop = setInterval(function () {
+  i++;
+  if ( i == 1 ) document.title = '【 '+dk+' 】' + times;
+  if ( i == 2 ) chart.setTitle();
+  if ( i == 3 ) i = 0;
+  }, 900);
+ },
+ stop: function () {
+  clearInterval(loop);
+  document.title = title;
+ }
+ };
+} ();
+document.getElementById("onclick_stop").onclick=function(){
+    newMessageRemind.stop();
+};
 
 function websockets(showLoading){
     if (showLoading == true) {
@@ -8925,17 +8948,22 @@ function websockets(showLoading){
                 var times=myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds();
                 if (d.zs=='1'){
                     openCzts();
+                    newMessageRemind.show('做多',times);
                     document.getElementById("czts_span").innerHTML="<span style='color:red;font-size:28px;'>做多  </span><br/>"+times;
                 }else if(d.zs=='2'){
                     openCzts();
+                    newMessageRemind.show('平多仓',times);
                     document.getElementById("czts_span").innerHTML="<span style='color:green;font-size:28px;'>平多仓  </span><br/>"+times;
                 }else if(d.zs=='-1'){
                     openCzts();
+                    newMessageRemind.show('做空',times);
                     document.getElementById("czts_span").innerHTML="<span style='color:green;font-size:28px;'>做空  </span><br/>"+times;
                 }else if(d.zs=='-2'){
                     openCzts();
+                    newMessageRemind.show('平空仓',times);
                     document.getElementById("czts_span").innerHTML="<span style='color:red;font-size:28px;'>平空仓  </span><br/>"+times;
                 }
+
                 if (!GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData)) {
                         //GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
                         //推送点下次请求
