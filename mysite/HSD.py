@@ -12,6 +12,7 @@ import configparser
 import requests
 from sklearn.externals import joblib
 from collections import Counter
+import random
 
 
 config = configparser.ConfigParser()
@@ -598,7 +599,7 @@ class Zbjs(object):
         cur=conn.cursor()
         cur.execute('TRUNCATE TABLE macd')
         conn.commit()
-        sql="insert into macd(code,date,open,close,diff,dea,macd,ma,var,std,reg,mul) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql="insert into macd(code,date,open,close,diff,dea,macd,ma60,var,std,reg,mul) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         count=0
         for d in data:
             #print('HSIc1',str(d['datetimes']),d['open'],d['close'],d['diff'],d['dea'],d['macd'],d['ma'],d['var'],d['std'],d['reg'],d['mul'])
@@ -762,6 +763,7 @@ class Zbjs(object):
                 data2=self.macd2(da=da[:_ma],ma=_ma)
                 dt2=data2.send(None)
                 da=da[_ma:]
+            random_a=[0,1]
             for df2 in da:
                 # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
                 dt3=data2.send(df2)
@@ -779,16 +781,24 @@ class Zbjs(object):
                     jg_k=clo
                     str_time2=str(datetimes)
                     is_k=-1
-                if is_d==1 and macd<0:#(clo-jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-jg_d<-100) (clo-jg_d>80 and (last_d-(clo-jg_d))/last_d<0.8)
-                    res[dates]['duo']+=1
-                    res[dates]['mony']+=(clo-jg_d)
-                    res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
-                    is_d=0
-                if is_k==-1 and macd>0:#(jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or jg_k-clo<-100) (jg_k-clo>80 and (last_k-(jg_k-clo))/last_k<0.8)
-                    res[dates]['kong']+=1
-                    res[dates]['mony']+=(jg_k-clo)
-                    res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
-                    is_k=0
+                if is_d==1 and macd<0 and clo<mas:#(clo-jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-jg_d<-100) (clo-jg_d>80 and (last_d-(clo-jg_d))/last_d<0.8)
+                    if clo-jg_d<0:
+                        res[dates]['duo']+=1
+                        res[dates]['mony']+=(clo-jg_d)
+                        res[dates]['datetimes'].append([str_time1+'--'+str(datetimes),'多',clo-jg_d])
+                        is_d=0
+                    if clo-jg_d>10:
+                        res[dates]['mony']+=(clo-jg_d)
+                        jg_d=clo
+                if is_k==-1 and macd>0 and clo>mas:#(jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or jg_k-clo<-100) (jg_k-clo>80 and (last_k-(jg_k-clo))/last_k<0.8)
+                    if jg_k-clo<0:
+                        res[dates]['kong']+=1
+                        res[dates]['mony']+=(jg_k-clo)
+                        res[dates]['datetimes'].append([str_time2+'--'+str(datetimes),'空',jg_k-clo])
+                        is_k=0
+                    if jg_k-clo>10:
+                        res[dates]['mony']+=(jg_k-clo)
+                        jg_k=clo
 
                 if is_d==1:
                     last_d=clo-jg_d
