@@ -1,19 +1,56 @@
 {% extends 'base/base.html' %}
 {% block title %}模拟表{% endblock %}
+{% block script %}
+<script>
+    function openLogin(){
+   document.getElementById("beizhu").style.display="";
+}
+function closeLogin(){
+   document.getElementById("beizhu").style.display="none";
+}
+</script>
+{% endblock %}
 {% block center_cen %}
+<div align="center" id="beizhu" style="display:none; POSITION:absolute; left:50%; top:50%; width:600px; height:320px; margin-left:-300px; margin-top:-200px;
+border:1px solid #888; background-color:green; text-align:center"><span>方案备注</span><br/><br/>
+    <ol>
+        <li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；
+        以macd的正负为第一条件，在60均线以上或以下为第二条件进行卖出</li>
+        <li>方案：以价差与标准差的倍数大于1.5为第一条件，并与上一个价差与标准差的倍数大于1.5的K线重合为第二条件进行买入；
+        以当前macd最高最低区域为条件进行卖出</li>
+        <li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；
+        以当前macd最高最低区域为条件进行卖出</li>
+    </ol><br/>
+<a href="javascript:closeLogin();"><h2>确 定</h2></a></div>
+</div>
     <div align="center">
     <form action="" method="POST">
         {% csrf_token %}
         开始时间：<input type="date" name="dates" value="{{ dates }}"/>&nbsp;&nbsp;
-        交易天数：<input type="number" name="ts" value="{{ ts }}"/>&nbsp;
-                <input type="submit" />
+        交易天数：<input type="number" name="ts" value="{{ ts }}"/> &nbsp;
+        方案选择：<select name="fa">
+        {% for i in fas %}
+        {% if fa == i %}
+        <option value={{i}} selected>方案{{i}}</option>
+        {% else %}
+        <option value={{i}} >方案{{i}}</option>
+        {% endif %}
+        {% endfor %}
+    </select> &nbsp;
+                <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="方案备注" onclick="openLogin()"/>
     </form><br/>
-    <table border="1">
+    <table border="1" align="center">
+        {% if huizong %}
+        <caption style="font-size:20px;align:center;">胜率：<span style="color:red;">{{ huizong.shenglv|floatformat:2 }}</span>&nbsp; 总盈亏：<span style="color:red;">{{ huizong.yk }}</span>&nbsp; 总共做单：<span style="color:red;">{{ huizong.zl }}</span></caption>
+        {% else %}
+        <h3 style="color:green;">请选择好参数并按《模拟测试》按钮进行测试！</h3>
+        {% endif %}
     {% for k,v in res.items %}
         {% if forloop.first %}
-            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>详细数据</th></tr>
+            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th><th>详细数据</th></tr>
         {% endif %}
-        <tr><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td>
+        <tr><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
             <td>
                 <table border="1"  style="width:650px;">
                     {% for i in v.datetimes %}
@@ -26,7 +63,7 @@
     </table>
     </div>
     <script type="text/javascript">
-        $('div>table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
+        $('div>table').css({'width': '1050px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
         $("tr:odd").css({"background-color": "#cccc33"});
         $('tr:even').css({'background-color': '#00cc00'});
         $('tr').css({'height': '30'});

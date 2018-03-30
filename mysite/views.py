@@ -566,12 +566,14 @@ def zhangting(rq,t):
 def moni(rq):
     dates=rq.POST.get('dates')
     ts=rq.POST.get('ts')
+    fa=rq.POST.get('fa')
+    fas=['1','2','3']
     ma=60
-    if dates and ts:
-        res=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts))
-        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts})
+    if dates and ts and fa:
+        res,huizong=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa)
+        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':fas,'huizong':huizong})
     dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
     ts=6
-    return render(rq,'moni.html',{'dates':dates,'ts':ts})
+    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':fas})
 
 
