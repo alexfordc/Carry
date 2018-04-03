@@ -415,28 +415,56 @@ def tools(rq):
     return render(rq, 'tools.html', {'cljs': cljs})
 
 def kline(rq):
-    return render(rq,'kline.html')
+    date = rq.GET.get('date',str(datetime.datetime.now())[:10])
+    write_to_cache('kline_date',date)
+    database=rq.GET.get('database','1')
+    write_to_cache('kline_database', database)
+    return render(rq,'kline.html',{'date':date})
 
-def getList(ts):
+def getList():
     # 时间,开盘价,最高价,最低价,收盘价,成交量
-    conn=HSD.get_conn('carry_investment')
-    cur=conn.cursor()
+    data_dict={'1':['carry_investment','futures_min'],'2':['stock_data','index_min']}
+    dates = read_from_cache('kline_date')
+    database=read_from_cache('kline_database')
+    if dates and database:
+        conn = HSD.get_conn(data_dict[database][0])
+        cur = conn.cursor()
+        dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=5)
+        cur.execute('SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>"%s" AND datetime<"%s"'%(data_dict[database][1],dates,dates2))
+        res = list(cur.fetchall())
+        conn.commit()
+        conn.close()
+        if len(res) > 0:
+            res = [[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]] for i in res]
+            data2 = HSD.Zbjs().macd2(res)
+            dc = data2.send(None)
+            _ch = [d['cd'] for d in dc]
+            return res,_ch
+    conn = HSD.get_conn('carry_investment')
+    cur = conn.cursor()
     str_time=str(datetime.datetime.now())[:10]+' 09:00:00'
     cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min WHERE datetime>="%s" ORDER BY datetime'%str_time)
     res=list(cur.fetchall())
-    if not res:
-        size_show=100  # 今天开盘之前要显示的分钟数据数量
+    if len(res)<5000:
+        size_show=800*5  # 今天开盘之前要显示的分钟数据数量
         cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
         count=cur.fetchall()[0][0]
         if count>-size_show:
-            cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show))
+            cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show)) # WHERE datetime>"2018-03-26" and datetime<"2018-03-27"')#
             res=list(cur.fetchall())
     conn.commit()
     conn.close()
+    #data2.send(res[:60])
+    #_ch=[i for i in range(60)]
+    #for df2 in res[60:]:
+    #    dc=data2.send(df2)
+
     if len(res)>0:
         res=[[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S"))*1000),i[1],i[2],i[3],i[4],i[5]] for i in res]
-
-    return res
+    data2 = HSD.Zbjs().macd2(res)
+    dc = data2.send(None)
+    _ch = [d['cd'] for d in dc]
+    return res,_ch
 
 def GetRealTimeData(times,price,amount):
     '''得到推送点数据'''
@@ -473,7 +501,8 @@ def getkline(rq):
     size=int(size) if size else 0
     #types=rq.POST.get('type') # 获取分钟类型
     if rq.is_ajax() and size>0:
-        lists=getList(int(time.time()))
+        lists, _ch=getList()
+        #_ch = [random.choice([0, 0, 0, 0, 0, 0]) for i in range(len(lists))]
         data={
             'des' : "注释",
             'isSuc' : True, #状态
@@ -485,12 +514,14 @@ def getkline(rq):
                     'moneyType' : "CNY",
                     'symbol' : 'btc38btccny',
                     'url' : '官网地址', #（选填）
-                    'topTickers' : [] #（选填）
+                    'topTickers' : [], #（选填）
+                '_ch': _ch
             }
         }
         return HttpResponse(json.dumps(data),content_type="application/json")
     elif rq.is_ajax() and size==0:
-        lists=getList(int(time.time()))
+        lists, _ch=getList()
+        #_ch = [random.choice([0, 0, 0, 0, 0, 0]) for i in range(len(lists))]
         data={
             'des' : "注释",
             'isSuc' : True, #状态
@@ -502,7 +533,8 @@ def getkline(rq):
                     'moneyType' : "CNY",
                     'symbol' : 'carry',
                     'url' : '官网地址', #（选填）
-                    'topTickers' : [] #（选填）
+                    'topTickers' : [], #（选填）
+                '_ch': _ch
             }
         }
         return HttpResponse(json.dumps(data),content_type="application/json")
@@ -539,7 +571,7 @@ def getwebsocket(rq):
                 #print('zs.............',zs)
                 if this_time*1000!=times:
 
-                    data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs)}
+                    data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs),'_ch':0}
                     data=json.dumps(data).encode()
                     rq.websocket.send(data)
                 #time.sleep(1)

@@ -101,7 +101,10 @@ SQL = {
 }
 
 
-def get_conn(dataName):
+def get_conn(dataName=None):
+    if dataName==None:
+        return pymysql.connect(user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
+                           charset='utf8')
     return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
                            charset='utf8')
 
@@ -632,6 +635,11 @@ class Zbjs(object):
         dc=[]
         co=0
         cds=1
+        def body_k(o, h, l, c):
+            if abs(h - l) > 0:
+                return abs(o - c) / abs(h - l) > 0.6
+            else:
+                return False
         for i in range(len(da)):
             dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':da[i][0],'open':da[i][1],'high':da[i][2],'low':da[i][3],'close':da[i][4],'cd':0})
             if i == long-1:
@@ -669,17 +677,45 @@ class Zbjs(object):
                 std=dc[i]['std']
                 if std:
                     dc[i]['mul']=round(price/std,2)
-                if abs(dc[i]['mul']) > 1.5:
-                    for j in range(i - 1, i - 21, -1):
-                        if abs(dc[j]['mul']) > 1.5:
-                            cd = [dc[i]['open'] - dc[j]['open'], dc[i]['high'] - dc[j]['high'],
-                                  dc[i]['low'] - dc[j]['low'], dc[i]['close'] - dc[j]['close']]
-                            if dc[j]['cd'] == 0 and len([v for v in cd if abs(v) <= 10]) > 2:
-                                cd2 = cds if len([v for v in cd if v > 0]) > 2 else -cds
-                                dc[j]['cd'] = cd2
-                                dc[i]['cd'] = cd2
-                                cds += 1
-                                break
+
+                o1 = dc[i]['open']
+                h1 = dc[i]['high']
+                l1 = dc[i]['low']
+                c1 = dc[i]['close']
+                if abs(dc[i]['mul']) > 1.5 and body_k(o1, h1, l1, c1):
+                    for j in range(i - 1, i - 15, -1):
+                        o2 = dc[j]['open']
+                        h2 = dc[j]['high']
+                        l2 = dc[j]['low']
+                        c2 = dc[j]['close']
+                        try:
+                            if abs(dc[j]['mul']) > 1.5 and ((o1 > c1 and o2 > c2) or (o1 < c1 and o2 < c2)) and body_k(o2, h2, l2, c2):
+                                # cd=[df.ix[i,'open']-df.ix[j,'open'],df.ix[i,'high']-df.ix[j,'high'],df.ix[i,'low']-df.ix[j,'low'],df.ix[i,'close']-df.ix[j,'close']]
+                                if o1 < c1:
+                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4 and c1 > c2 and o2 < o1 < c2 and c2 < c1:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5)
+                                        dc[j]['cd'] = cds
+                                        dc[i]['cd'] = cds
+                                        cds += 1
+                                        break
+                                elif o1 > c1:
+                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4 and c1 < c2 < o1 and c1 < c2: #  or (o2 - c1) / (o1 - c2) < -0.5)
+                                        dc[j]['cd'] = -cds
+                                        dc[i]['cd'] = -cds
+                                        cds += 1
+                                        break
+                        except:
+                            continue
+                # if abs(dc[i]['mul']) > 1.5:
+                #     for j in range(i - 1, i - 21, -1):
+                #         if abs(dc[j]['mul']) > 1.5:
+                #             cd = [dc[i]['open'] - dc[j]['open'], dc[i]['high'] - dc[j]['high'],
+                #                   dc[i]['low'] - dc[j]['low'], dc[i]['close'] - dc[j]['close']]
+                #             if dc[j]['cd'] == 0 and len([v for v in cd if abs(v) <= 10]) > 2:
+                #                 cd2 = cds if len([v for v in cd if v > 0]) > 2 else -cds
+                #                 dc[j]['cd'] = cd2
+                #                 dc[i]['cd'] = cd2
+                #                 cds += 1
+                #                 break
 
         data=None
         while 1:
@@ -709,17 +745,46 @@ class Zbjs(object):
                 std=dc[ind]['std']
                 if std:
                     dc[ind]['mul']=round(price/std,2)
-                if abs(dc[ind]['mul']) > 1.5:
-                    for j in range(ind - 1, ind - 21, -1):
-                        if abs(dc[j]['mul']) > 1.5:
-                            cd = [dc[ind]['open'] - dc[j]['open'], dc[ind]['high'] - dc[j]['high'],
-                                  dc[ind]['low'] - dc[j]['low'], dc[ind]['close'] - dc[j]['close']]
-                            if dc[j]['cd'] == 0 and len([v for v in cd if abs(v) <= 10]) > 2:
-                                cd2 = cds if len([v for v in cd if v > 0]) > 2 else -cds
-                                dc[j]['cd'] = cd2
-                                dc[ind]['cd'] = cd2
-                                cds += 1
-                                break
+
+                o1 = dc[ind]['open']
+                h1 = dc[ind]['high']
+                l1 = dc[ind]['low']
+                c1 = dc[ind]['close']
+                if abs(dc[ind]['mul']) > 1.5 and body_k(o1, h1, l1, c1):
+                    for j in range(ind - 1, ind - 12, -1):
+                        o2 = dc[j]['open']
+                        h2 = dc[j]['high']
+                        l2 = dc[j]['low']
+                        c2 = dc[j]['close']
+                        try:
+                            if abs(dc[j]['mul']) > 1.5 and ((o1 > c1 and o2 > c2) or (o1 < c1 and o2 < c2)) and body_k(
+                                    o2, h2, l2, c2):
+                                # cd=[df.ix[i,'open']-df.ix[j,'open'],df.ix[i,'high']-df.ix[j,'high'],df.ix[i,'low']-df.ix[j,'low'],df.ix[i,'close']-df.ix[j,'close']]
+                                if o1 < c1:
+                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4 and c1 > c2 and o2 < o1 < c2 and c2 < c1:
+                                        dc[j]['cd'] = cds
+                                        dc[ind]['cd'] = cds
+                                        cds += 1
+                                        break
+                                elif o1 > c1:
+                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4 and c1 < c2 < o1 and c1 < c2:
+                                        dc[j]['cd'] = -cds
+                                        dc[ind]['cd'] = -cds
+                                        cds += 1
+                                        break
+                        except Exception as exc:
+                            continue
+                # if abs(dc[ind]['mul']) > 1.5:
+                #     for j in range(ind - 1, ind - 21, -1):
+                #         if abs(dc[j]['mul']) > 1.5:
+                #             cd = [dc[ind]['open'] - dc[j]['open'], dc[ind]['high'] - dc[j]['high'],
+                #                   dc[ind]['low'] - dc[j]['low'], dc[ind]['close'] - dc[j]['close']]
+                #             if dc[j]['cd'] == 0 and len([v for v in cd if abs(v) <= 10]) > 2:
+                #                 cd2 = cds if len([v for v in cd if v > 0]) > 2 else -cds
+                #                 dc[j]['cd'] = cd2
+                #                 dc[ind]['cd'] = cd2
+                #                 cds += 1
+                #                 break
 
     def main(self,_ma=60):
         res={}
@@ -808,51 +873,47 @@ class Zbjs(object):
             'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
         self.mul,self.cd=mul,cd
         if cd > 0 and self.is_d == 0:
+            self.res[dates]['duo'] += 1
             self.jg_d = clo
             self.startMony_d=clo
             self.str_time1 = str(datetimes)
             self.is_d = 1
         if cd < 0 and self.is_k == 0:
+            self.res[dates]['kong'] += 1
             self.jg_k = clo
             self.startMony_k=clo
             self.str_time2 = str(datetimes)
             self.is_k = -1
-        if self.is_d == 1 and macd<dt3[-2]['macd']:
-            # self.res[dates]['duo'] += 1
-            # self.res[dates]['mony'] += (clo - self.startMony_d)
-            # self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
-            # self.is_d = 0
-            if clo-self.jg_d<-20:
-                self.res[dates]['duo']+=1
-                self.res[dates]['mony']+=(clo-self.startMony_d)
-                self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
-                self.is_d=0
-            elif clo-self.startMony_d<-200:
-                self.res[dates]['duo'] += 1
-                self.res[dates]['mony'] += (clo - self.startMony_d)
-                self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
-                self.is_d = 0
-            else:
-                #self.res[dates]['mony']+=(clo-self.jg_d)
-                self.jg_d=clo
-        if self.is_k == -1 and macd>dt3[-2]['macd']:
-            # self.res[dates]['kong'] += 1
-            # self.res[dates]['mony'] += (self.startMony_k - clo)
-            # self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
-            # self.is_k = 0
-            if self.jg_k-clo<-20:
-                self.res[dates]['kong']+=1
-                self.res[dates]['mony']+=(self.startMony_k-clo)
-                self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
-                self.is_k=0
-            elif clo - self.startMony_k<-200:
-                self.res[dates]['kong'] += 1
-                self.res[dates]['mony'] += (clo - self.startMony_k)
-                self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_k])
-                self.is_k = 0
-            else:
-                #self.res[dates]['mony']+=(self.jg_k-clo)
-                self.jg_k=clo
+        if self.is_d == 1 and (macd<dt3[-2]['macd'] or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+            self.res[dates]['mony'] += (clo - self.startMony_d)
+            self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
+            self.is_d = 0
+            # if clo-self.jg_d<-20:
+            #     self.res[dates]['mony']+=(clo-self.startMony_d)
+            #     self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
+            #     self.is_d=0
+            # elif clo-self.startMony_d<-200:
+            #     self.res[dates]['mony'] += (clo - self.startMony_d)
+            #     self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
+            #     self.is_d = 0
+            # else:
+            #     #self.res[dates]['mony']+=(clo-self.jg_d)
+            #     self.jg_d=clo
+        if self.is_k == -1 and (macd>dt3[-2]['macd'] or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+            self.res[dates]['mony'] += (self.startMony_k - clo)
+            self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
+            self.is_k = 0
+            # if self.jg_k-clo<-20:
+            #     self.res[dates]['mony']+=(self.startMony_k-clo)
+            #     self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
+            #     self.is_k=0
+            # elif clo - self.startMony_k<-200:
+            #     self.res[dates]['mony'] += (clo - self.startMony_k)
+            #     self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_k])
+            #     self.is_k = 0
+            # else:
+            #     #self.res[dates]['mony']+=(self.jg_k-clo)
+            #     self.jg_k=clo
 
 
     def fa3(self,dt3,dates):

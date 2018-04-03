@@ -11,7 +11,8 @@ var GLOBAL_VAR = {
     TimeOutId: null,
     button_down: false,
     init: false,
-    url: klineUrl //"http://localhost:8083/KlineTest/GetKline"//表示请求的数据地址
+    url: klineUrl, //"http://localhost:8083/KlineTest/GetKline"//表示请求的数据地址
+    _ch:[],
 };
 GLOBAL_VAR.periodMap = {
     "01w": "1week",
@@ -51,7 +52,7 @@ function create_class() {
     if (j) {
         d = arguments[0];
         for (var a in d.prototype) {
-            e.prototype[a] = d.prototype[a]
+            e.prototype[a] = d.prototype[a];
         }
     }
     for (var c = 1; c < j; c++) {
@@ -79,7 +80,7 @@ function create_class() {
             var f = this.__featureConstructors;
             var k, l = f.length;
             for (k = 0; k < l; k++) {
-                f[k].apply(this, arguments)
+                f[k].apply(this, arguments);
             }
         }
     };
@@ -4276,7 +4277,7 @@ MainDataSource.prototype.update = function (c) {
             low: j[3],
             close: j[4],
             volume: j[5]
-        })
+        });
     }
     return true
 };
@@ -4964,7 +4965,7 @@ var CandlestickPlotter = create_class(NamedObject);
 CandlestickPlotter.prototype.__construct = function(a) {
     CandlestickPlotter.__super.__construct.call(this, a)
 };
-CandlestickPlotter.prototype.Draw = function(c) {
+CandlestickPlotter.prototype.Draw = function(c) { // 画K线图
     var A = ChartManager.getInstance();
     var s = A.getDataSource(this.getDataSourceName());
     if (s.getDataCount() < 1) {
@@ -4995,6 +4996,7 @@ CandlestickPlotter.prototype.Draw = function(c) {
     var b = [];
     var l = [];
     for (var t = g; t < n; t++) {
+        var _ch=GLOBAL_VAR._ch[t];
         var B = s.getDataAt(t);
         var m = p.toY(B.high);
         var C = p.toY(B.low);
@@ -5010,14 +5012,30 @@ CandlestickPlotter.prototype.Draw = function(c) {
                     y: q + 0.5,
                     w: x - 1,
                     h: d - 1
-                })
+                });
+                if (_ch!=0){
+                    w.push({
+                        x: e + 0.5,
+                        y: 360,
+                        w: 2,
+                        h: 6
+                    });
+                }
             } else {
                 f.push({
                     x: e,
                     y: q,
                     w: Math.max(x, 1),
                     h: Math.max(d, 1)
-                })
+                });
+                if (_ch!=0){
+                    f.push({
+                    x: e,
+                    y: 360,
+                    w: 2,
+                        h: 6
+                    });
+                }
             }
             if (B.high > r) {
                 m = Math.min(m, q - 1);
@@ -5026,7 +5044,15 @@ CandlestickPlotter.prototype.Draw = function(c) {
                     y: m,
                     w: 1,
                     h: q - m
-                })
+                });
+                if (_ch!=0){
+                    f.push({
+                    x: z,
+                    y: 360,
+                    w: 2,
+                        h: 6
+                });
+                }
             }
             if (o > B.low) {
                 C = Math.max(C, k + 1);
@@ -5035,7 +5061,15 @@ CandlestickPlotter.prototype.Draw = function(c) {
                     y: k,
                     w: 1,
                     h: C - k
-                })
+                });
+                if (_ch!=0){
+                    f.push({
+                    x: z,
+                    y: 360,
+                    w: 2,
+                        h: 6
+                    });
+                }
             }
         } else {
             if (r == o) {
@@ -5046,6 +5080,14 @@ CandlestickPlotter.prototype.Draw = function(c) {
                     w: Math.max(x, 1),
                     h: 1
                 });
+                if (_ch!=0){
+                    b.push({
+                    x: e,
+                    y: 360,
+                    w: 2,
+                        h: 6
+                });
+                }
                 if (B.high > r) {
                     m = Math.min(m, q - 1)
                 }
@@ -5058,8 +5100,17 @@ CandlestickPlotter.prototype.Draw = function(c) {
                         y: m,
                         w: 1,
                         h: C - m
-                    })
+                    });
+                    if (_ch!=0){
+                    b.push({
+                    x: z,
+                        y: 360,
+                        w: 2,
+                        h: 6
+                    });
                 }
+                }
+
             } else {
                 var q = p.toY(o);
                 var k = p.toY(r);
@@ -5070,6 +5121,14 @@ CandlestickPlotter.prototype.Draw = function(c) {
                     w: Math.max(x, 1),
                     h: Math.max(d, 1)
                 });
+                if (_ch!=0){
+                    l.push({
+                    x: e,
+                    y: 360,
+                    w: 2,
+                    h: 6
+                });
+                }
                 if (B.high > o) {
                     m = Math.min(m, q - 1)
                 }
@@ -5082,7 +5141,15 @@ CandlestickPlotter.prototype.Draw = function(c) {
                         y: m,
                         w: 1,
                         h: C - m
-                    })
+                    });
+                    if (_ch!=0){
+                    l.push({
+                        x: z,
+                        y: 360,
+                        w: 2,
+                        h: 6
+                    });
+                }
                 }
             }
         }
@@ -5743,14 +5810,14 @@ IndicatorPlotter.prototype.drawMACDStick = function(a, r, g, e, h, n, o, q, k) {
                     y: s - b + 0.5,
                     w: q - 1,
                     h: b - 1
-                })
+                });
             } else {
                 d.push({
                     x: c,
                     y: s - b,
                     w: Math.max(q, 1),
                     h: Math.max(b, 1)
-                })
+                });
             }
         } else {
             var b = k.toHeight( - m);
@@ -5760,19 +5827,21 @@ IndicatorPlotter.prototype.drawMACDStick = function(a, r, g, e, h, n, o, q, k) {
                     y: s + 0.5,
                     w: q - 1,
                     h: b - 1
-                })
+                });
             } else {
                 f.push({
                     x: c,
                     y: s,
                     w: Math.max(q, 1),
                     h: Math.max(b, 1)
-                })
+                });
             }
         }
         j = m;
         c += o
     }
+
+     //重合
     if (p.length > 0) {
         a.strokeStyle = r.getColor(Theme.Color.Positive);
         Plotter.createRectangles(a, p);
@@ -8850,6 +8919,7 @@ var RequestData = function(showLoading) {
                 //kline.setTopTickers(json.datas.topTickers);
                 //GLOBAL_VAR.KLineData = eval(json.datas.data);
                 GLOBAL_VAR.KLineData = json.datas.data;
+                GLOBAL_VAR._ch = json.datas._ch;
                 try {
                     if (!GLOBAL_VAR.chartMgr.updateData("frame0.k0", GLOBAL_VAR.KLineData)) {
                         //GLOBAL_VAR.requestParam = setHttpRequestParam(GLOBAL_VAR.market_from, GLOBAL_VAR.time_type, GLOBAL_VAR.limit, null);
@@ -8943,6 +9013,7 @@ function websockets(showLoading){
                 //kline.setTopTickers(json.datas.topTickers);
                 //GLOBAL_VAR.KLineData = eval(json.datas.data);
                 GLOBAL_VAR.KLineData = [[parseInt(d.times),parseInt(d.opens),parseInt(d.high),parseInt(d.low),parseInt(d.close),parseInt(d.vol)]];
+                GLOBAL_VAR._ch.push(parseInt(d._ch));
 
                 var myDate=new Date();
                 var times=myDate.getHours()+":"+myDate.getMinutes()+":"+myDate.getSeconds();
