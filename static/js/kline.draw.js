@@ -1,7 +1,7 @@
 var GLOBAL_VAR = {
     KLineAllData: new Object,
     KLineData: new Object,
-    time_type: "15min",
+    time_type: "1min",
     market_from: "1",
     market_from_name: biType,//币种id
     limit: "1000",
@@ -87,7 +87,7 @@ function create_class() {
     e.prototype.__classId = classId++;
     if (d != undefined) {
         h.__super = d.prototype;
-        e.prototype.__super = d
+        e.prototype.__super = d;
     }
     h.prototype = new e();
     return h
@@ -993,10 +993,10 @@ HLCIndicator.prototype.getName = function() {
 var MAIndicator = create_class(Indicator);
 MAIndicator.prototype.__construct = function() {
     MAIndicator.__super.__construct.call(this);
-    var f = new ParameterExpr("M1", 2, 1000, 7);
-    var e = new ParameterExpr("M2", 2, 1000, 30);
-    var d = new ParameterExpr("M3", 2, 1000, 0);
-    var c = new ParameterExpr("M4", 2, 1000, 0);
+    var f = new ParameterExpr("M1", 2, 1000, 5);
+    var e = new ParameterExpr("M2", 2, 1000, 10);
+    var d = new ParameterExpr("M3", 2, 1000, 30);
+    var c = new ParameterExpr("M4", 2, 1000, 60);
     var b = new ParameterExpr("M5", 2, 1000, 0);
     var a = new ParameterExpr("M6", 2, 1000, 0);
     this.addParameter(f);
@@ -6791,7 +6791,7 @@ ChartSettings.init = function() {
     var h = "CandleStick";
     var c = "MA";
     var a = new Array("VOLUME", "MACD");
-    var l = "15m";
+    var l = "1m";
     var d = {};
     d.chartStyle = h;
     d.mIndic = c;

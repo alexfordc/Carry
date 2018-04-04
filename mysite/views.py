@@ -32,9 +32,8 @@ logging.basicConfig(
     format='%(filename)s[%(asctime)s][%(levelname)s]：%(message)s'
 )
 
+# 分页的一页数量
 PAGE_SIZE = 28
-
-
 
 
 # 从缓存读数据
@@ -353,7 +352,7 @@ def zhutu2(rq):
 
 
 def tongji(rq):
-    dates = str(datetime.datetime.now())[:10]
+    dates = HSD.get_date()
     rq_date = rq.GET.get('datetimes')
     rq_id=rq.GET.get('id')
     if rq_date:
@@ -415,7 +414,7 @@ def tools(rq):
     return render(rq, 'tools.html', {'cljs': cljs})
 
 def kline(rq):
-    date = rq.GET.get('date',str(datetime.datetime.now())[:10])
+    date = rq.GET.get('date',HSD.get_date())
     write_to_cache('kline_date',date)
     database=rq.GET.get('database','1')
     write_to_cache('kline_database', database)
@@ -430,7 +429,13 @@ def getList():
         conn = HSD.get_conn(data_dict[database][0])
         cur = conn.cursor()
         dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=5)
-        cur.execute('SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>"%s" AND datetime<"%s"'%(data_dict[database][1],dates,dates2))
+        if database=='1':
+            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>"%s" AND datetime<"%s"' % (
+                data_dict[database][1], dates, dates2)
+        elif database=='2':
+            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE code="HSIc1" AND datetime>"%s" AND datetime<"%s"' % (
+                data_dict[database][1], dates, dates2)
+        cur.execute(sql)
         res = list(cur.fetchall())
         conn.commit()
         conn.close()
@@ -440,20 +445,20 @@ def getList():
             dc = data2.send(None)
             _ch = [d['cd'] for d in dc]
             return res,_ch
-    conn = HSD.get_conn('carry_investment')
-    cur = conn.cursor()
-    str_time=str(datetime.datetime.now())[:10]+' 09:00:00'
-    cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min WHERE datetime>="%s" ORDER BY datetime'%str_time)
-    res=list(cur.fetchall())
-    if len(res)<5000:
-        size_show=800*5  # 今天开盘之前要显示的分钟数据数量
-        cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
-        count=cur.fetchall()[0][0]
-        if count>-size_show:
-            cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show)) # WHERE datetime>"2018-03-26" and datetime<"2018-03-27"')#
-            res=list(cur.fetchall())
-    conn.commit()
-    conn.close()
+    # conn = HSD.get_conn('carry_investment')
+    # cur = conn.cursor()
+    # str_time=str(datetime.datetime.now())[:10]+' 09:00:00'
+    # cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min WHERE datetime>="%s" ORDER BY datetime'%str_time)
+    # res=list(cur.fetchall())
+    # if len(res)<5000:
+    #     size_show=800*5  # 今天开盘之前要显示的分钟数据数量
+    #     cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
+    #     count=cur.fetchall()[0][0]
+    #     if count>-size_show:
+    #         cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show)) # WHERE datetime>"2018-03-26" and datetime<"2018-03-27"')#
+    #         res=list(cur.fetchall())
+    # conn.commit()
+    # conn.close()
     #data2.send(res[:60])
     #_ch=[i for i in range(60)]
     #for df2 in res[60:]:
@@ -579,19 +584,20 @@ def getwebsocket(rq):
         return redirect('index')
 
 def zhangting(rq,t):
+    dates = HSD.get_date()
     ZT = HSD.Limit_up()
     if t == 'today':
         zt=ZT.read_code()
         zt=sorted(zt,key=lambda x:x[2]) # 以第3个参数排序
         zt.reverse()
-        return render(rq,'zhangting.html',{'zt_today':zt})
+        return render(rq,'zhangting.html',{'zt_today':zt,'dates':dates})
     if t == 'tomorrow':
         zt_tomorrow = ZT.yanzen()
         if zt_tomorrow:
             for i in range(len(zt_tomorrow)):
                 zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
                 zt_tomorrow[i][2]=range(zt_tomorrow[i][2])#['★' for j in range(zt_tomorrow[i][2])]
-        return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow})
+        return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow,'dates':dates})
 
     return redirect('index')
 

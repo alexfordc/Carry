@@ -100,16 +100,20 @@ SQL = {
     'limit_init': 'select bazaar,code from stock_code where bazaar in ("sz","sh")',
 }
 
+def get_date():
+    ''' 返回当前日期，格式为：2018-04-04 '''
+    return str(datetime.datetime.now())[:10]
 
 def get_conn(dataName=None):
+    ''' 返回数据库连接 '''
     if dataName==None:
         return pymysql.connect(user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
                            charset='utf8')
     return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
                            charset='utf8')
 
-
 def get_tcp():
+    ''' 返回IP地址 '''
     return '192.168.2.204'#config['U']['hs']
 
 
@@ -551,7 +555,7 @@ class Limit_up:
         if os.path.isfile('log\\jyzt_gp.txt'):
             times = time.localtime(os.path.getmtime('log\\jyzt_gp.txt'))
             this_t = time.localtime()
-            if this_t.tm_mday == times.tm_mday and this_t.tm_hour - times.tm_hour <= 2:
+            if this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday: #  and this_t.tm_hour - times.tm_hour <= 2
                 with open('log\\jyzt_gp.txt', 'r') as f:
                     jyzt = f.read()
                     jyzt = json.loads(jyzt)
@@ -848,8 +852,8 @@ class Zbjs(object):
             self.startMony_k=clo
             self.str_time2=str(datetimes)
             self.is_k=-1
-        if self.is_d==1 and macd<0 and clo<mas:#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
-            if clo-self.jg_d<0:
+        if self.is_d==1 and (macd<0 and clo<mas or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16)):#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
+            if clo-self.jg_d<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
                 self.res[dates]['duo']+=1
                 self.res[dates]['mony']+=(clo-self.jg_d)
                 self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
@@ -857,8 +861,8 @@ class Zbjs(object):
             if clo-self.jg_d>10:
                 self.res[dates]['mony']+=(clo-self.jg_d)
                 self.jg_d=clo
-        if self.is_k==-1 and macd>0 and clo>mas:#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
-            if self.jg_k-clo<0:
+        if self.is_k==-1 and (macd>0 and clo>mas or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16)):#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
+            if self.jg_k-clo<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
                 self.res[dates]['kong']+=1
                 self.res[dates]['mony']+=(self.jg_k-clo)
                 self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
