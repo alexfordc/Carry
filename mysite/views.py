@@ -353,10 +353,45 @@ def zhutu2(rq):
 
 def tongji(rq):
     dates = HSD.get_date()
-    rq_date = rq.GET.get('datetimes')
-    rq_id=rq.GET.get('id')
+    id_name = HSD.get_idName()
+    try:
+        rq_date = rq.GET.get('datetimes')
+        rq_ts = int(rq.GET.get('rq_ts','1'))
+        rq_id=rq.GET.get('id')
+        rq_type=rq.GET.get('type')
+    except:
+        pass
+    if rq_type=='1' and rq_date:
+        dates = rq_date
+        results2=HSD.order_detail(rq_date,rq_ts)
+        huizong = []
+        if results2:
+            print(results2[:3])
+            for i in HSD.IDS:
+                hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
+                hz2 = len([j[6] for j in results2 if j[0] == i and j[6] == 0]) # 多单数量
+                hz3 = len([j[7] for j in results2 if j[0] == i and j[6] == 1]) # 空单数量
+                huizong.append([rq_date, i, hz1, hz2, hz3])
+            print(huizong)
+            results = np.array(results2)
+            id_count = {i: len(results[np.where(results[:, 0] == i)]) for i in HSD.IDS}
+            # results = list(results)
+        if rq_id and rq_id.isdecimal() and rq_id is not '1':
+            ind=len(results2)
+            ind1=0
+            rq_id=int(rq_id)
+            results1=[]
+            while ind1<ind:
+                if rq_id == results2[ind1][0]:
+                    results1.append(results2[ind1])
+                ind1+=1
+            results2=results1
+        else:
+            rq_id='1'
+        ids = HSD.IDS
+        return render(rq, 'tongji.html',locals())
     if rq_date:
-        results,id_name=HSD.calculate_earn(rq_date)
+        results=HSD.calculate_earn(rq_date,rq_ts)
         huizong=[]
         if results:
             for i in HSD.IDS:
@@ -390,7 +425,7 @@ def tongji(rq):
         rq_id='1'
     herys = None
     try:
-        herys,id_name = HSD.tongji()
+        herys = HSD.tongji()
     except Exception as exc:
         logging.error(exc)
     if not herys:
@@ -441,9 +476,9 @@ def getList():
         conn.close()
         if len(res) > 0:
             res = [[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]] for i in res]
-            data2 = HSD.Zbjs().macd2(res)
-            dc = data2.send(None)
-            _ch = [d['cd'] for d in dc]
+            # data2 = HSD.Zbjs().macd2(res)
+            # dc = data2.send(None)
+            _ch = [] # [d['cd'] for d in dc]
             return res,_ch
     # conn = HSD.get_conn('carry_investment')
     # cur = conn.cursor()
@@ -520,7 +555,7 @@ def getkline(rq):
                     'symbol' : 'btc38btccny',
                     'url' : '官网地址', #（选填）
                     'topTickers' : [], #（选填）
-                '_ch': _ch
+               # '_ch': _ch
             }
         }
         return HttpResponse(json.dumps(data),content_type="application/json")
@@ -539,7 +574,7 @@ def getkline(rq):
                     'symbol' : 'carry',
                     'url' : '官网地址', #（选填）
                     'topTickers' : [], #（选填）
-                '_ch': _ch
+               # '_ch': _ch
             }
         }
         return HttpResponse(json.dumps(data),content_type="application/json")
@@ -576,7 +611,7 @@ def getwebsocket(rq):
                 #print('zs.............',zs)
                 if this_time*1000!=times:
 
-                    data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs),'_ch':0}
+                    data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs)} # ,'_ch':0
                     data=json.dumps(data).encode()
                     rq.websocket.send(data)
                 #time.sleep(1)
@@ -605,13 +640,13 @@ def moni(rq):
     dates=rq.POST.get('dates')
     ts=rq.POST.get('ts')
     fa=rq.POST.get('fa')
-    fas=['1','2','3']
+    zbjs=HSD.Zbjs()
     ma=60
     if dates and ts and fa:
-        res,huizong=HSD.Zbjs().main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa)
-        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':fas,'huizong':huizong})
+        res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa)
+        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong})
     dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
     ts=6
-    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':fas})
+    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':zbjs.xzfa})
 
 

@@ -1,6 +1,7 @@
-<form action="" method="GET">
+<form action="" method="GET" id="tongji_form">
 时间：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;
- ID 或 名称： <select name="id">
+   天数： <input type="number" id="rq_ts" name="rq_ts" value="{{rq_ts}}" >&nbsp;&nbsp;&nbsp;
+ ID 或 名称： <select name="id" id="select_id">
     {% load mvote %}
         {% for id in ids %}
             {% if forloop.first %}
@@ -11,5 +12,6 @@
             <option value="{{ id }}">{{ id_name|name_option:id }}</option>
         {% endfor %}
     </select>&nbsp;&nbsp;
- <input type="submit" name=""><br/><br/>
+ <input type="button" onclick="doSubmitForm(1)" value="查询">&nbsp;&nbsp;
+    <input type="button" onclick="doSubmitForm()" value="跟单查询"><br/><br/>
 </form>

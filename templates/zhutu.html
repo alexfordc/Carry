@@ -68,7 +68,8 @@ function loadOneColumn() {
             myChart.hideLoading();    //隐藏加载动画
             myChart.setOption({        //加载数据图表
                 title: {
-                    text: '总点数：'+result.counts+'  时间：'+times
+                    text: '总点数：'+result.counts+'  时间：'+times,
+                    x:'center'
                 },
                 xAxis: {
                     data: names

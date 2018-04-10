@@ -48,7 +48,72 @@
         {% endfor %}
 
         </table>
-    {% elif results %}
+        {% elif results2 %}
+        <table border="1" class="dataframe">
+        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
+        <tr>
+            <th>日期</th>
+      <th>ID</th>
+        <th>赚得金额</th>
+        <th>多单数量</th>
+        <th>空单数量</th>
+            <th>下单总数</th><th></th><th></th><th></th><th>名  称</th>
+        </tr>
+        {% for i in huizong %}
+        <tr>
+            <td>{{ i.0 }}</td>
+        <td>{{ i.1 }}</td>
+        <td>{{ i.2|floatformat:1 }}</td>
+        <td>{{ i.3 }}</td>
+        <td>{{ i.4 }}</td>
+        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}">{{ id_name|names:i.1 }}</a></td>
+        </tr>
+        {% endfor %}
+        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
+    <tr>
+      <th>ID名称</th>
+      <th>开仓时间</th>
+      <th>开仓价格</th>
+      <th>平仓时间</th>
+      <th>平仓价格</th>
+      <th>盈亏</th>
+        <th>多空</th>
+        <th>手数</th>
+        <th>交易状态</th>
+        <th></th>
+
+    </tr>
+            {% for i in results2 %}
+    <tr>
+      <td>{{ id_name|names:i.0 }}</td>
+      <td>{{ i.1 }}</td>
+      <td>{{ i.2 }}</td>
+      {% if i.1 > i.3 %}
+        <td>未平仓</td>
+        {% else %}
+        <td>{{ i.3 }}</td>
+        {% endif %}
+      <td>{{ i.4 }}</td>
+      <td>{{ i.5 }}</td>
+        <td>{{ i.6|yesno:"空,多,未知" }}</td>
+      <td>{{ i.7|floatformat:0 }}</td>
+        {% if i.8 == 2 %}
+        <td>已平仓</td>
+        {% elif i.8 == 1 %}
+        <td>开仓</td>
+        {% elif i.8 == 0 %}
+        <td>挂单中</td>
+        {% else %}
+        <td></td>
+        {% endif %}
+      <!--<td>{{ i.9 }}</td>-->
+        <td>{{ id_name|names:i.0 }}</td>
+    </tr>
+        {% endfor %}
+
+        </table>
+
+        {% elif results %}
         <table border="1" class="dataframe">
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
@@ -100,11 +165,23 @@
         {% endfor %}
 
         </table>
+
     {% else %}
         <h3 style="color:green;">暂无数据</h3>
     {% endif %}
     </div>
     <script type="text/javascript">
+    function doSubmitForm(ty=null){
+        if(ty==null){
+        var tongji_form=document.getElementById('tongji_form');
+        tongji_form.submit();
+        }else{
+        var date=document.getElementById('datetimes').value;
+        var id=document.getElementById('select_id').value;
+        var rq_ts=document.getElementById('rq_ts').value;
+        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&rq_ts='+rq_ts;
+        }
+     }
         $('table').css({'width': '900px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
         $("tr:odd").css({"background-color": "#cccc33"});
         $('tr:even').css({'background-color': '#00cc00'});

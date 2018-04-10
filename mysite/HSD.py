@@ -98,6 +98,7 @@ SQL = {
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
     'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
     'limit_init': 'select bazaar,code from stock_code where bazaar in ("sz","sh")',
+    "order_detail":"SELECT Account_ID,OpenTime,OpenPrice,CloseTime,ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 def get_date():
@@ -315,9 +316,12 @@ def get_price():
 IDS = []  # 初始化账号列表
 
 
-def get_idName(cur):
+def get_idName(cur=None):
+    conn=get_conn('carry_investment')
+    cur=conn.cursor()
     cur.execute(SQL['get_idName'])
     id_name = cur.fetchall()
+    conn.close()
     id_name = {i: j for i, j in id_name}
     return id_name
 
@@ -340,14 +344,30 @@ def tongji():
     sql = SQL['tongji']
     cur.execute(sql)
     results = cur.fetchall()
-    id_name = get_idName(cur)
     conn.commit()
     conn.close()
     IDS = [i[0] for i in results]
-    return results, id_name
+    return results
 
+def get_date_add_day(dates,ts):
+    asd = dates.split('-')
+    asd = datetime.datetime(int(asd[0]), int(asd[1]), int(asd[2])) + datetime.timedelta(days=ts)
+    return str(asd)[:10]
 
-def calculate_earn(dates):
+def order_detail(dates,ts):
+    global IDS
+    conn=get_conn('carry_investment')
+    cur=conn.cursor()
+    dates_end=get_date_add_day(dates,ts)
+    sql=SQL['order_detail']
+    cur.execute(sql.format(dates,dates_end))
+    data=cur.fetchall()
+    conn.commit()
+    conn.close()
+    IDS = set([i[0] for i in data])
+    return data
+
+def calculate_earn(dates,ts):
     '''计算所赚。参数：‘2018-01-01’
     返回值：[[开仓时间，单号，ID，平仓时间，价格，开仓0平仓1，做多0做空1，赚得金额，正向跟单，反向跟单]...]'''
     global IDS
@@ -355,13 +375,10 @@ def calculate_earn(dates):
     cur = conn.cursor()
     sql = SQL['calculate_earn']
     if dates:
-        asd = dates.split('-')
-        asd = datetime.datetime(int(asd[0]), int(asd[1]), int(asd[2])) + datetime.timedelta(days=1)
-        dates1 = str(asd)[:10]
+        dates1 = get_date_add_day(dates,ts)
         sql += " and F.`datetime`>'{}' and F.`datetime`<'{}'".format(dates, dates1)
     cur.execute(sql)
     com = cur.fetchall()
-    id_name = get_idName(cur)
     conn.commit()
     conn.close()
     result = []
@@ -387,7 +404,7 @@ def calculate_earn(dates):
             # 开仓时间，单号，ID，平仓时间，价格，做多0做空1，赚得金额，正向跟单，反向跟单
             result.append(list(com[in1][:3]) + [com[in2][0], com[in1][4], com[in1][6], com[in1][-1], price_z, price_f])
     IDS = ids
-    return result, id_name
+    return result
 
 
 class Limit_up:
@@ -599,6 +616,7 @@ class Zbjs(object):
         self.str_time2 = '' if self.is_k == 0 else self.str_time2  # 做空开仓的时间
         self.jg_d = 0 if self.is_d == 0 else self.jg_d  # 做多开仓的收盘价
         self.jg_k = 0 if self.is_k == 0 else self.jg_k  # 做空开仓的收盘价
+        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4}  # 执行方案
 
     def get_data(self,dates):
         conn=get_conn('stock_data')
@@ -951,9 +969,38 @@ class Zbjs(object):
                 self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
                 self.is_k=0
 
+    def fa4(self,dt3,dates):
+        dt2 = dt3[-1:][0]
+        datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+        self.mul,self.cd=mul,cd
+        if clo>mas and mul>1.5 and self.is_d==0:
+            self.res[dates]['duo'] += 1
+            self.jg_d=clo
+            self.startMony_d=clo
+            self.str_time1=str(datetimes)
+            self.is_d=1
+        if clo<mas and mul<-1.5 and self.is_k==0:
+            self.res[dates]['kong'] += 1
+            self.jg_k=clo
+            self.startMony_k=clo
+            self.str_time2=str(datetimes)
+            self.is_k=-1
+        if self.is_d==1 and macd<0 and clo<mas:#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
+            if clo-self.startMony_d>100:
+                self.res[dates]['mony']+=(clo-self.jg_d)
+                self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
+                self.is_d=0
+
+        if self.is_k==-1 and macd>0 and clo>mas:#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
+            if self.startMony_k-clo>100:
+                self.res[dates]['mony']+=(self.jg_k-clo)
+                self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
+                self.is_k=0
+
+
 
     def main2(self,_ma,_dates, _ts,_fa):
-        xzfa = {'1':self.fa1,'2':self.fa2,'3':self.fa3}  # 执行方案
         i=0
         send_nan=0
         dt3=None
@@ -983,7 +1030,7 @@ class Zbjs(object):
                 if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16):
                     continue
 
-                xzfa[_fa](dt3=dt3,dates=dates)
+                self.xzfa[_fa](dt3=dt3,dates=dates)
                 if self.mul>1.5:
                     self.res[dates]['dy']+=1
                 if self.mul<-1.5:

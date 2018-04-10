@@ -9,7 +9,7 @@ def names(d, i):
     有对应的名称则返回空字符串 """
     if isinstance(d,dict):
         name = d.get(i)
-        return name if name else ''
+        return name if name else i
     return ''
 
 
