@@ -199,8 +199,8 @@ var $container = $('#works-container');
         </div>
     </header>
     <!--<div class="wrapper">-->
-    <div class="palette">
-        <div class="palette_item_wrapper" style="position: absolute;top: -165px;left:-665px;z-index:999;width:50px;height:50px;">
+    <div class="palette" id="palette_colors">
+        <div class="palette_item_wrapper" style="position: relative;top:124px;left:8px;z-index:999;width:50px;height:50px;">
             <div data-color="#e169c3" class="palette_color"></div>
             <div data-color="#b569e1" class="palette_color"></div>
             <div data-color="#7169e1" class="palette_color"></div>
@@ -210,36 +210,22 @@ var $container = $('#works-container');
             <div data-color="#bee169" class="palette_color"></div>
             <div data-color="#e1a169" class="palette_color"></div>
             <div data-color="#83091d" class="palette_color"></div>
-            <div data-color="#fdfdfd" class="palette_color"></div>
+            <div data-color="#cce8cf" class="palette_color"></div> <!-- fdfdfd CCE8CF-->
         </div>
-        <div class="palette_color__main" style="position: absolute;top: -580px;left:-1350px;z-index:999;width:60px;height:60px;"></div>
+        <div class="palette_color__main" style="z-index:999;width:60px;height:60px;
+    background: -webkit-radial-gradient(circle, red, yellow, green,blue);
+    background: -o-radial-gradient(circle, red, yellow, green,blue);
+    background: -moz-radial-gradient(circle, red, yellow, green,blue);
+    background: radial-gradient(circle, red, yellow, green,blue); /* 标准的语法（必须放在最后） */
+"></div>
     </div>
     <!--</div>-->
 
-
-
-<script type="text/javascript" src='jquery-1.7.1.min.js'></script>
 <script type="text/javascript">
 var _$paletteElement = $('.palette_color');
-
-function _colorizePaletteItems(){
-    $.each(_$paletteElement, function(i){
-           $(this).css('background-color', $(this).data('color'));
-    })
-}
-
-function _togglePalette(){
-    $('.palette_color__main').on('click', function(){
-        $('.palette').toggleClass('palette__opened');
-    })
-}
-
-function _initSetColor(){
-    $('.palette_color').on('click', function(){
-        var color = $(this).data('color');
-        _setColor(color);
-    })
-}
+var div = document.getElementById("palette_colors");
+var dragFlag = false;
+var x,y;
 
 //写入cookie，两个参数，一个是cookie的名称，一个是值
 function color_SetCookie(name,value){
@@ -255,6 +241,55 @@ function color_getCookie(name){
  if (arr != null) return unescape(arr[2]); return null;
 }
 
+div.onmousedown = function (e) {
+    e = e || window.event;
+    x = e.clientX - div.offsetLeft + 1350;
+    y = e.clientY - div.offsetTop + 580;
+    dragFlag = true;
+};
+document.onmousemove = function (e) {
+    if (dragFlag) {
+        e = e || window.event;
+        var left=e.clientX - x + "px";
+        var top=e.clientY - y + "px";
+        div.style.left = left;
+        div.style.top  = top;
+        color_SetCookie("div_left",left);
+        color_SetCookie("div_top",top);
+    }
+};
+document.onmouseup = function (e) {
+    dragFlag = false;
+};
+function _div_location(){
+    var left=color_getCookie("div_left");
+    var top=color_getCookie("div_top");
+    if(left==null || top==null){
+        top="-580px";
+        left="-1350px";
+    }
+    div.style.left = left;
+    div.style.top  = top;
+}
+
+
+function _colorizePaletteItems(){
+    $.each(_$paletteElement, function(i){
+           $(this).css('background-color', $(this).data('color'));
+    })
+}
+function _togglePalette(){
+    $('.palette_color__main').on('click', function(){
+        $('.palette').toggleClass('palette__opened');
+    })
+}
+function _initSetColor(){
+    $('.palette_color').on('click', function(){
+        var color = $(this).data('color');
+        _setColor(color);
+    })
+}
+
 function _setColor(color){
     $('.palette_color__main').css('background', color);
     color_SetCookie('color_cookie',color);
@@ -267,6 +302,7 @@ document.body.style.background=color;
 _colorizePaletteItems();
 _togglePalette();
 _initSetColor();
+_div_location(); //div定位
 </script>
 
         {% block center_cen %}{% endblock %}
