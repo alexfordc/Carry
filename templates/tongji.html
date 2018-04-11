@@ -52,12 +52,12 @@
         <table border="1" class="dataframe">
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
-            <th>日期</th>
+            <th>开始日期</th>
       <th>ID</th>
         <th>赚得金额</th>
         <th>多单数量</th>
         <th>空单数量</th>
-            <th>下单总数</th><th></th><th></th><th></th><th>名  称</th>
+            <th>下单总数</th><th>赢利单数</th><th>准确率（%）</th><th>温馨提示</th><th>名  称</th>
         </tr>
         {% for i in huizong %}
         <tr>
@@ -66,7 +66,19 @@
         <td>{{ i.2|floatformat:1 }}</td>
         <td>{{ i.3 }}</td>
         <td>{{ i.4 }}</td>
-        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}">{{ id_name|names:i.1 }}</a></td>
+        <td>{{ id_count|names:i.1 }}</td><td>{{ i.5 }}</td><td>{{ i.6 }}</td>
+            <td>
+                {% if i.6 >= 80 %}
+                看好你
+                {% elif i.6 >= 70 %}
+                稳稳保持
+                {% elif i.6 >= 60 %}
+                继续努力
+                {% else %}
+                加油哦
+                {% endif %}
+            </td>
+            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ rq_ts }}">{{ id_name|names:i.1 }}</a></td>
         </tr>
         {% endfor %}
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
@@ -131,7 +143,7 @@
         <td>{{ i.2|floatformat:1 }}</td>
         <td>{{ i.3 }}</td>
         <td>{{ i.4 }}</td>
-        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?datetimes={{ i.0 }}&id={{ i.1 }}">{{ id_name|names:i.1 }}</a></td>
+        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ rq_ts }}">{{ id_name|names:i.1 }}</a></td>
         </tr>
         {% endfor %}
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>

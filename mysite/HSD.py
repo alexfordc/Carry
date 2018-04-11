@@ -616,12 +616,18 @@ class Zbjs(object):
         self.str_time2 = '' if self.is_k == 0 else self.str_time2  # 做空开仓的时间
         self.jg_d = 0 if self.is_d == 0 else self.jg_d  # 做多开仓的收盘价
         self.jg_k = 0 if self.is_k == 0 else self.jg_k  # 做空开仓的收盘价
-        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4}  # 执行方案
+        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5}  # 执行方案
+        self.up_c=0 # 上涨数
+        self.down_c=0 # 下跌数
 
-    def get_data(self,dates):
-        conn=get_conn('stock_data')
-        cur=conn.cursor()
-        sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}'".format(dates)
+    def get_data(self,dates,database):
+        if database=='1':
+            conn = get_conn('carry_investment')
+            sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE DATE_FORMAT(DATETIME,'%Y-%m-%d')='{}'".format(dates)
+        else:
+            conn = get_conn('stock_data')
+            sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}'".format(dates)
+        cur = conn.cursor()
         cur.execute(sql)
         da=cur.fetchall()
         #df.columns=['date','open','high','low','close','vol']
@@ -663,7 +669,7 @@ class Zbjs(object):
             else:
                 return False
         for i in range(len(da)):
-            dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':da[i][0],'open':da[i][1],'high':da[i][2],'low':da[i][3],'close':da[i][4],'cd':0})
+            dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':da[i][0],'open':da[i][1],'high':da[i][2],'low':da[i][3],'close':da[i][4],'cd':0,'maidian':0})
             if i == long-1:
                 ac = da[i - 1][4]
                 this_c = da[i][4]
@@ -705,7 +711,7 @@ class Zbjs(object):
                 l1 = dc[i]['low']
                 c1 = dc[i]['close']
                 if abs(dc[i]['mul']) > 1.5 and body_k(o1, h1, l1, c1):
-                    for j in range(i - 1, i - 15, -1):
+                    for j in range(i - 2, i - 15, -1):
                         o2 = dc[j]['open']
                         h2 = dc[j]['high']
                         l2 = dc[j]['low']
@@ -714,17 +720,27 @@ class Zbjs(object):
                             if abs(dc[j]['mul']) > 1.5 and ((o1 > c1 and o2 > c2) or (o1 < c1 and o2 < c2)) and body_k(o2, h2, l2, c2):
                                 # cd=[df.ix[i,'open']-df.ix[j,'open'],df.ix[i,'high']-df.ix[j,'high'],df.ix[i,'low']-df.ix[j,'low'],df.ix[i,'close']-df.ix[j,'close']]
                                 if o1 < c1:
-                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4 and c1 > c2 and o2 < o1 < c2 and c2 < c1:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5)
-                                        dc[j]['cd'] = cds
+                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4 and o2 < o1 < c2 < c1:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5)
+                                        #dc[j]['cd'] = cds
                                         dc[i]['cd'] = cds
                                         cds += 1
                                         break
                                 elif o1 > c1:
-                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4 and c1 < c2 < o1 and c1 < c2: #  or (o2 - c1) / (o1 - c2) < -0.5)
-                                        dc[j]['cd'] = -cds
+                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4 and c1 < c2 < o1 < o2: #  or (o2 - c1) / (o1 - c2) < -0.5)
+                                        #dc[j]['cd'] = -cds
                                         dc[i]['cd'] = -cds
                                         cds += 1
                                         break
+
+                            elif abs(dc[j]['mul']) > 1.4 and (o1 > c1 and o2 < c2 and (h1 <= h2 and l1 <= l2 or c1 <= o2)):  # and body_k(o2, h2, l2,c2):
+                                if (o1 - o2) / (c2 - c1) > 0.4:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5)  df.ix[j, 'maidian'] == 0 and
+                                    dc[i]['maidian'] = -cds
+                                    break
+
+                            elif abs(dc[j]['mul']) > 1.4 and (o1 < c1 and o2 > c2) and (h1 >= h2 and l1 >= l2 or c1 >= o2):  # and body_k(o2, h2, l2,c2):
+                                if (o2 - o1) / (c1 - c2) > 0.4:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5) df.ix[j, 'maidian'] == 0 and
+                                    dc[i]['maidian'] = cds
+                                    break
                         except:
                             continue
                 # if abs(dc[i]['mul']) > 1.5:
@@ -744,19 +760,20 @@ class Zbjs(object):
             data=yield dc
             ind=len(dc)
             if isinstance(data,tuple):
-                dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'high':data[2],'low':data[3],'close':data[4],'cd':0})
+                dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'high':data[2],'low':data[3],'close':data[4],'cd':0,'maidian':0})
+                try:
+                    dc[ind]['ema_short'] = dc[ind-1]['ema_short'] * (short-2) / short + dc[ind]['close'] * 2 / short  # 当日EMA(12)
+                    dc[ind]['ema_long'] = dc[ind-1]['ema_long'] * (long-2) / long + dc[ind]['close'] * 2 / long  # 当日EMA(26)
+                    dc[ind]['diff'] = dc[ind]['ema_short'] - dc[ind]['ema_long']
+                    dc[ind]['dea'] = dc[ind-1]['dea'] * (phyd-2) / phyd + dc[ind]['diff'] * 2 / phyd
+                    dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
 
-                dc[ind]['ema_short'] = dc[ind-1]['ema_short'] * (short-2) / short + dc[ind]['close'] * 2 / short  # 当日EMA(12)
-                dc[ind]['ema_long'] = dc[ind-1]['ema_long'] * (long-2) / long + dc[ind]['close'] * 2 / long  # 当日EMA(26)
-                dc[ind]['diff'] = dc[ind]['ema_short'] - dc[ind]['ema_long']
-                dc[ind]['dea'] = dc[ind-1]['dea'] * (phyd-2) / phyd + dc[ind]['diff'] * 2 / phyd
-                dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
-
-                dc[ind]['ma']=sum(dc[ind-j]['close'] for j in range(ma))/ma # 移动平均值
-                std_pj=sum(dc[ind-j]['close']-dc[ind-j]['open']  for j in range(ma))/ma
-                dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind-j]['open']-std_pj)**2 for j in range(ma))/ma # 方差
-                dc[ind]['std']=float(np.sqrt(dc[ind]['var'])) # 标准差
-
+                    dc[ind]['ma']=sum(dc[ind-j]['close'] for j in range(ma))/ma # 移动平均值
+                    std_pj=sum(dc[ind-j]['close']-dc[ind-j]['open']  for j in range(ma))/ma
+                    dc[ind]['var']=sum((dc[ind-j]['close']-dc[ind-j]['open']-std_pj)**2 for j in range(ma))/ma # 方差
+                    dc[ind]['std']=float(np.sqrt(dc[ind]['var'])) # 标准差
+                except Exception as exc:
+                    logging.error(exc)
 
                 if dc[ind]['macd']>=0 and dc[ind-1]['macd']<0:
                     co+=1
@@ -783,17 +800,27 @@ class Zbjs(object):
                                     o2, h2, l2, c2):
                                 # cd=[df.ix[i,'open']-df.ix[j,'open'],df.ix[i,'high']-df.ix[j,'high'],df.ix[i,'low']-df.ix[j,'low'],df.ix[i,'close']-df.ix[j,'close']]
                                 if o1 < c1:
-                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4 and c1 > c2 and o2 < o1 < c2 and c2 < c1:
-                                        dc[j]['cd'] = cds
+                                    if dc[j]['cd'] == 0 and (c2 - o1) / (c1 - o2) > 0.4:# and o2 < o1 < c2 < c1:
+                                        #dc[j]['cd'] = cds
                                         dc[ind]['cd'] = cds
                                         cds += 1
                                         break
                                 elif o1 > c1:
-                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4 and c1 < c2 < o1 and c1 < c2:
-                                        dc[j]['cd'] = -cds
+                                    if dc[j]['cd'] == 0 and (o1 - c2) / (o2 - c1) > 0.4:# and c1 < c2 < o1 < o2:
+                                        #dc[j]['cd'] = -cds
                                         dc[ind]['cd'] = -cds
                                         cds += 1
                                         break
+
+                            elif abs(dc[j]['mul']) > 1.4 and (o1 > c1 and o2 < c2 and (h1 <= h2 and l1 <= l2 or c1 <= o2)):  # and body_k(o2, h2, l2,c2):
+                                if (o1 - o2) / (c2 - c1) > 0.4:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5)  df.ix[j, 'maidian'] == 0 and
+                                    dc[ind]['maidian'] = -cds
+                                    break
+
+                            elif abs(dc[j]['mul']) > 1.4 and (o1 < c1 and o2 > c2) and (h1 >= h2 and l1 >= l2 or c1 >= o2):  # and body_k(o2, h2, l2,c2):
+                                if (o2 - o1) / (c1 - c2) > 0.4:  # and o1<o2<c1 and c2>c1  or (c1 - o2) / (c2 - o1) < -0.5) df.ix[j, 'maidian'] == 0 and
+                                    dc[ind]['maidian'] = cds
+                                    break
                         except Exception as exc:
                             continue
                 # if abs(dc[ind]['mul']) > 1.5:
@@ -998,9 +1025,41 @@ class Zbjs(object):
                 self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
                 self.is_k=0
 
+    def fa5(self,dt3,dates):
+        dt2 = dt3[-1]
+        datetimes, ope, clo, macd, mas, std, reg, mul, cd ,maidian= dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['maidian']
+        self.mul,self.cd=mul,cd
+        if cd > 0 and self.is_d == 0:
+            self.res[dates]['duo'] += 1
+            self.jg_d = clo
+            self.startMony_d=clo
+            self.str_time1 = str(datetimes)
+            self.is_d = 1
+        if cd < 0 and self.is_k == 0:
+            self.res[dates]['kong'] += 1
+            self.jg_k = clo
+            self.startMony_k=clo
+            self.str_time2 = str(datetimes)
+            self.is_k = -1
+        self.up_c+=1 if (cd>0 or maidian>0) else 0
+        self.down_c+=1 if (cd<0 or maidian<0) else 0
+        if self.is_d == 1 and (self.down_c>self.up_c and self.down_c>1 or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+            self.res[dates]['mony'] += (clo - self.startMony_d)
+            self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
+            self.is_d = 0
+            self.up_c=0
+            self.down_c=0
+
+        if self.is_k == -1 and (self.up_c>self.down_c and self.up_c>1 or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+            self.res[dates]['mony'] += (self.startMony_k - clo)
+            self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
+            self.is_k = 0
+            self.up_c = 0
+            self.down_c = 0
 
 
-    def main2(self,_ma,_dates, _ts,_fa):
+    def main2(self,_ma,_dates, _ts,_fa,database):
         i=0
         send_nan=0
         dt3=None
@@ -1009,7 +1068,7 @@ class Zbjs(object):
             if dates>datetime.datetime.now():
                 break
             dates=str(dates)[:10]
-            da=self.get_data(dates)
+            da=self.get_data(dates,database)
             if len(da)<1:
                 i+=1
                 send_nan+=1

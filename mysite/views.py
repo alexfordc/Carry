@@ -241,7 +241,6 @@ def getData(rq):
     '''ajax请求数据'''
     record_from(rq)
     types=rq.GET.get('types')
-    print('types.......................................',types)
     if rq.method == 'GET' and rq.is_ajax():
         data = read_from_cache('weight')
         if is_time(data):
@@ -371,7 +370,9 @@ def tongji(rq):
                 hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
                 hz2 = len([j[6] for j in results2 if j[0] == i and j[6] == 0]) # 多单数量
                 hz3 = len([j[7] for j in results2 if j[0] == i and j[6] == 1]) # 空单数量
-                huizong.append([rq_date, i, hz1, hz2, hz3])
+                hz4 = len([j[5] for j in results2 if j[0] == i and j[5] > 0]) # 赢利单数
+                hz5 = int(hz4/(hz2+hz3)*100)  # 正确率
+                huizong.append([rq_date, i, hz1, hz2, hz3, hz4, hz5])
             print(huizong)
             results = np.array(results2)
             id_count = {i: len(results[np.where(results[:, 0] == i)]) for i in HSD.IDS}
@@ -640,10 +641,11 @@ def moni(rq):
     dates=rq.POST.get('dates')
     ts=rq.POST.get('ts')
     fa=rq.POST.get('fa')
+    database=rq.POST.get('database')
     zbjs=HSD.Zbjs()
     ma=60
     if dates and ts and fa:
-        res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa)
+        res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
         return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong})
     dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
     ts=6

@@ -5,16 +5,19 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/templatetags/mvote.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/templatetags/mvote.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/img/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/img/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/kline.assistant.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/kline.assistant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/kline.draw.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/kline.draw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/featured/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/featured/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/featured/featured-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/featured/featured-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/featured/featured-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/featured/featured-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/featured/featured-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/featured/featured-3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/flickr/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/flickr/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/preview/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/preview/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/work/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/work/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/moni.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moni.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/tongji.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tongji.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/zhutu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/zhutu.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,48 +53,45 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14825">
-              <caret line="616" column="30" selection-start-line="616" selection-start-column="30" selection-end-line="616" selection-end-column="30" />
+            <state relative-caret-position="510">
+              <caret line="647" column="27" selection-start-line="647" selection-start-column="27" selection-end-line="647" selection-end-column="27" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
-                <marker date="1523254351110" expanded="true" signature="3311:3335" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="5262:5369" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="6065:6112" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="6604:6692" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="10051:10100" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="16831:16926" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="17062:17097" ph="..." />
-                <marker date="1523254351110" expanded="true" signature="17205:17289" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="3311:3335" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="5262:5369" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="6065:6112" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="6604:6692" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="9987:10036" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="16914:17009" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="17145:17180" ph="..." />
+                <marker date="1523414566103" expanded="true" signature="17288:17372" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kline.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/kline.html">
+      <file leaf-file-name="moni.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/moni.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13675">
-              <caret line="548" column="13" selection-start-line="548" selection-start-column="13" selection-end-line="548" selection-end-column="13" />
+            <state relative-caret-position="404">
+              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
               <folding>
-                <element signature="n#style#0;n#div#7;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#8;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#8;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#9;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#9;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#10;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#form#0;n#div#0;n#div#10;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#form#0;n#div#0;n#div#10;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#6;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#1441#1447#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kline.draw.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+            <state relative-caret-position="400">
+              <caret line="251" column="12" lean-forward="true" selection-start-line="251" selection-start-column="12" selection-end-line="251" selection-end-column="12" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,17 +99,8 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="818">
-              <caret line="764" column="33" selection-start-line="764" selection-start-column="33" selection-end-line="764" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zhutu.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/zhutu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="72" column="18" lean-forward="true" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+            <state relative-caret-position="503">
+              <caret line="1053" column="69" selection-start-line="1053" selection-start-column="69" selection-end-line="1053" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -126,15 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>画</find>
-      <find>function Kline</find>
-      <find>getList</find>
-      <find>30</find>
-      <find>create_class</find>
-      <find>input</find>
-      <find>15分钟</find>
-      <find>默认</find>
-      <find>15</find>
       <find>15min</find>
       <find>15m</find>
       <find>1m</find>
@@ -156,6 +138,15 @@
       <find>title</find>
       <find>GLOBAL_VAR.KLineData</find>
       <find>data2</find>
+      <find>height</find>
+      <find>wrapper</find>
+      <find>id=&quot;header&quot;</find>
+      <find>palette_color__main</find>
+      <find>header_wrap</find>
+      <find>database</find>
+      <find>moni</find>
+      <find>get_data</find>
+      <find>logging</find>
     </findStrings>
     <replaceStrings>
       <replace>Index</replace>
@@ -186,7 +177,6 @@
         <option value="$PROJECT_DIR$/templates/zhexian.html" />
         <option value="$PROJECT_DIR$/aaa.ini" />
         <option value="$PROJECT_DIR$/log/logging.log" />
-        <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/404.html" />
         <option value="$PROJECT_DIR$/mysite/sub_client.py" />
@@ -214,23 +204,24 @@
         <option value="$PROJECT_DIR$/../../2018-3-21/zb2.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/demo/AndBefore-2018-3/TradeDate.py" />
         <option value="$PROJECT_DIR$/templates/zhutu2.html" />
-        <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/serv.py" />
         <option value="$PROJECT_DIR$/static/css/kline.css" />
         <option value="$PROJECT_DIR$/../../2018-3-29/Carry/mysite/HSD.py" />
-        <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/Carry/settings.py" />
         <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/templates/zhangting.html" />
         <option value="$PROJECT_DIR$/templates/base/form.html" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/mysite/templatetags/mvote.py" />
-        <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/static/js/kline.assistant.js" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/zhutu.html" />
+        <option value="$PROJECT_DIR$/templates/tongji.html" />
+        <option value="$PROJECT_DIR$/static/css/style.css" />
+        <option value="$PROJECT_DIR$/templates/moni.html" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/templates/base/base.html" />
       </list>
     </option>
   </component>
@@ -240,10 +231,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="904" />
+    <option name="width" value="1023" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -279,17 +269,6 @@
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="mysite" type="462c0819:PsiDirectoryNode" />
               <item name="templatetags" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
@@ -956,7 +935,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522806335746</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="2018-4-10">
+      <created>1523323228356</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1523323228356</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -983,16 +969,16 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.113804005" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08693361" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" weight="0.18865867" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32824427" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.18647765" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.16233766" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1021,7 +1007,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="标题修改" />
     <MESSAGE value="视图增改" />
     <MESSAGE value="配置文件设置" />
     <MESSAGE value="数据库配置修改" />
@@ -1046,7 +1031,8 @@
     <MESSAGE value="2018-3-30" />
     <MESSAGE value="2018-4-3" />
     <MESSAGE value="2018-4-4" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-4-4" />
+    <MESSAGE value="2018-4-10" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-4-10" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1060,13 +1046,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18750">
-          <caret line="764" column="33" selection-start-line="764" selection-start-column="33" selection-end-line="764" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../2018-3-8/data_37.py" />
     <entry file="file://$PROJECT_DIR$/../../2018-3-9/data_37.py" />
     <entry file="file://$PROJECT_DIR$/../../2018-3-9/xunlian.py" />
@@ -1199,13 +1178,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="173" column="25" selection-start-line="173" selection-start-column="25" selection-end-line="173" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sp_struct.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1262,13 +1234,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/moni.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -1290,24 +1255,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="69" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/templatetags/mvote.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1332,27 +1283,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/zhutu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14825">
-          <caret line="616" column="30" selection-start-line="616" selection-start-column="30" selection-end-line="616" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-            <marker date="1523254351110" expanded="true" signature="3311:3335" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="5262:5369" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="6065:6112" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="6604:6692" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="10051:10100" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="16831:16926" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="17062:17097" ph="..." />
-            <marker date="1523254351110" expanded="true" signature="17205:17289" ph="..." />
-          </folding>
+        <state relative-caret-position="217">
+          <caret line="72" column="18" lean-forward="true" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="724" selection-start-line="724" selection-end-line="724" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/kline.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13675">
+        <state relative-caret-position="817">
           <caret line="548" column="13" selection-start-line="548" selection-start-column="13" selection-end-line="548" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#div#7;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1375,17 +1329,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+    <entry file="file://$PROJECT_DIR$/templates/tongji.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="818">
-          <caret line="764" column="33" selection-start-line="764" selection-start-column="33" selection-end-line="764" selection-end-column="33" />
+        <state relative-caret-position="25">
+          <caret line="142" column="40" selection-start-line="142" selection-start-column="40" selection-end-line="142" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#th#0;n#tr#0;n#table#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#table#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#2;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/zhutu.html">
+    <entry file="file://$PROJECT_DIR$/templates/moni.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="72" column="18" lean-forward="true" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+        <state relative-caret-position="404">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
+          <folding>
+            <element signature="e#1441#1447#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="647" column="27" selection-start-line="647" selection-start-column="27" selection-end-line="647" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+            <marker date="1523414566103" expanded="true" signature="3311:3335" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="5262:5369" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="6065:6112" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="6604:6692" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="9987:10036" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="16914:17009" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="17145:17180" ph="..." />
+            <marker date="1523414566103" expanded="true" signature="17288:17372" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="1053" column="69" selection-start-line="1053" selection-start-column="69" selection-end-line="1053" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="251" column="12" lean-forward="true" selection-start-line="251" selection-start-column="12" selection-end-line="251" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

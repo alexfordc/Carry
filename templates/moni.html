@@ -36,7 +36,11 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         <option value={{i}} >方案{{i}}</option>
         {% endif %}
         {% endfor %}
-    </select> &nbsp;
+        </select> &nbsp;
+        数据库：<select name="database">
+        <option value="1">数据库1</option>
+        <option value="2">数据库2</option>
+    </select>
                 <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="button" value="方案备注" onclick="openLogin()"/>
     </form><br/>
