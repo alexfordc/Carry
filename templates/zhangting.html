@@ -17,15 +17,26 @@
         </td>
     </tr>
     {% endfor %}
-    {% endif %}
+    {% elif jyzt != None %}
+    <form action="" method="GET">
+        时间：<input type="date" name="date" value="{{ dates }}">&nbsp;
+        <input type="submit">&nbsp;&nbsp;&nbsp;&nbsp;{% include 'base/return.html' %}
+    </form><br/><br/>
     {% if zt_tomorrow %}
         <caption style="color:red"><span>将要上涨股票</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>日期：{{dates}}</span></caption>
     <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>推荐指数</th></tr>
     {% for z in zt_tomorrow %}
-    <tr bgcolor="{% cycle '#00cc00' '#cccc33' %}"><td>{{ forloop.counter }}<td>{{ z.1|default:'' }}</td><td>{{ z.0 }}</td>
+    <tr bgcolor="{% cycle '#00cc00' '#cccc33' %}"><td>{{ forloop.counter }}<td>{{ z.1|default:'' }}</td><td><a href="{% url 'showPicture' %}?code={{ z.3 }}"><font color="blue">{{ z.0 }}</font></a></td>
         <td style="color:red;">{% for zs in z.2 %}★{% endfor %}</td>
     </tr>
     {% endfor %}
+    {% elif jyzt == True %}
+    <h3 style="color:green;">暂时没有数据！</h3>
+    {% endif %}
+    {% if jyzt == False %}
+    <h3 style="color:green;">请选择日期后查询！</h3>
+    {% endif %}
+
     {% endif %}
 </table>
     </div>

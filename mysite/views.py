@@ -17,7 +17,7 @@ import logging
 import random
 import zmq
 from zmq import Context
-
+import socket
 
 from mysite import HSD
 from mysite import models
@@ -95,7 +95,10 @@ def stockData(rq):
         data[:, 0] = [i.strftime('%Y/%m/%d') for i in data[:, 0]]
         data=data.tolist()
         '''
-        h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r') #r'D:\tools\Tools\stock_data.hdf5'
+        if socket.gethostname()!='doc':
+            h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r') #r'D:\tools\Tools\stock_data.hdf5'
+        else:
+            h5 = h5py.File(r'D:\tools\Tools\stock_data.hdf5')
         data1 = h5['stock/' + code + '.day'][:].tolist()
         data = []
         for i in range(len(data1)):
@@ -365,7 +368,6 @@ def tongji(rq):
         results2=HSD.order_detail(rq_date,rq_ts)
         huizong = []
         if results2:
-            print(results2[:3])
             for i in HSD.IDS:
                 hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
                 hz2 = len([j[6] for j in results2 if j[0] == i and j[6] == 0]) # 多单数量
@@ -373,7 +375,6 @@ def tongji(rq):
                 hz4 = len([j[5] for j in results2 if j[0] == i and j[5] > 0]) # 赢利单数
                 hz5 = int(hz4/(hz2+hz3)*100)  # 正确率
                 huizong.append([rq_date, i, hz1, hz2, hz3, hz4, hz5])
-            print(huizong)
             results = np.array(results2)
             id_count = {i: len(results[np.where(results[:, 0] == i)]) for i in HSD.IDS}
             # results = list(results)
@@ -390,6 +391,7 @@ def tongji(rq):
         else:
             rq_id='1'
         ids = HSD.IDS
+        results2=tuple(reversed(results2))
         return render(rq, 'tongji.html',locals())
     if rq_date:
         results=HSD.calculate_earn(rq_date,rq_ts)
@@ -464,7 +466,7 @@ def getList():
     if dates and database:
         conn = HSD.get_conn(data_dict[database][0])
         cur = conn.cursor()
-        dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=5)
+        dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=1)
         if database=='1':
             sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>"%s" AND datetime<"%s"' % (
                 data_dict[database][1], dates, dates2)
@@ -622,18 +624,22 @@ def getwebsocket(rq):
 def zhangting(rq,t):
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
+    rq_date=rq.GET.get('date')
     if t == 'today':
         zt=ZT.read_code()
         zt=sorted(zt,key=lambda x:x[2]) # 以第3个参数排序
         zt.reverse()
         return render(rq,'zhangting.html',{'zt_today':zt,'dates':dates})
+    if not rq_date:
+        return render(rq,'zhangting.html',{'jyzt':False,'dates':dates})
     if t == 'tomorrow':
-        zt_tomorrow = ZT.yanzen()
+        zt_tomorrow = ZT.yanzen(rq_date=rq_date)
         if zt_tomorrow:
             for i in range(len(zt_tomorrow)):
+                zt_tomorrow[i].append(zt_tomorrow[i][0])
                 zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
                 zt_tomorrow[i][2]=range(zt_tomorrow[i][2])#['★' for j in range(zt_tomorrow[i][2])]
-        return render(rq,'zhangting.html',{'zt_tomorrow':zt_tomorrow,'dates':dates})
+        return render(rq,'zhangting.html',{'jyzt':True,'zt_tomorrow':zt_tomorrow,'dates':rq_date})
 
     return redirect('index')
 

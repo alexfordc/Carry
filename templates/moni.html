@@ -28,7 +28,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         {% csrf_token %}
         开始时间：<input type="date" name="dates" value="{{ dates }}"/>&nbsp;&nbsp;
         交易天数：<input type="number" name="ts" value="{{ ts }}"/> &nbsp;
-        方案选择：<select name="fa">
+        方案：<select name="fa">
         {% for i in fas %}
         {% if fa == i %}
         <option value={{i}} selected>方案{{i}}</option>
@@ -40,26 +40,39 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         数据库：<select name="database">
         <option value="1">数据库1</option>
         <option value="2">数据库2</option>
-    </select>
+    </select> &nbsp;
                 <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="button" value="方案备注" onclick="openLogin()"/>
     </form><br/>
-    <table border="1" align="center">
-        {% if huizong %}
-        <caption style="font-size:20px;align:center;">胜率：<span style="color:red;">{{ huizong.shenglv|floatformat:2 }}</span>&nbsp; 总盈亏：<span style="color:red;">{{ huizong.yk }}</span>&nbsp; 总共做单：<span style="color:red;">{{ huizong.zl }}</span></caption>
+        <table border="1" align="center">
+            {% if huizong %}
+        <!--<caption style="font-size:20px;align:center;">胜率：<span style="color:red;">{{ huizong.shenglv|floatformat:2 }}</span>&nbsp; 总盈亏：<span style="color:red;">{{ huizong.yk }}</span>&nbsp; 总共做单：<span style="color:red;">{{ huizong.zl }}</span></caption>-->
+        <tr><th colspan="8" style="font-size: 20px;">汇 总</th></tr>
+        <tr><th>正确率(%)</th><th>总盈亏</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>日期<br>亏损最多</th><th>亏损<br>涨幅与波动</th><th>日期<br>盈利最多</th><th>盈利<br>涨幅与波动</th></tr>
+        <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database=1">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
+            <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database=1">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
+            <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td></tr>
         {% else %}
         <h3 style="color:green;">请选择好参数并按《模拟测试》按钮进行测试！</h3>
         {% endif %}
+        </table><br/>
+    <table border="1" align="center">
     {% for k,v in res.items %}
         {% if forloop.first %}
-            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th><th>详细数据</th></tr>
+            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
+                <th>详细数据
+                <table border="1" style="width:650px;">
+                        <tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>
+                </table>
+                </th></tr>
         {% endif %}
-        <tr><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
+        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
             <td>
-                <table border="1"  style="width:650px;">
+                <table border="1" style="width:650px;">
                     {% for i in v.datetimes %}
-                        {% if forloop.first %}<tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>{% endif %}
-                        <tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td></tr>
+                        <tr><td style="width:400px;">{{ i.0 }}</td><td style="width:150px;">{{ i.1 }}</td><td>{{ i.2 }}</td></tr>
                         {% endfor %}
                 </table>
             </td></tr>
@@ -68,8 +81,8 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     </div>
     <script type="text/javascript">
         $('div>table').css({'width': '1050px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
-        $("tr:odd").css({"background-color": "#cccc33"});
-        $('tr:even').css({'background-color': '#00cc00'});
+        <!--$("tr:odd").css({"background-color": "#cccc33"});-->
+        <!--$('tr:even').css({'background-color': '#00cc00'});-->
         $('tr').css({'height': '30'});
     </script>
 {% endblock %}

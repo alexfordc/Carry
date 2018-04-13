@@ -13,7 +13,7 @@ import requests
 from sklearn.externals import joblib
 from collections import Counter
 import random
-
+import socket
 
 config = configparser.ConfigParser()
 config.read('log\\conf.conf')
@@ -97,8 +97,8 @@ SQL = {
     "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
     'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
-    'limit_init': 'select bazaar,code from stock_code where bazaar in ("sz","sh")',
-    "order_detail":"SELECT Account_ID,OpenTime,OpenPrice,CloseTime,ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+    'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
+    "order_detail":"SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 def get_date():
@@ -412,6 +412,7 @@ class Limit_up:
         '''初始化，从数据库更新所有股票代码'''
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
         self.this_up = False
+        self.chineseName={} # 中文名称
         try:
             self.conn = get_conn('stock_data')
             cur = self.conn.cursor()
@@ -429,6 +430,8 @@ class Limit_up:
             self.conn.close()
             # 获取股票代码
             codes = [i for i in codes if i[1][:3] in ('600', '000', '300', '601', '002', '603')]
+            self.chineseName={i[0]+i[1]:i[2] for i in codes if i[1][:3] in ('600', '000', '300', '601', '002', '603')}
+
             su = 1
             with open('log\\codes_gp.txt', 'w') as f:
                 for i in codes:
@@ -438,6 +441,7 @@ class Limit_up:
                         f.write('\n')
                     else:
                         f.write(',')
+
         if os.path.isfile('log\\dict_data.txt'):
             times = time.localtime(os.path.getmtime('log\\dict_data.txt'))
             this_t = time.localtime()
@@ -465,10 +469,10 @@ class Limit_up:
         '''获取指定股票的开盘收盘数据，返回格式：
         dict{'code':[2.46, 2.54, 2.48, 2.41, 2.36, 2.34, 2.33, 2.35, 2.35, 2.47, 2.47, 2.38, 2.27, 2.29, 2.29, 2.29, 2.29, 2.19],...}'''
 
-        with open('log\\dict_data.txt') as f:
+        with open('log\\dict_data.txt') as f,open('log\\dict_name.txt') as f2:
             dict_data = json.loads(f.read())
-        with open('log\\dict_name.txt') as f:
-            dict_name = json.loads(f.read())
+            dict_name = json.loads(f2.read())
+
         if self.this_up:
             return dict_data, dict_name
 
@@ -507,11 +511,10 @@ class Limit_up:
                     dict_data['last_date'] = ht[4]
             except Exception as exc:
                 continue
-        with open('log\\dict_data.txt', 'w') as f:
+        with open('log\\dict_data.txt', 'w') as f,open('log\\dict_name.txt', 'w') as f2:
             # 合并2个字典并保存
             f.write(json.dumps(dict(dict_data, **dict_data1)))
-        with open('log\\dict_name.txt', 'w') as f:
-            f.write(json.dumps(dict_name))
+            f2.write(json.dumps(dict_name))
 
         return dict_data, dict_name
 
@@ -557,8 +560,8 @@ class Limit_up:
             f.write(json.dumps(statistics))
         return statistics
 
-    def yanzen(self):
-        jyzt = []
+    def yanzen(self,rq_date):
+        jyzt = {}
         mx = {}
         #mx_n={}
         with open('log\\codes_gp.txt') as f:
@@ -569,16 +572,30 @@ class Limit_up:
         except Exception as exc:
             logging.error(exc)
             return
+        computer_name=socket.gethostname()
+        if computer_name!='doc':
+            file_index=r'E:\黄海军\资料\Carry\mysite\jyzt_gp.txt'
+        else:
+            file_index=r'D:\tools\Tools\EveryDay\jyzt_gp.txt'
+        if os.path.isfile(file_index):
+            times = time.localtime(os.path.getmtime(file_index))
+            this_t = time.localtime()
+            with open(file_index, 'r') as f:
+                jyzt = json.loads(f.read())
+            jyzt_l=jyzt.get(rq_date,[])
+            if jyzt_l or (this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday):
+                jyzt_l = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt_l]
+                return jyzt_l
+
         if os.path.isfile('log\\jyzt_gp.txt'):
             times = time.localtime(os.path.getmtime('log\\jyzt_gp.txt'))
             this_t = time.localtime()
-            if this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday: #  and this_t.tm_hour - times.tm_hour <= 2
-                with open('log\\jyzt_gp.txt', 'r') as f:
-                    jyzt = f.read()
-                    jyzt = json.loads(jyzt)
-                jyzt = jyzt[:10]
-                jyzt = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt]
-                return jyzt
+            with open('log\\jyzt_gp.txt', 'r') as f:
+                jyzt = json.loads(f.read())
+            jyzt_l=jyzt.get(rq_date,[])
+            if jyzt_l or (this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday):
+                jyzt_l = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt_l]
+                return jyzt_l
         for m in os.listdir('log\\models'):
             if m[-2:] == '.m':
                 mx[m[:-2]] = joblib.load('log\\models\\' + m)
@@ -589,15 +606,15 @@ class Limit_up:
             if not data2 or len(data2) != 18:
                 continue
             for i in mx.keys():
-                r = mx[i].predict([data[code]])
+                r = mx[i].predict([data2])
                 if r == 1:
                     jyzt.append(code)
                     #mx_n[i].append(code)
         jyzt = Counter(jyzt).most_common()
-
+        jyzt = jyzt[:10]
         with open('log\\jyzt_gp.txt', 'w') as f:  # 保存
             f.write(json.dumps(jyzt))
-        jyzt = jyzt[:10]
+
         jyzt = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt]
 
         return jyzt  # mx_n
@@ -621,6 +638,7 @@ class Zbjs(object):
         self.down_c=0 # 下跌数
 
     def get_data(self,dates,database):
+        ''' 从指定数据库获取指定日期的数据 '''
         if database=='1':
             conn = get_conn('carry_investment')
             sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE DATE_FORMAT(DATETIME,'%Y-%m-%d')='{}'".format(dates)
@@ -633,6 +651,14 @@ class Zbjs(object):
         #df.columns=['date','open','high','low','close','vol']
         conn.close()
         return da
+    def get_hkHSI_date(self,size=60):
+        ''' 从网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
+        data = requests.get(
+            'http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s'%size).text
+        data = json.loads(data.split('=')[1])
+        data = data['data']['hkHSI']['day']
+        data = {de[0]:[float(de[2])-float(de[1]),float(de[3])-float(de[4])] for de in data}
+        return data
 
     def macd_to_sql(self,data):
         '''
@@ -887,17 +913,17 @@ class Zbjs(object):
         datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
             'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
         self.mul,self.cd=mul,cd
-        if clo>mas and mul>1.5 and self.is_d==0:
+        if clo>mas and mul>1.5 and self.is_d==0 and not datetimes.hour==16:
             self.jg_d=clo
             self.startMony_d=clo
             self.str_time1=str(datetimes)
             self.is_d=1
-        if clo<mas and mul<-1.5 and self.is_k==0:
+        if clo<mas and mul<-1.5 and self.is_k==0 and not datetimes.hour==16:
             self.jg_k=clo
             self.startMony_k=clo
             self.str_time2=str(datetimes)
             self.is_k=-1
-        if self.is_d==1 and (macd<0 and clo<mas or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16)):#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
+        if self.is_d==1 and ((macd<0 and clo<mas) or (datetimes.hour==16 and datetimes.minute>=28 or datetimes.hour>16)):#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
             if clo-self.jg_d<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
                 self.res[dates]['duo']+=1
                 self.res[dates]['mony']+=(clo-self.jg_d)
@@ -906,7 +932,7 @@ class Zbjs(object):
             if clo-self.jg_d>10:
                 self.res[dates]['mony']+=(clo-self.jg_d)
                 self.jg_d=clo
-        if self.is_k==-1 and (macd>0 and clo>mas or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16)):#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
+        if self.is_k==-1 and ((macd>0 and clo>mas) or (datetimes.hour==16 and datetimes.minute>=28 or datetimes.hour>16)):#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
             if self.jg_k-clo<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
                 self.res[dates]['kong']+=1
                 self.res[dates]['mony']+=(self.jg_k-clo)
@@ -1030,28 +1056,33 @@ class Zbjs(object):
         datetimes, ope, clo, macd, mas, std, reg, mul, cd ,maidian= dt2['datetimes'], dt2['open'], dt2['close'], dt2[
             'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['maidian']
         self.mul,self.cd=mul,cd
-        if cd > 0 and self.is_d == 0:
+        self.up_c += 1 if (cd > 0 or maidian > 0) else 0 # 上涨提示次数
+        self.down_c += 1 if (cd < 0 or maidian < 0) else 0 # 下跌提示次数
+
+        judge_d=(self.down_c>self.up_c and self.down_c>2) # 做多与平多仓的判断
+        judge_k=(self.up_c>self.down_c and self.up_c>2) # 做空与平空仓的判断
+        if cd > 0 and self.is_d == 0 and self.is_k==0 and not judge_d:
             self.res[dates]['duo'] += 1
             self.jg_d = clo
             self.startMony_d=clo
             self.str_time1 = str(datetimes)
             self.is_d = 1
-        if cd < 0 and self.is_k == 0:
+        elif cd < 0 and self.is_k == 0 and self.is_d==0 and not judge_k:
             self.res[dates]['kong'] += 1
             self.jg_k = clo
             self.startMony_k=clo
             self.str_time2 = str(datetimes)
             self.is_k = -1
-        self.up_c+=1 if (cd>0 or maidian>0) else 0
-        self.down_c+=1 if (cd<0 or maidian<0) else 0
-        if self.is_d == 1 and (self.down_c>self.up_c and self.down_c>1 or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+
+
+        if self.is_d == 1 and (judge_d or (datetimes.hour==16 and datetimes.minute>=29) or datetimes.hour>16):
             self.res[dates]['mony'] += (clo - self.startMony_d)
             self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
             self.is_d = 0
             self.up_c=0
             self.down_c=0
 
-        if self.is_k == -1 and (self.up_c>self.down_c and self.up_c>1 or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
+        elif self.is_k == -1 and (judge_k or (datetimes.hour==16 and datetimes.minute>=29) or datetimes.hour>16):
             self.res[dates]['mony'] += (self.startMony_k - clo)
             self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
             self.is_k = 0
@@ -1086,7 +1117,7 @@ class Zbjs(object):
                 # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
                 dt3=data2.send(df2)
                 datetimes=dt3[-1]['datetimes']
-                if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16):
+                if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
                     continue
 
                 self.xzfa[_fa](dt3=dt3,dates=dates)
@@ -1097,12 +1128,22 @@ class Zbjs(object):
                 if self.cd!=0:
                     self.res[dates]['ch']+=1
 
-        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0}
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least':[0,0,0,0],'most':[0,0,0,0],'avg':0,'avg_day':0}
+        hk=self.get_hkHSI_date() # 当日波动
         for i in self.res:
-            huizong['yk'] += self.res[i]['mony']
+            mony=self.res[i]['mony']
+            huizong['yk'] += mony
             huizong['zl'] += (self.res[i]['duo'] + self.res[i]['kong'])
+            try:
+                huizong['least'] = [i, mony,hk.get(i)[0],hk.get(i)[1]] if mony<huizong['least'][1] else huizong['least']
+                huizong['most'] = [i, mony,hk.get(i)[0],hk.get(i)[1]] if mony>huizong['most'][1] else huizong['most']
+            except:
+                pass
             huizong['shenglv'] += len([j[2] for j in self.res[i]['datetimes'] if j[2] > 0])
-        huizong['shenglv'] = huizong['shenglv'] / huizong['zl'] if huizong['zl']>0 else 0
+        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl']*100) if huizong['zl']>0 else 0 # 胜率
+        huizong['avg'] = huizong['yk']/ huizong['zl'] if huizong['zl']>0 else 0 # 平均每单盈亏
+        res_size=len(self.res)
+        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0 # 平均每天盈亏
 
         # if dt3:
         #     self.macd_to_sql(dt3) # 存储到数据库
