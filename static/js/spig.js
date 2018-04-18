@@ -1,11 +1,74 @@
 /* spig.js */
 //右键菜单
+var showmessages="常用功能:<br><span style=\"line-height:30px;\" ><a style=\"color:red;\" href=\"/\" title=\"首页\">首页</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/tj\" title=\"统计表\">统计表</a>&nbsp;&nbsp;<a style=\"color:blue;\" href=\"/stockDatas\">股票</a> "+
+            "</span><br><a style=\"color:red;\" href=\"/zt\">柱图</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/zx\">折线图</a>&nbsp;&nbsp;<a style=\"color:blue;\" id=\"liaotian\" href=\"#\" title=\"聊天\">聊天</a>"
 jQuery(document).ready(function ($) {
     $("#spig").mousedown(function (e) {
         if(e.which==3){
-        showMessage("秘密通道:<br /><a href=\"/tj\" title=\"统计表\">统计表</a>    <a href=\"/\" title=\"首页\">首页</a>",10000);
-}
+        showMessage(showmessages,20000);
+    }
+
+$("#liaotian").click(function(){
+        var div=$("#liaotian_div")
+        div.css('display','block');
+        document.getElementById('liaotian_textarea').focus();
+        div.hide().stop();
+        div.fadeIn();
+    	div.fadeTo("1", 1);
+    	div.fadeOut(30000);
+	});
 });
+function bfsy_ajax(){
+    var text=$("#liaotian_textarea");
+    var mesg=text.val().trim();
+        if(mesg.length>0){
+        //$.get('/bfsy',{"msg":text.val()},callBack);
+        $.ajax({
+				type:"GET",
+				url:"/bfsy",
+				data:{"msg":mesg},
+				success:callBack
+			});
+			$('#chatAudio')[0].play(); //播放声音
+			$("#chatAudio").attr('src','');
+			text.val('');
+			function callBack(answer){
+				if(answer.length>0){
+				    showMessage(answer,2400*answer.length);
+					$("#chatAudio").attr('src','https://ss0.baidu.com/6KAZsjip0QIZ8tyhnq/text2audio?tex='+answer+'&cuid=dict&lan=ZH&ctp=1&pdt=30&vol=9&spd=4');
+					$('#chatAudio')[0].play(); //播放声音
+				}
+			}
+		}
+}
+document.onkeydown = function (evt) {//监听键盘敲击
+            evt = evt ? evt : window.event;
+            if (evt.keyCode == 13) { //按下Enter键
+                //判断光标是否聚焦在此,  KEY 入数量
+                if ($("#liaotian_textarea").is(":focus")) {
+                    bfsy_ajax();
+                }
+            }
+            else if (evt.keyCode == 8 && event.srcElement.readOnly == true) {//防止backspace键在input readOnly产生回退页面
+                evt.keyCode = 0;
+                return false;
+            }
+        }
+$("#liaotian_submit").click(function(){
+        var div=$("#liaotian_div");
+        bfsy_ajax();
+        document.getElementById('liaotian_textarea').focus();
+        div.hide().stop();
+    	div.fadeIn();
+    	div.fadeTo("1", 1);
+    	div.fadeOut(30000);
+});
+$("#liaotian_textarea").click(function(){
+	var div=$("#liaotian_div");
+	div.hide().stop();
+    div.fadeIn();
+    div.fadeOut(30000);
+})
 $("#spig").bind("contextmenu", function(e) {
     return false;
 });
@@ -17,7 +80,6 @@ jQuery(document).ready(function ($) {
        $("#message").fadeTo("100", 1);
      });
 });
-
 
 //鼠标在上方时
 jQuery(document).ready(function ($) {
@@ -37,17 +99,24 @@ jQuery(document).ready(function ($) {
 jQuery(document).ready(function ($) {
     if (is_show) { //如果要显示
         var now = (new Date()).getHours();
+        if(is_show2=='/'){
         if (now > 0 && now <= 6) {
-            showMessage( ' 你是夜猫子呀？还不睡觉，明天起的来么你？', 6000);
-        } else if (now > 6 && now <= 11) {
-            showMessage( ' 早上好！欢迎来到凯瑞投资有限公司！', 6000);
-        } else if (now > 11 && now <= 14) {
+            showMessage( ' 黑用冷伪装坚强,夜以静隐忍苍凉！', 6000);
+        } else if (now > 6 && now < 11) {
+            showMessage( ' 上午好！欢迎来到凯瑞投资有限公司！', 6000);
+        } else if (now >= 11 && now <= 12) {
             showMessage( ' 中午好！人是铁，饭是钢，别忘了吃饭呀！', 6000);
-        } else if (now > 14 && now <= 18) {
+        } else if (now > 12 && now <= 18) {
             showMessage( ' 下午好！欢迎来到凯瑞投资有限公司！', 6000);
         } else {
             showMessage( ' 我守住黄昏，守过夜晚！', 6000);
         }
+    }else{
+        var msgs=["观望也是持仓","下单止损紧跟随","绝对不要加死码","抢顶和抢底要当心","止损既设，万不可悔","市场聒噪，乱我心事","苦心孤诣，深研市场","耐心比决心重要","计划你的交易，交易你的计划","投资市道清淡的市场是危险的",
+        "期货投资人善于做一些不当的研究","事前须三思，临阵要严格按照计划行事","要不断培养耐心、坚韧、果断、理智的优良品质","成功的交易者是技巧、心态和德行的统一，三者不可分离","亏损可以使人谦虚，盈利可以使人骄傲。失败是成功的摇篮"];
+        var i = Math.floor(Math.random() * msgs.length);
+        showMessage(msgs[i],6000);
+    }
     }
     else {
         showMessage('欢迎' + '来到《' + title + '》', 6000);
@@ -64,8 +133,8 @@ jQuery(document).ready(function ($) {
 
 //鼠标在某些元素上方时
 jQuery(document).ready(function ($) {
-    $('h2 a').click(function () {//标题被点击时
-        showMessage('正在用吃奶的劲加载《<span style="color:#0099cc;">' + $(this).text() + '</span>》请稍候');
+    $('li a').click(function () {//标题被点击时
+        showMessage('正在努力加载《<span style="color:#0099cc;">' + $(this).text() + '</span>》请稍候');
     });
     $('h2 a').mouseover(function () {
         showMessage('要看看《<span style="color:#0099cc;">' + $(this).text() + '</span>》公司么？');
@@ -106,16 +175,16 @@ jQuery(document).ready(function ($) {
 
 });
 
-//无聊讲点什么
+
 jQuery(document).ready(function ($) {
     window.setInterval(function () {
-        msgs = ["播报天气<iframe name='weather_inc' src='http://i.tianqi.com/index.php?c=code&id=7' style='border:solid 1px red' width='225' height='90' frameborder='0' marginwidth='0' marginheight='0' scrolling='no'></iframe>", "莫因寂寞难耐的等待而入市！", "", "想要在期货市场混下去，必须自信，要相信自己的判断！", "接受失败等于向成功迈出了一步", "不管亏损多少，都要保持旺盛的斗志", "我可爱吧！嘻嘻!~^_^!~~","始终遵守你自己的投资计划的规则，这将加强良好的自我控制！~~","上山爬坡缓慢走，烘云托月是小牛。"];
+        msgs = ["莫因寂寞难耐的等待而入市！", "流水不腐，户枢不蠹", "想要在期货市场混下去，必须自信，要相信自己的判断！", "接受失败等于向成功迈出了一步", "不管亏损多少，都要保持旺盛的斗志", "专业的交易者，他首先是个具备丰富内心世界和涵养的人!~^_^!~~","始终遵守你自己的投资计划的规则，这将加强良好的自我控制！~~","上山爬坡缓慢走，烘云托月是小牛。"];
         var i = Math.floor(Math.random() * msgs.length);
-        showMessage(msgs[i], 10000);
-    }, 35000);
+        showMessage(msgs[i], 20000);
+    }, 40000);
 });
 
-//无聊动动
+
 jQuery(document).ready(function ($) {
     window.setInterval(function () {
         msgs = ["播报天气<iframe name='weather_inc' src='http://i.tianqi.com/index.php?c=code&id=7' style='border:solid 1px red' width='225' height='90' frameborder='0' marginwidth='0' marginheight='0' scrolling='no'></iframe>", "止损要牢记，亏损可减持！", "利好便卖，利空便买，成功人士，多善此举！", "把损失放在心上，利润就会照看好自己...", "收市便休兵，回家好休息", "避免频繁入市！~"];
@@ -128,16 +197,16 @@ jQuery(document).ready(function ($) {
             top:  document.body.offsetHeight/2*(1+s[i1])
         },
 			{
-			    duration: 2000,
+			    duration: 3000,
 			    complete: showMessage(msgs[i])
 			});
     }, 45000);
 });
 
-//评论资料
+//点击事件提示
 jQuery(document).ready(function ($) {
-    $("#author").click(function () {
-        showMessage("留下你的尊姓大名！");
+    $("#datetimes").click(function () {
+        showMessage("选择开始日期");
         $(".spig").animate({
             top: $("#author").offset().top - 70,
             left: $("#author").offset().left - 170
@@ -147,8 +216,8 @@ jQuery(document).ready(function ($) {
 		    duration: 1000
 		});
     });
-    $("#email").click(function () {
-        showMessage("留下你的邮箱，不然就是无头像人士了！");
+    $("#rq_ts").click(function () {
+        showMessage("输入交易天数");
         $(".spig").animate({
             top: $("#email").offset().top - 70,
             left: $("#email").offset().left - 170
@@ -158,9 +227,8 @@ jQuery(document).ready(function ($) {
 		    duration: 1000
 		});
     });
-    $("#url").click(function () {
-
-        showMessage("快快告诉我你的家在哪里，好让我去参观参观！");
+    $("#select_id").click(function () {
+        showMessage("选择ID号或者名称");
         $(".spig").animate({
             top: $("#url").offset().top - 70,
             left: $("#url").offset().left - 170
@@ -170,8 +238,19 @@ jQuery(document).ready(function ($) {
 		    duration: 1000
 		});
     });
-    $("#comment").click(function () {
-        showMessage("认真填写哦！不然会被认作垃圾评论的！我的乖乖~");
+    $("#select_fa").click(function () {
+        showMessage("请选择方案");
+        $(".spig").animate({
+            top: $("#comment").offset().top - 70,
+            left: $("#comment").offset().left - 170
+        },
+		{
+		    queue: false,
+		    duration: 1000
+		});
+    });
+     $("#select_db").click(function () {
+        showMessage("数据库选择<br>1： ticker数据 <br>2：同花顺数据");
         $(".spig").animate({
             top: $("#comment").offset().top - 70,
             left: $("#comment").offset().left - 170
@@ -197,15 +276,20 @@ jQuery(document).ready(function ($) {
 		});
     });
 });
-
+//移动端与电脑端的判断
+var client_pd='computer';
+if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+	client_pd='sj';
+}
 //鼠标点击时
 jQuery(document).ready(function ($) {
     var stat_click = 0;
     $(".mumu").click(function () {
+        if(client_pd=='computer'){
         if (!ismove) {
             stat_click++;
             if (stat_click > 4) {
-                msgs = ["循序渐进，精益求精。", "反弹不是底，是底不反弹", "进场容易出场难"];
+                msgs = ["循序渐进，精益求精", "反弹不是底，是底不反弹", "进场容易出场难", "任何时候忘记了去尊重市场，都会铸下大错"];
                 var i = Math.floor(Math.random() * msgs.length);
                 //showMessage(msgs[i]);
             } else {
@@ -226,6 +310,9 @@ jQuery(document).ready(function ($) {
 			});
         } else {
             ismove = false;
+        }
+        }else{
+            showMessage(showmessages,20000);
         }
     });
 });

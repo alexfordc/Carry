@@ -15,6 +15,40 @@ from collections import Counter
 import random
 import socket
 
+from mysite.DataIndex import ZB
+
+def tests(l):
+    '''
+    :param l: this is locals()
+    :return: None, test function
+    '''
+    print('Name', '\t', 'Type(size)', '\t', 'Value')
+    for k, v in l.items():
+        t = type(v)
+        if t == int:
+            print(k, '\t', 'int      ', '\t', v)
+        elif t == float:
+            print(k, '\t', 'float    ', '\t', v)
+        elif t == bytes:
+            print(k, '\t', 'bytes(%s)' % len(v), '\t', v[:20])
+        elif t == tuple:
+            print(k, '\t', 'tuple(%s)' % len(v), '\t', v[:2])
+        elif t == list:
+            print(k, '\t', 'list (%s)' % len(v), '\t', v[:2])
+        elif t == set:
+            print(k, '\t', 'set  (%s)' % len(v), '\t', tuple(v)[:2])
+        elif t == str:
+            print(k, '\t', 'str  (%s)' % len(v), '\t', v[:20])
+        elif t == dict:
+            key = tuple(v.keys())
+            if len(key)<2:
+                print(k, '\t', 'dict (%s)' % len(v), '\t', {key[0]: v[key[0]], key[1]: v[key[1]]})
+            else:
+                print(k, '\t', 'dict (%s)' % len(v), '\t', v)
+        else:
+            print(k, '\t', type(v), '\t', v)
+
+
 config = configparser.ConfigParser()
 config.read('log\\conf.conf')
 
@@ -112,6 +146,19 @@ def get_conn(dataName=None):
                            charset='utf8')
     return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
                            charset='utf8')
+
+def getSqlData(conn,sql):
+    ''' 从数据库查询数据 '''
+    cur=conn.cursor()
+    cur.execute(sql)
+    return cur.fetchall()
+
+def closeConn(conn):
+    ''' 关闭数据库 '''
+    try:
+        conn.close()
+    except:
+        pass
 
 def get_tcp():
     ''' 返回IP地址 '''
@@ -318,9 +365,8 @@ IDS = []  # 初始化账号列表
 
 def get_idName(cur=None):
     conn=get_conn('carry_investment')
-    cur=conn.cursor()
-    cur.execute(SQL['get_idName'])
-    id_name = cur.fetchall()
+    sql=SQL['get_idName']
+    id_name = getSqlData(conn,sql)
     conn.close()
     id_name = {i: j for i, j in id_name}
     return id_name
@@ -357,11 +403,10 @@ def get_date_add_day(dates,ts):
 def order_detail(dates,ts):
     global IDS
     conn=get_conn('carry_investment')
-    cur=conn.cursor()
     dates_end=get_date_add_day(dates,ts)
     sql=SQL['order_detail']
-    cur.execute(sql.format(dates,dates_end))
-    data=cur.fetchall()
+    sql=sql.format(dates,dates_end)
+    data=getSqlData(conn,sql)
     conn.commit()
     conn.close()
     IDS = set([i[0] for i in data])
@@ -620,45 +665,52 @@ class Limit_up:
         return jyzt  # mx_n
 
 
-class Zbjs(object):
+class Zbjss(object):
     def __init__(self):
-        self.res = {}
-        self.is_d = 0  # 做多为1，平仓为0
-        self.is_k = 0  # 做空为-1，平仓为0
-        self.startMony_d = 0 # 开始做多的收盘价
-        self.startMony_k = 0 # 开始做空的收盘价
-        self.mul = 0   # 价差与标准差的倍数
-        self.cd = 0    # 价差与标准差的倍数大于1.5，两根K线重合，0为不成立
-        self.str_time1 = '' if self.is_d == 0 else self.str_time1  # 做多开仓的时间
-        self.str_time2 = '' if self.is_k == 0 else self.str_time2  # 做空开仓的时间
-        self.jg_d = 0 if self.is_d == 0 else self.jg_d  # 做多开仓的收盘价
-        self.jg_k = 0 if self.is_k == 0 else self.jg_k  # 做空开仓的收盘价
+        # res = {}
+        # is_d = 0  # 做多为1，平仓为0
+        # is_k = 0  # 做空为-1，平仓为0
+        # startMony_d = 0 # 开始做多的收盘价
+        # startMony_k = 0 # 开始做空的收盘价
+        # mul = 0   # 价差与标准差的倍数
+        # cd = 0    # 价差与标准差的倍数大于1.5，两根K线重合，0为不成立
+        # str_time1 = '' if self.is_d == 0 else self.str_time1  # 做多开仓的时间
+        # str_time2 = '' if self.is_k == 0 else self.str_time2  # 做空开仓的时间
+        # jg_d = 0 if self.is_d == 0 else self.jg_d  # 做多开仓的收盘价
+        # jg_k = 0 if self.is_k == 0 else self.jg_k  # 做空开仓的收盘价
+        # up_c = 0  # 上涨数
+        # down_c = 0  # 下跌数
         self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5}  # 执行方案
-        self.up_c=0 # 上涨数
-        self.down_c=0 # 下跌数
 
-    def get_data(self,dates,database):
+    def is_date(self,datetimes):
+        ''' 是否已经或即将进入晚盘 '''
+        return (datetimes.hour==16 and datetimes.minute>=29) or datetimes.hour>16
+
+    def get_data(self,conn,dates,dates2,database):
         ''' 从指定数据库获取指定日期的数据 '''
         if database=='1':
-            conn = get_conn('carry_investment')
-            sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE DATE_FORMAT(DATETIME,'%Y-%m-%d')='{}'".format(dates)
+            sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE datetime>'{}' AND datetime<'{}'".format(dates,dates2)
         else:
-            conn = get_conn('stock_data')
-            sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}'".format(dates)
-        cur = conn.cursor()
-        cur.execute(sql)
-        da=cur.fetchall()
-        #df.columns=['date','open','high','low','close','vol']
-        conn.close()
-        return da
-    def get_hkHSI_date(self,size=60):
-        ''' 从网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
+            sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+        return getSqlData(conn,sql)
+    def get_hkHSI_date(self,conn,size=60,database=None):
+        ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
+        if database!=None:
+            if database=='1':
+                tab_name='futures_min'
+            else:
+                tab_name = 'index_min'
+            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(tab_name)
+            data=getSqlData(conn,sql)
+            data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
+            return data
         data = requests.get(
             'http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s'%size).text
         data = json.loads(data.split('=')[1])
         data = data['data']['hkHSI']['day']
         data = {de[0]:[float(de[2])-float(de[1]),float(de[3])-float(de[4])] for de in data}
         return data
+
 
     def macd_to_sql(self,data):
         '''
@@ -783,7 +835,10 @@ class Zbjs(object):
 
         data=None
         while 1:
-            data=yield dc
+            try:
+                data=yield dc
+            except StopIteration:
+                return
             ind=len(dc)
             if isinstance(data,tuple):
                 dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'high':data[2],'low':data[3],'close':data[4],'cd':0,'maidian':0})
@@ -866,14 +921,17 @@ class Zbjs(object):
         is_d=0
         is_k=0
         conn=get_conn('carry_investment')
-        cur=conn.cursor()
-        cur.execute('SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(_ma))
-        data=cur.fetchall()
+        sql='SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(_ma)
+        data=getSqlData(conn,sql)
         data2=self.macd2(da=data,ma=_ma)
         dt2=data2.send(None)
         data=None
         while 1:
-            data=yield res
+            try:
+                data=yield res
+            except StopIteration:
+                data2.send(None)
+                return
             dates=data[0]
             res[dates]={'duo':0,'kong':0,'mony':0,'datetimes':[],'dy':0,'xy':0}
             str_time1=None if is_d==0 else str_time1
@@ -908,251 +966,390 @@ class Zbjs(object):
                 res[dates]['datetimes'].append([str_time1,-2])
                 is_k=0
 
-    def fa1(self,dt3,dates):
-        dt2 = dt3[-1:][0]
-        datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
-        self.mul,self.cd=mul,cd
-        if clo>mas and mul>1.5 and self.is_d==0 and not datetimes.hour==16:
-            self.jg_d=clo
-            self.startMony_d=clo
-            self.str_time1=str(datetimes)
-            self.is_d=1
-        if clo<mas and mul<-1.5 and self.is_k==0 and not datetimes.hour==16:
-            self.jg_k=clo
-            self.startMony_k=clo
-            self.str_time2=str(datetimes)
-            self.is_k=-1
-        if self.is_d==1 and ((macd<0 and clo<mas) or (datetimes.hour==16 and datetimes.minute>=28 or datetimes.hour>16)):#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
-            if clo-self.jg_d<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
-                self.res[dates]['duo']+=1
-                self.res[dates]['mony']+=(clo-self.jg_d)
-                self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
-                self.is_d=0
-            if clo-self.jg_d>10:
-                self.res[dates]['mony']+=(clo-self.jg_d)
-                self.jg_d=clo
-        if self.is_k==-1 and ((macd>0 and clo>mas) or (datetimes.hour==16 and datetimes.minute>=28 or datetimes.hour>16)):#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
-            if self.jg_k-clo<0 or (datetimes.hour==16 and datetimes.minute>=30 or datetimes.hour>16):
-                self.res[dates]['kong']+=1
-                self.res[dates]['mony']+=(self.jg_k-clo)
-                self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
-                self.is_k=0
-            if self.jg_k-clo>10:
-                self.res[dates]['mony']+=(self.jg_k-clo)
-                self.jg_k=clo
+    def fa1(self):
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        is_dk = not (is_k or is_d)
+        res = {}
+        while 1:
+            _while, res, dt3, dates = yield res
+            if not _while:
+                break
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
 
-    def fa2(self,dt3,dates):
-        dt2 = dt3[-1]
-        datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
-        self.mul,self.cd=mul,cd
-        if cd > 0 and self.is_d == 0:
-            self.res[dates]['duo'] += 1
-            self.jg_d = clo
-            self.startMony_d=clo
-            self.str_time1 = str(datetimes)
-            self.is_d = 1
-        if cd < 0 and self.is_k == 0:
-            self.res[dates]['kong'] += 1
-            self.jg_k = clo
-            self.startMony_k=clo
-            self.str_time2 = str(datetimes)
-            self.is_k = -1
-        if self.is_d == 1 and (macd<dt3[-2]['macd'] or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
-            self.res[dates]['mony'] += (clo - self.startMony_d)
-            self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
-            self.is_d = 0
-            # if clo-self.jg_d<-20:
-            #     self.res[dates]['mony']+=(clo-self.startMony_d)
-            #     self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
-            #     self.is_d=0
-            # elif clo-self.startMony_d<-200:
-            #     self.res[dates]['mony'] += (clo - self.startMony_d)
-            #     self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
-            #     self.is_d = 0
-            # else:
-            #     #self.res[dates]['mony']+=(clo-self.jg_d)
-            #     self.jg_d=clo
-        if self.is_k == -1 and (macd>dt3[-2]['macd'] or (datetimes.hour==16 and datetimes.minute>=30) or datetimes.hour>16):
-            self.res[dates]['mony'] += (self.startMony_k - clo)
-            self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
-            self.is_k = 0
-            # if self.jg_k-clo<-20:
-            #     self.res[dates]['mony']+=(self.startMony_k-clo)
-            #     self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
-            #     self.is_k=0
-            # elif clo - self.startMony_k<-200:
-            #     self.res[dates]['mony'] += (clo - self.startMony_k)
-            #     self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_k])
-            #     self.is_k = 0
-            # else:
-            #     #self.res[dates]['mony']+=(self.jg_k-clo)
-            #     self.jg_k=clo
+            if clo>mas and mul>1.5 and is_dk and not datetimes.hour==16:
+                jg_d=clo
+                startMony_d=clo
+                str_time1=str(datetimes)
+                is_d=1
+            if clo<mas and mul<-1.5 and is_dk and not datetimes.hour==16:
+                jg_k=clo
+                startMony_k=clo
+                str_time2=str(datetimes)
+                is_k=-1
+            if is_d==1 and ((macd<0 and clo<mas) or self.is_date(datetimes)):
+                if clo - jg_d < 50 or self.is_date(datetimes):
+                    res[dates]['duo'] += 1
+                    res[dates]['mony'] += (clo - jg_d)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d])
+                    is_d = 0
+                elif clo - jg_d > 60:
+                    res[dates]['mony'] += (clo - jg_d)
+                    jg_d = clo
+            if is_k==-1 and ((macd>0 and clo>mas) or self.is_date(datetimes)):
+                if jg_k - clo < 50 or self.is_date(datetimes):
+                    res[dates]['kong'] += 1
+                    res[dates]['mony'] += (jg_k - clo)
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo])
+                    is_k = 0
+                elif jg_k - clo > 60:
+                    res[dates]['mony'] += (jg_k - clo)
+                    jg_k = clo
 
+    def fa2(self):
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        is_dk = not (is_k or is_d)
+        res = {}
+        while 1:
+            _while, res, dt3, dates = yield res
+            if not _while:
+                break
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
 
-    def fa3(self,dt3,dates):
-        dt2 = dt3[-1:][0]
-        datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
-        self.mul,self.cd=mul,cd
-        if clo>mas and mul>1.5 and self.is_d==0:
-            self.jg_d=clo
-            self.startMony_d=clo
-            self.str_time1=str(datetimes)
-            self.is_d=1
-        if clo<mas and mul<-1.5 and self.is_k==0:
-            self.jg_k=clo
-            self.startMony_k=clo
-            self.str_time2=str(datetimes)
-            self.is_k=-1
-        if self.is_d==1 and macd<dt3[-2]['macd']:#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
-            if clo-self.jg_d<0:
-                self.res[dates]['duo']+=1
-                self.res[dates]['mony']+=(clo-self.jg_d)
-                self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
-                self.is_d=0
-            if clo-self.jg_d>10:
-                self.res[dates]['mony']+=(clo-self.jg_d)
-                self.jg_d=clo
-        if self.is_k==-1 and macd>dt3[-2]['macd']:#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
-            if self.jg_k-clo<0:
-                self.res[dates]['kong']+=1
-                self.res[dates]['mony']+=(self.jg_k-clo)
-                self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
-                self.is_k=0
+            if cd > 0 and is_dk:
+                res[dates]['duo'] += 1
+                jg_d = clo
+                startMony_d=clo
+                str_time1 = str(datetimes)
+                is_d = 1
+            if cd < 0 and is_dk:
+                res[dates]['kong'] += 1
+                jg_k = clo
+                startMony_k=clo
+                str_time2 = str(datetimes)
+                is_k = -1
+            if is_d == 1 and (macd<dt3[-2]['macd'] or self.is_date(datetimes)):
+                res[dates]['mony'] += (clo - startMony_d)
+                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d])
+                is_d = 0
+            if is_k == -1 and (macd>dt3[-2]['macd'] or self.is_date(datetimes)):
+                res[dates]['mony'] += (startMony_k - clo)
+                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo])
+                is_k = 0
 
-    def fa4(self,dt3,dates):
-        dt2 = dt3[-1:][0]
-        datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
-        self.mul,self.cd=mul,cd
-        if clo>mas and mul>1.5 and self.is_d==0:
-            self.res[dates]['duo'] += 1
-            self.jg_d=clo
-            self.startMony_d=clo
-            self.str_time1=str(datetimes)
-            self.is_d=1
-        if clo<mas and mul<-1.5 and self.is_k==0:
-            self.res[dates]['kong'] += 1
-            self.jg_k=clo
-            self.startMony_k=clo
-            self.str_time2=str(datetimes)
-            self.is_k=-1
-        if self.is_d==1 and macd<0 and clo<mas:#(clo-self.jg_d>100 or (datetimes.hour==23 and datetimes.minute==45) or clo-self.jg_d<-80): #(macd<0 or datetimes.minute==45 or clo-self.jg_d<-100) (clo-self.jg_d>80 and (last_d-(clo-self.jg_d))/last_d<0.8)
-            if clo-self.startMony_d>100:
-                self.res[dates]['mony']+=(clo-self.jg_d)
-                self.res[dates]['datetimes'].append([self.str_time1+'--'+str(datetimes),'多',clo-self.startMony_d])
-                self.is_d=0
+    def fa3(self):
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        is_dk = not (is_k or is_d)
+        res = {}
+        while 1:
+            _while, res, dt3, dates = yield res
+            if not _while:
+                break
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
 
-        if self.is_k==-1 and macd>0 and clo>mas:#(self.jg_k-clo>100 or (datetimes.hour==23 and datetimes.minute==45) or self.jg_k-clo<-80): #(macd>0 or datetimes.minute==45 or self.jg_k-clo<-100) (self.jg_k-clo>80 and (last_k-(self.jg_k-clo))/last_k<0.8)
-            if self.startMony_k-clo>100:
-                self.res[dates]['mony']+=(self.jg_k-clo)
-                self.res[dates]['datetimes'].append([self.str_time2+'--'+str(datetimes),'空',self.startMony_k-clo])
-                self.is_k=0
+            if clo>mas and mul>1.5 and is_dk:
+                jg_d=clo
+                startMony_d=clo
+                str_time1=str(datetimes)
+                is_d=1
+            if clo<mas and mul<-1.5 and is_dk:
+                jg_k=clo
+                startMony_k=clo
+                str_time2=str(datetimes)
+                is_k=-1
+            if is_d==1 and (macd<dt3[-2]['macd'] or self.is_date(datetimes)):
+                if clo-jg_d<0:
+                    res[dates]['duo']+=1
+                    res[dates]['mony']+=(clo-jg_d)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes),'多',clo-startMony_d])
+                    is_d=0
+                if clo-jg_d>10:
+                    res[dates]['mony']+=(clo-jg_d)
+                    jg_d=clo
+            if is_k==-1 and (macd>dt3[-2]['macd'] or self.is_date(datetimes)):
+                if jg_k-clo<0:
+                    res[dates]['kong']+=1
+                    res[dates]['mony']+=(jg_k-clo)
+                    res[dates]['datetimes'].append([str_time2,str(datetimes),'空',startMony_k-clo])
+                    is_k=0
 
-    def fa5(self,dt3,dates):
-        dt2 = dt3[-1]
-        datetimes, ope, clo, macd, mas, std, reg, mul, cd ,maidian= dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-            'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['maidian']
-        self.mul,self.cd=mul,cd
-        self.up_c += 1 if (cd > 0 or maidian > 0) else 0 # 上涨提示次数
-        self.down_c += 1 if (cd < 0 or maidian < 0) else 0 # 下跌提示次数
+    def fa4(self):
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        is_dk = not (is_k or is_d)
+        res = {}
+        while 1:
+            _while, res, dt3, dates = yield res
+            if not _while:
+                break
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+            if clo>mas and mul>1.5 and is_dk:
+                res[dates]['duo'] += 1
+                jg_d=clo
+                startMony_d=clo
+                str_time1=str(datetimes)
+                is_d=1
+            if clo<mas and mul<-1.5 and is_dk:
+                res[dates]['kong'] += 1
+                jg_k=clo
+                startMony_k=clo
+                str_time2=str(datetimes)
+                is_k=-1
+            if is_d==1 and (macd<0 and clo<mas and clo-startMony_d>100) or self.is_date(datetimes):
+                    res[dates]['mony']+=(clo-jg_d)
+                    res[dates]['datetimes'].append([str_time1,str(datetimes),'多',clo-startMony_d])
+                    is_d=0
 
-        judge_d=(self.down_c>self.up_c and self.down_c>2) # 做多与平多仓的判断
-        judge_k=(self.up_c>self.down_c and self.up_c>2) # 做空与平空仓的判断
-        if cd > 0 and self.is_d == 0 and self.is_k==0 and not judge_d:
-            self.res[dates]['duo'] += 1
-            self.jg_d = clo
-            self.startMony_d=clo
-            self.str_time1 = str(datetimes)
-            self.is_d = 1
-        elif cd < 0 and self.is_k == 0 and self.is_d==0 and not judge_k:
-            self.res[dates]['kong'] += 1
-            self.jg_k = clo
-            self.startMony_k=clo
-            self.str_time2 = str(datetimes)
-            self.is_k = -1
+            if is_k==-1 and (macd>0 and clo>mas and startMony_k-clo>100) or self.is_date(datetimes):
+                    res[dates]['mony']+=(jg_k-clo)
+                    res[dates]['datetimes'].append([str_time2,str(datetimes),'空',startMony_k-clo])
+                    is_k=0
 
+    def fa5(self):
+        up_c,down_c=0,0
+        startMony_d,startMony_k=0,0
+        str_time1,str_time2='',''
+        is_d,is_k=0,0
+        is_dk=not (is_k or is_d)
+        res={}
+        while 1:
+            _while, res, dt3, dates = yield res
+            if not _while:
+                break
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd ,maidian= dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['maidian']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+            up_c += 1 if (cd > 0 or maidian > 0) else 0 # 上涨提示次数
+            down_c += 1 if (cd < 0 or maidian < 0) else 0 # 下跌提示次数
 
-        if self.is_d == 1 and (judge_d or (datetimes.hour==16 and datetimes.minute>=29) or datetimes.hour>16):
-            self.res[dates]['mony'] += (clo - self.startMony_d)
-            self.res[dates]['datetimes'].append([self.str_time1 + '--' + str(datetimes), '多', clo - self.startMony_d])
-            self.is_d = 0
-            self.up_c=0
-            self.down_c=0
+            judge_d=(down_c>up_c and down_c>2) # 做多与平多仓的判断
+            judge_k=(up_c>down_c and up_c>2) # 做空与平空仓的判断
+            if cd < 0 and is_dk and not judge_d:
+                #res[dates]['duo'] += 1
+                jg_d = clo
+                startMony_d=clo
+                str_time1 = str(datetimes)
+                is_d = 1
+            elif cd > 0 and is_dk and not judge_k:
+                #res[dates]['kong'] += 1
+                jg_k = clo
+                startMony_k=clo
+                str_time2 = str(datetimes)
+                is_k = -1
 
-        elif self.is_k == -1 and (judge_k or (datetimes.hour==16 and datetimes.minute>=29) or datetimes.hour>16):
-            self.res[dates]['mony'] += (self.startMony_k - clo)
-            self.res[dates]['datetimes'].append([self.str_time2 + '--' + str(datetimes), '空', self.startMony_k - clo])
-            self.is_k = 0
-            self.up_c = 0
-            self.down_c = 0
+            if is_d == 1 and (judge_d or self.is_date(datetimes)):
+                # res[dates]['mony'] += (clo - startMony_d)
+                # res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d])
+                # is_d = 0
+                # up_c = 0
+                # down_c = 0
+                if clo - jg_d < 50 or self.is_date(datetimes):
+                    res[dates]['duo'] += 1
+                    res[dates]['mony'] += (clo - jg_d)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d])
+                    is_d = 0
+                    up_c = 0
+                    down_c = 0
+                elif clo - jg_d > 60:
+                    res[dates]['mony'] += (clo - jg_d)
+                    jg_d = clo
 
+            elif is_k == -1 and (judge_k or self.is_date(datetimes)):
+                # res[dates]['mony'] += (startMony_k - clo)
+                # res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo])
+                # is_k = 0
+                # up_c = 0
+                # down_c = 0
+                if jg_k - clo < 50 or self.is_date(datetimes):
+                    res[dates]['kong'] += 1
+                    res[dates]['mony'] += (jg_k - clo)
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo])
+                    is_k = 0
+                    up_c = 0
+                    down_c = 0
+                elif jg_k - clo > 60:
+                    res[dates]['mony'] += (jg_k - clo)
+                    jg_k = clo
 
     def main2(self,_ma,_dates, _ts,_fa,database):
-        i=0
-        send_nan=0
-        dt3=None
-        while i<_ts:
-            dates=datetime.datetime.strptime(_dates,'%Y-%m-%d')+datetime.timedelta(days=i)
-            if dates>datetime.datetime.now():
-                break
-            dates=str(dates)[:10]
-            da=self.get_data(dates,database)
-            if len(da)<1:
-                i+=1
-                send_nan+=1
+        fa_send_no = 0
+        res={}
+        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        dates2=str(datetime.datetime.strptime(_dates,'%Y-%m-%d')+datetime.timedelta(days=_ts))[:10]
+        da = self.get_data(conn, _dates, dates2, database)
+
+        if len(da)>_ma:
+            data2=self.macd2(da=da[:_ma],ma=_ma)
+            data2.send(None)
+            fa = self.xzfa[_fa]()
+            fa.send(None)
+            da=da[_ma:]
+
+        else:
+            return
+
+        for df2 in da:
+            # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
+            dates=str(df2[0])[:10]
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
+            dt3=data2.send(df2)
+            datetimes=dt3[-1]['datetimes']
+            if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
                 continue
+            fa_send_no+=1
+            #self.xzfa[_fa](dt3=dt3,dates=dates)
+            res=fa.send((True,res,dt3,dates))
 
-            self.res[dates]={'duo':0,'kong':0,'mony':0,'datetimes':[],'dy':0,'xy':0,'ch':0}
-
-            i+=1
-            if i-send_nan==1:
-                data2=self.macd2(da=da[:_ma],ma=_ma)
-                dt2=data2.send(None)
-                da=da[_ma:]
-            random_a=[0,1]
-            for df2 in da:
-                # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
-                dt3=data2.send(df2)
-                datetimes=dt3[-1]['datetimes']
-                if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
-                    continue
-
-                self.xzfa[_fa](dt3=dt3,dates=dates)
-                if self.mul>1.5:
-                    self.res[dates]['dy']+=1
-                if self.mul<-1.5:
-                    self.res[dates]['xy']+=1
-                if self.cd!=0:
-                    self.res[dates]['ch']+=1
-
-        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least':[0,0,0,0],'most':[0,0,0,0],'avg':0,'avg_day':0}
-        hk=self.get_hkHSI_date() # 当日波动
-        for i in self.res:
-            mony=self.res[i]['mony']
-            huizong['yk'] += mony
-            huizong['zl'] += (self.res[i]['duo'] + self.res[i]['kong'])
-            try:
+        data2.send(None)
+        #fa.send(None)
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least':[0,1000,0,0],'most':[0,-1000,0,0],'avg':0,'avg_day':0,'least2':0,'most2':0}
+        hk=self.get_hkHSI_date(conn=conn,database=database) # 当日波动
+        closeConn(conn) # 关闭数据库连接
+        all_price=[]
+        try:
+            for i in res:
+                mony=res[i]['mony']
+                huizong['yk'] += mony
+                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
                 huizong['least'] = [i, mony,hk.get(i)[0],hk.get(i)[1]] if mony<huizong['least'][1] else huizong['least']
                 huizong['most'] = [i, mony,hk.get(i)[0],hk.get(i)[1]] if mony>huizong['most'][1] else huizong['most']
-            except:
-                pass
-            huizong['shenglv'] += len([j[2] for j in self.res[i]['datetimes'] if j[2] > 0])
+                all_price+=[j[3] for j in res[i]['datetimes']]
+        except Exception as exc:
+            print(exc)
+        huizong['shenglv'] += len([p for p in all_price if p>0])
         huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl']*100) if huizong['zl']>0 else 0 # 胜率
         huizong['avg'] = huizong['yk']/ huizong['zl'] if huizong['zl']>0 else 0 # 平均每单盈亏
-        res_size=len(self.res)
+        res_size=len(res)
         huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0 # 平均每天盈亏
+        huizong['least2']= min(all_price)
+        huizong['most2'] = max(all_price)
 
         # if dt3:
         #     self.macd_to_sql(dt3) # 存储到数据库
 
-        return self.res,huizong
+        return res,huizong
 
-# if __name__=='__main__':
-#     ma=60 # 设置均线时长
-#     dates='2018-03-19' # 开始时间，这天必须有数据
-#     ts=5 # 要测试的天数
-#     main2(_ma=ma, _dates=dates, _ts=ts)
 
+class Zbjs(ZB):
+    def __init__(self):
+        super(Zbjs, self).__init__()
+
+    def main(self,_ma=60):
+        conn = get_conn('carry_investment')
+        sql = 'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(
+            _ma)
+        data = getSqlData(conn, sql)
+        dyn = self.dynamic_index(data)
+        dyn.send(None)
+        req=None
+        param=1
+        while param:
+            param=yield req
+            req=dyn.send(param)
+        self.sendNone(dyn)
+
+    def get_hkHSI_date(self,conn,size=60,database=None):
+        ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
+        if database!=None:
+            if database=='1':
+                tab_name='futures_min'
+            else:
+                tab_name = 'index_min'
+            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(tab_name)
+            data=getSqlData(conn,sql)
+            data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
+            return data
+        data = requests.get(
+            'http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s'%size).text
+        data = json.loads(data.split('=')[1])
+        data = data['data']['hkHSI']['day']
+        data = {de[0]:[float(de[2])-float(de[1]),float(de[3])-float(de[4])] for de in data}
+        return data
+
+    def get_data(self,conn,dates,dates2,database):
+        ''' 从指定数据库获取指定日期的数据 '''
+        if database=='1':
+            sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+        else:
+            sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+        return getSqlData(conn,sql)
+
+    def main2(self,_ma,_dates,_ts,_fa,database):
+        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        dates2 = str(datetime.datetime.strptime(_dates, '%Y-%m-%d') + datetime.timedelta(days=_ts))[:10]
+        da = self.get_data(conn, _dates, dates2, database)
+        self.zdata=da
+        res = self.trd(_fa)
+
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                   'avg_day': 0, 'least2': 0, 'most2': 0}
+        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+        closeConn(conn)  # 关闭数据库连接
+        all_price = []
+        try:
+            for i in res:
+                mony = res[i]['mony']
+                huizong['yk'] += mony
+                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+                huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+                    'least']
+                huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+                    'most']
+                all_price += [j[3] for j in res[i]['datetimes']]
+        except Exception as exc:
+            print(exc)
+        huizong['shenglv'] += len([p for p in all_price if p > 0])
+        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+        huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+        res_size = len(res)
+        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+        huizong['least2'] = min(all_price)
+        huizong['most2'] = max(all_price)
+
+        # if dt3:
+        #     self.macd_to_sql(dt3) # 存储到数据库
+
+        return res, huizong

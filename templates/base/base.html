@@ -143,14 +143,14 @@ var $container = $('#works-container');
         <div id="top-area">
     	<div id="top-wrap">
         	<ul class="social_media">
-            	<li class="first"><a href="#" class="tip" title="LinkedIn"><img src="{% static 'images/social-linkedin-32x32.png' %}" alt="LinkedIn" /></a></li>
-                <li><a href="#" class="tip" title="Dribbble"><img src="{% static 'images/social-dribbble-32x32.png' %}" alt="Dribbble" /></a></li>
-                <li><a href="#" class="tip" title="Facebook"><img src="{% static 'images/social-facebook-32x32.png' %}" alt="Facebook" /></a></li>
-                <li><a href="#" class="tip" title="Flickr"><img src="{% static 'images/social-flickr-32x32.png' %}" alt="Flickr" /></a></li>
-                <li><a href="#" class="tip" title="Twitter"><img src="{% static 'images/social-twitter-32x32.png' %}" alt="Twitter" /></a></li>
-            	<li><a href="#" class="tip" title="Wordpress"><img src="{% static 'images/social-wordpress-32x32.png' %}" alt="Wordpress" /></a></li>
-                <li><a href="#" class="tip" title="Skype"><img src="{% static 'images/social-skype-32x32.png' %}" alt="Skype" /></a></li>
-                <li><a href="#" class="tip" title="RSS"><img src="{% static 'images/social-rss-32x32.png' %}" alt="RSS" /></a></li>
+            	<li class="first"><a href="{% url 'index' %}" class="tip" title="首页">首页</a></li>
+                <li><a href="{% url 'zhutu' %}" class="tip" title="柱状图">柱图</a></li>
+                <li><a href="{% url 'zhexian' %}" class="tip" title="折线图">折线</a></li>
+                <li><a href="{% url 'tongji' %}" class="tip" title="交易统计表">统计</a></li>
+                <!--<li><a href="#" class="tip" title="Twitter"><img src="{% static 'images/social-twitter-32x32.png' %}" alt="Twitter" /></a></li>-->
+            	<!--<li><a href="#" class="tip" title="Wordpress"><img src="{% static 'images/social-wordpress-32x32.png' %}" alt="Wordpress" /></a></li>-->
+                <!--<li><a href="#" class="tip" title="Skype"><img src="{% static 'images/social-skype-32x32.png' %}" alt="Skype" /></a></li>-->
+                <!--<li><a href="#" class="tip" title="RSS"><img src="{% static 'images/social-rss-32x32.png' %}" alt="RSS" /></a></li>-->
             </ul>
     		<span id="gotop"><a href="#" title="Back to top">&dagger;</a></span>
         </div>
@@ -195,7 +195,7 @@ var $container = $('#works-container');
 
                         </ul>
                     </li>
-                    <li><a href="{% url 'index' %}" id="_msg">关于我们</a></li>
+                    <li><a href="{% url 'index' %}" id="guanyu_msg">关于我们</a></li>
                 </ul>
             </nav>
         </div>
@@ -223,10 +223,14 @@ var $container = $('#works-container');
     </div>
     <!--小人-->
     <div id="spig" class="spig">
-    <div id="message">正在加载中……</div>
+    <div id="message"></div>
     <div id="mumu" class="mumu"></div>
+        <div id="liaotian_div" align="center" style="display: none;">
+        <input type="text" id="liaotian_textarea" size="14" maxlength="20" >
+        <input type="submit" id="liaotian_submit" value="Send"/>
+    </div>
 </div>
-
+<audio id="chatAudio"><source id="source_play" ></audio>
 <script type="text/javascript">
 var _$paletteElement = $('.palette_color');
 var div = document.getElementById("palette_colors");
@@ -312,7 +316,7 @@ _div_location(); //div定位
 
 var is_show = true;
 var is_show2=window.location.pathname;
-if(is_show2=='/zx/'){
+if(is_show2=='/zx/' || is_show2=='/zt/'){
     $('#spig').css("display","none");
 }
 

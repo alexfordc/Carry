@@ -16,7 +16,7 @@
             {% if forloop.first %}
                 <tr><th>时间</th><th>开盘价</th><th>最高价</th><th>最低价</th><th>收盘价</th><th>交易额</th><th>交易量</th><th>股票代码</th><th>股票名称</th><th>历史日K线</th><th>分钟K线图</th></tr>
             {% endif %}
-            <tr bgcolor="{% cycle '#ffffff' '#cccccc' %}"><td>{{ i.0 }}</td><td>{{ i.1|floatformat:3 }}</td><td>{{ i.2|floatformat:3 }}</td><td>{{ i.3|floatformat:3 }}</td>
+            <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ i.0 }}</td><td>{{ i.1|floatformat:3 }}</td><td>{{ i.2|floatformat:3 }}</td><td>{{ i.3|floatformat:3 }}</td>
                     <td>{{ i.4|floatformat:3 }}</td><td>{{ i.5|floatformat:0 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7 }}</td><td>
                     {{ i.8 }}
                     </td><td><a href="{% url 'stockData' %}?code={{ i.7 }}" style="color:red;">日K</a></td>
@@ -26,8 +26,8 @@
         {% endfor %}
     </table>
     {% if data and isPage %}
-    <a href="?pageType=up&allPage={{ allPage }}&curPage={{ curPage }}">上一页</a>  {{ curPage }}/{{ allPage }}
-        <a href="?pageType=down&allPage={{ allPage }}&curPage={{ curPage }}">下一页</a>
+    <a style="color:blue;" href="?pageType=up&allPage={{ allPage }}&curPage={{ curPage }}">上一页</a>  {{ curPage }}/{{ allPage }}
+        <a style="color:blue;" href="?pageType=down&allPage={{ allPage }}&curPage={{ curPage }}">下一页</a>
     {% endif %}
     </div>
 {% endblock %}

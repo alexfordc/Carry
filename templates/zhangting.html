@@ -22,6 +22,7 @@
         时间：<input type="date" name="date" value="{{ dates }}">&nbsp;
         <input type="submit">&nbsp;&nbsp;&nbsp;&nbsp;{% include 'base/return.html' %}
     </form><br/><br/>
+    <a style="color:blue;" href="?date={{up}}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:blue;;" href="?date={{down}}">下一页</a><br/><br/>
     {% if zt_tomorrow %}
         <caption style="color:red"><span>将要上涨股票</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>日期：{{dates}}</span></caption>
     <tr><th>序  号</th><th>股票名称</th><th>股票代码</th><th>推荐指数</th></tr>

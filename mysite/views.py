@@ -18,6 +18,7 @@ import random
 import zmq
 from zmq import Context
 import socket
+import requests
 
 from mysite import HSD
 from mysite import models
@@ -466,12 +467,19 @@ def getList():
     if dates and database:
         conn = HSD.get_conn(data_dict[database][0])
         cur = conn.cursor()
-        dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=1)
+        if len(dates)==10:
+            dates2=datetime.datetime.strptime(dates, '%Y-%m-%d') + datetime.timedelta(days=1)
+        else:
+            dates2 = datetime.datetime.strptime(dates, '%Y-%m-%d %H:%M:%S')
+            dates = dates2 - datetime.timedelta(minutes=20)
+            dates2 = dates2 + datetime.timedelta(days=1)
+            dates2 = str(dates2)[:10]
+
         if database=='1':
-            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>"%s" AND datetime<"%s"' % (
+            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>="%s" AND datetime<"%s"' % (
                 data_dict[database][1], dates, dates2)
         elif database=='2':
-            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE code="HSIc1" AND datetime>"%s" AND datetime<"%s"' % (
+            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE code="HSIc1" AND datetime>="%s" AND datetime<"%s"' % (
                 data_dict[database][1], dates, dates2)
         cur.execute(sql)
         res = list(cur.fetchall())
@@ -501,11 +509,11 @@ def getList():
     #_ch=[i for i in range(60)]
     #for df2 in res[60:]:
     #    dc=data2.send(df2)
-
     if len(res)>0:
         res=[[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S"))*1000),i[1],i[2],i[3],i[4],i[5]] for i in res]
     data2 = HSD.Zbjs().macd2(res)
     dc = data2.send(None)
+    data2.send(None)
     _ch = [d['cd'] for d in dc]
     return res,_ch
 
@@ -613,18 +621,17 @@ def getwebsocket(rq):
                     zs=zs[tm]['datetimes'][-1][1] if zs[tm]['datetimes'] else 0
                 #print('zs.............',zs)
                 if this_time*1000!=times:
-
                     data={'times':str(times),'opens':str(opens),'high':str(high),'low':str(low),'close':str(close),'vol':str(vol),'zs':str(zs)} # ,'_ch':0
                     data=json.dumps(data).encode()
                     rq.websocket.send(data)
-                #time.sleep(1)
+        zbjs.send(None)
     else:
         return redirect('index')
 
 def zhangting(rq,t):
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
-    rq_date=rq.GET.get('date')
+    rq_date=rq.GET.get('date',dates)
     if t == 'today':
         zt=ZT.read_code()
         zt=sorted(zt,key=lambda x:x[2]) # 以第3个参数排序
@@ -633,13 +640,16 @@ def zhangting(rq,t):
     if not rq_date:
         return render(rq,'zhangting.html',{'jyzt':False,'dates':dates})
     if t == 'tomorrow':
+        date_up = str(datetime.datetime.strptime(rq_date, '%Y-%m-%d') - datetime.timedelta(days=1))[:10]
+        date_down=str(datetime.datetime.strptime(rq_date, '%Y-%m-%d') + datetime.timedelta(days=1))[:10]
         zt_tomorrow = ZT.yanzen(rq_date=rq_date)
         if zt_tomorrow:
+            print(zt_tomorrow)
             for i in range(len(zt_tomorrow)):
                 zt_tomorrow[i].append(zt_tomorrow[i][0])
                 zt_tomorrow[i][0]=zt_tomorrow[i][0][2:]
                 zt_tomorrow[i][2]=range(zt_tomorrow[i][2])#['★' for j in range(zt_tomorrow[i][2])]
-        return render(rq,'zhangting.html',{'jyzt':True,'zt_tomorrow':zt_tomorrow,'dates':rq_date})
+        return render(rq,'zhangting.html',{'jyzt':True,'zt_tomorrow':zt_tomorrow,'dates':rq_date,'up':date_up,'down':date_down})
 
     return redirect('index')
 
@@ -647,14 +657,28 @@ def moni(rq):
     dates=rq.POST.get('dates')
     ts=rq.POST.get('ts')
     fa=rq.POST.get('fa')
-    database=rq.POST.get('database')
+    database=rq.POST.get('database','1')
     zbjs=HSD.Zbjs()
     ma=60
     if dates and ts and fa:
-        res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
-        return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong})
+        try:
+            res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
+            return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database})
+        except Exception as exc:
+            print (exc)
     dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
     ts=6
-    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':zbjs.xzfa})
+    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':zbjs.xzfa,'database':database})
 
+def bfsy(rq):
+    if rq.method=='GET' and rq.is_ajax():
+        msg=rq.GET.get('msg')
+        if msg:
+            appkey="14283e062e694e7398453680634cbcfc"
+            url = "http://www.tuling123.com/openapi/api?key=%s&info=%s"%(appkey,msg)
+            content = requests.get(url).text
+            data = json.loads(content)
+            answer = data['text']
+            return HttpResponse(answer)
 
+    return redirect('index')

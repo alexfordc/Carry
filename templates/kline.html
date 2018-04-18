@@ -179,10 +179,10 @@
                 </div>
             </div>
             <div class="chart_dropdown"  style="padding-left: 10px;">
-                <div style="padding-top: 6px;"><a href="{% url 'index' %}" style="text-decoration:none;font-size:12px;color:green;">返回首页</a></div>
+                <div style="padding-top:6px;" class="close_websocket"><a href="{% url 'index' %}" style="text-decoration:none;font-size:14px;color:green;">首页</a></div>
             </div>
             <div class="chart_dropdown"  style="padding-left: 15px;">
-                <div style="padding-top: 6px;"><a href="{% url 'zhutu' %}" style="text-decoration:none;font-size:12px;color:green;">柱状图</a></div>
+                <div class="close_websocket">{% include 'base/return.html' %}</div>
             </div>
             <div class="chart_dropdown" style="padding-left:15px;">
                 <div >

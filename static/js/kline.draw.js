@@ -8941,6 +8941,12 @@ function websockets(showLoading){
     socket.onopen = function(){
         socket.send("1");
     };
+    $('.close_websocket').click(function () {
+            if (socket) {
+                socket.close();//关闭websocket
+                console.log('关闭websocket');
+            }
+            });
     socket.onmessage = function(e){
         var d= $.parseJSON(e.data);
         //alert(window.location.host);
