@@ -357,6 +357,39 @@ def zhutu2(rq):
 def tongji(rq):
     dates = HSD.get_date()
     id_name = HSD.get_idName()
+    messages=''
+    if rq.method=='POST':
+        id=rq.POST.get('id')
+        name=rq.POST.get('name')
+        en=rq.POST.get('en')
+        passwd=rq.POST.get('pass')
+        types=rq.POST.get('types')
+        if passwd==HSD.get_ud()+dates[-2:] and id:
+            ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
+            en = ys.get(en.upper())
+            try:
+                conn = HSD.get_conn('carry_investment')
+                cur = conn.cursor()
+                if types=='update' and name and en and name != 'None':
+                    if en:
+                        sql = "UPDATE account_info SET trader_name='{}',available='{}' WHERE id={}".format(name, en, id)
+                        cur.execute(sql)
+                        conn.commit()
+                        messages='修改成功'
+                elif types=='delete' and id and en == '0':
+                    sql="delete from account_info where id={}".format(id)
+                    cur.execute(sql)
+                    conn.commit()
+                    messages='删除成功'
+                else:
+                    messages = '操作失败'
+            except:
+                conn.rollback()
+                messages = '操作失败'
+            finally:
+                conn.close()
+        else:
+            messages = '验证码错误！'
     try:
         rq_date = rq.GET.get('datetimes')
         rq_ts = int(rq.GET.get('rq_ts','1'))
@@ -662,8 +695,8 @@ def moni(rq):
     ma=60
     if dates and ts and fa:
         try:
-            res,huizong=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
-            return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database})
+            res,huizong,first_time=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
+            return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database,'first_time':first_time})
         except Exception as exc:
             print (exc)
     dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]

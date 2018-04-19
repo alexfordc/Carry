@@ -32,18 +32,18 @@
       <th>是否使用</th>
       <th>开户金额</th>
       <th>当前余额</th>
-
+        <th>操作</th>
     </tr>
             {% for i in herys %}
     <tr>
       <td>{{ i.0 }}</td>
-      <td>
+      <td id="name{{i.0}}" contentEditable="true">
           {% if i.1 %}{{ i.1 }}{% endif %}
       </td>
-      <td>{{ i.2|yesno:"Yes,No,未知" }}</td>
+      <td id="en{{i.0}}" contentEditable="true">{{ i.2|yesno:"Yes,No,未知" }}</td>
       <td>{{ i.3 }}</td>
       <td>{{ i.4 }}</td>
-
+        <td width="160"><input type="button" onclick="javascript:update_name('{{i.0}}')" value="修改">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="javascript:delete_user('{{i.0}}')" value="删除"></td>
     </tr>
         {% endfor %}
 
@@ -182,8 +182,16 @@
         <h3 style="color:green;">暂无数据</h3>
     {% endif %}
     </div>
+<div style="display:none">
+    <form method="POST" action="" id="form_up_del">
+        <input type="text" name="id" id="f_id">
+        <input type="text" name="name" id="f_name">
+        <input type="text" name="en" id="f_en">
+        <input type="password" id="f_pass">
+    </form>
+</div>
     <script type="text/javascript">
-    function doSubmitForm(ty=null){
+    function doSubmitForm(ty){
         if(ty==null){
         var tongji_form=document.getElementById('tongji_form');
         tongji_form.submit();
@@ -194,13 +202,48 @@
         window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&rq_ts='+rq_ts;
         }
      }
+
         $('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
         $("tr:odd").css({"background-color": "#cccc33"});
         $('tr:even').css({'background-color': '#00cc00'});
         $('tr').css({'height': '30'});
-{#        var dates=(new Date()).pattern('yyyy-MM-dd hh:mm:ss');#}
-{#        alert(dates);#}
-{#        document.getElementById("datetimes").value=dates;#}
 
+//提交
+function formSubmit(id,name,en,pass,types){
+        var form = $("<form method='POST' action=''>{% csrf_token %}</form>");
+        form.append($("<input type='text'>").val(id).attr('name','id'));
+        form.append($("<input type='text'>").val(name).attr('name','name'));
+        form.append($("<input type='text'>").val(en).attr('name','en'));
+        form.append($("<input type='password'>").val(pass).attr('name','pass'));
+        form.append($("<input type='text'>").val(types).attr('name','types'));
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+}
+
+//修改
+function update_name(id){
+        var name=$("#name"+id).text();
+        var en=$("#en"+id).text();
+        var pass=prompt('请输入验证码：','');
+        pass=pass.trim();
+        if(pass.length>0){
+        formSubmit(id,name,en,pass,'update');
+        }else{alert('验证码不能为空！');}
+    }
+//删除
+function delete_user(id){
+    var pass=prompt('请输入验证码：','');
+    pass=pass.trim();
+    if(pass.length>0){
+    var name=$("#name"+id).text();
+    var en=$("#en"+id).text();
+    if(confirm('您确定要删除吗？')==true){
+        formSubmit(id,name,en,pass,'delete');
+    }
+    }else{alert('验证码不能为空！');}
+}
+var messages='{{messages}}';
+if(messages.length>0){alert(messages);}
     </script>
 {% endblock %}

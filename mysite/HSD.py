@@ -17,38 +17,6 @@ import socket
 
 from mysite.DataIndex import ZB
 
-def tests(l):
-    '''
-    :param l: this is locals()
-    :return: None, test function
-    '''
-    print('Name', '\t', 'Type(size)', '\t', 'Value')
-    for k, v in l.items():
-        t = type(v)
-        if t == int:
-            print(k, '\t', 'int      ', '\t', v)
-        elif t == float:
-            print(k, '\t', 'float    ', '\t', v)
-        elif t == bytes:
-            print(k, '\t', 'bytes(%s)' % len(v), '\t', v[:20])
-        elif t == tuple:
-            print(k, '\t', 'tuple(%s)' % len(v), '\t', v[:2])
-        elif t == list:
-            print(k, '\t', 'list (%s)' % len(v), '\t', v[:2])
-        elif t == set:
-            print(k, '\t', 'set  (%s)' % len(v), '\t', tuple(v)[:2])
-        elif t == str:
-            print(k, '\t', 'str  (%s)' % len(v), '\t', v[:20])
-        elif t == dict:
-            key = tuple(v.keys())
-            if len(key)<2:
-                print(k, '\t', 'dict (%s)' % len(v), '\t', {key[0]: v[key[0]], key[1]: v[key[1]]})
-            else:
-                print(k, '\t', 'dict (%s)' % len(v), '\t', v)
-        else:
-            print(k, '\t', type(v), '\t', v)
-
-
 config = configparser.ConfigParser()
 config.read('log\\conf.conf')
 
@@ -138,6 +106,9 @@ SQL = {
 def get_date():
     ''' 返回当前日期，格式为：2018-04-04 '''
     return str(datetime.datetime.now())[:10]
+
+def get_ud():
+    return config['U']['ud']
 
 def get_conn(dataName=None):
     ''' 返回数据库连接 '''
@@ -1275,6 +1246,7 @@ class Zbjss(object):
 
 class Zbjs(ZB):
     def __init__(self):
+        self.tab2_name='handle_min' #index_min
         super(Zbjs, self).__init__()
 
     def main(self,_ma=60):
@@ -1297,7 +1269,7 @@ class Zbjs(ZB):
             if database=='1':
                 tab_name='futures_min'
             else:
-                tab_name = 'index_min'
+                tab_name = self.tab2_name
             sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(tab_name)
             data=getSqlData(conn,sql)
             data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
@@ -1314,7 +1286,8 @@ class Zbjs(ZB):
         if database=='1':
             sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE datetime>'{}' AND datetime<'{}'".format(dates,dates2)
         else:
-            sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+            #sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+            sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>'{}' AND datetime<'{}'".format(self.tab2_name, dates, dates2)
         return getSqlData(conn,sql)
 
     def main2(self,_ma,_dates,_ts,_fa,database):
@@ -1322,7 +1295,7 @@ class Zbjs(ZB):
         dates2 = str(datetime.datetime.strptime(_dates, '%Y-%m-%d') + datetime.timedelta(days=_ts))[:10]
         da = self.get_data(conn, _dates, dates2, database)
         self.zdata=da
-        res = self.trd(_fa)
+        res, first_time = self.trd(_fa)
 
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
@@ -1352,4 +1325,4 @@ class Zbjs(ZB):
         # if dt3:
         #     self.macd_to_sql(dt3) # 存储到数据库
 
-        return res, huizong
+        return res, huizong,first_time

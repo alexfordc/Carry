@@ -73,7 +73,9 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                         <tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>
                 </table>
                 </th></tr>
-
+            {% if first_time %}
+                    <tr><td style="color:green;" colspan="7">{{first_time.0}}</td><td colspan="2">{{first_time.1}}</td></tr>
+            {% endif %}
         {% endif %}
         <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
             <td>
@@ -81,9 +83,9 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                     {% for i in v.datetimes %}
                         <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ i.0 }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td><td style="width:150px;">{{ i.2 }}</td>
                             {% if i.3 == huizong.least2 %}
-                            <td style="background:white;"><a name="yidan_ks">{{ i.3 }}</a></td>
+                            <td style="background:white;"><a style="color:black;" name="yidan_ks">{{ i.3 }}</a></td>
                             {% elif i.3 == huizong.most2 %}
-                            <td style="background:red;"><a name="yidan_yl">{{ i.3 }}</a></td>
+                            <td style="background:red;"><a style="color:black;" name="yidan_yl">{{ i.3 }}</a></td>
                             {% else %}
                             <td>{{ i.3 }}</td>
                             {% endif %}
