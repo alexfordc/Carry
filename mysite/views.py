@@ -673,8 +673,12 @@ def zhangting(rq,t):
     if not rq_date:
         return render(rq,'zhangting.html',{'jyzt':False,'dates':dates})
     if t == 'tomorrow':
-        date_up = str(datetime.datetime.strptime(rq_date, '%Y-%m-%d') - datetime.timedelta(days=1))[:10]
-        date_down=str(datetime.datetime.strptime(rq_date, '%Y-%m-%d') + datetime.timedelta(days=1))[:10]
+        datet=datetime.datetime.strptime(rq_date, '%Y-%m-%d')
+        day=datet.weekday()
+        day_up=1 if 6>day>0 else (3 if day==0 else 2)
+        day_down=1 if day<4 or day==6 else (3 if day==4 else 2)
+        date_up = str(datet - datetime.timedelta(days=day_up))[:10]
+        date_down=str(datet + datetime.timedelta(days=day_down))[:10]
         zt_tomorrow = ZT.yanzen(rq_date=rq_date)
         if zt_tomorrow:
             print(zt_tomorrow)
@@ -696,11 +700,16 @@ def moni(rq):
     if dates and ts and fa:
         try:
             res,huizong,first_time=zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts),_fa=fa,database=database)
-            return render(rq,'moni.html',{'res':res,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database,'first_time':first_time})
+            keys=sorted(res.keys())
+            keys.reverse()
+            res=[dict(res[k],**{'time':k}) for k in keys]
+            return render(rq,'moni.html',{'res':res,'keys':keys,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database,'first_time':first_time})
         except Exception as exc:
             print (exc)
-    dates=str(datetime.datetime.now()-datetime.timedelta(days=5))[:10]
-    ts=6
+    dates=datetime.datetime.now()
+    day=dates.weekday()+3
+    dates=str(dates-datetime.timedelta(days=day))[:10]
+    ts=day+1
     return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':zbjs.xzfa,'database':database})
 
 def bfsy(rq):

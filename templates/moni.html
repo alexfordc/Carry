@@ -53,7 +53,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             {% if huizong %}
         <!--<caption style="font-size:20px;align:center;">胜率：<span style="color:red;">{{ huizong.shenglv|floatformat:2 }}</span>&nbsp; 总盈亏：<span style="color:red;">{{ huizong.yk }}</span>&nbsp; 总共做单：<span style="color:red;">{{ huizong.zl }}</span></caption>-->
         <tr><th colspan="8" style="font-size: 20px;">汇 总</th></tr>
-        <tr><th>正确率(%)</th><th>总盈亏</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
+        <tr><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
             <th>亏损<br>涨幅与波动</th><th>一天<br>盈利最多  <a style="color:blue;" href="#yidan_yl">查看一单</a></th><th>盈利<br>涨幅与波动</th></tr>
         <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
@@ -65,7 +65,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         {% endif %}
         </table><br/>
     <table border="1" align="center">
-    {% for k,v in res.items %}
+    {% for v in res %}
         {% if forloop.first %}
             <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
                 <th>详细数据
@@ -77,7 +77,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                     <tr><td style="color:green;" colspan="7">{{first_time.0}}</td><td colspan="2">{{first_time.1}}</td></tr>
             {% endif %}
         {% endif %}
-        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ k }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
+        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ v.time }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
             <td>
                 <table border="1" style="width:650px;">
                     {% for i in v.datetimes %}
