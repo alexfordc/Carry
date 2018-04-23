@@ -703,7 +703,7 @@ def moni(rq):
             keys=sorted(res.keys())
             keys.reverse()
             res=[dict(res[k],**{'time':k}) for k in keys]
-            return render(rq,'moni.html',{'res':res,'keys':keys,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'huizong':huizong,'database':database,'first_time':first_time})
+            return render(rq,'moni.html',{'res':res,'keys':keys,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'fa_doc':zbjs.fa_doc,'huizong':huizong,'database':database,'first_time':first_time})
         except Exception as exc:
             print (exc)
     dates=datetime.datetime.now()

@@ -7,6 +7,12 @@
       <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/featured/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/featured/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/flickr/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/flickr/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/preview/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/preview/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/work/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/work/Thumbs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/img/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/img/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/moni.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moni.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
@@ -20,13 +26,13 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Carry$data_38.coverage" NAME="data_38 Coverage Results" MODIFIED="1520931501782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../EveryDay" />
     <SUITE FILE_PATH="coverage/Carry$Mytensorflow.coverage" NAME="Mytensorflow Coverage Results" MODIFIED="1521117274927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../EveryDay" />
-    <SUITE FILE_PATH="coverage/Carry$Macd.coverage" NAME="Macd Coverage Results" MODIFIED="1512983522525" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月11日" />
-    <SUITE FILE_PATH="coverage/Carry$get_min.coverage" NAME="get_min Coverage Results" MODIFIED="1513138848938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月13日" />
+    <SUITE FILE_PATH="coverage/Carry$Macd.coverage" NAME="Macd Coverage Results" MODIFIED="1512983522525" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../2017年12月11日" />
+    <SUITE FILE_PATH="coverage/Carry$get_min.coverage" NAME="get_min Coverage Results" MODIFIED="1513138848938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../2017年12月13日" />
     <SUITE FILE_PATH="coverage/Carry$read_new_HSI.coverage" NAME="read_new_HSI Coverage Results" MODIFIED="1521429950442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../2018-3-19" />
     <SUITE FILE_PATH="coverage/Carry$zb2.coverage" NAME="zb2 Coverage Results" MODIFIED="1521605404947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../2018-3-21" />
     <SUITE FILE_PATH="coverage/Carry$TradeDate.coverage" NAME="TradeDate Coverage Results" MODIFIED="1521594800916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../EveryDay/demo/AndBefore-2018-3" />
     <SUITE FILE_PATH="coverage/Carry$sub_client.coverage" NAME="sub_client Coverage Results" MODIFIED="1522224973465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mysite" />
-    <SUITE FILE_PATH="coverage/Carry$this_get_min.coverage" NAME="this_get_min Coverage Results" MODIFIED="1513218888585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Tools/2017年12月14日" />
+    <SUITE FILE_PATH="coverage/Carry$this_get_min.coverage" NAME="this_get_min Coverage Results" MODIFIED="1513218888585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../2017年12月14日" />
     <SUITE FILE_PATH="coverage/Carry$data_37.coverage" NAME="data_37 Coverage Results" MODIFIED="1520476437204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../2018-3-8" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -39,24 +45,23 @@
     <favorites_list name="Carry" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="350" column="38" selection-start-line="350" selection-start-column="38" selection-end-line="350" selection-end-column="38" />
+            <state relative-caret-position="510">
+              <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
               <folding>
-                <element signature="e#456#748#0" />
-                <element signature="e#1028#1142#0" />
-                <element signature="e#1001#1107#0" />
-                <element signature="e#1143#1205#0" />
-                <element signature="e#1267#9410#0" />
-                <element signature="e#9461#11395#0" />
-                <element signature="e#11437#14018#0" />
-                <element signature="e#16657#18498#0" />
-                <element signature="e#15563#17463#0" />
-                <element signature="e#20752#22818#0" />
-                <element signature="e#19403#22663#0" />
+                <element signature="e#1337#1399#0" />
+                <element signature="e#1461#9604#0" />
+                <element signature="e#10052#12407#0" />
+                <element signature="e#14262#16834#0" />
+                <element signature="e#16739#18600#0" />
+                <element signature="e#18701#20879#0" />
+                <element signature="e#19240#21310#0" />
+                <element signature="e#20891#24232#0" />
+                <element signature="e#24217#26723#0" />
+                <element signature="e#26180#27085#0" />
               </folding>
             </state>
           </provider>
@@ -65,17 +70,17 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-75">
-              <caret line="668" column="25" selection-start-line="668" selection-start-column="25" selection-end-line="668" selection-end-column="25" />
+            <state relative-caret-position="475">
+              <caret line="653" column="79" selection-start-line="653" selection-start-column="79" selection-end-line="653" selection-end-column="79" />
               <folding>
                 <element signature="e#1008#1249#0" />
                 <element signature="e#1302#1469#0" />
                 <element signature="e#1505#1631#0" />
-                <marker date="1524217045283" expanded="true" signature="3460:3484" ph="..." />
-                <marker date="1524217045283" expanded="true" signature="5411:5518" ph="..." />
-                <marker date="1524217045283" expanded="true" signature="6214:6261" ph="..." />
-                <marker date="1524217045283" expanded="true" signature="6753:6841" ph="..." />
-                <marker date="1524217045283" expanded="true" signature="10136:10185" ph="..." />
+                <marker date="1524482118515" expanded="true" signature="3460:3484" ph="..." />
+                <marker date="1524482118515" expanded="true" signature="5411:5518" ph="..." />
+                <marker date="1524482118515" expanded="true" signature="6214:6261" ph="..." />
+                <marker date="1524482118515" expanded="true" signature="6753:6841" ph="..." />
+                <marker date="1524482118515" expanded="true" signature="10136:10185" ph="..." />
               </folding>
             </state>
           </provider>
@@ -84,9 +89,11 @@
       <file leaf-file-name="moni.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/moni.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
+            <state relative-caret-position="450">
+              <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
               <folding>
+                <element signature="n#style#0;n#ol#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#0;n#tr#1;n#table#1;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -96,8 +103,8 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="1297" column="33" selection-start-line="1297" selection-start-column="33" selection-end-line="1297" selection-end-column="33" />
+            <state relative-caret-position="600">
+              <caret line="1262" column="31" selection-start-line="1262" selection-start-column="31" selection-end-line="1262" selection-end-column="31" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#56074#56944#0" />
@@ -118,7 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cur=</find>
       <find>self.stop_profit</find>
       <find>stop_profit</find>
       <find>showMessage</find>
@@ -148,6 +154,7 @@
       <find>main2</find>
       <find>fa.send</find>
       <find>res</find>
+      <find>zsjg</find>
     </findStrings>
     <replaceStrings>
       <replace>Index</replace>
@@ -220,8 +227,8 @@
         <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
-        <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
       </list>
     </option>
@@ -255,6 +262,11 @@
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Carry" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -268,7 +280,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="D:\ProgramFiles\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EveryDay/demo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="D:/ProgramFiles/nodejs/node" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -629,13 +641,6 @@
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
     </task>
-    <task id="LOCAL-00001" summary="初始化项目">
-      <created>1520299831486</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1520299831486</updated>
-    </task>
     <task id="LOCAL-00002" summary="添加一行">
       <created>1520300327997</created>
       <option name="number" value="00002" />
@@ -972,7 +977,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524144945995</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="2018-4-20">
+      <created>1524221512876</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1524221512876</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -997,6 +1009,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08693361" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -1036,7 +1049,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="涨停板块股票" />
     <MESSAGE value="涨停板" />
     <MESSAGE value="功能添加" />
     <MESSAGE value="功能调整" />
@@ -1061,7 +1073,8 @@
     <MESSAGE value="2018-4-14" />
     <MESSAGE value="2018-4-18" />
     <MESSAGE value="2018-4-19" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-4-19" />
+    <MESSAGE value="2018-4-20" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-4-20" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1071,10 +1084,21 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="22" />
+      <option name="time" value="27" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32425">
+          <caret line="1297" column="33" selection-start-line="1297" selection-start-column="33" selection-end-line="1297" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#56074#56944#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1096,20 +1120,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/Mytensorflow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="145" column="27" selection-start-line="145" selection-start-column="27" selection-end-line="145" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/xunlian.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="31" column="21" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/Mytensorflow.py" />
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/xunlian.py" />
     <entry file="file://$PROJECT_DIR$/../../2018-3-19/read_new_HSI.py" />
     <entry file="file://D:/ProgramFiles/Anaconda3/Lib/datetime.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1133,20 +1145,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../2018-3-21/zb2.py" />
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/TradeDate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/MyUtil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/TradeDate.py" />
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/MyUtil.py" />
     <entry file="file://$PROJECT_DIR$/templates/zhexian.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1189,13 +1189,7 @@
         <state relative-caret-position="-142" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/zb2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="74" column="13" lean-forward="true" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../EveryDay/demo/AndBefore_2018_3/zb2.py" />
     <entry file="file://$USER_HOME$/Desktop/ass.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1217,20 +1211,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../Carry/static/js/kline.draw.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="1478" column="18" selection-start-line="1478" selection-start-column="8" selection-end-line="1478" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Carry/static/js/kline.assistant.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="14" lean-forward="true" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Carry/static/js/kline.draw.js" />
+    <entry file="file://$PROJECT_DIR$/../../Carry/static/js/kline.assistant.js" />
     <entry file="file://$PROJECT_DIR$/static/js/kline.assistant.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -1359,10 +1341,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/moni.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+          <folding>
+            <element signature="n#style#0;n#ol#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="1297" column="33" selection-start-line="1297" selection-start-column="33" selection-end-line="1297" selection-end-column="33" />
+        <state relative-caret-position="600">
+          <caret line="1262" column="31" selection-start-line="1262" selection-start-column="31" selection-end-line="1262" selection-end-column="31" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#56074#56944#0" />
@@ -1370,49 +1364,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/moni.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="78" column="19" selection-start-line="78" selection-start-column="19" selection-end-line="78" selection-end-column="19" />
-          <folding>
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#1;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75">
-          <caret line="668" column="25" selection-start-line="668" selection-start-column="25" selection-end-line="668" selection-end-column="25" />
+        <state relative-caret-position="475">
+          <caret line="653" column="79" selection-start-line="653" selection-start-column="79" selection-end-line="653" selection-end-column="79" />
           <folding>
             <element signature="e#1008#1249#0" />
             <element signature="e#1302#1469#0" />
             <element signature="e#1505#1631#0" />
-            <marker date="1524217045283" expanded="true" signature="3460:3484" ph="..." />
-            <marker date="1524217045283" expanded="true" signature="5411:5518" ph="..." />
-            <marker date="1524217045283" expanded="true" signature="6214:6261" ph="..." />
-            <marker date="1524217045283" expanded="true" signature="6753:6841" ph="..." />
-            <marker date="1524217045283" expanded="true" signature="10136:10185" ph="..." />
+            <marker date="1524482118515" expanded="true" signature="3460:3484" ph="..." />
+            <marker date="1524482118515" expanded="true" signature="5411:5518" ph="..." />
+            <marker date="1524482118515" expanded="true" signature="6214:6261" ph="..." />
+            <marker date="1524482118515" expanded="true" signature="6753:6841" ph="..." />
+            <marker date="1524482118515" expanded="true" signature="10136:10185" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="350" column="38" selection-start-line="350" selection-start-column="38" selection-end-line="350" selection-end-column="38" />
+        <state relative-caret-position="510">
+          <caret line="461" lean-forward="true" selection-start-line="461" selection-end-line="461" />
           <folding>
-            <element signature="e#456#748#0" />
-            <element signature="e#1028#1142#0" />
-            <element signature="e#1001#1107#0" />
-            <element signature="e#1143#1205#0" />
-            <element signature="e#1267#9410#0" />
-            <element signature="e#9461#11395#0" />
-            <element signature="e#11437#14018#0" />
-            <element signature="e#16657#18498#0" />
-            <element signature="e#15563#17463#0" />
-            <element signature="e#20752#22818#0" />
-            <element signature="e#19403#22663#0" />
+            <element signature="e#1337#1399#0" />
+            <element signature="e#1461#9604#0" />
+            <element signature="e#10052#12407#0" />
+            <element signature="e#14262#16834#0" />
+            <element signature="e#16739#18600#0" />
+            <element signature="e#18701#20879#0" />
+            <element signature="e#19240#21310#0" />
+            <element signature="e#20891#24232#0" />
+            <element signature="e#24217#26723#0" />
+            <element signature="e#26180#27085#0" />
           </folding>
         </state>
       </provider>

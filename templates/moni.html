@@ -13,15 +13,22 @@ function closeLogin(){
 {% block center_cen %}
 <div align="center" id="beizhu" style="display:none; POSITION:absolute; left:50%; top:50%; width:600px; height:320px; margin-left:-300px; margin-top:-200px;
 border:1px solid #888; background-color:green; text-align:center"><span>方案备注</span><br/><br/>
-    <ol>
-        <li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；
-        以macd的正负为第一条件，在60均线以上或以下为第二条件进行卖出</li>
-        <li>方案：以价差与标准差的倍数大于1.5为第一条件，并与上一个价差与标准差的倍数大于1.5的K线重合为第二条件进行买入；
-        以当前macd最高最低区域为条件进行卖出</li>
-        <li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；
-        以当前macd最高最低区域为条件进行卖出</li>
+    <ol style="list-style-type:none;">
+        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；-->
+        <!--以macd的正负为第一条件，在60均线以上或以下为第二条件进行卖出</li>-->
+        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，并与上一个价差与标准差的倍数大于1.5的K线重合为第二条件进行买入；-->
+        <!--以当前macd最高最低区域为条件进行卖出</li>-->
+        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；-->
+        <!--以当前macd最高最低区域为条件进行卖出</li>-->
+        {% for k,v in fa_doc.items %}
+        {% if k != 'z' %}
+        <li>方案{{k}}：{{v}}</li>
+        {% else %}
+        <li>{{v}}</li>
+        {% endif %}
+        {% endfor %}
     </ol><br/>
-<a href="javascript:closeLogin();"><h2>确 定</h2></a></div>
+<a href="javascript:closeLogin();"><h2 style="background-color:green;">确 定</h2></a></div>
 </div>
     <div align="center">
     <form action="" method="POST">
