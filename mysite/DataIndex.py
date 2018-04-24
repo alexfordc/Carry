@@ -13,7 +13,7 @@ class ZB(object):
     }
     def __init__(self):
         #self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
-        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5,'6':self.fa6}  # 执行方案
+        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5,'6':self.fa6,'7':self.fa7}  # 执行方案
 
     @property
     def zdata(self):
@@ -234,19 +234,21 @@ class ZB(object):
             #     res[dates]['xy']+=1
             if clo < mas and mul < -1.5 and is_dk and self.dt_kc(datetimes):
                 jg_d=clo
-                res[dates]['datetimes'].append([str(datetimes),1])
+                str_time1 = str(datetimes)
+                res[dates]['datetimes'].append([str_time1,1])
                 is_d=1
             elif clo > mas and mul > 1.5 and is_dk and self.dt_kc(datetimes):
                 jg_k=clo
-                res[dates]['datetimes'].append([str(datetimes),-1])
+                str_time2 = str(datetimes)
+                res[dates]['datetimes'].append([str_time2,-1])
                 is_k=-1
-            if is_d==1 and ((macd<0 and clo>mas) or clo-startMony_d<zsjg or self.is_date(datetimes)):
+            if is_d==1 and ((macd<0 and clo>mas) or clo-jg_d<zsjg or self.is_date(datetimes)):
                 if self.time_pd(str(datetimes),str_time1,3):
                     res[dates]['duo']+=1
                     res[dates]['mony']+=(clo-jg_d)
                     res[dates]['datetimes'].append([str(datetimes),2])
                     is_d=0
-            elif is_k == -1 and ((macd > 0 and clo < mas) or startMony_k - clo < zsjg or self.is_date(datetimes)):
+            elif is_k == -1 and ((macd > 0 and clo < mas) or jg_k - clo < zsjg or self.is_date(datetimes)):
                 if self.time_pd(str(datetimes), str_time2, 3):
                     res[dates]['kong']+=1
                     res[dates]['mony']+=(jg_k-clo)
@@ -482,12 +484,12 @@ class ZB(object):
             elif mul < -1.5:
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
-            up_c += 1 if (cd > 0 or maidian > 0) else 0 # 上涨提示次数
-            down_c += 1 if (cd < 0 or maidian < 0) else 0 # 下跌提示次数
+            up_c += 1 if mul>1.5 else 0 # 上涨提示次数
+            down_c += 1 if mul<-1.5 else 0 # 下跌提示次数
 
-            judge_d=(up_c>down_c and up_c>2) # 做多与平多仓的判断
-            judge_k=(down_c>up_c and down_c>2) # 做空与平空仓的判断
-            if cd > 0 and is_dk and judge_d and self.dt_kc(datetimes):
+            judge_d=(up_c>down_c and up_c>1) # 做多与平多仓的判断
+            judge_k=(down_c>up_c and down_c>1) # 做空与平空仓的判断
+            if is_dk and judge_d and self.dt_kc(datetimes):
                 jg_d = clo
                 startMony_d=clo
                 str_time1 = str(datetimes)
@@ -495,7 +497,7 @@ class ZB(object):
                 first_time=[str(datetimes), '多']
                 _high = high
 
-            elif cd < 0 and is_dk and judge_k and self.dt_kc(datetimes):
+            elif is_dk and judge_k and self.dt_kc(datetimes):
                 jg_k = clo
                 startMony_k=clo
                 str_time2 = str(datetimes)
@@ -503,7 +505,7 @@ class ZB(object):
                 first_time = [str(datetimes), '空']
                 _low = low
 
-            if is_d == 1 and ( maidian<0 or self.is_date(datetimes) or clo - startMony_d-cqdc<zsjg):
+            if is_d == 1 and ( macd<0 or self.is_date(datetimes) or clo - startMony_d-cqdc<zsjg):
                 # res[dates]['mony'] += (clo - startMony_d)
                 # res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d])
                 # is_d = 0
@@ -521,7 +523,7 @@ class ZB(object):
                 #     res[dates]['mony'] += (clo - jg_d)
                 #     jg_d = clo
 
-            elif is_k == -1 and (maidian>0 or self.is_date(datetimes) or startMony_k - clo<zsjg):
+            elif is_k == -1 and (macd>0 or self.is_date(datetimes) or startMony_k - clo<zsjg):
                 # res[dates]['mony'] += (startMony_k - clo)
                 # res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo])
                 # is_k = 0
@@ -596,6 +598,78 @@ class ZB(object):
                     res[dates]['mony'] += (jg_k - clo)
                     jg_k = clo
 
+    def fa7(self,cqdc=6,zsjg=-80):
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        while 1:
+            _while, res, dt3, dates = yield res,first_time
+            if not _while:
+                break
+            is_dk = not (is_k or is_d)
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            h = datetimes.hour
+            this_date = (h == 23 and datetimes.minute >= 56) or h < 9
+            if clo<mas and mul<-1.5 and is_dk and not this_date:
+                res[dates]['duo'] += 1
+                jg_d=clo
+                startMony_d=clo
+                str_time1=str(datetimes)
+                is_d=1
+                first_time = [str_time1, '多']
+            elif clo>mas and mul>1.5 and is_dk and not this_date:
+                res[dates]['kong'] += 1
+                jg_k=clo
+                startMony_k=clo
+                str_time2=str(datetimes)
+                is_k=-1
+                first_time = [str_time2, '空']
+
+            if is_d==1 and ((macd<0 and clo>mas) or clo-startMony_d<zsjg or this_date):
+                if this_date:
+                    res[dates]['mony'] += (clo - jg_d - cqdc)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d - cqdc])
+                    is_d = 0
+                    first_time = []
+                elif self.time_pd(str(datetimes),str_time1,3):
+                    res[dates]['mony']+=(clo-jg_d-cqdc)
+                    res[dates]['datetimes'].append([str_time1,str(datetimes),'多',clo-startMony_d-cqdc])
+                    is_d=0
+                    first_time = []
+                elif str_time1[:10]!=str(datetimes)[:10]:
+                    res[dates]['mony'] += (clo - jg_d - cqdc)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d - cqdc])
+                    is_d = 0
+                    first_time = []
+
+            elif is_k==-1 and ((macd>0 and clo<mas) or startMony_k-clo<zsjg or this_date):
+                if this_date:
+                    res[dates]['mony'] += (jg_k - clo - cqdc)
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo - cqdc])
+                    is_k = 0
+                    first_time = []
+                elif self.time_pd(str(datetimes), str_time2, 3):
+                    res[dates]['mony']+=(jg_k-clo-cqdc)
+                    res[dates]['datetimes'].append([str_time2,str(datetimes),'空',startMony_k-clo-cqdc])
+                    is_k=0
+                    first_time = []
+                elif str_time1[:10]!=str(datetimes)[:10]:
+                    res[dates]['mony'] += (clo - jg_d - cqdc)
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d - cqdc])
+                    is_k = 0
+                    first_time = []
+
     def trd(self,_fa,_ma=60):
         ''' 交易记录 '''
         res={}
@@ -615,7 +689,7 @@ class ZB(object):
                 res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
             dt3=data2.send(df2)
             datetimes=dt3[-1]['datetimes']
-            if ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
+            if _fa!="7" and ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
                 continue
             res,first_time=fa.send((True,res,dt3,dates))
 
