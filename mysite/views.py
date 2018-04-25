@@ -467,16 +467,6 @@ def tongji(rq):
         logging.error(exc)
     if not herys:
         return redirect('index')
-    # herys.tickerprice = round(herys.tickerprice, 2)
-    # herys['isnull'] = herys['isnull'].astype('int')
-    # herys.hsi = round(herys.hsi, 2)
-    # herys.mhi = round(herys.mhi, 2)
-    # if xz == '8':
-    #     try:
-    #         del herys['tickertime']
-    #     except Exception as exc:
-    #         logging.error(exc)
-    # {'herys': herys,'dates':dates,'ids':HSD.IDS,'id_name':id_name}
     ids=HSD.IDS
     return render(rq, 'tongji.html', locals())
 
@@ -520,28 +510,9 @@ def getList():
         conn.close()
         if len(res) > 0:
             res = [[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]] for i in res]
-            # data2 = HSD.Zbjs().macd2(res)
-            # dc = data2.send(None)
-            _ch = [] # [d['cd'] for d in dc]
+            _ch = []
             return res,_ch
-    # conn = HSD.get_conn('carry_investment')
-    # cur = conn.cursor()
-    # str_time=str(datetime.datetime.now())[:10]+' 09:00:00'
-    # cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min WHERE datetime>="%s" ORDER BY datetime'%str_time)
-    # res=list(cur.fetchall())
-    # if len(res)<5000:
-    #     size_show=800*5  # 今天开盘之前要显示的分钟数据数量
-    #     cur.execute('SELECT COUNT(0)-%s FROM futures_min'%size_show)
-    #     count=cur.fetchall()[0][0]
-    #     if count>-size_show:
-    #         cur.execute('SELECT datetime,open,high,low,close,vol FROM futures_min ORDER BY datetime LIMIT %s,%s'%(count,size_show)) # WHERE datetime>"2018-03-26" and datetime<"2018-03-27"')#
-    #         res=list(cur.fetchall())
-    # conn.commit()
-    # conn.close()
-    #data2.send(res[:60])
-    #_ch=[i for i in range(60)]
-    #for df2 in res[60:]:
-    #    dc=data2.send(df2)
+
     if len(res)>0:
         res=[[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S"))*1000),i[1],i[2],i[3],i[4],i[5]] for i in res]
     data2 = HSD.Zbjs().macd2(res)
@@ -724,3 +695,10 @@ def bfsy(rq):
             return HttpResponse(answer)
 
     return redirect('index')
+
+def gdzd(rq):
+    zbjs = HSD.Zbjs()
+    gd,zd=zbjs.get_future()
+    gd=gd*30 if gd>0 else 10
+    zd=zd*30 if zd>0 else 10
+    return render(rq,'zdzd.html',{'gd':gd,'zd':zd})

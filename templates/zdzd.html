@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+{% block title %}模拟表{% endblock %}
+
+{% block center_cen %}
+
+    <div align="center">
+    <table border="1">
+        <extended>This is the future information of the Hang Seng Index Futures</extended><br/><br/>
+        <tr style="background:yellow;"><th>高开概率（%）</th><th>上涨概率（%）</th></tr>
+        <tr style="background:red;color:white;"><td>{{gd}}</td><td>{{zd}}</td></tr>
+    </table>
+    </div>
+{% endblock %}

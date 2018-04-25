@@ -139,7 +139,8 @@ class ZB(object):
         data=1 # data future is list
         while data:
             data=yield dc
-            ind=len(dc)
+            dc.pop(0)
+            ind=59 # len(dc)
             if isinstance(data,tuple) or isinstance(data,list):
                 dc.append({'ema_short':0,'ema_long':0,'diff':0,'dea':0,'macd':0,'ma':0,'var':0,'std':0,'reg':0,'mul':0,'datetimes':data[0],'open':data[1],'high':data[2],'low':data[3],'close':data[4],'cd':0,'maidian':0})
                 try:
@@ -621,14 +622,14 @@ class ZB(object):
 
             h = datetimes.hour
             this_date = (h == 23 and datetimes.minute >= 56) or h < 9
-            if clo<mas and mul<-1.5 and is_dk and not this_date:
+            if clo<mas and mul<-1.9 and is_dk and not this_date:
                 res[dates]['duo'] += 1
                 jg_d=clo
                 startMony_d=clo
                 str_time1=str(datetimes)
                 is_d=1
                 first_time = [str_time1, '多']
-            elif clo>mas and mul>1.5 and is_dk and not this_date:
+            elif clo>mas and mul>1.9 and is_dk and not this_date:
                 res[dates]['kong'] += 1
                 jg_k=clo
                 startMony_k=clo
@@ -665,8 +666,8 @@ class ZB(object):
                     is_k=0
                     first_time = []
                 elif str_time1[:10]!=str(datetimes)[:10]:
-                    res[dates]['mony'] += (clo - jg_d - cqdc)
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', clo - startMony_d - cqdc])
+                    res[dates]['mony'] += (jg_k - clo - cqdc)
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', startMony_k - clo - cqdc])
                     is_k = 0
                     first_time = []
 

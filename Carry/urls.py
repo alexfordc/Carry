@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^zhangting/([a-z]*)/$',views.zhangting,name='zhangting'),
     url(r'^moni/$',views.moni,name='moni'),
     url(r'^bfsy/$',views.bfsy,name='bfsy'),
+    url(r'^gdzd/$',views.gdzd,name='gdzd'),
 ]
 
 # handler404 = views.page_not_found #404页面
