@@ -29901,3 +29901,1706 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\HSD.py", line 150, in get_data
     ti = re.findall('datetime="(.*?)"current', req)[0][-10:]
 IndexError: list index out of range
+base.py[2018-04-26 08:40:25][WARNING]：Not Found: /favicon.ico
+base.py[2018-04-26 11:09:25][WARNING]：Not Found: /favicon.ico
+base.py[2018-04-26 11:09:26][WARNING]：Not Found: /favicon.ico
+csrf.py[2018-04-26 11:12:02][WARNING]：Forbidden (CSRF cookie not set.): /moni/
+base.py[2018-04-27 08:49:49][WARNING]：Not Found: /favicon.ico
+views.py[2018-04-27 20:56:02][ERROR]：Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+base.py[2018-04-28 10:36:43][WARNING]：Not Found: /favicon.ico
+base.py[2018-04-28 12:58:02][WARNING]：Not Found: /favicon.ico
+exception.py[2018-04-28 15:16:26][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 653, in zhangting
+    zt_tomorrow = ZT.yanzen(rq_date=rq_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 571, in yanzen
+    jyzt.append(code)
+AttributeError: 'dict' object has no attribute 'append'
+exception.py[2018-04-28 15:18:51][ERROR]：Internal Server Error: /zhangting/tomorrow/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 653, in zhangting
+    zt_tomorrow = ZT.yanzen(rq_date=rq_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 571, in yanzen
+    jyzt[rq_date].append(code)
+KeyError: '2018-04-28'
+base.py[2018-05-02 09:12:29][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-02 09:15:15][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:17][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:18][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:19][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:20][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:21][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:32][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:33][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:34][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:35][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:36][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:37][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+exception.py[2018-05-02 09:15:38][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 518, in getList
+    data2 = HSD.Zbjs().macd2(res)
+AttributeError: 'Zbjs' object has no attribute 'macd2'
+base.py[2018-05-02 12:37:06][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-02 17:21:15][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-02 17:35:48][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-02 19:06:00][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-05-02 20:42:03][ERROR]：Internal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 82, in get
+    client=client)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 203, in get
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 616, in getwebsocket
+    objArr = cache.get("objArr")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 201, in get
+    value = client.get(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 976, in get
+    return self.execute_command('GET', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+base.py[2018-05-03 08:34:59][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-03 08:38:13][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-03 09:13:30][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-03 14:14:37][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:14:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:14:37][WARNING]：Not Found: /hc/myfxbook/fx-mins.css
+base.py[2018-05-03 14:14:37][WARNING]：Not Found: /hc/myfxbook/jquery-ui-1.8.21.custom.css
+base.py[2018-05-03 14:14:37][WARNING]：Not Found: /hc/myfxbook/cookieconsent.min.css
+exception.py[2018-05-03 14:40:26][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 507, in parse
+    compile_func = self.tags[command]
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 708, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 509, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 571, in invalid_block_tag
+    "or load this tag?" % (token.lineno, command)
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 12: 'static'. Did you forget to register or load this tag?
+base.py[2018-05-03 14:49:09][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:49:09][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:49:09][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:49:09][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:50:38][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:50:38][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:50:39][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:52:14][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:52:14][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:52:14][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:52:14][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:52:16][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:52:16][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:55:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:55:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:55:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:56:18][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:56:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 14:56:18][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 14:56:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:31:11][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 15:31:11][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:31:11][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 15:31:11][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:47:46][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 15:47:46][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:47:46][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 15:47:46][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:55:21][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 15:55:21][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 15:55:21][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:00:38][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:00:38][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:00:38][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:00:38][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:00:40][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:00:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:00:41][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:00:41][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:00:41][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:00:41][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:02:29][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:02:29][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:02:29][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:02:29][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:16:00][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:16:00][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:16:00][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:17:09][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:17:09][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:17:10][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:17:10][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:17:10][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:17:56][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:17:56][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:17:56][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:23][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:18:23][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:23][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:32][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:18:32][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:40][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:18:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:18:46][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:18:46][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:19:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:19:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:19:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:19:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:19:22][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:19:22][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:19:22][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:19:29][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:19:29][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:20:04][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:20:04][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:20:04][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:20:04][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:20:39][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:20:39][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:20:39][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:20:39][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:21:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:21:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:21:25][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:21:25][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:21:38][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:21:38][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:21:38][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:21:38][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:21:42][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:21:42][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:22:21][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:22:21][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:22:21][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:23:33][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:23:33][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:23:33][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:23:33][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:24:07][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:24:07][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:24:14][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:24:14][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:24:14][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:24:15][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:24:58][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:24:58][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:12][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:25:12][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:12][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:25:12][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:41][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:25:41][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:42][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:25:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:25:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:26:15][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:26:15][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:26:22][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:26:22][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:26:22][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:27:16][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:27:16][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:27:16][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:27:16][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+exception.py[2018-05-03 16:37:50][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 685, in moni
+    return render(rq,'moni.html',{'dates':dates,'ts':ts,'fas':zbjs.xzfa,'database':database})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' 'huice'' from 'url 'huice''
+base.py[2018-05-03 16:38:40][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:38:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:38:50][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:38:50][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:38:58][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:38:58][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:38:58][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:39:25][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 16:39:25][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 16:39:25][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:02:05][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:02:11][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:02:11][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:02:11][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:02:11][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:03:31][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:03:31][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:03:31][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:03:31][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:03:50][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:03:50][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:03:50][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:04:26][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:04:26][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:04:26][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:04:36][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:04:36][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:04:36][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:04:36][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:04:44][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:04:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:21:19][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:21:19][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:21:19][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:21:19][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:24:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:24:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:24:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:24:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:15][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:25:15][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:15][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:25:15][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:40][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:25:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:40][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:25:40][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:57][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:25:57][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:25:57][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:17][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:17][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:17][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:17][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:37][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:44][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:44][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:26:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:26:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:27:18][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:27:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:27:18][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:27:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:27:29][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:27:29][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:27:29][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:27:29][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:28:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:28:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:28:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:28:51][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:28:51][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:10][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:10][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:10][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:10][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:12][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:12][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:12][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:24][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:24][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:24][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:43][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:44][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:58][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:58][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:30:58][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:30:58][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:31:55][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:31:55][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:31:55][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:31:55][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:33:28][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:33:28][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:33:28][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:33:28][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:33:37][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:33:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:33:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:35][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:34:35][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:35][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:34:35][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:44][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:34:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:44][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:54][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:34:54][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:34:54][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:34:54][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:35:19][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:35:19][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:35:19][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:35:19][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:35:37][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:35:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:35:37][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:35:37][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:36:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:36:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:36:08][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:36:08][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:38:17][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:38:17][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:38:17][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:38:17][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:38:46][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:38:46][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:38:46][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:38:46][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:39:05][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:39:05][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:39:05][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:39:05][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:39:18][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:39:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:39:18][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:42:31][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:42:31][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:42:31][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:42:56][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:42:56][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:42:56][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:44:04][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:44:04][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:44:14][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:44:14][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:44:15][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:44:15][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:44:27][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:44:27][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:44:28][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:44:28][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:45:24][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:45:24][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:45:24][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:45:49][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:45:49][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:45:49][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:45:49][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:46:04][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:46:04][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:46:04][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:46:04][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:46:16][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:46:16][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:46:16][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:49:53][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:49:53][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:55:00][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:55:00][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:55:36][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:55:36][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 17:55:36][WARNING]：Not Found: /hc/myfxbook/echarts.min.js
+base.py[2018-05-03 17:55:36][WARNING]：Not Found: /hc/myfxbook/jquery.min.js
+base.py[2018-05-03 18:50:13][WARNING]：Not Found: /tests/
+base.py[2018-05-03 19:21:03][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-03 19:21:06][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-03 19:21:06][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 331, in read
+    return self._stream.read(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 47, in read
+    result = self.buffer + self._read_limited()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 41, in _read_limited
+    result = self.stream.read(size)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 272, in body
+    self._body = self.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 333, in read
+    six.reraise(UnreadablePostError, UnreadablePostError(*e.args), sys.exc_info()[2])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 331, in read
+    return self._stream.read(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 47, in read
+    result = self.buffer + self._read_limited()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 41, in _read_limited
+    result = self.stream.read(size)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+django.http.request.UnreadablePostError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 555, in getkline
+    size=rq.POST.get('size')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 126, in _get_post
+    self._load_post_and_files()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 311, in _load_post_and_files
+    self._post, self._files = QueryDict(self.body, encoding=self._encoding), MultiValueDict()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 274, in body
+    six.reraise(UnreadablePostError, UnreadablePostError(*e.args), sys.exc_info()[2])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 272, in body
+    self._body = self.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 333, in read
+    six.reraise(UnreadablePostError, UnreadablePostError(*e.args), sys.exc_info()[2])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\six.py", line 685, in reraise
+    raise value.with_traceback(tb)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 331, in read
+    return self._stream.read(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 47, in read
+    result = self.buffer + self._read_limited()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\wsgi.py", line 41, in _read_limited
+    result = self.stream.read(size)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+django.http.request.UnreadablePostError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+base.py[2018-05-04 08:38:41][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-04 10:49:14][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 756, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '+huizong.yk' from 'init_money+huizong.yk'
+exception.py[2018-05-04 11:16:05][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_y||safe
+views.py[2018-05-04 11:16:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:17:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:17:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:17:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:18:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:18:30][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-04 11:19:04][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-05-04 11:19:11][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_x||safe
+exception.py[2018-05-04 11:19:35][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_x||safe
+exception.py[2018-05-04 11:21:18][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_x||safe
+exception.py[2018-05-04 11:21:37][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_x||safe
+exception.py[2018-05-04 11:21:41][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 763, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 673, in __init__
+    token[start:]))
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: |{hc.zx_x||safe
+base.py[2018-05-04 13:09:23][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-04 17:41:49][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-04 19:52:10][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 19:52:11][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 19:52:12][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 19:52:13][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 19:52:13][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 19:52:14][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 559, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 516, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-04 20:07:55][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 831, in huice
+    return render(rq,'hc.html')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' - huizong.shenglv' from '100 - huizong.shenglv'
+exception.py[2018-05-04 20:19:38][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 831, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+views.py[2018-05-04 20:24:07][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-07 09:30:42][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-07 09:30:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-07 09:31:08][ERROR]：Object of type 'datetime' is not JSON serializable

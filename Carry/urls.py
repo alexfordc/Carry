@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^moni/$',views.moni,name='moni'),
     url(r'^bfsy/$',views.bfsy,name='bfsy'),
     url(r'^gdzd/$',views.gdzd,name='gdzd'),
+    url(r'^hc/$',views.huice,name='huice'),
+
 ]
 
 # handler404 = views.page_not_found #404页面

@@ -568,7 +568,7 @@ class Limit_up:
             for i in mx.keys():
                 r = mx[i].predict([data2])
                 if r == 1:
-                    jyzt.append(code)
+                    jyzt[rq_date].append(code)
                     #mx_n[i].append(code)
         jyzt = Counter(jyzt).most_common()
         jyzt = jyzt[:10]
@@ -631,7 +631,6 @@ class Zbjs(ZB):
         da = self.get_data(conn, _dates, dates2, database)
         self.zdata=da
         res, first_time = self.trd(_fa)
-
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
         hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
@@ -646,7 +645,12 @@ class Zbjs(ZB):
                     'least']
                 huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
                     'most']
-                all_price += [j[3] for j in res[i]['datetimes']]
+                mtsl = [j[3] for j in res[i]['datetimes']]
+                all_price += mtsl
+                if mtsl:
+                    res[i]['shenglv'] = len([sl for sl in mtsl if sl > 0]) / len(mtsl) * 100  # 每天胜率
+                else:
+                    res[i]['shenglv'] = 0
         except Exception as exc:
             print(exc)
         huizong['shenglv'] += len([p for p in all_price if p > 0])
@@ -663,6 +667,7 @@ class Zbjs(ZB):
         return res, huizong,first_time
 
     def get_future(self):
+        ''' 计算日线数据 '''
         data = requests.get(
             "http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,8").text
         data = data.split("=")[1]

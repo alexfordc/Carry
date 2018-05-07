@@ -8,18 +8,19 @@
 function closeLogin(){
    document.getElementById("beizhu").style.display="none";
 }
+function huice(){
+    var dates=document.getElementById("datetimes").value;
+    var ts=document.getElementById("rq_ts").value;
+    var fa=document.getElementById("select_fa").value;
+    var database=document.getElementById("select_db").value;
+    location.href="{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database;
+}
 </script>
 {% endblock %}
 {% block center_cen %}
-<div align="center" id="beizhu" style="display:none; POSITION:absolute; left:50%; top:50%; width:600px; height:320px; margin-left:-300px; margin-top:-200px;
+<div align="center" id="beizhu" style="display:none;position: absolute; left:50%; top:50%;width:800px; margin-left:-300px; margin-top:-200px;
 border:1px solid #888; background-color:green; text-align:center"><span>方案备注</span><br/><br/>
     <ol style="list-style-type:none;">
-        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；-->
-        <!--以macd的正负为第一条件，在60均线以上或以下为第二条件进行卖出</li>-->
-        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，并与上一个价差与标准差的倍数大于1.5的K线重合为第二条件进行买入；-->
-        <!--以当前macd最高最低区域为条件进行卖出</li>-->
-        <!--<li>方案：以价差与标准差的倍数大于1.5为第一条件，在60均线以上或以下为第二条件进行买入；-->
-        <!--以当前macd最高最低区域为条件进行卖出</li>-->
         {% for k,v in fa_doc.items %}
         {% if k != 'z' %}
         <li>方案{{k}}：{{v}}</li>
@@ -54,12 +55,12 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         {% endif %}
     </select> &nbsp;
                 <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="button" value="方案备注" onclick="openLogin()"/>
     </form><br/>
         <table border="1" align="center">
             {% if huizong %}
-        <!--<caption style="font-size:20px;align:center;">胜率：<span style="color:red;">{{ huizong.shenglv|floatformat:2 }}</span>&nbsp; 总盈亏：<span style="color:red;">{{ huizong.yk }}</span>&nbsp; 总共做单：<span style="color:red;">{{ huizong.zl }}</span></caption>-->
-        <tr><th colspan="8" style="font-size: 20px;">汇 总</th></tr>
+            <tr><th colspan="8"><span style="font-size: 20px;">汇 总&nbsp;&nbsp;&nbsp;&nbsp;方案{{fa}}</span><br/><span>做多：{{fa_one.0}}<br/>做空：{{fa_one.1}}<br/>止损：{{fa_one.2}}</span></th></tr>
         <tr><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
             <th>亏损<br>涨幅与波动</th><th>一天<br>盈利最多  <a style="color:blue;" href="#yidan_yl">查看一单</a></th><th>盈利<br>涨幅与波动</th></tr>
         <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>

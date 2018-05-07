@@ -515,7 +515,7 @@ def getList():
 
     if len(res)>0:
         res=[[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S"))*1000),i[1],i[2],i[3],i[4],i[5]] for i in res]
-    data2 = HSD.Zbjs().macd2(res)
+    data2 = HSD.Zbjs().vis(res)
     dc = data2.send(None)
     data2.send(None)
     _ch = [d['cd'] for d in dc]
@@ -674,7 +674,8 @@ def moni(rq):
             keys=sorted(res.keys())
             keys.reverse()
             res=[dict(res[k],**{'time':k}) for k in keys]
-            return render(rq,'moni.html',{'res':res,'keys':keys,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'fa_doc':zbjs.fa_doc,'huizong':huizong,'database':database,'first_time':first_time})
+            fa_doc=zbjs.fa_doc
+            return render(rq,'moni.html',{'res':res,'keys':keys,'dates':dates,'ts':ts,'fa':fa,'fas':zbjs.xzfa,'fa_doc':fa_doc,'fa_one':fa_doc.get(fa),'huizong':huizong,'database':database,'first_time':first_time})
         except Exception as exc:
             print (exc)
     dates=datetime.datetime.now()
@@ -702,3 +703,132 @@ def gdzd(rq):
     gd=gd*30 if gd>0 else 10
     zd=zd*30 if zd>0 else 10
     return render(rq,'zdzd.html',{'gd':gd,'zd':zd})
+
+def huice(rq):
+    dates = rq.GET.get('dates')
+    ts = rq.GET.get('ts')
+    fa = rq.GET.get('fa')
+    database = rq.GET.get('database','2')
+    init_money=5000
+    zbjs = HSD.Zbjs()
+    ma = 60
+    if dates and ts and fa:
+        try:
+            res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, _ts=int(ts), _fa=fa, database=database)
+            keys=[i for i in res if res[i]['datetimes']]
+            keys.sort()
+            jyts=len(keys)
+            jyys=int(keys[-1][-5:-3])-int(keys[0][-5:-3])+1
+            hc = {
+                'jyts':jyts,  # 交易天数
+                'jyys':jyys,  # 交易月数
+                'hlbfb':round(huizong['yk']/init_money*100,2), # 总获利百分比
+                'dhl':round(huizong['yk']/jyts/init_money*100,2),  # 日获利百分比
+                'mhl': round(huizong['yk'] / jyys/init_money*100, 2),  # 月获利百分比
+                'ye': init_money+huizong['yk'], # 余额
+            }
+            jingzhi=[]
+            zx_x=[]
+            zx_y=[]
+            zdhc=0
+            for i in keys:
+                je = res[i]['mony']
+                jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
+                zx_x.append(i[-5:-3] + i[-2:])
+                zx_y.append(zx_y[-1] + je if zx_y else je)
+                if len(jingzhi)>1:
+                    max_jz = max(jingzhi[:-1])
+                    zdhc2=round((max_jz-jingzhi[-1])/max_jz*100,2)
+                    zdhc=zdhc2 if zdhc2>zdhc else zdhc
+            hc['zjhc']=zdhc  # 最大回测
+            hc['zjhc']=hc['zjhc'] if hc['zjhc']>=0 else 0
+            hc['jingzhi'] = jingzhi # 每天净值
+            hc['max_jz']=max(jingzhi) # 最高
+            hc['zx_x']=zx_x  # 折线图x轴
+            hc['zx_y'] = zx_y # 折线图y轴
+
+            def get_jy(jg):
+                jy1 = round(jg['mony'] / init_money * 100, 2)  # 获利
+                jy2 = jg['mony']  # 利润
+                jy3 = jg['mony']  # 点
+                jy4 = jg['shenglv']  # 每天胜率
+                jy5 = jg['duo'] + jg['kong']  # 开的单数
+                jy6 = jy5  # 手
+                return jy1, jy2, jy3, jy4, jy5, jy6
+            try:
+                this_date=datetime.datetime.strptime(dates,'%Y-%m-%d')
+                this_date+=datetime.timedelta(days=int(ts))
+                this_date=datetime.datetime.now() if this_date>datetime.datetime.now() else this_date
+                week = [str(this_date - datetime.timedelta(days=i))[:10] for i in range(this_date.weekday() + 1)] # 这个星期的日期
+                month = [str(this_date - datetime.timedelta(days=i))[:10] for i in range(this_date.day)]  # 这个月的日期
+                time_date=time.strptime(dates, '%Y-%m-%d')
+                year = [str(this_date - datetime.timedelta(days=i))[:10] for i in range(time_date.tm_yday)] # 这一年的日期
+                year.sort()
+                this_week=[0,0,0,0,0,0,0]
+                this_month=[0,0,0,0,0,0,0]
+                this_year=[0,0,0,0,0,0,0]
+
+                for i in year:
+                    jg=res.get(i)
+                    if not jg or len(jg['datetimes'])<1:
+                        continue
+                    jys=get_jy(jg)
+                    if i == str(this_date)[:10]:
+                        hc['this_day']=jys
+                    if i in week:
+                        this_week[0] += jys[0]
+                        this_week[1] += jys[1]
+                        this_week[2] += jys[2]
+                        this_week[3] += jys[3]
+                        this_week[4] += jys[4]
+                        this_week[5] += jys[5]
+                        this_week[-1] += 1
+                    if i in month:
+                        this_month[0] += jys[0]
+                        this_month[1] += jys[1]
+                        this_month[2] += jys[2]
+                        this_month[3] += jys[3]
+                        this_month[4] += jys[4]
+                        this_month[5] += jys[5]
+                        this_month[-1] += 1
+                    this_year[0] += jys[0]
+                    this_year[1] += jys[1]
+                    this_year[2] += jys[2]
+                    this_year[3] += jys[3]
+                    this_year[4] += jys[4]
+                    this_year[5] += jys[5]
+                    this_year[-1] += 1
+                this_week[0]=round(this_week[0],2)
+                this_week[3]=round(this_week[3]/this_week[-1],2)
+                this_month[0]=round(this_month[0],2)
+                this_month[3] = round(this_month[3] / this_month[-1],2)
+                this_year[0]=round(this_year[0],2)
+                this_year[3] = round(this_year[3] / this_year[-1],2)
+            except Exception as exc:
+                print(exc)
+            hc['this_week']=this_week
+            hc['this_month']=this_month
+            hc['this_year']=this_year
+            huizong['kuilv']=100-huizong['shenglv']
+
+
+            """
+            {'2018-04-27': {'duo': 1, 'kong': 2, 'mony': -89.0, 'datetimes': [['2018-04-27 11:08:00', '2018-04-27 13:00:00', '多', -1.0], 
+            ['2018-04-27 13:09:00', '2018-04-27 13:38:00', '空', -100], ['2018-04-27 14:32:00', '2018-04-27 14:52:00', '空', 12.0]], 'dy': 27, 'xy': 23, 'ch': 1}, 
+            '2018-04-28': {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}, 
+            '2018-05-02': {'duo': 2, 'kong': 2, 'mony': -48.0, 'datetimes': [['2018-05-02 11:08:00', '2018-05-02 11:40:00', '多', -16.0], 
+            ['2018-05-02 11:53:00', '2018-05-02 11:56:00', '空', 3.0], ['2018-05-02 13:55:00', '2018-05-02 15:13:00', '空', -37.0], 
+            ['2018-05-02 15:23:00', '2018-05-02 15:53:00', '多', 2.0]], 'dy': 25, 'xy': 17, 'ch': 2}, 
+            '2018-05-03': {'duo': 2, 'kong': 3, 'mony': 8.0, 'datetimes': [['2018-05-03 11:17:00', '2018-05-03 11:59:00', '空', 21.0], 
+            ['2018-05-03 11:59:00', '2018-05-03 13:06:00', '多', 25.0], ['2018-05-03 13:20:00', '2018-05-03 13:32:00', '空', -100], 
+            ['2018-05-03 14:54:00', '2018-05-03 15:11:00', '多', 21.0], ['2018-05-03 15:19:00', '2018-05-03 16:01:00', '空', 41.0]], 'dy': 21, 'xy': 25, 'ch': 4}}
+
+            In [87]: print(huizong)
+            {'yk': -129.0, 'shenglv': 58, 'zl': 12, 'least': ['2018-04-27', -89.0, 9.0, 291.0], 'most': ['2018-05-03', 8.0, -6.0, 459.0], 'avg': -10.75, 'avg_day': -32.25, 'least2': -100, 'most2': 41.0}
+            """
+        except Exception as exc:
+            print (exc)
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+
+    return render(rq,'hc.html')
+
