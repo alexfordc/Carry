@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^bfsy/$',views.bfsy,name='bfsy'),
     url(r'^gdzd/$',views.gdzd,name='gdzd'),
     url(r'^hc/$',views.huice,name='huice'),
+    url(r'^account_update/$',views.account_info_update,name='account_update'),
 
 ]
 

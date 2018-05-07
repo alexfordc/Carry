@@ -726,11 +726,18 @@ def huice(rq):
                 'dhl':round(huizong['yk']/jyts/init_money*100,2),  # 日获利百分比
                 'mhl': round(huizong['yk'] / jyys/init_money*100, 2),  # 月获利百分比
                 'ye': init_money+huizong['yk'], # 余额
+                'cgzd':[0,0,0], # 成功的做多交易
+                'cgzk':[0,0,0], # 成功的做空交易
             }
             jingzhi=[]
             zx_x=[]
             zx_y=[]
             zdhc=0
+            ccsj=0  # 总持仓时间
+            count_yl=0 # 总盈利
+            count_ks=0 # 总亏损
+            avg=huizong['yk']/huizong['zl']  # 平均盈亏
+            count_var=0
             for i in keys:
                 je = res[i]['mony']
                 jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
@@ -740,6 +747,40 @@ def huice(rq):
                     max_jz = max(jingzhi[:-1])
                     zdhc2=round((max_jz-jingzhi[-1])/max_jz*100,2)
                     zdhc=zdhc2 if zdhc2>zdhc else zdhc
+                for j in res[i]['datetimes']:
+                    if j[2]=='多':
+                        hc['cgzd'][1]+=1
+                        if j[-1]>0:
+                            hc['cgzd'][0]+=1
+                    elif j[2]=='空':
+                        hc['cgzk'][1]+=1
+                        if j[-1]>0:
+                            hc['cgzk'][0]+=1
+                    # 计算持仓时间
+                    start_d = j[0].replace(':', '-').replace(' ', '-')
+                    start_d=start_d.split('-') + [0, 0, 0]
+                    start_d=[int(i) for i in start_d]
+                    end_d = j[1].replace(':', '-').replace(' ', '-')
+                    end_d = end_d.split('-') + [0, 0, 0]
+                    end_d = [int(i) for i in end_d]
+                    ccsj+=time.mktime(tuple(end_d))-time.mktime(tuple(start_d))
+                    # 计算利润因子
+                    if j[-1]>0:
+                        count_yl+=j[-1]
+                    else:
+                        count_ks+=-j[-1]
+                    # 方差
+                    count_var+=(j[-1]-avg)**2
+
+            hc['cgzd'][2]=round(hc['cgzd'][0]/hc['cgzd'][1]*100,2)
+            hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2)
+            hc['ccsj']=round(ccsj/60/huizong['zl'],1)  # 平均持仓时间
+            hc['lryz']=round(count_yl/count_ks,2)
+            count_var=count_var/huizong['zl']
+            hc['std']=round(count_var**0.5,2)
+
+            '''{'2018-04-27': {'duo': 1, 'kong': 2, 'mony': -89.0, 'datetimes': [['2018-04-27 11:08:00', '2018-04-27 13:00:00', '多', -1.0], 
+            ['2018-04-27 13:09:00', '2018-04-27 13:38:00', '空', -100], ['2018-04-27 14:32:00', '2018-04-27 14:52:00', '空', 12.0]], 'dy': 27, 'xy': 23, 'ch': 1}'''
             hc['zjhc']=zdhc  # 最大回测
             hc['zjhc']=hc['zjhc'] if hc['zjhc']>=0 else 0
             hc['jingzhi'] = jingzhi # 每天净值
@@ -831,4 +872,12 @@ def huice(rq):
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
 
     return render(rq,'hc.html')
+
+def account_info_update(rq):
+    conn=HSD.get_conn('carry_investment')
+    cur=conn.cursor()
+    cur.execute("CALL account_info_update")
+    conn.commit()
+    conn.close()
+    return redirect('tongji')
 

@@ -55,7 +55,7 @@
                                 <li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">$0.00</span></li>
                                 <li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> $5000.00</span></li>
                                 <li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">$0.00</span></li>
-                                <li class="paddB5 paddT5"><span class="floatLeft">已更新:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">1 分钟之前</span></li>
+                                <li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>
                                 <li>
                                         <span class="floatLeft">追踪</span><span class="floatNone" id="totalTracking">0</span>
                                 </li>
@@ -275,10 +275,7 @@ myChart.setOption(option);
                 <td>交易:</td>
                 <td class="alignR">{{huizong.zl}}</td>
             </tr>
-            
-                                                
-                        
-                                    <tr>
+            <tr>
                 <td>盈利的:</td>
                 <td class="pointer" align="right">
                             <span id="wonTip" class="在42笔交易中，正确21笔，获胜率为50<br/>在42笔交易中发生亏损21笔，亏损比例为50"><div class="blockHolder">
@@ -304,7 +301,7 @@ myChart.setOption(option);
             <tr>
 
                 <td>    手:</td>
-                <td class="alignR">42</td>
+                <td class="alignR">{{huizong.zl}}</td>
             </tr>
             <tr class="bg1">
                 <td>委员会:</td>
@@ -319,43 +316,41 @@ myChart.setOption(option);
                     <tbody><tr>
                         <td>成功的做多交易:</td>
                         <td align="right">
-                            <span class="gray">(0/21) </span> 0%
+                            <span class="gray">({{hc.cgzd.0}}/{{hc.cgzd.1}}) </span> {{hc.cgzd.2}}%
                             </td>
                     </tr>
                     <tr class="bg1">
                         <td>成功的做空交易:</td>
                         <td align="right">
-                            <span class="gray">(21/21) </span> 100%
+                            <span class="gray">({{hc.cgzk.0}}/{{hc.cgzk.1}}) </span> {{hc.cgzk.2}}%
                             </td>
                     </tr>
 
 
                     <tr>
                         <td>最佳交易($):</td>
-                        <td class="alignR">                             <span class="gray">(Apr 26)</span> 779.61
+                        <td class="alignR">                             <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1}}
                         </td>
                     </tr>
                     <tr class="bg1">
                         <td> 最差交易($):</td>
-                        <td class="alignR">                            <span class="gray">(Apr 26)</span> -689.73
+                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1}}
                         </td>
                     </tr>
                     <tr>
                         <td>最好的交易（按照点数计算）</td>
-                        <td class="alignR">                            <span class="gray">(Apr 26)</span> 77961.0
+                        <td class="alignR">                            <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1}}
                         </td>
                     </tr>
                     <tr class="bg1">
                         <td>最坏的交易（点数）</td>
-                        <td class="alignR">                            <span class="gray">(Apr 26)</span> -68973.0
+                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1}}
                         </td>
                     </tr>
 
                     <tr>
                         <td>平均持仓时间:</td>
-                        <td class="alignR">
-                            4d 
-                        </td>
+                        <td class="alignR">{{hc.ccsj}} 分钟</td>
                     </tr>
 
                                         </tbody></table>
@@ -364,15 +359,12 @@ myChart.setOption(option);
                 <table class="advanced border0R" cellspacing="0">
                     <tbody><tr class="bg1">
                         <td><span class="dotted" id="pfTip">利润因子:</span></td>
-                        <td class="alignR">
-                                                                                     0.96
-                                                                             </td>
+                        <td class="alignR">{{hc.lryz}}</td>
                     </tr>
                     <tr>
                         <td><span class="dotted" id="sdTip">标准差:</span></td>
-                        <td class="alignR">$381.88</td>
-                    </tr>
-                                                            <tr class="bg1">
+                        <td class="alignR">${{hc.std}}</td>
+                    </tr><tr class="bg1">
                                                                 <td><span class="dotted" id="sharpTip">夏普比率:</span></td>
                                                  <td class="alignR">
                                                      0.02

@@ -31604,3 +31604,733 @@ views.py[2018-05-04 20:24:07][ERROR]£ºObject of type 'datetime' is not JSON seri
 base.py[2018-05-07 09:30:42][WARNING]£ºNot Found: /favicon.ico
 views.py[2018-05-07 09:30:49][ERROR]£ºObject of type 'datetime' is not JSON serializable
 views.py[2018-05-07 09:31:08][ERROR]£ºObject of type 'datetime' is not JSON serializable
+views.py[2018-05-07 09:31:15][ERROR]£ºObject of type 'datetime' is not JSON serializable
+exception.py[2018-05-07 09:46:09][ERROR]£ºInternal Server Error: /account_update/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.account_info_update didn't return an HttpResponse object. It returned None instead.
+base.py[2018-05-07 09:46:09][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-05-07 16:51:10][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:22][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:22][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:34][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:34][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:46][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:46][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:49][ERROR]£ºInternal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 872, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-07 16:51:58][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:51:58][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:10][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:10][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:10][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:22][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:22][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:53][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:52:53][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:53:10][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:53:10][ERROR]£ºInternal Server Error: /getwebsocket
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\utils\decorators.py", line 149, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\dwebsocket\decorators.py", line 16, in new_func
+    response = func(request, *args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 603, in getwebsocket
+    zs=zbjs.send(None)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 589, in main
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-05-07 16:53:10][ERROR]£ºInternal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in getList
+    conn = HSD.get_conn(data_dict[database][0])
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 119, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+base.py[2018-05-07 18:36:44][WARNING]£ºNot Found: /favicon.ico
+views.py[2018-05-07 18:36:56][ERROR]£ºObject of type 'datetime' is not JSON serializable
+views.py[2018-05-07 18:37:17][ERROR]£ºObject of type 'datetime' is not JSON serializable
+views.py[2018-05-07 18:37:38][ERROR]£ºObject of type 'datetime' is not JSON serializable
+base.py[2018-05-07 18:41:24][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-07 19:55:16][WARNING]£ºNot Found: /favicon.ico

@@ -12,8 +12,8 @@ class ZB(object):
               "收盘价大于60均线 与 价差除以标准差<-1.5，则做空；若前阴价差除以标准差<-1.5倍 与 后阳价差除以标准差>1.5倍重合，则平仓。","止损100个点"],
         '4': ["收盘价小于60均线 与 价差除以标准差<-1.5,则做多；若macd<0 与 收盘价大于60均线,则平仓；",
               "收盘价大于60均线 与 价差除以标准差>1.5,则做空；若macd>0 与 收盘价小于60均线,则平仓；","止损100个点"],
-        '5': ["价差除以标准差>1.5，则做多；价差除以标准差<-1.5,则平仓。",
-              "价差除以标准差<-1.5,则做空；价差除以标准差>1.5，则平仓。","止损80个点"],
+        '5': ["价差除以标准差<-1.5,则做空；价差除以标准差>1.5，则平仓。",
+              "价差除以标准差>1.5，则做多；价差除以标准差<-1.5,则平仓。","止损80个点"],
         "6": ["收盘价大于60均线 与 价差除以标准差>1.5，则做多；若前阳价差除以标准差>1.5倍 与 后阴价差除以标准差<-1.5倍重合，则平仓。",
               "收盘价小于60均线 与 价差除以标准差<-1.5，则做空；若前阴价差除以标准差<-1.5倍 与 后阳价差除以标准差>1.5倍重合，则平仓。","止损100个点"],
         "7":["收盘价小于60均线 与 价差除以标准差<-1.5，则做多；若macd<0 与 收盘价大于60均线，则平仓。",
@@ -400,7 +400,7 @@ class ZB(object):
                 is_k = 0
                 first_time = []
 
-    def fa3(self,cqdc=6,zsjg=-100):
+    def fa3(self,cqdc=6,zsjg=-100,zyjg=200):
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
         str_time1, str_time2 = '', ''
@@ -433,7 +433,7 @@ class ZB(object):
                 str_time2=str(datetimes)
                 is_k=-1
                 first_time = [str_time2, '空']
-            if is_d==1 and (maidian<0 or self.is_date(datetimes) or low-startMony_d-cqdc<zsjg):  # macd<dt3[-2]['macd']
+            if is_d==1 and (maidian<0 or self.is_date(datetimes) or low-startMony_d-cqdc<zsjg or low-startMony_d-cqdc>zyjg):  # macd<dt3[-2]['macd']
                 #if clo-jg_d<0:
                 if self.time_pd(datetimes,str_time1,2):
                     price = zsjg if low - startMony_d - cqdc < zsjg else clo - startMony_d - cqdc
@@ -443,7 +443,7 @@ class ZB(object):
                     is_d=0
                     first_time = []
 
-            elif is_k==-1 and (maidian>0 or self.is_date(datetimes) or startMony_k-high-cqdc<zsjg): # macd>dt3[-2]['macd']
+            elif is_k==-1 and (maidian>0 or self.is_date(datetimes) or startMony_k-high-cqdc<zsjg or startMony_k-high-cqdc>zyjg): # macd>dt3[-2]['macd']
                 #if jg_k-clo<0:
                 if self.time_pd(datetimes,str_time2,2):
                     price = zsjg if startMony_k-high-cqdc<zsjg else startMony_k-clo-cqdc
