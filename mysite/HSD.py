@@ -139,7 +139,6 @@ def get_tcp():
 def get_data(url=None):
     '''获取恒生指数成分股数据，格式为：
     [(34, '腾讯控股'), (27, '香港交易所'), (21, '建设银行'), (18, '中国银行'), (16, '工商银行')...]，时间'''
-    print('get_datas...................')
     url = url if url else 'https://www.hsi.com.hk/HSI-Net/HSI-Net?cmd=nxgenindex&index=00001&sector=00'
     req = requests.get(url).text
     req = re.sub('\s', '', req)

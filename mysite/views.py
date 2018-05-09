@@ -19,6 +19,8 @@ import zmq
 from zmq import Context
 import socket
 import requests
+import pyquery
+import urllib.request as request
 
 from mysite import HSD
 from mysite import models
@@ -228,14 +230,14 @@ def showPicture(rq):
         return redirect('stockDatas')
 
 
-def is_time(data):
+def is_time(data,minutes):
     '''判断是否在指定时间内'''
     if not data:
         return False
     sj = data[-1] if isinstance(data, list) else data['times']
     if data and datetime.datetime.now() - datetime.datetime.strptime(sj,
                                                                      '%Y-%m-%d %H:%M:%S') < datetime.timedelta(
-        minutes=0.15):
+        minutes=minutes):
         return True
     else:
         return False
@@ -247,7 +249,7 @@ def getData(rq):
     types=rq.GET.get('types')
     if rq.method == 'GET' and rq.is_ajax():
         data = read_from_cache('weight')
-        if is_time(data):
+        if is_time(data,0.15):
             data, times = data[:-2], data[-2]
         else:
             # 若时间到15点则直接获取点数数据
@@ -315,7 +317,7 @@ def zhexian(rq):
     if status and status is not '1':
         return redirect('index')
     result = read_from_cache('history_weight' + str(status))
-    if not is_time(result):
+    if not is_time(result,0.15):
         result = HSD.get_min_history() if status else HSD.get_history(HSD.get_conn('stock_data'))
         # result = HSD.get_min_history()
         result['times'] = str(datetime.datetime.now()).split('.')[0]
@@ -874,6 +876,7 @@ def huice(rq):
     return render(rq,'hc.html')
 
 def account_info_update(rq):
+    ''' 刷新交易统计表 '''
     conn=HSD.get_conn('carry_investment')
     cur=conn.cursor()
     cur.execute("CALL account_info_update")
@@ -881,3 +884,19 @@ def account_info_update(rq):
     conn.close()
     return redirect('tongji')
 
+def journalism(rq):
+    if rq.is_ajax:
+        d=read_from_cache("journalism")
+        if not is_time(d,0.25):
+            url='https://www.jin10.com'
+            d = request.urlopen(url).read()
+            d = d.decode('utf-8')
+            d = pyquery.PyQuery(d)
+            d = d.find('.jin-flash_b')
+            d = d.text()
+            d = d.split('。 ')[:5]
+            d.append(str(datetime.datetime.now())[:19])
+            write_to_cache("journalism",d)
+        d = {str(i): d[i] for i in range(len(d)-1)}
+        return JsonResponse(d)
+    return redirect('index')

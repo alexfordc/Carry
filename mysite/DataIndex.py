@@ -12,17 +12,18 @@ class ZB(object):
               "收盘价大于60均线 与 价差除以标准差<-1.5，则做空；若前阴价差除以标准差<-1.5倍 与 后阳价差除以标准差>1.5倍重合，则平仓。","止损100个点"],
         '4': ["收盘价小于60均线 与 价差除以标准差<-1.5,则做多；若macd<0 与 收盘价大于60均线,则平仓；",
               "收盘价大于60均线 与 价差除以标准差>1.5,则做空；若macd>0 与 收盘价小于60均线,则平仓；","止损100个点"],
-        '5': ["价差除以标准差<-1.5,则做空；价差除以标准差>1.5，则平仓。",
-              "价差除以标准差>1.5，则做多；价差除以标准差<-1.5,则平仓。","止损80个点"],
+        '5': ["价差除以标准差<-1,则做多；价差除以标准差> 1.5，则平仓。",
+              "价差除以标准差> 1，则做空；价差除以标准差<-1.5,则平仓。","止损80个点"],
         "6": ["收盘价大于60均线 与 价差除以标准差>1.5，则做多；若前阳价差除以标准差>1.5倍 与 后阴价差除以标准差<-1.5倍重合，则平仓。",
               "收盘价小于60均线 与 价差除以标准差<-1.5，则做空；若前阴价差除以标准差<-1.5倍 与 后阳价差除以标准差>1.5倍重合，则平仓。","止损100个点"],
         "7":["收盘价小于60均线 与 价差除以标准差<-1.5，则做多；若macd<0 与 收盘价大于60均线，则平仓。",
              "收盘价大于60均线 与 价差除以标准差>1.5，则做空；若macd>0 与 收盘价小于60均线，则平仓。","止损100个点，全天止损200个点以上"],
-        "8":["方案5的更新版本","",""],
+        "8":["价差除以标准差<-1,并自行判断确定，则做多；价差除以标准差> 1.5，则平仓。",
+              "价差除以标准差> 1，并自行判断确定，则做空；价差除以标准差<-1.5,则平仓。","止损80个点"],
     }
     def __init__(self):
         #self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
-        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5,'6':self.fa6,'7':self.fa7,'8':self.fa8}  # 执行方案
+        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5,'6':self.fa6,'7':self.fa7,'8':self.fa8,'9':self.fa9}  # 执行方案
 
     @property
     def zdata(self):
@@ -510,7 +511,6 @@ class ZB(object):
         is_d, is_k = 0, 0
         res = {}
         first_time = []
-
         while 1:
             _while, res, dt3, dates = yield res, first_time
             if not _while:
@@ -522,20 +522,21 @@ class ZB(object):
                                                                                     dt2['reg'], dt2['mul'], dt2['cd'], \
                                                                                     dt2['maidian'], dt2['high'], dt2[
                                                                                         'low']
+
             if mul > 1.5:
                 res[dates]['dy'] += 1
             elif mul < -1.5:
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
-            if mul < -1.5 and self.dt_kc(datetimes):  # is_d!=1 and judge_d
+            if mul < -1 and self.dt_kc(datetimes):  # is_d!=1 and judge_d
                 jg_d = clo
                 startMony_d = clo
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str(datetimes), '多']
 
-            elif mul > 1.5 and self.dt_kc(datetimes):  # is_k!=-1 and judge_k
+            elif mul > 1 and self.dt_kc(datetimes):  # is_k!=-1 and judge_k
                 jg_k = clo
                 startMony_k = clo
                 str_time2 = str(datetimes)
@@ -691,7 +692,7 @@ class ZB(object):
         is_d,is_k=0,0
         res={}
         first_time=[]
-        svmDK=joblib.load("log\\svm2.m")
+        svmDK=joblib.load("log\\svms2.m")
         _high=None
         _low=None
         svm=0
@@ -719,7 +720,7 @@ class ZB(object):
             svm=svmDK.predict([[ope, high, low, clo]])
             svm = True if svm[0]>0 else False
 
-            if mul<-1.5 and svm and is_dk and self.dt_kc(datetimes): # is_dk and judge_d svmDK.predict([[ope,high,low,clo]])[0]==1
+            if mul<-1 and svm and is_dk and self.dt_kc(datetimes): # is_dk and judge_d svmDK.predict([[ope,high,low,clo]])[0]==1
                 jg_d = clo
                 startMony_d=clo
                 str_time1 = str(datetimes)
@@ -728,7 +729,7 @@ class ZB(object):
                 _high = high
                 #test_d.append([ope,high,low,clo])
 
-            elif mul>1.5 and not svm and is_dk and self.dt_kc(datetimes): # is_dk and judge_k svmDK.predict([[ope,high,low,clo]])[0]==-1
+            elif mul>1 and not svm and is_dk and self.dt_kc(datetimes): # is_dk and judge_k svmDK.predict([[ope,high,low,clo]])[0]==-1
                 jg_k = clo
                 startMony_k=clo
                 str_time2 = str(datetimes)
@@ -758,6 +759,75 @@ class ZB(object):
                 down_c = 0
                 first_time = []
 
+    def fa9(self,cqdc=6,zsjg=-100,zzs=-99,zzy=240):
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        tj_d = 0
+        tj_k = 0
+        while 1:
+            _while, res, dt3, dates = yield res, first_time
+            if not _while:
+                break
+            is_dk = not (is_k or is_d)
+
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd, high, low = dt2['datetimes'], dt2['open'], dt2['close'], \
+                                                                           dt2[
+                                                                               'macd'], dt2['ma'], dt2['std'], dt2[
+                                                                               'reg'], dt2['mul'], dt2['cd'], dt2[
+                                                                               'high'], dt2['low']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            tj_d += 1 if mul > 1 else 0
+            tj_k += 1 if mul < -1 else 0
+            if tj_d>tj_k and is_dk and 9 < datetimes.hour < 16 and not res[dates]['mony']<zzs and not res[dates]['mony']>zzy:
+
+                if tj_d >= 2:
+                    jg_d = clo
+                    startMony_d = clo
+                    str_time1 = str(datetimes)
+                    is_d = 1
+                    first_time = [str_time1, '多']
+            elif tj_k>tj_d and is_dk and 9 < datetimes.hour < 16 and not res[dates]['mony']<zzs and not res[dates]['mony']>zzy:
+
+                if tj_k >= 2:
+                    jg_k = clo
+                    startMony_k = clo
+                    str_time2 = str(datetimes)
+                    is_k = -1
+                    first_time = [str_time2, '空']
+            if is_d == 1 and (self.time_pd(str(datetimes),str_time1,9) and mul>1.2 or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg): # (macd > 0 and clo > mas)
+                # if clo - jg_d < 50 or self.is_date(datetimes):
+                res[dates]['duo'] += 1
+                price = zsjg if low - startMony_d - cqdc < zsjg else clo - startMony_d - cqdc
+                res[dates]['mony'] += price
+                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price])
+                is_d = 0
+                first_time = []
+                tj_d = 0
+                # elif clo - jg_d > 60:
+                #     res[dates]['mony'] += (clo - jg_d)
+                #     jg_d = clo
+            elif is_k == -1 and (self.time_pd(str(datetimes),str_time2,10) and mul<-1.1 or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg): # (macd < 0 and clo < mas)
+                # if jg_k - clo < 50 or self.is_date(datetimes):
+                res[dates]['kong'] += 1
+                price = zsjg if startMony_k - high - cqdc < zsjg else startMony_k - clo - cqdc
+                res[dates]['mony'] += price
+                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price])
+                is_k = 0
+                first_time = []
+                tj_k = 0
+                # elif jg_k - clo > 60:
+                #     res[dates]['mony'] += (jg_k - clo)
+                #     jg_k = clo
 
     def trd(self,_fa,_ma=60):
         ''' 交易记录 '''
@@ -781,9 +851,13 @@ class ZB(object):
             if _fa!="7" and ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
                 continue
             res,first_time=fa.send((True,res,dt3,dates))
-        # import json
-        # with open(r"D:\tools\Tools\April_2018\2018-4-25\test.txt","w") as f:
-        #     f.write(json.dumps(test))
+        import json
+        # sss=[]
+        # for i in res:
+        #     sss+=[j for j in res[i]['datetimes']]
+        #with open(r"D:\tools\Tools\May_2018\2018-5-9\sss2.txt","w") as f:
+        #    f.write(json.dumps(sss))
         #self.sendNone(data2)
         #self.sendNone(fa)
+
         return res,first_time

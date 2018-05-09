@@ -231,6 +231,11 @@ var $container = $('#works-container');
     </div>
 </div>
 <audio id="chatAudio"><source id="source_play" ></audio>
+    <!--新闻-->
+    <div id="xinwen" class="xinwen" style="border:5px solid red;width:300px;position:fixed;right:5px;top:5px;display:none;">
+        <ol id="xinwen_ol"></ol>
+    </div>
+</div>
 <script type="text/javascript">
 var _$paletteElement = $('.palette_color');
 var div = document.getElementById("palette_colors");
@@ -320,6 +325,49 @@ if(is_show2=='/zx/' || is_show2=='/zt/'){
     $('#spig').css("display","none");
 }
 
+function xinwen_ajax(){
+    $.ajax({
+        url:"/journalism/",
+        success: function (result) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            var ol=$("#xinwen_ol");
+            ol.text("");
+            $.each(result, function (index, item) {
+                ol.append("<li>"+item+"。<br/></li>");
+            });
+        },
+        error: function (errorMsg) {
+            //请求失败时执行该函数
+            //alert("请求数据失败!");
+        }
+    })
+}
+var ref=0;
+function xinwen_show2(){
+    var is_show=color_getCookie("xinwen_show");
+    var div=$("#xinwen");
+    if (is_show=="start"){
+    div.css('display','block');
+    xinwen_ajax();
+    ref = setInterval(function(){
+        xinwen_ajax();
+        },16000);
+    }else{
+        div.css('display','none');
+        clearInterval(ref);
+    }
+}
+function xinwen_show(){
+    if (document.getElementById("xinwen").style.display=="none"){
+        color_SetCookie("xinwen_show","start");
+        xinwen_show2();
+    }else{
+        color_SetCookie("xinwen_show","stop");
+        xinwen_show2();
+    }
+}
+
+xinwen_show2();
 </script>
 
         {% block center_cen %}{% endblock %}

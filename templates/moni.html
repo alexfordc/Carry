@@ -1,12 +1,16 @@
 {% extends 'base/base.html' %}
 {% block title %}模拟表{% endblock %}
 {% block script %}
+{% load staticfiles %}
 <script>
-    function openLogin(){
-   document.getElementById("beizhu").style.display="";
+    function openLogin(id){
+   document.getElementById(id).style.display="";
+   if(id=="beizhu_img"){
+    $("#beizhu_img_src").attr("src","{% static 'images/fa/方案' %}"+"{{fa}}.png");
+    }
 }
-function closeLogin(){
-   document.getElementById("beizhu").style.display="none";
+function closeLogin(id){
+   document.getElementById(id).style.display="none";
 }
 function huice(){
     var dates=document.getElementById("datetimes").value;
@@ -18,6 +22,12 @@ function huice(){
 </script>
 {% endblock %}
 {% block center_cen %}
+<div align="center" id="beizhu_img" style="display:none;position: absolute; left:50%; top:50%;width:800px; margin-left:-300px; margin-top:-200px;
+border:1px solid #888; background-color:green; text-align:center"><span>方案图例</span><br/><br/>
+    <img id="beizhu_img_src" src="" alt="无此方案图例" />
+    <br/>
+<a href="javascript:closeLogin('beizhu_img');"><h2 style="background-color:green;">确 定</h2></a></div>
+</div>
 <div align="center" id="beizhu" style="display:none;position: absolute; left:50%; top:50%;width:800px; margin-left:-300px; margin-top:-200px;
 border:1px solid #888; background-color:green; text-align:center"><span>方案备注</span><br/><br/>
     <ol style="list-style-type:none;">
@@ -29,7 +39,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         {% endif %}
         {% endfor %}
     </ol><br/>
-<a href="javascript:closeLogin();"><h2 style="background-color:green;">确 定</h2></a></div>
+<a href="javascript:closeLogin('beizhu');"><h2 style="background-color:green;">确 定</h2></a></div>
 </div>
     <div align="center">
     <form action="" method="POST">
@@ -56,11 +66,11 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     </select> &nbsp;
                 <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" value="方案备注" onclick="openLogin()"/>
+                <input type="button" value="方案备注" onclick="openLogin('beizhu')"/>
     </form><br/>
         <table border="1" align="center">
             {% if huizong %}
-            <tr><th colspan="8"><span style="font-size: 20px;">汇 总&nbsp;&nbsp;&nbsp;&nbsp;方案{{fa}}</span><br/><span>做多：{{fa_one.0}}<br/>做空：{{fa_one.1}}<br/>止损：{{fa_one.2}}</span></th></tr>
+            <tr><th colspan="8"><span style="font-size: 20px;">汇 总&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:blue;" href="#" onclick="openLogin('beizhu_img')">方案{{fa}}</a></span><br/><span>做多：{{fa_one.0}}<br/>做空：{{fa_one.1}}<br/>止损：{{fa_one.2}}</span></th></tr>
         <tr><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
             <th>亏损<br>涨幅与波动</th><th>一天<br>盈利最多  <a style="color:blue;" href="#yidan_yl">查看一单</a></th><th>盈利<br>涨幅与波动</th></tr>
         <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
