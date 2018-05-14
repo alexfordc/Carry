@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^account_update/$',views.account_info_update,name='account_update'),
     url(r'^journalism/$',views.journalism,name='journalism'),
 
+    url(r'^web/$', views.websocket_test,name='websocket_test'),
 ]
 
 # handler404 = views.page_not_found #404页面

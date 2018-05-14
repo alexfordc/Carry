@@ -1,0 +1,28 @@
+﻿<html>  
+    <head>  
+        <meta charset='utf-8'>  
+    </head>  
+    <body>  
+        
+        <form action="" method="POST">
+            <input type='text' id='inputText'>  
+            <input type="submit" value="发送">
+        </form>
+        <p id='startTime'></p>
+        <p id='dispStatus'>正在连接...</p>  
+        <script>  
+                var inputText=document.getElementById('inputText');//读输入框的句柄  
+                var dispStatus=document.getElementById('dispStatus');//读按钮的句柄  
+                var startTime=document.getElementById('startTime');//开始时间
+                var ws=new WebSocket('ws://127.0.0.1:3000');//创建websocket连接，，服务端的IP+端口号
+                ws.onopen=function(e){//开始创建连接时的事件，显示连接成功  
+                    dispStatus.innerHTML='连接成功';  
+                }  
+                 
+  
+                ws.onmessage=function(e){//读取服务端接收到的信息  
+                    dispStatus.innerHTML=e.data;//将信息显示出来  
+                }  
+            </script>  
+    </body>  
+</html>  

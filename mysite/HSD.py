@@ -14,6 +14,7 @@ from sklearn.externals import joblib
 from collections import Counter
 import random
 import socket
+import redis
 
 from mysite.DataIndex import ZB
 
@@ -688,3 +689,23 @@ class Zbjs(ZB):
             zd+=1 if jg=="1" else 0
 
         return gd,zd
+
+
+class RedisHelper:
+    def __init__(self):
+        self.__conn = redis.Redis(host='localhost')
+        self.chan_pub= 'test'
+        self.is_run=True
+
+    #发送消息
+    def public(self,msg):
+        self.__conn.publish(self.chan_pub,msg)
+        return True
+
+    def main(self):   
+        while self.is_run:
+            dt=str(datetime.datetime.now())
+            self.public(dt[:19]) # 发布
+            print(dt)
+            time.sleep(1)
+            break

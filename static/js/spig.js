@@ -1,6 +1,6 @@
 /* spig.js */
 //右键菜单
-var showmessages="常用功能:<br><span style=\"line-height:30px;\" ><a style=\"color:red;\" href=\"/\" title=\"首页\">首页</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/tj\" title=\"统计表\">统计表</a>&nbsp;&nbsp;<a style=\"color:blue;\" href=\"#\" onclick=\"javascript:xinwen_show()\">新闻</a> "+
+var showmessages="常用功能:&nbsp;&nbsp;<a href=\"#\" onclick=\"javascript:liaotianshi_show()\">聊天室</a><br><span style=\"line-height:30px;\" ><a style=\"color:red;\" href=\"/\" title=\"首页\">首页</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/tj\" title=\"统计表\">统计表</a>&nbsp;&nbsp;<a style=\"color:blue;\" href=\"#\" onclick=\"javascript:xinwen_show()\">新闻</a> "+
             "</span><br><a style=\"color:red;\" href=\"/zt\">柱图</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/zx\">折线图</a>&nbsp;&nbsp;<a style=\"color:blue;\" id=\"liaotian\" href=\"#\" title=\"聊天\">聊天</a>"
 jQuery(document).ready(function ($) {
     $("#spig").mousedown(function (e) {
@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
     }
 
 $("#liaotian").click(function(){
-        var div=$("#liaotian_div")
+        var div=$("#liaotian_div");
         div.css('display','block');
         document.getElementById('liaotian_textarea').focus();
         div.hide().stop();

@@ -32688,3 +32688,37 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 365, in _strptime
     data_string[found.end():])
 ValueError: unconverted data remains: .568678
+base.py[2018-05-10 09:16:18][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-10 09:26:39][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-11 18:11:19][WARNING]£ºNot Found: /liaotianshi/style.css
+base.py[2018-05-11 18:11:19][WARNING]£ºNot Found: /liaotianshi/json3.min.js
+base.py[2018-05-11 18:11:19][WARNING]£ºNot Found: /liaotianshi/client.js
+base.py[2018-05-11 18:11:27][WARNING]£ºNot Found: /liaotianshi/client.js
+base.py[2018-05-11 18:11:27][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-11 18:12:46][WARNING]£ºNot Found: /liaotianshi/static/css/style.css
+base.py[2018-05-11 18:12:46][WARNING]£ºNot Found: /liaotianshi/json3.min.js
+base.py[2018-05-11 18:12:46][WARNING]£ºNot Found: /liaotianshi/static/js/liaotianshi/client.js
+base.py[2018-05-11 18:12:54][WARNING]£ºNot Found: /liaotianshi/static/js/liaotianshi/client.js
+base.py[2018-05-11 18:29:46][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-14 08:56:00][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-05-14 08:58:41][ERROR]£ºInternal Server Error: /web/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 912, in websocket_test
+    return render(rq, "main.html")
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: main.html
+csrf.py[2018-05-14 09:04:06][WARNING]£ºForbidden (CSRF token missing or incorrect.): /web/
+base.py[2018-05-14 10:24:58][WARNING]£ºNot Found: /log/logging.log

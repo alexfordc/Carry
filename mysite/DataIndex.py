@@ -313,7 +313,7 @@ class ZB(object):
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
-            if clo<mas and mul<-1.5 and is_d!=1 and 9<datetimes.hour<16:
+            if clo<mas and mul<-1.5 and is_d!=1 and 9<=datetimes.hour<16:
                 tj_d+=1
                 if tj_d>3:
                     jg_d=clo
@@ -321,7 +321,7 @@ class ZB(object):
                     str_time1=str(datetimes)
                     is_d=1
                     first_time = [str_time1,'多']
-            elif clo>mas and mul>1.5 and is_k!=-1 and 9<datetimes.hour<16:
+            elif clo>mas and mul>1.5 and is_k!=-1 and 9<=datetimes.hour<16:
                 tj_k+=1
                 if tj_k>2:
                     jg_k=clo

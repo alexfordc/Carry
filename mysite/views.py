@@ -21,6 +21,7 @@ import socket
 import requests
 import pyquery
 import urllib.request as request
+import redis
 
 from mysite import HSD
 from mysite import models
@@ -887,16 +888,25 @@ def account_info_update(rq):
 def journalism(rq):
     if rq.is_ajax:
         d=read_from_cache("journalism")
-        if not is_time(d,0.25):
+        if not d or not is_time(d,0.25):
             url='https://www.jin10.com'
             d = request.urlopen(url).read()
             d = d.decode('utf-8')
             d = pyquery.PyQuery(d)
             d = d.find('.jin-flash_b')
             d = d.text()
-            d = d.split('。 ')[:5]
+            d = d.split('。 ')[:10]
+            d = [i for i in d if '金十' not in i][:5]
             d.append(str(datetime.datetime.now())[:19])
             write_to_cache("journalism",d)
         d = {str(i): d[i] for i in range(len(d)-1)}
         return JsonResponse(d)
     return redirect('index')
+
+
+def websocket_test(rq):
+    s=rq.POST.get('inputText');
+    if s:
+        r=HSD.RedisHelper()
+        r.main()
+    return render(rq, "main.html")

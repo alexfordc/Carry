@@ -8,7 +8,7 @@ tcp=HSD.get_tcp() # IP地址
 poller = zmq.Poller()
 ctx1 = Context()
 ticker_sub_socket = ctx1.socket(zmq.SUB)
-ticker_sub_socket.connect(f'tcp://{tcp}:6868')
+ticker_sub_socket.connect('tcp://{}:6868'.format(tcp))
 ticker_sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, '')
 poller.register(ticker_sub_socket, zmq.POLLIN)
 
@@ -16,10 +16,10 @@ ticker_sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, '')
 poller.register(ticker_sub_socket, zmq.POLLIN)
 ctx3 = Context()
 req_price_socket = ctx3.socket(zmq.REQ)
-req_price_socket.connect(f'tcp://{tcp}:6870')
+req_price_socket.connect('tcp://{}:6870'.format(tcp))
 ctx4 = Context()
 handle_socket = ctx4.socket(zmq.REQ)
-handle_socket.connect(f'tcp://{tcp}:6666')  #237
+handle_socket.connect('tcp://{}:6666'.format(tcp))  #237
 
 class sub_ticker:
 
