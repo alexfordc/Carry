@@ -648,7 +648,7 @@ class Zbjs(ZB):
                 mtsl = [j[3] for j in res[i]['datetimes']]
                 all_price += mtsl
                 if mtsl:
-                    res[i]['shenglv'] = len([sl for sl in mtsl if sl > 0]) / len(mtsl) * 100  # 每天胜率
+                    res[i]['shenglv'] = round(len([sl for sl in mtsl if sl > 0]) / len(mtsl) * 100,2)  # 每天胜率
                 else:
                     res[i]['shenglv'] = 0
         except Exception as exc:

@@ -1,6 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var redis=require('redis')
+var client=redis.createClient();
 
 // app.get('/', function(req, res){
 // 	res.send('<h1>Welcome Realtime Server</h1>');
@@ -70,15 +72,22 @@ app.post('/uploader', function(req, res) {
 });
 
 
+client.on('error',function(err){
+	console.log('Error. '+err);
+});
 
 //在线用户
 var onlineUsers = {};
 //当前在线人数
-var onlineCount = 0;
+var onlineCount = {};
 //聊天记录
 var record = new Array();
 //消息条数
 var ind = 0;
+//userid 对应的 聊天室
+var uid_lts = {};
+//所有聊天室
+var all_lts = new Array();
 io.on('connection', function(socket){
 	console.log('a user connected');
 	
@@ -86,35 +95,59 @@ io.on('connection', function(socket){
 	socket.on('login', function(obj){
 		//将新加入用户的唯一标识当作socket的名称，后面退出的时候会用到
 		socket.name = obj.userid;
-		
+		//聊天室名称
+		var ltsName = obj.liaotianshiName;
+		uid_lts[obj.userid] = ltsName;
+
+		if(!onlineUsers[ltsName]){
+		    onlineUsers[ltsName] = {};
+		}
+		if(!onlineCount[ltsName]){
+		    onlineCount[ltsName] = 0;
+		}
 		//检查在线列表，如果不在里面就加入
-		if(!onlineUsers.hasOwnProperty(obj.userid)) {
-			onlineUsers[obj.userid] = obj.username;
+		if(!onlineUsers[ltsName].hasOwnProperty(obj.userid)) {
+			onlineUsers[ltsName][obj.userid] = obj.username;
 			//在线人数+1
-			onlineCount++;
+			onlineCount[ltsName]++;
+		}
+		if(all_lts.indexOf(ltsName)<0){
+		    all_lts.push(ltsName);
+            client.set("liaotianshiList",JSON.stringify(onlineCount),redis.print); //写入redis
 		}
 		
 		//向所有客户端广播用户加入
 		io.emit('login', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj,record:record});
-		console.log(obj.username+'加入了聊天室');
-
+		//console.log(obj.username+'加入了聊天室  '+ltsName);
 	});
 	
 	//监听用户退出
 	socket.on('disconnect', function(){
+        var ltsName = uid_lts[socket.name];
 		//将退出的用户从在线列表中删除
-		if(onlineUsers.hasOwnProperty(socket.name)) {
-			//退出用户的信息
-			var obj = {userid:socket.name, username:onlineUsers[socket.name]};
-			
-			//删除
-			delete onlineUsers[socket.name];
-			//在线人数-1
-			onlineCount--;
-			
-			//向所有客户端广播用户退出
-			io.emit('logout', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
-			console.log(obj.username+'退出了聊天室');
+		try{
+            if(onlineUsers[ltsName].hasOwnProperty(socket.name)) {
+                //退出用户的信息
+                var obj = {userid:socket.name, username:onlineUsers[ltsName][socket.name], liaotianshiName:ltsName};
+
+                //删除
+                delete onlineUsers[ltsName][socket.name];
+                delete uid_lts[socket.name];
+                //在线人数-1
+                onlineCount[ltsName]--;
+                //删除聊天室
+                if(onlineCount[ltsName] <= 0){
+                    delete onlineUsers[ltsName];
+                    delete onlineCount[ltsName];
+                    client.set("liaotianshiList",JSON.stringify(onlineCount),redis.print); //写入redis
+                }
+
+                //向所有客户端广播用户退出
+                io.emit('logout', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
+                //console.log(obj.username+'退出了聊天室  '+obj.liaotianshiName);
+            }
+		}catch(err){
+            console.log("异常出现："+err);
 		}
 	});
 	
@@ -127,7 +160,7 @@ io.on('connection', function(socket){
 			record[ind]=obj
 			ind++;
 			//console.log(obj.username+'说：'+obj.content);
-			fs.appendFile('..\\..\\..\\log\\liaotianshi.txt',obj.username+"\t"+obj.content+"\r\n",'utf8',function(err){
+			fs.appendFile('..\\..\\..\\log\\liaotianshi.txt',obj.liaotianshiName+"\t"+obj.username+"\t"+obj.content+"\r\n",'utf8',function(err){
                 if(err) { console.log(err); }
 			});
 			is_tupian='';

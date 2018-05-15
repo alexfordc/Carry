@@ -244,9 +244,11 @@ var $container = $('#works-container');
 <div style="display:none;width:402px;height:500px;border:1px solid #afafaf;position:absolute;left:100px;top:100px;z-index:100;" id="mainDiv2">
         <div id="loginbox">
             <div style="width:260px;margin:200px auto;color:red;">
-                请先输入你在聊天室的昵称
+                <p style="color:green;">当前在线的聊天室有：<span id="liaotianshilist"></span></p><br/>
+                请输入聊天室名称与您的昵称
                 <br/>
                 <br/>
+                <input type="text" style="width:180px;" placeholder="请输入聊天室名称" id="liaotianshiName" name="liaotianshiName" /><br/><br/>
                 <input type="text" style="width:180px;" placeholder="请输入用户名" id="username_lt" name="username_lt" />
                 <input type="button" style="width:50px;" value="提交" onclick="CHAT.usernameSubmit();"/>
             </div>
@@ -256,6 +258,7 @@ var $container = $('#works-container');
                 <div style="line-height: 28px;color:#fff;">
                     <span style="text-align:left;margin-left:10px;cursor:pointer;" id="mainDiv">聊天室</span>
                     <span style="float:right; margin-right:10px;"><span id="showusername"></span> | 
+                    <a href="javascript:;" onclick="CHAT.hide()" style="color:#fff;">隐藏</a> |
                     <a href="javascript:;" onclick="CHAT.logout()" style="color:#fff;">退出</a></span>
                 </div>
             </div>
@@ -294,8 +297,8 @@ var dragFlag = false;
 var x,y;
 
 //写入cookie，两个参数，一个是cookie的名称，一个是值
-function color_SetCookie(name,value){
- var Days = 7;//此 cookie 将被保存 7 天
+function color_SetCookie(name,value,Days){
+ var Days=arguments[2] ? arguments[2] : 7; //此 cookie 默认保存 7 天
  var exp = new Date();
  exp.setTime(exp.getTime() + Days*24*60*60*1000);
  document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
@@ -342,18 +345,18 @@ function _div_location(){
 function _colorizePaletteItems(){
     $.each(_$paletteElement, function(i){
            $(this).css('background-color', $(this).data('color'));
-    })
+    });
 }
 function _togglePalette(){
     $('.palette_color__main').on('click', function(){
         $('.palette').toggleClass('palette__opened');
-    })
+    });
 }
 function _initSetColor(){
     $('.palette_color').on('click', function(){
         var color = $(this).data('color');
         _setColor(color);
-    })
+    });
 }
 
 function _setColor(color){
@@ -424,10 +427,31 @@ function liaotianshi_show(){
     var div=document.getElementById("mainDiv2");
     if (div.style.display=="none"){
         div.style.display='block';
+        var lts = "";
+        $.ajax({
+            url: '/liaotianshiList',
+            type: 'GET',
+            success: function(data){
+                $.each(data,function(k,v){
+                    lts+=k+"、";
+                });
+                $("#liaotianshilist").html("");
+                $("#liaotianshilist").append(lts.slice(0,-1));
+            }
+        });
     }else{
         div.style.display='none';
     }
 }
+function liaotianshiCookieShow(){
+    var username=color_getCookie("liaotianshi_username");
+    var liaotianshiName=color_getCookie("liaotianshiName");
+    //alert(username+liaotianshiName);
+    if(username != "" & liaotianshiName != ""){
+        CHAT.usernameSubmit(username,liaotianshiName);
+    }
+}
+liaotianshiCookieShow();
 
 /**
      * ajax 上传。

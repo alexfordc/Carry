@@ -903,6 +903,11 @@ def journalism(rq):
         return JsonResponse(d)
     return redirect('index')
 
+def liaotianshiList(rq):
+    r = redis.Redis(host='localhost')
+    ltsName=r.get('liaotianshiList')
+    ltsName = json.loads(ltsName)
+    return JsonResponse(ltsName)
 
 def websocket_test(rq):
     s=rq.POST.get('inputText');

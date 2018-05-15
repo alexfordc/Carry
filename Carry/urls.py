@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^hc/$',views.huice,name='huice'),
     url(r'^account_update/$',views.account_info_update,name='account_update'),
     url(r'^journalism/$',views.journalism,name='journalism'),
+    url(r'^liaotianshiList/$',views.liaotianshiList,name='liaotianshiList'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 ]

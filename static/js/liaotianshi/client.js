@@ -13,17 +13,23 @@
 		msgObj:d.getElementById("message_lt"),
 		screenheight:w.innerHeight ? w.innerHeight : dx.clientHeight,
 		username:null,
+        liaotianshiName:null,
 		userid:null,
 		socket:null,
 		//让浏览器滚动条保持在最低部
 		scrollToBottom:function(){
 			w.scrollTo(0, this.msgObj.clientHeight);
 		},
+		//隐藏
+		hide:function(){
+		    liaotianshi_show();
+		},
 		//退出，本例只是一个简单的刷新
 		logout:function(){
 			//this.socket.disconnect();
-			//location.reload();
-			liaotianshi_show();
+			location.reload();
+			color_SetCookie("liaotianshi_username","");
+			color_SetCookie("liaotianshiName","");
 		},
 		//显示消息时间
 		showTime:function(d){
@@ -41,6 +47,7 @@
 				var obj = {
 					userid: this.userid,
 					username: this.username,
+                    liaotianshiName: this.liaotianshiName,
 					content: content
 				};
 				this.socket.emit('message', obj);
@@ -52,24 +59,26 @@
 		},
 		// 广播消息内容
 		sendMsg:function(obj){
-				var isme = (obj.userid == CHAT.userid) ? true : false;
-				var dateTime=obj.content.indexOf("public/avatar")>=0 ? '<div>图片：'+obj.dateTime+'</div></div>' : '<div style="display:none">'+obj.dateTime+'</div></div>';
-				var contentDiv = '<div style="cursor:pointer;" onmouseover="CHAT.showTime(this)" onmouseout="CHAT.hideTime(this)">'+obj.content+dateTime;
-				var usernameDiv = '<span>'+obj.username+'</span>';
+		        if(obj.liaotianshiName == this.liaotianshiName){
+                    var isme = (obj.userid == CHAT.userid) ? true : false;
+                    var dateTime=obj.content.indexOf("public/avatar")>=0 ? '<div>图片：'+obj.dateTime+'</div></div>' : '<div style="display:none">'+obj.dateTime+'</div></div>';
+                    var contentDiv = '<div style="cursor:pointer;" onmouseover="CHAT.showTime(this)" onmouseout="CHAT.hideTime(this)">'+obj.content+dateTime;
+                    var usernameDiv = '<span>'+obj.username+'</span>';
 
-				var section = d.createElement('section');
-				if(isme){
-					section.className = 'user';
-					section.innerHTML = contentDiv + usernameDiv;
-				} else {
-					section.className = 'service';
-					section.innerHTML = usernameDiv + contentDiv;
+                    var section = d.createElement('section');
+                    if(isme){
+                        section.className = 'user';
+                        section.innerHTML = contentDiv + usernameDiv;
+                    } else {
+                        section.className = 'service';
+                        section.innerHTML = usernameDiv + contentDiv;
+                    }
+                    CHAT.msgObj.appendChild(section);
+                    //CHAT.scrollToBottom();
+
+                    var div = document.getElementById("chat");
+                    div.scrollTop=div.scrollHeight;
 				}
-				CHAT.msgObj.appendChild(section);
-				//CHAT.scrollToBottom();	
-
-				var div = document.getElementById("chat");
-				div.scrollTop=div.scrollHeight;
 			},
 		genUid:function(){
 			return new Date().getTime()+""+Math.floor(Math.random()*899+100);
@@ -77,14 +86,14 @@
 		//更新系统消息，本例中在用户加入、退出的时候调用
 		updateSysMsg:function(o, action){
 			//当前在线用户列表
-			var onlineUsers = o.onlineUsers;
+			var onlineUsers = o.onlineUsers[this.liaotianshiName];
 			//当前在线人数
-			var onlineCount = o.onlineCount;
+			var onlineCount = o.onlineCount[this.liaotianshiName];
 			//新加入用户的信息
 			var user = o.user;
 			//聊天记录
 			var record = o.record;
-			if(CHAT.msgObj.innerText.length==0){
+			if($(".service").length==0){
 				for(var i=0;i<record.length;i++){
 					CHAT.sendMsg(record[i]);
 				}
@@ -115,25 +124,35 @@
 			//this.scrollToBottom();
 		},
 		//第一个界面用户提交用户名
-		usernameSubmit:function(){
-			var username = d.getElementById("username_lt").value;
-			if(username != ""){
+		usernameSubmit:function(unm,lnm){
+		    var unm = arguments[0] ? arguments[0] : "";
+		    var lnm = arguments[1] ? arguments[1] : "";
+		    var username = d.getElementById("username_lt").value;
+		    var liaotianshiName = d.getElementById("liaotianshiName").value;
+			unm = unm!="" ? unm : username;
+			lnm = lnm!="" ? lnm: liaotianshiName;
+			if(unm != "" && lnm != ""){
+			    d.getElementById("liaotianshiName").value = '';
 				d.getElementById("username_lt").value = '';
 				d.getElementById("loginbox").style.display = 'none';
 				d.getElementById("chatbox").style.display = 'block';
-				this.init(username);
+				this.init(unm,lnm);
+				color_SetCookie("liaotianshi_username",unm,1/24/2);
+				color_SetCookie("liaotianshiName",lnm,1/24/2);
 			}
 			return false;
 		},
-		init:function(username){
+		init:function(username,liaotianshiName){
 			/*
 			客户端根据时间和随机数生成uid,这样使得聊天室用户名称可以重复。
 			实际项目中，如果是需要用户登录，那么直接采用用户的uid来做标识就可以
 			*/
 			this.userid = this.genUid();
 			this.username = username;
+			this.liaotianshiName = liaotianshiName;
 			
 			d.getElementById("showusername").innerHTML = this.username;
+			d.getElementById("mainDiv").innerHTML = this.liaotianshiName;
 			//this.msgObj.style.minHeight = (this.screenheight - db.clientHeight + this.msgObj.clientHeight) + "px";
 			//this.scrollToBottom();
 			
@@ -141,17 +160,20 @@
 			this.socket = io.connect('ws://192.168.2.204:3000');
 			
 			//告诉服务器端有用户登录
-			this.socket.emit('login', {userid:this.userid, username:this.username});
-			
+			this.socket.emit('login', {userid:this.userid, username:this.username, liaotianshiName:this.liaotianshiName});
+
 			//监听新用户登录
 			this.socket.on('login', function(o){
-				CHAT.updateSysMsg(o, 'login');	
-
+			    if(o.user.liaotianshiName == liaotianshiName){
+				    CHAT.updateSysMsg(o, 'login');
+                }
 			});
 			
 			//监听用户退出
 			this.socket.on('logout', function(o){
-				CHAT.updateSysMsg(o, 'logout');
+			    if(o.user.liaotianshiName == liaotianshiName){
+				    CHAT.updateSysMsg(o, 'logout');
+				}
 			});
 			
 			//监听消息发送
