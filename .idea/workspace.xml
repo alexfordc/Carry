@@ -2,17 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Carry/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Carry/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/sub_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/sub_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/img/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/img/Thumbs.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/spig.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/spig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styleliaotianshi.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styleliaotianshi.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/liaotianshi/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/liaotianshi/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/liaotianshi/public/avatar/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/liaotianshi/public/avatar/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/hc.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hc.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +46,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
+            <state relative-caret-position="21750">
               <caret line="897" column="34" selection-start-line="897" selection-start-column="34" selection-end-line="897" selection-end-column="34" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -60,7 +58,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Carry/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
+            <state relative-caret-position="1075">
               <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
             </state>
           </provider>
@@ -70,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/templates/main.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
-              <caret line="21" column="2" lean-forward="true" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
+              <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -78,17 +76,17 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="129" column="39" selection-start-line="129" selection-start-column="39" selection-end-line="129" selection-end-column="39" />
+            <state relative-caret-position="50">
+              <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="client.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/client.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="25" column="10" lean-forward="true" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
+            <state relative-caret-position="450">
+              <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -96,20 +94,23 @@
       <file leaf-file-name="styleliaotianshi.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/styleliaotianshi.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="510" column="10" selection-start-line="510" selection-start-column="1" selection-end-line="510" selection-end-column="10" />
+            <state relative-caret-position="18375">
+              <caret line="735" column="85" selection-start-line="735" selection-start-column="85" selection-end-line="735" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="266" column="26" lean-forward="true" selection-start-line="266" selection-start-column="26" selection-end-line="266" selection-end-column="26" />
+            <state relative-caret-position="10600">
+              <caret line="429" column="1" selection-start-line="429" selection-start-column="1" selection-end-line="429" selection-end-column="1" />
               <folding>
+                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#span#1;n#div#0;n#div#0;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#span#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -123,21 +124,8 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="665" lean-forward="true" selection-start-line="665" selection-end-line="665" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1775">
-              <caret line="295" column="37" selection-start-line="295" selection-start-column="37" selection-end-line="295" selection-end-column="37" />
-              <folding>
-                <element signature="e#2730#11794#0" />
-                <element signature="e#11855#14255#0" />
-              </folding>
+            <state relative-caret-position="16175">
+              <caret line="665" selection-start-line="665" selection-end-line="665" />
             </state>
           </provider>
         </entry>
@@ -166,13 +154,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showChangeCheck</find>
-      <find>导出</find>
-      <find>GHPR:</find>
-      <find>zhexiantu</find>
-      <find>hc</find>
-      <find>res</find>
-      <find>{{</find>
       <find>jyts</find>
       <find>_ts</find>
       <find>main2</find>
@@ -193,9 +174,16 @@
       <find>def tongji</find>
       <find>mainDiv</find>
       <find>newMessageRemind</find>
-      <find>input</find>
-      <find>.input</find>
       <find>input-box</find>
+      <find>class=&quot;input</find>
+      <find>input</find>
+      <find>client_pd</find>
+      <find>zhutu</find>
+      <find>.input</find>
+      <find>mjr_send</find>
+      <find>zt</find>
+      <find>button</find>
+      <find>xinwen_ol</find>
     </findStrings>
     <replaceStrings>
       <replace>Index</replace>
@@ -209,6 +197,8 @@
       <replace>self.jg_k</replace>
       <replace>dc[ind]</replace>
       <replace>self.xzfa</replace>
+      <replace>input_lts</replace>
+      <replace>.input_lts</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -220,7 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../spAPI/sub_client.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/data_38.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/../../EveryDay/test_models.py" />
@@ -255,7 +244,6 @@
         <option value="$PROJECT_DIR$/templates/tests.html" />
         <option value="$PROJECT_DIR$/templates/zhexian.html" />
         <option value="$PROJECT_DIR$/templates/tongji.html" />
-        <option value="$PROJECT_DIR$/templates/hc.html" />
         <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/../May_2018/2018-5-7/2018-5-7.py" />
         <option value="$PROJECT_DIR$/../May_2018/2018-5-7/jy.py" />
@@ -268,9 +256,11 @@
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/templates/main.html" />
         <option value="$PROJECT_DIR$/static/js/liaotianshi/index.js" />
-        <option value="$PROJECT_DIR$/static/js/liaotianshi/client.js" />
-        <option value="$PROJECT_DIR$/templates/base/base.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/templates/hc.html" />
         <option value="$PROJECT_DIR$/static/css/styleliaotianshi.css" />
+        <option value="$PROJECT_DIR$/templates/base/base.html" />
+        <option value="$PROJECT_DIR$/static/js/liaotianshi/client.js" />
       </list>
     </option>
   </component>
@@ -291,6 +281,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -317,30 +308,19 @@
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="liaotianshi" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -709,20 +689,6 @@
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
     </task>
-    <task id="LOCAL-00008" summary="功能完善">
-      <created>1520390512941</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1520390512941</updated>
-    </task>
-    <task id="LOCAL-00009" summary="功能完善">
-      <created>1520390520670</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1520390520670</updated>
-    </task>
     <task id="LOCAL-00010" summary="标题修改">
       <created>1520391306944</created>
       <option name="number" value="00010" />
@@ -1052,7 +1018,21 @@
       <option name="project" value="LOCAL" />
       <updated>1525872872003</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="聊天室">
+      <created>1526277343639</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1526277343640</updated>
+    </task>
+    <task id="LOCAL-00058" summary="聊天室">
+      <created>1526277507503</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1526277507503</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1077,7 +1057,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08693361" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -1117,7 +1096,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="统计表名称增加" />
     <MESSAGE value="自定义标签，处理名称字典" />
     <MESSAGE value="优化功能" />
     <MESSAGE value="统计表更改" />
@@ -1142,7 +1120,8 @@
     <MESSAGE value="2018-4-25" />
     <MESSAGE value="2018-5-7" />
     <MESSAGE value="2018-5-9" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-5-9" />
+    <MESSAGE value="聊天室" />
+    <option name="LAST_COMMIT_MESSAGE" value="聊天室" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1156,13 +1135,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/zhutu2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="117" column="42" selection-start-line="117" selection-start-column="42" selection-end-line="117" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sp_struct.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1317,13 +1289,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/hc.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9125">
-          <caret line="365" column="54" selection-start-line="365" selection-start-column="44" selection-end-line="365" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../May_2018/2018-5-7/2018-5-7.py" />
     <entry file="file://$PROJECT_DIR$/../May_2018/2018-5-7/jy.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1339,13 +1304,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1017">
           <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/spig.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="698">
-          <caret line="357" selection-start-line="357" selection-end-line="357" />
         </state>
       </provider>
     </entry>
@@ -1381,10 +1339,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1775">
           <caret line="295" column="37" selection-start-line="295" selection-start-column="37" selection-end-line="295" selection-end-column="37" />
-          <folding>
-            <element signature="e#2730#11794#0" />
-            <element signature="e#11855#14255#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1398,26 +1352,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/liaotianshi.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-500">
-          <caret line="1" column="6" lean-forward="true" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/liaotianshi.html" />
     <entry file="file://$PROJECT_DIR$/Carry/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
+        <state relative-caret-position="1075">
           <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
+        <state relative-caret-position="21750">
           <caret line="897" column="34" selection-start-line="897" selection-start-column="34" selection-end-line="897" selection-end-column="34" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
@@ -1428,51 +1373,75 @@
     <entry file="file://$PROJECT_DIR$/templates/main.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
-          <caret line="21" column="2" lean-forward="true" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
+          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="665" lean-forward="true" selection-start-line="665" selection-end-line="665" />
+        <state relative-caret-position="16175">
+          <caret line="665" selection-start-line="665" selection-end-line="665" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/index.js">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="129" column="39" selection-start-line="129" selection-start-column="39" selection-end-line="129" selection-end-column="39" />
+        <state relative-caret-position="150">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/client.js">
+    <entry file="file://$PROJECT_DIR$/templates/hc.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="25" column="10" lean-forward="true" selection-start-line="25" selection-start-column="10" selection-end-line="25" selection-end-column="10" />
+        <state relative-caret-position="350">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/spig.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="145" column="47" lean-forward="true" selection-start-line="145" selection-start-column="47" selection-end-line="145" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/styleliaotianshi.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="510" column="10" selection-start-line="510" selection-start-column="1" selection-end-line="510" selection-end-column="10" />
+        <state relative-caret-position="18375">
+          <caret line="735" column="85" selection-start-line="735" selection-start-column="85" selection-end-line="735" selection-end-column="85" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="266" column="26" lean-forward="true" selection-start-line="266" selection-start-column="26" selection-end-line="266" selection-end-column="26" />
+        <state relative-caret-position="10600">
+          <caret line="429" column="1" selection-start-line="429" selection-start-column="1" selection-end-line="429" selection-end-column="1" />
           <folding>
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#span#1;n#div#0;n#div#0;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#span#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/liaotianshi/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
         </state>
       </provider>
     </entry>

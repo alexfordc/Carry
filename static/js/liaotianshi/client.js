@@ -22,7 +22,8 @@
 		//退出，本例只是一个简单的刷新
 		logout:function(){
 			//this.socket.disconnect();
-			location.reload();
+			//location.reload();
+			liaotianshi_show();
 		},
 		//显示消息时间
 		showTime:function(d){

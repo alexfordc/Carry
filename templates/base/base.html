@@ -237,7 +237,7 @@ var $container = $('#works-container');
 <audio id="chatAudio"><source id="source_play" ></audio>
     <!--新闻-->
     <div id="xinwen" class="xinwen" style="border:5px solid red;width:300px;position:fixed;right:1px;top:1px;display:none;">
-        <ol id="xinwen_ol"></ol>
+        <ol id="xinwen_ol" ></ol>
     </div>
 </div>
 
@@ -266,19 +266,19 @@ var $container = $('#works-container');
                 </div>
                     </div>
                 </div>
-                <div class="input-box">
-                        <div class="input" style="border:none;">
-                        <input type="text" style="display:block;" maxlength="140" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">sss
+                <div class="input_lts-box">
+                        <div class="input_lts" style="border:none;">
+                        <input type="text" maxlength="140" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
                         </div>
                         <div class="action">
-                            <form role="form" id="myForm" action="http://127.0.0.1:3000/uploader" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:10px;">
+                            <form role="form" id="myForm" action="http://127.0.0.1:3000/uploader" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">
                             <span id="uploadImg" style="font-size:12px; overflow:hidden; position:absolute;background-color:#0f0;">
                             <input type="file" size="1" onchange="uploadByForm();" name="fulAvatar" id="file_upload" class="form-control"
                                    style="cursor:pointer;position:absolute; z-index:100; margin-left:-100px;opacity:0;filter:alpha(opacity=0); margin-top:-5px;">
                             <input type="button" value="🍀"><!--☯-->
                             </span> 
                             </form>
-                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-6px;">提交</button>
+                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-2px;">提交</button>
                         </div>
                     </div>
             </div>
@@ -371,8 +371,9 @@ _initSetColor();
 _div_location(); //div定位
 
 var is_show = true;
+// 在特定页面不显示
 var is_show2=window.location.pathname;
-if(is_show2=='/zx/' || is_show2=='/zt/'){
+if(is_show2=='/zx/' || is_show2=='/zt/' || is_show2=='/hc/'){
     $('#spig').css("display","none");
 }
 
@@ -384,7 +385,7 @@ function xinwen_ajax(){
             var ol=$("#xinwen_ol");
             ol.text("");
             $.each(result, function (index, item) {
-                ol.append("<li>"+item+"。<br/></li>");
+                ol.append("<li>"+index+"："+item+"。<br/></li>");
             });
         },
         error: function (errorMsg) {

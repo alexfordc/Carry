@@ -508,7 +508,7 @@ time {
   transform:rotate(45deg);
 }
 
-.input-box {
+.input_lts-box {
   display:-webkit-box;
   display:-ms-flexbox;
   display:-moz-box;
@@ -518,10 +518,10 @@ time {
   width:400px;
   box-shadow:0 0 1px #000;
   background-color:#fff;
-  height: 50px;
+  height: 40px;
 }
 
-.input-box .input {
+.input_lts-box .input_lts {
   -webkit-box-flex:1;
   -ms-flex:1;
   -moz-box-flex:1;
@@ -531,12 +531,12 @@ time {
   line-height:25px;
 }
 
-.input input {
+.input_lts input {
 	margin:0;
 	float: left;
 	padding:0 6px;
-	height:28px;
-	width:93%;
+	height:25px;
+	width:90%;
 	font-size:14px;
 	background-color: #fbfbfb;
 	border:none;
@@ -546,11 +546,11 @@ time {
 	box-shadow:0 0 1px #000;
 }
 
-.input input[disabled] {
+.input_lts input[disabled] {
   background-color:#eee;
 }
 
-.input-box button {
+.input_lts-box button {
   font-size: 15px;
   /*margin-left:11px;*/
  float: right;

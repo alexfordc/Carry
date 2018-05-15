@@ -32722,3 +32722,5 @@ Traceback (most recent call last):
 django.template.exceptions.TemplateDoesNotExist: main.html
 csrf.py[2018-05-14 09:04:06][WARNING]£ºForbidden (CSRF token missing or incorrect.): /web/
 base.py[2018-05-14 10:24:58][WARNING]£ºNot Found: /log/logging.log
+base.py[2018-05-14 17:51:46][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-05-14 17:59:17][WARNING]£ºNot Found: /favicon.ico
