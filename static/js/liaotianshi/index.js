@@ -2,6 +2,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis=require('redis')
+var querystring=require('querystring');
+
 var client=redis.createClient();
 
 // app.get('/', function(req, res){
@@ -19,56 +21,92 @@ var formidable = require('formidable'),
 /* 图片上传路由 */
 app.post('/uploader', function(req, res) {
 
-  var form = new formidable.IncomingForm();   //创建上传表单
-  form.encoding = 'utf-8';        //设置编辑
-  form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;     //设置上传目录
-  form.keepExtensions = true;     //保留后缀
-  form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
-
-  form.parse(req, function(err, fields, files) {
-
-    if (err) {
-      res.locals.error = err;
-      res.render('index', { title: TITLE });
-      return;
-    }
-    //console.log(files);
-
-    var extName = '';  //后缀名
-    switch (files.fulAvatar.type) {
-      case 'image/pjpeg':
-        extName = 'jpg';
-        break;
-      case 'image/jpeg':
-        extName = 'jpg';
-        break;
-      case 'image/png':
-        extName = 'png';
-        break;
-      case 'image/x-png':
-        extName = 'png';
-        break;
-    }
-
-    if(extName.length == 0){
-      res.locals.error = '只支持png和jpg格式图片';
-      res.render('index', { title: TITLE });
-      return;
-    }
-
+//  var form = new formidable.IncomingForm();   //创建上传表单
+//  form.encoding = 'utf-8';        //设置编辑
+//  form.uploadDir = 'public' + AVATAR_UPLOAD_FOLDER;     //设置上传目录
+//  form.keepExtensions = true;     //保留后缀
+//  form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+//
+//  form.parse(req, function(err, fields, files) {
+//
+//    if (err) {
+//      res.locals.error = err;
+//      res.render('index', { title: TITLE });
+//      return;
+//    }
+//    //console.log(files);
+//
+//    var extName = '';  //后缀名
+//    switch (files.fulAvatar.type) {
+//      case 'image/pjpeg':
+//        extName = 'jpg';
+//        break;
+//      case 'image/jpeg':
+//        extName = 'jpg';
+//        break;
+//      case 'image/png':
+//        extName = 'png';
+//        break;
+//      case 'image/x-png':
+//        extName = 'png';
+//        break;
+//    }
+//
+//    if(extName.length == 0){
+//      res.locals.error = '只支持png和jpg格式图片';
+//      res.render('index', { title: TITLE });
+//      return;
+//    }
+    extName="png";
     var avatarName = Math.random() + '.' + extName;
     //图片写入地址；
-    var newPath = form.uploadDir + avatarName;
+    var newPath = "public/avatar/"+avatarName//form.uploadDir + avatarName;
     //显示地址；
     var showUrl = "/static/js/liaotianshi/public" + AVATAR_UPLOAD_FOLDER + avatarName;
     //console.log("newPath",newPath);
-    fs.renameSync(files.fulAvatar.path, newPath);  //重命名
+    //fs.renameSync(files.fulAvatar.path, newPath);  //重命名
     //console.log("showUrl",showUrl);
     is_tupian=showUrl;
     // res.json({
     //   "newPath":showUrl
     // });
-  });
+  //});
+
+
+  //暂存请求体信息
+    var body = "";
+
+    //每当接收到请求体数据，累加到post中
+    req.on('data', function (chunk) {
+        body += chunk;  //一定要使用+=，如果body=chunk，因为请求favicon.ico，body会等于{}
+    });
+
+    //在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function () {
+        // 解析参数
+        body = querystring.parse(body);  //将一个字符串反序列化为一个对象
+        formData=body.formData;
+        //is_tupian=formData;
+        //过滤data:URL  data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABbMAAAOeCAYAAAA5mY3EAAAgAElEQVR4nOzdXWx
+        var base64Data = formData.replace(/^data:image\/\w+;base64,/, "");
+        base64Data = base64Data.replace(/ /g,'+');
+        var dataBuffer = new Buffer(base64Data, 'base64');
+        fs.writeFile(newPath, dataBuffer, function(err) {
+            if(err){
+              //res.send(err);
+              console.log(err);
+            }else{
+              console.log("保存成功！");
+              console.log(base64Data.slice(-80));
+            }
+        });
+            //res.end();
+    });
+
+
+
+  //接收前台POST过来的base64
+
 });
 
 

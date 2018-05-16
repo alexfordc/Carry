@@ -3,7 +3,7 @@
 {% block script %}
 {% load staticfiles %}
 <script>
-    function openLogin(id){
+function openLogin(id){
    document.getElementById(id).style.display="";
    if(id=="beizhu_img"){
     $("#beizhu_img_src").attr("src","{% static 'images/fa/方案' %}"+"{{fa}}.png");
@@ -17,7 +17,8 @@ function huice(){
     var ts=document.getElementById("rq_ts").value;
     var fa=document.getElementById("select_fa").value;
     var database=document.getElementById("select_db").value;
-    location.href="{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database;
+    //location.href="{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database;
+    window.open("{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database);
 }
 </script>
 {% endblock %}

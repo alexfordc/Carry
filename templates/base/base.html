@@ -29,9 +29,10 @@
 
     <script type="text/javascript" src="{% static 'js/spig.js' %}"></script>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/styleliaotianshi.css" />
-<script src="/static/js/liaotianshi/json3.min.js"></script>
-<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />
+<script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>
+<script src="{% static 'js/liaotianshi/socket.io.js' %}"></script>
+    <script src="{% static 'js/liaotianshi/html2canvas.js' %}"></script>
 
 <!--menu-->
 <script type="text/javascript">
@@ -274,14 +275,15 @@ var $container = $('#works-container');
                         <input type="text" maxlength="140" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
                         </div>
                         <div class="action">
-                            <form role="form" id="myForm" action="http://127.0.0.1:3000/uploader" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">
-                            <span id="uploadImg" style="font-size:12px; overflow:hidden; position:absolute;background-color:#0f0;">
-                            <input type="file" size="1" onchange="uploadByForm();" name="fulAvatar" id="file_upload" class="form-control"
+                            <!--<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">-->
+                            <span id="uploadImg" style="font-size:12px; overflow:hidden; position:absolute;background-color:#0f0;margin-left:-28px;margin-top:2px;">
+                            <input type="file" size="1"  name="fulAvatar" id="file_upload" class="form-control"
                                    style="cursor:pointer;position:absolute; z-index:100; margin-left:-100px;opacity:0;filter:alpha(opacity=0); margin-top:-5px;">
-                            <input type="button" value="🍀"><!--☯-->
-                            </span> 
-                            </form>
-                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-2px;">提交</button>
+                            <input type="button" value="🍀" id="uploadImg_button"><!--☯-->
+                            </span>
+                            <!--</form>-->
+                            <input type="button" value="☯" id="pingmujietu" style="cursor:pointer;">
+                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-4px;cursor:pointer;">提交</button>
                         </div>
                     </div>
             </div>
@@ -295,6 +297,7 @@ var _$paletteElement = $('.palette_color');
 var div = document.getElementById("palette_colors");
 var dragFlag = false;
 var x,y;
+
 
 //写入cookie，两个参数，一个是cookie的名称，一个是值
 function color_SetCookie(name,value,Days){
@@ -453,26 +456,92 @@ function liaotianshiCookieShow(){
 }
 liaotianshiCookieShow();
 
+// 屏幕截图
+$(document).ready( function(){
+                $("#pingmujietu").on("click", function(event) {
+                        event.preventDefault();
+                        html2canvas(document.body, {
+                        allowTaint: true,
+                        taintTest: false,
+                        onrendered: function(canvas) {
+                            canvas.id = "mycanvas";
+                            //document.body.appendChild(canvas);
+                            //生成base64图片数据
+                            var dataUrl = canvas.toDataURL();
+                            uploadByForm(dataUrl);
+                            //var newImg = document.createElement("img");
+                            //newImg.src =  dataUrl;
+                            //document.body.appendChild(newImg);
+                        }
+                    });
+                });
+
+        });
+//form file 图片转换为base64编码
+function _addImgFileListener(obj, fun){
+        $(obj).change(function ()
+        {
+            try
+            {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function ()
+                {
+                    var img = new Image();
+                    img.src = reader.result;
+                    img.onload = function ()
+                    {
+                        var w = img.width, h = img.height;
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        $(canvas).attr({
+                            width: w,
+                            height: h
+                        });
+                        ctx.drawImage(img, 0, 0, w, h);
+                        var base64 = canvas.toDataURL('image/jpeg', 0.5);
+                        var result = {
+                            url: window.URL.createObjectURL(file),
+                            base64: base64,
+                            clearBase64: base64.substr(base64.indexOf(',') + 1),
+                            suffix: base64.substring(base64.indexOf('/') + 1, base64.indexOf(';')),
+                        };
+                        fun(result);
+                    }
+                }
+                reader.readAsDataURL(this.files[0]);
+            } catch (e)
+            {
+                _showMsg(e);
+            }
+        });
+    }
+
+
 /**
-     * ajax 上传。
+     * ajax 上传base64编码图片
      */
-function uploadByForm() {
+function uploadByForm(imgData) {
     //用form 表单直接 构造formData 对象; 就不需要下面的append 方法来为表单进行赋值了。
-    var formData = new FormData($("#myForm")[0]);
+    var formData; // = new FormData($("#myForm")[0]);
+    if (imgData!=""){
+        formData=imgData;
+    }
     var url = "http://127.0.0.1:3000/uploader";
     $.ajax({
         url: url,
         type: 'POST',
-        data: formData,
+        dataType: 'json',
+        data: "formData="+formData,
         /**
          * 必须false才会避开jQuery对 formdata 的默认处理
          * XMLHttpRequest会对 formdata 进行正确的处理
          */
-        processData: false,
+        //processData: false,
         /**
          *必须false才会自动加上正确的Content-Type
          */
-        contentType: false,
+        //contentType: false,
         success: function (data) {
             //alert(data.newPath);
             //$("img").attr({"src": data.newPath}).prependTo($("body"));
@@ -483,13 +552,33 @@ function uploadByForm() {
     });
     CHAT.submit('tupian');
 }
+_addImgFileListener("#file_upload",function(data){
+    var d = data.base64;
+    uploadByForm(d);
+});
+
+$("#uploadImg").hover(
+    function(){
+            $("#uploadImg_button").val("发送本地图片");
+        } ,
+    function(){
+            $("#uploadImg_button").val("🍀") ;
+});
+$("#pingmujietu").hover(
+    function(){
+            $("#pingmujietu").val("截取整个网页");
+        } ,
+    function(){
+            $("#pingmujietu").val("☯");
+});
+
 
 </script>
 
         {% block center_cen %}{% endblock %}
         <div style="height:100px;color: #fdfdfd;">.</div>
-    <footer style="position: fixed;bottom: -20px;">
-        <div id="copyright">
+    <footer style="position: fixed;bottom: 0;">
+        <div id="copyright" >
         	<div id="copy-wrap">
     			<p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>
                     <a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>
