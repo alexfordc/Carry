@@ -1,7 +1,12 @@
 /* spig.js */
 //右键菜单
-var showmessages="常用功能:&nbsp;&nbsp;<a href=\"#\" onclick=\"javascript:liaotianshi_show()\">聊天室</a><br><span style=\"line-height:30px;\" ><a style=\"color:red;\" href=\"/\" title=\"首页\">首页</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/tj\" title=\"统计表\">统计表</a>&nbsp;&nbsp;<a style=\"color:blue;\" href=\"#\" onclick=\"javascript:xinwen_show()\">新闻</a> "+
+var showmessages="功能:&nbsp;&nbsp;<a style=\"color:blue;\" href=\"#\" onclick=\"javascript:liaotianshi_show()\">聊天室</a>&nbsp;&nbsp;<a href=\"#\" onclick=\"javascript:liaotianshi_hide()\">隐藏</a><br><span style=\"line-height:30px;\" >"+
+"<a style=\"color:red;\" href=\"/\" title=\"首页\">首页</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/tj\" title=\"统计表\">统计表</a>&nbsp;&nbsp;<a style=\"color:blue;\" href=\"#\" onclick=\"javascript:xinwen_show()\">新闻</a> "+
             "</span><br><a style=\"color:red;\" href=\"/zt\">柱图</a>&nbsp;&nbsp;<a style=\"color:green;\" href=\"/zx\">折线图</a>&nbsp;&nbsp;<a style=\"color:blue;\" id=\"liaotian\" href=\"#\" title=\"聊天\">聊天</a>"
+
+function liaotianshi_hide(){
+    $('#spig').css("display","none");
+}
 jQuery(document).ready(function ($) {
     $("#spig").mousedown(function (e) {
         if(e.which==3){

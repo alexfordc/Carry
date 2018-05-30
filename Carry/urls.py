@@ -43,8 +43,12 @@ urlpatterns = [
     url(r'^account_update/$',views.account_info_update,name='account_update'),
     url(r'^journalism/$',views.journalism,name='journalism'),
     url(r'^liaotianshiList/$',views.liaotianshiList,name='liaotianshiList'),
+    url(r'^ztzx/$', views.zhutu_zhexian, name = 'zhutu_zhexian'),
+    url(r'^zhutu_zhexian_ajax/$', views.zhutu_zhexian_ajax, name = 'zhutu_zhexian_ajax'),
+    url(r'^moniAll/$', views.moni_all, name = 'moni_all'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
+
 ]
 
 # handler404 = views.page_not_found #404页面

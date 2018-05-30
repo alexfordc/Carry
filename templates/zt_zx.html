@@ -1,0 +1,156 @@
+
+{% extends 'base/base.html' %}
+{% block title %}柱状图{% endblock %}
+{% block script %}{% endblock %}
+{% block center_cen %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+
+<div align="center">
+    <form action="#" method="get">
+        <label for="radio1">折线图1：</label>
+        <input type="radio" id="radio1" name="zxxz" value="1" onclick="javascript:radio_xz(this.value)" checked>&nbsp;&nbsp;&nbsp;
+        <label for="radio2">折线图2：</label>
+        <input type="radio" id="radio2" name="zxxz" value="2" onclick="javascript:radio_xz(this.value)">
+    </form>
+</div><br/>
+<div id="main_zx" style="width: auto;height: 600px;" align="center"></div>
+<div id="main_zt" style="width: auto;height: 600px;" align="center"></div>
+    <script type="text/javascript">
+var url = '{% url 'zhutu_zhexian_ajax' %}';
+
+    var myChart_zt = echarts.init(document.getElementById('main_zt'));
+    var myChart_zx = echarts.init(document.getElementById('main_zx'));
+    var is_tm = false;  // 是否清除缓存
+    // 显示标题，图例和空的坐标轴
+
+    myChart_zt.setOption({
+        //backgroundColor:'#fdfdfd', // 背景颜色
+        color : ["red"],  //"#26aa1b", "#f9873a"
+        title: {
+            text: '权重股'
+        },
+        tooltip: {},
+        legend: {
+            data: []
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel:{
+                interval:0,
+                rotate:-0.1
+            }
+        },
+        yAxis: {
+            splitLine: { show: true },//false去除网格线
+            name: '',
+            minInterval:1,
+            maxInterval:20
+        },
+        series: [{
+            name: '名称',
+            type: 'bar',
+            data: []
+        }],
+        label:{
+            normal:{
+                show:true,
+                position:'top'
+            }
+        }
+    });
+
+    //myChart_zt.showLoading();    //数据加载完之前先显示一段简单的loading动画
+function loadOneColumn() {
+    $.ajax({
+        type: 'GET',
+        url: url,//请求数据的地址
+        dataType: "json",
+        success: function (result) {
+            is_tm = result.tm;
+            var names_zt = [];    //类别数组（实际用来盛放X轴坐标值）
+            var series_zt = [];
+            var names_zx = [];
+            var series_zx = [];
+            // result为服务器返回的json对象
+            $.each(result.zt.jinJian, function (index, item) {
+                names_zt.push(item.AREA);    //挨个取出类别并填入类别数组
+                series_zt.push(item.LANDNUM);
+            });
+
+            var times=result.zt.times;
+            //myChart_zt.hideLoading();    //隐藏加载动画
+
+            myChart_zt.setOption({        //加载数据图表
+                title: {
+                    text: '总点数：'+result.zt.counts+'  时间：'+times,
+                    x:'center'
+                },
+                xAxis: {
+                    data: names_zt
+                },
+                series: [{
+                    data: series_zt
+                }]
+            });
+            myChart_zx.setOption({        //加载数据图表
+                tooltip: {
+                    trigger: 'axis'
+                },
+                color: result.zx.colors,
+                legend: {
+                    data: result.zx.names
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: result.zx.times
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        maxInterval:30
+                    }
+                ],
+                series: result.zx.data
+            });
+        },
+        error: function (errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            //myChart_zt.hideLoading();
+        }
+    });
+    //myChart_zt.clear();  // 清除柱状图缓存
+    if(is_tm) myChart_zx.clear(); // 清除折线图缓存
+}
+loadOneColumn();
+function radio_xz(value){
+    if(value == "1"){
+        url = '{% url 'zhutu_zhexian_ajax' %}';
+        loadOneColumn();
+    }
+    if(value == "2"){
+        url = '{% url 'zhutu_zhexian_ajax' %}?s=1';
+        loadOneColumn();
+    }
+}
+var t=setInterval("loadOneColumn()",10000);
+</script></br></br></br></br></br></br></br></br></br></br>
+
+{% endblock %}

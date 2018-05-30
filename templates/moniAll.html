@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+{% block title %}模拟表{% endblock %}
+{% block script %}
+{% load staticfiles %}
+<script>
+function openLogin(id){
+   if("0123456789".indexOf(id[0])>=0){
+        document.getElementById('beizhu_img').style.display="";
+        $("#beizhu_img_src").attr("src","{% static 'images/fa/方案' %}"+id+".png");
+    }else{
+        document.getElementById(id).style.display="";
+    }
+}
+function closeLogin(id){
+   document.getElementById(id).style.display="none";
+}
+
+</script>
+{% endblock %}
+{% block center_cen %}
+<div align="center" id="beizhu_img" style="display:none;position: absolute; left:50%; top:50%;width:800px; margin-left:-300px; margin-top:-200px;
+border:1px solid #888; background-color:green; text-align:center"><span>方案图例</span><br/><br/>
+    <img id="beizhu_img_src" src="" alt="无此方案图例" />
+    <br/>
+<a href="javascript:closeLogin('beizhu_img');"><h2 style="background-color:green;">确 定</h2></a></div>
+</div>
+<div align="center" id="beizhu" style="display:none;position: absolute; left:50%; top:50%;width:800px; margin-left:-300px; margin-top:-200px;
+border:1px solid #888; background-color:green; text-align:center"><span>方案备注</span><br/><br/>
+    <ol style="list-style-type:none;">
+        {% for k,v in fa_doc.items %}
+        {% if k != 'z' %}
+        <li>方案{{k}}：{{v}}</li>
+        {% else %}
+        <li>{{v}}</li>
+        {% endif %}
+        {% endfor %}
+    </ol><br/>
+<a href="javascript:closeLogin('beizhu');"><h2 style="background-color:green;">确 定</h2></a></div>
+</div>
+    <div align="center">
+    <form action="." method="GET">
+        <table width="950">
+            <tr><td>止损点数：<input type="number" style="width:100px;" min="10" name="zsds" value="{{ zsds }}"></td>
+                <td>移动止损：<input type="number" style="width:100px;" min="10" name="ydzs" value="{{ ydzs }}"></td>
+                <td>止盈：<input type="number"  style="width:100px;" min="10" name="zyds" value="{{ zyds }}"></td>
+                <td>点差：<input type="number"  style="width:100px;" min="0" name="cqdc" value="{{ cqdc }}"></td>
+                <td>数据库：<select name="database" id="select_db">
+            {% if database == '1' %}
+            <option value="1" >数据库1</option>
+            <option value="2">数据库2</option>
+            {% else %}
+            <option value="2">数据库2</option>
+            <option value="1" >数据库1</option>
+            {% endif %}
+            </select></td></tr>
+            <tr><td>开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/></td>
+                <td>结束时间：<input type="date" name="end_date" id="rq_ts" value="{{ end_date }}"/></td>
+                <td><input type="button" value="方案备注" onclick="openLogin('beizhu')"/></td>
+                <td><input type="submit" value="测试" style="background-color:#ff0323;width:50px;" /></td>
+                <td><input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/></td>
+
+        </table>
+    </form><br/>
+        <table border="1" align="center">
+            {% if huizongs %}
+            <tr><th colspan="11"><span style="font-size: 20px;">方 案 汇 总&nbsp;&nbsp;&nbsp;&nbsp;</span><br/></th></tr>
+            <tr><th>方案</th><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>平均每单盈亏</th>
+                <th>平均每天盈亏</th><th>亏损最多的一天</th><th>亏损<br>涨幅与波动</th><th>盈利最多的一天</th>
+                <th>盈利<br>涨幅与波动</th><th>未平仓的单</th></tr>
+            {% for fa,huizong in huizongs.items %}
+        <tr bgcolor="#cccc33"><td><a style="color:blue;" href="#" onclick="openLogin('{{fa}}')">方案{{fa}}</a></td><td>{{ huizong.shenglv }}%</td><td>{{ huizong.yk }}</td>
+            <td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}</td><td>{{ huizong.avg_day|floatformat:2 }}</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
+            <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
+            <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td>
+            {% if huizong.first_time %}
+                <td><span
+                        {% if huizong.first_time.1 == '多' %}style="background:red"{% else %}style="background:white"{% endif %}>&nbsp;&nbsp;{{ huizong.first_time.1 }}&nbsp;&nbsp;</span><br/>{{ huizong.first_time.2 }}<br/>{{ huizong.first_time.0 }}</td>
+            {% else %}
+                <td>  </td>
+            {% endif %}
+        </tr>
+            {% endfor %}
+        {% else %}
+        <h3 style="color:green;">请选择好参数并按《模拟测试》按钮进行测试！</h3>
+        {% endif %}
+        </table>
+        <br/>
+        {% if ress %}
+            <table border="1" align="center">
+                <tr><th width="100">日期</th><th>行情</th><th width="150">方案</th><th width="150">胜率</th><th width="150">盈亏</th><th width="100">多单数量</th><th width="100">空单数量</th><th width="150">最大亏损</th><th width="150">最大盈利</th></tr>
+                {% for k,res in ress.items %}
+                    <tr>
+                        <td>{{ k }}</td>
+                        <td>预计高开：{{res.hq.0}}%<br/>预计上涨：{{res.hq.1}}%<br/>
+                            <br/>实际高开：{{res.hq.2|floatformat:0}}点<br/>实际上涨：{{res.hq.3|floatformat:0}}点
+                        </td>
+                        <td colspan="7">
+                        <table border="1" width="950">
+                            {% for f,v in res.items %}
+                            {% if f != 'hq' %}
+                            <tr><td width="150">方案{{ f }}</td><td width="150">{{v.sl}}%</td>
+                                {% if v.max_yk %}
+                                <td width="150" bgcolor="red">{{v.yk}}</td>
+                                {% elif v.min_yk %}
+                                <td width="150" bgcolor="white">{{v.yk}}</td>
+                                {% else %}
+                                <td width="150">{{v.yk}}</td>
+                                {% endif %}
+                                <td width="100">{{v.duo}}</td><td width="100">{{v.kong}}</td><td width="150">{{v.maxk}}</td><td width="150">{{v.maxy}}</td></tr>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+    <script type="text/javascript">
+        $('div>table').css({'width': '1200px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
+        $("tr:odd").css({"background-color": "#cccc33"});
+        $('tr:even').css({'background-color': '#00cc00'});
+        $('tr').css({'height': '30'});
+    </script>
+{% endblock %}

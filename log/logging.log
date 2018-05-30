@@ -32756,3 +32756,1498 @@ Traceback (most recent call last):
 TypeError: In order to allow non-dict objects to be serialized set the safe parameter to False.
 base.py[2018-05-15 16:31:03][WARNING]：Not Found: /favicon.ico
 base.py[2018-05-15 16:46:22][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-16 09:13:33][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-16 09:13:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:13:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:14:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:14:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:15:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:15:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:15:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:16:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:16:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:16:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:17:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:17:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:18:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:18:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:18:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:19:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:19:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:19:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:20:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 09:20:34][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-16 10:38:56][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-16 14:41:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:42:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:42:40][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:43:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:43:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:43:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:44:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:44:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:44:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:45:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:45:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:45:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:46:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:46:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:46:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:47:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:47:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:47:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:48:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:48:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:48:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:49:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:49:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:50:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:50:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:50:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:51:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:51:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:51:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:52:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:52:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:52:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:53:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:53:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:53:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:54:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:54:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:54:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:55:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:55:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:56:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:56:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:56:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:57:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:57:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:57:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:58:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:58:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:58:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:59:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:59:30][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 14:59:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:00:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:00:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:00:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:01:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:01:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:01:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:02:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:02:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-16 15:03:00][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-16 15:34:28][WARNING]：Not Found: /9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAGQAfQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4 Tl5ufo6erx8vP09fb3 Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3 Pn6/9oADAMBAAIRAxEAPwDp7eCH7NETDH9xf4R6U828P/PGP/vgf4Ulsf8ARov9wfyFSGvnjpIzBB/zxj/74H FIbeH/nlH/wB8ipTSGmrgRG3h/wCeUf8A3yKDbw/88Y/  R/hUhpDTQiM28P/ADxj/wC R/hSGCH/AJ4x/wDfIqQ0hpgRm3h/54x/98j/AApDBD/zyj/75FSGkNMCMwQ/88o/  RQYIf eUf/AHyKkNIaYiPyIf8AnlH/AN8ikMEP/PKP/vkVIaQ1QEZgh/55R/8AfIpDBD/zyj/75FSGg09RERhh/wCeUf8A3yKQww/88o/  RUppDTERGGH/nlH/wB8igww/wDPKP8A75FSGkNO4EZhh/55R/8AfIpDDD/zyT/vkVIaQ002IjMMP/PJP  RSGGH/nkn/fIqQ0GmBGYYf eaf98ikMMX/PJP  RUhpDVCIzDF/zyT/vkUhhi/wCeSf8AfIqQ0hpgMMMX/PNP  RSGGL/AJ5p/wB8inmkNNCIzFF/zyT/AL5FBii/55J/3yKeaQ1Qhhhi/wCeafkKQwxf880/75FSGkNMCMwxf880/wC RSGGP/nmn/fIqQ0hp6iIzDH/AM80/wC RQYo/wDnmn/fIp5pDTAYYo/ eaf98ikMUf8AzzT/AL5FPNBpoCMxR/8APNP  RSGKP8A55p/3yKkNIaaEMMUf/PNP  RSGKP/nmn/fIp5pDVIBhij/55p/3yKDFH/wA81/75FONBpoRGYo/ ea/98ikMUf8AzzX/AL5FSGkNMBhij/55r/3yKQxR/wDPNf8AvkU80hpiGGKP/nmv/fIoMcf9xfypxpDTEMMaf3F/IUGNP7i/kKcaDTQDDGn9xfyFIY0/uL QpxpDTQXEMaf3F/IUhjT 4v5ClNBqrCuNMaf3F/IU0xp/cX8hTzSGnYLjTGn9xfyFIY0/uL QpxpDTSEUrtE8wfKv3fQUUt2f3o/3aKAud5b/APHtF/uD QqQ1Fb/APHtF/uD QqQ186d4GkNBpDQkAGkNBpDTsIDSGg0GqSAQ0Gg0hp2ADSGg0hpiA0hoNBppABpDQaQ1VhAaQ0GkNNIQGkNBpDTsIDSGg0GmkAGkNBpDTADSGg0hpiA0hoNIapABpDQaQ07CA0Gg0hpoQGkNBpDTEBpDQaQ1SQAaQ0Gg0wA0hoNIaYgNIaDSGqsAGkNBoNOwgNIaDSGmkIDSGg0hp2ADSGg0hppCA0hoNBpgBppoNIaYgNIaDQaaQAaQ0GkNVYQGkNBpDTSADSGg0hp2EVbs/vB/u0Ul2f3g/3aKYzu7f8A49ov9wfyFSGo7c/6PF/uD Qp5r5w7gNIaDSGhABpDQaDVJABpDQaQ0wA0hoNIaYgNIaDQaaQAaQ0GkNVYQGkNBpDTSEBpDQaQ07CA0hoNBppABpDQaQ0wA0hoNIaYgNIaDSGqSADSGg0hp2EBoNBpDTSEBpDQaQ07CA0hoNIapIANIaDQaYAaQ0GkNMQGkNBpDVWADSGg0GnYQGkNBpDTSEBpDQaQ07ABpDQaQ00hAaQ0Gg0wA000GkNMQGkNBoNNIANIaDSGqsIDSGg0hppABpDQaQ07CA0hoNBqkhFW6P7wfT tFJd/wCsH 7RRYZ3duf9Hi/3B/IU81Hbn/Rov91f5CnmvnDvA0hoNBppABpDQaSmAUhoNIaYgNIaDQaaQAaQ0GkNVYQGkNBpDTSEBpDQaQ07ABpDQaDTSEBpDQaQ0wA0hoNIaYgNIaDSGqSADSGg0hp2EBoNBpDTSEBpDQaQ07ABpDQaQ1SQgNIaDQaYAaQ0GkNMQGkNBpDVWADSGg0GnYANIaDSGmkSBpDQaQ07ABpDQaQ00hAaQ0Gg0wA000GkNMQGkNBoNNIANIaDSGqsIDSGg0hppABpDQaQ07CA0hoNBqkhAaQ0GkNNAVrr/WD6f1opLk/vB9P60UDO6tz/AKNF/ur/ACFPNR2//HvF/ur/ACFSGvnDvA0hoNJTQBSGg0hpiA0hoNBppABpDQaQ1VhAaQ0GkNNIQGkNBpDTsAGkNBoNNIQGkNBpDTADSGg0hpiA0hoNIapIANIaDQadhCGg0GkNNIQGkNBpDTsAGkNBpDVJCA0hoNBpgBpDQaQ0xAaQ0GkNVYANIaDQadgA0hoNIaaRIGkNBpDTsAGkNBpDTSEBpDQaDTADTTQaQ0xAaQ0Gg00gA0hoNIaqwgNIaDSGmkAGkNBpDTsIDSGg0GqSEBpDQaQ0wA0hoNIaYFa5P7wfT tFFyf3g n9aKAO6t/ PeL/AHV/kKeaitz/AKPF/uj QqSvnDvCkNBpDTADSGg0GmkAGkNBpDVWEBpDQaQ00hAaQ0GkNOwAaQ0Gg07CA0hoNIaYAaQ0GkNMQGkNBpDVJABpDQaDTsIDSGg0hppCA0hoNIadgA0hoNIapIQGkNBoNMANIaDSGmIDSGg0hqrABpDQaDTsIDSGg0hppABpDQaQ07CA0hoNIaaQgNIaU0hpgBppoNIaYgNIaDQaaQAaQ0GkNVYQGkNBpDTSADSGg0hp2EBpDQaDVJCA0hoNIaYAaQ0GkNMANIaDQaaQitcn94Pp/Wii5Pzj6f1ooGdzb/8AHvF/uj VPNR25/0eL/dH8hTzXzp3gaQ0Gg0JABpDQaQ1VhAaQ0GkNNIQGkNBpDTsAGkNBoNOwgNIaDSGmAGkNBpDTEBpDQaQ1SQAaQ0Gg07CA0hoNIaaQgNIaDSGnYANIaDSGqSEBpDQaDTADSGg0hpiA0hoNIaaQAaQ0Gg1VgA0hoNIaaQgNIaDSGnYQGkNBpDTSEBoNBpDTADTTQaQ0xAaQ0Gg00gA0hoNIaqwgNIaDSGmkAGkNBpDTsIDQaDSGqSEBpDQaQ0wA0hoNIaYAaQ0Gg00hAaQ0GkppAV7n74 n9aKLn74 n9aKBncW5/0eL/dH8hTzUduf9Hi/wB0fyFSGvnTuA0hoNIadgA0hoNIaaQgNIaDSGnYANIaDQadhAaQ0GkNMANIaDSGmIDSGg0hqkgA0hoNBp2EBpDQaQ00hAaQ0GkNOwAaQ0GkNUkIDSGg0GmAGkNBpDTEBpDQaQ07ABpDQaDVWADSGg0hpkgaQ0GkNOwAaQ0GkNNIQGg0GkNMANNNBpDTEBpDQaDTSADSGg0hqrCA0hoNIaaQAaQ0GkNOwgNBoNIapIQGkNBpDTADSGg0hpgBpDQaDTSEBpDQaSmkAUUUUwK9z98fT tFFz98fT tFIZ28H/HvF/uD lPNRwf8e8X 4P6U8188ztA0hoNIaaQAaQ0GkNOwAaQ0Gg07CA0hoNIaYAaQ0GkNMQGkNBpDVJABpDQaDTsIDSGg0hppCA0hoNIadgA0hoNIadhAaQ0Gg1QAaQ0GkNMQGkNBpDTQAaQ0hYKCScfWomuUHAyx9hWkacpbEuSjuTGkNVjdHsv5mk 1H 6K1WHqdiPaxLJpDVcXQ7qR9DmpVlRuAwz6Hg1LpyjuhqSY40hoNIamwwNBoNIaYAaaaDSGmAGkNBoNNIQGkNBpDVWEBpDQaQ00gA0hoNIadhAaDQaQ1SQgNIaDSGmAGkNBpDTADSGg0GmkIDSGg0lNIAooopgFFFFAFe5  Pp/Wii5  Pp/WikM7WD/j3i/3B/Snmo4P PeL/AHB/SnmvnztA0hoNIadgA0Gg0hp2EBpDQaQ0wA0hoNIaYgNIaDSGqSADQaDSGnYQGkNBpDTSEBpDQaQ07ABpDQaQ07CA0hoNBqgA0hoNIaYgNIaDSGmgA013CKWPQUpqC7P7sD1NaU480kiJvlVyEl53x nYCkkhdBk4I747U62dVYhiBnoTUs0iiNhnJPAFdspyhPlitDnUVKN2U80hoNGa6bmdgzSZoNIaljRZglJ Rjn3qc1RQ4dceoq6a46sUnodEHdAaaaDSGsiwNBoNIaaQgNIaDSGqsIDSGg0hppABpDQaQ07CA0Gg0hqkhAaQ0GkNMANIaDSGmAGkNBoNNIQGkNBpKaQBRRRTAKKKKACiiigCvc/fH0/rRRc/fH0/rRSGdnB/qIv90fyFPNMg/1EX 6P5CnGvAe52AaDQaQ07ABpDQaQ0wA0hoNIaYgNIaDSGqSADQaDSGnYQGkNBpDTSEBpDQaQ07ABpDQaQ07CA0hoNBqgA0hoNIaYgNIaDSGmkAGkNNkdYxlj HrVVrpz0AA9 a2hSlPYzlUUS4agugxRdozz2qE3L 1BuX9q3jRnF3M3UjJWI/Lf 4fypCj/ANw/lUhuX9qT7S/tXQ3U7GaUSMo/9w/lSEEHnINSG5f2/Ko3YsxJ6n0oTl1BpdBppDRmg02wSFX76/Wrpqiv31 tdDplhBdW7PLu3BiBg9sVx4mooLmZvSjfRGWaDXQHR7T/AG/  qo3uktEhkgYuo5KkciuSGKpydjV0pIzDSGg0hrrRkBpDQaQ00gA0hoNIadhAaDQaQ1SQgNIaDSGmAGkNBpDTADSGg0GmkIDSGg0lNIAooopgFFFFABRRRQAUUUUAV7n74 n9aKLn74 n9aKQzsoP9RH/uD Qp5qOD/UR/7g/kKea8FnYBpDQaQ07ABpDQaQ0xAaQ0GkNUkAGg0GkNOwgNIaDSGmkIDSGg0hp2ADSGg0hp2EBpDQaDVABpDQaQ0xAaQ0GkNMANBoNRyttjYjsOKqKu0hN2VynPIZJDzwOlRmg0hr14rlVkcL1dwNGaQ0ZobGgzSGjNJmpHYU0maDSZpFJAaDSGipGhV 8v1rq9DP hv/AL/9BXLRAtIB2HWut0mMx2C7hgud3 H8q8zMZL2djqw6965dpCaM0hrwjvsc9q1uLe63IMJIMjHQHuKoGt7W032YfHKMKwDXvYSftKSucFaPLIDSGg0hrqsYgaDQaQ07CA0hoNIaoANIaDSGmAGkNBoNNIQGkNBpKaQBRRRTAKKKKACiiigAooooAKKKKAK9z98fT tFFz98fT tFIZ2EH oj/3R/IU81HB/qI/90fyp5rwmdYGkNBpDTADSGg0hqkgA0Gg0hp2EBpDQaQ00hAaQ0GkNOwAaQ0GkNOwgNIaDQaoANIaDSGmIDSGg0hppABoNBpDTSEBqC5OIT74/nUxqG55hPsR/OtafxImWxSNIaM0hr0rnJYXNIaDT4YvNbnoOuO/tUSkkrspJt2GBS33QSfpTvJk/umujstHXyw1wSueiL1/Oro02zHHkg/Un/GvNqZjCLsjqjh31OP8AJk/un8xSGGT 7 orsTp1n/zxH5n/ABpDp1n/AM8R Z/xrP8AtKPYr6szj/Jf 7/KlEDnqMD3Ndd/Z1n/AM8R Z/xpUs7aM5SFQR7ZxSeZR7FLDMxdM0tpWDupWIc5PBb2 nvXQjAAAGAB0oJpK8yvXlWd2dMKaghTTSaDSGsDaxV1MZsJh6AH9a5o10mptiwm9wP51zRr2cv/hs4cT8QGg0GkNegjlA0hoNIaoANIaDSGmAGkNKaQ00hAaQ0GkppAFFFFMAooooAKKKKACiiigAooooAKKKKAK9z98fT tFFz98fT tFIZ18H oj/wB0fypxpkH oj/3R/KnGvEsdYGkNBpDTSADQaDSGnYQGkNBpDTSEBpDQaQ07ABpDQaQ07CA0hoNBqgA0hoNIaYgNIaDSGmkAGg0GkNNIQGkNBpDVCA1HKN0bAdSOKeaQ01o7g9UZppDUk6bHIxweRURr0U7q5zWsxTW1oUCyToWAIUbyD3Pb YrENdD4e/1jf8AXP8AqK48bJqk7G1FXkbxNJSUhNfNnpWFNITQaaTSHYU0hoNNNBQpptBNITSHYU000E0hNAzP1qULaBM8u38qwjVzVbkT3O1TlE UY7 p/wA lUjX0OEp8lJXPNry5pgaQ0GkNdZgBpDQaQ0wA0Gg0hppCA0hoNJTSAKKKKYBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAFe5  Pp/Wii5  Pp/WikM62A/uI/90fypxpkB/cR/7o/lTjXi2OsDQaDSGnYQGkNBpDTSEBpDQaQ07ABpDQaQ07CA0hoNBqgA0hoNIaYgNIaDSGmkAGg0GkNNIQGkNBpDVJCA0hoNIadgA0hoNBppCGSIsg2sPp7VWa1cH5SD9eKtmkNaRm0JxTKf2aT/AGfzrc0AYmYHtGAfzFZprS0T/j4k/wBz orHFSbpMukrSNs0hNBppNeAeghc1SuNRgglaNw25cZwParZqJ4Ynbc8SMT3IBq4OKfviabWhUOr23/TT/vkUh1e2/6af98irRtrf/njH/3yKQ21v/zwj/75Fbc1DsybVO5V/te2/wCmn5Ck/te2/wCmn/fIqea3hEMhEUYIU4 UcVzRrqw9CjXvZGVSpUpm6dXtvST8v/r1TvNVaVDHApRTwT3I/pWcaQ11wwVKLuYSxE2rAaQ0GkNdqRgBpDQaQ0wA0Gg0hppCA0hoNJTSAKKKKYBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBXufvj6f1ooufvj6f1opDOrhP7iP/AHR/Knmo4T 4T/dH8qea8a2p1AaQ0GkNNIQGkNBpDTsAGkNBoNOwhDQaDSGqADSGg0hpiA0hoNIaaQAaDQaQ00gA0hoNIapIkDSGg0hp2ADSGg0GnYQGkNBpDTADTTQaDTADWhojAXLgnkof5is40 CZoJlkQ8qfzHcVFWDnBxQ4NRlc6jNJUFtdRXKbkI3d17ipc14EouLsz0otPYU0maQ0hNSVYq6nO8NoWj4ZjtyOorEgupopldXYnPIJJB9q6KWNZYykgyrDBFU4tNt4ZPMyzbTkbug/Su/D16UKbjJXZz1Kc5STTLNywW3lJ4 U5/KuYNaep36yL5EJyCfmYdDWWa7cDSlCDcupz4malKyA0hoNIa9BI5gNIaDSGmAGg0GkNNIQGkNBpKaQBRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCvc/fH0/rRRc/fH0/rRSGdTCf3Cf7o/lTzUcJ/cJ/uj VPNePbU6QNIaDSGnYANIaDQadhAaQ0GkNUAGkNBpDTADSGg0hppCA0Gg0hppABpDQaQ1SQgNIaDSGnYQGkNBoNOwgNIaDSGmAGmmg0GmIDSGg0hppABpDQaQ1QhysyNuRirDoQcEVbj1W5QYYq4/2h/WqJpDUSpRn8SKU5R2NZdZ/vQ/k3/1qDrK9oW/76/ tWQaQ1l9So9jT6xU7mm sSHOyJV pJ/wqlPeTz5EkhI/ujgfkKhNIa1hh6cPhREqs5bsDSGg0hroSMgNIaDSGmAGg0GkNNIQGkNBpKaQBRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAr3P3x9P60UXP3x9P60UhnTwn9wn 6P5U80yE/uE/3R/KnGvJOkDSGg0GiwgNIaDSGqADSGg0hpgBpDQaDTSEIaDQaQ00gA0hoNIapIQGkNBpDTsIDSGg0GnYQGkNBpDTADTTQaDTADSGg0hppCA0hoNIapIQGkNBpDTSADSGg0hppCA0Gg0hp2ADSGg0hqrCA0hoNIaYAaDQaQ00hAaQ0GkppAFFFFMAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAr3P3x9P60UXP3x9P60UhnTQn9wn 6P5U40yI/uI/90fyp5ryjoA0hoNIaYAaQ0GkNMANIaDQaaQgNIaDSGmkAGkNBpDVJCA0hopDTsIDSGg0GnYANIaDSGmIDTTQaDTADSGg0hppCA0hoNIapIQGkNBpDTSADSGg0hp2EBoNBpDTsAGkNBpDVCA0hoNIaYAaDQaQ00hAaQ0GkppAFFFFMAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAK9z98fT tFFz98fT tFIZ0kR/cp/uj VPNRxH9yn 6P5U815Z0AaQ0GkNMANIaDQaaQgNIaDSGmkAGkNBpDVJCA0lFIadhAaQ0Gg07ABpDQaQ0xAaaaDQaYAaQ0GkNNIQGkNBpDVJCA0hoNIaaQAaQ0GkNOwgNBoNIadhAaQ0GkNUAGkNBpDTADQaDSGmkIDSGg0lNIAooopgFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAV7n74 n9aKLn74 n9aKQzoov9TH/ALo/lTzTIj 5T/dH8qca8yx0AaQ0Gg00hAaQ0GkNNIANIaDSGqSEBpKKQ07CA0hoNBp2ADSGg0hpiA000Gg0wA0hoNIaaQgNIaDSGqSEBpDQaQ00gA0hoNBp2EBpDQaQ07ABpDQaQ1QgNIaDSGmAGg0GkNNIQGkNBpKaQBRRRTAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAopAyltoYFgM4HWlpAFFFFMAooooAKKKKACiiigCvc/fH0/rRRc/fH0/rRSGdDEf3Kf7o/lTjTIj 5T/dH8qea86xuBpDQaQ0JABpDQaQ1SQgNIaDSGnYQGkNKaQ07ABpDQaQ0xAaaaDQaYAaQ0GkNNIQGkNBpDVJABpDQaQ00hAaQ0Gg07CA0hoNIadgA0hoNIaoQGkNBpDTADQaDSGmkAGkNBpKaQgooopgFFFFABRRRQAUUUUAFFFFABRRQSAMkgY6k0AFFV2vIwcKGf/dFLHdxyNtOVY9ARU8yHZk9FDHapYnAHJPtTIpkmDFM4B69M1V0KzH0UHpmo4p0m3BM/LjPGKLhYWSdI3VGzuYjjHvin1nXEySXKOucL1yPQ1eimWbOzPGM54qFK7KcbFS1/4/ZPx/nV6qFuypdysxwBnkn3qwb2EHA3EeuOKIvQJLUnopsciyruQgj VDyLGu5zgVd1a5NnsOoqsb6PPCuR64FTxyJKuUbP8xSugsx1FI7qgLM2B6moDex87VZgO4HFF7BYsUVDFcxynCkhvQjrU1PcLMr3P3x9P60UXP3x9P60UhnQRH9yn 6P5U40yL/Up/uinGvPsbgaQ0GkNNIQGkNBpDTsIDQaDSGnYANIaDSGmIDTTQaDTADSGg0hppCA0hoNIapIANIaDSGmkIDSGg0GnYQGkNBpDTsAGkNBpDVCA0hoNIaYAaDQaQ00gA0hoNJTSEFFFFMAooooAKKKKACiiigAooooAKKKKACq1 f3Awerc/rVmq2of6gfUfyqZbDjuS26gQJgAZXP14qG/jBjEgGCpAPvU8H oT/dH8qjviPsxz3wKTtyjXxBG5ksiSckKQfwFR6d/q3/AN6ltwRYuT3DH9KTTv8AVt/vUk9UPoy2elUtO6yfhV09Kpad1k/Cm90JbMS7/wCPyL8P51eqjd/8fkX4fzq9RHdg9kZ8May3kgcZAyf1q Y1KlSowRjGKpWv/H7J P8AOr1EErDkyjZZS5kQHgD Roc/aL0Ix Rc/p1/Wi2/4/ZPx/nRF8moMDxkn9eRUdCupdAG3AHGMe1UW/0a9G3hW6j61fqjd/Ndoo56CrlpsRHUL7/Xxg8jHT8avABQAAAB0wKpXv8Ax8R1dojuwlsihdKEukK8Z54 tX6pXv8Ax8x/571dojuweyK9z98fT tFFz98fT tFUI3ov8AUp/uj VONMi/1Kf7o/lTjXAbAaQ0GkNOwgNBoNIadgA0hoNIaYgNNNBoNMANIaDSGmkIDSGg0hqkgA0hoNIaaQgNIaDQadgA0hoNIadhAaQ0GkNUIDSGg0hpgBoNBpDTSADSGg0lNIQUUUUwCiiigAooooAKKKKACiiigAooooAKKKKACquof6gf7w/katVV1D/UD/eH8jUy2HHcSKS4jiX92JEIGCOCB6U10numAdPLQc8/55qzb/6iP/dH8qkpKI27DQiiMIBwBj8KprHPayExrvU nf8A vV6im0hJsrGS5kGFi2Z6lj0pmnDBk/D tWJ5kiQ5I3Y4GeSaisIysRZhjcc/hU21KvoF3C0jLJHyy9vXnNSwyNIDvjKEfrUlFXYm5Ut4pEupGZcA559eat0UUJWE3cq28TpdSMy4U559eadc25kYSRkB1/WrFFLl6D5isJ5wMG3Jb26UtvAwkM0vLnoPSrFFHKFypdRSSTxlVJA6n0q3RRTSsJu6Kt1E7zxsqkgAZPpzVqiihKw27le5  Pp/Wii5  Pp/WigDdi/1Kf7o/lSmoopY/KT51 6P4h6U4yx/89F/MVw2NRxoNMMsf/PRfzFIZY/8Anov5inYB5pDTDLH/AH1/MUGWP  v5imIcaaaQyx/31/MUhlj/vr YpgONIaaZY/76/mKQyx/31/MU0hDjSGmmVP76/mKQyJ/fX8xVJAONIaaZE/vr YpDIn99fzFNCHGkNIZE/vr YpDIn99fzFNAONIaaZE/vr YpDIn99fzFNCHGkNN8xP76/nSGRP74/MU0IcaQ0hkT  PzFIZE/vj8xTAcaQ00yJ/fH5ikMif3x YqgHGkNIZE/vL YpN6f31/MUxC0Um9P76/mKN6f31/MUALRSb0/vr Yo3p/fX8xTuAtFJvT  v5ijen99fzFFwFopN6f31/MUb0/vr YouAtFJvT  v5ijen99fzFFwFopN6f31/MUb0/vr YouAtFJvT  v5ijen99fzFFwFopN6f31/MUb0/vr YouAtMliWVNrjIznrjBp29P76/mKN6f31/MUACKERVBJCgYzS0m9P76/mKN6f31/MUtA1FpJE8xCpJGfQ80b0/vr Yo3p/fX8xTAiS0iQ5wWPqTmpqTen99fzFG9P76/mKVh3uLRSb0/vr Yo3p/fX8xTuIWik3p/fX8xRvT  v5ii4C0Um9P76/mKN6f31/MUXAWik3p/fX8xRvT  v5ii4C0Um9P76/mKN6f31/MUXAWik3p/fX8xRvT  v5ii4EFz98fT tFNuHXePmHT196KQz/2Q==
+views.py[2018-05-17 10:42:55][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-17 10:58:55][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-17 11:04:28][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 11:04:29][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 11:04:30][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 11:04:31][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 11:04:32][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 11:04:33][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 523, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 163, in vis
+    dc.pop(0)
+IndexError: pop from empty list
+exception.py[2018-05-17 13:38:42][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 519, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-17 13:38:43][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 519, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-17 13:38:44][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 519, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+exception.py[2018-05-17 13:38:45][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 562, in getkline
+    lists, _ch=getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 519, in getList
+    if len(res)>0:
+UnboundLocalError: local variable 'res' referenced before assignment
+base.py[2018-05-17 19:09:04][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-18 18:03:30][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-21 09:12:12][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-21 09:15:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:16:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:16:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:16:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:17:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:18:03][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-21 09:18:17][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-21 09:28:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:28:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:29:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:29:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:29:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:30:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:30:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:30:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:31:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:31:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:31:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:32:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:32:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:33:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:33:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:33:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:34:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:34:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:34:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:35:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:35:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:35:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:36:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:36:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:36:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:37:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:37:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:37:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:42:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:42:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:43:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:43:25][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-05-21 09:43:35][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 328, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+TypeError: 'NoneType' object is not iterable
+base.py[2018-05-21 09:43:35][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-21 09:43:46][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 328, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-05-21 09:44:27][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 328, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-05-21 09:44:41][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 328, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+TypeError: 'NoneType' object is not iterable
+views.py[2018-05-21 09:45:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:45:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 09:46:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 10:12:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 10:54:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 10:54:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 10:54:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 10:55:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:09:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:09:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:09:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:09:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:10:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:10:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:10:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:19:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:19:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:19:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:19:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:19:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:20:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:23:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:23:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:23:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:23:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:24:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:24:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:24:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:25:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:25:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:25:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:25:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:25:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:26:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:26:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:26:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:30][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:27:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:28:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:29:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:36:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:37:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:38:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:41:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:47:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:58:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:59:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:59:13][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 11:59:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:03:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:04:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:05:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:06:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:07:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:07:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:07:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:07:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:12:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:13:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:13:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:13:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:13:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:14:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:15:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:15:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:15:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:16:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:16:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:16:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:16:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:16:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:17:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:18:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:19:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:20:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:21:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:22:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:23:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:24:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:25:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:25:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:25:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:25:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:26:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:26:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:26:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:26:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:26:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:27:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:28:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:29:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:30:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:31:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:32:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:32:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:32:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:32:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:32:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:33:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:34:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:35:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:36:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:37:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:06][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:38:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:39:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:40:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:41:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:42:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:43:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:44:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:44:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:44:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:44:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:44:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:10][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:45:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:46:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:47:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:48:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:49:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:49:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:49:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:51:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:51:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:52:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:52:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:53:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:54:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:55:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:55:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:57:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:57:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:57:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:57:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:57:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:58:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:58:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:58:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:58:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 12:58:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:00:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:00:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:00:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:00:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:00:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:13][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:01:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:02:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:02:13][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:10:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:10:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:11:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:11:40][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:11:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:12:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:12:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:12:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:13:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:13:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:13:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:13:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:13:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:16:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:17:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:18:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:19:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:19:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:19:30][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:19:40][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:19:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:20:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:23:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:23:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:24:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:25:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:26:00][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:26:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:26:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:26:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:26:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:28:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:28:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:28:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:28:57][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:29:07][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:29:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:29:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:29:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:29:47][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:11][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:30:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:31:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:49][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:32:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:33:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:33:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:33:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:37:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:37:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:37:42][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:37:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:38:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:16][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:39:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:40:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:40:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:40:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:42:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:42:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:44:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:45:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:46:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:49:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:49:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:50:21][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:50:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:50:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:54:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:54:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:54:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:54:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:54:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:55:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:13][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:23][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:33][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:43][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:56:53][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 13:57:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:06:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:07:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:07:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:07:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:07:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:08:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:08:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:15:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:15:22][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:15:32][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:15:40][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-05-21 14:27:10][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 361, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 285, in get_zx_zt
+    result = HSD.get_min_history() if status else HSD.get_history(HSD.get_conn('stock_data'))
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 205, in get_history
+    cur.execute(SQL['get_history'].format(WEIGHT))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '['腾讯控股', '汇丰控股', '建设银行', '友邦保险', '工商银行',' at line 1")
+views.py[2018-05-21 14:27:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:29:03][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:43:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:43:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:44:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:49:56][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-05-21 14:49:56][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 361, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in get_zx_zt
+    for ind, name in enumerate(names)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in <listcomp>
+    for ind, name in enumerate(names)
+IndexError: list index out of range
+views.py[2018-05-21 14:53:17][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:53:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:54:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:54:12][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:55:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:55:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:56:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:56:28][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:56:38][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:56:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:56:58][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:18][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:29][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:39][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:57:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:58:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:59:31][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:59:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 14:59:51][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:00:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:01:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:01:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:01:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:01:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:02:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:02:15][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:02:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:02:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:02:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:43:30][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:43:37][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:43:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:43:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:44:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:34][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:45:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:46:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-21 15:46:14][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-21 16:22:48][WARNING]：Not Found: /mysite/views.py
+exception.py[2018-05-21 17:17:26][ERROR]：Internal Server Error: /moniAll/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in moni_all
+    if dates and ts and fa:
+NameError: name 'fa' is not defined
+base.py[2018-05-21 17:37:21][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-21 18:02:18][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-22 09:45:03][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-22 11:04:03][WARNING]：Not Found: //static/images/fa/方案id.png
+base.py[2018-05-22 11:04:15][WARNING]：Not Found: //static/images/fa/方案1.png
+exception.py[2018-05-22 15:21:10][ERROR]：Internal Server Error: /moniAll/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 736, in moni_all
+    return render(rq, 'moniAll.html', {'dates': dates, 'ts': ts, 'database': database})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 969, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 827, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 817, in do_for
+    " 'for x in y': %s" % token.contents)
+django.template.exceptions.TemplateSyntaxError: 'for' statements should use the format 'for x in y': for f,v in res.items if f!='hq'
+exception.py[2018-05-22 15:21:18][ERROR]：Internal Server Error: /moniAll/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 736, in moni_all
+    return render(rq, 'moniAll.html', {'dates': dates, 'ts': ts, 'database': database})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 969, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 827, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 817, in do_for
+    " 'for x in y': %s" % token.contents)
+django.template.exceptions.TemplateSyntaxError: 'for' statements should use the format 'for x in y': for f,v in res.items if f != 'hq'
+exception.py[2018-05-22 16:56:00][ERROR]：Internal Server Error: /gdzd/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 764, in gdzd
+    if i in gdzds:
+NameError: name 'i' is not defined
+base.py[2018-05-23 08:58:58][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-23 09:36:48][ERROR]：Internal Server Error: /moniAll/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\smartif.py", line 175, in translate_token
+    op = OPERATORS[token]
+KeyError: "huizong.first_time.1=='多'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 759, in moni_all
+    return render(rq, 'moniAll.html', {'dates': dates, 'ts': ts, 'database': database})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 969, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 827, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 969, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 968, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 900, in __init__
+    super(TemplateIfParser, self).__init__(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\smartif.py", line 166, in __init__
+    mapped_tokens.append(self.translate_token(token))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\smartif.py", line 177, in translate_token
+    return self.create_var(token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 903, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '=='多'' from 'huizong.first_time.1=='多''
+base.py[2018-05-24 09:54:45][WARNING]：Not Found: /favicon.ico
+views.py[2018-05-24 09:54:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-24 09:59:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-24 09:59:08][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-24 09:59:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:38:27][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:38:35][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:38:45][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:38:55][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:39:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:41:20][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:41:41][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:42:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:42:26][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:42:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:42:46][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:42:56][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:45:52][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:45:59][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:46:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:46:19][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:48:01][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:48:09][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:48:25][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:50:48][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 11:51:02][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:04:52][ERROR]：Object of type 'datetime' is not JSON serializable
+exception.py[2018-05-25 12:05:11][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 355, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in get_zx_zt
+    for ind, name in enumerate(names)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in <listcomp>
+    for ind, name in enumerate(names)
+KeyError: 0.5
+views.py[2018-05-25 12:06:36][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:06:44][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:06:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:07:04][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:07:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:07:24][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:07:50][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:07:54][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:08:05][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:08:14][ERROR]：Object of type 'datetime' is not JSON serializable
+views.py[2018-05-25 12:12:40][ERROR]：Object of type 'datetime' is not JSON serializable
+base.py[2018-05-28 09:08:02][WARNING]：Not Found: /index/
+exception.py[2018-05-28 09:58:59][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 361, in zhexian
+    _, result = get_zx_zt(zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in get_zx_zt
+    for ind, name in enumerate(names)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 309, in <listcomp>
+    for ind, name in enumerate(names)
+IndexError: list index out of range
+base.py[2018-05-28 18:03:38][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-28 18:51:07][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-29 11:06:29][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-30 09:36:54][WARNING]：Not Found: /favicon.ico
+base.py[2018-05-30 10:29:43][WARNING]：Not Found: /favicon.ico
+exception.py[2018-05-30 10:29:46][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    hz5 = int(hz4 / (hz2 + hz3) * 100)  # 正确率
+ZeroDivisionError: division by zero
+exception.py[2018-05-30 10:31:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    hz5 = int(hz4 / (hz2 + hz3) * 100)  # 正确率
+ZeroDivisionError: division by zero
+exception.py[2018-05-30 11:40:09][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 994, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 11:43:10][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 994, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 12:18:10][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 708, in moni
+    zsds = int(rq.GET.get('zsds','100')) # 止损
+ValueError: invalid literal for int() with base 10: ''
+exception.py[2018-05-30 13:28:46][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 360, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 314, in get_zx_zt
+    for ind, name in enumerate(names)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 314, in <listcomp>
+    for ind, name in enumerate(names)
+KeyError: '蒙牛乳业'
+exception.py[2018-05-30 13:49:25][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 360, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 314, in get_zx_zt
+    for ind, name in enumerate(names)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 314, in <listcomp>
+    for ind, name in enumerate(names)
+KeyError: '中国海洋石油'
+exception.py[2018-05-30 15:49:32][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1005, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 15:53:57][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1005, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:02:40][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1013, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:05:04][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 862, in huice
+    if dates and ts and fa:
+NameError: name 'ts' is not defined
+exception.py[2018-05-30 18:17:38][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:17:50][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:19:10][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:19:20][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:22:25][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+exception.py[2018-05-30 18:23:15][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1024, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment

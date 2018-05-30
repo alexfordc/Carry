@@ -174,6 +174,7 @@ var $container = $('#works-container');
                             <!--<li class="no-border-top" id="zhutu2_msg"><a href="{% url 'zhutu2' %}">柱状图（点数折线图）</a></li>-->
                             <li class="no-border-top" id="zhexian_msg"><a href="{% url 'zhexian' %}">折线图</a></li>
                             <li class="no-border-top" id="zhexian2_msg"><a href="{% url 'zhexian' %}?s=1">折线图（慢而细）</a></li>
+                            <li class="no-border-top" ><a href="{% url 'zhutu_zhexian' %}">合 图</a></li>
                             <li class="no-border-top" id="kline_msg"><a href="{% url 'kline' %}">K线图</a></li>
                         </ul>
                     </li>
@@ -181,6 +182,7 @@ var $container = $('#works-container');
                     <ul>
                         <li class="no-border-top" id="tongji_msg"><a href="{% url 'tongji' %}">交易统计表</a></li>
                         <li class="no-border-top" id="moni_msg"><a href="{% url 'moni' %}">模拟测试表</a></li>
+                        <li class="no-border-top" ><a href="{% url 'moni_all' %}">方案荟萃</a></li>
                     </ul>
                     </li>
                     <li><a href="{% url 'index' %}">产品介绍</a>
@@ -207,7 +209,7 @@ var $container = $('#works-container');
     </header>
     <!--<div class="wrapper">-->
     <div class="palette" id="palette_colors">
-        <div class="palette_item_wrapper" style="position: relative;top:124px;left:8px;z-index:999;width:50px;height:50px;">
+        <div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">
             <div data-color="#e169c3" class="palette_color"></div>
             <div data-color="#b569e1" class="palette_color"></div>
             <div data-color="#7169e1" class="palette_color"></div>
@@ -272,7 +274,7 @@ var $container = $('#works-container');
                 </div>
                 <div class="input_lts-box">
                         <div class="input_lts" style="border:none;">
-                        <input type="text" maxlength="140" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
+                        <input type="text" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
                         </div>
                         <div class="action">
                             <!--<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">-->
@@ -379,7 +381,7 @@ _div_location(); //div定位
 var is_show = true;
 // 在特定页面不显示
 var is_show2=window.location.pathname;
-if(is_show2=='/zx/' || is_show2=='/zt/' || is_show2=='/hc/'){
+if(is_show2=='/zx/' || is_show2=='/zt/' || is_show2=='/ztzx/' || is_show2=='/hc/' || is_show2=='/moni/'){
     $('#spig').css("display","none");
 }
 

@@ -32,9 +32,12 @@ logging.basicConfig(
 # 昨天收盘指数价格
 YESTERDAT_PRICE = (None, None)
 # 权重依次最大的股
-WEIGHT = ('腾讯控股', '汇丰控股', '建设银行', '友邦保险', '工商银行', '中国移动', '中国平安', '中国银行', '香港交易所', '长和')
+WEIGHT_BASE = ('腾讯控股', '汇丰控股', '建设银行', '友邦保险', '工商银行', '中国移动', '中国平安', '中国银行', '香港交易所', '长和')
+# 影响最大的股
+WEIGHT = ['腾讯控股', '汇丰控股', '建设银行', '友邦保险', '工商银行', '中国移动', '中国平安', '中国银行', '香港交易所', '长和']
 # 颜色
-COLORS = ['#FF0000', '#00FF00', '#003300', '#FF6600', '#99CC33', '#663366', '#009966', '#0000FF', '#FF0080', '#00FFFF']
+COLORS = ['#FF0000', '#00FF00', '#003300', '#FF6600', '#FFD700', '#663366', '#066606', '#0000FF', '#FF0080', '#00FFFF',
+          '#2E8B57', '#B8860B', '#CD5C5C', '#006400']
 
 # 代码：名称
 CODE_NAME = {'hk00700': '腾讯控股', 'hk00005': '汇丰控股', 'hk00939': '建设银行', 'hk01299': '友邦保险', 'hk01398': '工商银行',
@@ -101,29 +104,34 @@ SQL = {
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
     'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
-    "order_detail":"SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+    "order_detail": "SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
+
 
 def get_date():
     ''' 返回当前日期，格式为：2018-04-04 '''
     return str(datetime.datetime.now())[:10]
 
+
 def get_ud():
     return config['U']['ud']
 
+
 def get_conn(dataName=None):
     ''' 返回数据库连接 '''
-    if dataName==None:
+    if dataName == None:
         return pymysql.connect(user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
-                           charset='utf8')
+                               charset='utf8')
     return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
                            charset='utf8')
 
-def getSqlData(conn,sql):
+
+def getSqlData(conn, sql):
     ''' 从数据库查询数据 '''
-    cur=conn.cursor()
+    cur = conn.cursor()
     cur.execute(sql)
     return cur.fetchall()
+
 
 def closeConn(conn):
     ''' 关闭数据库 '''
@@ -132,10 +140,34 @@ def closeConn(conn):
     except:
         pass
 
+
 def get_tcp():
     ''' 返回IP地址 '''
-    return '192.168.2.204'#config['U']['hs']
+    return '192.168.2.204'  # config['U']['hs']
 
+
+def dtf(d):
+    """ 日期时间格式化 """
+    if isinstance(d, str):
+        d = d.strip()
+        if len(d) == 10:
+            d = datetime.datetime.strptime(d, '%Y-%m-%d')
+        else:
+            d = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
+        return d
+    elif isinstance(d, datetime.datetime):
+        d = datetime.datetime.strftime(d, '%Y-%m-%d %H:%M:%S')
+        return d
+    elif isinstance(d,datetime.date):
+        d = datetime.datetime.strftime(d, '%Y-%m-%d')
+        return d
+
+def format_int(*args):
+    """  字符串批量转换为整数 """
+    if isinstance(args,tuple) and len(args) == 1:
+        return int(args[0])
+    else:
+        return (int(i) for i in args)
 
 def get_data(url=None):
     '''获取恒生指数成分股数据，格式为：
@@ -154,6 +186,10 @@ def get_data(url=None):
     result.sort()
     result.reverse()
 
+    global WEIGHT
+    resSize = len(result)
+    WEIGHT = [result[i][1] for i in range(resSize) if (result[i][
+                                                           1] in WEIGHT_BASE or 2 > i or i >= resSize - 2)]  # WEIGHT_BASE + [result[i][1] for i in range(-2, 2)]
     return result, s1
 
 
@@ -199,15 +235,15 @@ def get_min_history():
 
 
 def get_history(conn):
-    '''返回数据格式为：(点数，名称，时间)...'''
+    '''返回数据格式为：(点数，时间)...'''
     cur = conn.cursor()
-    cur.execute(SQL['get_history'].format(WEIGHT))
+    cur.execute(SQL['get_history'].format(tuple(WEIGHT)))
     result = cur.fetchall()
     conn.commit()
     conn.close()
     result1 = {}
     for name in WEIGHT:
-        result1[name] = [[i[0], i[2]] for i in result if i[1] == name]
+        result1[name] = [[i[0], str(i[2])[-8:-3].replace(':', '')] for i in result if i[1] == name]
     return result1
 
 
@@ -272,6 +308,11 @@ def get_price():
         jjres.append((round(gx), result[i][2], CODE_NAME[i]))
     jjres.sort()
     jjres.reverse()
+
+    global WEIGHT
+    resSize = len(jjres)
+    WEIGHT = [jjres[i][-1] for i in range(resSize) if (jjres[i][
+                                                           -1] in WEIGHT_BASE or 2 > i or i >= resSize - 2)]  # WEIGHT_BASE + [jjres[i][-1] for i in range(-2,2)]
     return jjres, times
 
 
@@ -279,9 +320,9 @@ IDS = []  # 初始化账号列表
 
 
 def get_idName(cur=None):
-    conn=get_conn('carry_investment')
-    sql=SQL['get_idName']
-    id_name = getSqlData(conn,sql)
+    conn = get_conn('carry_investment')
+    sql = SQL['get_idName']
+    id_name = getSqlData(conn, sql)
     conn.close()
     id_name = {i: j for i, j in id_name}
     return id_name
@@ -310,24 +351,27 @@ def tongji():
     IDS = [i[0] for i in results]
     return results
 
-def get_date_add_day(dates,ts):
+
+def get_date_add_day(dates, ts):
     asd = dates.split('-')
     asd = datetime.datetime(int(asd[0]), int(asd[1]), int(asd[2])) + datetime.timedelta(days=ts)
     return str(asd)[:10]
 
-def order_detail(dates,ts):
+
+def order_detail(dates, ts):
     global IDS
-    conn=get_conn('carry_investment')
-    dates_end=get_date_add_day(dates,ts)
-    sql=SQL['order_detail']
-    sql=sql.format(dates,dates_end)
-    data=getSqlData(conn,sql)
+    conn = get_conn('carry_investment')
+    dates_end = get_date_add_day(dates, ts)
+    sql = SQL['order_detail']
+    sql = sql.format(dates, dates_end)
+    data = getSqlData(conn, sql)
     conn.commit()
     conn.close()
     IDS = set([i[0] for i in data])
     return data
 
-def calculate_earn(dates,ts):
+
+def calculate_earn(dates, ts):
     '''计算所赚。参数：‘2018-01-01’
     返回值：[[开仓时间，单号，ID，平仓时间，价格，开仓0平仓1，做多0做空1，赚得金额，正向跟单，反向跟单]...]'''
     global IDS
@@ -335,7 +379,7 @@ def calculate_earn(dates,ts):
     cur = conn.cursor()
     sql = SQL['calculate_earn']
     if dates:
-        dates1 = get_date_add_day(dates,ts)
+        dates1 = get_date_add_day(dates, ts)
         sql += " and F.`datetime`>'{}' and F.`datetime`<'{}'".format(dates, dates1)
     cur.execute(sql)
     com = cur.fetchall()
@@ -343,15 +387,15 @@ def calculate_earn(dates,ts):
     conn.close()
     result = []
     ticket = [i[1] for i in com]
-    dt_tk = [(datetime.datetime.strftime(i[0], '%y-%m-%d'), i[1]) for i in com]
+    dt_tk = [(dtf(i[0]), i[1]) for i in com]
     ids = []
     for inz, i in enumerate(com):
         if ticket.count(i[1]) == 2:
-            in1 = dt_tk.index((datetime.datetime.strftime(i[0], '%y-%m-%d'), i[1]))
+            in1 = dt_tk.index((dtf(i[0]), i[1]))
             if in1 < inz:
                 continue
             try:
-                in2 = dt_tk[in1 + 1:].index((datetime.datetime.strftime(i[0], '%y-%m-%d'), i[1])) + in1 + 1
+                in2 = dt_tk[in1 + 1:].index((dtf(i[0]), i[1])) + in1 + 1
             except:
                 continue
             if com[in1][6] == 0:  # longshort为0则是做多
@@ -372,7 +416,7 @@ class Limit_up:
         '''初始化，从数据库更新所有股票代码'''
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
         self.this_up = False
-        self.chineseName={} # 中文名称
+        self.chineseName = {}  # 中文名称
         try:
             self.conn = get_conn('stock_data')
             cur = self.conn.cursor()
@@ -390,7 +434,8 @@ class Limit_up:
             self.conn.close()
             # 获取股票代码
             codes = [i for i in codes if i[1][:3] in ('600', '000', '300', '601', '002', '603')]
-            self.chineseName={i[0]+i[1]:i[2] for i in codes if i[1][:3] in ('600', '000', '300', '601', '002', '603')}
+            self.chineseName = {i[0] + i[1]: i[2] for i in codes if
+                                i[1][:3] in ('600', '000', '300', '601', '002', '603')}
 
             su = 1
             with open('log\\codes_gp.txt', 'w') as f:
@@ -406,7 +451,7 @@ class Limit_up:
             times = time.localtime(os.path.getmtime('log\\dict_data.txt'))
             this_t = time.localtime()
             if this_t.tm_mday == times.tm_mday and (
-                                1502 > int(str(this_t[3]) + str(this_t[4])) > 901 or times.tm_hour >= 15):
+                    1502 > int(str(this_t[3]) + str(this_t[4])) > 901 or times.tm_hour >= 15):
                 self.this_up = True
         self.codes = []
         try:
@@ -414,7 +459,6 @@ class Limit_up:
                 self.codes = f.readlines()
         except Exception as exc:
             logging.error(exc)
-
 
     def f_date(self, s_date):
         '''格式化日期时间，格式：20180103151743'''
@@ -429,7 +473,7 @@ class Limit_up:
         '''获取指定股票的开盘收盘数据，返回格式：
         dict{'code':[2.46, 2.54, 2.48, 2.41, 2.36, 2.34, 2.33, 2.35, 2.35, 2.47, 2.47, 2.38, 2.27, 2.29, 2.29, 2.29, 2.29, 2.19],...}'''
 
-        with open('log\\dict_data.txt') as f,open('log\\dict_name.txt') as f2:
+        with open('log\\dict_data.txt') as f, open('log\\dict_name.txt') as f2:
             dict_data = json.loads(f.read())
             dict_name = json.loads(f2.read())
 
@@ -449,8 +493,8 @@ class Limit_up:
                          float(i[5]),  # 开盘价
                          float(i[3]),  # 收盘价
                          i[30][:8],  # 时间20180314
-                        ] for i in html
-                ]
+                         ] for i in html
+                        ]
                 last_date = dict_data.get('last_date')
                 for ht in html:
                     d = dict_data.get(ht[0])
@@ -471,7 +515,7 @@ class Limit_up:
                     dict_data['last_date'] = ht[4]
             except Exception as exc:
                 continue
-        with open('log\\dict_data.txt', 'w') as f,open('log\\dict_name.txt', 'w') as f2:
+        with open('log\\dict_data.txt', 'w') as f, open('log\\dict_name.txt', 'w') as f2:
             # 合并2个字典并保存
             f.write(json.dumps(dict(dict_data, **dict_data1)))
             f2.write(json.dumps(dict_name))
@@ -490,7 +534,7 @@ class Limit_up:
                 return jtzt
         codes = self.codes
         rou = lambda f: round((f * 1.1) - f, 2)
-        #while 1:
+        # while 1:
         stock_up = []
         for code in codes:
             try:
@@ -512,7 +556,7 @@ class Limit_up:
                      self.f_date(i[30]),  # 涨停时间
                      1 if float(i[31]) >= rou(float(i[4])) else 0,  # 当前是否涨停(1是，0否)
                      self.cdate  # 创建的日期
-                    ] for i in html
+                     ] for i in html
                     if round((float(i[33]) - float(i[4])) / float(i[4]), 2) >= 0.1]  # 计算是否涨停
             stock_up += html
         statistics = [[i[0], i[1], i[10]] for i in stock_up]
@@ -520,10 +564,10 @@ class Limit_up:
             f.write(json.dumps(statistics))
         return statistics
 
-    def yanzen(self,rq_date):
+    def yanzen(self, rq_date):
         jyzt = {}
         mx = {}
-        #mx_n={}
+        # mx_n={}
         with open('log\\codes_gp.txt') as f:
             codes = f.read()
         codes = codes.split(',')[:-1]
@@ -532,18 +576,18 @@ class Limit_up:
         except Exception as exc:
             logging.error(exc)
             return
-        computer_name=socket.gethostname()
-        if computer_name!='doc':
-            file_index=r'E:\黄海军\资料\Carry\mysite\jyzt_gp.txt'
+        computer_name = socket.gethostname()
+        if computer_name != 'doc':
+            file_index = r'E:\黄海军\资料\Carry\mysite\jyzt_gp.txt'
         else:
-            file_index=r'D:\tools\Tools\EveryDay\jyzt_gp.txt'
+            file_index = r'D:\tools\Tools\EveryDay\jyzt_gp.txt'
         if os.path.isfile(file_index):
             times = time.localtime(os.path.getmtime(file_index))
             this_t = time.localtime()
             with open(file_index, 'r') as f:
                 jyzt = json.loads(f.read())
-            jyzt_l=jyzt.get(rq_date,[])
-            if jyzt_l or (this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday):
+            jyzt_l = jyzt.get(rq_date, [])
+            if jyzt_l or (this_t.tm_hour < 15 or this_t.tm_mday == times.tm_mday):
                 jyzt_l = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt_l]
                 return jyzt_l
 
@@ -552,14 +596,14 @@ class Limit_up:
             this_t = time.localtime()
             with open('log\\jyzt_gp.txt', 'r') as f:
                 jyzt = json.loads(f.read())
-            jyzt_l=jyzt.get(rq_date,[])
-            if jyzt_l or (this_t.tm_hour<15 or this_t.tm_mday == times.tm_mday):
+            jyzt_l = jyzt.get(rq_date, [])
+            if jyzt_l or (this_t.tm_hour < 15 or this_t.tm_mday == times.tm_mday):
                 jyzt_l = [[i[0], dict_name.get(i[0]), i[1]] for i in jyzt_l]
                 return jyzt_l
         for m in os.listdir('log\\models'):
             if m[-2:] == '.m':
                 mx[m[:-2]] = joblib.load('log\\models\\' + m)
-                #mx_n[m[:-2]]=[]
+                # mx_n[m[:-2]]=[]
 
         for code in codes:
             data2 = data.get(code)
@@ -569,7 +613,7 @@ class Limit_up:
                 r = mx[i].predict([data2])
                 if r == 1:
                     jyzt[rq_date].append(code)
-                    #mx_n[i].append(code)
+                    # mx_n[i].append(code)
         jyzt = Counter(jyzt).most_common()
         jyzt = jyzt[:10]
         with open('log\\jyzt_gp.txt', 'w') as f:  # 保存
@@ -582,62 +626,71 @@ class Limit_up:
 
 class Zbjs(ZB):
     def __init__(self):
-        self.tab2_name='handle_min' #index_min
+        self.tab2_name = 'handle_min'  # index_min
         super(Zbjs, self).__init__()
 
-    def main(self,_ma=60):
+    def main(self, _ma=60):
         conn = get_conn('carry_investment')
-        sql = 'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(_ma)
+        sql = 'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(
+            _ma)
         data = getSqlData(conn, sql)
         dyn = self.dynamic_index(data)
         dyn.send(None)
-        req=None
-        param=1
+        req = None
+        param = 1
         while param:
-            param=yield req
-            req=dyn.send(param)
+            param = yield req
+            req = dyn.send(param)
         self.sendNone(dyn)
 
-    def get_hkHSI_date(self,conn,size=60,database=None):
+    def get_hkHSI_date(self, conn, size=60, database=None):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
-        if database!=None:
-            if database=='1':
-                tab_name='futures_min'
+        if database != None:
+            if database == '1':
+                tab_name = 'futures_min'
             else:
                 tab_name = self.tab2_name
-            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(tab_name)
-            data=getSqlData(conn,sql)
+            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
+                tab_name)
+            data = getSqlData(conn, sql)
             data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
             return data
         data = requests.get(
-            'http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s'%size).text
+            'http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s' % size).text
         data = json.loads(data.split('=')[1])
         data = data['data']['hkHSI']['day']
-        data = {de[0]:[float(de[2])-float(de[1]),float(de[3])-float(de[4])] for de in data}
+        data = {de[0]: [float(de[2]) - float(de[1]), float(de[3]) - float(de[4])] for de in data}
         return data
 
-    def get_data(self,conn,dates,dates2,database):
+    def get_data(self, conn, dates, dates2, database,code):
         ''' 从指定数据库获取指定日期的数据 '''
-        if database=='1':
-            sql="SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+        if database == '1':
+            sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE prodcode='{}' AND datetime>='{}' AND datetime<='{}'".format(
+                code, dates, dates2)
         else:
-            #sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
-            sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>'{}' AND datetime<'{}'".format(self.tab2_name, dates, dates2)
-        return getSqlData(conn,sql)
+            # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
+            sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
+                self.tab2_name, dates, dates2)
+        return getSqlData(conn, sql)
 
-    def main2(self,_ma,_dates,_ts,_fa,database):
+    def main2(self, _ma, _dates, end_date, _fa, database, reverse=False,param=None):
+        _res, _huizong, _first_time = {},{},[]
         conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
-        dates2 = str(datetime.datetime.strptime(_dates, '%Y-%m-%d') + datetime.timedelta(days=_ts))[:10]
-        da = self.get_data(conn, _dates, dates2, database)
-        self.zdata=da
-        res, first_time = self.trd(_fa)
-        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-                   'avg_day': 0, 'least2': 0, 'most2': 0}
-        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
-        closeConn(conn)  # 关闭数据库连接
-        all_price = []
-        try:
-            for i in res:
+        prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
+
+        for code in prodcode:
+            da = self.get_data(conn, _dates, end_date, database,code[0])
+            self.zdata = da
+            res, first_time = self.trd(_fa, reverse=reverse, param=param)
+            huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                       'avg_day': 0, 'least2': 0, 'most2': 0}
+            hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+            all_price = []
+            res_key = list(res.keys())
+            for i in res_key:
+                if not res[i]['datetimes']:
+                    del res[i]
+                    continue
                 mony = res[i]['mony']
                 huizong['yk'] += mony
                 huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
@@ -647,65 +700,131 @@ class Zbjs(ZB):
                     'most']
                 mtsl = [j[3] for j in res[i]['datetimes']]
                 all_price += mtsl
+                if not res[i].get('ylds'):
+                    res[i]['ylds'] = 0
                 if mtsl:
-                    res[i]['shenglv'] = round(len([sl for sl in mtsl if sl > 0]) / len(mtsl) * 100,2)  # 每天胜率
+                    ylds = len([sl for sl in mtsl if sl > 0])
+                    res[i]['ylds'] += ylds  # 盈利单数
+                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
                 else:
                     res[i]['shenglv'] = 0
-        except Exception as exc:
-            print(exc)
-        huizong['shenglv'] += len([p for p in all_price if p > 0])
-        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
-        huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
-        res_size = len(res)
-        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-        huizong['least2'] = min(all_price)
-        huizong['most2'] = max(all_price)
 
-        # if dt3:
-        #     self.macd_to_sql(dt3) # 存储到数据库
+            huizong['shenglv'] += len([p for p in all_price if p > 0])
+            huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+            huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+            res_size = len(res)
+            huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+            huizong['least2'] = min(all_price)
+            huizong['most2'] = max(all_price)
 
-        return res, huizong,first_time
+            _res = dict(res,**_res)
+            _huizong = dict(huizong,**_huizong)
+            _first_time += first_time
 
-    def get_future(self):
+        closeConn(conn)  # 关闭数据库连接
+        return _res, _huizong, _first_time
+
+    def main_all(self, _dates, end_date, database, reverse=True,param=None):
+        _res, _huizong = {}, {}
+        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
+        conn.commit()
+        hk = self.get_hkHSI_date(conn=conn)  # 当日波动
+
+        for code in prodcode:
+            da = self.get_data(conn, _dates, end_date, database,code[0])
+            self.zdata = da
+            res, first_time = self.trd_all(reverse=reverse, param=param)
+            huizong_all = {}
+            res_key = list(res.keys())
+            for fa in res_key:
+                huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                           'avg_day': 0, 'least2': 0, 'most2': 0, 'first_time': None}
+                all_price = []
+                res_fa_key = list(res[fa].keys())
+                for i in res_fa_key:
+                    if not res[fa][i]['datetimes']:
+                        del res[fa][i]
+                        continue
+                    bd = hk.get(i, [0, 0])
+                    mony = res[fa][i]['mony']
+                    huizong['yk'] += mony
+                    huizong['zl'] += (res[fa][i]['duo'] + res[fa][i]['kong'])
+                    huizong['least'] = [i, mony, bd[0], bd[1]] if mony < huizong['least'][1] else huizong[
+                        'least']
+                    huizong['most'] = [i, mony, bd[0], bd[1]] if mony > huizong['most'][1] else huizong[
+                        'most']
+                    mtsl = [j[3] for j in res[fa][i]['datetimes']]
+                    all_price += mtsl
+                    if not res[fa][i].get('ylds'):
+                        res[fa][i]['ylds'] = 0
+                    if mtsl:
+                        ylds = len([sl for sl in mtsl if sl > 0])
+                        res[fa][i]['ylds'] += ylds  # 盈利单数
+                        res[fa][i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+                    else:
+                        res[fa][i]['shenglv'] = 0
+                huizong['shenglv'] += len([p for p in all_price if p > 0])
+                huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+                huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+                res_size = len(res[fa])
+                huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+                huizong['least2'] = min(all_price) if all_price else 0  # 亏损最多的一单
+                huizong['most2'] = max(all_price) if all_price else 0  # 盈利最多的一单
+                huizong['first_time'] = first_time[fa] if first_time else None  # 未平仓的单
+                huizong_all[fa] = huizong.copy()
+            _res = dict(res, **_res)
+            _huizong = dict(huizong_all, **_huizong)
+
+        closeConn(conn)  # 关闭数据库连接
+        return _res, _huizong
+
+    def get_future(self, this_date):
         ''' 计算日线数据 '''
+        dd = dtf(this_date)
+        size = datetime.datetime.now() - dd
+        size = size.days + 8
         data = requests.get(
-            "http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,8").text
+            "http://web.ifzq.gtimg.cn/appstock/app/kline/kline?_var=kline_dayqfq&param=hkHSI,day,,,%s" % size).text
         data = data.split("=")[1]
         data = json.loads(data)
         data = data["data"]["hkHSI"]["day"]
-        data2 = [[i[1], i[2], i[3], i[4]] for i in data]
+        data2 = [[i[1], i[2], i[3], i[4]] for i in data if i[0] <= this_date]
+        gs = float(data2[-1][0]) - float(data2[-2][1])
+        zs = float(data2[-1][1]) - float(data2[-1][0])
         data = []
+        data2.pop()
         for d in data2[-6:]:
             data += [d[0], d[1], d[2], d[3]]
-        gd=0
-        zd=0
+        gd = 0
+        zd = 0
         for m in os.listdir('log\\svm_gd'):
             svm = joblib.load('log\\svm_gd\\' + m)
-            jg=svm.predict([data])[0]
-            gd+=1 if jg=="1" else 0
+            jg = svm.predict([data])[0]
+            gd += 1 if jg == "1" else 0
         for m in os.listdir('log\\svm_zd'):
             svm = joblib.load('log\\svm_zd\\' + m)
-            jg=svm.predict([data])[0]
-            zd+=1 if jg=="1" else 0
+            jg = svm.predict([data])[0]
+            zd += 1 if jg == "1" else 0
 
-        return gd,zd
+        return gd, zd, gs, zs
 
 
 class RedisHelper:
     def __init__(self):
         self.__conn = redis.Redis(host='localhost')
-        self.chan_pub= 'test'
-        self.is_run=True
+        self.chan_pub = 'test'
+        self.is_run = True
 
-    #发送消息
-    def public(self,msg):
-        self.__conn.publish(self.chan_pub,msg)
+    # 发送消息
+    def public(self, msg):
+        self.__conn.publish(self.chan_pub, msg)
         return True
 
-    def main(self):   
+    def main(self):
         while self.is_run:
-            dt=str(datetime.datetime.now())
-            self.public(dt[:19]) # 发布
+            dt = str(datetime.datetime.now())
+            self.public(dt[:19])  # 发布
             print(dt)
             time.sleep(1)
             break

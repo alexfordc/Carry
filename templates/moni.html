@@ -13,12 +13,17 @@ function closeLogin(id){
    document.getElementById(id).style.display="none";
 }
 function huice(){
-    var dates=document.getElementById("datetimes").value;
-    var ts=document.getElementById("rq_ts").value;
-    var fa=document.getElementById("select_fa").value;
-    var database=document.getElementById("select_db").value;
+    var dates = document.getElementById("datetimes").value;
+    var end_date = document.getElementById("end_date").value;
+    var fa = document.getElementById("select_fa").value;
+    var database = document.getElementById("select_db").value;
+    var zsds = document.getElementById("zsds").value;
+    var ydzs = document.getElementById("ydzs").value;
+    var zyds = document.getElementById("zyds").value;
+    var cqdc = document.getElementById("cqdc").value;
     //location.href="{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database;
-    window.open("{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database);
+    // zsds, ydzs, zyds, cqdc
+    window.open("{% url 'huice' %}?dates="+dates+"&end_date="+end_date+"&fa="+fa+"&database="+database+"&zsds="+zsds+"&ydzs="+ydzs+"&zyds="+zyds+"&cqdc="+cqdc);
 }
 </script>
 {% endblock %}
@@ -43,31 +48,38 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
 <a href="javascript:closeLogin('beizhu');"><h2 style="background-color:green;">确 定</h2></a></div>
 </div>
     <div align="center">
-    <form action="" method="POST">
-        {% csrf_token %}
-        开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/>&nbsp;&nbsp;
-        交易天数：<input type="number" name="ts" id="rq_ts" value="{{ ts }}"/> &nbsp;
-        方案：<select name="fa" id="select_fa">
-        {% for i in fas %}
-        {% if fa == i %}
-        <option value={{i}} selected>方案{{i}}</option>
-        {% else %}
-        <option value={{i}} >方案{{i}}</option>
-        {% endif %}
-        {% endfor %}
-        </select> &nbsp;
-        数据库：<select name="database" id="select_db">
-        {% if database == '1' %}
-        <option value="1" >数据库1</option>
-        <option value="2">数据库2</option>
-        {% else %}
-        <option value="2">数据库2</option>
-        <option value="1" >数据库1</option>
-        {% endif %}
-    </select> &nbsp;
-                <input type="submit" value="模拟测试" style="background-color:#ff0323;"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" value="方案备注" onclick="openLogin('beizhu')"/>
+    <form action="" method="GET">
+        <table width="950">
+            <tr><td>止损点数：<input type="number" style="width:100px;" min="10" name="zsds" value="{{ zsds }}" id="zsds"></td>
+                <td>移动止损：<input type="number" style="width:100px;" min="10" name="ydzs" value="{{ ydzs }}" id="ydzs"></td>
+                <td>止盈：<input type="number"  style="width:100px;" min="10" name="zyds" value="{{ zyds }}" id="zyds"></td>
+                <td>点差：<input type="number"  style="width:100px;" min="0" name="cqdc" value="{{ cqdc }}" id="cqdc"></td>
+                <td>数据库：<select name="database" id="select_db">
+            {% if database == '1' %}
+            <option value="1" >数据库1</option>
+            <option value="2">数据库2</option>
+            {% else %}
+            <option value="2">数据库2</option>
+            <option value="1" >数据库1</option>
+            {% endif %}
+            </select></td></tr>
+            <tr><td>开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/></td>
+                <td>结束时间：<input type="date" name="end_date" id="end_date" value="{{ end_date }}"/></td>
+                <td>方案：<select name="fa" id="select_fa">
+                    {% for i in fas %}
+                    {% if fa == i %}
+                    <option value={{i}} selected>方案{{i}}</option>
+                    {% else %}
+                    <option value={{i}} >方案{{i}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    </select></td>
+                <td><input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="button" value="方案备注" onclick="openLogin('beizhu')"/></td>
+                <td><input type="submit" value="测试" style="background-color:#ff0323;width:50px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/></td>
+
+        </table>
     </form><br/>
         <table border="1" align="center">
             {% if huizong %}
@@ -86,7 +98,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     <table border="1" align="center">
     {% for v in res %}
         {% if forloop.first %}
-            <tr><th style="width:100px;">时间</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
+            <tr><th style="width:100px;">日期&nbsp;&nbsp;({{res|length}})天</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
                 <th>详细数据
                 <table border="1" style="width:650px;">
                         <tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>
