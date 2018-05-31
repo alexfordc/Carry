@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.externals import joblib
+import datetime
 
 
 class ZB(object):
@@ -29,7 +30,7 @@ class ZB(object):
     }
     def __init__(self):
         #self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
-        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'6':self.fa6,'7':self.fa7,'9':self.fa9,'10':self.fa10,'11':self.fa11}  # 执行方案 '8':self.fa8, '5':self.fa5,
+        self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4,'5':self.fa5,'6':self.fa6,'7':self.fa7,'9':self.fa9,'10':self.fa10,'11':self.fa11}  # 执行方案 '8':self.fa8, '5':self.fa5,
 
     @property
     def zdata(self):
@@ -297,6 +298,7 @@ class ZB(object):
         self.sendNone(data2)
 
     def fa1(self, zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2=zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -338,6 +340,7 @@ class ZB(object):
                     str_time1=str(datetimes)
                     is_d=1
                     first_time = [str_time1,'多' ,clo]
+                    zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9<=datetimes.hour<16:
                 tj_k+=1
                 if tj_k>2:
@@ -346,6 +349,7 @@ class ZB(object):
                     str_time2=str(datetimes)
                     is_k=-1
                     first_time = [str_time2, '空' ,clo]
+                    zsjg = clo-high-1 if zsjg2 >= -10 else zsjg
 
             if is_d==1:
                 high_zs = high - startMony_d
@@ -387,6 +391,7 @@ class ZB(object):
                     #     jg_k = clo
 
     def fa2(self, zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         startMony_d, startMony_k = 0, 0
         str_time1, str_time2 = '', ''
@@ -423,6 +428,7 @@ class ZB(object):
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str_time1, '多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and self.dt_kc(datetimes):
                 res[dates]['kong'] += 1
                 jg_k = clo
@@ -430,6 +436,7 @@ class ZB(object):
                 str_time2 = str(datetimes)
                 is_k = -1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
             if is_d == 1:
                 high_zs = high - startMony_d
                 if high_zs >= ydzs:
@@ -462,6 +469,7 @@ class ZB(object):
                     _zsjg_k = 0
 
     def fa3(self, zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -498,12 +506,14 @@ class ZB(object):
                 str_time1=str(datetimes)
                 is_d=1
                 first_time = [str_time1, '多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and self.dt_kc(datetimes):
                 jg_k=clo
                 startMony_k=clo
                 str_time2=str(datetimes)
                 is_k=-1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
 
             if is_d==1:
                 high_zs = high - startMony_d
@@ -542,6 +552,7 @@ class ZB(object):
                     first_time = []
 
     def fa4(self, zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -578,12 +589,14 @@ class ZB(object):
                 str_time1=str(datetimes)
                 is_d=1
                 first_time = [str_time1, '多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and self.dt_kc(datetimes):
                 res[dates]['kong'] += 1
                 startMony_k=clo
                 str_time2=str(datetimes)
                 is_k=-1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
             if is_d==1:
                 high_zs = high - startMony_d
                 if high_zs >= ydzs:
@@ -623,7 +636,7 @@ class ZB(object):
         res = {}
         first_time = []
         while 1:
-            _while, res, dt3, dates = yield res, first_time
+            _while, res, dt3, dates, qzpc = yield res, first_time
             if not _while:
                 break
             dt2 = dt3[-1]
@@ -663,7 +676,7 @@ class ZB(object):
                 is_k = -1
                 first_time = [str(datetimes), '空' ,clo]
 
-            if is_d == 1 and (pctj_d or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg):
+            if is_d == 1 and (pctj_d or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg) or qzpc:
                 res[dates]['duo'] += 1
                 price=zsjg if low - startMony_d - cqdc < zsjg else clo - startMony_d - cqdc
                 res[dates]['mony'] += price
@@ -671,7 +684,7 @@ class ZB(object):
                 is_d = 0
                 first_time = []
 
-            elif is_k == -1 and (pctj_k or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg):
+            elif is_k == -1 and (pctj_k or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg) or qzpc:
                 res[dates]['kong'] += 1
                 price=zsjg if startMony_k - high - cqdc < zsjg else startMony_k - clo - cqdc
                 res[dates]['mony'] += price
@@ -680,6 +693,7 @@ class ZB(object):
                 first_time = []
 
     def fa6(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -716,12 +730,14 @@ class ZB(object):
                 str_time1=str(datetimes)
                 is_d=1
                 first_time = [str_time1,'多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9<datetimes.hour<16:
                 jg_k=clo
                 startMony_k=clo
                 str_time2=str(datetimes)
                 is_k=-1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
 
             if is_d==1:
                 high_zs = high - startMony_d
@@ -758,6 +774,7 @@ class ZB(object):
                     first_time = []
 
     def fa7(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
         str_time1, str_time2 = '', ''
@@ -797,6 +814,7 @@ class ZB(object):
                 str_time1=str(datetimes)
                 is_d=1
                 first_time = [str_time1, '多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and not this_date and not res[dates]['mony']<-200:
                 res[dates]['kong'] += 1
                 jg_k=clo
@@ -804,6 +822,7 @@ class ZB(object):
                 str_time2=str(datetimes)
                 is_k=-1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
 
             if is_d==1 and (pctj_d or low-startMony_d-cqdc<zsjg or this_date) or qzpc:
                 price=zsjg if low-startMony_d-cqdc<zsjg else clo - startMony_d - cqdc
@@ -916,6 +935,7 @@ class ZB(object):
                 first_time = []
 
     def fa9(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         startMony_d, startMony_k = 0, 0
         str_time1, str_time2 = '', ''
@@ -966,12 +986,14 @@ class ZB(object):
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str_time1, '多' ,clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
 
             elif kctj_k and is_dk and 9 <= datetimes.hour < 16:
                 startMony_k = clo
                 str_time2 = str(datetimes)
                 is_k = -1
                 first_time = [str_time2, '空' ,clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
 
             if is_d == 1:
                 high_zs = high - startMony_d
@@ -1009,6 +1031,7 @@ class ZB(object):
 
 
     def fa10(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -1047,6 +1070,7 @@ class ZB(object):
                 is_d = 1
                 first_time = [str_time1, '多', clo]
                 sb = reg
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             # elif kctj_k and mul < -1.5 and is_dk and 9 <= datetimes.hour < 16:
             #     startMony_k = clo
             #     str_time2 = str(datetimes)
@@ -1084,6 +1108,7 @@ class ZB(object):
             #     count = 0
 
     def fa11(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
+        zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
         jg_d, jg_k = 0, 0
         startMony_d, startMony_k = 0, 0
@@ -1128,6 +1153,7 @@ class ZB(object):
                 is_k = -1
                 first_time = [str_time2, '空', clo]
                 sb = reg
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             if not is_dk and sb != reg and abs(macd)>5:
                 count += 1
                 sb = reg
@@ -1172,6 +1198,7 @@ class ZB(object):
             fa.send(None)
         else:
             return
+        is_date = str(datetime.datetime.now())[:15]
         for df2 in da:
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates=str(df2[0])[:10]
@@ -1181,7 +1208,7 @@ class ZB(object):
             datetimes=dt3[-1]['datetimes']
             if _fa!="7" and ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
                 continue
-            qzpc = True if df2 == da[-1] else False
+            qzpc = True if (df2 == da[-1] and str(df2[0])[:15]!=is_date) else False
             res,first_time=fa.send((True,res,dt3,dates,qzpc))
 
         # sss=[]
@@ -1210,6 +1237,7 @@ class ZB(object):
                 res[k] = {}
         else:
             return
+        is_date = str(datetime.datetime.now())[:15]
         for df2 in da:
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates = str(df2[0])[:10]
@@ -1220,7 +1248,7 @@ class ZB(object):
                     res[fa][dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
                 if fa != "7" and ((datetimes.hour == 16 and datetimes.minute > 30) or datetimes.hour > 16 or datetimes.hour < 9):
                     continue
-                qzpc = True if df2 == da[-1] else False
+                qzpc = True if (df2 == da[-1] and str(df2[0])[:15] != is_date) else False
                 res[fa], first_time[fa] = fas[fa].send((True, res[fa], dt3, dates, qzpc))
         # sss=[]
         # for i in res:

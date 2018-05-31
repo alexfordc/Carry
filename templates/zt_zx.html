@@ -1,7 +1,14 @@
 
 {% extends 'base/base.html' %}
 {% block title %}柱状图{% endblock %}
-{% block script %}{% endblock %}
+{% block script %}
+<style>
+.zt_zx_label{margin:10px 20px 0 0;display:inline-block}
+.zt_zx_radio{display:none}
+.zt_zx_radioInput{background-color:#fff;border:1px solid rgba(0,0,0,0.15);border-radius:100%;display:inline-block;height:16px;margin-right:10px;margin-top:-1px;vertical-align:middle;width:16px;line-height:1}
+.zt_zx_radio:checked + .zt_zx_radioInput:after{background-color:#57ad68;border-radius:100%;content:"";display:inline-block;height:12px;margin:1.5px;width:12px}
+</style>
+{% endblock %}
 {% block center_cen %}
     {% load staticfiles %}
     <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
@@ -9,22 +16,31 @@
 
 <div align="center">
     <form action="#" method="get">
-        <label for="radio1">折线图1：</label>
-        <input type="radio" id="radio1" name="zxxz" value="1" onclick="javascript:radio_xz(this.value)" checked>&nbsp;&nbsp;&nbsp;
-        <label for="radio2">折线图2：</label>
-        <input type="radio" id="radio2" name="zxxz" value="2" onclick="javascript:radio_xz(this.value)">
+        <label class="zt_zx_label">
+        <input type="radio" id="radio1" class="zt_zx_radio" name="zxxz" value="1" onclick="javascript:radio_xz(this.value)" checked>&nbsp;&nbsp;&nbsp;
+        <span class="zt_zx_radioInput"></span>折线图1：</label>
+        <label class="zt_zx_label">
+        <input type="radio" id="radio2" class="zt_zx_radio" name="zxxz" value="2" onclick="javascript:radio_xz(this.value)">&nbsp;&nbsp;&nbsp;
+            <span class="zt_zx_radioInput"></span>折线图2：</label>
+        <input type="button" onclick="javascript:flush()" value="刷新"
+               style="background: gold;
+                        border: none;
+                        border-radius: 50%;
+                        width: 60px;
+                        height: 30px;cursor:pointer;">
     </form>
 </div><br/>
 <div id="main_zx" style="width: auto;height: 600px;" align="center"></div>
 <div id="main_zt" style="width: auto;height: 600px;" align="center"></div>
     <script type="text/javascript">
+
 var url = '{% url 'zhutu_zhexian_ajax' %}';
 
     var myChart_zt = echarts.init(document.getElementById('main_zt'));
     var myChart_zx = echarts.init(document.getElementById('main_zx'));
     var is_tm = false;  // 是否清除缓存
     // 显示标题，图例和空的坐标轴
-
+function init_tx(){
     myChart_zt.setOption({
         //backgroundColor:'#fdfdfd', // 背景颜色
         color : ["red"],  //"#26aa1b", "#f9873a"
@@ -61,7 +77,7 @@ var url = '{% url 'zhutu_zhexian_ajax' %}';
             }
         }
     });
-
+}
     //myChart_zt.showLoading();    //数据加载完之前先显示一段简单的loading动画
 function loadOneColumn() {
     $.ajax({
@@ -139,6 +155,7 @@ function loadOneColumn() {
     //myChart_zt.clear();  // 清除柱状图缓存
     if(is_tm) myChart_zx.clear(); // 清除折线图缓存
 }
+init_tx();
 loadOneColumn();
 function radio_xz(value){
     if(value == "1"){
@@ -150,6 +167,13 @@ function radio_xz(value){
         loadOneColumn();
     }
 }
+function flush(){
+    myChart_zt.clear();  // 清除柱状图缓存
+    myChart_zx.clear(); // 清除折线图缓存
+    init_tx();
+    loadOneColumn();
+}
+
 var t=setInterval("loadOneColumn()",10000);
 </script></br></br></br></br></br></br></br></br></br></br>
 

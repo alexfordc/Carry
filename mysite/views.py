@@ -353,7 +353,7 @@ def zhutu_zhexian(rq):
 def zhutu_zhexian_ajax(rq):
     status = rq.GET.get('s')
     tm = time.localtime()
-    tm = (tm.tm_min%2 == 0 and tm.tm_sec > 45) # 两分钟清除折线图缓存一次
+    tm = tm.tm_sec > 45 # 每分钟清除折线图缓存一次
     if status and status is not '1':
         return redirect('index')
     if rq.method == 'GET' and rq.is_ajax():
@@ -731,6 +731,75 @@ def moni(rq):
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
+                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+
+def newMoni(rq):
+    dates = rq.GET.get('dates')
+    end_date = rq.GET.get('end_date')
+    fa = rq.GET.get('fa')
+    database = rq.GET.get('database', '1')
+    reverse = rq.GET.get('reverse')
+    zsds = rq.GET.get('zsds') # 止损
+    ydzs = rq.GET.get('ydzs') # 移动止损
+    zyds = rq.GET.get('zyds') # 止盈
+    cqdc = rq.GET.get('cqdc')   # 点差
+    # zsds, ydzs, zyds, cqdc
+    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (100,80,200,6)
+    reverse = True if reverse else False
+    # duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
+    #duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
+    duo_macd = rq.GET.get("duo_macd")
+    duo_avg = rq.GET.get("duo_avg")
+    duo_yidong = rq.GET.get("duo_yidong")
+    duo_chonghes = rq.GET.get("duo_chonghes")
+    duo_chonghed = rq.GET.get("duo_chonghed")
+    kong_macd = rq.GET.get("kong_macd")
+    kong_avg = rq.GET.get("kong_avg")
+    kong_yidong = rq.GET.get("kong_yidong")
+    kong_chonghes = rq.GET.get("kong_chonghes")
+    kong_chonghed = rq.GET.get("kong_chonghed")
+    pdd_macd = rq.GET.get("pdd_macd")
+    pdd_avg = rq.GET.get("pdd_avg")
+    pdd_yidong = rq.GET.get("pdd_yidong")
+    pdd_chonghes = rq.GET.get("pdd_chonghes")
+    pdd_chonghed = rq.GET.get("pdd_chonghed")
+    pkd_macd = rq.GET.get("pkd_macd")
+    pkd_avg = rq.GET.get("pkd_avg")
+    pkd_yidong = rq.GET.get("pkd_yidong")
+    pkd_chonghes = rq.GET.get("pkd_chonghes")
+    pkd_chonghed = rq.GET.get("pkd_chonghed")
+
+    zbjs = HSD.Zbjs()
+    ma = 60
+    if dates and end_date and fa:
+        try:
+            param = {'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc}
+            res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
+                                                  reverse=reverse,param=param)
+            keys = sorted(res.keys())
+            keys.reverse()
+            res = [dict(res[k], **{'time': k}) for k in keys]
+            fa_doc = zbjs.fa_doc
+            return render(rq, 'new_moni.html',
+                          {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
+                           'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
+                           'first_time': first_time,'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc,
+
+                           "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
+                           "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
+                           "kong_avg": kong_avg, "kong_yidong": kong_yidong, "kong_chonghes": kong_chonghes,
+                           "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
+                           "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
+                           "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
+                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
+                           })
+        except Exception as exc:
+            print ('Err: new_moni ',exc)
+    dates = datetime.datetime.now()
+    day = dates.weekday() + 3
+    dates = str(dates - datetime.timedelta(days=day))[:10]
+    end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
+    return render(rq, 'new_moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
                                     'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
 
 
