@@ -736,7 +736,6 @@ def moni(rq):
 def newMoni(rq):
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
-    fa = rq.GET.get('fa')
     database = rq.GET.get('database', '1')
     reverse = rq.GET.get('reverse')
     zsds = rq.GET.get('zsds') # 止损
@@ -747,12 +746,11 @@ def newMoni(rq):
     zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (100,80,200,6)
     reverse = True if reverse else False
     # duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
-    #duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
-    duo_macd = rq.GET.get("duo_macd")
-    duo_avg = rq.GET.get("duo_avg")
-    duo_yidong = rq.GET.get("duo_yidong")
-    duo_chonghes = rq.GET.get("duo_chonghes")
-    duo_chonghed = rq.GET.get("duo_chonghed")
+    duo_macd = rq.GET.get("duo_macd")       # macd小于大于零
+    duo_avg = rq.GET.get("duo_avg")         # 收盘价小于大于60均线
+    duo_yidong = rq.GET.get("duo_yidong")       # 异动小于大于1.5倍
+    duo_chonghes = rq.GET.get("duo_chonghes")   # 阴线阳线重合
+    duo_chonghed = rq.GET.get("duo_chonghed")   # 前阳后阴 前阴后阳重合
     kong_macd = rq.GET.get("kong_macd")
     kong_avg = rq.GET.get("kong_avg")
     kong_yidong = rq.GET.get("kong_yidong")
@@ -769,20 +767,35 @@ def newMoni(rq):
     pkd_chonghes = rq.GET.get("pkd_chonghes")
     pkd_chonghed = rq.GET.get("pkd_chonghed")
 
+    duo = duo_macd or duo_avg or duo_yidong or duo_chonghes or duo_chonghed
+    kong = kong_macd or kong_avg or kong_yidong or kong_chonghes or kong_chonghed
+    pdd = pdd_macd or pdd_avg or pdd_yidong or pdd_chonghes or pdd_chonghed
+    pkd = pkd_macd or pkd_avg or pkd_yidong or pkd_chonghes or pkd_chonghed
+
     zbjs = HSD.Zbjs()
     ma = 60
-    if dates and end_date and fa:
+    if dates and end_date and (duo and pdd or kong and pkd):
         try:
-            param = {'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc}
-            res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
+            param = {
+                'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc,
+                "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
+                "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
+                "kong_avg": kong_avg, "kong_yidong": kong_yidong, "kong_chonghes": kong_chonghes,
+                "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
+                "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
+                "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
+                "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
+                "duo":duo, "kong":kong, "pdd":pdd, "pkd":pkd,
+            }
+            res, huizong, first_time = zbjs.main_new(_ma=ma, _dates=dates, end_date=end_date, database=database,
                                                   reverse=reverse,param=param)
             keys = sorted(res.keys())
             keys.reverse()
             res = [dict(res[k], **{'time': k}) for k in keys]
             fa_doc = zbjs.fa_doc
             return render(rq, 'new_moni.html',
-                          {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
-                           'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
+                          {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa,
+                           'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
                            'first_time': first_time,'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc,
 
                            "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,

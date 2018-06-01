@@ -791,6 +791,61 @@ class Zbjs(ZB):
         closeConn(conn)  # 关闭数据库连接
         return _res, _huizong
 
+    def main_new(self, _ma, _dates, end_date, database, reverse=False,param=None):
+        _res, first_time = {}, []
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                   'avg_day': 0, 'least2': 0, 'most2': 0}
+        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
+        all_price = []
+        is_inst_date = []
+        for code in prodcode:
+            da = self.get_data(conn, _dates, end_date, database,code[0])
+            self.zdata = da
+            res, first_time = self.trd_new(reverse=reverse, param=param)
+
+            hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+
+            res_key = list(res.keys())
+            for i in res_key:
+                if i in is_inst_date:
+                    continue
+                is_inst_date.append(i)
+                if not res[i]['datetimes']:
+                    del res[i]
+                    continue
+                mony = res[i]['mony']
+                huizong['yk'] += mony
+                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+                huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+                    'least']
+                huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+                    'most']
+                mtsl = [j[3] for j in res[i]['datetimes']]
+                all_price += mtsl
+                if not res[i].get('ylds'):
+                    res[i]['ylds'] = 0
+                if mtsl:
+                    ylds = len([sl for sl in mtsl if sl > 0])
+                    res[i]['ylds'] += ylds  # 盈利单数
+                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+                else:
+                    res[i]['shenglv'] = 0
+
+            _res = dict(res, **_res)
+
+        huizong['shenglv'] += len([p for p in all_price if p > 0])
+        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+        huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+        res_size = len(_res)
+        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+        huizong['least2'] = min(all_price)
+        huizong['most2'] = max(all_price)
+
+
+        closeConn(conn)  # 关闭数据库连接
+        return _res, huizong, first_time
+
     def get_future(self, this_date):
         ''' 计算日线数据 '''
         dd = dtf(this_date)

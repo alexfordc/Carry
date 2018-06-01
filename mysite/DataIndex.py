@@ -328,6 +328,7 @@ class ZB(object):
             kctj_k = clo>mas and mul>1.5
             pctj_d = (macd>0 and clo>mas)
             pctj_k = (macd<0 and clo<mas)
+
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
@@ -1029,7 +1030,6 @@ class ZB(object):
                     is_k = 0
                     first_time = []
 
-
     def fa10(self,zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False):
         zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
@@ -1184,6 +1184,113 @@ class ZB(object):
                     first_time = []
                     count = 0
 
+    def fa_new(self, zsjg=-100, ydzs=80, zyds=300, cqdc=6,reverse=False, param=None):
+        zsjg2=zsjg
+        _zsjg_d, _zsjg_k = 0, 0
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        # duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
+        choices = lambda x,y,z: x if y == '0' else (z if y == '1' else True)
+        while 1:
+            # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
+            _while, res, dt3, dates, qzpc = yield res,first_time
+            if not _while:
+                break
+            is_dk = not (is_k or is_d)
+            dt2 = dt3[-1]
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd, high,low, maidian = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['maidian']
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            # 反向做单
+            kctj_d = choices(macd<0, param['duo_macd'],macd>0)
+            kctj_d = kctj_d and choices(clo<mas,param['duo_avg'],clo>mas)
+            kctj_d = kctj_d and choices(mul<-1.5, param['duo_yidong'], mul>1.5)
+            kctj_d = kctj_d and choices(cd < 0, param['duo_chonghes'], cd > 0)
+            kctj_d = kctj_d and choices(maidian < 0, param['duo_chonghed'], maidian > 0)
+            kctj_d = kctj_d if param['duo'] else False
+
+            #kctj_k = clo>mas and mul>1.5
+            kctj_k = choices(macd < 0, param['kong_macd'], macd > 0)
+            kctj_k = kctj_k and choices(clo < mas, param['kong_avg'], clo > mas)
+            kctj_k = kctj_k and choices(mul < -1.5, param['kong_yidong'], mul > 1.5)
+            kctj_k = kctj_k and choices(cd < 0, param['kong_chonghes'], cd > 0)
+            kctj_k = kctj_k and choices(maidian < 0, param['kong_chonghed'], maidian > 0)
+            kctj_k = kctj_k if param['kong'] else False
+
+            #pctj_d = (macd>0 and clo>mas)
+            pctj_d = choices(macd < 0, param['pdd_macd'], macd > 0)
+            pctj_d = pctj_d and choices(clo < mas, param['pdd_avg'], clo > mas)
+            pctj_d = pctj_d and choices(mul < -1.5, param['pdd_yidong'], mul > 1.5)
+            pctj_d = pctj_d and choices(cd < 0, param['pdd_chonghes'], cd > 0)
+            pctj_d = pctj_d and choices(maidian < 0, param['pdd_chonghed'], maidian > 0)
+
+            #pctj_k = (macd<0 and clo<mas)
+            pctj_k = choices(macd < 0, param['pkd_macd'], macd > 0)
+            pctj_k = pctj_k and choices(clo < mas, param['pkd_avg'], clo > mas)
+            pctj_k = pctj_k and choices(mul < -1.5, param['pkd_yidong'], mul > 1.5)
+            pctj_k = pctj_k and choices(cd < 0, param['pkd_chonghes'], cd > 0)
+            pctj_k = pctj_k and choices(maidian < 0, param['pkd_chonghed'], maidian > 0)
+
+            if reverse:
+                kctj_d, kctj_k = kctj_k, kctj_d
+                pctj_d, pctj_k = pctj_k, pctj_d
+
+            if kctj_d and is_dk and self.dt_kc(datetimes):
+                jg_d=clo
+                startMony_d=clo
+                str_time1=str(datetimes)
+                is_d=1
+                first_time = [str_time1,'多' ,clo]
+                zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
+            elif kctj_k and is_dk and self.dt_kc(datetimes):
+                jg_k=clo
+                startMony_k=clo
+                str_time2=str(datetimes)
+                is_k=-1
+                first_time = [str_time2, '空' ,clo]
+                zsjg = clo-high-1 if zsjg2 >= -10 else zsjg
+
+            if is_d==1:
+                high_zs = high - startMony_d
+                if high_zs >= ydzs:
+                    _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_d == 0:
+                    _zsjg_d = startMony_d + zsjg  # 止损所在价格点
+                if (pctj_d or self.is_date(datetimes) or low<=_zsjg_d or high-startMony_d>=zyds) or qzpc:
+                    res[dates]['duo'] += 1
+                    price = round(_zsjg_d - startMony_d if low<=_zsjg_d else (zyds if high-startMony_d>=zyds else clo-startMony_d))
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price])
+                    is_d = 0
+                    first_time = []
+                    _zsjg_d = 0
+
+            elif is_k==-1:
+                low_zs = startMony_k - low
+                if low_zs >= ydzs:
+                    _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_k==0:
+                    _zsjg_k = startMony_k - zsjg  # 止损所在价格点
+                if (pctj_k or self.is_date(datetimes) or high>=_zsjg_k or startMony_k-low>=zyds) or qzpc:
+                    res[dates]['kong'] += 1
+                    price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price])
+                    is_k = 0
+                    first_time = []
+                    _zsjg_k = 0
+
 
     def trd(self,_fa,reverse=False,_ma=60,param=None):
         ''' 交易记录 '''
@@ -1257,5 +1364,33 @@ class ZB(object):
         #    f.write(json.dumps(sss))
         # self.sendNone(data2)
         # self.sendNone(fa)
+
+        return res, first_time
+
+    def trd_new(self,reverse=True,param=None):
+        _ma = 60
+        res = {}
+        da = self.zdata
+        if len(da) > _ma:
+            data2 = self.vis(da=da[:_ma], ma=_ma)
+            data2.send(None)
+            da = da[_ma:]
+            zsds, ydzs, zyds, cqdc = param['zsds'], param['ydzs'], param['zyds'], param['cqdc']
+            fa = self.fa_new(-zsds, ydzs, zyds, cqdc, reverse=reverse, param=param)
+            fa.send(None)
+        else:
+            return
+        is_date = str(datetime.datetime.now())[:15]
+        for df2 in da:
+            # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
+            dates = str(df2[0])[:10]
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
+            dt3 = data2.send(df2)
+            datetimes = dt3[-1]['datetimes']
+            if (datetimes.hour == 16 and datetimes.minute > 30) or datetimes.hour > 16 or datetimes.hour < 9:
+                continue
+            qzpc = True if (df2 == da[-1] and str(df2[0])[:15] != is_date) else False
+            res, first_time = fa.send((True, res, dt3, dates, qzpc))
 
         return res, first_time

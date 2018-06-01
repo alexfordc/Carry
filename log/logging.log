@@ -34708,3 +34708,20 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\smartif.py", line 144, in nud
     raise parser.error_class("Unexpected end of expression in if tag.")
 django.template.exceptions.TemplateSyntaxError: Unexpected end of expression in if tag.
+exception.py[2018-06-01 09:28:57][ERROR]£ºInternal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in moni
+    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (100,80,200,6)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 170, in <genexpr>
+    return (int(i) for i in args)
+ValueError: invalid literal for int() with base 10: 'a'
+base.py[2018-06-01 09:28:57][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-06-01 09:39:34][WARNING]£ºNot Found: /moninew/

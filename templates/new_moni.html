@@ -22,7 +22,6 @@ function closeLogin(id){
 function huice(){
     var dates = document.getElementById("datetimes").value;
     var end_date = document.getElementById("end_date").value;
-    var fa = document.getElementById("select_fa").value;
     var database = document.getElementById("select_db").value;
     var zsds = document.getElementById("zsds").value;
     var ydzs = document.getElementById("ydzs").value;
@@ -255,17 +254,8 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             </select></td></tr>
             <tr><td>开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/></td>
                 <td>结束时间：<input type="date" name="end_date" id="end_date" value="{{ end_date }}"/></td>
-                <td>方案：<select name="fa" id="select_fa">
-                    {% for i in fas %}
-                    {% if fa == i %}
-                    <option value={{i}} selected>方案{{i}}</option>
-                    {% else %}
-                    <option value={{i}} >方案{{i}}</option>
-                    {% endif %}
-                    {% endfor %}
-                    </select></td>
-                <td><input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="button" value="方案备注" onclick="openLogin('beizhu')"/><input type="button" id="zuoduo_cancel" value="取消选中" size="20"></td>
+                <td><input type="button" value="回测" onclick="huice()"/></td>
+                <td><input type="button" id="zuoduo_cancel" value="取消选中" size="20"></td>
                 <td><input type="submit" value="测试" style="background-color:#ff0323;width:50px;" />&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/></td>
         </table>
