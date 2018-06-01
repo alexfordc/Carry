@@ -3,7 +3,7 @@
 {% block title %}柱状图{% endblock %}
 {% block script %}
 <style>
-.zt_zx_label{margin:10px 20px 0 0;display:inline-block}
+.zt_zx_label{margin:10px 10px 0 0;display:inline-block}
 .zt_zx_radio{display:none}
 .zt_zx_radioInput{background-color:#fff;border:1px solid rgba(0,0,0,0.15);border-radius:100%;display:inline-block;height:16px;margin-right:10px;margin-top:-1px;vertical-align:middle;width:16px;line-height:1}
 .zt_zx_radio:checked + .zt_zx_radioInput:after{background-color:#57ad68;border-radius:100%;content:"";display:inline-block;height:12px;margin:1.5px;width:12px}
@@ -18,11 +18,11 @@
     <form action="#" method="get">
         <label class="zt_zx_label">
         <input type="radio" id="radio1" class="zt_zx_radio" name="zxxz" value="1" onclick="javascript:radio_xz(this.value)" checked>&nbsp;&nbsp;&nbsp;
-        <span class="zt_zx_radioInput"></span>折线图1：</label>
+        <span class="zt_zx_radioInput"></span>折线图1</label>
         <label class="zt_zx_label">
         <input type="radio" id="radio2" class="zt_zx_radio" name="zxxz" value="2" onclick="javascript:radio_xz(this.value)">&nbsp;&nbsp;&nbsp;
-            <span class="zt_zx_radioInput"></span>折线图2：</label>
-        <input type="button" onclick="javascript:flush()" value="刷新"
+            <span class="zt_zx_radioInput"></span>折线图2</label>
+        &nbsp;&nbsp;&nbsp;<input type="button" onclick="javascript:flush()" value="刷新"
                style="background: gold;
                         border: none;
                         border-radius: 50%;
