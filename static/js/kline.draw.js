@@ -9169,14 +9169,16 @@ function chart_switch_language(b) {
     ChartSettings.save()
 }
 function on_size() {
-    var u = window.innerWidth;
-    var t = window.innerHeight;
-    //var u = window.innerWidth - 250;
-    //var t = window.innerHeight - 41;
+    //var u = window.innerWidth;
+    //var t = window.innerHeight;
+    var u = window.innerWidth - 500;
+    var t = window.innerHeight - 75;
     var o = $("#chart_container");
     o.css({
         width: u + "px",
-        height: t + "px"
+        height: t + "px",
+        top: "75px",
+        left:"200px"
     });
     var z = $("#chart_toolbar");
     var p = $("#chart_toolpanel");

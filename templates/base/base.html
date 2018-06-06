@@ -169,7 +169,7 @@ var $container = $('#works-container');
                     <li><a href="{% url 'index' %}" class="current no-border-left" id="index">首页</a></li>
                     <li><a href="{% url 'index' %}">服务支持</a>
                     	<ul>
-                        	<li class="no-border-top" id="stockDatas_msg"><a href="{% url 'stockDatas' %}">股票信息</a></li>
+                        	<li class="no-border-top" id="stockDatas_msg"><a class="close_websocket" href="{% url 'stockDatas' %}">股票信息</a></li>
                             <li class="no-border-top" id="zhutu_msg"><a href="{% url 'zhutu' %}">柱状图</a></li>
                             <!--<li class="no-border-top" id="zhutu2_msg"><a href="{% url 'zhutu2' %}">柱状图（点数折线图）</a></li>-->
                             <li class="no-border-top" id="zhexian_msg"><a href="{% url 'zhexian' %}">折线图</a></li>
@@ -579,15 +579,19 @@ $("#pingmujietu").hover(
 </script>
 
         {% block center_cen %}{% endblock %}
-        <div style="height:100px;color: #fdfdfd;">.</div>
-    <footer style="position: fixed;bottom: 0;">
-        <div id="copyright" >
-        	<div id="copy-wrap">
-    			<p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>
+        <div style="padding-left:40%;position:fixed;bottom:0;text-align:center;">
+            <p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>
                     <a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>
-            </div>
-    	</div>
-    </footer>
+        </div>
+    <br><br>
+    <!--<footer style="position: fixed;bottom: 0;">-->
+        <!--<div id="copyright" >-->
+        	<!--<div id="copy-wrap">-->
+    			<!--<p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>-->
+                    <!--<a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>-->
+            <!--</div>-->
+    	<!--</div>-->
+    <!--</footer>-->
     {% endblock %}
 </body>
 </html>

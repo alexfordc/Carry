@@ -68,7 +68,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                 <th>平均每天盈亏</th><th>亏损最多的一天</th><th>亏损<br>涨幅与波动</th><th>盈利最多的一天</th>
                 <th>盈利<br>涨幅与波动</th><th>未平仓的单</th></tr>
             {% for fa,huizong in huizongs.items %}
-        <tr bgcolor="#cccc33"><td><a style="color:blue;" href="#" onclick="openLogin('{{fa}}')">方案{{fa}}</a></td><td>{{ huizong.shenglv }}%</td><td>{{ huizong.yk }}</td>
+        <tr bgcolor="#cccc33"><td><a style="color:blue;" href="#" onclick="openLogin('{{fa}}')">方案{{fa}}</a></td><td>{{ huizong.shenglv }}%</td><td>{{ huizong.yk|floatformat }}</td>
             <td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}</td><td>{{ huizong.avg_day|floatformat:2 }}</td>
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
             <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>

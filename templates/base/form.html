@@ -1,13 +1,13 @@
 <form action="" method="GET" id="tongji_form">
-日期：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;
-   天数： <input type="number" id="rq_ts" name="rq_ts" value="{{rq_ts}}" >&nbsp;&nbsp;&nbsp;
+开始日期：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;
+   结束日期： <input type="date" id="rq_ts" name="end_date" value="{{end_date}}" >&nbsp;&nbsp;&nbsp;
  ID 或 名称： <select name="id" id="select_id">
     {% load mvote %}
         {% for id in ids %}
             {% if forloop.first %}
-                {% if rq_id == '1' %}<option value="{{ rq_id }}">全  部</option>{% else %}
+                {% if rq_id == 0 %}<option value="{{ rq_id }}">全  部</option>{% else %}
                     <option value="{{ rq_id }}">{{ id_name|name_option:rq_id }}</option>
-                    <option value="1">全  部</option>{% endif %}
+                    <option value="0">全  部</option>{% endif %}
                 {% endif %}
             <option value="{{ id }}">{{ id_name|name_option:id }}</option>
         {% endfor %}

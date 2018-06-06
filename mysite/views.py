@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-import json, urllib, h5py
+import json
+import urllib
+import h5py
 import numpy as np
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
@@ -13,7 +15,6 @@ from pytdx.hq import TdxHq_API
 import time, base64
 from django.http import HttpResponse
 import datetime
-import logging
 import random
 import zmq
 from zmq import Context
@@ -22,18 +23,12 @@ import requests
 import pyquery
 import urllib.request as request
 import redis
+import sys
 
 from mysite import HSD
 from mysite import models
 from mysite.sub_client import sub_ticker, getTickData
 
-logging.basicConfig(
-    filename='log\\logging.log',
-    filemode='a',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S',
-    format='%(filename)s[%(asctime)s][%(levelname)s]：%(message)s'
-)
 
 # 分页的一页数量
 PAGE_SIZE = 28
@@ -45,7 +40,7 @@ def read_from_cache(user_name):
     try:
         value = cache.get(key)
     except Exception as exc:
-        logging.error(exc)
+        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
         value = None
     if value:
         data = json.loads(value)
@@ -60,7 +55,7 @@ def write_to_cache(user_name, data):
     try:
         cache.set(key, json.dumps(data), settings.NEVER_REDIS_TIMEOUT)
     except Exception as exc:
-        logging.error(exc)
+        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
 
 
 # 更新缓存
@@ -72,7 +67,7 @@ def redis_update(rq):
 
 
 def record_from(rq):
-    pass  # logging.info('访问者：'+rq.META.get('REMOTE_ADDR')+'访问页面：'+rq.META.get('HTTP_HOST') + rq.META.get('PATH_INFO'))
+    pass  # HSD.logging.info('访问者：'+rq.META.get('REMOTE_ADDR')+'访问页面：'+rq.META.get('HTTP_HOST') + rq.META.get('PATH_INFO'))
 
 
 def index(rq):
@@ -327,7 +322,7 @@ def getData(rq):
 
         # for i in data:
         #     counts += i[0]
-        # logging.info(counts)
+        # HSD.logging.info(counts)
         # dt = {"jinJian": dt, 'times': times[10:], 'counts': counts}  # "dt1":dt1,
         if types == '2':
             conn = HSD.get_conn('stock_data')
@@ -353,7 +348,7 @@ def zhutu_zhexian(rq):
 def zhutu_zhexian_ajax(rq):
     status = rq.GET.get('s')
     tm = time.localtime()
-    tm = tm.tm_sec > 45 # 每分钟清除折线图缓存一次
+    tm = tm.tm_sec > 45  # 每分钟清除折线图缓存一次
     if status and status is not '1':
         return redirect('index')
     if rq.method == 'GET' and rq.is_ajax():
@@ -414,45 +409,102 @@ def tongji(rq):
                 conn.close()
         else:
             messages = '验证码错误！'
+
+    rq_date = rq.GET.get('datetimes')
+    end_date = rq.GET.get('end_date')
+    rq_id = rq.GET.get('id')
+    rq_type = rq.GET.get('type')
     try:
-        rq_date = rq.GET.get('datetimes')
-        rq_ts = int(rq.GET.get('rq_ts', '1'))
-        rq_id = rq.GET.get('id')
-        rq_type = rq.GET.get('type')
+        rq_id = int(rq_id)
     except:
-        pass
+        rq_id = 0
+
+    end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10] if not end_date else end_date
+
+    if rq_type == '2' and rq_date and end_date and rq_id != 0:
+        results2, price = HSD.order_detail(rq_date, end_date)
+        res = {}
+        all_price = []
+        results2 = [result for result in results2 if rq_id == result[0]]
+        for i in results2:
+            dt = str(i[1])[:10]
+            if dt not in res:
+                res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv':0,'ylds':0, 'datetimes': []}
+            if i[8] == 2 and i[6] == 0:
+                res[dt]['duo'] += 1
+            elif i[8] == 2 and i[6] == 1:
+                res[dt]['kong'] += 1
+            res[dt]['mony'] += i[5]
+            xx = [str(i[1]), str(i[3]), '空', i[5]] if (i[8] == 2 and i[6] == 1) else [str(i[1]), str(i[3]), '多', i[5]]
+            res[dt]['datetimes'].append(xx)
+
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                   'avg_day': 0, 'least2': 0, 'most2': 0}
+        res_key = list(res.keys())
+
+        for i in res_key:
+            mony = res[i]['mony']
+            huizong['yk'] += mony
+            huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+            huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
+                'least']
+            huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
+                'most']
+            mtsl = [j[3] for j in res[i]['datetimes']]
+            all_price += mtsl
+            if not res[i].get('ylds'):
+                res[i]['ylds'] = 0
+            if mtsl:
+                ylds = len([sl for sl in mtsl if sl > 0])
+                res[i]['ylds'] += ylds  # 盈利单数
+                res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+            else:
+                res[i]['shenglv'] = 0
+        huizong['shenglv'] += len([p for p in all_price if p > 0])
+        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+        huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+        res_size = len(res)
+        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+        huizong['least2'] = min(all_price)
+        huizong['most2'] = max(all_price)
+        conn = HSD.get_conn('carry_investment')
+        sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
+        init_money = HSD.getSqlData(conn,sql)
+        conn.close()
+        init_money = init_money[0][0]
+        hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+        fa = '0'
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa, 'init_money':init_money,})
+
+
+        # hc, huizong = HSD.huices(res,huizong,init_money,dates,end_date)
     if rq_type == '1' and rq_date:
         dates = rq_date
-        results2 = HSD.order_detail(rq_date, rq_ts)
+        results2, price = HSD.order_detail(rq_date, end_date)
         huizong = []
         if results2:
             for i in HSD.IDS:
-                hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
+                hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
+                hz1 = sum(
+                    [j[5] if j[8] == 2 else ((price - j[2] if j[6] == 0 else j[2] - price) if j[8] == 1 else j[5]) for j
+                     in results2 if j[0] == i])  # 盈亏
                 hz2 = len([j[6] for j in results2 if j[0] == i and j[6] == 0])  # 多单数量
                 hz3 = len([j[7] for j in results2 if j[0] == i and j[6] == 1])  # 空单数量
                 hz4 = len([j[5] for j in results2 if j[0] == i and j[5] > 0])  # 赢利单数
                 hz5 = int(hz4 / (hz2 + hz3) * 100) if hz2 + hz3 != 0 else 0  # 正确率
-                huizong.append([rq_date, i, hz1, hz2, hz3, hz4, hz5])
+                huizong.append([str(hz0)[:10], i, hz1, hz2, hz3, hz4, hz5])
             results = np.array(results2)
             id_count = {i: len(results[np.where(results[:, 0] == i)]) for i in HSD.IDS}
             # results = list(results)
-        if rq_id and rq_id.isdecimal() and rq_id is not '1':
-            ind = len(results2)
-            ind1 = 0
-            rq_id = int(rq_id)
-            results1 = []
-            while ind1 < ind:
-                if rq_id == results2[ind1][0]:
-                    results1.append(results2[ind1])
-                ind1 += 1
-            results2 = results1
-        else:
-            rq_id = '1'
+        if rq_id != 0:
+            results2 = [result for result in results2 if rq_id == result[0]]
+
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
-        return render(rq, 'tongji.html', locals())
+        if results2:
+            return render(rq, 'tongji.html', locals())
     if rq_date:
-        results = HSD.calculate_earn(rq_date, rq_ts)
+        results = HSD.calculate_earn(rq_date, end_date)
         huizong = []
         if results:
             for i in HSD.IDS:
@@ -464,31 +516,21 @@ def tongji(rq):
             results = np.array(results)
             id_count = {i: len(results[np.where(results[:, 2] == i)]) for i in HSD.IDS}
             results = list(results)
-        if rq_id and rq_id.isdecimal() and rq_id is not '1':
-            ind = len(results)
-            ind1 = 0
-            rq_id = int(rq_id)
-            results1 = []
-            while ind1 < ind:
-                if rq_id == results[ind1][2]:
-                    results1.append(results[ind1])
-                    # ind-=1
-                    # ind1-=1
-                ind1 += 1
-            results = results1
-        else:
-            rq_id = '1'
+        if rq_id != 0:
+            results = [result for result in results if rq_id == result[2]]
+
         ids = HSD.IDS
         dates = rq_date
         # {'results':results,'dates':rq_date,'ids':HSD.IDS,'huizong':huizong,'id_name':id_name,'id_count':id_count}
-        return render(rq, 'tongji.html', locals())
-    else:
-        rq_id = '1'
+        if results:
+            return render(rq, 'tongji.html', locals())
+
+    #rq_id = rq_id if rq_id else 0
     herys = None
     try:
         herys = HSD.tongji()
     except Exception as exc:
-        logging.error(exc)
+        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
     if not herys:
         return redirect('index')
     ids = HSD.IDS
@@ -648,7 +690,7 @@ def getwebsocket(rq):
                 this_time = ticker.TickerTime
                 objArr = cache.get("objArr")
                 times, opens, high, low, close, vol = objArr if objArr else (
-                ticker.TickerTime * 1000, ticker.Price, ticker.Price, ticker.Price, ticker.Price, ticker.Qty)
+                    ticker.TickerTime * 1000, ticker.Price, ticker.Price, ticker.Price, ticker.Price, ticker.Qty)
                 GetRealTimeData(ticker.TickerTime, ticker.Price, ticker.Qty)
                 zs = 0
                 if time.localtime(this_time).tm_min != time.localtime(times / 1000).tm_min:
@@ -702,20 +744,21 @@ def moni(rq):
     fa = rq.GET.get('fa')
     database = rq.GET.get('database', '1')
     reverse = rq.GET.get('reverse')
-    zsds = rq.GET.get('zsds') # 止损
-    ydzs = rq.GET.get('ydzs') # 移动止损
-    zyds = rq.GET.get('zyds') # 止盈
-    cqdc = rq.GET.get('cqdc')   # 点差
+    zsds = rq.GET.get('zsds')  # 止损
+    ydzs = rq.GET.get('ydzs')  # 移动止损
+    zyds = rq.GET.get('zyds')  # 止盈
+    cqdc = rq.GET.get('cqdc')  # 点差
     # zsds, ydzs, zyds, cqdc
-    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (100,80,200,6)
+    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
+    100, 80, 200, 6)
     reverse = True if reverse else False
     zbjs = HSD.Zbjs()
     ma = 60
     if dates and end_date and fa:
         try:
-            param = {'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc}
+            param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
             res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
-                                                  reverse=reverse,param=param)
+                                                  reverse=reverse, param=param)
             keys = sorted(res.keys())
             keys.reverse()
             res = [dict(res[k], **{'time': k}) for k in keys]
@@ -723,9 +766,9 @@ def moni(rq):
             return render(rq, 'moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
-                           'first_time': first_time,'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc})
+                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
-            print ('Err: moni ',exc)
+            print ('Err: moni ', exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -733,24 +776,26 @@ def moni(rq):
     return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
                                     'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
 
+
 def newMoni(rq):
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
     reverse = rq.GET.get('reverse')
-    zsds = rq.GET.get('zsds') # 止损
-    ydzs = rq.GET.get('ydzs') # 移动止损
-    zyds = rq.GET.get('zyds') # 止盈
-    cqdc = rq.GET.get('cqdc')   # 点差
+    zsds = rq.GET.get('zsds')  # 止损
+    ydzs = rq.GET.get('ydzs')  # 移动止损
+    zyds = rq.GET.get('zyds')  # 止盈
+    cqdc = rq.GET.get('cqdc')  # 点差
     # zsds, ydzs, zyds, cqdc
-    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (100,80,200,6)
+    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
+    100, 80, 200, 6)
     reverse = True if reverse else False
     # duo_macd, duo_avg, duo_yidong, duo_chonghes, duo_chonghed, kong_macd, kong_avg, kong_yidong, kong_chonghes, kong_chonghed, pdd_macd, pdd_avg, pdd_yidong, pdd_chonghes, pdd_chonghed, pkd_macd, pkd_avg, pkd_yidong, pkd_chonghes, pkd_chonghed
-    duo_macd = rq.GET.get("duo_macd")       # macd小于大于零
-    duo_avg = rq.GET.get("duo_avg")         # 收盘价小于大于60均线
-    duo_yidong = rq.GET.get("duo_yidong")       # 异动小于大于1.5倍
-    duo_chonghes = rq.GET.get("duo_chonghes")   # 阴线阳线重合
-    duo_chonghed = rq.GET.get("duo_chonghed")   # 前阳后阴 前阴后阳重合
+    duo_macd = rq.GET.get("duo_macd")  # macd小于大于零
+    duo_avg = rq.GET.get("duo_avg")  # 收盘价小于大于60均线
+    duo_yidong = rq.GET.get("duo_yidong")  # 异动小于大于1.5倍
+    duo_chonghes = rq.GET.get("duo_chonghes")  # 阴线阳线重合
+    duo_chonghed = rq.GET.get("duo_chonghed")  # 前阳后阴 前阴后阳重合
     kong_macd = rq.GET.get("kong_macd")
     kong_avg = rq.GET.get("kong_avg")
     kong_yidong = rq.GET.get("kong_yidong")
@@ -777,7 +822,7 @@ def newMoni(rq):
     if dates and end_date and (duo and pdd or kong and pkd):
         try:
             param = {
-                'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc,
+                'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
                 "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
                 "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
                 "kong_avg": kong_avg, "kong_yidong": kong_yidong, "kong_chonghes": kong_chonghes,
@@ -785,10 +830,10 @@ def newMoni(rq):
                 "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
                 "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
                 "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
-                "duo":duo, "kong":kong, "pdd":pdd, "pkd":pkd,
+                "duo": duo, "kong": kong, "pdd": pdd, "pkd": pkd,
             }
             res, huizong, first_time = zbjs.main_new(_ma=ma, _dates=dates, end_date=end_date, database=database,
-                                                  reverse=reverse,param=param)
+                                                     reverse=reverse, param=param)
             keys = sorted(res.keys())
             keys.reverse()
             res = [dict(res[k], **{'time': k}) for k in keys]
@@ -796,7 +841,7 @@ def newMoni(rq):
             return render(rq, 'new_moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
-                           'first_time': first_time,'zsds':zsds, 'ydzs':ydzs, 'zyds':zyds, 'cqdc':cqdc,
+                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
 
                            "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
                            "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
@@ -807,13 +852,13 @@ def newMoni(rq):
                            "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
                            })
         except Exception as exc:
-            print ('Err: new_moni ',exc)
+            print ('Err: new_moni ', exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'new_moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
 
 
 def moni_all(rq):
@@ -827,13 +872,14 @@ def moni_all(rq):
     cqdc = rq.GET.get('cqdc')  # 点差
     # zsds, ydzs, zyds, cqdc
     zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
-    100, 80, 200, 6)
+        100, 80, 200, 6)
     reverse = True if reverse else False
     zbjs = HSD.Zbjs()
     if dates and end_date:
         try:
             param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
-            res, huizong = zbjs.main_all(_dates=dates, end_date=end_date, database=database, reverse=reverse,param=param)
+            res, huizong = zbjs.main_all(_dates=dates, end_date=end_date, database=database, reverse=reverse,
+                                         param=param)
             dt = list(set([j for i in res for j in res[i]]))
             dt.sort()
             dt.reverse()
@@ -880,15 +926,18 @@ def moni_all(rq):
                 ress[i][max_yk[0]]['max_yk'] = 1
                 ress[i][min_yk[0]]['min_yk'] = 1
             return render(rq, 'moniAll.html',
-                          {'ress': ress, 'huizongs': huizong, 'fa_doc': zbjs.fa_doc, 'dates': dates, 'end_date': end_date,
-                           'database': database,'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+                          {'ress': ress, 'huizongs': huizong, 'fa_doc': zbjs.fa_doc, 'dates': dates,
+                           'end_date': end_date,
+                           'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
-            print (exc)
+            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
-    return render(rq, 'moniAll.html', {'dates': dates, 'end_date': end_date, 'database': database,'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+    return render(rq, 'moniAll.html',
+                  {'dates': dates, 'end_date': end_date, 'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds,
+                   'cqdc': cqdc})
 
 
 def bfsy(rq):
@@ -931,7 +980,7 @@ def huice(rq):
     cqdc = rq.GET.get('cqdc')  # 点差
     # zsds, ydzs, zyds, cqdc
     zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
-    100, 80, 200, 6)
+        100, 80, 200, 6)
     reverse = True if reverse else False
     zbjs = HSD.Zbjs()
     ma = 60
@@ -941,161 +990,10 @@ def huice(rq):
             param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
             res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
                                                   reverse=reverse, param=param)
-            keys = [i for i in res if res[i]['datetimes']]
-            keys.sort()
-            jyts = len(keys)
-            jyys = int(keys[-1][-5:-3]) - int(keys[0][-5:-3]) + 1
-            hc = {
-                'jyts': jyts,  # 交易天数
-                'jyys': jyys,  # 交易月数
-                'hlbfb': round(huizong['yk'] / init_money * 100, 2),  # 总获利百分比
-                'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
-                'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
-                'ye': init_money + huizong['yk'],  # 余额
-                'cgzd': [0, 0, 0],  # 成功的做多交易
-                'cgzk': [0, 0, 0],  # 成功的做空交易
-            }
-            jingzhi = []
-            zx_x = []
-            zx_y = []
-            zdhc = 0
-            ccsj = 0  # 总持仓时间
-            count_yl = 0  # 总盈利
-            count_ks = 0  # 总亏损
-            avg = huizong['yk'] / huizong['zl']  # 平均盈亏
-            count_var = 0
-            for i in keys:
-                je = res[i]['mony']
-                jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
-                zx_x.append(i[-5:-3] + i[-2:])
-                zx_y.append(zx_y[-1] + je if zx_y else je)
-                if len(jingzhi) > 1:
-                    max_jz = max(jingzhi[:-1])
-                    zdhc2 = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
-                    zdhc = zdhc2 if zdhc2 > zdhc else zdhc
-                for j in res[i]['datetimes']:
-                    if j[2] == '多':
-                        hc['cgzd'][1] += 1
-                        if j[-1] > 0:
-                            hc['cgzd'][0] += 1
-                    elif j[2] == '空':
-                        hc['cgzk'][1] += 1
-                        if j[-1] > 0:
-                            hc['cgzk'][0] += 1
-                    # 计算持仓时间
-                    start_d = j[0].replace(':', '-').replace(' ', '-')
-                    start_d = start_d.split('-') + [0, 0, 0]
-                    start_d = [int(sd) for sd in start_d]
-                    end_d = j[1].replace(':', '-').replace(' ', '-')
-                    end_d = end_d.split('-') + [0, 0, 0]
-                    end_d = [int(ed) for ed in end_d]
-                    ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))
-                    # 计算利润因子
-                    if j[-1] > 0:
-                        count_yl += j[-1]
-                    else:
-                        count_ks += -j[-1]
-                    # 方差
-                    count_var += (j[-1] - avg) ** 2
-
-            hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
-            hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-            hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1)  # 平均持仓时间
-            hc['lryz'] = round(count_yl / count_ks, 2)
-            count_var = count_var / huizong['zl']
-            hc['std'] = round(count_var ** 0.5, 2)
-
-            '''{'2018-04-27': {'duo': 1, 'kong': 2, 'mony': -89.0, 'datetimes': [['2018-04-27 11:08:00', '2018-04-27 13:00:00', '多', -1.0], 
-            ['2018-04-27 13:09:00', '2018-04-27 13:38:00', '空', -100], ['2018-04-27 14:32:00', '2018-04-27 14:52:00', '空', 12.0]], 'dy': 27, 'xy': 23, 'ch': 1}'''
-            hc['zjhc'] = zdhc  # 最大回测
-            hc['zjhc'] = hc['zjhc'] if hc['zjhc'] >= 0 else 0
-            hc['jingzhi'] = jingzhi  # 每天净值
-            hc['max_jz'] = max(jingzhi)  # 最高
-            hc['zx_x'] = zx_x  # 折线图x轴
-            hc['zx_y'] = zx_y  # 折线图y轴
-
-            def get_jy(jg):
-                jy1 = round(jg['mony'] / init_money * 100, 2)  # 获利
-                jy2 = jg['mony']  # 利润
-                jy3 = jg['mony']  # 点
-                jy4 = jg['shenglv']  # 每天胜率
-                jy5 = jg['duo'] + jg['kong']  # 开的单数
-                jy6 = jy5  # 手
-                jy7 = jg['ylds']
-                return jy1, jy2, jy3, jy4, jy5, jy6, jy7
-
-            try:
-                this_date = HSD.dtf(end_date) - datetime.timedelta(days=1)
-                this_date = datetime.datetime.now() if this_date > datetime.datetime.now() else this_date
-                week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
-                        range(this_date.weekday() + 1)]  # 这个星期的日期
-                month = [str(this_date - datetime.timedelta(days=td))[:10] for td in range(this_date.day)]  # 这个月的日期
-                time_date = time.strptime(dates, '%Y-%m-%d')
-                year = [str(this_date - datetime.timedelta(days=ty))[:10] for ty in range(time_date.tm_yday)]  # 这一年的日期
-                year.sort()
-                this_week = [0, 0, 0, 0, 0, 0, 0]
-                this_month = [0, 0, 0, 0, 0, 0, 0]
-                this_year = [0, 0, 0, 0, 0, 0, 0]
-
-                for yd in year[year.index(keys[0]):]:
-                    jg = res.get(yd)
-                    if not jg or len(jg['datetimes']) < 1:
-                        continue
-                    jys = get_jy(jg)
-                    if yd == str(this_date)[:10]:
-                        hc['this_day'] = jys
-                    if yd in week:
-                        this_week[0] += jys[0]
-                        this_week[1] += jys[1]
-                        this_week[2] += jys[2]
-                        # this_week[3] += jys[3]
-                        this_week[4] += jys[4]
-                        this_week[5] += jys[5]
-                        this_week[6] += jys[6]
-                    if yd in month:
-                        this_month[0] += jys[0]
-                        this_month[1] += jys[1]
-                        this_month[2] += jys[2]
-                        # this_month[3] += jys[3]
-                        this_month[4] += jys[4]
-                        this_month[5] += jys[5]
-                        this_month[6] += jys[6]
-                    this_year[0] += jys[0]
-                    this_year[1] += jys[1]
-                    this_year[2] += jys[2]
-                    # this_year[3] += jys[3]
-                    this_year[4] += jys[4]
-                    this_year[5] += jys[5]
-                    this_year[6] += jys[6]
-                this_week[0] = round(this_week[0], 2)
-                this_week[3] = round(this_week[6] / this_week[4] * 100, 2)
-                this_month[0] = round(this_month[0], 2)
-                this_month[3] = round(this_month[6] / this_month[4] * 100, 2)
-                this_year[0] = round(this_year[0], 2)
-                this_year[3] = round(this_year[6] / this_year[4] * 100, 2)
-            except Exception as exc:
-                print(exc)
-            hc['this_week'] = this_week
-            hc['this_month'] = this_month
-            hc['this_year'] = this_year
-            huizong['kuilv'] = 100 - huizong['shenglv']
-
-            """
-            {'2018-04-27': {'duo': 1, 'kong': 2, 'mony': -89.0, 'datetimes': [['2018-04-27 11:08:00', '2018-04-27 13:00:00', '多', -1.0], 
-            ['2018-04-27 13:09:00', '2018-04-27 13:38:00', '空', -100], ['2018-04-27 14:32:00', '2018-04-27 14:52:00', '空', 12.0]], 'dy': 27, 'xy': 23, 'ch': 1}, 
-            '2018-04-28': {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}, 
-            '2018-05-02': {'duo': 2, 'kong': 2, 'mony': -48.0, 'datetimes': [['2018-05-02 11:08:00', '2018-05-02 11:40:00', '多', -16.0], 
-            ['2018-05-02 11:53:00', '2018-05-02 11:56:00', '空', 3.0], ['2018-05-02 13:55:00', '2018-05-02 15:13:00', '空', -37.0], 
-            ['2018-05-02 15:23:00', '2018-05-02 15:53:00', '多', 2.0]], 'dy': 25, 'xy': 17, 'ch': 2}, 
-            '2018-05-03': {'duo': 2, 'kong': 3, 'mony': 8.0, 'datetimes': [['2018-05-03 11:17:00', '2018-05-03 11:59:00', '空', 21.0], 
-            ['2018-05-03 11:59:00', '2018-05-03 13:06:00', '多', 25.0], ['2018-05-03 13:20:00', '2018-05-03 13:32:00', '空', -100], 
-            ['2018-05-03 14:54:00', '2018-05-03 15:11:00', '多', 21.0], ['2018-05-03 15:19:00', '2018-05-03 16:01:00', '空', 41.0]], 'dy': 21, 'xy': 25, 'ch': 4}}
-
-            In [87]: print(huizong)
-            {'yk': -129.0, 'shenglv': 58, 'zl': 12, 'least': ['2018-04-27', -89.0, 9.0, 291.0], 'most': ['2018-05-03', 8.0, -6.0, 459.0], 'avg': -10.75, 'avg_day': -32.25, 'least2': -100, 'most2': 41.0}
-            """
+            hc, huizong = HSD.huices(res,huizong,init_money,dates,end_date)
         except Exception as exc:
-            print (exc)
+            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
 
     return render(rq, 'hc.html')

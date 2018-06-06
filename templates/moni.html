@@ -86,11 +86,12 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             <tr><th colspan="8"><span style="font-size: 20px;">汇 总&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:blue;" href="#" onclick="openLogin('beizhu_img')">方案{{fa}}</a></span><br/><span>做多：{{fa_one.0}}<br/>做空：{{fa_one.1}}<br/>止损：{{fa_one.2}}</span></th></tr>
         <tr><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
             <th>亏损<br>涨幅与波动</th><th>一天<br>盈利最多  <a style="color:blue;" href="#yidan_yl">查看一单</a></th><th>盈利<br>涨幅与波动</th></tr>
-        <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
+        <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk|floatformat }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
             <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
             <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td></tr>
+            <tr><td>止损：{{ huizong.zs }}</td><td>移动止损：{{ huizong.ydzs }}</td><td>止盈：{{ huizong.zy }}</td><td colspan="5"></td></tr>
         {% else %}
         <h3 style="color:green;">请选择好参数并按《模拟测试》按钮进行测试！</h3>
         {% endif %}
@@ -108,17 +109,25 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                     <tr><td style="color:green;" colspan="7">{{first_time.0}}</td><td colspan="2">{{first_time.1}}</td></tr>
             {% endif %}
         {% endif %}
-        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ v.time }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
+        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}"><td>{{ v.time }}</td><td>{{ v.duo }}</td><td>{{ v.kong }}</td><td>{{ v.mony|floatformat }}</td><td>{{ v.dy }}</td><td>{{ v.xy }}</td><td>{{ v.ch }}</td>
             <td>
                 <table border="1" style="width:650px;">
                     {% for i in v.datetimes %}
-                        <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ i.0 }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td><td style="width:150px;">{{ i.2 }}</td>
+                        <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ i.0 }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td>
+                            <td style="width:150px;">
+                                {{ i.2 }}
+                                {% if i.4 == 1 %}
+                                --止盈
+                                {% elif i.4 == -1 %}
+                                --止损
+                                {% endif %}
+                            </td>
                             {% if i.3 == huizong.least2 %}
-                            <td style="background:white;"><a style="color:black;" name="yidan_ks">{{ i.3 }}</a></td>
+                            <td style="background:white;"><a style="color:black;" name="yidan_ks">{{ i.3|floatformat }}</a></td>
                             {% elif i.3 == huizong.most2 %}
-                            <td style="background:red;"><a style="color:black;" name="yidan_yl">{{ i.3 }}</a></td>
+                            <td style="background:red;"><a style="color:black;" name="yidan_yl">{{ i.3|floatformat }}</a></td>
                             {% else %}
-                            <td>{{ i.3 }}</td>
+                            <td>{{ i.3|floatformat }}</td>
                             {% endif %}
                         {% endfor %}
                 </table>

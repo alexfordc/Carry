@@ -38,22 +38,22 @@
 
                             <ul class="quickStats" id="stats" style="">
                                 <li class="font12 bold"><span class="floatLeft dotted" id="gainTip">获利:</span>
-                                    <span class="floatNone"><span class="red">{{hc.hlbfb}}%</span></span></li>
+                                    <span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>
                                 <li class="paddB5 borderB"><span class="floatLeft dotted" id="absGainTip">绝对收益:</span>
-                                    <span class="floatNone"><span class="red">{{hc.hlbfb}}%</span></span></li>
+                                    <span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>
 
-                                <li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl}}%</span></li>
-                                <li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl}}%</span></li>
-                                <li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc}}%</span></li>
+                                <li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl|floatformat:"2"}}%</span></li>
+                                <li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl|floatformat:"2"}}%</span></li>
+                                <li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc|floatformat:"2"}}%</span></li>
 
-                                <li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ${{hc.ye}}</span></li>
-                                <li><span class="floatLeft">净值:</span><span class="floatNone">  ${{hc.ye}} </span></li>
-                                <li><span class="floatLeft">最高:</span><span class="floatNone">${{hc.max_jz}}</span>
+                                <li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ${{hc.ye|floatformat:"2"}}</span></li>
+                                <li><span class="floatLeft">净值:</span><span class="floatNone">  ${{hc.ye|floatformat:"2"}} </span></li>
+                                <li><span class="floatLeft">最高:</span><span class="floatNone">${{hc.max_jz|floatformat:"2"}}</span>
                                 </li>
 
-                                <li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">${{huizong.yk}}</span> </span></li>
+                                <li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">${{huizong.yk|floatformat:"2"}}</span> </span></li>
                                 <li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">$0.00</span></li>
-                                <li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> $5000.00</span></li>
+                                <li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> ${{init_money}}</span></li>
                                 <li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">$0.00</span></li>
                                 <li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>
                                 <li>
@@ -96,7 +96,7 @@ var myChart = echarts.init(document.getElementById('zhexiantu'));
 
 option = {
 title:{
-    text:"方案"+{{fa}}+" -- 回测",
+    text:"方案"+{{fa|safe}}+" -- 回测",
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -185,39 +185,39 @@ myChart.setOption(option);
                                     <tr class="bg1">
                                         
                                         <td class="paddL10" align="left">一天</td>
-                                            <td><span class="green">{{hc.this_day.0}}%</span> </td>
-                                            <td>${{hc.this_day.1}} </td>
-                                            <td>{{hc.this_day.2}} </td>
-                                            <td>{{hc.this_day.3}}% </td>
+                                            <td><span class="green">{{hc.this_day.0|floatformat:"2"}}%</span> </td>
+                                            <td>${{hc.this_day.1|floatformat:"2"}} </td>
+                                            <td>{{hc.this_day.2|floatformat:"2"}} </td>
+                                            <td>{{hc.this_day.3|floatformat:"2"}}% </td>
                                             <td>{{hc.this_day.4}} </td>
                                             <td>{{hc.this_day.5}} </td>
                                                                             </tr>
                                     <tr>
                                         <td class="paddL10" align="left">一星期</td>
-                                            <td><span class="green">{{hc.this_week.0}}%</span> </td>
-                                            <td>${{hc.this_week.1}} </td>
-                                            <td>{{hc.this_week.2}} </td>
-                                            <td>{{hc.this_week.3}}% </td>
+                                            <td><span class="green">{{hc.this_week.0|floatformat:"2"}}%</span> </td>
+                                            <td>${{hc.this_week.1|floatformat:"2"}} </td>
+                                            <td>{{hc.this_week.2|floatformat:"2"}} </td>
+                                            <td>{{hc.this_week.3|floatformat:"2"}}% </td>
                                             <td>{{hc.this_week.4}} </td>
                                             <td>{{hc.this_week.5}} </td>
                                         
                                     </tr>
                                     <tr class="bg1">
                                         <td class="paddL10" align="left">一个月</td>
-                                            <td><span class="green">{{hc.this_month.0}}%</span> </td>
-                                            <td>${{hc.this_month.1}}</td>
-                                            <td>{{hc.this_month.2}}</td>
-                                            <td>{{hc.this_month.3}}% </td>
+                                            <td><span class="green">{{hc.this_month.0|floatformat:"2"}}%</span> </td>
+                                            <td>${{hc.this_month.1|floatformat:"2"}}</td>
+                                            <td>{{hc.this_month.2|floatformat:"2"}}</td>
+                                            <td>{{hc.this_month.3|floatformat:"2"}}% </td>
                                             <td>{{hc.this_month.4}}</td>
                                             <td>{{hc.this_month.5}}</td>
                                                                             </tr>
                                     <tr>
                                         <td class="paddL10" align="left">一年</td>
-                                            <td><span class="red">{{hc.this_year.0}}%</span> <span class="gray">( - )</span></td>
-                                            <td><span class="red">{{hc.this_year.1}}</span> <span class="gray">( - )</span></td>
-                                            <td><span class="red">{{hc.this_year.2}}</span> <span class="gray">( - )</span>
+                                            <td><span class="red">{{hc.this_year.0|floatformat:"2"}}%</span> <span class="gray">( - )</span></td>
+                                            <td><span class="red">{{hc.this_year.1|floatformat:"2"}}</span> <span class="gray">( - )</span></td>
+                                            <td><span class="red">{{hc.this_year.2|floatformat:"2"}}</span> <span class="gray">( - )</span>
                                             </td>
-                                            <td>{{hc.this_year.3}}% <span class="gray">( - )</span></td>
+                                            <td>{{hc.this_year.3|floatformat:"2"}}% <span class="gray">( - )</span></td>
                                             <td>{{hc.this_year.4}} <span class="gray">( - )</span></td>
                                             <td>{{hc.this_year.5}} <span class="gray">( - )</span></td>
                                                                             </tr>
@@ -329,22 +329,22 @@ myChart.setOption(option);
 
                     <tr>
                         <td>最佳交易($):</td>
-                        <td class="alignR">                             <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1}}
+                        <td class="alignR">                             <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1|floatformat}}
                         </td>
                     </tr>
                     <tr class="bg1">
                         <td> 最差交易($):</td>
-                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1}}
+                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1|floatformat}}
                         </td>
                     </tr>
                     <tr>
                         <td>最好的交易（按照点数计算）</td>
-                        <td class="alignR">                            <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1}}
+                        <td class="alignR">                            <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1|floatformat}}
                         </td>
                     </tr>
                     <tr class="bg1">
                         <td>最坏的交易（点数）</td>
-                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1}}
+                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1|floatformat}}
                         </td>
                     </tr>
 
