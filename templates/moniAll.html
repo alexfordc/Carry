@@ -72,7 +72,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             <td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}</td><td>{{ huizong.avg_day|floatformat:2 }}</td>
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
             <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>
-            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1|floatformat }}</td>
             <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td>
             {% if huizong.first_time %}
                 <td><span
@@ -102,13 +102,13 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                             {% if f != 'hq' %}
                             <tr><td width="150">方案{{ f }}</td><td width="150">{{v.sl}}%</td>
                                 {% if v.max_yk %}
-                                <td width="150" bgcolor="red">{{v.yk}}</td>
+                                <td width="150" bgcolor="red">{{v.yk|floatformat}}</td>
                                 {% elif v.min_yk %}
-                                <td width="150" bgcolor="white">{{v.yk}}</td>
+                                <td width="150" bgcolor="white">{{v.yk|floatformat}}</td>
                                 {% else %}
-                                <td width="150">{{v.yk}}</td>
+                                <td width="150">{{v.yk|floatformat}}</td>
                                 {% endif %}
-                                <td width="100">{{v.duo}}</td><td width="100">{{v.kong}}</td><td width="150">{{v.maxk}}</td><td width="150">{{v.maxy}}</td></tr>
+                                <td width="100">{{v.duo}}</td><td width="100">{{v.kong}}</td><td width="150">{{v.maxk|floatformat}}</td><td width="150">{{v.maxy|floatformat}}</td></tr>
                             {% endif %}
                             {% endfor %}
                         </table>

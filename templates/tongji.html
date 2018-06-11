@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% block title %}统计表{% endblock %}
 {% block center_cen %}
+{% load staticfiles %}
     <div align="center">
     {% include 'base/form.html' %}
     {% load mvote %}
@@ -25,7 +26,7 @@
 {#        </h3>#}
     {% if herys %}
 {#        {{ herys|safe }}#}
-        <a href="{% url 'account_update' %}" style="color:blue;background:yellow;font-size:18px;">刷新</a>
+
          <table border="1" class="dataframe">
     <tr>
       <th>ID号</th>
@@ -44,7 +45,7 @@
       <td id="en{{i.0}}" contentEditable="true">{{ i.2|yesno:"Yes,No,未知" }}</td>
       <td>{{ i.3 }}</td>
       <td>{{ i.4 }}</td>
-        <td width="160"><input type="button" onclick="javascript:update_name('{{i.0}}')" value="修改">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="javascript:delete_user('{{i.0}}')" value="删除"></td>
+        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:update_name('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:delete_user('{{i.0}}')" title="删除"></td>
     </tr>
         {% endfor %}
 
@@ -199,7 +200,7 @@
         var tongji_form=document.getElementById('tongji_form');
         tongji_form.submit();
         }else{
-        var date=document.getElementById('datetimes').value;
+        var date=document.getElementById('J-xl').value;
         var id=document.getElementById('select_id').value;
         var rq_ts=document.getElementById('rq_ts').value;
         window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&end_date='+rq_ts;

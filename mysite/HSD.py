@@ -729,8 +729,8 @@ class Zbjs(ZB):
         huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
         res_size = len(_res)
         huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-        huizong['least2'] = min(all_price)
-        huizong['most2'] = max(all_price)
+        huizong['least2'] = min(all_price) if all_price else 0
+        huizong['most2'] = max(all_price) if all_price else 0
 
 
         closeConn(conn)  # 关闭数据库连接

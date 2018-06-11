@@ -1,7 +1,74 @@
+<style>
+    .button {
+    display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+	padding: .3em 1em .3em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	margin-right:10px;
+}
+
+/* green */
+.green {
+	color: #e8f0de;
+	border: solid 1px #538312;
+	background: #64991e;
+	width:90px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+	background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+}
+.green:hover {
+	background: #538018;
+	background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+	background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+}
+.green:active {
+	color: #a9c08c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#4e7d0e), to(#7db72f));
+	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
+}
+</style>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/easyui.css' %}" />
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.easyui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.fullcalendar.js' %}"></script>
+
+
+
 <form action="" method="GET" id="tongji_form">
-开始日期：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;
-   结束日期： <input type="date" id="rq_ts" name="end_date" value="{{end_date}}" >&nbsp;&nbsp;&nbsp;
- ID 或 名称： <select name="id" id="select_id">
+        <!--开始日期：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;-->
+    <table>
+    <tr style="background-color:red;">
+        <td>
+            <div class="membder-background addMemo-body">
+    <div class="addMemo" id="iframe">
+        <label>开始日期</label><input type="text" value="{{ dates }}" name="datetimes" id="J-xl"/>
+        <div class="clear-both"></div>
+        <!-- <iframe src="iframe.html" width="100%" height="600" id="iframepage" name="iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>     -->
+        <div id="iframepage" >
+            <div region="center">
+            <div class="easyui-fullCalendar" fit="true" style="height:300px;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+        </td>
+        <td>结束日期： <input type="date" id="rq_ts" name="end_date" value="{{end_date}}" >&nbsp;&nbsp;&nbsp;</td>
+        <td>
+            ID 或 名称： <select name="id" id="select_id">
     {% load mvote %}
         {% for id in ids %}
             {% if forloop.first %}
@@ -11,9 +78,23 @@
                 {% endif %}
             <option value="{{ id }}">{{ id_name|name_option:id }}</option>
         {% endfor %}
-    </select>&nbsp;&nbsp;
- <input type="button" onclick="javascript:doSubmitForm(1)" value="查询">&nbsp;&nbsp;
-    <input type="button" onclick="javascript:doSubmitForm()" value="跟单查询">&nbsp;&nbsp;
-    {% include 'base/return.html' %}
-    <br/><br/>
+    </select>
+        </td></tr>
+
+    </table>
+ <div style="margin-left:43%;"><br/>
+     <a style="position:relative;right:200px;" href="{% url 'account_update' %}" ><img width="30" src="{% static 'images/b9.ico' %}" title="刷新"></a>
+     <input type="button" onclick="javascript:doSubmitForm(1)" class="button green" value="查询">
+    <input type="button" onclick="javascript:doSubmitForm()" class="button green" value="跟单查询">
+    <input type="button" onclick="JavaScript:window.history.back();" class="button green"  value="返回">
+
+ </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+    var iframe=$("#iframepage").hide();
+    $("#J-xl").click(function(){
+        iframe.fadeIn();
+    });
+});
+</script>

@@ -426,30 +426,33 @@ def tongji(rq):
         res = {}
         all_price = []
         results2 = [result for result in results2 if rq_id == result[0]]
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                   'avg_day': 0, 'least2': 0, 'most2': 0}
         for i in results2:
             dt = str(i[1])[:10]
             if dt not in res:
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv':0,'ylds':0, 'datetimes': []}
-            if i[8] == 2 and i[6] == 0:
-                res[dt]['duo'] += 1
-            elif i[8] == 2 and i[6] == 1:
-                res[dt]['kong'] += 1
-            res[dt]['mony'] += i[5]
-            xx = [str(i[1]), str(i[3]), '空', i[5]] if (i[8] == 2 and i[6] == 1) else [str(i[1]), str(i[3]), '多', i[5]]
-            res[dt]['datetimes'].append(xx)
+            if i[8] == 2:
+                if i[6] == 0:
+                    res[dt]['duo'] += 1
+                elif i[6] == 1:
+                    res[dt]['kong'] += 1
+                res[dt]['mony'] += i[5]
+                xx = [str(i[1]), str(i[3]), '空', i[5]] if i[6] == 1 else [str(i[1]), str(i[3]), '多', i[5]]
+                res[dt]['datetimes'].append(xx)
 
-        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-                   'avg_day': 0, 'least2': 0, 'most2': 0}
+                huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
+                    'least']
+                huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
+                    'most']
+
+
         res_key = list(res.keys())
-
         for i in res_key:
             mony = res[i]['mony']
             huizong['yk'] += mony
             huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-            huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
-                'least']
-            huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
-                'most']
+
             mtsl = [j[3] for j in res[i]['datetimes']]
             all_price += mtsl
             if not res[i].get('ylds'):
@@ -750,7 +753,7 @@ def moni(rq):
     cqdc = rq.GET.get('cqdc')  # 点差
     # zsds, ydzs, zyds, cqdc
     zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
-    100, 80, 200, 6)
+    100, 100, 200, 6)
     reverse = True if reverse else False
     zbjs = HSD.Zbjs()
     ma = 60
