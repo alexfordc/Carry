@@ -241,3 +241,32 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 571, in invalid_block_tag
     "or load this tag?" % (token.lineno, command)
 django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 43: 'static'. Did you forget to register or load this tag?
+base.py[2018-06-11 17:28:27][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-06-11 17:33:26][ERROR]：文件 HSD.py 第1043行报错：division by zero
+HSD.py[2018-06-11 17:34:11][ERROR]：文件 HSD.py 第1043行报错：division by zero
+views.py[2018-06-12 11:06:18][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:14:46][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:15:12][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:15:42][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:16:21][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:16:26][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:45:06][ERROR]：文件：views.py 第936行报错： sequence index must be integer, not 'slice'
+views.py[2018-06-12 11:45:40][ERROR]：文件：views.py 第936行报错： '9'
+views.py[2018-06-12 11:46:39][ERROR]：文件：views.py 第936行报错： '9'
+views.py[2018-06-12 11:50:12][ERROR]：文件：views.py 第936行报错： '9'
+views.py[2018-06-12 12:03:28][ERROR]：文件：views.py 第998行报错： sequence index must be integer, not 'slice'
+exception.py[2018-06-12 12:03:28][ERROR]：Internal Server Error: /hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1000, in huice
+    return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+UnboundLocalError: local variable 'hc' referenced before assignment
+base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico
+base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico

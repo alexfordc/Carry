@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="2018-6-11">
-      <change afterPath="$PROJECT_DIR$/static/css/easyui.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/b10.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/b16.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/b9.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/calendar_nextmonth.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/calendar_nextyear.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/calendar_prevmonth.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/images/calendar_prevyear.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/jquery-1.8.3.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/jquery.easyui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/jquery.fullcalendar.js" afterDir="false" />
+    <list default="true" id="b6f7fbc3-6162-45bb-bb0b-ff47b0b46ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/Thumbs.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/return.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/return.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/moniAll.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moniAll.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/moni.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moni.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/tongji.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tongji.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/zt_zx.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/zt_zx.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,75 +45,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="746" column="25" selection-start-line="746" selection-start-column="25" selection-end-line="746" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tongji.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tongji.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="967">
-              <caret line="202" column="55" lean-forward="true" selection-start-line="202" selection-start-column="55" selection-end-line="202" selection-end-column="55" />
-              <folding>
-                <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="form.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1988">
-              <caret line="91" column="7" lean-forward="true" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
-              <folding>
-                <element signature="n#style#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="easyui.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/easyui.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery.easyui.min.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/jquery.easyui.min.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-54">
-              <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery.fullcalendar.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/jquery.fullcalendar.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4712">
-              <caret line="1034" column="69" selection-start-line="1034" selection-start-column="69" selection-end-line="1034" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="return.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/return.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="23" column="56" selection-start-line="23" selection-start-column="56" selection-end-line="23" selection-end-column="56" />
-              <folding>
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="10225">
+              <caret line="438" column="40" selection-start-line="438" selection-start-column="40" selection-end-line="438" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -136,8 +54,8 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18300">
-              <caret line="732" column="61" selection-start-line="732" selection-start-column="61" selection-end-line="732" selection-end-column="61" />
+            <state relative-caret-position="22575">
+              <caret line="922" column="5" selection-start-line="922" selection-start-column="5" selection-end-line="922" selection-end-column="5" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -148,39 +66,75 @@
       <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="431">
-              <caret line="1850" column="44" selection-start-line="1850" selection-start-column="44" selection-end-line="1850" selection-end-column="44" />
+            <state relative-caret-position="500">
+              <caret line="1629" column="64" selection-start-line="1629" selection-start-column="64" selection-end-line="1629" selection-end-column="64" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#3535#14656#0" />
-                <element signature="e#14717#17117#0" />
-                <element signature="e#17199#22333#0" />
-                <element signature="e#22415#26659#0" />
-                <element signature="e#26741#31145#0" />
-                <element signature="e#31227#35573#0" />
-                <element signature="e#35654#38479#0" />
-                <element signature="e#38560#42887#0" />
-                <element signature="e#42968#46851#0" />
-                <element signature="e#46932#49947#0" />
-                <element signature="e#50028#55245#0" />
-                <element signature="e#55327#59305#0" />
-                <element signature="e#59387#63351#0" />
-                <element signature="e#63432#67126#0" />
-                <element signature="e#67207#71524#0" />
-                <element signature="e#71605#76580#0" />
-                <element signature="e#76677#82181#0" />
-                <element signature="e#82247#83725#0" />
-                <element signature="e#85454#86616#0" />
+                <element signature="e#3566#14695#0" />
+                <element signature="e#14756#17156#0" />
+                <element signature="e#17238#22372#0" />
+                <element signature="e#22454#26698#0" />
+                <element signature="e#26780#31184#0" />
+                <element signature="e#31266#35612#0" />
+                <element signature="e#35693#38518#0" />
+                <element signature="e#38599#42926#0" />
+                <element signature="e#43007#46890#0" />
+                <element signature="e#46971#49986#0" />
+                <element signature="e#50068#55421#0" />
+                <element signature="e#55374#59352#0" />
+                <element signature="e#59434#63398#0" />
+                <element signature="e#63480#67174#0" />
+                <element signature="e#67256#71573#0" />
+                <element signature="e#76735#82239#0" />
+                <element signature="e#82305#83783#0" />
+                <element signature="e#83848#85473#0" />
+                <element signature="e#85530#86692#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="zt_zx.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/zt_zx.html">
+      <file leaf-file-name="moni.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/moni.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="2" column="33" lean-forward="true" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
+            <state relative-caret-position="725">
+              <caret line="94" column="18" lean-forward="true" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hc.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/hc.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3200">
+              <caret line="128" column="31" selection-start-line="128" selection-start-column="31" selection-end-line="128" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tongji.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tongji.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3350">
+              <caret line="134" column="12" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="form.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="22" column="29" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="29" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -197,10 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>block</find>
-      <find>首页</find>
-      <find>computer_name</find>
-      <find>header</find>
       <find>select_id</find>
       <find>.click</find>
       <find>websockets</find>
@@ -227,6 +177,10 @@
       <find>tongji_form</find>
       <find>fullcalendar-detail</find>
       <find>width</find>
+      <find>for</find>
+      <find>tongji</find>
+      <find>zx_x</find>
+      <find>zszy</find>
     </findStrings>
     <replaceStrings>
       <replace>Index</replace>
@@ -300,21 +254,21 @@
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/templates/new_moni.html" />
         <option value="$PROJECT_DIR$/templates/hc.html" />
-        <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/zt_zx.html" />
         <option value="$PROJECT_DIR$/templates/moniAll.html" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
-        <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
         <option value="$PROJECT_DIR$/templates/base/return.html" />
         <option value="$PROJECT_DIR$/static/css/easyui.css" />
-        <option value="$PROJECT_DIR$/templates/tongji.html" />
         <option value="$PROJECT_DIR$/static/js/jquery.fullcalendar.js" />
         <option value="$PROJECT_DIR$/templates/base/form.html" />
+        <option value="$PROJECT_DIR$/templates/tongji.html" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
+        <option value="$PROJECT_DIR$/templates/moni.html" />
       </list>
     </option>
   </component>
@@ -339,6 +293,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -359,12 +314,6 @@
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -377,7 +326,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -746,13 +694,6 @@
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
     </task>
-    <task id="LOCAL-00019" summary="功能添加">
-      <created>1520492201157</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1520492201157</updated>
-    </task>
     <task id="LOCAL-00020" summary="功能调整">
       <created>1520559291383</created>
       <option name="number" value="00020" />
@@ -1089,7 +1030,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528277160517</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="2018-6-11">
+      <created>1528706957061</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1528706957062</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1114,6 +1062,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14172813" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -1138,27 +1087,27 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14172813" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32824427" />
       <window_info anchor="bottom" id="Changes" order="9" weight="0.32900432" />
-      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49736565" visible="true" weight="0.22246456" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49841937" weight="0.16139586" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50263435" side_tool="true" weight="0.16684842" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32824427" />
-      <window_info anchor="bottom" id="Application Servers" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49841937" weight="0.16139586" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49736565" visible="true" weight="0.22246456" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1176,7 +1125,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2018-3-27" />
     <MESSAGE value="2018-3-29" />
     <MESSAGE value="2018-3-30" />
     <MESSAGE value="2018-4-3" />
@@ -1201,7 +1149,8 @@
     <MESSAGE value="折线与柱图异步刷新" />
     <MESSAGE value="2018-6-1" />
     <MESSAGE value="2018-6-6" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-6-6" />
+    <MESSAGE value="2018-6-11" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-6-11" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1211,10 +1160,39 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="55" />
+      <option name="time" value="58" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9550">
+          <caret line="385" column="26" lean-forward="true" selection-start-line="385" selection-start-column="26" selection-end-line="385" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#3566#14695#0" />
+            <element signature="e#14756#17156#0" />
+            <element signature="e#17238#22372#0" />
+            <element signature="e#22454#26698#0" />
+            <element signature="e#26780#31184#0" />
+            <element signature="e#31266#35612#0" />
+            <element signature="e#35693#38518#0" />
+            <element signature="e#38599#42926#0" />
+            <element signature="e#43007#46890#0" />
+            <element signature="e#46971#49986#0" />
+            <element signature="e#50068#55421#0" />
+            <element signature="e#55374#59352#0" />
+            <element signature="e#59434#63398#0" />
+            <element signature="e#63480#67174#0" />
+            <element signature="e#67256#71573#0" />
+            <element signature="e#76735#82239#0" />
+            <element signature="e#82305#83783#0" />
+            <element signature="e#83848#85473#0" />
+            <element signature="e#85530#86692#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/kline.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
@@ -1401,20 +1379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/hc.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="316" column="30" selection-start-line="316" selection-start-column="28" selection-end-line="316" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/moni.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="143" selection-start-line="143" selection-end-line="143" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2000">
@@ -1447,9 +1411,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14500">
           <caret line="585" column="12" selection-start-line="585" selection-start-column="12" selection-end-line="585" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1460,66 +1421,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18300">
-          <caret line="732" column="61" selection-start-line="732" selection-start-column="61" selection-end-line="732" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="1850" column="44" selection-start-line="1850" selection-start-column="44" selection-end-line="1850" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#3535#14656#0" />
-            <element signature="e#14717#17117#0" />
-            <element signature="e#17199#22333#0" />
-            <element signature="e#22415#26659#0" />
-            <element signature="e#26741#31145#0" />
-            <element signature="e#31227#35573#0" />
-            <element signature="e#35654#38479#0" />
-            <element signature="e#38560#42887#0" />
-            <element signature="e#42968#46851#0" />
-            <element signature="e#46932#49947#0" />
-            <element signature="e#50028#55245#0" />
-            <element signature="e#55327#59305#0" />
-            <element signature="e#59387#63351#0" />
-            <element signature="e#63432#67126#0" />
-            <element signature="e#67207#71524#0" />
-            <element signature="e#71605#76580#0" />
-            <element signature="e#76677#82181#0" />
-            <element signature="e#82247#83725#0" />
-            <element signature="e#85454#86616#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/zt_zx.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="33" lean-forward="true" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/easyui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="746" column="25" selection-start-line="746" selection-start-column="25" selection-end-line="746" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1541,16 +1446,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="575">
           <caret line="23" column="56" selection-start-line="23" selection-start-column="56" selection-end-line="23" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/zt_zx.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="23" column="41" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="22" column="29" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="29" />
           <folding>
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/tongji.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="967">
-          <caret line="202" column="55" lean-forward="true" selection-start-line="202" selection-start-column="55" selection-end-line="202" selection-end-column="55" />
+        <state relative-caret-position="3350">
+          <caret line="134" column="12" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
           <folding>
             <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
@@ -1558,16 +1479,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/form.html">
+    <entry file="file://$PROJECT_DIR$/templates/hc.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1988">
-          <caret line="91" column="7" lean-forward="true" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
+        <state relative-caret-position="3200">
+          <caret line="128" column="31" selection-start-line="128" selection-start-column="31" selection-end-line="128" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10225">
+          <caret line="438" column="40" selection-start-line="438" selection-start-column="40" selection-end-line="438" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22575">
+          <caret line="922" column="5" selection-start-line="922" selection-start-column="5" selection-end-line="922" selection-end-column="5" />
           <folding>
-            <element signature="n#style#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="1629" column="64" selection-start-line="1629" selection-start-column="64" selection-end-line="1629" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#3566#14695#0" />
+            <element signature="e#14756#17156#0" />
+            <element signature="e#17238#22372#0" />
+            <element signature="e#22454#26698#0" />
+            <element signature="e#26780#31184#0" />
+            <element signature="e#31266#35612#0" />
+            <element signature="e#35693#38518#0" />
+            <element signature="e#38599#42926#0" />
+            <element signature="e#43007#46890#0" />
+            <element signature="e#46971#49986#0" />
+            <element signature="e#50068#55421#0" />
+            <element signature="e#55374#59352#0" />
+            <element signature="e#59434#63398#0" />
+            <element signature="e#63480#67174#0" />
+            <element signature="e#67256#71573#0" />
+            <element signature="e#76735#82239#0" />
+            <element signature="e#82305#83783#0" />
+            <element signature="e#83848#85473#0" />
+            <element signature="e#85530#86692#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/moni.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="94" column="18" lean-forward="true" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
         </state>
       </provider>
     </entry>

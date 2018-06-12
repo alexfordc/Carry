@@ -87,9 +87,9 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         <tr><th>正确率(%)</th><th>总盈亏(去点差)</th><th>总共做单</th><th>每单盈亏<br>每天盈亏</th><th>一天<br>亏损最多  <a style="color:blue;" href="#yidan_ks">查看一单</a></th>
             <th>亏损<br>涨幅与波动</th><th>一天<br>盈利最多  <a style="color:blue;" href="#yidan_yl">查看一单</a></th><th>盈利<br>涨幅与波动</th></tr>
         <tr bgcolor="#cccc33"><td>{{ huizong.shenglv }}</td><td>{{ huizong.yk|floatformat }}</td><td>{{ huizong.zl }}</td><td>{{ huizong.avg|floatformat:2 }}<br>{{ huizong.avg_day|floatformat:2 }}</td>
-            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1 }}</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.least.0 }}&database={{database}}">{{ huizong.least.0 }}</a><br>{{ huizong.least.1|floatformat }}</td>
             <td>涨幅：{{ huizong.least.2|floatformat:0 }} 点<br>波动：{{ huizong.least.3|floatformat:0 }} 点</td>
-            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
+            <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1|floatformat }}</td>
             <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td></tr>
             <tr><td>止损：{{ huizong.zs }}</td><td>移动止损：{{ huizong.ydzs }}</td><td>止盈：{{ huizong.zy }}</td><td colspan="5"></td></tr>
         {% else %}

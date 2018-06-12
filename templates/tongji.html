@@ -37,7 +37,7 @@
         <th>操作</th>
     </tr>
             {% for i in herys %}
-    <tr>
+    <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
       <td>{{ i.0 }}</td>
       <td id="name{{i.0}}" contentEditable="true">
           {% if i.1 %}{{ i.1 }}{% endif %}
@@ -62,7 +62,7 @@
             <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th><th> 回测 </th><th>名  称</th>
         </tr>
         {% for i in huizong %}
-        <tr>
+        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
             <td>{{ i.0 }}</td>
         <td>{{ i.1 }}</td>
         <td>{{ i.2|floatformat:1 }}</td>
@@ -100,7 +100,7 @@
 
     </tr>
             {% for i in results2 %}
-    <tr>
+    <tr bgcolor="{% cycle '#cccc33' '00cc00' %}">
       <td>{{ id_name|names:i.0 }}</td>
       <td>{{ i.1 }}</td>
       <td>{{ i.2 }}</td>
@@ -208,8 +208,8 @@
      }
 
         $('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
-        $("tr:odd").css({"background-color": "#cccc33"});
-        $('tr:even').css({'background-color': '#00cc00'});
+        //$("tr:odd").css({"background-color": "#cccc33"});
+        //$('tr:even').css({'background-color': '#00cc00'});
         $('tr').css({'height': '30'});
 
 //提交

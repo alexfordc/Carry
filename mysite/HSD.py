@@ -931,7 +931,7 @@ def huices(res,huizong,init_money,dates,end_date):
     avg = huizong['yk'] / huizong['zl']  # 平均盈亏
     count_var = 0
     for i in keys:
-        je = res[i]['mony']
+        je = round(res[i]['mony'])
         jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
         zx_x.append(i[-5:-3] + i[-2:])
         zx_y.append(zx_y[-1] + je if zx_y else je)
