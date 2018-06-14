@@ -270,3 +270,5 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'hc' referenced before assignment
 base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico
 base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-06-12 17:53:22][ERROR]：文件 HSD.py 第1043行报错：'2018-03-06' is not in list
+HSD.py[2018-06-12 17:53:56][ERROR]：文件 HSD.py 第1043行报错：'2018-03-06' is not in list

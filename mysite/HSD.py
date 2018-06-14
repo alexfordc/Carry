@@ -626,7 +626,7 @@ class Limit_up:
 
 class Zbjs(ZB):
     def __init__(self):
-        self.tab2_name = 'handle_min'  # index_min
+        self.tab_name = {'1':'futures_min','2':'wh_min','3':'handle_min','4':'index_min'}  # index_min
         super(Zbjs, self).__init__()
 
     def main(self, _ma=60):
@@ -646,10 +646,7 @@ class Zbjs(ZB):
     def get_hkHSI_date(self, conn, size=60, database=None):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
         if database != None:
-            if database == '1':
-                tab_name = 'futures_min'
-            else:
-                tab_name = self.tab2_name
+            tab_name = self.tab_name.get(database,'futures_min')
             sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
                 tab_name)
             data = getSqlData(conn, sql)
@@ -670,14 +667,14 @@ class Zbjs(ZB):
         else:
             # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
             sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
-                self.tab2_name, dates, dates2)
+                self.tab_name['2'], dates, dates2)
         return getSqlData(conn, sql)
 
     def main2(self, _ma, _dates, end_date, _fa, database, reverse=False,param=None):
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0, 'zs':0,'ydzs':0,'zy':0}
-        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        conn = get_conn('carry_investment') #if database == '1' else get_conn('stock_data')
         prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
         all_price = []
         is_inst_date = []
@@ -743,7 +740,7 @@ class Zbjs(ZB):
                            'avg_day': 0, 'least2': 0, 'most2': 0, 'first_time': None}
             for k in self.xzfa
         }
-        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        conn = get_conn('carry_investment') # if database == '1' else get_conn('stock_data')
         prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
         conn.commit()
         hk = self.get_hkHSI_date(conn=conn)  # 当日波动
@@ -803,7 +800,7 @@ class Zbjs(ZB):
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
-        conn = get_conn('carry_investment') if database == '1' else get_conn('stock_data')
+        conn = get_conn('carry_investment') # if database == '1' else get_conn('stock_data')
         prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
         all_price = []
         is_inst_date = []

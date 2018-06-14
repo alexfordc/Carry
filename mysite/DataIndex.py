@@ -30,7 +30,7 @@ class ZB(object):
         "11": ["",
                "收盘价小于60均线 与 价差除以标准差<-1.5，在本macd区域（价差除以标准差<-1.5）的次数小于3次，则做空；在第二波macd红绿区平仓", "止损100个点。反测则为 收盘价大于60均线"],
         "12": ["",
-               "上一分钟的5分钟K值大于80，则做空；当前K值小于15 或者 K值已经突破了25 并且 当前K值比突破25的K值中的最小值大10，则平仓", "止损100个点。"],
+               "上一分钟的5分钟K值大于80，则做空；当前K值小于15 或者 KDJ（K）值已经突破了25 并且 当前K值比突破25的K值中的最小值大10，则平仓", "止损100个点。"],
         "13": ["上一分钟的5分钟K值小于20，则做多；当前K值大于80，则平仓。",
                "", "止损100个点。"],
         "14": ["收盘价大于60均线 与 dea大于0，则做多；收盘价小于60均线 与 dea小于0，则平仓。",
@@ -1214,6 +1214,7 @@ class ZB(object):
         res = {}
         first_time = []
         sb = 0
+        sb2 = 0
         count = 0
         count_c = 0
         ydzs_d, ydzs_k = 0, 0  # 移动止损
@@ -1249,6 +1250,7 @@ class ZB(object):
                 is_d = 1
                 first_time = [str_time1, '多', clo]
                 sb = reg
+                sb2 = reg%2
                 zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             # elif kctj_k and mul < -1.5 and is_dk and 9 <= datetimes.hour < 16:
             #     startMony_k = clo
@@ -1257,10 +1259,9 @@ class ZB(object):
             #     first_time = [str_time2, '空', clo]
             #     sb = reg
 
-            if not is_dk and sb != reg: # and abs(macd)>5:
+            if not is_dk and sb != reg and abs(macd)>5:
                 count += 1
                 sb = reg
-
 
             if is_d == 1:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
@@ -1269,7 +1270,7 @@ class ZB(object):
                     _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
                 elif _zsjg_d == 0:
                     _zsjg_d = startMony_d + zsjg  # 止损所在价格点
-                if ((count > 2 or self.is_date(datetimes) or low<=_zsjg_d or high-startMony_d>=zyds) or qzpc) and str(datetimes)!=str_time1:
+                if (((count > 2 and sb2 != reg%2) or self.is_date(datetimes) or low<=_zsjg_d or high-startMony_d>=zyds) or qzpc) and str(datetimes)!=str_time1:
                     res[dates]['duo'] += 1
                     if low > _zsjg_d and high - startMony_d < zyds:
                         price = round(clo - startMony_d)
@@ -1308,9 +1309,11 @@ class ZB(object):
         res = {}
         first_time = []
         sb = 0
+        sb2 = 0
         count = 0
         count_c = 0
         ydzs_d, ydzs_k = 0, 0  # 移动止损
+        vs = 0
         while 1:
             _while, res, dt3, dates, qzpc = yield res, first_time
             if not _while:
@@ -1322,7 +1325,6 @@ class ZB(object):
                                                                                'macd'], dt2['ma'], dt2['std'], dt2[
                                                                                'reg'], dt2['mul'], dt2['cd'], dt2[
                                                                                'high'], dt2['low']
-
             if mul > 1.5:
                 res[dates]['dy'] += 1
             elif mul < -1.5:
@@ -1348,10 +1350,15 @@ class ZB(object):
                 is_k = -1
                 first_time = [str_time2, '空', clo]
                 sb = reg
+                sb2 = reg%2
                 zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
-            if not is_dk and sb != reg and abs(macd)>5:
-                count += 1
-                sb = reg
+                count = 0
+
+            if sb != reg:
+                if abs(macd)>5:
+                    count += 1
+                    sb = reg
+
 
             # if is_d == 1 and (count > 2 or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg):
             #     res[dates]['duo'] += 1
@@ -1368,7 +1375,7 @@ class ZB(object):
                     _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
                 elif _zsjg_k == 0:
                     _zsjg_k = startMony_k - zsjg  # 止损所在价格点
-                if ((count > 2 or self.is_date(datetimes) or high>=_zsjg_k or startMony_k-low>=zyds) or qzpc) and str(datetimes)!=str_time2:
+                if (((count > 2 and sb2!=reg%2) or self.is_date(datetimes) or high>=_zsjg_k or startMony_k-low>=zyds) or qzpc) and str(datetimes)!=str_time2:
                     res[dates]['kong'] += 1
                     if high < _zsjg_k and startMony_k - low < zyds:
                         price = round(startMony_k - clo)
