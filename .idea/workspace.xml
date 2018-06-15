@@ -5,9 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/moniAll.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/moniAll.html" afterDir="false" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,40 +39,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <file leaf-file-name="macd_bl.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../June_2018/2018-6-14/macd_bl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10225">
-              <caret line="438" column="40" selection-start-line="438" selection-start-column="40" selection-end-line="438" selection-end-column="40" />
+            <state relative-caret-position="588">
+              <caret line="445" selection-start-line="445" selection-end-line="445" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5825">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="247">
+              <caret line="574" column="21" lean-forward="true" selection-start-line="574" selection-start-column="21" selection-end-line="574" selection-end-column="21" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#17529#26224#0" />
-                <element signature="e#31595#34990#0" />
-                <element signature="e#35083#37608#0" />
-                <element signature="e#37655#38736#0" />
-                <element signature="e#39254#44944#0" />
+                <element signature="e#12663#19645#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="1206" column="71" selection-start-line="1206" selection-start-column="71" selection-end-line="1206" selection-end-column="71" />
+            <state relative-caret-position="4025">
+              <caret line="1390" lean-forward="true" selection-start-line="1390" selection-end-line="1390" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#3714#14843#0" />
+                <element signature="e#3742#16787#0" />
                 <element signature="e#14904#17304#0" />
                 <element signature="e#17386#22520#0" />
                 <element signature="e#22602#26846#0" />
@@ -84,68 +78,15 @@
                 <element signature="e#43155#47038#0" />
                 <element signature="e#47119#50134#0" />
                 <element signature="e#50216#55569#0" />
-                <element signature="e#55651#59673#0" />
-                <element signature="e#59711#63788#0" />
-                <element signature="e#63870#67564#0" />
-                <element signature="e#67646#71963#0" />
-                <element signature="e#72045#76968#0" />
-                <element signature="e#77065#82569#0" />
-                <element signature="e#82635#84113#0" />
-                <element signature="e#84178#85877#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="moniAll.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/moniAll.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="81" column="23" lean-forward="true" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="moni.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/moni.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hc.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/hc.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3200">
-              <caret line="128" column="31" selection-start-line="128" selection-start-column="31" selection-end-line="128" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tongji.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tongji.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3350">
-              <caret line="134" column="12" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
-              <folding>
-                <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="form.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="22" column="29" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="29" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="e#55651#59688#0" />
+                <element signature="e#63929#67623#0" />
+                <element signature="e#67705#72022#0" />
+                <element signature="e#72104#77027#0" />
+                <element signature="e#79345#84290#0" />
+                <element signature="e#77124#82628#0" />
+                <element signature="e#82694#84172#0" />
+                <element signature="e#84237#85936#0" />
+                <element signature="e#85993#87155#0" />
               </folding>
             </state>
           </provider>
@@ -163,16 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>总盈亏(去点差)</find>
-      <find>body</find>
-      <find>re.</find>
-      <find>moni</find>
-      <find>盈亏</find>
-      <find>oc</find>
-      <find>&gt; 0.4</find>
-      <find>Err: moni</find>
-      <find>min(</find>
-      <find>(oc[3] - oc[2]) / (oc[4] - oc[1])</find>
       <find>csrf_</find>
       <find>pop(0)</find>
       <find>dc =</find>
@@ -184,7 +115,6 @@
       <find>fullcalendar-detail</find>
       <find>width</find>
       <find>for</find>
-      <find>tongji</find>
       <find>zx_x</find>
       <find>zszy</find>
       <find>数据库</find>
@@ -193,6 +123,17 @@
       <find>tab_name</find>
       <find>conn =</find>
       <find>CODE_EQUITY</find>
+      <find>亏损最多的一天</find>
+      <find>jqdata</find>
+      <find>data</find>
+      <find>talib</find>
+      <find>O</find>
+      <find>vis</find>
+      <find>overlap</find>
+      <find>namedtuple</find>
+      <find>rsi</find>
+      <find>return</find>
+      <find>tongji</find>
     </findStrings>
     <replaceStrings>
       <replace>Index</replace>
@@ -230,7 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../EveryDay/demo/AndBefore-2018-3/MyUtil.py" />
         <option value="$PROJECT_DIR$/../../2018-3-21/zb2.py" />
         <option value="$PROJECT_DIR$/../../EveryDay/demo/AndBefore-2018-3/TradeDate.py" />
         <option value="$PROJECT_DIR$/templates/zhutu2.html" />
@@ -276,11 +216,12 @@
         <option value="$PROJECT_DIR$/static/js/jquery.fullcalendar.js" />
         <option value="$PROJECT_DIR$/templates/base/form.html" />
         <option value="$PROJECT_DIR$/templates/tongji.html" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/moni.html" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
-        <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
         <option value="$PROJECT_DIR$/templates/moniAll.html" />
+        <option value="$PROJECT_DIR$/../June_2018/2018-6-14/macd_bl.py" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
       </list>
     </option>
   </component>
@@ -306,7 +247,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -318,6 +258,11 @@
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Carry" type="462c0819:PsiDirectoryNode" />
+              <item name="mysite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
@@ -339,6 +284,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -707,13 +653,6 @@
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
     </task>
-    <task id="LOCAL-00021" summary="标题数据显示">
-      <created>1520565533930</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1520565533930</updated>
-    </task>
     <task id="LOCAL-00022" summary="成交量改动">
       <created>1520824639297</created>
       <option name="number" value="00022" />
@@ -1050,7 +989,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528792811119</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="2018-6-14">
+      <created>1528966146768</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1528966146768</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1075,7 +1021,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14172813" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -1100,27 +1045,27 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14172813" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32824427" />
       <window_info anchor="bottom" id="Changes" order="9" weight="0.32900432" />
-      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49736565" visible="true" weight="0.22246456" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50263435" side_tool="true" weight="0.16684842" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32824427" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49841937" weight="0.16139586" />
-      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49736565" visible="true" weight="0.22246456" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1138,7 +1083,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2018-3-30" />
     <MESSAGE value="2018-4-3" />
     <MESSAGE value="2018-4-4" />
     <MESSAGE value="2018-4-10" />
@@ -1163,7 +1107,8 @@
     <MESSAGE value="2018-6-6" />
     <MESSAGE value="2018-6-11" />
     <MESSAGE value="2018-6-12" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-6-12" />
+    <MESSAGE value="2018-6-14" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-6-14" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1177,35 +1122,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9550">
-          <caret line="385" column="26" lean-forward="true" selection-start-line="385" selection-start-column="26" selection-end-line="385" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#3714#14843#0" />
-            <element signature="e#14904#17304#0" />
-            <element signature="e#17386#22520#0" />
-            <element signature="e#22602#26846#0" />
-            <element signature="e#26928#31332#0" />
-            <element signature="e#31414#35760#0" />
-            <element signature="e#35841#38666#0" />
-            <element signature="e#38747#43074#0" />
-            <element signature="e#43155#47038#0" />
-            <element signature="e#47119#50134#0" />
-            <element signature="e#50216#55569#0" />
-            <element signature="e#55651#59673#0" />
-            <element signature="e#59711#63788#0" />
-            <element signature="e#63870#67564#0" />
-            <element signature="e#67646#71963#0" />
-            <element signature="e#72045#76968#0" />
-            <element signature="e#77065#82569#0" />
-            <element signature="e#82635#84113#0" />
-            <element signature="e#84178#85877#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/kline.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
@@ -1459,11 +1375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="22" column="29" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1471,10 +1382,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3350">
           <caret line="134" column="12" selection-start-line="134" selection-start-column="12" selection-end-line="134" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1482,13 +1389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3200">
           <caret line="128" column="31" selection-start-line="128" selection-start-column="31" selection-end-line="128" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10225">
-          <caret line="438" column="40" selection-start-line="438" selection-start-column="40" selection-end-line="438" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1521,13 +1421,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/moniAll.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="81" column="23" lean-forward="true" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../June_2018/2018-6-14/macd_bl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="445" selection-start-line="445" selection-end-line="445" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="574" column="21" lean-forward="true" selection-start-line="574" selection-start-column="21" selection-end-line="574" selection-end-column="21" />
+          <folding>
+            <element signature="e#12663#19645#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="1206" column="71" selection-start-line="1206" selection-start-column="71" selection-end-line="1206" selection-end-column="71" />
+        <state relative-caret-position="4025">
+          <caret line="1390" lean-forward="true" selection-start-line="1390" selection-end-line="1390" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#3714#14843#0" />
+            <element signature="e#3742#16787#0" />
             <element signature="e#14904#17304#0" />
             <element signature="e#17386#22520#0" />
             <element signature="e#22602#26846#0" />
@@ -1538,22 +1462,16 @@
             <element signature="e#43155#47038#0" />
             <element signature="e#47119#50134#0" />
             <element signature="e#50216#55569#0" />
-            <element signature="e#55651#59673#0" />
-            <element signature="e#59711#63788#0" />
-            <element signature="e#63870#67564#0" />
-            <element signature="e#67646#71963#0" />
-            <element signature="e#72045#76968#0" />
-            <element signature="e#77065#82569#0" />
-            <element signature="e#82635#84113#0" />
-            <element signature="e#84178#85877#0" />
+            <element signature="e#55651#59688#0" />
+            <element signature="e#63929#67623#0" />
+            <element signature="e#67705#72022#0" />
+            <element signature="e#72104#77027#0" />
+            <element signature="e#79345#84290#0" />
+            <element signature="e#77124#82628#0" />
+            <element signature="e#82694#84172#0" />
+            <element signature="e#84237#85936#0" />
+            <element signature="e#85993#87155#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/moniAll.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="81" column="23" lean-forward="true" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
         </state>
       </provider>
     </entry>

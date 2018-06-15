@@ -555,7 +555,7 @@ def kline(rq):
 
 def getList():
     # 时间,开盘价,最高价,最低价,收盘价,成交量
-    data_dict = {'1': ['carry_investment', 'futures_min'], '2': ['stock_data', 'index_min']}
+    data_dict = {'1': ['carry_investment', 'futures_min'], '2': ['carry_investment', 'wh_min']}
     dates = read_from_cache('kline_date')
     database = read_from_cache('kline_database')
     if dates and database:
@@ -569,12 +569,7 @@ def getList():
             dates2 = dates2 + datetime.timedelta(days=1)
             dates2 = str(dates2)[:10]
 
-        if database == '1':
-            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>="%s" AND datetime<"%s"' % (
-                data_dict[database][1], dates, dates2)
-        elif database == '2':
-            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE code="HSIc1" AND datetime>="%s" AND datetime<"%s"' % (
-                data_dict[database][1], dates, dates2)
+        sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE datetime>="%s" AND datetime<"%s"' % (data_dict[database][1], dates, dates2)
         cur.execute(sql)
         res = list(cur.fetchall())
         conn.commit()

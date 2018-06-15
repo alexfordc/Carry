@@ -272,3 +272,1123 @@ base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico
 base.py[2018-06-12 12:03:29][WARNING]：Not Found: /favicon.ico
 HSD.py[2018-06-12 17:53:22][ERROR]：文件 HSD.py 第1043行报错：'2018-03-06' is not in list
 HSD.py[2018-06-12 17:53:56][ERROR]：文件 HSD.py 第1043行报错：'2018-03-06' is not in list
+exception.py[2018-06-15 13:16:25][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 377, in tongji
+    print(bool(rq.POSTs),'..........',rq.method=='GET')
+AttributeError: 'WSGIRequest' object has no attribute 'POSTs'
+base.py[2018-06-15 13:16:25][WARNING]：Not Found: /favicon.ico
+base.py[2018-06-15 13:16:25][WARNING]：Not Found: /favicon.ico
+exception.py[2018-06-15 16:53:29][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:30][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:31][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:32][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:33][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:34][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:35][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:36][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 16:53:37][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:25][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:26][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:27][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:28][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:29][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:30][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:31][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:32][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:33][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:34][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:35][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:36][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:37][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:38][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:39][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:40][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:42][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:43][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:44][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:45][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:46][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:47][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:48][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:49][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:24:50][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:04][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 594, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:37][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:38][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:40][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:42][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:43][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:44][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:46][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:29:47][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:31:04][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:31:17][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:31:18][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 637, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 595, in getList
+    data2.send(None)
+  File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 213, in vis
+    dc.popleft()
+IndexError: pop from an empty deque
+exception.py[2018-06-15 17:32:49][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:50][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:51][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:52][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:53][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:54][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
+exception.py[2018-06-15 17:32:55][ERROR]：Internal Server Error: /getkline
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 636, in getkline
+    lists, _ch = getList()
+  File "D:\tools\Tools\Carry\mysite\views.py", line 578, in getList
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'code' in 'where clause'")
