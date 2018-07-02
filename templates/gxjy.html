@@ -1,0 +1,231 @@
+{% extends 'base/base.html' %}
+{% block title %}国信交易{% endblock %}
+{% block script %}
+<style>
+    .button {
+    display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+	padding: .3em 1em .3em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	margin-right:10px;
+}
+
+/* green */
+.green {
+	color: #e8f0de;
+	border: solid 1px #538312;
+	background: #64991e;
+	width:90px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+	background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+}
+.green:hover {
+	background: #538018;
+	background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+	background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+}
+.green:active {
+	color: #a9c08c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#4e7d0e), to(#7db72f));
+	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
+}
+</style>
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
+<div align="center">
+    <form action="">
+
+ <div style="margin-left:43%;"><br/>
+     <a style="position:relative;right:200px;" href="{% url 'gxjy' %}?type=sx" ><img width="30" src="{% static 'images/b9.ico' %}" title="刷新"></a>
+     <input type="button" onclick="javascript:myajaxs({% url 'gxjy' %})" class="button green" value="原始数据">
+    <input type="button" onclick="javascript:myajaxs('/gxjy/?type=js')" class="button green" value="计算数据">
+     <input type="button" onclick="javascript:myajaxs('/gxjy/?type=tjt')" class="button green" value="统计图">
+
+ </div>
+</form>
+    <!--<a href="javascript:myajaxs({% url 'gxjy' %})">原始数据</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--<a href="javascript:myajaxs('/gxjy/?type=js')">计算数据</a>（<a href="javascript:myajaxs('/gxjy/?type=js&group=date')">日期分组</a>）&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--<a href="javascript:myajaxs('/gxjy/?type=tjt')">统计图</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <!--<a href="{% url 'gxjy' %}?type=sx">刷新</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/><br/>-->
+    <div id="data_is_ajax">
+    <table border="1">
+        {% if hys %}
+        <tr><th colspan="22" style="font-size:20px;">交易汇总</th></tr>
+        <tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th><th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th>
+            <th>总盈利</th><th>总平均盈利</th><th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th><th>手续费</th><th>已平仓</th><th>序号</th></tr>
+        {% for i in hys %}
+        <tr bgcolor="{% cycle '#aaf' '#ccf' %}"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
+            <td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td>
+            <td>{{i.7}}</td><td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td>
+            <td>{{i.14}}</td><td>{{i.15}}</td><td>{{i.16}}</td><td>{{i.17}}</td><td>{{i.18}}</td><td>{{i.19}}</td><td>{{forloop.counter}}</td></tr>
+        {% endfor %}
+        {% endif %}
+        {% if data %}
+        <tr><th colspan="22" style="font-size:20px;">交易详情</th></tr>
+        <tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th><th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th>
+        <th>总盈利</th><th>总平均盈利</th><th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th><th>手续费</th><th>已平仓</th><th>序号</th></tr>
+        {% for i in data %}
+        <tr bgcolor="{% if i.21 == 0 %}'#aaf'{% else %}'#ccf'{% endif %}"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
+            <td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td>
+            <td>{{i.7}}</td><td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td>
+            <td>{{i.14}}</td><td>{{i.15}}</td><td>{{i.16}}</td><td>{{i.17}}</td><td>{{i.18}}</td><td>{{i.19}}</td><td>{{i.20}}&nbsp;&nbsp;{{forloop.counter}}</td></tr>
+        {% endfor %}
+        {% endif %}
+        {% if init_data %}
+        <tr style="width:1000px;"><th colspan="17" style="font-size:20px;">交易数据</th></tr>
+        <tr><th>成交时间</th><th>交易所</th><th>合约号</th><th>买卖</th><th>开平仓</th><th>成交手数</th><th>成交价格</th><th>手续费</th>
+            <th>交易费</th><th>交易编码</th><th>席位号</th><th>系统号</th><th>成交号</th><th>投保</th><th>交割期</th><th>币种</th><th>名称</th><th>序号</th></tr>
+        {% for i in init_data %}
+        <tr bgcolor="{% cycle '#aaf' '#ccf' %}"><td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td><td>{{i.7}}</td>
+            <td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td><td>{{i.14}}</td><td>{{i.15}}</td>
+            <td><a href="{% url 'gxjy' %}?code={{i.2}}" style="color:blue;">{{i.16}}</a></td><td>{{forloop.counter}}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+  </div>
+    <div id="zhexiantu" style="width:auto;height:600px"></div>
+
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+ <script type="text/javascript">
+function myzhexiantu(zx_x,zx_y){
+var myChart = echarts.init(document.getElementById('zhexiantu'));
+option = {
+title:{
+    text:"统计图",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+    }
+},
+color:["#FF0000"],
+tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: zx_x
+        },
+toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+    xAxis: {
+        type: 'category',
+        data: zx_x
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: zx_y,
+        type: 'line'
+    }]
+};
+
+myChart.setOption(option);
+}
+
+
+function myajaxs(url){
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function(res){
+                if(res.init_data){
+                    var data = res.init_data;
+                    var html="<table border='1'>";
+                    html += "<tr style='width:1000px;'><th colspan='18' style='font-size:20px;'>交易数据</th></tr>";
+                    html += "<tr><th>成交时间</th><th>交易所</th><th>合约号</th><th>买卖</th><th>开平仓</th><th>成交手数</th><th>成交价格</th><th>手续费</th>"
+                    html += "<th>交易费</th><th>交易编码</th><th>席位号</th><th>系统号</th><th>成交号</th><th>投保</th><th>交割期</th><th>币种</th><th>名称</th><th>序号</th></tr>"
+                    for (var i=0;i<data.length;i++){
+                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                        for (var j=0;j<data[i].length;j++){
+                            if(j==data[i].length-1){
+                                html += "<td><a href='{% url 'gxjy' %}?code="+data[i][2]+"' style='color:blue;'>"+data[i][j]+"</a></td>";
+                                html += "<td>"+(i+1)+"</td>";
+                            }else{
+                                html += "<td>"+data[i][j]+"</td>";
+                            }
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+
+                    $("#data_is_ajax").html(html); //append(res.data);
+                }else if(res.data){
+                    var hys = res.hys;
+                    var data = res.data;
+                    var html="<table border='1'><tr><th colspan='22' style='font-size:20px;'>交易汇总</th></tr>";
+                    html += "<tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th>";
+                    html += "<th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th><th>总盈利</th><th>总平均盈利</th>";
+                    html += "<th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th>";
+                    html += "<th>手续费</th><th>已平仓</th><th>序号</th></tr>";
+                    for(var i=0;i<hys.length;i++){
+                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                        html += "<td><a href='{% url 'gxjy' %}?type=js&code="+hys[i][0]+"' style='color:blue;'>"+hys[i][22]+"</a></td>";
+                        for (var j=0;j<hys[i].length-4;j++){
+                            html += "<td>"+hys[i][j]+"</td>";
+                        }
+                        html += "<td>"+(i+1)+"</td></tr>";
+                    }
+                    html += "<tr><th colspan='22' style='font-size:20px;'>交易详情</th></tr>";
+                    html += "<tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th>";
+                    html += "<th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th><th>总盈利</th><th>总平均盈利</th>";
+                    html += "<th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th>";
+                    html += "<th>手续费</th><th>已平仓</th><th>序号</th></tr>";
+                    for(var i=0;i<data.length;i++){
+                        html += data[i][21]%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                        html += "<td>"+data[i][22]+"</td>";
+                        for (var j=0;j<data[i].length-3;j++){
+                            if(j<data[i].length-4){
+                                html += "<td>"+data[i][j]+"</td>";
+                            }else{
+                                html += "<td>"+data[i][j]+"&nbsp;&nbsp;"+(i+1)+"</td>";
+                            }
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+                    $("#data_is_ajax").html(html);
+                }else if(res.zx_x){
+                    var zx_x=[],zx_y=[],zx_x2 = res.zx_x,zx_y2 = res.zx_y;
+                    for(var i=0;i<zx_x2.length;i++){
+                        zx_x.push(zx_x2[i]);
+                        zx_y.push(zx_y2[i]);
+                    }
+                    $("#data_is_ajax").html('');
+                    myzhexiantu(zx_x,zx_y);
+                }
+            },
+            error: function (errorMsg) {
+                //alert("no!");
+        }
+        });
+}
+</script>
+</div>
+
+{% endblock %}

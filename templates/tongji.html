@@ -2,8 +2,8 @@
 {% block title %}统计表{% endblock %}
 {% block center_cen %}
 {% load staticfiles %}
-    <div align="center">
-    {% include 'base/form.html' %}
+{% include 'base/form.html' %}
+    <div align="center" id="tongji">
     {% load mvote %}
 {#        <h3>#}
 {#            {% if xz == '1' %}#}
@@ -181,7 +181,10 @@
         {% endfor %}
 
         </table>
+    {% elif monijy or sjjy %}
+        <div id="ssjy">
 
+            </div>
     {% else %}
         <h3 style="color:green;">暂无数据</h3>
     {% endif %}
@@ -195,22 +198,89 @@
     </form>
 </div>
     <script type="text/javascript">
-    function doSubmitForm(ty){
-        if(ty==null){
-        var tongji_form=document.getElementById('tongji_form');
-        tongji_form.submit();
-        }else{
-        var date=document.getElementById('J-xl').value;
-        var id=document.getElementById('select_id').value;
-        var rq_ts=document.getElementById('rq_ts').value;
-        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&end_date='+rq_ts;
-        }
-     }
+function myajaxs(){
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'tongji' %}?type=3',
+            dataType: 'json',
+            success: function(res){
+                var html = "";
+                if(res.monijy.length>0){
+                    var data = res.monijy;
+                    html += "<table border='1' width='1080px'><br/><thead>模拟交易</thead>";
+                    html += "<tr><th>名称</th><th>交易时间</th><th>价格</th><th>多空</th><th>手数</th><th>状态</th><th>止损</th><th>止盈</th></tr>";
+                    for (var i=0;i<data.length;i++){
+                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                        for (var j=0;j<data[i].length;j++){
+                                html += "<td>"+data[i][j]+"</td>";
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</table>";
 
-        $('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
-        //$("tr:odd").css({"background-color": "#cccc33"});
-        //$('tr:even').css({'background-color': '#00cc00'});
-        $('tr').css({'height': '30'});
+                }
+                html += "<br/>"
+                if(res.sjjy.length>0){
+                    if(res.ssjygd.length>0){
+                        var data = res.ssjygd;
+                        html += "<table border='1' width='1080px'><thead>实盘交易挂单</thead>";
+                        html += "<th>时间</th><th>合约</th><th>价格</th><th>止损价</th><th>订单编号</th><th>剩余数量</th><th>已成交数量</th><th>总数量</th><th>用户</th><th>买卖</th><th>状态</th>";
+                        for (var i=0;i<data.length;i++){
+                            html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                            for (var j=0;j<data[i].length;j++){
+                                html += "<td>"+data[i][j]+"</td>";
+                         }
+                            html += "</tr>";
+                    }
+                    html += "</table>";
+                    }
+                    var data = res.sjjy;
+                    html += "<table border='1' width='1080px'><thead>实盘交易记录</thead>";
+                    html += "<tr><td>时间</td><td>成交价格</td><td>成交记录号</td><td>成交手数</td><td>产品代码</td><td>交易账户</td><td>买卖</td>";
+                    html += "<td>状态</td><td>下单价格</td><td>总量</td><td>剩余量</td><td>成交量</td><td>订单号</td><td>持仓</td><td>平仓总盈亏</td></tr>";
+                    for (var i=0;i<data.length;i++){
+                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
+                        for (var j=0;j<data[i].length;j++){
+                            if(j==5){
+                                if(data[i][j]=='B'){
+                                    html += "<td>买</td>";
+                                }else if(data[i][j]=='S'){
+                                    html += "<td>卖</td>";
+                                }else{
+                                    html += "<td></td>";
+                                }
+                            }else if(j==6){
+                                if(data[i][j]==9){
+                                    html += "<td>已成交</td>";
+                                }else if(data[i][j]==8){
+                                    html += "<td>部分成交</td>";
+                                }else{
+                                    html += "<td></td>";
+                                }
+                            }else{
+                                html += "<td>"+data[i][j]+"</td>";
+                            }
+                        }
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+                }
+                $("#tongji").html(html);
+            },
+            error: function (errorMsg) {
+                //alert(errorMsg);
+        }
+        });
+}
+function tongjiss(){
+    myajaxs();
+    var t = setInterval("myajaxs()",10000);
+}
+
+$('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
+//$("tr:odd").css({"background-color": "#cccc33"});
+//$('tr:even').css({'background-color': '#00cc00'});
+$('tr').css({'height': '30'});
 
 //提交
 function formSubmit(id,name,en,pass,types){
@@ -247,7 +317,7 @@ function delete_user(id){
     }
     }else{alert('验证码不能为空！');}
 }
-var messages='{{messages}}';
-if(messages.length>0){alert(messages);}
+var messagess='{{messagess}}';
+if(messagess.length>0){alert(messagess);}
     </script>
 {% endblock %}

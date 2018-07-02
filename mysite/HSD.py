@@ -107,20 +107,27 @@ SQL = {
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
     'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
-    "order_detail": "SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,TYPE,Lots,STATUS FROM order_detail WHERE OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+    "order_detail": "SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit "
+                    "FROM order_detail WHERE Status!=-1 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 
 computer_name = socket.gethostname()  # 计算机名称
 
-def get_date():
-    ''' 返回当前日期，格式为：2018-04-04 '''
+def get_date(d=None):
+    ''' 返回当前日期，格式为：2018-04-04
+        若参数为整数，则把当前日期按参数向前后推移 '''
+    if isinstance(d,int):
+        return str(datetime.datetime.now()+datetime.timedelta(days=d))[:10]
     return str(datetime.datetime.now())[:10]
 
 
 def get_ud():
     return config['U']['ud']
 
+def get_allow_ip():
+    ip = config['IP']['ip']
+    return ip.split(',')
 
 def get_conn(dataName=None):
     ''' 返回数据库连接 '''
@@ -145,10 +152,9 @@ def closeConn(conn):
     except:
         pass
 
-
 def get_tcp():
     ''' 返回IP地址 '''
-    return '192.168.2.226' if computer_name != 'doc' else '192.168.2.204'  # config['U']['hs']
+    return config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
 
 
 def dtf(d):
@@ -347,10 +353,7 @@ def tongji():
     #     results.Account_ID = results.Account_ID.astype('int')
     #     IDS = list(set(results.Account_ID))  # 账号列表
     conn = get_conn('carry_investment')
-    cur = conn.cursor()
-    sql = SQL['tongji']
-    cur.execute(sql)
-    results = cur.fetchall()
+    results = getSqlData(conn,SQL['tongji'])
     conn.commit()
     conn.close()
     IDS = [i[0] for i in results]
@@ -363,18 +366,58 @@ def get_date_add_day(dates, ts):
     return str(asd)[:10]
 
 
-def order_detail(dates, end_date):
+def order_detail(dates=None, end_date=None):
     global IDS
+    if dates is None and end_date is None:
+        dates = get_date(-30)
+        end_date = get_date(1)
+    end_date = dtf(end_date)+datetime.timedelta(days=1)
     conn = get_conn('carry_investment')
     sql = SQL['order_detail']
     sql = sql.format(dates, end_date)
     data = getSqlData(conn, sql)
-    price = getSqlData(conn,"SELECT price FROM futures_tick ORDER BY id DESC LIMIT 1")
     conn.commit()
     conn.close()
     IDS = set([i[0] for i in data])
-    return data,price[0][0]
+    return data
 
+def sp_order_records():
+    status = {0: '发送中',1: '工作中',2: '无效',3: '待定',4: '新增中',5: '更改中',6: '删除中',
+                7: '无效中',8: '部分成交且工作中',9: '已成交',10: '已删除',18: '等待批准',
+                20: '成交已覆盘',21: '删除已覆盘',24: '同步异常中',28: '部分成交已删除',
+                29: '部分成交并删除已覆盘 ',30: '交易所無效',
+                }
+
+    conn = get_conn('carry_investment')
+    timeStamp = time.mktime(time.strptime(str(datetime.datetime.now())[:10],'%Y-%m-%d'))
+    sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s"%timeStamp
+    # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
+    sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,Initiator,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
+    data = getSqlData(conn,sql_trade)
+    datagd = getSqlData(conn,sql_order)
+    datagd = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:9])+['买' if i[9]=='B' else '卖']+[status.get(i[10])] for i in datagd]
+    ran = range(len(data))
+    count = 0
+    kc = []
+    data2 = []
+    for i in ran:
+        dt = [str(datetime.datetime.fromtimestamp(data[i][0]))]
+        dt += list(data[i][1:])
+        dt.append(sum(data[j][3] if data[j][6]=='B' else -data[j][3] for j in range(0,i+1)))
+        try:
+            for j in range(dt[3]):
+                kc.append(dt[1])
+                if data2 and abs(dt[13]) < abs(data2[-1][13]):
+                    count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (kc.pop() - kc.pop() if dt[6] == 'S' else 0)
+        except Exception as exc:
+            logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))(exc)
+        dt.append(count)
+        data2.append(dt)
+
+    cc = sum(1 if i[6] == 'B' else (-1 if i[6] == 'S' else 0) for i in data)
+    if cc == 0:
+        pass
+    return data2,datagd
 
 def calculate_earn(dates, end_date):
     '''计算所赚。参数：‘2018-01-01’
@@ -605,6 +648,7 @@ class Limit_up:
                 mx[m[:-2]] = joblib.load('log\\models\\' + m)
                 # mx_n[m[:-2]]=[]
 
+        jyzt_l = []
         for code in codes:
             data2 = data.get(code)
             if not data2 or len(data2) != 18:
@@ -612,10 +656,11 @@ class Limit_up:
             for i in mx.keys():
                 r = mx[i].predict([data2])
                 if r == 1:
-                    jyzt[rq_date].append(code)
+                    jyzt_l.append(code)
                     # mx_n[i].append(code)
-        jyzt = Counter(jyzt).most_common()
-        jyzt = jyzt[:10]
+
+        jyzt_l = Counter(jyzt_l).most_common()
+        jyzt[rq_date] = jyzt_l[:10]
         with open('log\\jyzt_gp.txt', 'w') as f:  # 保存
             f.write(json.dumps(jyzt))
 
@@ -641,6 +686,7 @@ class Zbjs(ZB):
         while param:
             param = yield req
             req = dyn.send(param)
+        dyn.close()
         self.sendNone(dyn)
 
     def get_hkHSI_date(self, conn, size=60, database=None):
@@ -659,11 +705,11 @@ class Zbjs(ZB):
         data = {de[0]: [float(de[2]) - float(de[1]), float(de[3]) - float(de[4])] for de in data}
         return data
 
-    def get_data(self, conn, dates, dates2, database,code):
+    def get_data(self, conn, dates, dates2, database):
         ''' 从指定数据库获取指定日期的数据 '''
         if database == '1':
-            sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM futures_min WHERE prodcode='{}' AND datetime>='{}' AND datetime<='{}'".format(
-                code, dates, dates2)
+            sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM wh_same_month_min WHERE prodcode='HSI' AND datetime>='{}' AND datetime<='{}'".format(
+                dates, dates2)
         else:
             # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
             sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
@@ -671,55 +717,57 @@ class Zbjs(ZB):
         return getSqlData(conn, sql)
 
     def main2(self, _ma, _dates, end_date, _fa, database, reverse=False,param=None):
+        end_date = dtf(end_date)+datetime.timedelta(days=1)
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0, 'zs':0,'ydzs':0,'zy':0}
         conn = get_conn('carry_investment') #if database == '1' else get_conn('stock_data')
-        prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
+        #prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
         all_price = []
         is_inst_date = []
-        for code in prodcode:
-            da = self.get_data(conn, _dates, end_date, database,code[0])
-            self.zdata = da
-            res, first_time = self.trd(_fa, reverse=reverse, param=param)
+        #for code in prodcode:
+            #da = self.get_data(conn, _dates, end_date, database,code[0])
+        da = self.get_data(conn, _dates, end_date, database)
+        self.zdata = da
+        res, first_time = self.trd(_fa, reverse=reverse, param=param)
 
-            hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
 
-            res_key = list(res.keys())
-            for i in res_key:
-                if i in is_inst_date:
-                    continue
-                is_inst_date.append(i)
-                if not res[i]['datetimes']:
-                    del res[i]
-                    continue
-                mony = res[i]['mony']
-                huizong['yk'] += mony
-                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-                huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
-                    'least']
-                huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
-                    'most']
-                mtsl = []
-                for j in res[i]['datetimes']:
-                    mtsl.append(j[3] )
-                    if j[4] == -1 and j[3]<0:
-                        huizong['zs'] +=1
-                    elif j[4] == 1:
-                        huizong['zy'] += 1
-                    elif j[4] == -1:
-                        huizong['ydzs'] +=1
-                all_price += mtsl
-                if not res[i].get('ylds'):
-                    res[i]['ylds'] = 0
-                if mtsl:
-                    ylds = len([sl for sl in mtsl if sl > 0])
-                    res[i]['ylds'] += ylds  # 盈利单数
-                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
-                else:
-                    res[i]['shenglv'] = 0
+        res_key = list(res.keys())
+        for i in res_key:
+            if i in is_inst_date:
+                continue
+            is_inst_date.append(i)
+            if not res[i]['datetimes']:
+                del res[i]
+                continue
+            mony = res[i]['mony']
+            huizong['yk'] += mony
+            huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+            huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+                'least']
+            huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+                'most']
+            mtsl = []
+            for j in res[i]['datetimes']:
+                mtsl.append(j[3] )
+                if j[4] == -1 and j[3]<0:
+                    huizong['zs'] +=1
+                elif j[4] == 1:
+                    huizong['zy'] += 1
+                elif j[4] == -1:
+                    huizong['ydzs'] +=1
+            all_price += mtsl
+            if not res[i].get('ylds'):
+                res[i]['ylds'] = 0
+            if mtsl:
+                ylds = len([sl for sl in mtsl if sl > 0])
+                res[i]['ylds'] += ylds  # 盈利单数
+                res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+            else:
+                res[i]['shenglv'] = 0
 
-            _res = dict(res, **_res)
+        _res = dict(res, **_res)
 
         huizong['shenglv'] += len([p for p in all_price if p > 0])
         huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
@@ -741,57 +789,57 @@ class Zbjs(ZB):
             for k in self.xzfa
         }
         conn = get_conn('carry_investment') # if database == '1' else get_conn('stock_data')
-        prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
+        #prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
         conn.commit()
         hk = self.get_hkHSI_date(conn=conn)  # 当日波动
         all_price = {}
-        for code in prodcode:
-            da = self.get_data(conn, _dates, end_date, database,code[0])
-            self.zdata = da
-            res, first_time = self.trd_all(reverse=reverse, param=param)
-            res_key = list(res.keys())
-            for fa in res_key:
-                res_fa_key = list(res[fa].keys())
-                all_price[fa] = all_price[fa] if all_price.get(fa) else []
-                _huizong[fa]['first_time'] = first_time[fa] if first_time[fa] else _huizong[fa]['first_time']  # 未平仓的单
-                for i in res_fa_key:
-                    if not res[fa][i]['datetimes']:
-                        del res[fa][i]
-                        continue
-                    if _res.get(fa) and i in _res[fa]:
-                        continue
-                    bd = hk.get(i, [0, 0])
-                    mony = res[fa][i]['mony']
-                    _huizong[fa]['yk'] += mony
-                    _huizong[fa]['zl'] += (res[fa][i]['duo'] + res[fa][i]['kong'])
-                    _huizong[fa]['least'] = [i, mony, bd[0], bd[1]] if mony < _huizong[fa]['least'][1] else _huizong[fa][
-                        'least']
-                    _huizong[fa]['most'] = [i, mony, bd[0], bd[1]] if mony > _huizong[fa]['most'][1] else _huizong[fa][
-                        'most']
-                    mtsl = [j[3] for j in res[fa][i]['datetimes']]
-                    all_price[fa] += mtsl
-                    if not res[fa][i].get('ylds'):
-                        res[fa][i]['ylds'] = 0
-                    if mtsl:
-                        ylds = len([sl for sl in mtsl if sl > 0])
-                        res[fa][i]['ylds'] += ylds  # 盈利单数
-                        res[fa][i]['shenglv'] = round(ylds / len(mtsl) * 100, 2) if len(mtsl) != 0 else 0  # 每天胜率
-                    else:
-                        res[fa][i]['shenglv'] = 0
-                if code == prodcode[-1]:
+        #for code in prodcode:
+        da = self.get_data(conn, _dates, end_date, database)
+        self.zdata = da
+        res, first_time = self.trd_all(reverse=reverse, param=param)
+        res_key = list(res.keys())
+        for fa in res_key:
+            res_fa_key = list(res[fa].keys())
+            all_price[fa] = all_price[fa] if all_price.get(fa) else []
+            _huizong[fa]['first_time'] = first_time[fa] if first_time[fa] else _huizong[fa]['first_time']  # 未平仓的单
+            for i in res_fa_key:
+                if not res[fa][i]['datetimes']:
+                    del res[fa][i]
+                    continue
+                if _res.get(fa) and i in _res[fa]:
+                    continue
+                bd = hk.get(i, [0, 0])
+                mony = res[fa][i]['mony']
+                _huizong[fa]['yk'] += mony
+                _huizong[fa]['zl'] += (res[fa][i]['duo'] + res[fa][i]['kong'])
+                _huizong[fa]['least'] = [i, mony, bd[0], bd[1]] if mony < _huizong[fa]['least'][1] else _huizong[fa][
+                    'least']
+                _huizong[fa]['most'] = [i, mony, bd[0], bd[1]] if mony > _huizong[fa]['most'][1] else _huizong[fa][
+                    'most']
+                mtsl = [j[3] for j in res[fa][i]['datetimes']]
+                all_price[fa] += mtsl
+                if not res[fa][i].get('ylds'):
+                    res[fa][i]['ylds'] = 0
+                if mtsl:
+                    ylds = len([sl for sl in mtsl if sl > 0])
+                    res[fa][i]['ylds'] += ylds  # 盈利单数
+                    res[fa][i]['shenglv'] = round(ylds / len(mtsl) * 100, 2) if len(mtsl) != 0 else 0  # 每天胜率
+                else:
+                    res[fa][i]['shenglv'] = 0
+            #if code == prodcode[-1]:
 
-                    _huizong[fa]['shenglv'] += len([p for p in all_price[fa] if p > 0])
-                    _huizong[fa]['shenglv'] = int(_huizong[fa]['shenglv'] / _huizong[fa]['zl'] * 100) if _huizong[fa]['zl'] > 0 else 0  # 胜率
-                    _huizong[fa]['avg'] = _huizong[fa]['yk'] / _huizong[fa]['zl'] if _huizong[fa]['zl'] > 0 else 0  # 平均每单盈亏
-                    res_size = len(res[fa])
-                    _huizong[fa]['avg_day'] = _huizong[fa]['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-                    _huizong[fa]['least2'] = min(all_price[fa]) if all_price[fa] else 0  # 亏损最多的一单
-                    _huizong[fa]['most2'] = max(all_price[fa]) if all_price[fa] else 0  # 盈利最多的一单
+            _huizong[fa]['shenglv'] += len([p for p in all_price[fa] if p > 0])
+            _huizong[fa]['shenglv'] = int(_huizong[fa]['shenglv'] / _huizong[fa]['zl'] * 100) if _huizong[fa]['zl'] > 0 else 0  # 胜率
+            _huizong[fa]['avg'] = _huizong[fa]['yk'] / _huizong[fa]['zl'] if _huizong[fa]['zl'] > 0 else 0  # 平均每单盈亏
+            res_size = len(res[fa])
+            _huizong[fa]['avg_day'] = _huizong[fa]['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+            _huizong[fa]['least2'] = min(all_price[fa]) if all_price[fa] else 0  # 亏损最多的一单
+            _huizong[fa]['most2'] = max(all_price[fa]) if all_price[fa] else 0  # 盈利最多的一单
 
-            if _res:
-                _res = {k:dict(res[k],**_res[k]) for k in _res}
-            else:
-                _res = res
+        if _res:
+            _res = {k:dict(res[k],**_res[k]) for k in _res}
+        else:
+            _res = res
 
         closeConn(conn)  # 关闭数据库连接
         return _res, _huizong
@@ -804,40 +852,41 @@ class Zbjs(ZB):
         prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
         all_price = []
         is_inst_date = []
-        for code in prodcode:
-            da = self.get_data(conn, _dates, end_date, database,code[0])
-            self.zdata = da
-            res, first_time = self.trd_new(reverse=reverse, param=param)
+        #for code in prodcode:
+        #da = self.get_data(conn, _dates, end_date, database,code[0])
+        da = self.get_data(conn, _dates, end_date, database)
+        self.zdata = da
+        res, first_time = self.trd_new(reverse=reverse, param=param)
 
-            hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
 
-            res_key = list(res.keys())
-            for i in res_key:
-                if i in is_inst_date:
-                    continue
-                is_inst_date.append(i)
-                if not res[i]['datetimes']:
-                    del res[i]
-                    continue
-                mony = res[i]['mony']
-                huizong['yk'] += mony
-                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-                huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
-                    'least']
-                huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
-                    'most']
-                mtsl = [j[3] for j in res[i]['datetimes']]
-                all_price += mtsl
-                if not res[i].get('ylds'):
-                    res[i]['ylds'] = 0
-                if mtsl:
-                    ylds = len([sl for sl in mtsl if sl > 0])
-                    res[i]['ylds'] += ylds  # 盈利单数
-                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
-                else:
-                    res[i]['shenglv'] = 0
+        res_key = list(res.keys())
+        for i in res_key:
+            if i in is_inst_date:
+                continue
+            is_inst_date.append(i)
+            if not res[i]['datetimes']:
+                del res[i]
+                continue
+            mony = res[i]['mony']
+            huizong['yk'] += mony
+            huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+            huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+                'least']
+            huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+                'most']
+            mtsl = [j[3] for j in res[i]['datetimes']]
+            all_price += mtsl
+            if not res[i].get('ylds'):
+                res[i]['ylds'] = 0
+            if mtsl:
+                ylds = len([sl for sl in mtsl if sl > 0])
+                res[i]['ylds'] += ylds  # 盈利单数
+                res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+            else:
+                res[i]['shenglv'] = 0
 
-            _res = dict(res, **_res)
+        _res = dict(res, **_res)
 
         huizong['shenglv'] += len([p for p in all_price if p > 0])
         huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
@@ -897,7 +946,6 @@ class RedisHelper:
         while self.is_run:
             dt = str(datetime.datetime.now())
             self.public(dt[:19])  # 发布
-            print(dt)
             time.sleep(1)
             break
 
@@ -915,10 +963,19 @@ def huices(res,huizong,init_money,dates,end_date):
         'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
         'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
         'ye': init_money + huizong['yk'],  # 余额
-        'cgzd': [0, 0, 0],  # 成功的做多交易
-        'cgzk': [0, 0, 0],  # 成功的做空交易
+        'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
+        'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
+        'avglr': 0, # 平均获利
+        'alllr': 0, # 总获利
+        'avgss': 0, # 平均损失
+        'allss': 0, # 总损失
+        'zzl': [],   # 增长率
+        'vol': [],   # 手数
+        'dayye': [], # 每天余额
+        'daylr': [], # 每天利润，不叠加
+        'zjhcs':[0],  # 资金回测
     }
-    jingzhi = []
+    jingzhi = [] # 净值
     zx_x = []
     zx_y = []
     zdhc = 0
@@ -930,21 +987,32 @@ def huices(res,huizong,init_money,dates,end_date):
     for i in keys:
         je = round(res[i]['mony'])
         jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
-        zx_x.append(i[-5:-3] + i[-2:])
-        zx_y.append(zx_y[-1] + je if zx_y else je)
+        zx_x.append(i[-5:-3] + i[-2:])  # 日期
+        zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
+        hc['zzl'].append(round(zx_y[-1]/init_money*100,2))
+        hc['vol'].append(res[i]['duo'] + res[i]['kong'])
+        hc['dayye'].append(zx_y[-1]+init_money) # 每天余额
+        hc['daylr'].append(je)                  # 每天利润
         if len(jingzhi) > 1:
             max_jz = max(jingzhi[:-1])
-            zdhc2 = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
-            zdhc = zdhc2 if zdhc2 > zdhc else zdhc
+            zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
+            #zdhc = zdhc2 if zdhc2 > zdhc else zdhc
+            hc['zjhcs'].append(zjhc if zjhc>0 else 0)  # 资金回测
         for j in res[i]['datetimes']:
             if j[2] == '多':
                 hc['cgzd'][1] += 1
-                if j[-1] > 0:
+                if j[3] > 0:
                     hc['cgzd'][0] += 1
             elif j[2] == '空':
                 hc['cgzk'][1] += 1
-                if j[-1] > 0:
+                if j[3] > 0:
                     hc['cgzk'][0] += 1
+            if j[3] > 0:
+                hc['alllr'] += j[3]
+                hc['avglr'] += 1
+            else:
+                hc['allss'] += j[3]
+                hc['avgss'] += 1
             # 计算持仓时间
             start_d = j[0].replace(':', '-').replace(' ', '-')
             start_d = start_d.split('-') + [0, 0, 0]
@@ -954,12 +1022,12 @@ def huices(res,huizong,init_money,dates,end_date):
             end_d = [int(ed) for ed in end_d]
             ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))
             # 计算利润因子
-            if j[-1] > 0:
-                count_yl += j[-1]
+            if j[3] > 0:
+                count_yl += j[3]
             else:
-                count_ks += -j[-1]
+                count_ks += -j[3]
             # 方差
-            count_var += (j[-1] - avg) ** 2
+            count_var += (j[3] - avg) ** 2
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
@@ -968,12 +1036,14 @@ def huices(res,huizong,init_money,dates,end_date):
         count_var = count_var / huizong['zl']
         hc['std'] = round(count_var ** 0.5, 2)
 
-        hc['zjhc'] = zdhc  # 最大回测
+        hc['zjhc'] = max(hc['zjhcs'])  # 最大回测
+        hc['avglr'] = hc['alllr']/hc['avglr'] if hc['avglr']!=0 else 0  # 平均获利
+        hc['avgss'] = hc['allss']/hc['avgss'] if hc['avgss']!=0 else 0  # 平均损失
         hc['zjhc'] = hc['zjhc'] if hc['zjhc'] >= 0 else 0
         hc['jingzhi'] = jingzhi  # 每天净值
         hc['max_jz'] = max(jingzhi)  # 最高
-        hc['zx_x'] = zx_x  # 折线图x轴
-        hc['zx_y'] = zx_y  # 折线图y轴
+        hc['zx_x'] = zx_x  # 折线图x轴 时间
+        hc['zx_y'] = zx_y  # 折线图y轴 利润
     except Exception as exc:
         logging.error("文件：HSD.py 第{}行报错： {}".format(sys._getframe().f_lineno,exc))
 
@@ -1043,3 +1113,262 @@ def huices(res,huizong,init_money,dates,end_date):
     hc['this_year'] = this_year
     huizong['kuilv'] = 100 - huizong['shenglv']
     return hc, huizong
+
+class GXJY:
+    def __init__(self):
+        self.code_name2 = {'bu1706': '石油沥青', 'rb1705': '螺纹钢', 'ru1705': '橡胶', 'j1705': '冶金焦炭',
+                          'ru1709': '橡胶', 'j1709': '冶金焦炭', 'al1711': '铝', 'rb1801': '螺纹钢',
+                          'j1801': '冶金焦炭', 'rb1805': '螺纹钢', 'rb1810': '螺纹钢', 'AP1810': '苹果',
+                          'CF1901': '棉一号'}
+        self.code_name = {'bu': '石油沥青', 'rb': '螺纹钢', 'ru': '橡胶', 'j': '冶金焦炭',
+                          'al': '铝', 'AP': '苹果','CF': '棉花'}
+        self.bs = {'bu': 10, 'rb': 10, 'ru': 10, 'j': 100, 'al': 5, 'AP': 10,'CF': 5}
+        self.conn = get_conn('carry_investment')
+
+    def closeConn(self):
+        self.conn.close()
+
+    def gx_lsjl(self,folder):
+        data = pd.DataFrame()
+        xls = [folder+os.sep+i for i in os.listdir(folder) if '.xls' in i]
+        for i in xls:
+            p = pd.read_excel(i)
+            data = data.append(p)
+            # data = pd.concat([data,p])
+        return data
+
+    def to_sql(self, data, table):
+        """ 写入数据到指定的数据表"""
+        cur = self.conn.cursor()
+        if table == 'gx_record':
+            sql = "INSERT INTO gx_record(datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code," \
+                  "system_code,cj_code,insure,jgq,currency) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            for r in data.values:
+                r[0] = str(r[0])
+                dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8] + ' ' + str(r[13])
+                try:
+                    cur.execute(sql, (
+                    dt, r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], str(r[9]), r[10], r[11], r[12], r[14], r[15],
+                    r[16]))
+                except Exception as exc:
+                    pass #print(exc)
+        elif table == 'gx_entry_exit':
+
+            sql = "INSERT INTO gx_entry_exit(`datetime`,flow,direction,`out`,enter,currency,`type`,bank,abstract) " \
+                  "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            for r in data.values:
+                r[0] = str(r[0])
+                dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8]
+                fx = '证券转出' if r[3] > 0 else '银行转入'
+                try:
+                    cur.execute(sql, (dt, r[1], fx, r[3], r[4], r[5], r[6], r[7], r[8]))
+                except Exception as exc:
+                    pass  # print(exc)
+        self.conn.commit()
+
+    def get_gxjy_sql(self,code=None):
+        """ 得到数据表 gx_record 的数据，格式化指定的格式用以 ray 函数调用 """
+        sql = "SELECT datetime,code,busi,price,vol,cost FROM gx_record WHERE 1=1"
+        if code and code[:-4] in self.bs:
+            sql += " AND code LIKE '{}%'".format(code[:-4])
+        ds = []
+        data = getSqlData(self.conn,sql)
+        self.conn.commit()
+        for i in data:
+            bs = -i[4] if i[2] == '卖出' else i[4]
+            price = i[3]
+            sj = i[0]
+            code = i[1]
+            cost = i[5]
+            ds.append([bs, price, sj, code, cost])
+
+        ds = pd.DataFrame(ds, columns=['bs', 'price', 'time', 'code', 'cost'])
+        return ds
+
+    def get_gxjy_sql_all(self,code=None):
+        """ 获取数据库，原始数据，并增加一列名称 """
+        sql = "SELECT datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code," \
+              "system_code,cj_code,insure,jgq,currency FROM gx_record where 1=1"
+        if code and code[:-4] in self.bs:
+            sql += " AND code LIKE '{}%'".format(code[:-4])
+        p = getSqlData(self.conn,sql) # pd.read_sql(sql, conn)
+        p2 = []
+        for i in p:
+            p2.append((str(i[0]),)+i[1:]+(self.code_name.get(i[2][:-4]),))
+        return p2
+
+    def get_dates(self):
+        """ 获取所有的交易日期 """
+        sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d') FROM gx_record GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d') ORDER BY DATETIME"
+        dates = getSqlData(self.conn,sql)
+        return dates
+
+
+    def datas(self):
+        data = {
+            'jy': 0,  # 交易手数
+            'price': 0,  # 交易价格
+            'cb': 0,  # 总成本
+            'jcb': 0,  # 净会话成本
+            'start_time': 0,  # 开始时间
+            'end_time': 0,  # 结束时间
+            'mai': 0,  # 买卖
+            'kc': [],  # 开仓
+            'all_kp': [],  # 当前会话所有开平仓
+            'pcyl': 0,  # 平仓盈利
+            'pcyl_all': 0,  # 平仓盈利汇总
+            'all_price': 0,  # 叠加价格
+            'all': 0,  # 总盈亏
+            'sum_price': 0,  # 全天叠加价格
+            'all_jy_add': 0,  # 全天所有交易手数，叠加
+            'dbs': 0,  # 序号
+            'wcds1': 0,
+            'wcds': 0,  # 完成的单
+            'cost': 0,  # 手续费
+        }
+        ind = 0
+        _while = 0
+        while 1:
+            msg = yield data, ind
+            hand = abs(msg[0])
+            if _while <= 0 and hand > 1:
+                _while = hand
+            _while -= 1
+            if _while <= 0:
+                ind += 1
+            data['price'] = msg[1]
+            if data['jy'] == 0:
+                data['pcyl'] = 0
+                data['wcds1'] = 0
+                data['pcyl_all'] = 0
+                data['all_kp'] = []
+
+                data['cb'] = 0  # 成本
+                data['jcb'] = 0  # 净成本
+                data['all_price'] = 0
+
+            if msg[0] > 0:
+                data['jy'] += 1
+                data['all_jy_add'] += 1
+                data['mai'] = 1
+                data['all_price'] += data['price']
+                data['sum_price'] += data['price']
+                data['kc'].append([1, data['price']])
+                data['all_kp'].append([1, data['price']])
+                data['cost'] += msg[4]
+
+            elif msg[0] < 0:
+                data['jy'] -= 1
+                data['all_jy_add'] += 1
+                data['mai'] = -1
+                data['all_price'] -= data['price']
+                data['sum_price'] -= data['price']
+                data['kc'].append([-1, data['price']])
+                data['all_kp'].append([-1, data['price']])
+                data['cost'] += msg[4]
+
+            if len(data['kc']) > 1 and data['kc'][-1][0] != data['kc'][-2][0]:
+                if data['kc'][-1][0] < 0:
+                    data['pcyl'] = (data['kc'][-1][1] - data['kc'][-2][1])
+                else:
+                    data['pcyl'] = (data['kc'][-2][1] - data['kc'][-1][1])
+                data['pcyl_all'] += data['pcyl']
+                data['all'] += data['pcyl']
+                data['kc'].pop()
+                data['kc'].pop()
+                data['wcds1'] += 1
+                data['wcds'] += 1
+            else:
+                data['pcyl'] = 0
+
+            if data['jy'] != 0:
+                data['cb'] = data['all_price'] / data['jy']
+                # jcbs = self.SXF * 2 / 50 * data['jy']
+                jcbs = (data['wcds1'] + abs(data['jy'])) * data['cost'] / data['jy']
+                # sum_cb = sum([cb[1] if cb[0]>0 else -cb[1] for cb in data['all_kp']]) # 净成本
+                sum_cb = data['cb'] + jcbs  # (sum_cb-jcbs)/data['jy']
+                data['jcb'] = int(sum_cb) if data['jy'] < 0 else (
+                    int(sum_cb) + 1 if sum_cb > int(sum_cb) else int(sum_cb))
+
+            data['time'] = msg[2]
+
+    def transfer(self, df, structs):
+        """ df:
+                         bs    price                 time       code     cost
+                    0    -1   10055.0   2018/06/19 14:51:12     AP1810   10.18
+                    1    -2   10032.0   2018/06/19 14:52:54     AP1810  10.18
+                    """
+        res = []
+        ind = 0
+        is_ind = 0
+        cbyl = 0
+        dts = self.datas()
+        dts.send(None)
+        while ind < len(df.values):
+            msg = df.values[ind]
+            data, ind = dts.send(msg)
+            pri = data['price']
+            if len(data['kc']) > 0:
+                yscb = round(sum(i[-1] for i in data['kc']) / len(data['kc']), 2)  # 原始成本
+                cb = round(data['cb'], 2)  # 成本
+            else:
+                ak_k = [ak[1] for ak in data['all_kp'] if ak[0] > 0]
+                ak_p = [ak[1] for ak in data['all_kp'] if ak[0] < 0]
+                yscb = round(sum(ak_k) / len(ak_k), 2) if msg[0] < 0 else round(sum(ak_p) / len(ak_p), 2)
+                cb = round(sum(ak_k) / len(ak_k), 2) if msg[0] > 0 else round(sum(ak_p) / len(ak_p), 2)
+
+            jcb = data['jcb']  # 净成本
+            cbyl += data['pcyl']  # 此笔盈利
+            pjyl = round(data['all'] / data['wcds'], 2) if data['wcds'] > 0 else 0  # 平均盈利
+            huihuapj = round(data['pcyl_all'] / data['wcds1'], 2) if data['wcds1'] > 0 else 0  # 会话平均盈利
+            zcb = round(data['sum_price'] / data['jy'], 2) if data['jy'] != 0 else round(data['sum_price'], 2)  # 持仓成本
+            jzcbs = (data['wcds'] + abs(data['jy'])) * data['cost'] / data['jy'] if \
+            data[
+                'jy'] != 0 else 0  # self.SXF * 2 / 50 * data['jy']
+            jzcb = (data['sum_price'] / data['jy'] + jzcbs) if data['jy'] != 0 else 0  # 净持仓成本
+            jzcb = int(jzcb) + 1 if jzcb > int(jzcb) else int(jzcb)
+
+            jlr = round(data['all'] * self.bs[msg[3][:-4]] - data['cost'], 2)  # 净利润
+            jpjlr = round(jlr / data['wcds'], 2) if data['wcds'] > 0 else 0  # 净平均利润
+
+            if ind != is_ind: # or (ind == is_ind and data['jy'] == 0):
+                # ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本',
+                # '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利', '持仓成本', '净持仓成本', '利润',
+                # '净利润', '净平均利润', '手续费', '已平仓', '序号', '分块号', '中文名', '此笔净利润']
+                dtstr = str(data['time'])
+                struct = structs if (structs == 0 or structs == 1) else structs[dtstr[:10]]
+                res.append(
+                    [msg[3], dtstr, msg[0], pri, data['jy'], yscb, cb, jcb,
+                     cbyl, data['pcyl_all'], data['all'], pjyl, huihuapj, zcb, jzcb, data['all'] * self.bs[msg[3][:-4]],
+                     jlr, jpjlr,round(data['cost'], 2), data['wcds'], data['dbs'], struct, self.code_name.get(msg[3][:-4]),cbyl*self.bs[msg[3][:-4]]])
+                cbyl = 0
+            data['dbs'] += 1 if data['jy'] == 0 else 0  # 序号
+            is_ind = ind
+        dts.close()
+        return res
+
+    def ray(self, df, group=None):
+        res = []
+        struct = 0
+        codes = set(df.iloc[:, 3])
+        codes = {i[:-4] for i in codes}
+        dates = list(set(df.iloc[:,2].apply(lambda x: str(x)[:10])))
+        dates.sort()
+        dates = {dates[i]: i % 2 for i in range(len(dates))}
+        if len(codes) == 1:
+            res = self.transfer(df,struct)
+        else:
+            for code in codes:
+                #df2 = df[df.iloc[:, 3] == code]
+                df2 = df[df.code.apply(lambda x: x[:-4]) == code]
+                if group == 'date':
+                    rs = self.transfer(df2, dates)
+                else:
+                    rs = self.transfer(df2,struct)
+                    struct = 0 if struct == 1 else 1
+                res += rs
+
+        columns = ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本', '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利',
+                   '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
+        #res = pd.DataFrame(res, columns=columns)
+        return res

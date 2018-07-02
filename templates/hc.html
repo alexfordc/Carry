@@ -82,6 +82,10 @@
                 <div class="ds5">
                     <div class="ds6">
                         <div class="box_cont" style="height:348px">
+                            <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">增长率</span>&nbsp;&nbsp;
+                                <span id="tuxian2">余额</span>&nbsp;&nbsp;
+                                <span id="tuxian3">利润</span>&nbsp;&nbsp;
+                                <span id="tuxian4">资金回测</span></div>
                                 <div id="zhexiantu" style="width: auto;height: 318px;"></div>
                            </div>
                     </div>
@@ -92,46 +96,113 @@
 </div>
 
 <script type="text/javascript">
+var tu_name;
+function tuxiancolor(id){
+    var id2 = "";
+    for(var i=1;i<=4;i++){
+        id2 = "#tuxian"+i;
+        if(id2==id){
+        $("#tuxian"+i).css({"background-color":"red","width":"40px"});
+        }else{
+        $("#tuxian"+i).css({"background-color":"white","width":"40px"});
+        }
+    }
+    if(id=='#tuxian1'){
+        tu_name=["增长率","手数"];
+        huatu(tu_name,{{hc.zx_x|safe}},{{hc.zzl|safe}},{{hc.vol|safe}});
+    }else if(id=='#tuxian2'){
+        tu_name=["净值","手数"];
+        huatu(tu_name,{{hc.zx_x|safe}},{{hc.dayye|safe}},{{hc.vol|safe}});
+    }else if(id=='#tuxian3'){
+        tu_name=["总利润","利润"];
+        huatu(tu_name,{{hc.zx_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}});
+    }else if(id=='#tuxian4'){
+        tu_name=["","资金回测"];
+        huatu(tu_name,{{hc.zx_x|safe}},null,{{hc.zjhcs|safe}});
+    }
+}
+$("#tuxian1").click(function(){
+    tuxiancolor("#tuxian1");
+});
+$("#tuxian2").click(function(){
+    tuxiancolor("#tuxian2");
+});
+$("#tuxian3").click(function(){
+    tuxiancolor("#tuxian3");
+});
+$("#tuxian4").click(function(){
+    tuxiancolor("#tuxian4");
+});
+tuxiancolor("#tuxian1");
+
+//var myChart = echarts.init(document.getElementById('zhexiantu'));
+
+function huatu(tu_name,category,lineData,barData){
 var myChart = echarts.init(document.getElementById('zhexiantu'));
+// var category = {{hc.zx_x|safe}};  // X轴
+// var lineData = {{hc.zzl|safe}};   // 折线图Y轴
+// var barData = {{hc.vol|safe}};   // 柱状图Y轴
+
 
 option = {
-title:{
-    text:"方案"+{{fa|safe}}+" -- 回测",
-    textStyle:{
-        color:'#00A600',
-        fontSize:18
-    }
-},
-tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: {{hc.zx_x|safe}}
-        },
-toolbox: {
-            show: true,
-            feature: {
-                mark: {show: true},
-                dataView: {show: true, readOnly: false},
-                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                restore: {show: true},
-                saveAsImage: {show: true}
-            }
-        },
+    backgroundColor: '#0f375f',
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: tu_name,
+        textStyle: {
+            color: '#ccc'
+        }
+    },
     xAxis: {
-        type: 'category',
-        data: {{hc.zx_x|safe}}
+        data: category,
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
     },
     yAxis: {
-        type: 'value'
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
     },
     series: [{
-        data: {{hc.zx_y|safe}},
-        type: 'line'
+        name: tu_name[0],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 8,
+        data: lineData
+    }, {
+        name: tu_name[1],
+        type: 'bar',
+        barWidth: 10,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 3,
+                color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                        {offset: 0, color: '#14c8d4'},
+                        {offset: 1, color: '#43eec6'}
+                    ]
+                )
+            }
+        },
+        data: barData
     }]
 };
-
 myChart.setOption(option);
+}
 
 </script>
 
@@ -279,8 +350,8 @@ myChart.setOption(option);
                 <td>盈利的:</td>
                 <td class="pointer" align="right">
                             <span id="wonTip" class="在42笔交易中，正确21笔，获胜率为50<br/>在42笔交易中发生亏损21笔，亏损比例为50"><div class="blockHolder">
-                                <div class="greenBlock floatLeft" style="width:{{huizong.shenglv}}px"></div>
-                                <div class="redBlock floatLeft" style="width:{{ huizong.kuilv }}px"></div>
+                                <div class="greenBlock floatLeft" style="width:{{huizong.shenglv}}px;"></div>
+                                <div class="redBlock floatLeft" style="width:{{ huizong.kuilv }}px;"></div>
                             </div></span>
                 </td>
             </tr>
@@ -292,11 +363,11 @@ myChart.setOption(option);
                 
             <tr>
                 <td>平均获利:</td>
-                <td class="alignR">34462.24 pips / $344.62</td>
+                <td class="alignR">{{ hc.alllr|floatformat:2 }} / ${{ hc.avglr|floatformat:2 }}</td>
             </tr>
             <tr class="bg1">
                 <td>平均损失</td>
-                <td class="alignR">-35926.67 pips / -$359.27</td>
+                <td class="alignR">{{ hc.allss|floatformat:2 }} / -${{ hc.avgss|floatformat:2 }}</td>
             </tr>
             <tr>
 

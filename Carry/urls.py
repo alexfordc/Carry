@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^zhutu_zhexian_ajax/$', views.zhutu_zhexian_ajax, name = 'zhutu_zhexian_ajax'),
     url(r'^moniAll/$', views.moni_all, name = 'moni_all'),
     url(r'^newMoni/$', views.newMoni, name = 'newMoni'),
+    url(r'^gxjy/$',views.gxjy, name = 'gxjy'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 

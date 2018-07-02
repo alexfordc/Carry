@@ -372,43 +372,47 @@ def zhexian(rq):
 def zhutu2(rq):
     return render(rq, 'zhutu2.html')
 
-
-def tongji(rq):
-    dates = HSD.get_date()
-    id_name = HSD.get_idName()
-    messages = ''
-    if rq.method == 'POST':
-        id = rq.POST.get('id')
-        name = rq.POST.get('name')
-        en = rq.POST.get('en')
-        passwd = rq.POST.get('pass')
-        types = rq.POST.get('types')
-        if passwd == HSD.get_ud() + dates[-2:] and id:
-            ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
-            en = ys.get(en.upper())
-            try:
-                conn = HSD.get_conn('carry_investment')
-                cur = conn.cursor()
-                if types == 'update' and name and en and name != 'None':
-                    if en:
-                        sql = "UPDATE account_info SET trader_name='{}',available='{}' WHERE id={}".format(name, en, id)
-                        cur.execute(sql)
-                        conn.commit()
-                        messages = '修改成功'
-                elif types == 'delete' and id and en == '0':
-                    sql = "delete from account_info where id={}".format(id)
+def tongji_adus(rq,dates):
+    id = rq.POST.get('id')
+    name = rq.POST.get('name')
+    en = rq.POST.get('en')
+    passwd = rq.POST.get('pass')
+    types = rq.POST.get('types')
+    if passwd == HSD.get_ud() + dates[-2:] and id:
+        ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
+        en = ys.get(en.upper())
+        try:
+            conn = HSD.get_conn('carry_investment')
+            cur = conn.cursor()
+            if types == 'update' and name and en and name != 'None':
+                if en:
+                    sql = "UPDATE account_info SET trader_name='{}',available='{}' WHERE id={}".format(name, en, id)
                     cur.execute(sql)
                     conn.commit()
-                    messages = '删除成功'
-                else:
-                    messages = '操作失败'
-            except:
-                conn.rollback()
+                    messages = '修改成功'
+            elif types == 'delete' and id and en == '0':
+                sql = "delete from account_info where id={}".format(id)
+                cur.execute(sql)
+                conn.commit()
+                messages = '删除成功'
+            else:
                 messages = '操作失败'
-            finally:
-                conn.close()
-        else:
-            messages = '验证码错误！'
+        except:
+            conn.rollback()
+            messages = '操作失败'
+        finally:
+            conn.close()
+    else:
+        messages = '验证码错误！'
+    return messages
+
+def tongji(rq):
+    """ rq_type: '1':'历史查询','2':'回测','3':'实时交易数据' """
+    dates = HSD.get_date()
+    id_name = HSD.get_idName()
+    messagess = ''
+    if rq.method == 'POST':
+        messagess = tongji_adus(rq,dates)
 
     rq_date = rq.GET.get('datetimes')
     end_date = rq.GET.get('end_date')
@@ -419,10 +423,20 @@ def tongji(rq):
     except:
         rq_id = 0
 
-    end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10] if not end_date else end_date
+    end_date = str(datetime.datetime.now())[:10] if not end_date else end_date #  + datetime.timedelta(days=1)
+    client = rq.META.get('REMOTE_ADDR')
+    if rq_type == '3' and client: # in HSD.get_allow_ip():
+        results2 = HSD.order_detail()
+        monijy = [i for i in results2 if i[8] != 2]
+        status = {0:"挂单",1:"开仓",2:"平仓"}
+        monijy = [[id_name[i[0]] if i[0] in id_name else i[0],str(i[1]),i[2],('多' if i[6]==0 else '空'),i[7],status.get(i[8]),i[9],i[10]] for i in monijy]
+        sjjy, ssjygd = HSD.sp_order_records()
+        if rq.is_ajax():
+            return JsonResponse({'monijy':monijy,'sjjy':sjjy,'ssjygd':ssjygd,'id_name':id_name})
+        return render(rq,'tongji.html',{'monijy':monijy,'sjjy':sjjy,'ssjygd':ssjygd,'id_name':id_name})
 
     if rq_type == '2' and rq_date and end_date and rq_id != 0:
-        results2, price = HSD.order_detail(rq_date, end_date)
+        results2 = HSD.order_detail(rq_date, end_date)
         res = {}
         all_price = []
         results2 = [result for result in results2 if rq_id == result[0]]
@@ -445,7 +459,6 @@ def tongji(rq):
                     'least']
                 huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
                     'most']
-
 
         res_key = list(res.keys())
         for i in res_key:
@@ -483,14 +496,12 @@ def tongji(rq):
         # hc, huizong = HSD.huices(res,huizong,init_money,dates,end_date)
     if rq_type == '1' and rq_date:
         dates = rq_date
-        results2, price = HSD.order_detail(rq_date, end_date)
+        results2 = HSD.order_detail(rq_date, end_date)
         huizong = []
         if results2:
             for i in HSD.IDS:
                 hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
-                hz1 = sum(
-                    [j[5] if j[8] == 2 else ((price - j[2] if j[6] == 0 else j[2] - price) if j[8] == 1 else j[5]) for j
-                     in results2 if j[0] == i])  # 盈亏
+                hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
                 hz2 = len([j[6] for j in results2 if j[0] == i and j[6] == 0])  # 多单数量
                 hz3 = len([j[7] for j in results2 if j[0] == i and j[6] == 1])  # 空单数量
                 hz4 = len([j[5] for j in results2 if j[0] == i and j[5] > 0])  # 赢利单数
@@ -506,7 +517,7 @@ def tongji(rq):
         results2 = tuple(reversed(results2))
         if results2:
             return render(rq, 'tongji.html', locals())
-    if rq_date:
+    if rq_date and rq_id == 0:
         results = HSD.calculate_earn(rq_date, end_date)
         huizong = []
         if results:
@@ -588,6 +599,7 @@ def getList():
     dc = data2.send(None)
     data2.send(None)
     _ch = [d['cd'] for d in dc]
+    data2.close()
     return res, _ch
 
 
@@ -766,11 +778,11 @@ def moni(rq):
                            'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
                            'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
-            print ('Err: moni ', exc)
+            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
-    end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
+    end_date = str(datetime.datetime.now())[:10]  #  + datetime.timedelta(days=1)
     return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
                                     'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
 
@@ -850,7 +862,7 @@ def newMoni(rq):
                            "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
                            })
         except Exception as exc:
-            print ('Err: new_moni ', exc)
+            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -928,7 +940,7 @@ def moni_all(rq):
                            'end_date': end_date,
                            'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
-            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+            HSD.logging.error("文件：views.py 第{}行出错： {}".format(sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -991,6 +1003,7 @@ def huice(rq):
             hc, huizong = HSD.huices(res,huizong,init_money,dates,end_date)
         except Exception as exc:
             HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+            return redirect('index')
 
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
 
@@ -1008,7 +1021,7 @@ def account_info_update(rq):
 
 
 def journalism(rq):
-    if rq.is_ajax:
+    if rq.is_ajax():
         d = read_from_cache("journalism")
         if not d or not is_time(d, 0.25):
             url = 'https://www.jin10.com'
@@ -1024,6 +1037,86 @@ def journalism(rq):
         d = {str(i): d[i] for i in range(len(d) - 1)}
         return JsonResponse(d)
     return redirect('index')
+
+
+def gxjy(rq):
+
+    folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
+    folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
+    client = rq.META.get('REMOTE_ADDR')
+    if client:# in HSD.get_allow_ip():
+        types = rq.GET.get('type')
+        code = rq.GET.get('code')
+        group = rq.GET.get('group')
+        h = HSD.GXJY()
+
+        if types == 'sx': # 刷新
+            try:
+                data = h.gx_lsjl(folder1)
+                data = data.fillna('')
+                data = data.sort_values(['日期', '成交时间'])
+                h.to_sql(data,'gx_record')
+                data = h.gx_lsjl(folder2)
+                h.to_sql(data, 'gx_entry_exit')
+                init_data = h.get_gxjy_sql_all()
+                response =  render(rq, 'gxjy.html', {'init_data': init_data})
+            except Exception as exc:
+                HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+                response = redirect('index')
+        elif not rq.is_ajax() and types == 'js': # 计算数据
+            dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
+            data = h.ray(dd,group=group) if group == 'date' else h.ray(dd)
+            length = len(data)
+            if code:
+                hys = [data[-1]]
+            else:
+                hys = [data[i] for i in range(length)
+                       if i < length-1 and ((data[i+1][0][:-4]!=data[i][0][:-4]) # and data[i][4]!=0
+                       or (data[i+1][0][:-4]!=data[i][0][:-4] and i==length-1)) #  and data[i][4]!=0
+                       or i==length-1]  #  and data[i][4]!=0
+            if group == 'date':
+                data = sorted(data, key=lambda x: x[1])
+            response = render(rq,'gxjy.html',{'data':data,'hys':hys})
+        elif rq.is_ajax() and types == 'js': # 计算数据
+            dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
+            data = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
+            length = len(data)
+            if code:
+                hys = [data[-1]]
+            else:
+                hys = [data[i] for i in range(length)
+                       if i < length - 1 and ((data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
+                                              or (data[i + 1][0][:-4] != data[i][0][
+                                                                         :-4] and i == length - 1))  # and data[i][4]!=0
+                       or i == length - 1]  # and data[i][4]!=0
+            if group == 'date':
+                data = sorted(data, key=lambda x: x[1])
+            h.closeConn()
+            return JsonResponse({'data':data,'hys':hys})
+        elif rq.is_ajax() and types == 'tjt': # 折线图
+            dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
+            data = h.ray(dd)
+            dates = h.get_dates()
+            # zx_x = [i[0] for i in dates]
+            # prices = [sum(i[8] for i in data if i[1][:10] == dt) for dt in zx_x]
+            zx_x,prices = [],[]
+            for de in dates:
+                zx_x.append(de[0])
+                prices.append(sum(i[23] for i in data if i[1][:10] == de[0])+(prices[-1] if prices else 0))
+            h.closeConn()
+            return JsonResponse({'zx_x':zx_x,'zx_y':prices})
+        elif rq.method == "GET" and rq.is_ajax():
+            init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
+            h.closeConn()
+            return JsonResponse({"init_data":init_data})
+        else: # 原始数据
+            init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
+            response = render(rq,'gxjy.html',{'init_data':init_data})
+        h.closeConn() # 关闭数据库
+    else:
+        response = redirect('index')
+
+    return response
 
 
 def liaotianshiList(rq):

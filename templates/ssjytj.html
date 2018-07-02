@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% block title %}统计表{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
+    <div align="center">
+    {% include 'base/form.html' %}
+    {% load mvote %}
+             {% if monijy %}
+             <table border="1">
+                 <tr><td>名称</td><td>交易时间</td><td>价格</td><td>多空</td><td>状态</td></tr>
+                 {% for i in monijy %}
+                    <tr><td>{{ id_name|names:i.0 }}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{ i.6|yesno:"空,多,未知" }}</td>
+                        <td>
+                            <td>{{ i.7|floatformat:0 }}</td>
+                                {% if i.8 == 2 %}
+                                <td>已平仓</td>
+                                {% elif i.8 == 1 %}
+                                <td>开仓</td>
+                                {% elif i.8 == 0 %}
+                                <td>挂单中</td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                        </td></tr>
+                 {% endfor %}
+             </table>
+             {% else %}
+             <h2 style="color:green;">暂无交易中的单</h2>
+             {% endif %}
+    </div>
+<script>
+function ssjy_ajax(){
+
+}
+</script>
+
+{% endblock %}

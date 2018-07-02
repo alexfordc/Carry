@@ -3,13 +3,13 @@
 <div class="flexslider clearfix">
     {% load staticfiles %}
     <div id="page_wrap">
-        	<h2 class="intro-title">您好! <a href="{% url 'index' %}">凯瑞</a> 投资有限公司</h2>
+        	<h2 class="intro-title">您好! <a href="{% url 'index' %}" >凯瑞</a> 投资有限公司</h2>
         	<ul class="slides">
-            	<li><a href="#"><img src="{% static 'images/featured/featured-1.jpg' %}" alt="Image" /></a>
+            	<li><a href="javascript:gxjy();"><img src="{% static 'images/featured/featured-1.jpg' %}" alt="Image" /></a>
                 </li>
-                <li><a href="#"><img src="{% static 'images/featured/featured-2.jpg' %}" alt="Image" /></a>
+                <li><a href="javascript:gxjy();"><img src="{% static 'images/featured/featured-2.jpg' %}" alt="Image" /></a>
                 </li>
-                <li><a href="#"><img src="{% static 'images/featured/featured-3.jpg' %}" alt="Image" /></a>
+                <li><a href="javascript:gxjy();"><img src="{% static 'images/featured/featured-3.jpg' %}" alt="Image" /></a>
                 </li>
             </ul>
         </div>
@@ -39,5 +39,10 @@
 
         </div>
     </div>
-    </div>
+<script>
+    function gxjy(){
+        window.location = "{% url 'gxjy' %}";
+    }
+</script>
+</div>
 {% endblock %}
