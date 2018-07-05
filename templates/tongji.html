@@ -3,6 +3,13 @@
 {% block center_cen %}
 {% load staticfiles %}
 {% include 'base/form.html' %}
+<div align="center" id="password_div" style="display:none; left:50%; bottom:50%;width:360px; height:60px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+border:1px solid #888; background-color:green; text-align:center"><br/><input type="password" id="div_password" placeholder="请输入验证码"/>&nbsp;
+            <input type="button" onclick="javascript:closeLogin('update')" id="div_password_update" value="修 改">&nbsp;&nbsp;
+    <input type="button" onclick="javascript:closeLogin('delete')" value="删 除">&nbsp;&nbsp;
+    <input type="button" onclick="javascript:closeLogin(null)" value="取 消">
+<!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
+        </div>
     <div align="center" id="tongji">
     {% load mvote %}
 {#        <h3>#}
@@ -45,7 +52,7 @@
       <td id="en{{i.0}}" contentEditable="true">{{ i.2|yesno:"Yes,No,未知" }}</td>
       <td>{{ i.3 }}</td>
       <td>{{ i.4 }}</td>
-        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:update_name('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:delete_user('{{i.0}}')" title="删除"></td>
+        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="删除"></td>
     </tr>
         {% endfor %}
 
@@ -70,19 +77,11 @@
         <td>{{ i.4 }}</td>
         <td>{{ id_count|names:i.1 }}</td><td>{{ i.5 }}</td><td>{{ i.6 }}</td>
             <td>
-                <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ end_date }}">
-                    {% if i.6 >= 80 %}
-                看好你
-                {% elif i.6 >= 70 %}
-                稳稳保持
-                {% elif i.6 >= 60 %}
-                继续努力
-                {% else %}
-                加油哦
-                {% endif %}
+                <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">
+                    <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
                 </a>
             </td>
-            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ end_date }}">{{ id_name|names:i.1 }}</a></td>
+            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ id_name|names:i.1 }}</a></td>
         </tr>
         {% endfor %}
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
@@ -237,29 +236,29 @@ function myajaxs(){
                     var data = res.sjjy;
                     html += "<table border='1' width='1080px'><thead>实盘交易记录</thead>";
                     html += "<tr><td>时间</td><td>成交价格</td><td>成交记录号</td><td>成交手数</td><td>产品代码</td><td>交易账户</td><td>买卖</td>";
-                    html += "<td>状态</td><td>下单价格</td><td>总量</td><td>剩余量</td><td>成交量</td><td>订单号</td><td>持仓</td><td>平仓总盈亏</td></tr>";
+                    html += "<td width='100'>状态</td><td>下单价格</td><td>总量</td><td>剩余量</td><td>成交量</td><td>订单号</td><td>持仓</td><td>平仓总盈亏</td></tr>";
                     for (var i=0;i<data.length;i++){
                         html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
                         for (var j=0;j<data[i].length;j++){
-                            if(j==5){
-                                if(data[i][j]=='B'){
-                                    html += "<td>买</td>";
-                                }else if(data[i][j]=='S'){
-                                    html += "<td>卖</td>";
-                                }else{
-                                    html += "<td></td>";
-                                }
-                            }else if(j==6){
-                                if(data[i][j]==9){
-                                    html += "<td>已成交</td>";
-                                }else if(data[i][j]==8){
-                                    html += "<td>部分成交</td>";
-                                }else{
-                                    html += "<td></td>";
-                                }
-                            }else{
+                            <!--if(j==5){-->
+                                <!--if(data[i][j]=='B'){-->
+                                    <!--html += "<td>买</td>";-->
+                                <!--}else if(data[i][j]=='S'){-->
+                                    <!--html += "<td>卖</td>";-->
+                                <!--}else{-->
+                                    <!--html += "<td></td>";-->
+                                <!--}-->
+                            <!--}else if(j==6){-->
+                                <!--if(data[i][j]==9){-->
+                                    <!--html += "<td>已成交</td>";-->
+                                <!--}else if(data[i][j]==8){-->
+                                    <!--html += "<td>部分成交</td>";-->
+                                <!--}else{-->
+                                    <!--html += "<td></td>";-->
+                                <!--}-->
+                            <!--}else{-->
                                 html += "<td>"+data[i][j]+"</td>";
-                            }
+                            //}
                         }
                         html += "</tr>";
                     }
@@ -295,20 +294,17 @@ function formSubmit(id,name,en,pass,types){
         document.body.removeChild(form[0]);
 }
 
+var status;
 //修改
-function update_name(id){
+function update_name(id,pass){
         var name=$("#name"+id).text();
         var en=$("#en"+id).text();
-        var pass=prompt('请输入验证码：','');
-        pass=pass.trim();
         if(pass.length>0){
         formSubmit(id,name,en,pass,'update');
         }else{alert('验证码不能为空！');}
     }
 //删除
-function delete_user(id){
-    var pass=prompt('请输入验证码：','');
-    pass=pass.trim();
+function delete_user(id,pass){
     if(pass.length>0){
     var name=$("#name"+id).text();
     var en=$("#en"+id).text();
@@ -317,6 +313,31 @@ function delete_user(id){
     }
     }else{alert('验证码不能为空！');}
 }
+
+var cid=null;
+
+function openLogin(id){
+   cid = id;
+   document.getElementById("password_div").style.display="";
+   $("#div_password").focus();
+   $('#div_password').bind('keyup', function(event) {
+　　if (event.keyCode == "13") {
+　　　　//回车执行
+　　　　$('#div_password_update').click();
+       }
+    });
+}
+function closeLogin(sta){
+    var password = $("#div_password").val();
+    //alert(password+' '+cid+' '+sta);
+    if(sta=="update"){
+        update_name(cid,password);
+    }else if(sta=="delete"){
+        delete_user(cid,password);
+    }
+   document.getElementById("password_div").style.display="none";
+}
+
 var messagess='{{messagess}}';
 if(messagess.length>0){alert(messagess);}
     </script>

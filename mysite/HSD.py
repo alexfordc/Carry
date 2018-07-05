@@ -383,7 +383,7 @@ def order_detail(dates=None, end_date=None):
 
 def sp_order_records():
     status = {0: '发送中',1: '工作中',2: '无效',3: '待定',4: '新增中',5: '更改中',6: '删除中',
-                7: '无效中',8: '部分成交且工作中',9: '已成交',10: '已删除',18: '等待批准',
+                7: '无效中',8: '部分成交',9: '已成交',10: '已删除',18: '等待批准',
                 20: '成交已覆盘',21: '删除已覆盘',24: '同步异常中',28: '部分成交已删除',
                 29: '部分成交并删除已覆盘 ',30: '交易所無效',
                 }
@@ -396,6 +396,7 @@ def sp_order_records():
     data = getSqlData(conn,sql_trade)
     datagd = getSqlData(conn,sql_order)
     datagd = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:9])+['买' if i[9]=='B' else '卖']+[status.get(i[10])] for i in datagd]
+    # data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])]+list(i[8:]) for i in data]
     ran = range(len(data))
     count = 0
     kc = []
@@ -414,9 +415,10 @@ def sp_order_records():
         dt.append(count)
         data2.append(dt)
 
-    cc = sum(1 if i[6] == 'B' else (-1 if i[6] == 'S' else 0) for i in data)
-    if cc == 0:
-        pass
+    # cc = sum(1 if i[6] == 'B' else (-1 if i[6] == 'S' else 0) for i in data)
+    # if cc == 0:
+    #     pass
+    data2 = [i[0:6] + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + i[8:] for i in data2]
     return data2,datagd
 
 def calculate_earn(dates, end_date):
@@ -949,6 +951,17 @@ class RedisHelper:
             time.sleep(1)
             break
 
+def day_this_mins(dates,code='HSI'):
+    """ 获取指定时间段的分钟数据，转换为指定分钟的分钟数据"""
+    conn = get_conn('carry_investment')
+    sql = "SELECT DATE_FORMAT(datetime,'%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' " \
+          "AND DATE_FORMAT(DATETIME,'%H')>=9 AND DATE_FORMAT(DATETIME,'%H')<17 AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}' ORDER BY datetime".format(code,dates)
+    d = getSqlData(conn,sql)
+    times = [i[0] for i in d]
+    datas = [i[1] for i in d]
+    conn.close()
+    return times,datas
+
 def huices(res,huizong,init_money,dates,end_date):
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
@@ -1013,6 +1026,7 @@ def huices(res,huizong,init_money,dates,end_date):
             else:
                 hc['allss'] += j[3]
                 hc['avgss'] += 1
+
             # 计算持仓时间
             start_d = j[0].replace(':', '-').replace(' ', '-')
             start_d = start_d.split('-') + [0, 0, 0]
@@ -1044,6 +1058,241 @@ def huices(res,huizong,init_money,dates,end_date):
         hc['max_jz'] = max(jingzhi)  # 最高
         hc['zx_x'] = zx_x  # 折线图x轴 时间
         hc['zx_y'] = zx_y  # 折线图y轴 利润
+
+    except Exception as exc:
+        logging.error("文件：HSD.py 第{}行报错： {}".format(sys._getframe().f_lineno,exc))
+
+    def get_jy(jg):
+        jy1 = round(jg['mony'] / init_money * 100, 2)  # 获利
+        jy2 = jg['mony']  # 利润
+        jy3 = jg['mony']  # 点
+        jy4 = jg['shenglv']  # 每天胜率
+        jy5 = jg['duo'] + jg['kong']  # 开的单数
+        jy6 = jy5  # 手
+        jy7 = jg['ylds']
+        return jy1, jy2, jy3, jy4, jy5, jy6, jy7
+
+    try:
+        this_date = dtf(end_date) - datetime.timedelta(days=1)
+        this_date = datetime.datetime.now() if this_date > datetime.datetime.now() else this_date
+        week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
+                range(this_date.weekday() + 1)]  # 这个星期的日期
+        month = [str(this_date - datetime.timedelta(days=td))[:10] for td in range(this_date.day)]  # 这个月的日期
+        time_date = time.strptime(dates, '%Y-%m-%d')
+        year = [str(this_date - datetime.timedelta(days=ty))[:10] for ty in range(time_date.tm_yday)]  # 这一年的日期
+        year.sort()
+        this_week = [0, 0, 0, 0, 0, 0, 0]
+        this_month = [0, 0, 0, 0, 0, 0, 0]
+        this_year = [0, 0, 0, 0, 0, 0, 0]
+
+        for yd in year[year.index(keys[0]):]:
+            jg = res.get(yd)
+            if not jg or len(jg['datetimes']) < 1:
+                continue
+            jys = get_jy(jg)
+            if yd == str(this_date)[:10]:
+                hc['this_day'] = jys
+            if yd in week:
+                this_week[0] += jys[0]
+                this_week[1] += jys[1]
+                this_week[2] += jys[2]
+                # this_week[3] += jys[3]
+                this_week[4] += jys[4]
+                this_week[5] += jys[5]
+                this_week[6] += jys[6]
+            if yd in month:
+                this_month[0] += jys[0]
+                this_month[1] += jys[1]
+                this_month[2] += jys[2]
+                # this_month[3] += jys[3]
+                this_month[4] += jys[4]
+                this_month[5] += jys[5]
+                this_month[6] += jys[6]
+            this_year[0] += jys[0]
+            this_year[1] += jys[1]
+            this_year[2] += jys[2]
+            # this_year[3] += jys[3]
+            this_year[4] += jys[4]
+            this_year[5] += jys[5]
+            this_year[6] += jys[6]
+        this_week[0] = round(this_week[0], 2)
+        this_week[3] = round(this_week[6] / this_week[4] * 100, 2)
+        this_month[0] = round(this_month[0], 2)
+        this_month[3] = round(this_month[6] / this_month[4] * 100, 2)
+        this_year[0] = round(this_year[0], 2)
+        this_year[3] = round(this_year[6] / this_year[4] * 100, 2)
+    except Exception as exc:
+        logging.error("文件 HSD.py 第{}行报错：{}".format(sys._getframe().f_lineno,exc))
+    hc['this_week'] = this_week
+    hc['this_month'] = this_month
+    hc['this_year'] = this_year
+    huizong['kuilv'] = 100 - huizong['shenglv']
+    return hc, huizong
+
+def huice_day(res,huizong,init_money,dates,end_date):
+    keys = [i for i in res if res[i]['datetimes']]
+    keys.sort()
+    jyts = len(keys)
+    if not keys:
+        return {}, huizong
+    jyys = int(keys[-1][-5:-3]) - int(keys[0][-5:-3]) + 1
+    hc = {
+        'jyts': jyts,  # 交易天数
+        'jyys': jyys,  # 交易月数
+        'hlbfb': round(huizong['yk'] / init_money * 100, 2),  # 总获利百分比
+        'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
+        'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
+        'ye': init_money + huizong['yk'],  # 余额
+        'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
+        'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
+        'avglr': 0, # 平均获利
+        'alllr': 0, # 总获利
+        'avgss': 0, # 平均损失
+        'allss': 0, # 总损失
+        'zzl': [],   # 增长率
+        'vol': [],   # 手数
+        'dayye': [], # 每天余额
+        'daylr': [], # 每天利润，不叠加
+        'zjhcs':[0],  # 资金回测
+        'day_time': [], # 当天每单交易时间
+        'day_yk': [],  # 当天每单交易盈亏
+        'day_ykall': [], # 当天每单叠加交易盈亏
+        'day_close': [],  # 当天交易时的收盘价
+        'day_x': 0, # 当天分钟行情时间
+        'samedatetime': '', # 当天的日期
+        'subtracted': 0, # 行情价格减去的值
+        'interval_1': [],
+    }
+    jingzhi = [] # 净值
+    zx_x = []
+    zx_y = []
+    zdhc = 0
+    ccsj = 0  # 总持仓时间
+    count_yl = 0  # 总盈利
+    count_ks = 0  # 总亏损
+    avg = huizong['yk'] / huizong['zl']  # 平均盈亏
+    count_var = 0
+    for i in keys:
+        je = round(res[i]['mony'])
+        jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
+        zx_x.append(i[-5:-3] + i[-2:])  # 日期
+        zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
+        hc['zzl'].append(round(zx_y[-1]/init_money*100,2))
+        hc['vol'].append(res[i]['duo'] + res[i]['kong'])
+        hc['dayye'].append(zx_y[-1]+init_money) # 每天余额
+        hc['daylr'].append(je)                  # 每天利润
+        sameday = [] # 当天的所有交易
+        if len(jingzhi) > 1:
+            max_jz = max(jingzhi[:-1])
+            zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
+            #zdhc = zdhc2 if zdhc2 > zdhc else zdhc
+            hc['zjhcs'].append(zjhc if zjhc>0 else 0)  # 资金回测
+        for j in res[i]['datetimes']:
+            if j[2] == '多':
+                hc['cgzd'][1] += 1
+                if j[3] > 0:
+                    hc['cgzd'][0] += 1
+            elif j[2] == '空':
+                hc['cgzk'][1] += 1
+                if j[3] > 0:
+                    hc['cgzk'][0] += 1
+            if j[3] > 0:
+                hc['alllr'] += j[3]
+                hc['avglr'] += 1
+            else:
+                hc['allss'] += j[3]
+                hc['avgss'] += 1
+            if i == keys[-1]:
+                st = 1 if j[2] == '多' else -1
+                sameday.append([j[0],st,j[4]])
+                sameday.append([j[1],-st,j[5]])
+                hc['samedatetime'] = i
+            # 计算持仓时间
+            start_d = j[0].replace(':', '-').replace(' ', '-')
+            start_d = start_d.split('-') + [0, 0, 0]
+            start_d = [int(sd) for sd in start_d]
+            end_d = j[1].replace(':', '-').replace(' ', '-')
+            end_d = end_d.split('-') + [0, 0, 0]
+            end_d = [int(ed) for ed in end_d]
+            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))
+            # 计算利润因子
+            if j[3] > 0:
+                count_yl += j[3]
+            else:
+                count_ks += -j[3]
+            # 方差
+            count_var += (j[3] - avg) ** 2
+    try:
+        hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
+        hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
+        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1)  # 平均持仓时间
+        hc['lryz'] = round(count_yl / count_ks, 2)
+        count_var = count_var / huizong['zl']
+        hc['std'] = round(count_var ** 0.5, 2)
+
+        hc['zjhc'] = max(hc['zjhcs'])  # 最大回测
+        hc['avglr'] = hc['alllr']/hc['avglr'] if hc['avglr']!=0 else 0  # 平均获利
+        hc['avgss'] = hc['allss']/hc['avgss'] if hc['avgss']!=0 else 0  # 平均损失
+        hc['zjhc'] = hc['zjhc'] if hc['zjhc'] >= 0 else 0
+        hc['jingzhi'] = jingzhi  # 每天净值
+        hc['max_jz'] = max(jingzhi)  # 最高
+        hc['zx_x'] = zx_x  # 折线图x轴 时间
+        hc['zx_y'] = zx_y  # 折线图y轴 利润
+        sameday.sort()
+        hc['day_time'] = [sa[0][-8:-3] for sa in sameday]
+        from copy import deepcopy
+        day_time = deepcopy(hc['day_time'])
+        #hc['day_yk'] = [sa[1] for sa in sameday]
+        hc['day_x'], hc['day_close'] = day_this_mins(keys[-1])
+        syc = [] # 开仓价
+        cc = 0 # 持仓
+
+        def get_ind(l, x, s):
+            if s > 0:
+                inde = l.index(x) + 1
+                return inde + get_ind(l[inde:], x, s - 1)
+            else:
+                return l.index(x)
+
+        for y in range(len(hc['day_x'])):
+            cl = hc['day_close'][y]
+            dx = hc['day_x'][y]
+            if dx not in day_time:
+                yk = 0
+                if cc == 0:
+                    yk = 0
+                elif cc < 0:
+                    yk = sum(syc) - len(syc) * cl
+                else:
+                    yk = len(syc) * cl - sum(syc)
+                hc['day_yk'].append(round(yk,1))
+            else:
+                yk = 0
+                for c2 in range(day_time.count(dx)):
+                    sind = get_ind(day_time,dx,c2)
+                    same = sameday[sind]
+                    syc.append(same[2])
+                    if same[1]==1:
+                        if cc < 0:
+                            yk += -(syc.pop() - syc.pop())
+                            yk += sum(syc) - len(syc)*cl
+                        else:
+                            yk = sum(syc) - len(syc)*cl
+                    elif  same[1]==-1:
+                        if cc >0:
+                            yk += syc.pop() - syc.pop()
+                            yk += len(syc)*cl - sum(syc)
+                        else:
+                            yk += len(syc)*cl - sum(syc)
+                    else:
+                        yk = 0
+                    cc += same[1]
+                hc['day_yk'].append(round(yk,1))
+
+        v = hc['day_close'][0] // 1000 * 1000
+        hc['subtracted'] = int(v)
+        hc['day_close'] = [i - v for i in hc['day_close']]
+
     except Exception as exc:
         logging.error("文件：HSD.py 第{}行报错： {}".format(sys._getframe().f_lineno,exc))
 
@@ -1225,6 +1474,7 @@ class GXJY:
             'wcds1': 0,
             'wcds': 0,  # 完成的单
             'cost': 0,  # 手续费
+            'ALL_JY': [], # 所有完成的交易记录
         }
         ind = 0
         _while = 0
@@ -1253,7 +1503,7 @@ class GXJY:
                 data['mai'] = 1
                 data['all_price'] += data['price']
                 data['sum_price'] += data['price']
-                data['kc'].append([1, data['price']])
+                data['kc'].append([1, data['price'], msg[2], msg[3], msg[4]])
                 data['all_kp'].append([1, data['price']])
                 data['cost'] += msg[4]
 
@@ -1263,7 +1513,7 @@ class GXJY:
                 data['mai'] = -1
                 data['all_price'] -= data['price']
                 data['sum_price'] -= data['price']
-                data['kc'].append([-1, data['price']])
+                data['kc'].append([-1, data['price'], msg[2], msg[3], msg[4]])
                 data['all_kp'].append([-1, data['price']])
                 data['cost'] += msg[4]
 
@@ -1274,8 +1524,10 @@ class GXJY:
                     data['pcyl'] = (data['kc'][-2][1] - data['kc'][-1][1])
                 data['pcyl_all'] += data['pcyl']
                 data['all'] += data['pcyl']
-                data['kc'].pop()
-                data['kc'].pop()
+                # 多空，平仓价，
+                # [-1, data['price'], msg[2], msg[3], msg[4], 1, data['price'], msg[2], msg[3], msg[4]]
+                p = data['kc'].pop() + data['kc'].pop()
+                data['ALL_JY'].append([p[2],p[5],p[4]])
                 data['wcds1'] += 1
                 data['wcds'] += 1
             else:

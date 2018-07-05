@@ -437,9 +437,10 @@ def tongji(rq):
 
     if rq_type == '2' and rq_date and end_date and rq_id != 0:
         results2 = HSD.order_detail(rq_date, end_date)
+        # (8959114, datetime.datetime(2018, 7, 4, 9, 30, 41), 28339.62, datetime.datetime(2018, 7, 4, 9, 48, 5), 28328.35, 11.27, 1, 1.0, 2, 28496.3, 28250.88)
         res = {}
         all_price = []
-        results2 = [result for result in results2 if rq_id == result[0]]
+        results2 = [result for result in results2 if (rq_id == result[0] and result[8] != 0)]
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
         for i in results2:
@@ -452,7 +453,7 @@ def tongji(rq):
                 elif i[6] == 1:
                     res[dt]['kong'] += 1
                 res[dt]['mony'] += i[5]
-                xx = [str(i[1]), str(i[3]), '空', i[5]] if i[6] == 1 else [str(i[1]), str(i[3]), '多', i[5]]
+                xx = [str(i[1]), str(i[3]), '空' if i[6] == 1 else '多', i[5], i[2], i[4]]
                 res[dt]['datetimes'].append(xx)
 
                 huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
@@ -488,9 +489,12 @@ def tongji(rq):
         init_money = HSD.getSqlData(conn,sql)
         conn.close()
         init_money = init_money[0][0]
+        if rq_date == end_date:
+            hc, huizong = HSD.huice_day(res, huizong, init_money, rq_date, end_date)
+            return render(rq,'hc_day.html',{'hc': hc, 'huizong': huizong, 'init_money':init_money,})
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
-        fa = '0'
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa, 'init_money':init_money,})
+
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money':init_money,})
 
 
         # hc, huizong = HSD.huices(res,huizong,init_money,dates,end_date)
@@ -539,7 +543,6 @@ def tongji(rq):
         if results:
             return render(rq, 'tongji.html', locals())
 
-    #rq_id = rq_id if rq_id else 0
     herys = None
     try:
         herys = HSD.tongji()
@@ -1005,7 +1008,7 @@ def huice(rq):
             HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
             return redirect('index')
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'fa': fa})
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong})
 
     return render(rq, 'hc.html')
 
@@ -1092,6 +1095,7 @@ def gxjy(rq):
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
             h.closeConn()
+            # print(data)
             return JsonResponse({'data':data,'hys':hys})
         elif rq.is_ajax() and types == 'tjt': # 折线图
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
@@ -1109,6 +1113,66 @@ def gxjy(rq):
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
             h.closeConn()
             return JsonResponse({"init_data":init_data})
+        elif types == 'hc':
+            # Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit
+            #results2 = [[8959325, datetime.datetime(2018, 7, 3, 15, 53, 20), 28373.79, datetime.datetime(1970, 1, 1, 8, 0), 28381.82, -8.03, 1, 1.0, 1, 28435.82, 28275.82],...]
+            """ dd=     bs    price                time    code   cost
+                    0    -1   2162.0 2016-11-22 14:12:54   j1701  26.22
+                    1    -2   2925.0 2016-11-23 13:35:13  rb1701   6.10
+                    2    -2   2952.0 2016-11-23 14:54:10  rb1701   6.15"""
+            res = {}
+            all_price = []
+            huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                       'avg_day': 0, 'least2': 0, 'most2': 0}
+            for i in results2:
+                dt = str(i[1])[:10]
+                if dt not in res:
+                    res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+                if i[8] == 2:
+                    if i[6] == 0:
+                        res[dt]['duo'] += 1
+                    elif i[6] == 1:
+                        res[dt]['kong'] += 1
+                    res[dt]['mony'] += i[5]
+                    xx = [str(i[1]), str(i[3]), '空', i[5]] if i[6] == 1 else [str(i[1]), str(i[3]), '多', i[5]]
+                    res[dt]['datetimes'].append(xx)
+
+                    huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
+                        'least']
+                    huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
+                        'most']
+
+            res_key = list(res.keys())
+            for i in res_key:
+                mony = res[i]['mony']
+                huizong['yk'] += mony
+                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+
+                mtsl = [j[3] for j in res[i]['datetimes']]
+                all_price += mtsl
+                if not res[i].get('ylds'):
+                    res[i]['ylds'] = 0
+                if mtsl:
+                    ylds = len([sl for sl in mtsl if sl > 0])
+                    res[i]['ylds'] += ylds  # 盈利单数
+                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+                else:
+                    res[i]['shenglv'] = 0
+            huizong['shenglv'] += len([p for p in all_price if p > 0])
+            huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+            huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+            res_size = len(res)
+            huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+            huizong['least2'] = min(all_price)
+            huizong['most2'] = max(all_price)
+            conn = HSD.get_conn('carry_investment')
+            sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
+            init_money = HSD.getSqlData(conn, sql)
+            conn.close()
+            init_money = init_money[0][0]
+            hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+
+            return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
         else: # 原始数据
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
             response = render(rq,'gxjy.html',{'init_data':init_data})

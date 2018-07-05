@@ -1,0 +1,203 @@
+{% extends 'base/base.html' %}
+{% block title %}回测{% endblock %}
+{% block center_cen %}
+    {% load staticfiles %}
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>
+
+
+<link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">
+
+
+<link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
+
+
+
+
+<p style="position:absolute;left:50%;top:120px;font-size:20px;">{% include 'base/return.html' %}</p>
+
+<div class="floatLeft">
+    
+
+
+<div class="ds1">
+    <div class="ds2">
+        <div class="ds3">
+            <div class="ds4">
+                <div class="ds5">
+                    <div class="ds6">
+                        <div class="box_cont" id="huicetuall"> <!--style="height:348px"-->
+                            <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">开仓盈亏</span>&nbsp;&nbsp;
+                                <span id="tuxian2">余额</span>&nbsp;&nbsp;
+                                <span id="tuxian3">利润</span>&nbsp;&nbsp;
+                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;
+                                <!--<span id="tuxian5">当天盈亏</span>-->
+                            </div>
+                                <div id="zhexiantu"></div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var tu_name;
+function tuxiancolor(id){
+    var id2 = "";
+    for(var i=1;i<=4;i++){
+        id2 = "#tuxian"+i;
+        if(id2==id){
+        $("#tuxian"+i).css({"background-color":"red","width":"40px"});
+        }else{
+        $("#tuxian"+i).css({"background-color":"white","width":"40px"});
+        }
+    }
+    if(id=='#tuxian1'){
+        tu_name=["行情（{{hc.subtracted}}）","盈亏"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}});
+    }else if(id=='#tuxian2'){
+        tu_name=["净值","手数"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.daylr|safe}});
+    }else if(id=='#tuxian3'){
+        tu_name=["总利润","日利润"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}});
+    }else if(id=='#tuxian4'){
+        tu_name=["","资金回测"];
+        huatu(tu_name,{{hc.day_x|safe}},null,{{hc.zjhcs|safe}});
+    }
+    <!--else if(id=='#tuxian5'){-->
+        <!--tu_name=["收盘价（{{hc.qcbs}}）","当天每单盈亏（{{hc.samedatetime}}）"];-->
+        <!--huatu(tu_name,{{hc.day_time|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}});-->
+    <!--}-->
+}
+$("#tuxian1").click(function(){
+    tuxiancolor("#tuxian1");
+});
+$("#tuxian2").click(function(){
+    tuxiancolor("#tuxian2");
+});
+$("#tuxian3").click(function(){
+    tuxiancolor("#tuxian3");
+});
+$("#tuxian4").click(function(){
+    tuxiancolor("#tuxian4");
+});
+
+tuxiancolor("#tuxian1");
+
+//var myChart = echarts.init(document.getElementById('zhexiantu'));
+
+function huatu(tu_name,category,lineData,barData){
+// caregory: X轴，lineData：折线图Y轴，barData：柱状图Y轴
+
+var winWidth=1140;
+var winHeight=940;
+//获取窗口宽度、高度
+if (document.documentElement  && document.documentElement.clientHeight && document.documentElement.clientWidth){
+    winWidth  = document.documentElement.clientWidth;
+    winHeight = document.documentElement.clientHeight;
+}
+var main = $("#zhexiantu")
+main.css({"width":winWidth,"height":winHeight});
+var myChart = echarts.init(document.getElementById('zhexiantu'));  // document.getElementById('')
+
+
+option = {
+    title: {
+            text: "{{hc.samedatetime}}",
+            textStyle:{ color:'#0a0' }
+        },
+    backgroundColor: '#0f375f',
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: tu_name,
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    xAxis: {
+        data: category,
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    yAxis: [
+        {
+        name: tu_name[0],
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+        {
+        name: tu_name[1],
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    }
+    ],
+    series: [{
+        name: tu_name[0],
+        type: 'line',
+        yAxisIndex: 0,
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        data: lineData
+    }, {
+        name: tu_name[1],
+        type: 'bar',
+        yAxisIndex: 1,
+        barWidth: 2,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 1,
+                color: new echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                        {offset: 0, color: '#14c8d4'},
+                        {offset: 1, color: '#43eec6'}
+                    ]
+                )
+            }
+        },
+        data: barData
+    }]
+};
+myChart.setOption(option);
+}
+
+</script>
+
+</div>
+
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -95,3 +95,1008 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\views.py", line 744, in zhangting
     zt_tomorrow[i][2] = range(zt_tomorrow[i][2])  # ['★' for j in range(zt_tomorrow[i][2])]
 TypeError: 'str' object cannot be interpreted as an integer
+exception.py[2018-07-03 13:59:33][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 404, in sp_order_records
+    dt = [datagd[i][0]]
+IndexError: list index out of range
+exception.py[2018-07-03 13:59:43][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 404, in sp_order_records
+    dt = [datagd[i][0]]
+IndexError: list index out of range
+exception.py[2018-07-03 13:59:53][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 404, in sp_order_records
+    dt = [datagd[i][0]]
+IndexError: list index out of range
+exception.py[2018-07-03 14:00:03][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 404, in sp_order_records
+    dt = [datagd[i][0]]
+IndexError: list index out of range
+exception.py[2018-07-03 14:03:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:03:10][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:03:20][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:03:30][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:03:40][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:03:51][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:01][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:11][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:21][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:32][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:42][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:04:52][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:02][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:13][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:23][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:33][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:44][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 400, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 400, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:05:48][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 400, in sp_order_records
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 400, in <listcomp>
+    data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])+list(i[8:])] for i in data]
+TypeError: must be str, not list
+exception.py[2018-07-03 14:16:47][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:16:50][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:16:57][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:00][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:11][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:17][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:20][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:30][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+exception.py[2018-07-03 14:17:37][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 433, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in sp_order_records
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 421, in <listcomp>
+    data2 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:6]) + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + list(i[8:]) for i in data2]
+TypeError: an integer is required (got type str)
+HSD.py[2018-07-03 14:25:30][ERROR]：文件 HSD.py 第1112行报错：'2018-07-03' is not in list
+HSD.py[2018-07-03 14:25:58][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 15:37:09][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 15:38:11][ERROR]：文件 HSD.py 第1112行报错：division by zero
+exception.py[2018-07-03 15:45:19][ERROR]：Internal Server Error: /gxjy/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1095, in gxjy
+    pritn(data)
+NameError: name 'pritn' is not defined
+HSD.py[2018-07-03 15:54:16][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 16:06:38][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 16:09:42][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 16:09:57][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 16:10:43][ERROR]：文件 HSD.py 第1112行报错：division by zero
+base.py[2018-07-03 17:16:33][WARNING]：Not Found: /gxjy/group=date
+base.py[2018-07-03 17:16:33][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-07-03 18:11:33][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:14:12][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:27:24][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:29:07][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:30:13][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:30:28][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:30:38][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:31:31][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:35:41][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:37:17][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:42:08][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:44:21][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-03 18:46:34][ERROR]：文件 HSD.py 第1112行报错：division by zero
+HSD.py[2018-07-04 10:00:36][ERROR]：文件 HSD.py 第1117行报错：division by zero
+HSD.py[2018-07-04 10:01:22][ERROR]：文件 HSD.py 第1117行报错：division by zero
+HSD.py[2018-07-04 10:20:28][ERROR]：文件 HSD.py 第1117行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 10:26:54][ERROR]：文件 HSD.py 第1120行报错：'2018-07-04' is not in list
+exception.py[2018-07-04 10:47:54][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 499, in tongji
+    results2 = HSD.order_detail(rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 378, in order_detail
+    data = getSqlData(conn, (sql,(dates,end_date)))
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 144, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 859, in query
+    self._execute_command(COMMAND.COM_QUERY, sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1095, in _execute_command
+    packet = prelude + sql[:packet_size-1]
+TypeError: can't concat tuple to bytes
+base.py[2018-07-04 10:47:54][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-07-04 10:49:29][ERROR]：文件 HSD.py 第1120行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:21:45][ERROR]：文件：HSD.py 第1068行报错： (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '['09:48:01', '09:59:27', '10:14:08', '10:14:09', '10:45:43', '10:51:35', '11:36:' at line 1")
+HSD.py[2018-07-04 12:21:45][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:21:50][ERROR]：文件：HSD.py 第1068行报错： (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '['09:48:01', '09:59:27', '10:14:08', '10:14:09', '10:45:43', '10:51:35', '11:36:' at line 1")
+HSD.py[2018-07-04 12:21:50][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:23:16][ERROR]：文件：HSD.py 第1069行报错： (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '['09:48:01', '09:59:27', '10:14:08', '10:14:09', '10:45:43', '10:51:35', '11:36:' at line 1")
+HSD.py[2018-07-04 12:23:16][ERROR]：文件 HSD.py 第1131行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:23:36][ERROR]：文件：HSD.py 第1070行报错： (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '['09:48:01', '09:59:27', '10:14:08', '10:14:09', '10:45:43', '10:51:35', '11:36:' at line 1")
+HSD.py[2018-07-04 12:23:36][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:24:10][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:24:34][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:25:56][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:26:30][ERROR]：文件 HSD.py 第1131行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:34:18][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:35:19][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:35:39][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:36:11][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:36:40][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:38:05][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:38:35][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:39:06][ERROR]：文件 HSD.py 第1130行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:40:25][ERROR]：文件 HSD.py 第1131行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:41:20][ERROR]：文件 HSD.py 第1133行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:45:11][ERROR]：文件 HSD.py 第1131行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:47:44][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 12:49:52][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 13:18:49][ERROR]：文件 HSD.py 第1132行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 13:24:39][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 13:27:38][ERROR]：文件 HSD.py 第1135行报错：'2018-06-29' is not in list
+HSD.py[2018-07-04 13:28:19][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:30:25][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:32:01][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:36:41][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:38:48][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:40:00][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:40:34][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:41:13][ERROR]：文件：HSD.py 第1073行报错： list index out of range
+HSD.py[2018-07-04 13:41:13][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:48:10][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:48:35][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 13:50:42][ERROR]：文件 HSD.py 第1135行报错：division by zero
+HSD.py[2018-07-04 14:24:38][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 14:56:37][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:12:40][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:40:55][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:41:26][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:43:07][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:46:52][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:47:01][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:54:38][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:56:48][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+HSD.py[2018-07-04 16:56:52][ERROR]：文件 HSD.py 第1135行报错：'2018-07-04' is not in list
+exception.py[2018-07-04 16:59:59][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.tongji didn't return an HttpResponse object. It returned None instead.
+HSD.py[2018-07-04 17:57:32][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+exception.py[2018-07-04 17:57:32][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.tongji didn't return an HttpResponse object. It returned None instead.
+HSD.py[2018-07-05 09:08:10][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+exception.py[2018-07-05 09:08:10][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.tongji didn't return an HttpResponse object. It returned None instead.
+base.py[2018-07-05 09:08:10][WARNING]：Not Found: /favicon.ico
+base.py[2018-07-05 09:08:10][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-07-05 09:09:54][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:11:07][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:11:53][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:12:14][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:12:52][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:13:06][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:13:12][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:13:15][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:16:41][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:18:36][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:18:58][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:19:37][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:20:00][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:20:03][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:23:33][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:24:07][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:24:28][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:28:14][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:28:43][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:29:57][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:41:59][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:42:10][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:42:23][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:42:36][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:43:04][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:49:18][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:49:22][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:49:51][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:49:54][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:51:42][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:55:09][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:55:42][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:56:30][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:56:44][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:56:57][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:57:09][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:57:15][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 09:57:44][ERROR]：文件 HSD.py 第1136行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 10:03:43][ERROR]：文件 HSD.py 第1138行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 10:04:34][ERROR]：文件 HSD.py 第1138行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 10:05:24][ERROR]：文件 HSD.py 第1138行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 10:06:48][ERROR]：文件 HSD.py 第1138行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 10:08:15][ERROR]：文件 HSD.py 第1138行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:39:31][ERROR]：文件 HSD.py 第1167行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:41:57][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:42:16][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:43:00][ERROR]：文件 HSD.py 第1169行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:44:01][ERROR]：文件 HSD.py 第1170行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:44:47][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:45:56][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:46:33][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:49:58][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:51:18][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:51:49][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:56:17][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 11:56:49][ERROR]：文件 HSD.py 第1168行报错：'2018-07-04' is not in list
+HSD.py[2018-07-05 12:20:34][ERROR]：文件 HSD.py 第1336行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:21:15][ERROR]：文件 HSD.py 第1336行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:23:22][ERROR]：文件 HSD.py 第1336行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:26:23][ERROR]：文件 HSD.py 第1336行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:27:50][ERROR]：文件 HSD.py 第1337行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:29:57][ERROR]：文件：HSD.py 第1276行报错： not all arguments converted during string formatting
+HSD.py[2018-07-05 12:29:57][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:30:34][ERROR]：文件：HSD.py 第1276行报错： unsupported operand type(s) for //: 'str' and 'int'
+HSD.py[2018-07-05 12:30:34][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:31:23][ERROR]：文件：HSD.py 第1276行报错： unsupported operand type(s) for //: 'str' and 'int'
+HSD.py[2018-07-05 12:31:23][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+base.py[2018-07-05 12:31:40][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-07-05 12:31:41][ERROR]：文件：HSD.py 第1276行报错： unsupported operand type(s) for //: 'str' and 'int'
+HSD.py[2018-07-05 12:31:41][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:32:05][ERROR]：文件：HSD.py 第1276行报错： unsupported operand type(s) for //: 'str' and 'int'
+HSD.py[2018-07-05 12:32:05][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:33:13][ERROR]：文件：HSD.py 第1277行报错： unsupported operand type(s) for //: 'str' and 'int'
+HSD.py[2018-07-05 12:33:13][ERROR]：文件 HSD.py 第1339行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:34:03][ERROR]：文件 HSD.py 第1338行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 12:35:17][ERROR]：文件 HSD.py 第1339行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:08:21][ERROR]：文件 HSD.py 第1340行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:09:25][ERROR]：文件 HSD.py 第1340行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:10:12][ERROR]：文件 HSD.py 第1340行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:12:05][ERROR]：文件 HSD.py 第1340行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:13:29][ERROR]：文件 HSD.py 第1341行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:20:33][ERROR]：文件 HSD.py 第1344行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:23:30][ERROR]：文件 HSD.py 第1344行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:28:13][ERROR]：文件 HSD.py 第1343行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:29:18][ERROR]：文件 HSD.py 第1344行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:34:35][ERROR]：文件 HSD.py 第1344行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:36:15][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:37:18][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:42:27][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:43:39][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:49:00][ERROR]：文件：HSD.py 第1285行报错： unsupported operand type(s) for +: 'int' and 'str'
+HSD.py[2018-07-05 13:49:00][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:53:19][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:55:26][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:57:05][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 13:59:21][ERROR]：文件 HSD.py 第1349行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:00:33][ERROR]：文件 HSD.py 第1349行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:01:52][ERROR]：文件 HSD.py 第1349行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:02:11][ERROR]：文件 HSD.py 第1349行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:30:00][ERROR]：文件 HSD.py 第1352行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:41:53][ERROR]：文件 HSD.py 第1350行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:48:51][ERROR]：文件 HSD.py 第1350行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:53:21][ERROR]：文件 HSD.py 第1350行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 14:54:37][ERROR]：文件 HSD.py 第1349行报错：'2018-07-05' is not in list
+exception.py[2018-07-05 14:55:52][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 412, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 334, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 138, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-05 14:56:15][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 412, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 334, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 138, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+HSD.py[2018-07-05 15:01:01][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:16:12][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:16:57][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:19:40][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:23:43][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:24:23][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:25:18][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:25:48][ERROR]：文件 HSD.py 第1348行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:30:21][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:30:34][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:30:41][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:30:46][ERROR]：文件 HSD.py 第1345行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:31:28][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:31:59][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:32:14][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:35:56][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:41:44][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:43:57][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:45:03][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:46:01][ERROR]：文件 HSD.py 第1347行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 15:46:46][ERROR]：文件 HSD.py 第1346行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:01:17][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:02:33][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:03:30][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:04:29][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:05:33][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:06:07][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:09:37][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:12:21][ERROR]：文件 HSD.py 第1354行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:16:47][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:17:01][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:18:05][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:19:31][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+base.py[2018-07-05 16:19:47][WARNING]：Not Found: /index
+HSD.py[2018-07-05 16:20:06][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:23:43][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:24:04][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+exception.py[2018-07-05 16:24:04][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 494, in tongji
+    return render(rq,'hc_day.html',{'hc': hc, 'huizong': huizong, 'init_money':init_money,})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: '{hc.samedatetime' from '{hc.samedatetime'
+HSD.py[2018-07-05 16:24:18][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:24:31][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:24:45][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:26:15][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:38:28][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:38:52][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:39:39][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:41:23][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:41:59][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:42:08][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:43:17][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:43:40][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:44:34][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:44:58][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:45:25][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:45:54][ERROR]：文件 HSD.py 第1353行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:48:46][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:49:35][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:50:26][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:51:18][ERROR]：文件：HSD.py 第1293行报错： append() takes exactly one argument (2 given)
+HSD.py[2018-07-05 16:51:18][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:51:23][ERROR]：文件：HSD.py 第1293行报错： append() takes exactly one argument (2 given)
+HSD.py[2018-07-05 16:51:23][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 16:51:51][ERROR]：文件 HSD.py 第1355行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 17:07:38][ERROR]：文件 HSD.py 第1298行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 17:08:08][ERROR]：文件 HSD.py 第1299行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 17:26:04][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 17:26:29][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:04:02][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:30:40][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:30:45][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:41:45][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:41:49][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:42:20][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:43:26][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:43:36][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:44:30][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:45:43][ERROR]：文件 HSD.py 第1356行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:46:49][ERROR]：文件 HSD.py 第1357行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:48:23][ERROR]：文件 HSD.py 第1359行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:49:16][ERROR]：文件 HSD.py 第1359行报错：'2018-07-05' is not in list
+HSD.py[2018-07-05 18:50:07][ERROR]：文件 HSD.py 第1359行报错：'2018-07-05' is not in list

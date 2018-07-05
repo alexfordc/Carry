@@ -382,8 +382,11 @@ _div_location(); //div定位
 var is_show = true;
 // 在特定页面不显示
 var is_show2=window.location.pathname;
-if(is_show2=='/zx/' || is_show2=='/zt/' || is_show2=='/ztzx/' || is_show2=='/hc/' || is_show2=='/moni/'){
+if(is_show2!='/'){
     $('#spig').css("display","none");
+}
+if(is_show2!='/'){
+    $('#palette_colors').css("display","none");
 }
 
 function xinwen_ajax(){
