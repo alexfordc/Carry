@@ -37,7 +37,6 @@ urlpatterns = [
     url(r'^getwebsocket$',views.getwebsocket),
     url(r'^zhangting/([a-z]*)/$',views.zhangting,name='zhangting'),
     url(r'^moni/$',views.moni,name='moni'),
-    url(r'^bfsy/$',views.bfsy,name='bfsy'),
     url(r'^gdzd/$',views.gdzd,name='gdzd'),
     url(r'^hc/$',views.huice,name='huice'),
     url(r'^account_update/$',views.account_info_update,name='account_update'),

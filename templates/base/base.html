@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/beijing_style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/spigPet.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/spigPet.css' %}">-->
 
 <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/css3-mediaqueries.js' %}"></script>
@@ -27,7 +27,7 @@
 <script type="text/javascript" src="{% static 'js/jquery.tipsy.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/grayscale-image.js' %}"></script>
 
-    <script type="text/javascript" src="{% static 'js/spig.js' %}"></script>
+    <!--<script type="text/javascript" src="{% static 'js/spig.js' %}"></script>-->
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />
 <script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>
@@ -382,9 +382,6 @@ _div_location(); //div定位
 var is_show = true;
 // 在特定页面不显示
 var is_show2=window.location.pathname;
-if(is_show2!='/'){
-    $('#spig').css("display","none");
-}
 if(is_show2!='/'){
     $('#palette_colors').css("display","none");
 }

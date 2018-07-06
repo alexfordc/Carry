@@ -62,8 +62,8 @@ function tuxiancolor(id){
         tu_name=["行情（{{hc.subtracted}}）","盈亏"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["净值","手数"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.daylr|safe}});
+        tu_name=["行情","利润"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}});
     }else if(id=='#tuxian3'){
         tu_name=["总利润","日利润"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}});
@@ -105,7 +105,7 @@ if (document.documentElement  && document.documentElement.clientHeight && docume
 }
 var main = $("#zhexiantu")
 main.css({"width":winWidth,"height":winHeight});
-var myChart = echarts.init(document.getElementById('zhexiantu'));  // document.getElementById('')
+var myChart = echarts.init(document.getElementById('zhexiantu'));
 
 
 option = {
@@ -165,7 +165,7 @@ option = {
         data: lineData
     }, {
         name: tu_name[1],
-        type: 'bar',
+        type: 'line', // bar
         yAxisIndex: 1,
         barWidth: 2,
         itemStyle: {
