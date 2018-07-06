@@ -1295,7 +1295,6 @@ def huice_day(res, huizong, init_money, dates, end_date):
                     if same[1] == 1:
                         if cc < 0:
                             yk += -(syc.pop() - syc.pop())
-                            print(hc['day_ykall'].nonzero,yk,'...')
                             hc['day_ykall'].append(hc['day_ykall'].nonzero + yk)
                             yk += sum(syc) - len(syc) * cl
                         else:
@@ -1303,7 +1302,6 @@ def huice_day(res, huizong, init_money, dates, end_date):
                     elif same[1] == -1:
                         if cc > 0:
                             yk += syc.pop() - syc.pop()
-                            print(hc['day_ykall'].nonzero, yk, '...')
                             hc['day_ykall'].append(hc['day_ykall'].nonzero + yk)
                             yk += len(syc) * cl - sum(syc)
                         else:
@@ -1312,9 +1310,7 @@ def huice_day(res, huizong, init_money, dates, end_date):
                         yk = 0
                         hc['day_ykall'].append(0)
                     cc += same[1]
-                    print(syc, cc)
                 hc['day_yk'].append(round(yk, 1))
-        print(dx, hc['day_ykall'])
 
         v = hc['day_close'][0] // 1000 * 1000
         hc['subtracted'] = int(v)
