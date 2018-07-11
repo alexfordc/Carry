@@ -49,7 +49,7 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
 <div align="center">
     <form action="">
-
+开始日期：<input type='date' value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' value={{end_date}} id='end_date'>
  <div style="margin-left:43%;"><br/>
 
      <input type="button" onclick="javascript:myajaxs({% url 'gxjy' %})" class="button green" value="原始数据">
@@ -62,7 +62,7 @@
     <!--<a href="javascript:myajaxs('/gxjy/?type=js')">计算数据</a>（<a href="javascript:myajaxs('/gxjy/?type=js&group=date')">日期分组</a>）&nbsp;&nbsp;&nbsp;&nbsp;-->
     <!--<a href="javascript:myajaxs('/gxjy/?type=tjt')">统计图</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
     <!--<a href="{% url 'gxjy' %}?type=sx">刷新</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/><br/>-->
-    <div id="data_is_ajax">
+    <div id="data_is_ajax" align="center">
     <table border="1">
         {% if hys %}
         <tr><th colspan="22" style="font-size:20px;">交易汇总</th></tr>
@@ -87,7 +87,7 @@
         {% endfor %}
         {% endif %}
         {% if init_data %}
-        <tr style="width:1000px;"><th colspan="17" style="font-size:20px;">交易数据</th></tr>
+        <tr style="width:1000px;"><th colspan="18" style="font-size:20px;">交易数据</th></tr>
         <tr><th>成交时间</th><th>交易所</th><th>合约号</th><th>买卖</th><th>开平仓</th><th>成交手数</th><th>成交价格</th><th>手续费</th>
             <th>交易费</th><th>交易编码</th><th>席位号</th><th>系统号</th><th>成交号</th><th>投保</th><th>交割期</th><th>币种</th><th>名称</th><th>序号</th></tr>
         {% for i in init_data %}
@@ -149,9 +149,13 @@ myChart.setOption(option);
 
 
 function myajaxs(url){
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var datas = {'start_date':start_date,'end_date':end_date};
         $.ajax({
             type: 'GET',
             url: url,
+            data: datas,
             dataType: 'json',
             success: function(res){
                 if(res.init_data){
@@ -173,12 +177,13 @@ function myajaxs(url){
                         html += "</tr>";
                     }
                     html += "</table>";
-
+                    $("#zhexiantu").css('display','none');
+                    $("#data_is_ajax").css("align","center");
                     $("#data_is_ajax").html(html); //append(res.data);
                 }else if(res.data){
                     var hys = res.hys;
                     var data = res.data;
-                    var html="<table border='1'><tr><th colspan='22' style='font-size:20px;'>交易汇总</th></tr>";
+                    var html = "<table border='1'><tr><th colspan='22' style='font-size:20px;'>交易汇总</th></tr>";
                     html += "<tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th>";
                     html += "<th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th><th>总盈利</th><th>总平均盈利</th>";
                     html += "<th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th>";
@@ -209,6 +214,7 @@ function myajaxs(url){
                         html += "</tr>";
                     }
                     html += "</table>";
+                    $("#zhexiantu").css('display','none');
                     $("#data_is_ajax").html(html);
                 }else if(res.zx_x){
                     var zx_x=[],zx_y=[],zx_x2 = res.zx_x,zx_y2 = res.zx_y;
@@ -217,6 +223,7 @@ function myajaxs(url){
                         zx_y.push(zx_y2[i]);
                     }
                     $("#data_is_ajax").html('');
+                    $("#zhexiantu").css('display','block');
                     myzhexiantu(zx_x,zx_y);
                 }
             },

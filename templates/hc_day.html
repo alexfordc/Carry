@@ -6,23 +6,14 @@
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>
-
-
 <link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">
-
-
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
-
-
 
 
 <p style="position:absolute;left:50%;top:120px;font-size:20px;">{% include 'base/return.html' %}</p>
 
 <div class="floatLeft">
-    
-
 
 <div class="ds1">
     <div class="ds2">
@@ -59,17 +50,17 @@ function tuxiancolor(id){
         }
     }
     if(id=='#tuxian1'){
-        tu_name=["行情（{{hc.subtracted}}）","盈亏"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}});
+        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（手）"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["行情","利润"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}});
+        tu_name=["行情","利润","平仓盈亏"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}},{{hc.day_pcyk|safe}});
     }else if(id=='#tuxian3'){
-        tu_name=["总利润","日利润"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}});
+        tu_name=["总利润","日利润","持仓（手）"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}},"");
     }else if(id=='#tuxian4'){
-        tu_name=["","资金回测"];
-        huatu(tu_name,{{hc.day_x|safe}},null,{{hc.zjhcs|safe}});
+        tu_name=["","资金回测","持仓（手）"];
+        huatu(tu_name,{{hc.day_x|safe}},null,{{hc.zjhcs|safe}},"");
     }
     <!--else if(id=='#tuxian5'){-->
         <!--tu_name=["收盘价（{{hc.qcbs}}）","当天每单盈亏（{{hc.samedatetime}}）"];-->
@@ -93,7 +84,7 @@ tuxiancolor("#tuxian1");
 
 //var myChart = echarts.init(document.getElementById('zhexiantu'));
 
-function huatu(tu_name,category,lineData,barData){
+function huatu(tu_name,category,lineData,barData,volData){
 // caregory: X轴，lineData：折线图Y轴，barData：柱状图Y轴
 
 var winWidth=1140;
@@ -143,8 +134,7 @@ option = {
                 color: '#ccc'
             }
         }
-    },
-        {
+    },{
         name: tu_name[1],
         splitLine: {show: false},
         axisLine: {
@@ -162,10 +152,16 @@ option = {
         showAllSymbol: true,
         symbol: 'emptyCircle',
         symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#3CE8C8',
+                lineStyle: { color: '#3CE8C8' }
+            }
+        },
         data: lineData
-    }, {
-        name: tu_name[1],
-        type: 'line', // bar
+    },{
+        name: tu_name[2],
+        type: 'bar', // bar
         yAxisIndex: 1,
         barWidth: 2,
         itemStyle: {
@@ -178,6 +174,19 @@ option = {
                         {offset: 1, color: '#43eec6'}
                     ]
                 )
+            }
+        },
+        data: volData
+    }, {
+        name: tu_name[1],
+        type: 'line', // bar
+        yAxisIndex: 1,
+        barWidth: 2,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 1,
+                color: '#f33',
+                lineStyle: { color: '#f33' }
             }
         },
         data: barData

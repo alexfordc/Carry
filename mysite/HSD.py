@@ -108,27 +108,10 @@ SQL = {
     'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
     "order_detail": "SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit "
-                    "FROM order_detail WHERE Status!=-1 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+                    "FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 computer_name = socket.gethostname()  # 计算机名称
-
-
-class mylist(list):
-    """ 自定义列表，记录最后一个不为0的数，在列表为空的时候返回0 """
-
-    def __init__(self):
-        self.nonzero = 0
-
-    def append(self, value):
-        self += [value]
-        if value is not 0:
-            self.nonzero = value
-
-    def __getitem__(self, item):
-        if not self:
-            return 0
-        return list(self)[item]
 
 
 def get_date(d=None):
@@ -687,7 +670,7 @@ class Limit_up:
 
 class Zbjs(ZB):
     def __init__(self):
-        self.tab_name = {'1': 'futures_min', '2': 'wh_min', '3': 'handle_min', '4': 'index_min'}  # index_min
+        self.tab_name = {'1': 'wh_same_month_min', '2': 'wh_min', '3': 'handle_min', '4': 'index_min'}  # index_min
         super(Zbjs, self).__init__()
 
     def main(self, _ma=60):
@@ -708,8 +691,8 @@ class Zbjs(ZB):
     def get_hkHSI_date(self, conn, size=60, database=None):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
         if database != None:
-            tab_name = self.tab_name.get(database, 'futures_min')
-            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
+            tab_name = self.tab_name.get(database, 'wh_same_month_min') # futures_min
+            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} WHERE prodcode='HSI' GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
                 tab_name)
             data = getSqlData(conn, sql)
             data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
@@ -1175,7 +1158,8 @@ def huice_day(res, huizong, init_money, dates, end_date):
         'zjhcs': [0],  # 资金回测
         'day_time': [],  # 当天每单交易时间
         'day_yk': [],  # 当天每单交易盈亏
-        'day_ykall': mylist(),  # 当天每单叠加交易盈亏
+        'day_ykall': [],  # 当天每单叠加交易盈亏
+        'day_pcyk': [], # 当天每次平仓盈亏
         'day_close': [],  # 当天交易时的收盘价
         'day_x': 0,  # 当天分钟行情时间
         'samedatetime': '',  # 当天的日期
@@ -1197,7 +1181,6 @@ def huice_day(res, huizong, init_money, dates, end_date):
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
         hc['zzl'].append(round(zx_y[-1] / init_money * 100, 2))
-        hc['vol'].append(res[i]['duo'] + res[i]['kong'])
         hc['dayye'].append(zx_y[-1] + init_money)  # 每天余额
         hc['daylr'].append(je)  # 每天利润
         sameday = []  # 当天的所有交易
@@ -1263,8 +1246,6 @@ def huice_day(res, huizong, init_money, dates, end_date):
         day_time = deepcopy(hc['day_time'])
         # hc['day_yk'] = [sa[1] for sa in sameday]
         hc['day_x'], hc['day_close'] = day_this_mins(keys[-1])
-        syc = []  # 开仓价
-        cc = 0  # 持仓
 
         def get_ind(l, x, s):
             if s > 0:
@@ -1273,11 +1254,13 @@ def huice_day(res, huizong, init_money, dates, end_date):
             else:
                 return l.index(x)
 
+        syc = []  # 开仓价
+        cc = 0  # 持仓
         for y in range(len(hc['day_x'])):
-            cl = hc['day_close'][y]
-            dx = hc['day_x'][y]
+            cl = hc['day_close'][y] # 分钟收盘价
+            dx = hc['day_x'][y]     # 分钟
+            pcyk = 0                # 分钟平仓盈亏
             if dx not in day_time:
-                yk = 0
                 if cc == 0:
                     yk = 0
                 elif cc < 0:
@@ -1285,33 +1268,35 @@ def huice_day(res, huizong, init_money, dates, end_date):
                 else:
                     yk = len(syc) * cl - sum(syc)
                 hc['day_yk'].append(round(yk, 1))
-                hc['day_ykall'].append(0)
             else:
-                yk = 0
-                for c2 in range(day_time.count(dx)):
+                yk = 0 # 分钟盈亏
+                reg = day_time.count(dx)
+                for c2 in range(reg):
                     sind = get_ind(day_time, dx, c2)
                     same = sameday[sind]
                     syc.append(same[2])
                     if same[1] == 1:
                         if cc < 0:
-                            yk += -(syc.pop() - syc.pop())
-                            hc['day_ykall'].append(hc['day_ykall'].nonzero + yk)
-                            yk += sum(syc) - len(syc) * cl
+                            pop = -(syc.pop() - syc.pop())
+                            yk += pop
+                            pcyk += pop
+                            yk += (sum(syc) - len(syc) * cl if c2 == reg-1 else 0)
                         else:
-                            yk = sum(syc) - len(syc) * cl
+                            yk += (len(syc) * cl - sum(syc) if c2 == reg-1 else 0)
                     elif same[1] == -1:
                         if cc > 0:
-                            yk += syc.pop() - syc.pop()
-                            hc['day_ykall'].append(hc['day_ykall'].nonzero + yk)
-                            yk += len(syc) * cl - sum(syc)
+                            pop = syc.pop() - syc.pop()
+                            yk += pop
+                            pcyk += pop
+                            yk += (len(syc) * cl - sum(syc) if c2 == reg-1 else 0)
                         else:
-                            yk += len(syc) * cl - sum(syc)
-                    else:
-                        yk = 0
-                        hc['day_ykall'].append(0)
+                            yk += (sum(syc) - len(syc) * cl if c2 == reg-1 else 0)
                     cc += same[1]
                 hc['day_yk'].append(round(yk, 1))
 
+            hc['vol'].append(cc)
+            hc['day_pcyk'].append(round(pcyk,1))
+            hc['day_ykall'].append(round(pcyk+hc['day_ykall'][-1] if hc['day_ykall'] else pcyk,1))
         v = hc['day_close'][0] // 1000 * 1000
         hc['subtracted'] = int(v)
         hc['day_close'] = [i - v for i in hc['day_close']]
@@ -1424,7 +1409,7 @@ class GXJY:
                         r[15],
                         r[16]))
                 except Exception as exc:
-                    print(exc)
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         elif table == 'gx_entry_exit':
 
             sql = "INSERT IGNORE INTO gx_entry_exit(`datetime`,flow,direction,`out`,enter,currency,`type`,bank,abstract) " \
