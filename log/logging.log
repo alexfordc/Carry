@@ -2720,3 +2720,336 @@ views.py[2018-07-10 16:43:05][ERROR]：文件：views.py 第781行报错： 'NoneType' ob
 views.py[2018-07-10 16:44:37][ERROR]：文件：views.py 第781行报错： 'NoneType' object is not subscriptable
 views.py[2018-07-10 16:44:51][ERROR]：文件：views.py 第781行报错： 'NoneType' object is not subscriptable
 views.py[2018-07-10 16:47:24][ERROR]：文件：views.py 第781行报错： 'NoneType' object is not subscriptable
+HSD.py[2018-07-11 09:24:34][ERROR]：文件 HSD.py 第1366行报错：'2018-07-11' is not in list
+exception.py[2018-07-11 11:56:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 435, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    prods = {[i[4] for i in data]}
+TypeError: unhashable type: 'list'
+exception.py[2018-07-11 11:56:17][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 435, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 399, in sp_order_records
+    prods = {[i[4] for i in data]}
+TypeError: unhashable type: 'list'
+HSD.py[2018-07-11 12:00:08][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
+HSD.py[2018-07-11 13:55:04][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 13:55:58][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 13:56:24][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 13:57:08][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 13:57:30][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 13:58:06][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:02:15][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:08:48][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:08:54][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:09:16][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:09:29][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:12:20][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:12:24][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:12:52][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:13:34][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:13:51][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:14:39][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:16:15][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:19:57][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:21:09][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:21:20][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:21:39][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:21:54][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:42][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:42][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:43][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:43][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:44][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:45][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:45][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:46][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:47][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:47][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:48][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:48][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:49][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:49][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:50][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:51][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:23:52][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:27:48][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:27:52][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:28:03][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:29:22][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:29:25][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:29:30][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:02][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:05][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:08][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:26][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:29][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:31:48][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:33:29][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:33:34][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:33:47][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:35:16][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:35:18][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:35:53][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:36:09][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:36:16][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:36:30][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:36:39][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:36:52][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:37:05][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:37:19][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:37:39][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:37:54][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:38:00][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:38:15][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:38:22][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:38:26][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:39:29][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:39:32][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:40:37][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:44:06][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:44:10][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:45:35][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:45:38][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:46:57][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:47:00][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:47:40][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:47:47][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:47:59][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 14:48:06][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
+views.py[2018-07-11 14:56:49][INFO]：访问者：192.168.2.204访问页面：192.168.2.204/
+views.py[2018-07-11 14:57:31][INFO]：访问者：192.168.2.204访问页面：192.168.2.204/
+base.py[2018-07-11 15:36:23][WARNING]：Not Found: /favicon.ico
+exception.py[2018-07-11 15:56:45][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 524, in tongji
+    results2 = [i+[id_name.get(i[0],i[0])] for i in results2]
+  File "D:\tools\Tools\Carry\mysite\views.py", line 524, in <listcomp>
+    results2 = [i+[id_name.get(i[0],i[0])] for i in results2]
+TypeError: can only concatenate tuple (not "list") to tuple
+base.py[2018-07-11 15:56:45][WARNING]：Not Found: /favicon.ico
+exception.py[2018-07-11 15:57:46][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 526, in tongji
+    return render(rq, 'tongji.html', locals())
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader.py", line 21, in get_template
+    return engine.get_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\backends\django.py", line 39, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 162, in get_template
+    template, origin = self.find_template(template_name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\engine.py", line 136, in find_template
+    name, template_dirs=dirs, skip=skip,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loaders\base.py", line 44, in get_template
+    contents, origin, origin.template_name, self.engine,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 191, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 230, in compile_nodelist
+    return parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 312, in do_extends
+    nodelist = parser.parse()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\loader_tags.py", line 255, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 977, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 515, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 513, in parse
+    compiled_result = compile_func(self, token)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\defaulttags.py", line 827, in do_for
+    nodelist_loop = parser.parse(('empty', 'endfor',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 486, in parse
+    raise self.error(token, e)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 484, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\template\base.py", line 700, in __init__
+    "from '%s'" % (token[upto:], token))
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ':i.9' from 'names:i.9'
+exception.py[2018-07-11 16:25:59][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 526, in tongji
+    results2 = json.dumps(results2)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'datetime' is not JSON serializable
+exception.py[2018-07-11 16:27:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 526, in tongji
+    results2 = json.dumps(results2)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'datetime' is not JSON serializable
+exception.py[2018-07-11 16:27:36][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 527, in tongji
+    results2 = json.dumps(results2)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'datetime' is not JSON serializable
+exception.py[2018-07-11 16:30:45][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 506, in tongji
+    results2 = HSD.order_detail(rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 371, in order_detail
+    data = getSqlData(conn, sql)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=>'2018-07-11' AND OpenTime<='2018-07-11' AND Symbol LIKE 'HSENG%'' at line 1")
+exception.py[2018-07-11 16:39:42][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 517, in tongji
+    hz7 = id_name.get[i] if i in id_name else i
+TypeError: 'builtin_function_or_method' object is not subscriptable
+exception.py[2018-07-11 17:00:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 536, in tongji
+    results2 = json.dumps(results2)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "D:\ProgramFiles\Anaconda3\lib\json\encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'datetime' is not JSON serializable
+HSD.py[2018-07-11 18:07:33][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
+HSD.py[2018-07-11 18:07:43][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
+HSD.py[2018-07-11 18:07:52][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
+HSD.py[2018-07-11 18:09:12][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-11 18:09:15][ERROR]：文件 HSD.py 第1136行报错：division by zero

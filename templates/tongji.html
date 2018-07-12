@@ -58,7 +58,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
 
         </table>
         {% elif results2 %}
-        <table border="1" class="dataframe">
+        <table border="1" class="dataframe" id="huizong_mingxi">
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
             <th>开始日期</th>
@@ -68,25 +68,25 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>空单数量</th>
             <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th><th> 回测 </th><th>名  称</th>
         </tr>
-        {% for i in huizong %}
+        {% for j,i in huizong.items %}
         <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
             <td>{{ i.0 }}</td>
         <td>{{ i.1 }}</td>
         <td>{{ i.2|floatformat:1 }}</td>
-        <td>{{ i.3 }}</td>
-        <td>{{ i.4 }}</td>
-        <td>{{ id_count|names:i.1 }}</td><td>{{ i.5 }}</td><td>{{ i.6 }}</td>
+        <td>{{ i.3|floatformat:0 }}</td>
+        <td>{{ i.4|floatformat:0 }}</td>
+        <td>{{ i.5 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>
             <td>
                 <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">
                     <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
                 </a>
             </td>
-            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ id_name|names:i.1 }}</a></td>
+            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ i.8 }}</a></td>
         </tr>
         {% endfor %}
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
-      <th>ID名称</th>
+      <th>ID</th>
       <th>开仓时间</th>
       <th>开仓价格</th>
       <th>平仓时间</th>
@@ -95,12 +95,11 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>多空</th>
         <th>手数</th>
         <th>交易状态</th>
-        <th></th>
-
+        <th>名称</th>
     </tr>
             {% for i in results2 %}
     <tr bgcolor="{% cycle '#cccc33' '00cc00' %}">
-      <td>{{ id_name|names:i.0 }}</td>
+      <td>{{ i.0 }}</td>
       <td>{{ i.1 }}</td>
       <td>{{ i.2 }}</td>
       {% if i.1 > i.3 %}
@@ -122,7 +121,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <td></td>
         {% endif %}
       <!--<td>{{ i.9 }}</td>-->
-        <td>{{ id_name|names:i.0 }}</td>
+        <td>{{ i.9 }}</td>
     </tr>
         {% endfor %}
 
@@ -197,6 +196,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
     </form>
 </div>
     <script type="text/javascript">
+
 function myajaxs(){
         $.ajax({
             type: 'GET',

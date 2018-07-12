@@ -50,6 +50,8 @@ urlpatterns = [
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 
+    url(r'', views.page_not_found, name='page_not_found'),
+
 ]
 
 # handler404 = views.page_not_found #404页面

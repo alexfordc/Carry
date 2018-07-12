@@ -105,10 +105,10 @@ SQL = {
     'tongji': 'select id,trader_name,available,origin_asset,remain_asset from account_info order by available desc',
     "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
-    'get_idName': 'SELECT id,trader_name FROM account_info WHERE trader_name IS NOT NULL',
+    'get_idName': 'SELECT id,trader_name FROM account_info',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
-    "order_detail": "SELECT Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit "
-                    "FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+    "order_detail": "SELECT Account_ID,DATE_ADD(DATE_FORMAT(OpenTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),OpenPrice,DATE_ADD(DATE_FORMAT(CloseTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),"
+                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 computer_name = socket.gethostname()  # 计算机名称
@@ -394,28 +394,38 @@ def sp_order_records():
         status.get(i[10])] for i in datagd]
     # data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])]+list(i[8:]) for i in data]
     ran = range(len(data))
-    count = 0
-    kc = []
-    data2 = []
-    for i in ran:
-        dt = [str(datetime.datetime.fromtimestamp(data[i][0]))]
-        dt += list(data[i][1:])
-        dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1)))
-        try:
-            for j in range(dt[3]):
-                kc.append(dt[1])
-                if data2 and abs(dt[13]) < abs(data2[-1][13]):
-                    count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (kc.pop() - kc.pop() if dt[6] == 'S' else 0)
-        except Exception as exc:
-            logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))(exc)
-        dt.append(count)
-        data2.append(dt)
+    # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
+    users = {i[5] for i in data}
+    prods = {i[4] for i in data}
+    res = {}
+    for user in users:
+        res[user] = {}
+        for prod in prods:
+            count = 0
+            kc = []
+            data2 = []
+            for i in ran:
+                dt = [str(datetime.datetime.fromtimestamp(data[i][0]))]
+                dt += list(data[i][1:])
+                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1)))
+                try:
+                    for j in range(dt[3]):
+                        kc.append(dt[1])
+                        if data2 and abs(dt[13]) < abs(data2[-1][13]):
+                            count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (kc.pop() - kc.pop() if dt[6] == 'S' else 0)
+                except Exception as exc:
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))(exc)
+                dt.append(count)
+                data2.append(dt)
+            data2 = [i[0:6] + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + i[8:] for i in data2]
+            res[user][prod] = data2
 
     # cc = sum(1 if i[6] == 'B' else (-1 if i[6] == 'S' else 0) for i in data)
     # if cc == 0:
     #     pass
-    data2 = [i[0:6] + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + i[8:] for i in data2]
-    return data2, datagd
+    data = [res[j][i] for j in res for i in res[j]]
+    data = [i for j in data for i in j]
+    return data, datagd
 
 
 def calculate_earn(dates, end_date):
@@ -1074,7 +1084,7 @@ def huices(res, huizong, init_money, dates, end_date):
         return jy1, jy2, jy3, jy4, jy5, jy6, jy7
 
     try:
-        this_date = dtf(end_date) - datetime.timedelta(days=1)
+        this_date = dtf(end_date) # - datetime.timedelta(days=1)
         this_date = datetime.datetime.now() if this_date > datetime.datetime.now() else this_date
         week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
                 range(this_date.weekday() + 1)]  # 这个星期的日期

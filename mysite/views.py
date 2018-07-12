@@ -66,7 +66,12 @@ def redis_update(rq):
 
 
 def record_from(rq):
-    pass  # HSD.logging.info('访问者：'+rq.META.get('REMOTE_ADDR')+'访问页面：'+rq.META.get('HTTP_HOST') + rq.META.get('PATH_INFO'))
+    if rq.is_ajax():
+        return
+    info = '访问者：' + rq.META.get('REMOTE_ADDR') + '\t访问页面：' + rq.META.get('HTTP_HOST') + rq.META.get(
+        'PATH_INFO') + '\t' + str(datetime.datetime.now()) + '\n'
+    with open('log\\log.txt', 'a') as f:
+        f.write(info)
 
 
 def index(rq):
@@ -74,8 +79,8 @@ def index(rq):
     return render(rq, 'index.html')
 
 
-# def page_not_found(rq):  # 404页面
-#     return render(rq,'page/404page.html')
+def page_not_found(rq):  # 404页面
+    return render(rq,'404.html')
 
 
 def stockData(rq):
@@ -313,7 +318,6 @@ def get_zx_zt(zt=False, zx=False, status=None):
 
 def getData(rq):
     '''ajax请求数据'''
-    record_from(rq)
     types = rq.GET.get('types')
     if rq.method == 'GET' and rq.is_ajax():
         dt, _ = get_zx_zt(zt=True)
@@ -341,6 +345,7 @@ def zhutu(rq):
 
 
 def zhutu_zhexian(rq):
+    record_from(rq)
     return render(rq, 'zt_zx.html')
 
 
@@ -409,6 +414,7 @@ def tongji_adus(rq, dates):
 
 def tongji(rq):
     """ rq_type: '1':'历史查询','2':'回测','3':'实时交易数据' """
+    record_from(rq)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
     messagess = ''
@@ -500,24 +506,38 @@ def tongji(rq):
 
     if rq_type == '1' and rq_date:
         dates = rq_date
-        results2 = HSD.order_detail(rq_date, end_date)
-        huizong = []
-        if results2:
-            for i in HSD.IDS:
-                hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
-                hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
-                hz2 = len([j[6] for j in results2 if j[0] == i and j[6]%2 == 0])  # 多单数量
-                hz3 = len([j[7] for j in results2 if j[0] == i and j[6]%2 == 1])  # 空单数量
-                hz4 = len([j[5] for j in results2 if j[0] == i and j[5] > 0])  # 赢利单数
-                hz5 = int(hz4 / (hz2 + hz3) * 100) if hz2 + hz3 != 0 else 0  # 正确率
-                huizong.append([str(hz0)[:10], i, hz1, hz2, hz3, hz4, hz5])
-            results = np.array(results2)
-            id_count = {i: len(results[np.where(results[:, 0] == i)]) for i in HSD.IDS}
+        result9 = HSD.order_detail(rq_date, end_date)
+        huizong = {}
+        results2 = []
+        if result9:
+            for i in result9:
+                c = i[0]
+                name = id_name[c]
+                if c not in huizong:
+                    huizong[c] = [str(i[1])[:10], c, 0, 0, 0, 0, 0, 0, c]
+                huizong[c][2] += i[5]                           # 盈亏
+                huizong[c][3] += i[7] if i[6] % 2 == 0 else 0   # 多单数量
+                huizong[c][4] += i[7] if i[6] % 2 == 1 else 0   # 空单数量
+                huizong[c][5] += 1                              # 下单总数
+                huizong[c][6] += i[7] if i[5] > 0 else 0        # 赢利单数
+                huizong[c][7] = huizong[c][6] / huizong[c][5] * 100 # 胜率
+                huizong[c][8] = name                            # 姓名
+                results2.append(i[:9]+(name,))                   # 交易明细
+                # hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
+                # hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
+                # hz2 = len([j[6] for j in results2 if j[0] == i and j[6]%2 == 0])  # 多单数量
+                # hz3 = len([j[7] for j in results2 if j[0] == i and j[6]%2 == 1])  # 空单数量
+                # hz4 = len([j[0] for j in results2 if j[0] == i])  # 下单总数
+                # hz5 = len([j[5] for j in results2 if j[0] == i and j[5] > 0])  # 赢利单数
+                # hz6 = int(hz4 / (hz2 + hz3) * 100) if hz2 + hz3 != 0 else 0  # 正确率
+                # hz7 = id_name[i] if i in id_name else i
+                # huizong.append([str(hz0)[:10], i, hz1, hz2, hz3, hz4, hz5, hz6, hz7])
         if rq_id != 0:
             results2 = [result for result in results2 if rq_id == result[0]]
 
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
+        #results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
         if results2:
             return render(rq, 'tongji.html', locals())
     if rq_date and rq_id == 0:
@@ -558,6 +578,7 @@ def tools(rq):
 
 
 def kline(rq):
+    record_from(rq)
     date = rq.GET.get('date', HSD.get_date())
     write_to_cache('kline_date', date)
     database = rq.GET.get('database', '1')
@@ -719,6 +740,7 @@ def getwebsocket(rq):
 
 
 def zhangting(rq, t):
+    record_from(rq)
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
     rq_date = rq.GET.get('date', dates)
@@ -745,7 +767,7 @@ def zhangting(rq, t):
         return render(rq, 'zhangting.html',
                       {'jyzt': True, 'zt_tomorrow': zt_tomorrow, 'dates': rq_date, 'up': date_up, 'down': date_down})
 
-    return redirect('index')
+    return redirect('page_not_found')
 
 
 def moni(rq):
@@ -869,6 +891,7 @@ def newMoni(rq):
 
 
 def moni_all(rq):
+    record_from(rq)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1025,6 +1048,7 @@ def journalism(rq):
 
 
 def gxjy(rq):
+    record_from(rq)
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     client = rq.META.get('REMOTE_ADDR')
