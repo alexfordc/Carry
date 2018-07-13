@@ -3053,3 +3053,752 @@ HSD.py[2018-07-11 18:07:43][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is no
 HSD.py[2018-07-11 18:07:52][ERROR]：文件 HSD.py 第1376行报错：'2018-07-11' is not in list
 HSD.py[2018-07-11 18:09:12][ERROR]：文件 HSD.py 第1136行报错：division by zero
 HSD.py[2018-07-11 18:09:15][ERROR]：文件 HSD.py 第1136行报错：division by zero
+HSD.py[2018-07-12 10:49:26][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 10:50:05][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 11:01:55][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+exception.py[2018-07-12 11:06:12][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 508, in tongji
+    result9 = HSD.order_detail(rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 368, in order_detail
+    end_date = dtf(end_date) + datetime.timedelta(days=1)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 170, in dtf
+    d = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 565, in _strptime_datetime
+    tt, fraction = _strptime(data_string, format)
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 362, in _strptime
+    (data_string, format))
+ValueError: time data '2018-07-12/sd' does not match format '%Y-%m-%d %H:%M:%S'
+HSD.py[2018-07-12 14:09:44][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:09:48][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:11:06][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:15:23][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:16:25][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:16:45][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:22:24][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:22:44][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:23:23][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:24:25][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:27:24][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:27:28][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:28:07][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:28:42][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 14:31:48][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:12:31][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:12:54][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:20:34][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:41:07][ERROR]：文件 HSD.py 第1376行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:49:51][ERROR]：文件 HSD.py 第1369行报错：'2018-07-12' is not in list
+exception.py[2018-07-12 15:51:24][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 503, in tongji
+    hc = HSD.huice_day(res, huizong, init_money, rq_date, end_date)
+TypeError: huice_day() takes 4 positional arguments but 5 were given
+HSD.py[2018-07-12 15:51:38][ERROR]：文件 HSD.py 第1369行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:52:05][ERROR]：文件 HSD.py 第1369行报错：'2018-07-12' is not in list
+HSD.py[2018-07-12 15:55:16][ERROR]：文件：HSD.py 第1305行报错： max() arg is an empty sequence
+HSD.py[2018-07-12 15:57:50][ERROR]：文件：HSD.py 第1296行报错： max() arg is an empty sequence
+HSD.py[2018-07-12 15:58:21][ERROR]：文件：HSD.py 第1297行报错： max() arg is an empty sequence
+exception.py[2018-07-12 16:02:11][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 491, in tongji
+    hc = HSD.huice_day(res)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1186, in huice_day
+    hc['cgzk'][1] += 1
+KeyError: 'cgzk'
+views.py[2018-07-12 17:22:24][ERROR]：文件：views.py 第832行报错： 'NoneType' object is not subscriptable
+exception.py[2018-07-12 18:24:22][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 406, in sp_order_records
+    if not (i[5]==user and i[4]==prod):
+TypeError: 'int' object is not subscriptable
+exception.py[2018-07-12 18:24:32][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 406, in sp_order_records
+    if not (i[5]==user and i[4]==prod):
+TypeError: 'int' object is not subscriptable
+exception.py[2018-07-12 18:24:42][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 406, in sp_order_records
+    if not (i[5]==user and i[4]==prod):
+TypeError: 'int' object is not subscriptable
+exception.py[2018-07-12 18:24:52][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 406, in sp_order_records
+    if not (i[5]==user and i[4]==prod):
+TypeError: 'int' object is not subscriptable
+exception.py[2018-07-12 18:58:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:58:10][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:58:17][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:58:20][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:58:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:58:30][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(len(data2[0]))
+IndexError: list index out of range
+exception.py[2018-07-12 18:59:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(data2[0])
+IndexError: list index out of range
+exception.py[2018-07-12 18:59:30][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(data2[0])
+IndexError: list index out of range
+exception.py[2018-07-12 18:59:33][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 469, in tongji
+    sjjy, ssjygd = HSD.sp_order_records()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 422, in sp_order_records
+    print(data2[0])
+IndexError: list index out of range
+exception.py[2018-07-13 09:54:43][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 440, in tongji
+    results2 = [result for result in results2 if (rq_id == result[0] and result[8] != 0)]
+UnboundLocalError: local variable 'results2' referenced before assignment
+exception.py[2018-07-13 11:35:25][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in <listcomp>
+    [data.pop(i) for i in used]
+AttributeError: 'tuple' object has no attribute 'pop'
+exception.py[2018-07-13 11:36:08][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 11:36:47][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 11:36:57][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 427, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 11:37:24][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 11:37:34][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 11:37:44][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 467, in tongji
+    sjjy, ssjygd = HSD.sp_order_trade()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in sp_order_trade
+    [data.pop(i) for i in used]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 428, in <listcomp>
+    [data.pop(i) for i in used]
+IndexError: pop index out of range
+exception.py[2018-07-13 13:32:57][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 442, in sp_order_record
+    "WHERE FROM_UNIXTIME(TradeDate,'%Y-%m-%d')>=%s and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<=%s"%(start_date,end_date)
+ValueError: unsupported format character 'Y' (0x59) at index 33
+exception.py[2018-07-13 13:38:06][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 442, in sp_order_record
+    "WHERE FROM_UNIXTIME(TradeDate,'%Y-%m-%d')>=%s and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<=%s"%(start_date,end_date)
+ValueError: unsupported format character 'Y' (0x59) at index 33
+exception.py[2018-07-13 13:39:04][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 444, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(TradeDate,'%Y-%m-%d')>=2018-7-13 and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<=2018-' at line 1")
+exception.py[2018-07-13 13:39:21][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 444, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(TradeDate,'%Y-%m-%d')>='2018-7-13' and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<='20' at line 1")
+exception.py[2018-07-13 13:40:15][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 444, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(TradeDate,'%Y-%m-%d')>='2018-7-13' and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<='20' at line 1")
+exception.py[2018-07-13 13:44:53][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 445, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(TradeDate,'%Y-%m-%d')>='2018-7-13' and FROM_UNIXTIME(TradeDate,'%Y-%m-%d')<='20' at line 1")
+exception.py[2018-07-13 13:46:36][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 447, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>='1531411200.0' and TradeDate<='1531411200.0'' at line 1")
+exception.py[2018-07-13 13:47:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 447, in sp_order_record
+    data = getSqlData(conn, sql_trade)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 146, in getSqlData
+    cur.execute(sql)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 165, in execute
+    result = self._query(query)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\cursors.py", line 321, in _query
+    conn.query(q)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 860, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1061, in _read_query_result
+    result.read()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1349, in read
+    first_packet = self.connection._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>=1531411200.0 and TradeDate<=1531411200.0' at line 1")
+exception.py[2018-07-13 13:47:56][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 455, in sp_order_record
+    res[user] = {}
+TypeError: list indices must be integers or slices, not str
+exception.py[2018-07-13 13:48:29][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 452, in sp_order_record
+    res[user] = {}
+TypeError: list indices must be integers or slices, not str
+exception.py[2018-07-13 14:00:22][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 485, in sp_order_record
+    sl = huizong[user + prod][7]/huizong[user + prod][6]*100
+ZeroDivisionError: division by zero
+exception.py[2018-07-13 14:12:56][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 487, in sp_order_record
+    sl = huizong[user + prod][7]/huizong[user + prod][6]*100 if huizong[user + prod][6]>0 else 0
+KeyError: '01-0202975-00MHIN8'
+exception.py[2018-07-13 14:16:01][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 487, in sp_order_record
+    huizong[user + prod]
+KeyError: '01-0520186-00HSIN8'
+exception.py[2018-07-13 14:16:18][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 437, in tongji
+    results2, huizong = HSD.sp_order_record(rq_date,end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 487, in sp_order_record
+    print(huizong[user + prod])
+KeyError: '01-0202975-00MHIN8'
+exception.py[2018-07-13 17:19:58][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 541, in tongji
+    huizong[10] += 1
+KeyError: 10
+exception.py[2018-07-13 17:34:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 537, in tongji
+    if c in last[c] and i[1]<=last[c][3] and (last[c][6]%2 and i[6]%2):
+KeyError: 8959325

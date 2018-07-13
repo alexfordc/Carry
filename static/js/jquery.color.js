@@ -1,9 +1,3 @@
-/*
- * jQuery Color Animations
- * Copyright 2007 John Resig
- * Released under the MIT and GPL licenses.
- */
-
 (function(jQuery){
 
 	// We override the animation for all of these color styles

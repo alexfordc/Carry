@@ -1,21 +1,7 @@
-/**
- * calendar - jQuery EasyUI
- *
- * Copyright (c) 2009-2013 www.jeasyui.com. All rights reserved.
- *
- * Licensed under the GPL or commercial licenses
- * To use it on other terms please contact us: jeasyui@gmail.com
- * http://www.gnu.org/licenses/gpl.txt
- * http://www.jeasyui.com/license_commercial.php
- * 二次开发 ____′↘夏悸
- * http://bbs.btboys.com Easyui中文社区
- */
 (function ($) {
-	
-	/*****************************************************************************
-	/*****************************************************************************
+	/**
 	日期资料
-	 *****************************************************************************/
+	*/
 	var ttime = 0;
 	var detail;
 	var hideTimer;

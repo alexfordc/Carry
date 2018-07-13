@@ -59,14 +59,15 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         </table>
         {% elif results2 %}
         <table border="1" class="dataframe" id="huizong_mingxi">
-        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
+        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
             <th>开始日期</th>
       <th>ID</th>
         <th>赚得金额</th>
-        <th>多单数量</th>
-        <th>空单数量</th>
-            <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th><th> 回测 </th><th>名  称</th>
+        <th>多单</th>
+        <th>空单</th>
+            <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th>
+           <th> 回测 </th><th>名  称</th> <th>正向加仓</th><th>反向加仓</th>
         </tr>
         {% for j,i in huizong.items %}
         <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
@@ -82,14 +83,15 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
                 </a>
             </td>
             <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ i.8 }}</a></td>
+            <td>{{ i.9 }}</td><td>{{ i.10 }}</td>
         </tr>
         {% endfor %}
-        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
+        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
       <th>ID</th>
-      <th>开仓时间</th>
+      <th colspan="2">开仓时间</th>
       <th>开仓价格</th>
-      <th>平仓时间</th>
+      <th colspan="2">平仓时间</th>
       <th>平仓价格</th>
       <th>盈亏</th>
         <th>多空</th>
@@ -100,12 +102,12 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
             {% for i in results2 %}
     <tr bgcolor="{% cycle '#cccc33' '00cc00' %}">
       <td>{{ i.0 }}</td>
-      <td>{{ i.1 }}</td>
+      <td colspan="2">{{ i.1 }}</td>
       <td>{{ i.2 }}</td>
       {% if i.1 > i.3 %}
-        <td>未平仓</td>
+        <td colspan="2">未平仓</td>
         {% else %}
-        <td>{{ i.3 }}</td>
+        <td colspan="2">{{ i.3 }}</td>
         {% endif %}
       <td>{{ i.4 }}</td>
       <td>{{ i.5 }}</td>
@@ -228,37 +230,25 @@ function myajaxs(){
                             html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
                             for (var j=0;j<data[i].length;j++){
                                 html += "<td>"+data[i][j]+"</td>";
-                         }
+                            }
                             html += "</tr>";
-                    }
-                    html += "</table>";
+                        }
+                        html += "</table>";
                     }
                     var data = res.sjjy;
-                    html += "<table border='1' width='1080px'><thead>实盘交易记录</thead>";
+                    html += "<table border='1' width='1080px'><thead>实盘交易记录（当天）</thead>";
                     html += "<tr><td>时间</td><td>成交价格</td><td>成交记录号</td><td>成交手数</td><td>产品代码</td><td>交易账户</td><td>买卖</td>";
                     html += "<td width='100'>状态</td><td>下单价格</td><td>总量</td><td>剩余量</td><td>成交量</td><td>订单号</td><td>持仓</td><td>平仓总盈亏</td></tr>";
                     for (var i=0;i<data.length;i++){
                         html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
                         for (var j=0;j<data[i].length;j++){
-                            <!--if(j==5){-->
-                                <!--if(data[i][j]=='B'){-->
-                                    <!--html += "<td>买</td>";-->
-                                <!--}else if(data[i][j]=='S'){-->
-                                    <!--html += "<td>卖</td>";-->
-                                <!--}else{-->
-                                    <!--html += "<td></td>";-->
-                                <!--}-->
-                            <!--}else if(j==6){-->
-                                <!--if(data[i][j]==9){-->
-                                    <!--html += "<td>已成交</td>";-->
-                                <!--}else if(data[i][j]==8){-->
-                                    <!--html += "<td>部分成交</td>";-->
-                                <!--}else{-->
-                                    <!--html += "<td></td>";-->
-                                <!--}-->
-                            <!--}else{-->
+                            if(j==5 && data[i][0]==0){
+                                html += "<td><a style='color:red;' href='/tj/?type=4&user="+data[i][j]+"'>"+data[i][j]+"</a></td>";
+                            }else if(data[i][0]==0){
+                                html += "<td></td>";
+                            }else{
                                 html += "<td>"+data[i][j]+"</td>";
-                            //}
+                            }
                         }
                         html += "</tr>";
                     }

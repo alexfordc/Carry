@@ -50,16 +50,16 @@ function tuxiancolor(id){
         }
     }
     if(id=='#tuxian1'){
-        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（手）"];
+        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（0.1手）"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian2'){
         tu_name=["行情","利润","平仓盈亏"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}},{{hc.day_pcyk|safe}});
     }else if(id=='#tuxian3'){
-        tu_name=["总利润","日利润","持仓（手）"];
+        tu_name=["总利润","日利润","持仓（0.1手）"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}},"");
     }else if(id=='#tuxian4'){
-        tu_name=["","资金回测","持仓（手）"];
+        tu_name=["","资金回测","持仓（0.1手）"];
         huatu(tu_name,{{hc.day_x|safe}},null,{{hc.zjhcs|safe}},"");
     }
     <!--else if(id=='#tuxian5'){-->
@@ -98,6 +98,10 @@ var main = $("#zhexiantu")
 main.css({"width":winWidth,"height":winHeight});
 var myChart = echarts.init(document.getElementById('zhexiantu'));
 
+var Xz = new Array();
+for(var i=0;i<category.length;i++){
+    Xz.push(0);
+}
 
 option = {
     title: {
@@ -145,6 +149,20 @@ option = {
     }
     ],
     series: [{
+        type: 'line',
+        yAxisIndex: 1,
+        symbol:'none',
+        tooltip : {
+            show:false
+        },
+        itemStyle: {
+            normal: {
+                //barBorderRadius: 'none',
+                lineStyle: { color: '#ccc', width:1 }
+            }
+        },
+        data: Xz
+    },{
         name: tu_name[0],
         type: 'line',
         yAxisIndex: 0,
@@ -154,8 +172,8 @@ option = {
         symbolSize: 1,
         itemStyle: {
             normal: {
-                color: '#3CE8C8',
-                lineStyle: { color: '#3CE8C8' }
+                color: '#808080',
+                lineStyle: { color: '#808080' }
             }
         },
         data: lineData

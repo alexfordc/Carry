@@ -32,7 +32,6 @@ from mysite.sub_client import sub_ticker, getTickData
 # 分页的一页数量
 PAGE_SIZE = 28
 
-
 # 从缓存读数据
 def read_from_cache(user_name):
     key = 'user_id_of_' + user_name
@@ -413,7 +412,7 @@ def tongji_adus(rq, dates):
 
 
 def tongji(rq):
-    """ rq_type: '1':'历史查询','2':'回测','3':'实时交易数据' """
+    """ rq_type: '1':'历史查询','2':'回测','3':'实时交易数据', '4':'实盘交易记录' """
     record_from(rq)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
@@ -425,6 +424,7 @@ def tongji(rq):
     end_date = rq.GET.get('end_date')
     rq_id = rq.GET.get('id')
     rq_type = rq.GET.get('type')
+    user = rq.GET.get('user')
     try:
         rq_id = int(rq_id)
     except:
@@ -432,13 +432,22 @@ def tongji(rq):
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
+    if rq_type == '4' and rq_date and end_date:
+        dates = rq_date
+        # ['2018-07-12 09:39:18', 28394.0, 670, 1, 'MHIN8', '01-0520186-00', '卖', '已成交', 28394.0, 1, 0, 1, 14730710, -1, 0]
+        results2, huizong = HSD.sp_order_record(rq_date,end_date)
+        if user:
+            results2 = [i for i in results2 if i[0]==user]
+        # hc = HSD.huice_day(res)
+        return render(rq, 'tongjisp.html', locals())
+
     if rq_type == '3' and client:  # in HSD.get_allow_ip():
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消",0: "挂单", 1: "开仓", 2: "平仓"}
         monijy = [[id_name[i[0]] if i[0] in id_name else i[0], str(i[1]), i[2], ('空' if i[6]%2 else '多'), i[7],
                    status.get(i[8]), i[9], i[10]] for i in monijy]
-        sjjy, ssjygd = HSD.sp_order_records()
+        sjjy, ssjygd = HSD.sp_order_trade()
         if rq.is_ajax():
             return JsonResponse({'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
         return render(rq, 'tongji.html', {'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
@@ -461,14 +470,16 @@ def tongji(rq):
                 elif i[6] == 1:
                     res[dt]['kong'] += 1
                 res[dt]['mony'] += i[5]
-                xx = [str(i[1]), str(i[3]), '空' if i[6]%2 else '多', i[5], i[2], i[4]]
+                xx = [str(i[1]), str(i[3]), '空' if i[6]%2 else '多', i[5], i[2], i[4],i[7]]
                 res[dt]['datetimes'].append(xx)
 
                 huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
                     'least']
                 huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
                     'most']
-
+        if rq_date == end_date:
+            hc = HSD.huice_day(res)
+            return render(rq, 'hc_day.html', {'hc': hc})
         res_key = list(res.keys())
         for i in res_key:
             mony = res[i]['mony']
@@ -477,7 +488,7 @@ def tongji(rq):
 
             mtsl = [j[3] for j in res[i]['datetimes']]
             all_price += mtsl
-            if not res[i].get('ylds'):
+            if 'ylds' not in res[i]:
                 res[i]['ylds'] = 0
             if mtsl:
                 ylds = len([sl for sl in mtsl if sl > 0])
@@ -485,6 +496,7 @@ def tongji(rq):
                 res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
             else:
                 res[i]['shenglv'] = 0
+
         huizong['shenglv'] += len([p for p in all_price if p > 0])
         huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
         huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
@@ -497,9 +509,7 @@ def tongji(rq):
         init_money = HSD.getSqlData(conn, sql)
         conn.close()
         init_money = init_money[0][0]
-        if rq_date == end_date:
-            hc, huizong = HSD.huice_day(res, huizong, init_money, rq_date, end_date)
-            return render(rq, 'hc_day.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
+
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
@@ -510,11 +520,12 @@ def tongji(rq):
         huizong = {}
         results2 = []
         if result9:
+            last = {}
             for i in result9:
                 c = i[0]
                 name = id_name[c]
                 if c not in huizong:
-                    huizong[c] = [str(i[1])[:10], c, 0, 0, 0, 0, 0, 0, c]
+                    huizong[c] = [str(i[1])[:10], c, 0, 0, 0, 0, 0, 0, c, 0, 0]
                 huizong[c][2] += i[5]                           # 盈亏
                 huizong[c][3] += i[7] if i[6] % 2 == 0 else 0   # 多单数量
                 huizong[c][4] += i[7] if i[6] % 2 == 1 else 0   # 空单数量
@@ -522,7 +533,20 @@ def tongji(rq):
                 huizong[c][6] += i[7] if i[5] > 0 else 0        # 赢利单数
                 huizong[c][7] = huizong[c][6] / huizong[c][5] * 100 # 胜率
                 huizong[c][8] = name                            # 姓名
+                # (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
+                # 正向加仓，反向加仓
+                if c in last and i[1]<=last[c][3] and (last[c][6]%2 and i[6]%2):
+                    if i[2]>last[c][2]:
+                        huizong[c][9] += 1
+                    elif i[2]<last[c][2]:
+                        huizong[c][10] += 1
+                elif c in last and i[1]<=last[c][3] and (not last[c][6]%2 and not i[6]%2):
+                    if i[2]>last[c][2]:
+                        huizong[c][10] += 1
+                    elif i[2] < last[c][2]:
+                        huizong[c][9] += 1
                 results2.append(i[:9]+(name,))                   # 交易明细
+                last[c] = i
                 # hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
                 # hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
                 # hz2 = len([j[6] for j in results2 if j[0] == i and j[6]%2 == 0])  # 多单数量

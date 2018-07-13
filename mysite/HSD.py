@@ -375,8 +375,8 @@ def order_detail(dates=None, end_date=None):
     IDS = set([i[0] for i in data])
     return data
 
-
-def sp_order_records():
+def sp_order_trade(size=None):
+    ''' :return data ['2018-07-13 09:49:09', 28608.0, 697, 1, 'MHIN8', '01-0520186-00', '卖', '已成交', 28608.0, 1, 0, 1, 14734039, -1, 0]'''
     status = {0: '发送中', 1: '工作中', 2: '无效', 3: '待定', 4: '新增中', 5: '更改中', 6: '删除中',
               7: '无效中', 8: '部分成交', 9: '已成交', 10: '已删除', 18: '等待批准',
               20: '成交已覆盘', 21: '删除已覆盘', 24: '同步异常中', 28: '部分成交已删除',
@@ -385,19 +385,18 @@ def sp_order_records():
 
     conn = get_conn('carry_investment')
     timeStamp = time.mktime(time.strptime(str(datetime.datetime.now())[:10], '%Y-%m-%d'))
+    # 时间，成交价，
     sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s" % timeStamp
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,Initiator,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
     data = getSqlData(conn, sql_trade)
-    datagd = getSqlData(conn, sql_order)
-    datagd = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:9]) + ['买' if i[9] == 'B' else '卖'] + [
-        status.get(i[10])] for i in datagd]
-    # data1 = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]]+list(i[1:6])+['买' if i[6]=='B' else '卖']+[status.get(i[7])]+list(i[8:]) for i in data]
+
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     users = {i[5] for i in data}
     prods = {i[4] for i in data}
     res = {}
+    used = []  # 已经处理了的单
     for user in users:
         res[user] = {}
         for prod in prods:
@@ -405,28 +404,94 @@ def sp_order_records():
             kc = []
             data2 = []
             for i in ran:
+                if i in used or not (data[i][5]==user and data[i][4]==prod):
+                    continue
+                used.append(i)
                 dt = [str(datetime.datetime.fromtimestamp(data[i][0]))]
                 dt += list(data[i][1:])
-                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1)))
+                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1) if data[j][5]==user and data[j][4]==prod))
                 try:
                     for j in range(dt[3]):
                         kc.append(dt[1])
                         if data2 and abs(dt[13]) < abs(data2[-1][13]):
                             count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (kc.pop() - kc.pop() if dt[6] == 'S' else 0)
+
                 except Exception as exc:
-                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))(exc)
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
                 dt.append(count)
-                data2.append(dt)
+                data2.append(dt.copy())
             data2 = [i[0:6] + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + i[8:] for i in data2]
+            if len(data2)>0:
+                data2.insert(0,[0 if i!=5 else user for i in range(15)])
             res[user][prod] = data2
 
-    # cc = sum(1 if i[6] == 'B' else (-1 if i[6] == 'S' else 0) for i in data)
-    # if cc == 0:
-    #     pass
     data = [res[j][i] for j in res for i in res[j]]
     data = [i for j in data for i in j]
+    if size == 1:
+        conn.close()
+        return data
+    datagd = getSqlData(conn, sql_order)
+    datagd = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:9]) + ['买' if i[9] == 'B' else '卖'] + [
+        status.get(i[10])] for i in datagd]
+    conn.close()
     return data, datagd
 
+def sp_order_record(start_date=None, end_date=None):
+    global IDS
+    IDS = set()
+    conn = get_conn('carry_investment')
+    std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
+    endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
+    sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
+                "WHERE TradeDate>={} and TradeDate<={}".format(std,endd)
+    # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
+    data = getSqlData(conn, sql_trade)
+    ran = range(len(data))
+    # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
+    users = {i[5] for i in data}
+    prods = {i[4] for i in data}
+    res = []
+    huizong = {}
+    for user in users:
+        for prod in prods:
+            kc = []
+            data2 = []
+            upk = user + prod
+            for i in ran:
+                if not (data[i][5] == user and data[i][4] == prod):
+                    continue
+                dt = list(data[i][:7])
+                # huizong: 日期，账号，合约，盈亏，多单数，空单数，总下单数，盈利单数
+                if upk not in huizong:
+                    huizong[upk] = [dt[0][:10], user, prod, 0, 0, 0, 0, 0]
+
+                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1) if
+                              data[j][5] == user and data[j][4] == prod))
+                try:
+                    for j in range(dt[3]):
+                        kc.append(dt)
+                        if data2 and abs(dt[7]) < abs(data2[-1][7]):
+                            stop = kc.pop()
+                            start = kc.pop()
+                            yk = 0
+                            if dt[6] == 'B':    # 卖
+                                yk = (start[1] - stop[1])
+                                huizong[upk][5] += 1
+                            elif dt[6] == 'S':  # 买
+                                yk = (stop[1] - start[1])
+                                huizong[upk][4] += 1
+                            res.append([user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[6]=='S' else '空', 1, '已平仓'])
+                            huizong[upk][3] += yk
+                            huizong[upk][6] += 1
+                            huizong[upk][7] += (1 if yk>0 else 0)
+                    data2.append(dt)
+                except Exception as exc:
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
+            if upk in huizong:
+                sl = round(huizong[upk][7]/huizong[upk][6]*100,1) if huizong[upk][6]>0 else 0
+                huizong[upk].append(sl)
+        IDS.add(user)
+    return res, huizong
 
 def calculate_earn(dates, end_date):
     '''计算所赚。参数：‘2018-01-01’
@@ -1141,20 +1206,16 @@ def huices(res, huizong, init_money, dates, end_date):
     return hc, huizong
 
 
-def huice_day(res, huizong, init_money, dates, end_date):
+def huice_day(res):
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
     jyts = len(keys)
     if not keys:
-        return {}, huizong
+        return {}
     jyys = int(keys[-1][-5:-3]) - int(keys[0][-5:-3]) + 1
     hc = {
         'jyts': jyts,  # 交易天数
         'jyys': jyys,  # 交易月数
-        'hlbfb': round(huizong['yk'] / init_money * 100, 2),  # 总获利百分比
-        'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
-        'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
-        'ye': init_money + huizong['yk'],  # 余额
         'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
         'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
         'avglr': 0,  # 平均获利
@@ -1179,19 +1240,13 @@ def huice_day(res, huizong, init_money, dates, end_date):
     jingzhi = []  # 净值
     zx_x = []
     zx_y = []
-    zdhc = 0
     ccsj = 0  # 总持仓时间
     count_yl = 0  # 总盈利
     count_ks = 0  # 总亏损
-    avg = huizong['yk'] / huizong['zl']  # 平均盈亏
-    count_var = 0
     for i in keys:
         je = round(res[i]['mony'])
-        jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
-        hc['zzl'].append(round(zx_y[-1] / init_money * 100, 2))
-        hc['dayye'].append(zx_y[-1] + init_money)  # 每天余额
         hc['daylr'].append(je)  # 每天利润
         sameday = []  # 当天的所有交易
         if len(jingzhi) > 1:
@@ -1215,7 +1270,7 @@ def huice_day(res, huizong, init_money, dates, end_date):
                 hc['allss'] += j[3]
                 hc['avgss'] += 1
             if i == keys[-1]:
-                st = 1 if j[2] == '多' else -1
+                st = j[6] if j[2] == '多' else -j[6]
                 sameday.append([j[0], st, j[4]])
                 sameday.append([j[1], -st, j[5]])
                 hc['samedatetime'] = i
@@ -1233,21 +1288,9 @@ def huice_day(res, huizong, init_money, dates, end_date):
             else:
                 count_ks += -j[3]
             # 方差
-            count_var += (j[3] - avg) ** 2
+            # count_var += (j[3] - avg) ** 2
     try:
-        hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
-        hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1) if huizong['zl'] != 0 else 0  # 平均持仓时间
-        hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
-        count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
-        hc['std'] = round(count_var ** 0.5, 2)
-
-        hc['zjhc'] = max(hc['zjhcs'])  # 最大回测
-        hc['avglr'] = hc['alllr'] / hc['avglr'] if hc['avglr'] != 0 else 0  # 平均获利
-        hc['avgss'] = hc['allss'] / hc['avgss'] if hc['avgss'] != 0 else 0  # 平均损失
-        hc['zjhc'] = hc['zjhc'] if hc['zjhc'] >= 0 else 0
         hc['jingzhi'] = jingzhi  # 每天净值
-        hc['max_jz'] = max(jingzhi)  # 最高
         hc['zx_x'] = zx_x  # 折线图x轴 时间
         hc['zx_y'] = zx_y  # 折线图y轴 利润
         sameday.sort()
@@ -1277,7 +1320,7 @@ def huice_day(res, huizong, init_money, dates, end_date):
                     yk = sum(syc) - len(syc) * cl
                 else:
                     yk = len(syc) * cl - sum(syc)
-                hc['day_yk'].append(round(yk, 1))
+                hc['day_yk'].append(round(sum(hc['day_pcyk'])+yk, 1))
             else:
                 yk = 0 # 分钟盈亏
                 reg = day_time.count(dx)
@@ -1302,9 +1345,9 @@ def huice_day(res, huizong, init_money, dates, end_date):
                         else:
                             yk += (sum(syc) - len(syc) * cl if c2 == reg-1 else 0)
                     cc += same[1]
-                hc['day_yk'].append(round(yk, 1))
+                hc['day_yk'].append(round(sum(hc['day_pcyk'])+yk, 1))
 
-            hc['vol'].append(cc)
+            hc['vol'].append(cc*10)
             hc['day_pcyk'].append(round(pcyk,1))
             hc['day_ykall'].append(round(pcyk+hc['day_ykall'][-1] if hc['day_ykall'] else pcyk,1))
         v = hc['day_close'][0] // 1000 * 1000
@@ -1314,71 +1357,8 @@ def huice_day(res, huizong, init_money, dates, end_date):
     except Exception as exc:
         logging.error("文件：HSD.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
 
-    def get_jy(jg):
-        jy1 = round(jg['mony'] / init_money * 100, 2)  # 获利
-        jy2 = jg['mony']  # 利润
-        jy3 = jg['mony']  # 点
-        jy4 = jg['shenglv']  # 每天胜率
-        jy5 = jg['duo'] + jg['kong']  # 开的单数
-        jy6 = jy5  # 手
-        jy7 = jg['ylds']
-        return jy1, jy2, jy3, jy4, jy5, jy6, jy7
 
-    try:
-        this_date = dtf(end_date) - datetime.timedelta(days=1)
-        this_date = datetime.datetime.now() if this_date > datetime.datetime.now() else this_date
-        week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
-                range(this_date.weekday() + 1)]  # 这个星期的日期
-        month = [str(this_date - datetime.timedelta(days=td))[:10] for td in range(this_date.day)]  # 这个月的日期
-        time_date = time.strptime(dates, '%Y-%m-%d')
-        year = [str(this_date - datetime.timedelta(days=ty))[:10] for ty in range(time_date.tm_yday)]  # 这一年的日期
-        year.sort()
-        this_week = [0, 0, 0, 0, 0, 0, 0]
-        this_month = [0, 0, 0, 0, 0, 0, 0]
-        this_year = [0, 0, 0, 0, 0, 0, 0]
-        for yd in year[year.index(keys[0]):]:
-            jg = res.get(yd)
-            if not jg or len(jg['datetimes']) < 1:
-                continue
-            jys = get_jy(jg)
-            if yd == str(this_date)[:10]:
-                hc['this_day'] = jys
-            if yd in week:
-                this_week[0] += jys[0]
-                this_week[1] += jys[1]
-                this_week[2] += jys[2]
-                # this_week[3] += jys[3]
-                this_week[4] += jys[4]
-                this_week[5] += jys[5]
-                this_week[6] += jys[6]
-            if yd in month:
-                this_month[0] += jys[0]
-                this_month[1] += jys[1]
-                this_month[2] += jys[2]
-                # this_month[3] += jys[3]
-                this_month[4] += jys[4]
-                this_month[5] += jys[5]
-                this_month[6] += jys[6]
-            this_year[0] += jys[0]
-            this_year[1] += jys[1]
-            this_year[2] += jys[2]
-            # this_year[3] += jys[3]
-            this_year[4] += jys[4]
-            this_year[5] += jys[5]
-            this_year[6] += jys[6]
-        this_week[0] = round(this_week[0], 2)
-        this_week[3] = round(this_week[6] / this_week[4] * 100, 2)
-        this_month[0] = round(this_month[0], 2)
-        this_month[3] = round(this_month[6] / this_month[4] * 100, 2)
-        this_year[0] = round(this_year[0], 2)
-        this_year[3] = round(this_year[6] / this_year[4] * 100, 2)
-    except Exception as exc:
-        logging.error("文件 HSD.py 第{}行报错：{}".format(sys._getframe().f_lineno, exc))
-    hc['this_week'] = this_week
-    hc['this_month'] = this_month
-    hc['this_year'] = this_year
-    huizong['kuilv'] = 100 - huizong['shenglv']
-    return hc, huizong
+    return hc
 
 
 class GXJY:
