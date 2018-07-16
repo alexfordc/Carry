@@ -3802,3 +3802,37 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\views.py", line 537, in tongji
     if c in last[c] and i[1]<=last[c][3] and (last[c][6]%2 and i[6]%2):
 KeyError: 8959325
+exception.py[2018-07-16 11:08:33][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 503, in tongji
+    print(res[:3])
+TypeError: unhashable type: 'slice'
+HSD.py[2018-07-16 15:09:00][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:09:00][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:09:39][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:09:39][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:10:00][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:10:00][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:12:32][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:12:32][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:12:50][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:12:50][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:17:23][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:17:23][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:22:03][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:22:03][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:22:52][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:22:52][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:23:35][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:23:35][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:27:44][ERROR]：文件：HSD.py 第1140行报错： float division by zero
+HSD.py[2018-07-16 15:27:44][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-16 15:31:54][ERROR]：文件 HSD.py 第1202行报错：division by zero

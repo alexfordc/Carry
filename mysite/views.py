@@ -410,9 +410,36 @@ def tongji_adus(rq, dates):
         messages = '验证码错误！'
     return messages
 
+def tongji_huice(res,huizong):
+    all_price = []
+    res_key = list(res.keys())
+    for i in res_key:
+        mony = res[i]['mony']
+        huizong['yk'] += mony
+        huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+
+        mtsl = [j[3] for j in res[i]['datetimes']]
+        all_price += mtsl
+        if 'ylds' not in res[i]:
+            res[i]['ylds'] = 0
+        if mtsl:
+            ylds = len([sl for sl in mtsl if sl > 0])
+            res[i]['ylds'] += ylds  # 盈利单数
+            res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+        else:
+            res[i]['shenglv'] = 0
+
+    huizong['shenglv'] += len([p for p in all_price if p > 0])
+    huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
+    huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
+    res_size = len(res)
+    huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
+    huizong['least2'] = min(all_price)
+    huizong['most2'] = max(all_price)
+    return res,huizong
 
 def tongji(rq):
-    """ rq_type: '1':'历史查询','2':'回测','3':'实时交易数据', '4':'实盘交易记录' """
+    """ rq_type: '1':'历史查询','2':'模拟回测','3':'实时交易数据', '4':'实盘交易记录'，'5':'实盘回测' """
     record_from(rq)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
@@ -425,23 +452,54 @@ def tongji(rq):
     rq_id = rq.GET.get('id')
     rq_type = rq.GET.get('type')
     user = rq.GET.get('user')
-    try:
-        rq_id = int(rq_id)
-    except:
-        rq_id = 0
+    rq_id = '0' if rq_id == 'None' else rq_id
+    dates = rq_date if rq_date and rq_date != 'None' else dates
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '4' and rq_date and end_date:
-        dates = rq_date
-        # ['2018-07-12 09:39:18', 28394.0, 670, 1, 'MHIN8', '01-0520186-00', '卖', '已成交', 28394.0, 1, 0, 1, 14730710, -1, 0]
+    if rq_type == '5' and rq_date and end_date and rq_id!='0' and client in HSD.get_allow_ip():
+        results2, _ = HSD.sp_order_record(rq_date, end_date)
+        results2 = [i for i in results2 if i[0]==rq_id]
+        res = {}
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+                   'avg_day': 0, 'least2': 0, 'most2': 0}
+        for i in results2:
+            dt = i[2][:10]
+            if dt not in res:
+                res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+            if i[7] == '多':
+                res[dt]['duo'] += 1
+            elif i[7] == '空':
+                res[dt]['kong'] += 1
+            res[dt]['mony'] += i[6]
+            xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+            res[dt]['datetimes'].append(xx)
+
+            huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong[
+                'least']
+            huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong[
+                'most']
+        if rq_date == end_date:
+            hc = HSD.huice_day(res)
+            return render(rq, 'hc_day.html', {'hc': hc})
+
+        res,huizong = tongji_huice(res,huizong)
+        init_money = 5000
+
+        hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
+
+    if rq_type == '4' and rq_date and end_date and client in HSD.get_allow_ip():
         results2, huizong = HSD.sp_order_record(rq_date,end_date)
         if user:
             results2 = [i for i in results2 if i[0]==user]
+        ids = HSD.IDS
+        # results2: [['01-0520186-00', 'MHIN8', '2018-07-16 09:41:13', 28548.0, '2018-07-16 09:41:57', 28518.0, -30.0, '多', 1, '已平仓']...]
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3' and client:  # in HSD.get_allow_ip():
+    if rq_type == '3' and client in HSD.get_allow_ip():
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消",0: "挂单", 1: "开仓", 2: "平仓"}
@@ -452,12 +510,12 @@ def tongji(rq):
             return JsonResponse({'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
         return render(rq, 'tongji.html', {'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
 
-    if rq_type == '2' and rq_date and end_date and rq_id != 0:
+    if rq_type == '2' and rq_date and end_date and rq_id != '0':
         results2 = HSD.order_detail(rq_date, end_date)
         # (8959114, datetime.datetime(2018, 7, 4, 9, 30, 41), 28339.62, datetime.datetime(2018, 7, 4, 9, 48, 5), 28328.35, 11.27, 1, 1.0, 2, 28496.3, 28250.88)
         res = {}
-        all_price = []
-        results2 = [result for result in results2 if (rq_id == result[0] and result[8] != 0)]
+        results2 = [result for result in results2 if (rq_id == str(result[0]) and result[8] != 0)]
+        # [(8959325, '2018-07-16 09:16:20', 28584.32, '2018-07-16 09:30:31', 28540.18, 44.14, 1, 1.0, 2, 28623.69, 28456.86),
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
         for i in results2:
@@ -480,30 +538,7 @@ def tongji(rq):
         if rq_date == end_date:
             hc = HSD.huice_day(res)
             return render(rq, 'hc_day.html', {'hc': hc})
-        res_key = list(res.keys())
-        for i in res_key:
-            mony = res[i]['mony']
-            huizong['yk'] += mony
-            huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-
-            mtsl = [j[3] for j in res[i]['datetimes']]
-            all_price += mtsl
-            if 'ylds' not in res[i]:
-                res[i]['ylds'] = 0
-            if mtsl:
-                ylds = len([sl for sl in mtsl if sl > 0])
-                res[i]['ylds'] += ylds  # 盈利单数
-                res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
-            else:
-                res[i]['shenglv'] = 0
-
-        huizong['shenglv'] += len([p for p in all_price if p > 0])
-        huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
-        huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
-        res_size = len(res)
-        huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-        huizong['least2'] = min(all_price)
-        huizong['most2'] = max(all_price)
+        res, huizong = tongji_huice(res, huizong)
         conn = HSD.get_conn('carry_investment')
         sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
         init_money = HSD.getSqlData(conn, sql)
@@ -515,7 +550,6 @@ def tongji(rq):
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
 
     if rq_type == '1' and rq_date:
-        dates = rq_date
         result9 = HSD.order_detail(rq_date, end_date)
         huizong = {}
         results2 = []
@@ -556,15 +590,15 @@ def tongji(rq):
                 # hz6 = int(hz4 / (hz2 + hz3) * 100) if hz2 + hz3 != 0 else 0  # 正确率
                 # hz7 = id_name[i] if i in id_name else i
                 # huizong.append([str(hz0)[:10], i, hz1, hz2, hz3, hz4, hz5, hz6, hz7])
-        if rq_id != 0:
-            results2 = [result for result in results2 if rq_id == result[0]]
+        if rq_id != '0':
+            results2 = [result for result in results2 if rq_id == str(result[0])]
 
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
         #results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
         if results2:
             return render(rq, 'tongji.html', locals())
-    if rq_date and rq_id == 0:
+    if rq_date and rq_id == '0':
         results = HSD.calculate_earn(rq_date, end_date)
         huizong = []
         if results:
@@ -577,11 +611,10 @@ def tongji(rq):
             results = np.array(results)
             id_count = {i: len(results[np.where(results[:, 2] == i)]) for i in HSD.IDS}
             results = list(results)
-        if rq_id != 0:
-            results = [result for result in results if rq_id == result[2]]
+        if rq_id != '0':
+            results = [result for result in results if rq_id == str(result[2])]
 
         ids = HSD.IDS
-        dates = rq_date
         if results:
             return render(rq, 'tongji.html', locals())
 
@@ -1076,7 +1109,7 @@ def gxjy(rq):
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     client = rq.META.get('REMOTE_ADDR')
-    if client:  # in HSD.get_allow_ip():
+    if client in HSD.get_allow_ip():
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')

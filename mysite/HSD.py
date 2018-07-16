@@ -446,6 +446,7 @@ def sp_order_record(start_date=None, end_date=None):
                 "WHERE TradeDate>={} and TradeDate<={}".format(std,endd)
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = getSqlData(conn, sql_trade)
+    conn.close()
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     users = {i[5] for i in data}
@@ -1121,9 +1122,9 @@ def huices(res, huizong, init_money, dates, end_date):
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1)  # 平均持仓时间
-        hc['lryz'] = round(count_yl / count_ks, 2)
-        count_var = count_var / huizong['zl']
+        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1) if huizong['zl']!=0 else 0  # 平均持仓时间
+        hc['lryz'] = round(count_yl / count_ks, 2) if count_ks!=0 else 0
+        count_var = count_var / huizong['zl'] if huizong['zl']!=0 else 0
         hc['std'] = round(count_var ** 0.5, 2)
 
         hc['zjhc'] = max(hc['zjhcs'])  # 最大回测

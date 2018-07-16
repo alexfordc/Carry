@@ -24,8 +24,8 @@
                         <div class="box_cont" id="huicetuall"> <!--style="height:348px"-->
                             <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">开仓盈亏</span>&nbsp;&nbsp;
                                 <span id="tuxian2">余额</span>&nbsp;&nbsp;
-                                <span id="tuxian3">利润</span>&nbsp;&nbsp;
-                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;
+                                <!--<span id="tuxian3">利润</span>&nbsp;&nbsp;-->
+                                <!--<span id="tuxian4">资金回测</span>&nbsp;&nbsp;-->
                                 <!--<span id="tuxian5">当天盈亏</span>-->
                             </div>
                                 <div id="zhexiantu"></div>
@@ -50,10 +50,10 @@ function tuxiancolor(id){
         }
     }
     if(id=='#tuxian1'){
-        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（0.1手）"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}},{{hc.vol|safe}});
+        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（0.1手）","平仓盈亏"];
+        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}},{{hc.vol|safe}},{{hc.day_pcyk|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["行情","利润","平仓盈亏"];
+        tu_name=["行情（{{hc.subtracted}}）","利润","平仓盈亏"];
         huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}},{{hc.day_pcyk|safe}});
     }else if(id=='#tuxian3'){
         tu_name=["总利润","日利润","持仓（0.1手）"];
@@ -84,7 +84,8 @@ tuxiancolor("#tuxian1");
 
 //var myChart = echarts.init(document.getElementById('zhexiantu'));
 
-function huatu(tu_name,category,lineData,barData,volData){
+
+function huatu(tu_name,category,lineData,barData,volData,pcykData){
 // caregory: X轴，lineData：折线图Y轴，barData：柱状图Y轴
 
 var winWidth=1140;
@@ -131,7 +132,7 @@ option = {
     },
     yAxis: [
         {
-        name: tu_name[0],
+        name: tu_name[1],
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
@@ -139,7 +140,7 @@ option = {
             }
         }
     },{
-        name: tu_name[1],
+        name: tu_name[0],
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
@@ -165,7 +166,7 @@ option = {
     },{
         name: tu_name[0],
         type: 'line',
-        yAxisIndex: 0,
+        yAxisIndex: 1,
         smooth: true,
         showAllSymbol: true,
         symbol: 'emptyCircle',
@@ -180,7 +181,7 @@ option = {
     },{
         name: tu_name[2],
         type: 'bar', // bar
-        yAxisIndex: 1,
+        yAxisIndex: 0,
         barWidth: 2,
         itemStyle: {
             normal: {
@@ -196,20 +197,59 @@ option = {
         },
         data: volData
     }, {
+        name: "平仓盈亏",
+        type: 'bar', // bar
+        yAxisIndex: 0,
+        barWidth: 2,
+        itemStyle: {
+            normal: {
+                barBorderRadius: 1,
+                color: '#0f0',
+                label: {
+                    show: true,
+                    color:'#ccc',
+                    position: 'top',
+                    formatter: function(params) {
+                        if (params.value != 0) {
+                            return params.value;
+                        } else {
+                            return '';
+                        }
+                    }
+                }
+            }
+        },
+        data: pcykData
+    },{
         name: tu_name[1],
         type: 'line', // bar
-        yAxisIndex: 1,
+        yAxisIndex: 0,
         barWidth: 2,
         itemStyle: {
             normal: {
                 barBorderRadius: 1,
                 color: '#f33',
-                lineStyle: { color: '#f33' }
+                lineStyle: { color: '#f33' },
+                // label : {show: true} // 显示数值
             }
         },
-        data: barData
+        data: barData,
+        //标记点
+        markPoint:{
+          data:[
+            {type:'max',name:'最大值'},
+            {type:'min',name:'最小值',symbol:'diamond'}//标记的图形
+          ]
+        },
+        //标记线
+        /*markLine:{
+          data:[
+            {type:'average',name:'平均值'}
+          ]
+        }*/
     }]
 };
+
 myChart.setOption(option);
 }
 
