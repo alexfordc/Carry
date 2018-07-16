@@ -3836,3 +3836,7 @@ HSD.py[2018-07-16 15:23:35][ERROR]：文件 HSD.py 第1202行报错：division by zero
 HSD.py[2018-07-16 15:27:44][ERROR]：文件：HSD.py 第1140行报错： float division by zero
 HSD.py[2018-07-16 15:27:44][ERROR]：文件 HSD.py 第1202行报错：division by zero
 HSD.py[2018-07-16 15:31:54][ERROR]：文件 HSD.py 第1202行报错：division by zero
+views.py[2018-07-16 17:38:40][ERROR]：文件：views.py 第859行报错： local variable 'sb' referenced before assignment
+views.py[2018-07-16 17:39:09][ERROR]：文件：views.py 第859行报错： local variable 'sb' referenced before assignment
+views.py[2018-07-16 17:53:47][ERROR]：文件：views.py 第859行报错： list index out of range
+views.py[2018-07-16 17:53:54][ERROR]：文件：views.py 第859行报错： list index out of range

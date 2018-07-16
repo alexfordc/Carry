@@ -35,6 +35,8 @@ class ZB(object):
                "", "止损100个点。"],
         "14": ["收盘价大于60均线 与 dea大于0，则做多；收盘价小于60均线 与 dea小于0，则平仓。",
                "收盘价小于60均线 与 dea小于0，则做空；收盘价大于60均线 与 dea大于0，则平仓。", "止损100个点。"],
+        "15": ["出现三波上涨（以macd区间区分） 与 底背离，则做多；macd小于0，则平仓。",
+               "出现三波下跌（以macd区间区分） 与 顶背离，则做空；macd大于0，则平仓。", "止损100个点。"],
     }
     def __init__(self):
         #self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
@@ -1732,6 +1734,9 @@ class ZB(object):
         is_d, is_k = 0, 0
         res = {}
         first_time = []
+        tj_d, tj_k = 0, 0
+        last_clo = 0
+        sb = 0
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
@@ -1749,30 +1754,38 @@ class ZB(object):
             res[dates]['ch'] += 1 if cd != 0 else 0
 
 
-            # 反向做单
-            kctj_d = deviation == 1
-            kctj_k = deviation == -1
-            pctj_d = mul > 1.5
-            pctj_k = mul < -1.5
+            kctj_d = deviation == 1  # 底背离
+            kctj_k = deviation == -1 # 顶背离
+            pctj_d = macd<0  # mul > 1.5
+            pctj_k = macd>0  # mul < -1.5
 
+            if sb != reg:
+                tj_d += 1 if macd>0 and last_clo and clo>last_clo else 0
+                tj_k += 1 if macd<0 and last_clo and clo<last_clo else 0
+                sb = reg
+                last_clo = clo
+
+            # 反向做单
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
 
             if kctj_d and is_dk and 9<=datetimes.hour<16:
-                jg_d=clo
-                startMony_d=clo
-                str_time1=str(datetimes)
-                is_d=1
-                first_time = [str_time1,'多' ,clo]
-                zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
+                if tj_d >= 3:
+                    jg_d=clo
+                    startMony_d=clo
+                    str_time1=str(datetimes)
+                    is_d=1
+                    first_time = [str_time1,'多' ,clo]
+                    zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9<=datetimes.hour<16:
-                jg_k=clo
-                startMony_k=clo
-                str_time2=str(datetimes)
-                is_k=-1
-                first_time = [str_time2, '空' ,clo]
-                zsjg = clo-high-1 if zsjg2 >= -10 else zsjg
+                if tj_k >= 3:
+                    jg_k=clo
+                    startMony_k=clo
+                    str_time2=str(datetimes)
+                    is_k=-1
+                    first_time = [str_time2, '空' ,clo]
+                    zsjg = clo-high-1 if zsjg2 >= -10 else zsjg
 
             if is_d==1:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d

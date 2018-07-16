@@ -186,13 +186,13 @@ option = {
         itemStyle: {
             normal: {
                 barBorderRadius: 1,
-                color: new echarts.graphic.LinearGradient(
-                    0, 0, 0, 1,
-                    [
-                        {offset: 0, color: '#14c8d4'},
-                        {offset: 1, color: '#43eec6'}
-                    ]
-                )
+                color: function(params){
+                    if(params.value>0){
+                        return '#f44';
+                    }else{
+                        return '#14c8d4';
+                    }
+                }
             }
         },
         data: volData
