@@ -3435,6 +3435,10 @@ function huatu(tu_name,category,lineData,barData){
 // var lineData = {{hc.zzl|safe}};   // 折线图Y轴
 // var barData = {{hc.vol|safe}};   // 柱状图Y轴
 
+var Xz = new Array();
+for(var i=0;i<category.length;i++){
+    Xz.push(0);
+}
 
 option = {
     backgroundColor: '#0f375f',
@@ -3464,7 +3468,7 @@ option = {
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
-                color: '#ccc'
+                color: 'red'
             }
         }
     },
@@ -3473,12 +3477,26 @@ option = {
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
-                color: '#ccc'
+                color: '#28dcc9'
             }
         }
     }
     ],
     series: [{
+        type: 'line',
+        yAxisIndex: 1,
+        symbol:'none',
+        tooltip : {
+            show:false
+        },
+        itemStyle: {
+            normal: {
+                //barBorderRadius: 'none',
+                lineStyle: { color: '#ccc', width:1 }
+            }
+        },
+        data: Xz
+    },{
         name: tu_name[0],
         type: 'line',
         yAxisIndex: 0,
@@ -3486,6 +3504,13 @@ option = {
         showAllSymbol: true,
         symbol: 'emptyCircle',
         symbolSize: 8,
+        color: 'red',
+        itemStyle: {
+            normal: {
+                color: 'red',
+                lineStyle: { color: 'red' }
+            }
+        },
         data: lineData
     }, {
         name: tu_name[1],
@@ -3495,13 +3520,14 @@ option = {
         itemStyle: {
             normal: {
                 barBorderRadius: 3,
-                color: new echarts.graphic.LinearGradient(
+                color: '#28dcc9',
+                /*new echarts.graphic.LinearGradient(
                     0, 0, 0, 1,
                     [
                         {offset: 0, color: '#14c8d4'},
                         {offset: 1, color: '#43eec6'}
                     ]
-                )
+                )*/
             }
         },
         data: barData

@@ -3840,3 +3840,346 @@ views.py[2018-07-16 17:38:40][ERROR]：文件：views.py 第859行报错： local variabl
 views.py[2018-07-16 17:39:09][ERROR]：文件：views.py 第859行报错： local variable 'sb' referenced before assignment
 views.py[2018-07-16 17:53:47][ERROR]：文件：views.py 第859行报错： list index out of range
 views.py[2018-07-16 17:53:54][ERROR]：文件：views.py 第859行报错： list index out of range
+exception.py[2018-07-17 10:29:13][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 560, in tongji
+    name = id_name[c]
+KeyError: 222053658
+HSD.py[2018-07-17 10:30:51][ERROR]：文件 HSD.py 第1202行报错：division by zero
+HSD.py[2018-07-17 10:31:04][ERROR]：文件 HSD.py 第1202行报错：division by zero
+exception.py[2018-07-17 13:46:05][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 936, in connect
+    self._request_authentication()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1156, in _request_authentication
+    auth_packet = self._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'kairuitouzi'@'doc' (using password: YES)")
+exception.py[2018-07-17 13:46:18][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 936, in connect
+    self._request_authentication()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1156, in _request_authentication
+    auth_packet = self._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'kairuitouzi'@'doc' (using password: YES)")
+exception.py[2018-07-17 14:03:21][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-17 14:03:31][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-17 15:10:37][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 936, in connect
+    self._request_authentication()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1156, in _request_authentication
+    auth_packet = self._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, 'Unknown error 1045')
+exception.py[2018-07-17 15:10:45][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 936, in connect
+    self._request_authentication()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1156, in _request_authentication
+    auth_packet = self._read_packet()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 1018, in _read_packet
+    packet.check_error()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 384, in check_error
+    err.raise_mysql_exception(self._data)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\err.py", line 107, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, 'Unknown error 1045')
+exception.py[2018-07-17 15:43:00][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-17 15:43:02][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-17 15:43:06][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")
+exception.py[2018-07-17 15:43:22][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 920, in connect
+    **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 724, in create_connection
+    raise err
+  File "D:\ProgramFiles\Anaconda3\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 445, in tongji
+    id_name = HSD.get_idName()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 339, in get_idName
+    conn = get_conn('carry_investment')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 140, in get_conn
+    charset='utf8')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\__init__.py", line 90, in Connect
+    return Connection(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 699, in __init__
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymysql\connections.py", line 967, in connect
+    raise exc
+pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on '192.168.2.226' (timed out)")

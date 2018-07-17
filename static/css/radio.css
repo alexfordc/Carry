@@ -1,0 +1,5 @@
+.radio_label{margin:10px 20px 0 0;display:inline-block}
+.radio_radio{display:none}
+.radio_radioInput{background-color:#fff;border:1px solid rgba(0,0,0,0.15);border-radius:100%;display:inline-block;height:16px;margin-right:10px;margin-top:-1px;vertical-align:middle;width:16px;line-height:1}
+.radio_radio:checked + .radio_radioInput:after{background-color:#57ad68;border-radius:100%;content:"";display:inline-block;height:12px;margin:1.5px;width:12px}
+.radio_checkbox.radio_radioInput,.radio_radio:checked + .radio_checkbox.radio_radioInput:after{border-radius:0}

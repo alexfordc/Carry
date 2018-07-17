@@ -452,8 +452,20 @@ def tongji(rq):
     rq_id = rq.GET.get('id')
     rq_type = rq.GET.get('type')
     user = rq.GET.get('user')
-    rq_id = '0' if rq_id == 'None' else rq_id
+    when = rq.GET.get('when')
+    this_d = datetime.datetime.now()
+    this_day = str(this_d)[:10]
+    date_d = {
+        'd': this_day,      # 当天
+        'w': HSD.get_date(-this_d.weekday()), # 当周
+        'm': HSD.get_date(-this_d.day+1),     # 当月
+    }
+    if when in date_d:
+        rq_date, end_date = date_d[when],this_day
+
+    rq_id = '0' if rq_id == 'None' or rq_id=='' else rq_id
     dates = rq_date if rq_date and rq_date != 'None' else dates
+
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
@@ -557,7 +569,7 @@ def tongji(rq):
             last = {}
             for i in result9:
                 c = i[0]
-                name = id_name[c]
+                name = id_name[c] if c in id_name else c
                 if c not in huizong:
                     huizong[c] = [str(i[1])[:10], c, 0, 0, 0, 0, 0, 0, c, 0, 0]
                 huizong[c][2] += i[5]                           # 盈亏

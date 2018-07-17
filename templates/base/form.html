@@ -1,3 +1,6 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/radio.css' %}" />
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
 <style>
     .button {
     display: inline-block;
@@ -39,41 +42,39 @@
 	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
 }
+.radio_label{
+    margin-bottom: 10px;
+}
 </style>
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/easyui.css' %}" />
-<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.easyui.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.fullcalendar.js' %}"></script>
+
 
 
 
 <form action="" method="GET" id="tongji_form">
-        <!--开始日期：<input type="date" id="datetimes" name="datetimes" value="{{ dates }}">&nbsp;&nbsp;&nbsp;-->
     <div align="center">
     <table>
     <tr>
-        <td>
-            <div class="membder-background addMemo-body">
-    <div class="addMemo" id="iframe">
-        <label>开始日期</label><input type="text" value="{{ dates }}" name="datetimes" id="J-xl"/>
-        <div class="clear-both"></div>
-        <!-- <iframe src="iframe.html" width="100%" height="600" id="iframepage" name="iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>     -->
-        <div id="iframepage" >
-            <div region="center">
-            <div class="easyui-fullCalendar" fit="true" style="height:300px;"></div>
-            </div>
-        </div>
-    </div>
-    </div>
+        <td><label class="radio_label">
+        <input type="radio" class="radio_radio" name="when" value="d" {% if when == 'd' %}checked{% endif %} />
+        <span class="radio_radioInput"></span>当天</label></td>
+        <td><label class="radio_label">
+        <input type="radio" class="radio_radio" name="when" value="w" {% if when == 'w' %}checked{% endif %} />
+        <span class="radio_radioInput"></span>当周</label></td>
+        <td><label class="radio_label">
+        <input type="radio" class="radio_radio" name="when" value="m" {% if when == 'm' %}checked{% endif %} />
+        <span class="radio_radioInput"></span>当月</label></td>
+        <td><label class="radio_label">
+        <input type="radio" class="radio_radio" name="when" value="0" {% if when == '0' %}checked{% endif %} />
+        <span class="radio_radioInput"></span>指定日期</label></td>
+        <td>开始日期：<input type="date" value="{{ dates }}" name="datetimes" id="J-xl"/>
         </td>
-        <td>结束日期： <input type="date" id="rq_ts" name="end_date" value="{{end_date}}" >&nbsp;&nbsp;&nbsp;</td>
+        <td>结束日期：<input type="date" id="rq_ts" name="end_date" value="{{end_date}}" >&nbsp;&nbsp;&nbsp;</td>
         <td>
             ID 或 名称： <select name="id" id="select_id">
     {% load mvote %}
         {% for id in ids %}
             {% if forloop.first %}
-                {% if rq_id == 0 %}<option value="{{ rq_id }}">全  部</option>{% else %}
+                {% if rq_id == '0' or rq_id == None %}<option value="{{ rq_id }}">全  部</option>{% else %}
                     <option value="{{ rq_id }}">{{ id_name|name_option:rq_id }}</option>
                     <option value="0">全  部</option>{% endif %}
                 {% endif %}
@@ -101,23 +102,35 @@ function doSubmitForm(ty){
         var tongji_form=document.getElementById('tongji_form');
         tongji_form.submit();
         }else if(ty==1){
+        // 模拟
         var date=document.getElementById('J-xl').value;
         var id=document.getElementById('select_id').value;
         var rq_ts=document.getElementById('rq_ts').value;
-        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&end_date='+rq_ts;
+        var when_r = document.getElementsByName('when');
+        var when = "0";
+        for(var i=0;i<when_r.length;i++){
+            if(when_r[i].checked){
+                when=when_r[i].value;
+                break;
+            }
+        }
+        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=1'+'&end_date='+rq_ts+'&when='+when;
         }else if(ty==2){
             window.location.href='{% url 'tongji' %}?type=3';
         }else if(ty==4){
+        // 实盘
             var date=document.getElementById('J-xl').value;
         var id=document.getElementById('select_id').value;
         var rq_ts=document.getElementById('rq_ts').value;
-        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=4'+'&end_date='+rq_ts;
+        var when = document.getElementsByName('when');
+        for(var i=0;i<when.length;i++){
+            if(when[i].checked){
+                when=when[i].value;
+                break;
+            }
+        }
+        window.location.href='{% url 'tongji' %}?datetimes='+date+'&id='+id+'&type=4'+'&end_date='+rq_ts+'&when='+when;
         }
      }
-$(document).ready(function(){
-    var iframe=$("#iframepage").hide();
-    $("#J-xl").click(function(){
-        iframe.fadeIn();
-    });
-});
+
 </script>
