@@ -3520,7 +3520,15 @@ option = {
         itemStyle: {
             normal: {
                 barBorderRadius: 3,
-                color: '#28dcc9',
+                color: function(params){
+                    if(tu_name[1]!="日利润"){
+                        return '#28dcc9';
+                    }else if(params.value > 0){
+                        return 'red';
+                    }else{
+                        return '#28dcc9';
+                    }
+                }
                 /*new echarts.graphic.LinearGradient(
                     0, 0, 0, 1,
                     [

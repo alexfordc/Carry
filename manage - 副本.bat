@@ -1,1 +1,1 @@
-python manage.py runserver 192.168.2.204:80
+python manage.py runserver 192.168.2.204:8000

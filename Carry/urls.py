@@ -47,6 +47,8 @@ urlpatterns = [
     url(r'^moniAll/$', views.moni_all, name = 'moni_all'),
     url(r'^newMoni/$', views.newMoni, name = 'newMoni'),
     url(r'^gxjy/$',views.gxjy, name = 'gxjy'),
+    url(r'^systems/$', views.systems, name='systems'),
+    url(r'^get_system/$', views.get_system, name='get_system'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 

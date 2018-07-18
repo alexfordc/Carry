@@ -1754,14 +1754,14 @@ class ZB(object):
             res[dates]['ch'] += 1 if cd != 0 else 0
 
 
-            kctj_d = deviation == 1  # 底背离
-            kctj_k = deviation == -1 # 顶背离
-            pctj_d = macd<0  # mul > 1.5
-            pctj_k = macd>0  # mul < -1.5
+            kctj_d = deviation == -1  # 底背离
+            kctj_k = deviation == 1 # 顶背离
+            pctj_d = clo>mas #macd<0  # mul > 1.5
+            pctj_k = clo<mas #macd>0  # mul < -1.5
 
             if sb != reg:
-                tj_d += 1 if macd>0 and last_clo and clo>last_clo else 0
-                tj_k += 1 if macd<0 and last_clo and clo<last_clo else 0
+                tj_d += 1 if macd>0 and last_clo and clo>last_clo and clo<60 else 0
+                tj_k += 1 if macd<0 and last_clo and clo<last_clo and clo>60 else 0
                 sb = reg
                 last_clo = clo
 
@@ -1771,7 +1771,7 @@ class ZB(object):
                 pctj_d, pctj_k = pctj_k, pctj_d
 
             if kctj_d and is_dk and 9<=datetimes.hour<16:
-                if tj_d >= 3:
+                if tj_d >= 5:
                     jg_d=clo
                     startMony_d=clo
                     str_time1=str(datetimes)
@@ -1779,7 +1779,7 @@ class ZB(object):
                     first_time = [str_time1,'多' ,clo]
                     zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9<=datetimes.hour<16:
-                if tj_k >= 3:
+                if tj_k >= 5:
                     jg_k=clo
                     startMony_k=clo
                     str_time2=str(datetimes)

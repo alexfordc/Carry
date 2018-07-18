@@ -1,0 +1,126 @@
+
+{% extends 'base/base.html' %}
+{% block title %}合图{% endblock %}
+{% block script %}
+{% endblock %}
+{% block center_cen %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/radio.css' %}" />
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+
+
+<div id="main_zx" style="width: auto;height: 600px;" align="center"></div>
+    <script type="text/javascript">
+
+var url = '{% url 'get_system' %}';
+
+    var myChart_zx = echarts.init(document.getElementById('main_zx'));
+    // 显示标题，图例和空的坐标轴
+var nc = new Array();
+var cpu = new Array();
+var times = new Array();
+var names = ["内存使用率(%)","CUP使用率(%)"];
+function loadOneColumn() {
+    //alert(data0);
+    //alert(times);
+    $.ajax({
+        type: 'GET',
+        url: url,//请求数据的地址
+        dataType: "json",
+        success: function (result) {
+            // result为服务器返回的json对象
+            if(times.length>600){
+                nc = new Array();
+                cpu = new Array();
+                times = new Array();
+            }
+            nc[nc.length] = result.zx.nc;
+            cpu[cpu.length] = result.zx.cpu;
+            times[times.length] = result.zx.times;
+            myChart_zx.setOption({        //加载数据图表
+                tooltip: {
+                    trigger: 'axis'
+                },
+                //color: result.zx.colors,
+                legend: {
+                    data: names
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: times
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        maxInterval:30
+                    }
+                ],
+                series: [
+                    {
+                    name: names[0],
+                    type: 'line',
+                    tiled: '点数',
+                    data: nc,
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    itemStyle: {
+                        normal: {
+                            color: 'green',
+                            lineStyle: {
+                                width: 3 ,
+                                color: 'green',
+                                type: 'solid'
+                            }
+                        }
+                    }
+                },{
+                    name: names[1],
+                    type: 'line',
+                    tiled: '点数',
+                    data: cpu,
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    itemStyle: {
+                        normal: {
+                            color: 'red',
+                            lineStyle: {
+                                width: 3 ,
+                                color: 'red',
+                                type: 'dotted'
+                            }
+                        }
+                    }
+                }
+                ]
+            });
+        },
+        error: function (errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            //myChart_zt.hideLoading();
+        }
+    });
+    //myChart_zt.clear();  // 清除柱状图缓存
+}
+loadOneColumn();
+
+
+var t=setInterval("loadOneColumn()",3000);
+</script></br></br></br></br></br></br></br></br></br></br>
+
+{% endblock %}

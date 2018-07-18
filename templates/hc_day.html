@@ -6,28 +6,36 @@
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>
-<link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">
-<link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
+<!--<link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>-->
+<!--<link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">-->
+<!--<link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />-->
 
 
-<p style="position:absolute;left:50%;top:120px;font-size:20px;">{% include 'base/return.html' %}</p>
+<p style="position:absolute;left:50%;top:85px;font-size:20px;">{% include 'base/return.html' %}</p>
 
 <div class="floatLeft">
 
-<div class="ds1">
+<div class="ds1" style="position:absolute;top:100px;">
     <div class="ds2">
         <div class="ds3">
             <div class="ds4">
                 <div class="ds5">
                     <div class="ds6">
                         <div class="box_cont" id="huicetuall"> <!--style="height:348px"-->
-                            <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">开仓盈亏</span>&nbsp;&nbsp;
-                                <span id="tuxian2">余额</span>&nbsp;&nbsp;
+                            <table width="280">
+                                <tr style="cursor:pointer;">
+                                    <td id="tuxian1">&nbsp;盈&nbsp;亏</td>
+                                    <td id="tuxian2">&nbsp;余&nbsp;额</td>
+                                    <td id="tuxian3">&nbsp;利&nbsp;润</td>
+                                    <td id="tuxian4">&nbsp;回&nbsp;测</td>
+                                </tr>
+                            </table>
+                            <!--<div style="font-size:14px;cursor:pointer;"><span id="tuxian1">开仓盈亏</span>&nbsp;&nbsp;-->
+                                <!--<span id="tuxian2">余额</span>&nbsp;&nbsp;-->
                                 <!--<span id="tuxian3">利润</span>&nbsp;&nbsp;-->
                                 <!--<span id="tuxian4">资金回测</span>&nbsp;&nbsp;-->
-                                <!--<span id="tuxian5">当天盈亏</span>-->
-                            </div>
+                                <!--&lt;!&ndash;<span id="tuxian5">当天盈亏</span>&ndash;&gt;-->
+                            <!--</div>-->
                                 <div id="zhexiantu"></div>
                            </div>
                     </div>
@@ -44,9 +52,9 @@ function tuxiancolor(id){
     for(var i=1;i<=4;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
-        $("#tuxian"+i).css({"background-color":"red","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
         }else{
-        $("#tuxian"+i).css({"background-color":"white","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"#2b2b2b","width":"40px","color":"#f5f5f5"});
         }
     }
     if(id=='#tuxian1'){
@@ -136,7 +144,7 @@ option = {
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
-                color: '#ccc'
+                color: '#f44'
             }
         }
     },{
@@ -144,7 +152,7 @@ option = {
         splitLine: {show: false},
         axisLine: {
             lineStyle: {
-                color: '#ccc'
+                color: '#808080'
             }
         }
     }
@@ -180,7 +188,7 @@ option = {
         data: lineData
     },{
         name: tu_name[2],
-        type: 'bar', // bar
+        type: 'bar',
         yAxisIndex: 0,
         barWidth: 2,
         itemStyle: {
@@ -188,7 +196,7 @@ option = {
                 barBorderRadius: 1,
                 color: function(params){
                     if(params.value>0){
-                        return '#f44';
+                        return '#FF606B';
                     }else{
                         return '#14c8d4';
                     }

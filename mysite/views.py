@@ -24,6 +24,7 @@ import pyquery
 import urllib.request as request
 import redis
 import sys
+import psutil
 
 from mysite import HSD
 from mysite import models
@@ -567,41 +568,84 @@ def tongji(rq):
         results2 = []
         if result9:
             last = {}
+            jc = {}
+            len_result9 = len(result9)
             for i in result9:
                 c = i[0]
+                if rq_id!='0' and str(c)!=rq_id:
+                    continue
                 name = id_name[c] if c in id_name else c
+                dt = i[1][:10]
                 if c not in huizong:
-                    huizong[c] = [str(i[1])[:10], c, 0, 0, 0, 0, 0, 0, c, 0, 0]
-                huizong[c][2] += i[5]                           # 盈亏
-                huizong[c][3] += i[7] if i[6] % 2 == 0 else 0   # 多单数量
-                huizong[c][4] += i[7] if i[6] % 2 == 1 else 0   # 空单数量
-                huizong[c][5] += 1                              # 下单总数
-                huizong[c][6] += i[7] if i[5] > 0 else 0        # 赢利单数
-                huizong[c][7] = huizong[c][6] / huizong[c][5] * 100 # 胜率
-                huizong[c][8] = name                            # 姓名
+                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, {}]
+                    last[c] = []
+                    jc[c] = []
+                if dt not in huizong[c][-1]:
+                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0]
+
+                h1 = i[5]                           # 盈亏
+                h2 = i[7] if i[6] % 2 == 0 else 0   # 多单数量
+                h3 = i[7] if i[6] % 2 == 1 else 0   # 空单数量
+                h4 = 1                              # 下单总数
+                h5 = i[7] if i[5] > 0 else 0        # 赢利单数
+                #h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
+                h7 = name                           # 姓名
+                huizong[c][2] += h1
+                huizong[c][3] += h2
+                huizong[c][4] += h3
+                huizong[c][5] += h4
+                huizong[c][6] += h5
+                #huizong[c][7] = h6
+                huizong[c][8] = h7
+                huizong[c][-1][dt][2] += h1
+                huizong[c][-1][dt][3] += h2
+                huizong[c][-1][dt][4] += h3
+                huizong[c][-1][dt][5] += h4
+                huizong[c][-1][dt][6] += h5
+                #huizong[c][-1][dt][7] = h6
+                huizong[c][-1][dt][8] = h7
                 # (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
                 # 正向加仓，反向加仓
-                if c in last and i[1]<=last[c][3] and (last[c][6]%2 and i[6]%2):
-                    if i[2]>last[c][2]:
+                last[c] = [las for las in last[c] if i[1]<las[3]]
+                if last[c] and i[1]<=last[c][-1][3] and (last[c][-1][6]%2 and i[6]%2):
+                    jcyk = sum(la[2] for la in last[c])/len(last[c])-i[2]
+                    if jcyk>0:
                         huizong[c][9] += 1
-                    elif i[2]<last[c][2]:
+                        huizong[c][-1][dt][9] += 1
+                        jc[c].append([i[1],jcyk])
+                    else:
                         huizong[c][10] += 1
-                elif c in last and i[1]<=last[c][3] and (not last[c][6]%2 and not i[6]%2):
-                    if i[2]>last[c][2]:
-                        huizong[c][10] += 1
-                    elif i[2] < last[c][2]:
+                        huizong[c][-1][dt][10] += 1
+                        jc[c].append([i[1],jcyk])
+                elif last[c] and i[1]<=last[c][-1][3] and (not last[c][-1][6]%2 and not i[6]%2):
+                    jcyk = i[2]-sum(la[2] for la in last[c]) / len(last[c])
+                    if jcyk>0:
                         huizong[c][9] += 1
+                        huizong[c][-1][dt][9] += 1
+                        jc[c].append([i[1],jcyk])
+                    else:
+                        huizong[c][10] += 1
+                        huizong[c][-1][dt][10] += 1
+                        jc[c].append([i[1],jcyk])
                 results2.append(i[:9]+(name,))                   # 交易明细
-                last[c] = i
-                # hz0 = min([j[1] for j in results2 if j[0] == i])  # 开始时间
-                # hz1 = sum([j[5] for j in results2 if j[0] == i])  # 盈亏
-                # hz2 = len([j[6] for j in results2 if j[0] == i and j[6]%2 == 0])  # 多单数量
-                # hz3 = len([j[7] for j in results2 if j[0] == i and j[6]%2 == 1])  # 空单数量
-                # hz4 = len([j[0] for j in results2 if j[0] == i])  # 下单总数
-                # hz5 = len([j[5] for j in results2 if j[0] == i and j[5] > 0])  # 赢利单数
-                # hz6 = int(hz4 / (hz2 + hz3) * 100) if hz2 + hz3 != 0 else 0  # 正确率
-                # hz7 = id_name[i] if i in id_name else i
-                # huizong.append([str(hz0)[:10], i, hz1, hz2, hz3, hz4, hz5, hz6, hz7])
+                last[c].append(i)
+
+            for c in jc:
+                jcss = []
+                for dt in huizong[c][-1]:
+                    jcs = [i[1] for i in jc[c] if i[0][:10]==dt]
+                    jc_z = [s for s in jcs if s > 0]
+                    jc_k = [s for s in jcs if s <= 0]
+                    huizong[c][-1][dt][7] = huizong[c][-1][dt][6] / huizong[c][-1][dt][5] * 100  # 胜率
+                    huizong[c][-1][dt][11] = sum(jc_z) / len(jc_z) if jc_z else 0  # 一天，平均每单赚多少钱加仓
+                    huizong[c][-1][dt][12] = sum(jc_k) / len(jc_k) if jc_k else 0  # 一天，平均每单亏多少钱加仓
+                    jcss += jcs
+
+                jc_z = [s for s in jcss if s > 0]
+                jc_k = [s for s in jcss if s <= 0]
+                huizong[c][7] = huizong[c][6] / huizong[c][5] * 100  # 胜率
+                huizong[c][11] = sum(jc_z)/len(jc_z) if jc_z else 0 # 总共，平均每单赚多少钱加仓
+                huizong[c][12] = sum(jc_k)/len(jc_k) if jc_k else 0 # 总共，平均每单亏多少钱加仓
         if rq_id != '0':
             results2 = [result for result in results2 if rq_id == str(result[0])]
 
@@ -1269,6 +1313,18 @@ def gxjy(rq):
         response = redirect('index')
 
     return response
+
+def systems(rq):
+    return render(rq,'systems.html')
+
+def get_system(rq):
+    nc = psutil.virtual_memory().percent    # 内存使用率%
+    cpu = psutil.cpu_percent(0)             # cup 使用率%
+
+    dt = str(datetime.datetime.now())[11:19]
+
+    zx = {'nc': nc,'cpu':cpu, 'times': dt}
+    return JsonResponse({'zx': zx }, safe=False)
 
 
 def liaotianshiList(rq):

@@ -44,7 +44,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>操作</th>
     </tr>
             {% for i in herys %}
-    <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
+    <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
       <td>{{ i.0 }}</td>
       <td id="name{{i.0}}" contentEditable="true">
           {% if i.1 %}{{ i.1 }}{% endif %}
@@ -59,7 +59,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         </table>
         {% elif results2 %}
         <table border="1" class="dataframe" id="huizong_mingxi">
-        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
+        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">总 汇 总</th></tr>
         <tr>
             <th>开始日期</th>
       <th>ID</th>
@@ -70,7 +70,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
            <th> 回测 </th><th>名  称</th> <th>正向加仓</th><th>反向加仓</th>
         </tr>
         {% for j,i in huizong.items %}
-        <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
+        <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
             <td>{{ i.0 }}</td>
         <td>{{ i.1 }}</td>
         <td>{{ i.2|floatformat:1 }}</td>
@@ -78,13 +78,35 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <td>{{ i.4|floatformat:0 }}</td>
         <td>{{ i.5 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>
             <td>
-                <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">
+                <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}" target="_blank">
                     <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
                 </a>
             </td>
             <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ i.8 }}</a></td>
-            <td>{{ i.9 }}</td><td>{{ i.10 }}</td>
+            <td>{{ i.9 }} ({{ i.11|floatformat:0 }})</td><td>{{ i.10 }} ({{ i.12|floatformat:0 }})</td>
         </tr>
+        {% endfor %}
+            {% for j,i in huizong.items %}
+            {% if end_date != i.0 %}
+            <tr><th colspan="12" style="font-size: 18px;background-color:#FFFFFF;">日汇总（{{ j }}）</th></tr>
+            {% for k,v in i.13.items %}
+             <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
+            <td>{{ v.0 }}</td>
+        <td>{{ v.1 }}</td>
+        <td>{{ v.2|floatformat:1 }}</td>
+        <td>{{ v.3|floatformat:0 }}</td>
+        <td>{{ v.4|floatformat:0 }}</td>
+        <td>{{ v.5 }}</td><td>{{ v.6|floatformat:0 }}</td><td>{{ v.7|floatformat:0 }}</td>
+            <td>
+                <a style="color:#0000ff;" href="{% url 'tongji' %}?type=2&datetimes={{ v.0 }}&id={{ v.1 }}&end_date={{ v.0 }}" target="_blank">
+                    <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
+                </a>
+            </td>
+            <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ v.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ v.8 }}</a></td>
+            <td>{{ v.9 }} ({{ v.11|floatformat:0 }})</td><td>{{ v.10 }} ({{ v.12|floatformat:0 }})</td>
+        </tr>
+            {% endfor %}
+            {% endif %}
         {% endfor %}
         <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
@@ -100,7 +122,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>名称</th>
     </tr>
             {% for i in results2 %}
-    <tr bgcolor="{% cycle '#cccc33' '00cc00' %}">
+    <tr bgcolor="{% cycle '#dbdbdb' 'f7f7f7' %}">
       <td>{{ i.0 }}</td>
       <td colspan="2">{{ i.1 }}</td>
       <td>{{ i.2 }}</td>

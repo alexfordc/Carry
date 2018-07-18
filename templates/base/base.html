@@ -188,6 +188,7 @@ var $container = $('#works-container');
                     </li>
                     <li><a href="{% url 'index' %}">产品介绍</a>
                     <ul>
+                        <li class="no-border-top" ><a href="{% url 'systems' %}">系统资源</a></li>
                         <li class="no-border-top" id="tools_msg"><a href="{% url 'tools' %}">友情链接</a></li>
                         <li class="no-border-top" id="today_msg"><a href="{% url 'zhangting' 'today' %}">已经涨停股票</a></li>
                         <li class="no-border-top" id="tomorrow_msg"><a href="{% url 'zhangting' 'tomorrow' %}">将要涨停股票</a></li>
@@ -372,6 +373,7 @@ function _setColor(color){
     document.body.style.background=color;
 }
 var color=color_getCookie('color_cookie');
+color = color==null?"#fff":color;
 $('#header').css('background', color);
 document.body.style.background=color;
 _colorizePaletteItems();
