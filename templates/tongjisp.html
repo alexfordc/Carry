@@ -3,61 +3,11 @@
 {% block center_cen %}
 {% load staticfiles %}
 {% include 'base/form.html' %}
-<div align="center" id="password_div" style="display:none; left:50%; bottom:50%;width:360px; height:60px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
-border:1px solid #888; background-color:green; text-align:center"><br/><input type="password" id="div_password" placeholder="请输入验证码"/>&nbsp;
-            <input type="button" onclick="javascript:closeLogin('update')" id="div_password_update" value="修 改">&nbsp;&nbsp;
-    <input type="button" onclick="javascript:closeLogin('delete')" value="删 除">&nbsp;&nbsp;
-    <input type="button" onclick="javascript:closeLogin(null)" value="取 消">
-<!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
-        </div>
+
     <div align="center" id="tongji">
     {% load mvote %}
-{#        <h3>#}
-{#            {% if xz == '1' %}#}
-{#                时间分组#}
-{#            {% elif xz == '2' %}#}
-{#                ID  分组#}
-{#            {% elif xz == '3' %}#}
-{#                多空分组#}
-{#            {% elif xz == '4' %}#}
-{#                时间与ID分组#}
-{#            {% elif xz == '5' %}#}
-{#                时间与多空分组#}
-{#            {% elif xz == '6' %}#}
-{#                ID 与 空分组#}
-{#            {% elif xz == '7' %}#}
-{#                时间、ID与多空三者结合分组#}
-{#            {% elif xz == '8' %}#}
-{#                详细数据#}
-{#            {% endif %}#}
-{#        </h3>#}
-    {% if herys %}
-{#        {{ herys|safe }}#}
 
-         <table border="1" class="dataframe">
-    <tr>
-      <th>ID号</th>
-      <th>名称</th>
-      <th>是否使用</th>
-      <th>开户金额</th>
-      <th>当前余额</th>
-        <th>操作</th>
-    </tr>
-            {% for i in herys %}
-    <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
-      <td>{{ i.0 }}</td>
-      <td id="name{{i.0}}" contentEditable="true">
-          {% if i.1 %}{{ i.1 }}{% endif %}
-      </td>
-      <td id="en{{i.0}}" contentEditable="true">{{ i.2|yesno:"Yes,No,未知" }}</td>
-      <td>{{ i.3 }}</td>
-      <td>{{ i.4 }}</td>
-        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="删除"></td>
-    </tr>
-        {% endfor %}
-
-        </table>
-        {% elif results2 %}
+        {% if results2 %}
         <table border="1" class="dataframe" id="huizong_mingxi">
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
@@ -79,7 +29,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <td>{{ i.5|floatformat:0 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>
             <td>{{ i.8 }}</td>
             <td>
-                <a style="color:#0000ff;" href="{% url 'tongji' %}?{% if rq_type == '4' %}type=5{% else %}type=2{% endif %}&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">
+                <a style="color:#0000ff;" href="{% url 'tongji' %}?{% if rq_type == '4' %}type=5{% else %}type=2{% endif %}&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}" target="_blank">
                     <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
                 </a>
             </td>
@@ -116,59 +66,6 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         {% endfor %}
 
         </table>
-
-        {% elif results %}
-        <table border="1" class="dataframe">
-        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
-        <tr>
-            <th>日期</th>
-      <th>ID</th>
-        <th>赚得金额</th>
-        <th>正向跟单</th>
-        <th>反向跟单</th>
-            <th>下单数量</th><th></th><th></th><th></th><th>名  称</th>
-        </tr>
-        {% for i in huizong %}
-        <tr>
-            <td>{{ i.0 }}</td>
-        <td>{{ i.1 }}</td>
-        <td>{{ i.2|floatformat:1 }}</td>
-        <td>{{ i.3 }}</td>
-        <td>{{ i.4 }}</td>
-        <td>{{ id_count|names:i.1 }}</td><td></td><td></td><td></td><td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ end_date }}">{{ id_name|names:i.1 }}</a></td>
-        </tr>
-        {% endfor %}
-        <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
-    <tr>
-      <th>开仓时间</th>
-      <th>单号</th>
-      <th>ID</th>
-      <th>平仓时间</th>
-      <th>价格</th>
-      <th>多空</th>
-        <th>赚得金额</th>
-        <th>正向跟单</th>
-        <th>反向跟单</th>
-        <th>名  称</th>
-
-    </tr>
-            {% for i in results %}
-    <tr>
-      <td>{{ i.0 }}</td>
-      <td>{{ i.1 }}</td>
-      <td>{{ i.2 }}</td>
-      <td>{{ i.3 }}</td>
-      <td>{{ i.4 }}</td>
-      <td>{{ i.5|yesno:"空,多,未知" }}</td>
-        <td>{{ i.6 }}</td>
-      <td>{{ i.7 }}</td>
-        <td>{{ i.8 }}</td>
-      <!--<td>{{ i.9 }}</td>-->
-        <td>{{ id_name|names:i.2 }}</td>
-    </tr>
-        {% endfor %}
-
-        </table>
     {% elif monijy or sjjy %}
         <div id="ssjy">
 
@@ -187,72 +84,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
 </div>
     <script type="text/javascript">
 
-function myajaxs(){
-        $.ajax({
-            type: 'GET',
-            url: '{% url 'tongji' %}?type=3',
-            dataType: 'json',
-            success: function(res){
-                var html = "";
-                if(res.monijy.length>0){
-                    var data = res.monijy;
-                    html += "<table border='1' width='1080px'><br/><thead>模拟交易</thead>";
-                    html += "<tr><th>名称</th><th>交易时间</th><th>价格</th><th>多空</th><th>手数</th><th>状态</th><th>止损</th><th>止盈</th></tr>";
-                    for (var i=0;i<data.length;i++){
-                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
-                        for (var j=0;j<data[i].length;j++){
-                                html += "<td>"+data[i][j]+"</td>";
-                        }
-                        html += "</tr>";
-                    }
-                    html += "</table>";
 
-                }
-                html += "<br/>"
-                if(res.sjjy.length>0){
-                    if(res.ssjygd.length>0){
-                        var data = res.ssjygd;
-                        html += "<table border='1' width='1080px'><thead>实盘交易挂单</thead>";
-                        html += "<th>时间</th><th>合约</th><th>价格</th><th>止损价</th><th>订单编号</th><th>剩余数量</th><th>已成交数量</th><th>总数量</th><th>用户</th><th>买卖</th><th>状态</th>";
-                        for (var i=0;i<data.length;i++){
-                            html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
-                            for (var j=0;j<data[i].length;j++){
-                                html += "<td>"+data[i][j]+"</td>";
-                            }
-                            html += "</tr>";
-                        }
-                        html += "</table>";
-                    }
-                    var data = res.sjjy;
-                    html += "<table border='1' width='1080px'><thead>实盘交易记录（当天）</thead>";
-                    html += "<tr><td>时间</td><td>成交价格</td><td>成交记录号</td><td>成交手数</td><td>产品代码</td><td>交易账户</td><td>买卖</td>";
-                    html += "<td width='100'>状态</td><td>下单价格</td><td>总量</td><td>剩余量</td><td>成交量</td><td>订单号</td><td>持仓</td><td>平仓总盈亏</td></tr>";
-                    for (var i=0;i<data.length;i++){
-                        html += i%2==0? "<tr bgcolor='#aaf'>": "<tr bgcolor='#ccf'>";
-                        for (var j=0;j<data[i].length;j++){
-                            if(j==5 && data[i][0]==0){
-                                html += "<td><a style='color:red;' href='/tj/?type=4&user="+data[i][j]+"'>"+data[i][j]+"</a></td>";
-                            }else if(data[i][0]==0){
-                                html += "<td></td>";
-                            }else{
-                                html += "<td>"+data[i][j]+"</td>";
-                            }
-                        }
-                        html += "</tr>";
-                    }
-                    html += "</table>";
-                }
-                $("#tongji").html(html);
-            },
-            error: function (errorMsg) {
-                //alert(errorMsg);
-        }
-        });
-}
-function tongjiss(){
-    myajaxs();
-    var t = setInterval("myajaxs()",10000);
-}
 
 $('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
 //$("tr:odd").css({"background-color": "#cccc33"});
@@ -272,25 +104,6 @@ function formSubmit(id,name,en,pass,types){
         document.body.removeChild(form[0]);
 }
 
-var status;
-//修改
-function update_name(id,pass){
-        var name=$("#name"+id).text();
-        var en=$("#en"+id).text();
-        if(pass.length>0){
-        formSubmit(id,name,en,pass,'update');
-        }else{alert('验证码不能为空！');}
-    }
-//删除
-function delete_user(id,pass){
-    if(pass.length>0){
-    var name=$("#name"+id).text();
-    var en=$("#en"+id).text();
-    if(confirm('您确定要删除吗？')==true){
-        formSubmit(id,name,en,pass,'delete');
-    }
-    }else{alert('验证码不能为空！');}
-}
 
 var cid=null;
 

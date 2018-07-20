@@ -101,7 +101,7 @@ CODE_PRODUCT = {'hk00001': 27.006, 'hk00002': 18.945, 'hk00003': 83.928, 'hk0000
                 'hk03988': 794.409}
 
 SQL = {
-    'get_history': 'select number,name,time from weight where name in {}',
+    'get_history': 'select number,name,time from weight where time>"{}" AND name in {}',
     'tongji': 'select id,trader_name,available,origin_asset,remain_asset from account_info order by available desc',
     "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
@@ -253,7 +253,8 @@ def get_min_history():
 def get_history(conn):
     '''返回数据格式为：(点数，时间)...'''
     cur = conn.cursor()
-    cur.execute(SQL['get_history'].format(tuple(WEIGHT)))
+    this_day = get_date()
+    cur.execute(SQL['get_history'].format(this_day,tuple(WEIGHT)))
     result = cur.fetchall()
     conn.commit()
     conn.close()
@@ -1111,7 +1112,7 @@ def huices(res, huizong, init_money, dates, end_date):
             end_d = j[1].replace(':', '-').replace(' ', '-')
             end_d = end_d.split('-') + [0, 0, 0]
             end_d = [int(ed) for ed in end_d]
-            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))
+            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)) if end_d>=start_d else 0
             # 计算利润因子
             if j[3] > 0:
                 count_yl += j[3]
@@ -1207,7 +1208,7 @@ def huices(res, huizong, init_money, dates, end_date):
     return hc, huizong
 
 
-def huice_day(res):
+def huice_day(res,init_money):
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
     jyts = len(keys)
@@ -1215,22 +1216,13 @@ def huice_day(res):
         return {}
     jyys = int(keys[-1][-5:-3]) - int(keys[0][-5:-3]) + 1
     hc = {
-        'jyts': jyts,  # 交易天数
-        'jyys': jyys,  # 交易月数
-        'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
-        'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
-        'avglr': 0,  # 平均获利
-        'alllr': 0,  # 总获利
-        'avgss': 0,  # 平均损失
-        'allss': 0,  # 总损失
-        'zzl': [],  # 增长率
         'vol': [],  # 手数
         'dayye': [],  # 每天余额
-        'daylr': [],  # 每天利润，不叠加
+        'singlelr': [],  # 每单利润，不叠加
         'zjhcs': [0],  # 资金回测
         'day_time': [],  # 当天每单交易时间
-        'day_yk': [],  # 当天每单交易盈亏
-        'day_ykall': [],  # 当天每单叠加交易盈亏
+        'day_yk': [],  # 当天每单交易盈亏，包括未平仓的状态
+        'day_ykall': [],  # 当天每单叠加交易盈亏，不包括未平仓的状态
         'day_pcyk': [], # 当天每次平仓盈亏
         'day_close': [],  # 当天交易时的收盘价
         'day_x': 0,  # 当天分钟行情时间
@@ -1241,59 +1233,21 @@ def huice_day(res):
     jingzhi = []  # 净值
     zx_x = []
     zx_y = []
-    ccsj = 0  # 总持仓时间
     count_yl = 0  # 总盈利
     count_ks = 0  # 总亏损
     for i in keys:
         je = round(res[i]['mony'])
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
-        hc['daylr'].append(je)  # 每天利润
         sameday = []  # 当天的所有交易
-        if len(jingzhi) > 1:
-            max_jz = max(jingzhi[:-1])
-            zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
-            # zdhc = zdhc2 if zdhc2 > zdhc else zdhc
-            hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
         for j in res[i]['datetimes']:
-            if j[2] == '多':
-                hc['cgzd'][1] += 1
-                if j[3] > 0:
-                    hc['cgzd'][0] += 1
-            elif j[2] == '空':
-                hc['cgzk'][1] += 1
-                if j[3] > 0:
-                    hc['cgzk'][0] += 1
-            if j[3] > 0:
-                hc['alllr'] += j[3]
-                hc['avglr'] += 1
-            else:
-                hc['allss'] += j[3]
-                hc['avgss'] += 1
             if i == keys[-1]:
                 st = j[6] if j[2] == '多' else -j[6]
                 sameday.append([j[0], st, j[4]])
                 sameday.append([j[1], -st, j[5]])
                 hc['samedatetime'] = i
-            # 计算持仓时间
-            start_d = j[0].replace(':', '-').replace(' ', '-')
-            start_d = start_d.split('-') + [0, 0, 0]
-            start_d = [int(sd) for sd in start_d]
-            end_d = j[1].replace(':', '-').replace(' ', '-')
-            end_d = end_d.split('-') + [0, 0, 0]
-            end_d = [int(ed) for ed in end_d]
-            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))
-            # 计算利润因子
-            if j[3] > 0:
-                count_yl += j[3]
-            else:
-                count_ks += -j[3]
-            # 方差
-            # count_var += (j[3] - avg) ** 2
+
     try:
-        hc['jingzhi'] = jingzhi  # 每天净值
-        hc['zx_x'] = zx_x  # 折线图x轴 时间
-        hc['zx_y'] = zx_y  # 折线图y轴 利润
         sameday.sort()
         hc['day_time'] = [sa[0][-8:-3] for sa in sameday]
         from copy import deepcopy
@@ -1310,6 +1264,7 @@ def huice_day(res):
 
         syc = []  # 开仓价
         cc = 0  # 持仓
+        zjhcs = 0
         for y in range(len(hc['day_x'])):
             cl = hc['day_close'][y] # 分钟收盘价
             dx = hc['day_x'][y]     # 分钟
@@ -1351,6 +1306,12 @@ def huice_day(res):
             hc['vol'].append(cc*10)
             hc['day_pcyk'].append(round(pcyk,1))
             hc['day_ykall'].append(round(pcyk+hc['day_ykall'][-1] if hc['day_ykall'] else pcyk,1))
+            if len(hc['day_yk']) > 1:
+                max_lr = max(hc['day_yk'][:-1])
+                zjhc = round((max_lr - hc['day_yk'][-1]) / (max_lr+init_money) * 100, 2)
+                zjhc = zjhc if (hc['day_yk'][-1]!=0 and zjhc > 0) else 0
+                hc['zjhcs'].append(zjhc if zjhc!=zjhcs else 0)  # 资金回测
+                zjhcs = zjhc if zjhc!=0 else zjhcs
         v = hc['day_close'][0] // 1000 * 1000
         hc['subtracted'] = int(v)
         hc['day_close'] = [i - v for i in hc['day_close']]

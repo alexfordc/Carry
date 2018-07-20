@@ -12,6 +12,7 @@
 
 var myChart = echarts.init(document.getElementById('main'));
 // 显示标题，图例和空的坐标轴
+var name_code = null;  // 名称：代码
 
 myChart.setOption({
     //backgroundColor:'#fdfdfd', // 背景颜色
@@ -49,6 +50,7 @@ myChart.setOption({
         }
     }
 });
+
 myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
 
 function loadOneColumn() {
@@ -64,6 +66,7 @@ function loadOneColumn() {
                 names.push(item.AREA);    //挨个取出类别并填入类别数组
                 series.push(item.LANDNUM);
             });
+            name_code = result.name_code;
             var times=result.times
             myChart.hideLoading();    //隐藏加载动画
             myChart.setOption({        //加载数据图表
@@ -87,6 +90,17 @@ function loadOneColumn() {
     });
 };
 loadOneColumn();
+// 柱状图点击事件
+myChart.on('click',function(params){
+    var s = "";
+    var names = params.name.split('\n');
+    for(var i=0;i<names.length;i++){
+        s += names[i];
+     }
+    if(name_code != null){
+        window.open("http://quote.eastmoney.com/hk/"+name_code[s]+".html");
+    }
+});
 var t=setInterval("loadOneColumn()",10000);
 </script></br></br></br></br></br></br></br></br></br></br>
 

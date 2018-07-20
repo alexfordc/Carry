@@ -58,21 +58,21 @@ function tuxiancolor(id){
         }
     }
     if(id=='#tuxian1'){
-        tu_name=["行情（{{hc.subtracted}}）","盈亏","持仓（0.1手）","平仓盈亏"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}},{{hc.vol|safe}},{{hc.day_pcyk|safe}});
+        tu_name=["行情（{{hcd.subtracted}}）","盈亏","持仓（0.1手）","平仓盈亏"];
+        huatu(tu_name,{{hcd.day_x|safe}},{{hcd.day_close|safe}},{{hcd.day_yk|safe}},{{hcd.vol|safe}},{{hcd.day_pcyk|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["行情（{{hc.subtracted}}）","利润","平仓盈亏"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.day_close|safe}},{{hc.day_ykall|safe}},{{hc.day_pcyk|safe}});
+        tu_name=["行情（{{hcd.subtracted}}）","利润","平仓盈亏"];
+        huatu(tu_name,{{hcd.day_x|safe}},{{hcd.day_close|safe}},{{hcd.day_ykall|safe}},{{hcd.day_pcyk|safe}});
     }else if(id=='#tuxian3'){
         tu_name=["总利润","日利润","持仓（0.1手）"];
-        huatu(tu_name,{{hc.day_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}},"");
+        huatu(tu_name,{{hcd.day_x|safe}},{{hcd.zx_y|safe}},{{hcd.singlelr|safe}},"");
     }else if(id=='#tuxian4'){
         tu_name=["","资金回测","持仓（0.1手）"];
-        huatu(tu_name,{{hc.day_x|safe}},null,{{hc.zjhcs|safe}},"");
+        huatu(tu_name,{{hcd.day_x|safe}},null,{{hcd.zjhcs|safe}},"");
     }
     <!--else if(id=='#tuxian5'){-->
-        <!--tu_name=["收盘价（{{hc.qcbs}}）","当天每单盈亏（{{hc.samedatetime}}）"];-->
-        <!--huatu(tu_name,{{hc.day_time|safe}},{{hc.day_close|safe}},{{hc.day_yk|safe}});-->
+        <!--tu_name=["收盘价（{{hcd.qcbs}}）","当天每单盈亏（{{hcd.samedatetime}}）"];-->
+        <!--huatu(tu_name,{{hcd.day_time|safe}},{{hcd.day_close|safe}},{{hcd.day_yk|safe}});-->
     <!--}-->
 }
 $("#tuxian1").click(function(){
@@ -114,7 +114,7 @@ for(var i=0;i<category.length;i++){
 
 option = {
     title: {
-            text: "{{hc.samedatetime}}",
+            text: "{{hcd.samedatetime}}",
             textStyle:{ color:'#0a0' }
         },
     backgroundColor: '#0f375f',

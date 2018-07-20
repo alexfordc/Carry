@@ -28,7 +28,7 @@
 <div id="main_zx" style="width: auto;height: 600px;" align="center"></div>
 <div id="main_zt" style="width: auto;height: 600px;" align="center"></div>
     <script type="text/javascript">
-
+var name_code = null;  // 名称：代码
 var url = '{% url 'zhutu_zhexian_ajax' %}';
 
     var myChart_zt = echarts.init(document.getElementById('main_zt'));
@@ -92,6 +92,7 @@ function loadOneColumn() {
             });
 
             var times=result.zt.times;
+            name_code = result.zt.name_code;
             //myChart_zt.hideLoading();    //隐藏加载动画
 
             myChart_zt.setOption({        //加载数据图表
@@ -152,6 +153,17 @@ function loadOneColumn() {
 }
 init_tx();
 loadOneColumn();
+// 柱状图点击事件
+myChart_zt.on('click',function(params){
+    var s = "";
+    var names = params.name.split('\n');
+    for(var i=0;i<names.length;i++){
+        s += names[i];
+     }
+    if(name_code != null){
+        window.open("http://quote.eastmoney.com/hk/"+name_code[s]+".html");
+    }
+});
 function radio_xz(value){
     if(value == "1"){
         url = '{% url 'zhutu_zhexian_ajax' %}';

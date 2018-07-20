@@ -68,9 +68,10 @@ def redis_update(rq):
 def record_from(rq):
     if rq.is_ajax():
         return
-    info = '访问者：' + rq.META.get('REMOTE_ADDR') + '\t访问页面：' + rq.META.get('HTTP_HOST') + rq.META.get(
-        'PATH_INFO') + '\t' + str(datetime.datetime.now()) + '\n'
-    with open('log\\log.txt', 'a') as f:
+    dt = str(datetime.datetime.now())
+    info = 'Visitor come from：' + rq.META.get('REMOTE_ADDR') + '\tDestination：' + rq.META.get('HTTP_HOST') + rq.META.get(
+        'PATH_INFO') + '\t' + dt + '\n'
+    with open('log\\visitor\\log-%s.txt'%dt[:9], 'a') as f:
         f.write(info)
 
 
@@ -280,7 +281,8 @@ def get_zx_zt(zt=False, zx=False, status=None):
             } if d[0] < 0 else d[0]
         } for d in data]
         counts = sum(i[0] for i in data)
-        zt_data = {"jinJian": dt, 'times': times[10:], 'counts': counts}
+        name_code = {j:i[2:] for i,j in HSD.CODE_NAME.items()}
+        zt_data = {"jinJian": dt, 'times': times[10:], 'counts': counts, 'name_code':name_code}
 
     if zx:  # 折线图
         result = read_from_cache('history_weight' + str(status))
@@ -492,16 +494,16 @@ def tongji(rq):
                 'least']
             huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong[
                 'most']
+        init_money = 10000  # 入金
+        hcd = None
         if rq_date == end_date:
-            hc = HSD.huice_day(res)
-            return render(rq, 'hc_day.html', {'hc': hc})
+            hcd = HSD.huice_day(res,init_money)
 
         res,huizong = tongji_huice(res,huizong)
-        init_money = 5000
 
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd':hcd})
 
     if rq_type == '4' and rq_date and end_date and client in HSD.get_allow_ip():
         results2, huizong = HSD.sp_order_record(rq_date,end_date)
@@ -548,19 +550,19 @@ def tongji(rq):
                     'least']
                 huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
                     'most']
-        if rq_date == end_date:
-            hc = HSD.huice_day(res)
-            return render(rq, 'hc_day.html', {'hc': hc})
-        res, huizong = tongji_huice(res, huizong)
+        hcd = {}
         conn = HSD.get_conn('carry_investment')
         sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
         init_money = HSD.getSqlData(conn, sql)
         conn.close()
-        init_money = init_money[0][0]
-
+        init_money = init_money[0][0] if init_money else 10000
+        if rq_date == end_date:
+            hcd = HSD.huice_day(res,init_money)
+            #return render(rq, 'hc_day.html', {'hcd': hcd})
+        res, huizong = tongji_huice(res, huizong)
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
+        return render(rq, 'hc.html', {'hc': hc, 'hcd':hcd, 'huizong': huizong, 'init_money': init_money, })
 
     if rq_type == '1' and rq_date:
         result9 = HSD.order_detail(rq_date, end_date)
@@ -577,11 +579,11 @@ def tongji(rq):
                 name = id_name[c] if c in id_name else c
                 dt = i[1][:10]
                 if c not in huizong:
-                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, {}]
+                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, {}]
                     last[c] = []
                     jc[c] = []
                 if dt not in huizong[c][-1]:
-                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0]
+                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1]
 
                 h1 = i[5]                           # 盈亏
                 h2 = i[7] if i[6] % 2 == 0 else 0   # 多单数量
@@ -604,7 +606,11 @@ def tongji(rq):
                 huizong[c][-1][dt][6] += h5
                 #huizong[c][-1][dt][7] = h6
                 huizong[c][-1][dt][8] = h7
-                # (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
+                # i: (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
+                # 最大持仓
+                lzd = len(last[c])
+                huizong[c][13] = lzd if lzd > huizong[c][13] else huizong[c][13]
+                huizong[c][-1][dt][13] = lzd if lzd > huizong[c][-1][dt][13] else huizong[c][-1][dt][13]
                 # 正向加仓，反向加仓
                 last[c] = [las for las in last[c] if i[1]<las[3]]
                 if last[c] and i[1]<=last[c][-1][3] and (last[c][-1][6]%2 and i[6]%2):

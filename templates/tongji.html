@@ -59,7 +59,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         </table>
         {% elif results2 %}
         <table border="1" class="dataframe" id="huizong_mingxi">
-        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">总 汇 总</th></tr>
+        <tr><th colspan="13" style="font-size: 20px;background-color:#FFFFFF;">总 汇 总</th></tr>
         <tr>
             <th>开始日期</th>
       <th>ID</th>
@@ -67,7 +67,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>多单</th>
         <th>空单</th>
             <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th>
-           <th> 回测 </th><th>名  称</th> <th>正向加仓</th><th>反向加仓</th>
+           <th> 回测 </th><th>名  称</th> <th>正向加仓</th><th>反向加仓</th><th>最大持仓</th>
         </tr>
         {% for j,i in huizong.items %}
         <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
@@ -83,13 +83,13 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
                 </a>
             </td>
             <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ i.8 }}</a></td>
-            <td>{{ i.9 }} ({{ i.11|floatformat:0 }})</td><td>{{ i.10 }} ({{ i.12|floatformat:0 }})</td>
+            <td>{{ i.9 }} ({{ i.11|floatformat:0 }})</td><td>{{ i.10 }} ({{ i.12|floatformat:0 }})</td><td>{{ i.13 }}</td>
         </tr>
         {% endfor %}
             {% for j,i in huizong.items %}
             {% if end_date != i.0 %}
-            <tr><th colspan="12" style="font-size: 18px;background-color:#FFFFFF;">日汇总（{{ j }}）</th></tr>
-            {% for k,v in i.13.items %}
+            <tr><th colspan="13" style="font-size: 18px;background-color:#FFFFFF;">日汇总（{{ j }}）</th></tr>
+            {% for k,v in i.14.items %}
              <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
             <td>{{ v.0 }}</td>
         <td>{{ v.1 }}</td>
@@ -103,14 +103,14 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
                 </a>
             </td>
             <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ v.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ v.8 }}</a></td>
-            <td>{{ v.9 }} ({{ v.11|floatformat:0 }})</td><td>{{ v.10 }} ({{ v.12|floatformat:0 }})</td>
+            <td>{{ v.9 }} ({{ v.11|floatformat:0 }})</td><td>{{ v.10 }} ({{ v.12|floatformat:0 }})</td><td>{{ v.13 }}</td>
         </tr>
             {% endfor %}
             {% endif %}
         {% endfor %}
-        <tr><th colspan="12" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
+        <tr><th colspan="13" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
-      <th>ID</th>
+      <th colspan="2">ID</th>
       <th colspan="2">开仓时间</th>
       <th>开仓价格</th>
       <th colspan="2">平仓时间</th>
@@ -122,8 +122,8 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>名称</th>
     </tr>
             {% for i in results2 %}
-    <tr bgcolor="{% cycle '#dbdbdb' 'f7f7f7' %}">
-      <td>{{ i.0 }}</td>
+    <tr bgcolor="{% cycle '#dbdbdb' 'f7f7f7' %}" >
+      <td colspan="2">{{ i.0 }}</td>
       <td colspan="2">{{ i.1 }}</td>
       <td>{{ i.2 }}</td>
       {% if i.1 > i.3 %}
