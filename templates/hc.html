@@ -16,9 +16,7 @@
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
 
 
-
-<p style="position:absolute;left:50%;top:150px;font-size:20px;">回测图表</p>
-<div id="leftColumn" class="relative" style="position:absolute;left:25%;top:200px;">
+<div id="leftColumn" class="relative" style="position:absolute;left:20%;top:140px;">
                     <div class="floatLeft marginB10">
 <div class="ds1">
     <div class="ds2">
@@ -85,7 +83,7 @@
                                 <span id="tuxian2">余额</span>&nbsp;&nbsp;
                                 <span id="tuxian3">利润</span>&nbsp;&nbsp;
                                 <span id="tuxian4">资金回测</span>&nbsp;&nbsp;
-                                <span id="fangda" style="float:right;margin-left:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>
+                                <span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>
                                 <span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>
                                 <!--<span id="tuxian5">当天盈亏</span>-->
                             </div>
@@ -3340,9 +3338,9 @@ function tuxiancolor(id){
     for(var i=1;i<=4;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
-        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","fontSize":"14px"});
         }else{
-        $("#tuxian"+i).css({"background-color":"white","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"white","width":"40px","fontSize":"12px"});
         }
     }
     if(id=='#tuxian1'){
@@ -3375,14 +3373,21 @@ $("#tuxian3").click(function(){
 $("#tuxian4").click(function(){
     tuxiancolor("#tuxian4");
 });
+var winWidth=1490;
+//获取窗口宽度
+ if (document.documentElement  && document.documentElement.clientHeight && document.documentElement.clientWidth){
+    winWidth  = document.documentElement.clientWidth;
+    //winHeight = document.documentElement.clientHeight;
+}
+
 if(color_getCookie("hc_ck_div")=="fd"){
     $(".ds1").hide();
-    $("#leftColumn").css("left","50px");
-    $("#huicetuall").css({"width":"1480px","height":"730px"});
-    $("#zhexiantu").css({"width":"1480px","height":"700px"});
+    $("#leftColumn").css("left","0");
+    $("#huicetuall").css({"width":winWidth,"height":"710px"});
+    $("#zhexiantu").css({"width":winWidth,"height":"680px"});
 }else{
     $(".ds1").show();
-    $("#huicetuall").css({"margin-left":"1px","width":"658px","height":"348px"});
+    $("#huicetuall").css({"margin-left":"0","width":"658px","height":"348px"});
     $("#zhexiantu").css({"width":"658px","height":"318px"});
 }
 
@@ -3418,7 +3423,7 @@ option = {
     tooltip: {
         trigger: 'axis',
         axisPointer: {
-            type: 'shadow'
+            type: 'cross' //'shadow'
         }
     },
     legend: {
@@ -3529,9 +3534,9 @@ function tuxiancolor(id){
     for(var i=1;i<=4;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
-        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","fontSize":"14px"});
         }else{
-        $("#tuxian"+i).css({"background-color":"white","width":"40px"});
+        $("#tuxian"+i).css({"background-color":"white","width":"40px","fontSize":"12px"});
         }
     }
     if(id=='#tuxian1'){
@@ -3564,14 +3569,21 @@ $("#tuxian3").click(function(){
 $("#tuxian4").click(function(){
     tuxiancolor("#tuxian4");
 });
+var winWidth=1490;
+//获取窗口宽度
+ if (document.documentElement  && document.documentElement.clientHeight && document.documentElement.clientWidth){
+    winWidth  = document.documentElement.clientWidth;
+    //winHeight = document.documentElement.clientHeight;
+}
+
 if(color_getCookie("hc_ck_div")=="fd"){
     $(".ds1").hide();
-    $("#leftColumn").css("left","50px");
-    $("#huicetuall").css({"width":"1480px","height":"730px"});
-    $("#zhexiantu").css({"width":"1480px","height":"700px"});
+    $("#leftColumn").css("left","0");
+    $("#huicetuall").css({"width":winWidth,"height":"710px"});
+    $("#zhexiantu").css({"width":winWidth,"height":"680px"});
 }else{
     $(".ds1").show();
-    $("#huicetuall").css({"margin-left":"1px","width":"658px","height":"348px"});
+    $("#huicetuall").css({"margin-left":"0","width":"658px","height":"348px"});
     $("#zhexiantu").css({"width":"658px","height":"318px"});
 }
 

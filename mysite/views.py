@@ -569,6 +569,7 @@ def tongji(rq):
         huizong = {}
         results2 = []
         if result9:
+            result9 = sorted(result9,key=lambda x:x[1])
             last = {}
             jc = {}
             len_result9 = len(result9)
@@ -607,10 +608,6 @@ def tongji(rq):
                 #huizong[c][-1][dt][7] = h6
                 huizong[c][-1][dt][8] = h7
                 # i: (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
-                # 最大持仓
-                lzd = len(last[c])
-                huizong[c][13] = lzd if lzd > huizong[c][13] else huizong[c][13]
-                huizong[c][-1][dt][13] = lzd if lzd > huizong[c][-1][dt][13] else huizong[c][-1][dt][13]
                 # 正向加仓，反向加仓
                 last[c] = [las for las in last[c] if i[1]<las[3]]
                 if last[c] and i[1]<=last[c][-1][3] and (last[c][-1][6]%2 and i[6]%2):
@@ -635,6 +632,10 @@ def tongji(rq):
                         jc[c].append([i[1],jcyk])
                 results2.append(i[:9]+(name,))                   # 交易明细
                 last[c].append(i)
+                # 最大持仓
+                lzd = len(last[c])
+                huizong[c][13] = lzd if lzd > huizong[c][13] else huizong[c][13]
+                huizong[c][-1][dt][13] = lzd if lzd > huizong[c][-1][dt][13] else huizong[c][-1][dt][13]
 
             for c in jc:
                 jcss = []

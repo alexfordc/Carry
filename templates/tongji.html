@@ -44,7 +44,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>操作</th>
     </tr>
             {% for i in herys %}
-    <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
+    <tr bgcolor="{% cycle '#f6f6f6' '#ffffff' %}">
       <td>{{ i.0 }}</td>
       <td id="name{{i.0}}" contentEditable="true">
           {% if i.1 %}{{ i.1 }}{% endif %}
@@ -70,7 +70,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
            <th> 回测 </th><th>名  称</th> <th>正向加仓</th><th>反向加仓</th><th>最大持仓</th>
         </tr>
         {% for j,i in huizong.items %}
-        <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
+        <tr bgcolor="{% cycle '#f6f6f6' '#ffffff' %}">
             <td>{{ i.0 }}</td>
         <td>{{ i.1 }}</td>
         <td>{{ i.2|floatformat:1 }}</td>
@@ -90,7 +90,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
             {% if end_date != i.0 %}
             <tr><th colspan="13" style="font-size: 18px;background-color:#FFFFFF;">日汇总（{{ j }}）</th></tr>
             {% for k,v in i.14.items %}
-             <tr bgcolor="{% cycle '#dbdbdb' '#f7f7f7' %}">
+             <tr bgcolor="{% cycle '#f6f6f6' '#ffffff' %}">
             <td>{{ v.0 }}</td>
         <td>{{ v.1 }}</td>
         <td>{{ v.2|floatformat:1 }}</td>
@@ -122,7 +122,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>名称</th>
     </tr>
             {% for i in results2 %}
-    <tr bgcolor="{% cycle '#dbdbdb' 'f7f7f7' %}" >
+    <tr bgcolor="{% cycle '#f6f6f6' 'ffffff' %}" >
       <td colspan="2">{{ i.0 }}</td>
       <td colspan="2">{{ i.1 }}</td>
       <td>{{ i.2 }}</td>
