@@ -27,6 +27,7 @@ import sys
 import psutil
 
 from mysite import HSD
+from mysite.HSD import get_ip_name
 from mysite import models
 from mysite.sub_client import sub_ticker, getTickData
 
@@ -69,8 +70,16 @@ def record_from(rq):
     if rq.is_ajax():
         return
     dt = str(datetime.datetime.now())
-    info = 'Visitor come from：' + rq.META.get('REMOTE_ADDR') + '\tDestination：' + rq.META.get('HTTP_HOST') + rq.META.get(
-        'PATH_INFO') + '\t' + dt + '\n'
+    ip = rq.META.get('REMOTE_ADDR')
+    files = 'log\\visitor\\IP_NAME.txt'
+    IP_NAME = get_ip_name(files)
+    if ip not in IP_NAME:
+        address = HSD.get_ip_address(ip)
+        IP_NAME[ip] = address
+        with open(files,'w') as f:
+            f.write(json.dumps(IP_NAME))
+    # 2018-07-20 15:24:53.419241----江苏----192.168.2.204----192.168.2.204:8000/tj/
+    info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('PATH_INFO')}\n"
     with open('log\\visitor\\log-%s.txt'%dt[:9], 'a') as f:
         f.write(info)
 

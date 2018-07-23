@@ -16,6 +16,7 @@ import random
 import socket
 import redis
 import sys
+from pyquery import PyQuery
 
 from mysite.DataIndex import ZB
 
@@ -184,6 +185,31 @@ def format_int(*args):
     else:
         return (int(i) for i in args)
 
+IP_NAME = {}
+def get_ip_name(files):
+    # 访客字典
+    global IP_NAME
+    if not IP_NAME and os.path.isfile(files):
+        with open(files,'r') as f:
+            IP_NAME = json.loads(f.read())
+        return IP_NAME
+    else:
+        return IP_NAME
+
+def get_ip_address(ip):
+    res = ''
+    try:
+        d = requests.get('http://www.ip138.com/ips1388.asp?ip={}&action=2'.format(ip))
+        d.encoding = 'gb2312'
+        d = d.text
+        p = PyQuery(d)
+        a = p('ul')
+        a = a('li')[0].text
+        res = a[5:]
+    except:
+        pass
+    return res
+
 
 def get_data(url=None):
     '''获取恒生指数成分股数据，格式为：
@@ -254,7 +280,7 @@ def get_history(conn):
     '''返回数据格式为：(点数，时间)...'''
     cur = conn.cursor()
     this_day = get_date()
-    cur.execute(SQL['get_history'].format(this_day,tuple(WEIGHT)))
+    cur.execute(SQL['get_history'].format(this_day, tuple(WEIGHT)))
     result = cur.fetchall()
     conn.commit()
     conn.close()
@@ -376,6 +402,7 @@ def order_detail(dates=None, end_date=None):
     IDS = set([i[0] for i in data])
     return data
 
+
 def sp_order_trade(size=None):
     ''' :return data ['2018-07-13 09:49:09', 28608.0, 697, 1, 'MHIN8', '01-0520186-00', '卖', '已成交', 28608.0, 1, 0, 1, 14734039, -1, 0]'''
     status = {0: '发送中', 1: '工作中', 2: '无效', 3: '待定', 4: '新增中', 5: '更改中', 6: '删除中',
@@ -405,25 +432,27 @@ def sp_order_trade(size=None):
             kc = []
             data2 = []
             for i in ran:
-                if i in used or not (data[i][5]==user and data[i][4]==prod):
+                if i in used or not (data[i][5] == user and data[i][4] == prod):
                     continue
                 used.append(i)
                 dt = [str(datetime.datetime.fromtimestamp(data[i][0]))]
                 dt += list(data[i][1:])
-                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1) if data[j][5]==user and data[j][4]==prod))
+                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1) if
+                              data[j][5] == user and data[j][4] == prod))
                 try:
                     for j in range(dt[3]):
                         kc.append(dt[1])
                         if data2 and abs(dt[13]) < abs(data2[-1][13]):
-                            count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (kc.pop() - kc.pop() if dt[6] == 'S' else 0)
+                            count += -(kc.pop() - kc.pop()) if dt[6] == 'B' else (
+                                kc.pop() - kc.pop() if dt[6] == 'S' else 0)
 
                 except Exception as exc:
                     logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
                 dt.append(count)
                 data2.append(dt.copy())
             data2 = [i[0:6] + ['买' if i[6] == 'B' else '卖'] + [status.get(i[7])] + i[8:] for i in data2]
-            if len(data2)>0:
-                data2.insert(0,[0 if i!=5 else user for i in range(15)])
+            if len(data2) > 0:
+                data2.insert(0, [0 if i != 5 else user for i in range(15)])
             res[user][prod] = data2
 
     data = [res[j][i] for j in res for i in res[j]]
@@ -437,6 +466,7 @@ def sp_order_trade(size=None):
     conn.close()
     return data, datagd
 
+
 def sp_order_record(start_date=None, end_date=None):
     global IDS
     IDS = set()
@@ -444,7 +474,7 @@ def sp_order_record(start_date=None, end_date=None):
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
     endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
     sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
-                "WHERE TradeDate>={} and TradeDate<={}".format(std,endd)
+                "WHERE TradeDate>={} and TradeDate<={}".format(std, endd)
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = getSqlData(conn, sql_trade)
     conn.close()
@@ -476,24 +506,27 @@ def sp_order_record(start_date=None, end_date=None):
                             stop = kc.pop()
                             start = kc.pop()
                             yk = 0
-                            if dt[6] == 'B':    # 卖
+                            if dt[6] == 'B':  # 卖
                                 yk = (start[1] - stop[1])
                                 huizong[upk][5] += 1
                             elif dt[6] == 'S':  # 买
                                 yk = (stop[1] - start[1])
                                 huizong[upk][4] += 1
-                            res.append([user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[6]=='S' else '空', 1, '已平仓'])
+                            res.append(
+                                [user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[6] == 'S' else '空', 1,
+                                 '已平仓'])
                             huizong[upk][3] += yk
                             huizong[upk][6] += 1
-                            huizong[upk][7] += (1 if yk>0 else 0)
+                            huizong[upk][7] += (1 if yk > 0 else 0)
                     data2.append(dt)
                 except Exception as exc:
                     logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
             if upk in huizong:
-                sl = round(huizong[upk][7]/huizong[upk][6]*100,1) if huizong[upk][6]>0 else 0
+                sl = round(huizong[upk][7] / huizong[upk][6] * 100, 1) if huizong[upk][6] > 0 else 0
                 huizong[upk].append(sl)
         IDS.add(user)
     return res, huizong
+
 
 def calculate_earn(dates, end_date):
     '''计算所赚。参数：‘2018-01-01’
@@ -768,7 +801,7 @@ class Zbjs(ZB):
     def get_hkHSI_date(self, conn, size=60, database=None):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
         if database != None:
-            tab_name = self.tab_name.get(database, 'wh_same_month_min') # futures_min
+            tab_name = self.tab_name.get(database, 'wh_same_month_min')  # futures_min
             sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} WHERE prodcode='HSI' GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
                 tab_name)
             data = getSqlData(conn, sql)
@@ -1112,7 +1145,7 @@ def huices(res, huizong, init_money, dates, end_date):
             end_d = j[1].replace(':', '-').replace(' ', '-')
             end_d = end_d.split('-') + [0, 0, 0]
             end_d = [int(ed) for ed in end_d]
-            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)) if end_d>=start_d else 0
+            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)) if end_d >= start_d else 0
             # 计算利润因子
             if j[3] > 0:
                 count_yl += j[3]
@@ -1123,9 +1156,9 @@ def huices(res, huizong, init_money, dates, end_date):
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1) if huizong['zl']!=0 else 0  # 平均持仓时间
-        hc['lryz'] = round(count_yl / count_ks, 2) if count_ks!=0 else 0
-        count_var = count_var / huizong['zl'] if huizong['zl']!=0 else 0
+        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1) if huizong['zl'] != 0 else 0  # 平均持仓时间
+        hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
+        count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
         hc['std'] = round(count_var ** 0.5, 2)
 
         hc['zjhc'] = max(hc['zjhcs'])  # 最大回测
@@ -1151,7 +1184,7 @@ def huices(res, huizong, init_money, dates, end_date):
         return jy1, jy2, jy3, jy4, jy5, jy6, jy7
 
     try:
-        this_date = dtf(end_date) # - datetime.timedelta(days=1)
+        this_date = dtf(end_date)  # - datetime.timedelta(days=1)
         this_date = datetime.datetime.now() if this_date > datetime.datetime.now() else this_date
         week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
                 range(this_date.weekday() + 1)]  # 这个星期的日期
@@ -1208,7 +1241,7 @@ def huices(res, huizong, init_money, dates, end_date):
     return hc, huizong
 
 
-def huice_day(res,init_money):
+def huice_day(res, init_money):
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
     jyts = len(keys)
@@ -1223,7 +1256,7 @@ def huice_day(res,init_money):
         'day_time': [],  # 当天每单交易时间
         'day_yk': [],  # 当天每单交易盈亏，包括未平仓的状态
         'day_ykall': [],  # 当天每单叠加交易盈亏，不包括未平仓的状态
-        'day_pcyk': [], # 当天每次平仓盈亏
+        'day_pcyk': [],  # 当天每次平仓盈亏
         'day_close': [],  # 当天交易时的收盘价
         'day_x': 0,  # 当天分钟行情时间
         'samedatetime': '',  # 当天的日期
@@ -1266,9 +1299,9 @@ def huice_day(res,init_money):
         cc = 0  # 持仓
         zjhcs = 0
         for y in range(len(hc['day_x'])):
-            cl = hc['day_close'][y] # 分钟收盘价
-            dx = hc['day_x'][y]     # 分钟
-            pcyk = 0                # 分钟平仓盈亏
+            cl = hc['day_close'][y]  # 分钟收盘价
+            dx = hc['day_x'][y]  # 分钟
+            pcyk = 0  # 分钟平仓盈亏
             if dx not in day_time:
                 if cc == 0:
                     yk = 0
@@ -1276,9 +1309,9 @@ def huice_day(res,init_money):
                     yk = sum(syc) - len(syc) * cl
                 else:
                     yk = len(syc) * cl - sum(syc)
-                hc['day_yk'].append(round(sum(hc['day_pcyk'])+yk, 1))
+                hc['day_yk'].append(round(sum(hc['day_pcyk']) + yk, 1))
             else:
-                yk = 0 # 分钟盈亏
+                yk = 0  # 分钟盈亏
                 reg = day_time.count(dx)
                 for c2 in range(reg):
                     sind = get_ind(day_time, dx, c2)
@@ -1289,36 +1322,35 @@ def huice_day(res,init_money):
                             pop = -(syc.pop() - syc.pop())
                             yk += pop
                             pcyk += pop
-                            yk += (sum(syc) - len(syc) * cl if c2 == reg-1 else 0)
+                            yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
                         else:
-                            yk += (len(syc) * cl - sum(syc) if c2 == reg-1 else 0)
+                            yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
                     elif same[1] == -1:
                         if cc > 0:
                             pop = syc.pop() - syc.pop()
                             yk += pop
                             pcyk += pop
-                            yk += (len(syc) * cl - sum(syc) if c2 == reg-1 else 0)
+                            yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
                         else:
-                            yk += (sum(syc) - len(syc) * cl if c2 == reg-1 else 0)
+                            yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
                     cc += same[1]
-                hc['day_yk'].append(round(sum(hc['day_pcyk'])+yk, 1))
+                hc['day_yk'].append(round(sum(hc['day_pcyk']) + yk, 1))
 
-            hc['vol'].append(cc*10)
-            hc['day_pcyk'].append(round(pcyk,1))
-            hc['day_ykall'].append(round(pcyk+hc['day_ykall'][-1] if hc['day_ykall'] else pcyk,1))
+            hc['vol'].append(cc * 10)
+            hc['day_pcyk'].append(round(pcyk, 1))
+            hc['day_ykall'].append(round(pcyk + hc['day_ykall'][-1] if hc['day_ykall'] else pcyk, 1))
             if len(hc['day_yk']) > 1:
                 max_lr = max(hc['day_yk'][:-1])
-                zjhc = round((max_lr - hc['day_yk'][-1]) / (max_lr+init_money) * 100, 2)
-                zjhc = zjhc if (hc['day_yk'][-1]!=0 and zjhc > 0) else 0
-                hc['zjhcs'].append(zjhc if zjhc!=zjhcs else 0)  # 资金回测
-                zjhcs = zjhc if zjhc!=0 else zjhcs
+                zjhc = round((max_lr - hc['day_yk'][-1]) / (max_lr + init_money) * 100, 2)
+                zjhc = zjhc if (hc['day_yk'][-1] != 0 and zjhc > 0) else 0
+                hc['zjhcs'].append(zjhc if zjhc != zjhcs else 0)  # 资金回测
+                zjhcs = zjhc if zjhc != 0 else zjhcs
         v = hc['day_close'][0] // 1000 * 1000
         hc['subtracted'] = int(v)
         hc['day_close'] = [i - v for i in hc['day_close']]
 
     except Exception as exc:
         logging.error("文件：HSD.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
-
 
     return hc
 
