@@ -414,9 +414,9 @@ def sp_order_trade(size=None):
     conn = get_conn('carry_investment')
     timeStamp = time.mktime(time.strptime(str(datetime.datetime.now())[:10], '%Y-%m-%d'))
     # 时间，成交价，
-    sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s" % timeStamp
+    sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s" % timeStamp
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
-    sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,Initiator,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
+    sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,AccNo,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
     data = getSqlData(conn, sql_trade)
 
     ran = range(len(data))
@@ -473,10 +473,11 @@ def sp_order_record(start_date=None, end_date=None):
     conn = get_conn('carry_investment')
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
     endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
-    sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,Initiator,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
-                "WHERE TradeDate>={} and TradeDate<={}".format(std, endd)
+    sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
+                "WHERE TradeDate>={} and TradeDate<={} AND RecNo not in {}".format(std, endd,(14722630,14722737))
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = getSqlData(conn, sql_trade)
+    data = data[2:]  # 数据缺失导致
     conn.close()
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
@@ -1445,6 +1446,12 @@ class GXJY:
         dates = getSqlData(self.conn, sql)
         return dates
 
+    def entry_exit(self):
+        """ 获取出入金信息 """
+        sql = "SELECT DATE_FORMAT(datetime,'%Y-%m-%d'),direction,`out`,enter FROM gx_entry_exit;"
+        ee = getSqlData(self.conn, sql)
+        return ee
+
     def datas(self):
         data = {
             'jy': 0,  # 交易手数
@@ -1465,7 +1472,7 @@ class GXJY:
             'dbs': 0,  # 序号
             'wcds1': 0,
             'wcds': 0,  # 完成的单
-            'cost': 0,  # 手续费
+            'cost': 0,  # 手续费，不叠加
             'ALL_JY': [],  # 所有完成的交易记录
         }
         ind = 0
@@ -1497,7 +1504,6 @@ class GXJY:
                 data['sum_price'] += data['price']
                 data['kc'].append([1, data['price'], msg[2], msg[3], msg[4]])
                 data['all_kp'].append([1, data['price']])
-                data['cost'] += msg[4]
 
             elif msg[0] < 0:
                 data['jy'] -= 1
@@ -1507,7 +1513,8 @@ class GXJY:
                 data['sum_price'] -= data['price']
                 data['kc'].append([-1, data['price'], msg[2], msg[3], msg[4]])
                 data['all_kp'].append([-1, data['price']])
-                data['cost'] += msg[4]
+
+            data['cost'] = msg[4]
 
             if len(data['kc']) > 1 and data['kc'][-1][0] != data['kc'][-2][0]:
                 if data['kc'][-1][0] < 0:
@@ -1548,10 +1555,16 @@ class GXJY:
         cbyl = 0
         dts = self.datas()
         dts.send(None)
+        pz = {}  # 各品种交易单数
         while ind < len(df.values):
             msg = df.values[ind]
             data, ind = dts.send(msg)
             pri = data['price']
+            code = msg[3][:-4]
+            if code in pz:
+                pz[code] += 1
+            else:
+                pz[code] = 1
             if len(data['kc']) > 0:
                 yscb = round(sum(i[-1] for i in data['kc']) / len(data['kc']), 2)  # 原始成本
                 cb = round(data['cb'], 2)  # 成本
@@ -1578,22 +1591,24 @@ class GXJY:
             if ind != is_ind:  # or (ind == is_ind and data['jy'] == 0):
                 # ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本',
                 # '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利', '持仓成本', '净持仓成本', '利润',
-                # '净利润', '净平均利润', '手续费', '已平仓', '序号', '分块号', '中文名', '此笔净利润']
+                # '净利润', '净平均利润', '手续费', '已平仓', '序号', '分块号', '中文名', '此笔净利润',
+                # '手续费，不累积']
                 dtstr = str(data['time'])
                 struct = structs if (structs == 0 or structs == 1) else structs[dtstr[:10]]
                 res.append(
                     [msg[3], dtstr, msg[0], pri, data['jy'], yscb, cb, jcb,
                      cbyl, data['pcyl_all'], data['all'], pjyl, huihuapj, zcb, jzcb, data['all'] * self.bs[msg[3][:-4]],
-                     jlr, jpjlr, round(data['cost'], 2), data['wcds'], data['dbs'], struct,
-                     self.code_name.get(msg[3][:-4]), cbyl * self.bs[msg[3][:-4]]])
+                     jlr, jpjlr, round(data['cost']+(res[-1][18] if res else 0), 2), data['wcds'], data['dbs'], struct,
+                     self.code_name.get(msg[3][:-4]), cbyl * self.bs[msg[3][:-4]], data['cost']])
                 cbyl = 0
             data['dbs'] += 1 if data['jy'] == 0 else 0  # 序号
             is_ind = ind
         dts.close()
-        return res
+        return res,pz
 
     def ray(self, df, group=None):
         res = []
+        pzs = {}
         struct = 0
         codes = set(df.iloc[:, 3])
         codes = {i[:-4] for i in codes}
@@ -1607,13 +1622,16 @@ class GXJY:
                 # df2 = df[df.iloc[:, 3] == code]
                 df2 = df[df.code.apply(lambda x: x[:-4]) == code]
                 if group == 'date':
-                    rs = self.transfer(df2, dates)
+                    rs,pz = self.transfer(df2, dates)
                 else:
-                    rs = self.transfer(df2, struct)
+                    rs,pz = self.transfer(df2, struct)
                     struct = 0 if struct == 1 else 1
                 res += rs
+                pzs = dict(pz,**pzs)
 
         columns = ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本', '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利',
                    '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
         # res = pd.DataFrame(res, columns=columns)
-        return res
+        pzs = [(self.code_name.get(k),v/2) for k,v in pzs.items()]
+        pzs = sorted(pzs,key=lambda x: x[1],reverse=True)
+        return res,pzs

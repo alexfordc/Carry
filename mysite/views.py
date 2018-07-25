@@ -79,7 +79,7 @@ def record_from(rq):
         with open(files,'w') as f:
             f.write(json.dumps(IP_NAME))
     # 2018-07-20 15:24:53.419241----江苏----192.168.2.204----192.168.2.204:8000/tj/
-    info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('PATH_INFO')}\n"
+    info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     with open('log\\visitor\\log-%s.txt'%dt[:9], 'a') as f:
         f.write(info)
 
@@ -481,7 +481,7 @@ def tongji(rq):
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '5' and rq_date and end_date and rq_id!='0' and client in HSD.get_allow_ip():
+    if rq_type == '5' and rq_date and end_date and rq_id!='0': # and client in HSD.get_allow_ip():
         results2, _ = HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0]==rq_id]
         res = {}
@@ -514,7 +514,7 @@ def tongji(rq):
 
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd':hcd})
 
-    if rq_type == '4' and rq_date and end_date and client in HSD.get_allow_ip():
+    if rq_type == '4' and rq_date and end_date: # and client in HSD.get_allow_ip():
         results2, huizong = HSD.sp_order_record(rq_date,end_date)
         if user:
             results2 = [i for i in results2 if i[0]==user]
@@ -523,7 +523,7 @@ def tongji(rq):
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3' and client in HSD.get_allow_ip():
+    if rq_type == '3': # and client in HSD.get_allow_ip():
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消",0: "挂单", 1: "开仓", 2: "平仓"}
@@ -1185,6 +1185,9 @@ def gxjy(rq):
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')
+        start_date = rq.GET.get('start_date')
+        end_date = rq.GET.get('end_date')
+        start_date = None if start_date == 'undefined' else start_date
         h = HSD.GXJY()
 
         if types == 'sx':  # 刷新
@@ -1202,7 +1205,7 @@ def gxjy(rq):
                 response = redirect('index')
         elif not rq.is_ajax() and types == 'js':  # 计算数据
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
+            data,_ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
             length = len(data)
             if code:
                 hys = [data[-1]]
@@ -1214,12 +1217,15 @@ def gxjy(rq):
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
-            response = render(rq, 'gxjy.html', {'data': data, 'hys': hys})
+            if start_date and end_date:
+                data = [i for i in data if start_date<=i[1]<=end_date]
+            h.closeConn()
+            return render(rq, 'gxjy.html', {'data': data, 'hys': hys,'start_date':start_date,'end_date':end_date})
         elif rq.is_ajax() and types == 'js':  # 计算数据
             start_date = rq.GET.get('start_date','1970-01-01')
             end_date = rq.GET.get('end_date','2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
+            data,_ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
             length = len(data)
             if code:
                 hys = [data[-1]]
@@ -1234,25 +1240,48 @@ def gxjy(rq):
             h.closeConn()
             data = [i for i in data if start_date<=i[1]<=end_date]
             return JsonResponse({'data': data, 'hys': hys})
-        elif rq.is_ajax() and types == 'tjt':  # 折线图
+        elif types == 'tjt':  # 折线图
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data = h.ray(dd)
+            data,pzs = h.ray(dd)
+            #pie = {'name':,'value':}
             dates = h.get_dates()
+            ee = h.entry_exit()
+            h.closeConn()
+            init_money = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == ee[0][0]) # 入金
+            jz = 1     # 初始净值
+            jzq = init_money / jz  # 初始净值权重
             # zx_x = [i[0] for i in dates]
             # prices = [sum(i[8] for i in data if i[1][:10] == dt) for dt in zx_x]
             zx_x, prices = [], []
+            hc = {
+                'allyk': [],    # 累积盈亏
+                'alljz': [],    # 累积净值
+                'allsxf': [],   # 累积手续费
+                'pie_name': [i[0] for i in pzs], # 饼图 产品名称
+                'pie_value': [{'value':i[1],'name':i[0]} for i in pzs], # 饼图的值
+            }
+            # data ['bu1706', '2017-01-05 09:06:27', -4, 2680.0, -4, 11.21, 2680.0, 2635, 0, 0, 0, 0, 0, 2680.0, 2636, 0, -44.84, 0, 44.84, 0, 0, 0, '石油沥青', 0, 44.84],
             for de in dates:
                 zx_x.append(de[0])
-                prices.append(sum(i[23] for i in data if i[1][:10] == de[0]) + (prices[-1] if prices else 0))
+                yk = sum(i[23] for i in data if i[1][:10] == de[0]) + (prices[-1] if prices else 0)
+                prices.append(yk)
+                sxf = sum(i[24] for i in data if i[1][:10] == de[0])+(hc['allsxf'][-1] if hc['allsxf'] else 0)
+                hc['allsxf'].append(round(sxf,1))
+                rj = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == de[0])
+                if de[0] != ee[0][0] and rj != 0:
+                    init_money += rj
+                    jzq = init_money / jz  # 净值权重
+                jz = (init_money+yk-hc['allsxf'][-1])/jzq if jzq!=0 else 0
+                hc['alljz'].append(round(jz,4))
             zx_x2 = [i for i in zx_x if start_date<=i<=end_date]
             ind_s = zx_x.index(zx_x2[0])
             ind_e = zx_x.index(zx_x2[-1])+1
             zx_x = zx_x[ind_s:ind_e]
             prices = prices[ind_s:ind_e]
-            h.closeConn()
-            return JsonResponse({'zx_x': zx_x, 'zx_y': prices})
+            hc['allyk'] = prices
+            return render(rq,'gxjy.html',{'zx_x': zx_x, 'hc': hc, 'start_date':start_date,'end_date':end_date})
         elif rq.method == "GET" and rq.is_ajax():
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
@@ -1322,7 +1351,10 @@ def gxjy(rq):
             return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
         else:  # 原始数据
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
-            start_date,end_date = init_data[0][0][:10],init_data[-1][0][:10]
+            if start_date and end_date:
+                init_data = [i for i in init_data if start_date<=i[0][:10]<=end_date]
+            else:
+                start_date,end_date = init_data[0][0][:10],init_data[-1][0][:10]
             response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date':start_date, 'end_date':end_date})
         h.closeConn()  # 关闭数据库
     else:

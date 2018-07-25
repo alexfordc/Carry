@@ -52,9 +52,9 @@
 开始日期：<input type='date' value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' value={{end_date}} id='end_date'>
  <div style="margin-left:43%;"><br/>
 
-     <input type="button" onclick="javascript:myajaxs({% url 'gxjy' %})" class="button green" value="原始数据">
-    <input type="button" onclick="javascript:myajaxs('/gxjy/?type=js')" class="button green" value="计算数据">
-     <input type="button" onclick="javascript:myajaxs('/gxjy/?type=tjt')" class="button green" value="统计图">
+     <input type="button" onclick="javascript:request('ys')" class="button green" value="原始数据">
+    <input type="button" onclick="javascript:request('js')" class="button green" value="计算数据">
+     <input type="button" onclick="javascript:request('tu')" class="button green" value="统计图">
  </div>
         <a style="position:relative;left:10px;" href="{% url 'gxjy' %}?type=sx" ><img width="30" src="{% static 'images/b9.ico' %}" title="刷新"></a>
 </form>
@@ -69,24 +69,21 @@
         <tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th><th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th>
             <th>总盈利</th><th>总平均盈利</th><th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th><th>手续费</th><th>已平仓</th><th>序号</th></tr>
         {% for i in hys %}
-        <tr bgcolor="{% cycle '#aaf' '#ccf' %}"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
+        <tr bgcolor="{% cycle '#aaf' '#ccf' %}" style="font-size:14px;"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
             <td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td>
             <td>{{i.7}}</td><td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td>
             <td>{{i.14}}</td><td>{{i.15}}</td><td>{{i.16}}</td><td>{{i.17}}</td><td>{{i.18}}</td><td>{{i.19}}</td><td>{{forloop.counter}}</td></tr>
         {% endfor %}
-        {% endif %}
-        {% if data %}
         <tr><th colspan="22" style="font-size:20px;">交易详情</th></tr>
         <tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th><th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th>
         <th>总盈利</th><th>总平均盈利</th><th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th><th>手续费</th><th>已平仓</th><th>序号</th></tr>
         {% for i in data %}
-        <tr bgcolor="{% if i.21 == 0 %}'#aaf'{% else %}'#ccf'{% endif %}"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
+        <tr bgcolor="{% if i.21 == 0 %}'#aaf'{% else %}'#ccf'{% endif %}" style="font-size:14px;"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
             <td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td>
             <td>{{i.7}}</td><td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td>
             <td>{{i.14}}</td><td>{{i.15}}</td><td>{{i.16}}</td><td>{{i.17}}</td><td>{{i.18}}</td><td>{{i.19}}</td><td>{{i.20}}&nbsp;&nbsp;{{forloop.counter}}</td></tr>
         {% endfor %}
-        {% endif %}
-        {% if init_data %}
+        {% elif init_data %}
         <tr style="width:1000px;"><th colspan="18" style="font-size:20px;">交易数据</th></tr>
         <tr><th>成交时间</th><th>交易所</th><th>合约号</th><th>买卖</th><th>开平仓</th><th>成交手数</th><th>成交价格</th><th>手续费</th>
             <th>交易费</th><th>交易编码</th><th>席位号</th><th>系统号</th><th>成交号</th><th>投保</th><th>交割期</th><th>币种</th><th>名称</th><th>序号</th></tr>
@@ -100,20 +97,37 @@
     </table>
 
   </div>
-    <div id="zhexiantu" style="width:auto;height:600px"></div>
+    {% if zx_x %}
+    <div align="center">
+        <div style="position:absolute;left:100px;Z-index:100;">
+            <table width="380">
+                <tr style="cursor:pointer;">
+                    <td id="tuxian1">累积净值</td>
+                    <td id="tuxian2">累积盈亏</td>
+                    <td id="tuxian3">成交偏好</td>
+                    <td id="tuxian4">品种盈亏</td>
+                </tr>
+            </table>
+        </div>
+        <div id="zhexiantu" style="width:auto;height:600px"></div>
+    </div>
 
     <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
  <script type="text/javascript">
-function myzhexiantu(zx_x,zx_y){
+ var tu_name;
+function huatu(type,zx_x,zx_y,zx_y2){
 var myChart = echarts.init(document.getElementById('zhexiantu'));
+
+if(type=='line'){
 option = {
+/*
 title:{
     text:"统计图",
     textStyle:{
         color:'#00A600',
         fontSize:18
     }
-},
+},*/
 color:["#FF0000"],
 tooltip: {
             trigger: 'axis'
@@ -139,14 +153,147 @@ toolbox: {
         type: 'value'
     },
     series: [{
-        data: zx_y,
-        type: 'line'
+        name: tu_name[0],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#ff6a4a',
+                lineStyle: { color: '#ff6a4a' }
+            }
+        },
+        data: zx_y
+    },{
+        name: tu_name[1],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#00f', // rgb(97,183,236)
+                lineStyle: { color: '#00f' }
+            }
+        },
+        data: zx_y2
     }]
 };
+}else{
+    myChart.clear();
+    option = {
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'horizontal', //'vertical',
+        //x : '80%',
+        y : '80%',
+        data:zx_x
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true,
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 1548
+                    }
+                }
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'成交量',
+            type:'pie',
+            radius : '40%',
+            center: ['50%', '50%'],
+            data:zx_y
+        }
+    ]
+};
+}
 
 myChart.setOption(option);
 }
+//huatu({{zx_x|safe}},{{zx_y|safe}});
 
+
+
+function tuxiancolor(id){
+    var id2 = "";
+    for(var i=1;i<=4;i++){
+        id2 = "#tuxian"+i;
+        if(id2==id){
+        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
+        }else{
+        $("#tuxian"+i).css({"background-color":"#2b2b2b","width":"40px","color":"#f5f5f5"});
+        }
+    }
+    if(id=='#tuxian1'){
+        tu_name=["累积净值",""];
+        huatu("line",{{zx_x|safe}},{{hc.alljz|safe}},'');
+    }else if(id=='#tuxian2'){
+        tu_name=["累积利润","累积手续费"];
+        huatu("line",{{zx_x|safe}},{{hc.allyk|safe}},{{hc.allsxf|safe}});
+    }else if(id=='#tuxian3'){
+        tu_name=["成交偏好","日利润","持仓（0.1手）"];
+        huatu("pie",{{hc.pie_name|safe}},{{hc.pie_value|safe}},"");
+    }else if(id=='#tuxian4'){
+        tu_name=["","资金回测","持仓（0.1手）"];
+       // huatu(tu_name,{{hcd.day_x|safe}},null,{{hcd.zjhcs|safe}},"");
+    }
+    <!--else if(id=='#tuxian5'){-->
+        <!--tu_name=["收盘价（{{hcd.qcbs}}）","当天每单盈亏（{{hcd.samedatetime}}）"];-->
+        <!--huatu(tu_name,{{hcd.day_time|safe}},{{hcd.day_close|safe}},{{hcd.day_yk|safe}});-->
+    <!--}-->
+}
+$("#tuxian1").click(function(){
+    tuxiancolor("#tuxian1");
+});
+$("#tuxian2").click(function(){
+    tuxiancolor("#tuxian2");
+});
+$("#tuxian3").click(function(){
+    tuxiancolor("#tuxian3");
+});
+$("#tuxian4").click(function(){
+    tuxiancolor("#tuxian4");
+});
+
+tuxiancolor("#tuxian1");
+
+</script>
+    </div>
+{% endif %}
+    <script>
+function request(type){
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    if(type=='ys'){
+        url = "{% url 'gxjy' %}"+"?start_date="+start_date+"&end_date="+end_date;
+    }else if(type=='js'){
+        url = "{% url 'gxjy' %}?type=js"+"&start_date="+start_date+"&end_date="+end_date;
+    }else if(type=='tu'){
+        url = "{% url 'gxjy' %}?type=tjt"+"&start_date="+start_date+"&end_date="+end_date;
+    }
+    location.href = url;
+}
 
 function myajaxs(url){
         var start_date = $("#start_date").val();
@@ -233,6 +380,5 @@ function myajaxs(url){
         });
 }
 </script>
-</div>
 
 {% endblock %}
