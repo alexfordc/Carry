@@ -473,11 +473,12 @@ def sp_order_record(start_date=None, end_date=None):
     conn = get_conn('carry_investment')
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
     endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
+
     sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
                 "WHERE TradeDate>={} and TradeDate<={} AND RecNo not in {}".format(std, endd,(14722630,14722737))
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = getSqlData(conn, sql_trade)
-    data = data[2:]  # 数据缺失导致
+    #data = data[2:]  # 数据缺失导致
     conn.close()
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
@@ -1061,12 +1062,12 @@ class RedisHelper:
             break
 
 
-def day_this_mins(dates, code='HSI'):
+def day_this_mins(start_date,end_date, code='HSI'):
     """ 获取指定时间段的分钟数据，转换为指定分钟的分钟数据"""
     conn = get_conn('carry_investment')
-    sql = "SELECT DATE_FORMAT(datetime,'%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' " \
-          "AND DATE_FORMAT(DATETIME,'%H')>=9 AND DATE_FORMAT(DATETIME,'%H')<17 AND DATE_FORMAT(datetime,'%Y-%m-%d')='{}' ORDER BY datetime".format(
-        code, dates)
+    sql = "SELECT DATE_FORMAT(datetime,'%d/%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' " \
+          "AND DATE_FORMAT(datetime,'%Y-%m-%d')>='{}' AND DATE_FORMAT(datetime,'%Y-%m-%d')<='{}' ORDER BY datetime".format(
+        code, start_date, end_date)  # AND DATE_FORMAT(DATETIME,'%H')<17
     d = getSqlData(conn, sql)
     times = [i[0] for i in d]
     datas = [i[1] for i in d]
@@ -1269,26 +1270,25 @@ def huice_day(res, init_money):
     zx_y = []
     count_yl = 0  # 总盈利
     count_ks = 0  # 总亏损
+    sameday = []  # 当天的所有交易
     for i in keys:
         je = round(res[i]['mony'])
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
-        sameday = []  # 当天的所有交易
         for j in res[i]['datetimes']:
-            if i == keys[-1]:
-                st = j[6] if j[2] == '多' else -j[6]
-                sameday.append([j[0], st, j[4]])
-                sameday.append([j[1], -st, j[5]])
-                hc['samedatetime'] = i
+            #if i == keys[-1]:
+            st = j[6] if j[2] == '多' else -j[6]
+            sameday.append([j[0], st, j[4]])
+            sameday.append([j[1], -st, j[5]])
+            hc['samedatetime'] = i
 
     try:
         sameday.sort()
-        hc['day_time'] = [sa[0][-8:-3] for sa in sameday]
+        hc['day_time'] = [sa[0][-11:-3].replace(' ','/') for sa in sameday]
         from copy import deepcopy
         day_time = deepcopy(hc['day_time'])
         # hc['day_yk'] = [sa[1] for sa in sameday]
-        hc['day_x'], hc['day_close'] = day_this_mins(keys[-1])
-
+        hc['day_x'], hc['day_close'] = day_this_mins(keys[0],keys[-1])
         def get_ind(l, x, s):
             if s > 0:
                 inde = l.index(x) + 1
@@ -1301,7 +1301,7 @@ def huice_day(res, init_money):
         zjhcs = 0
         for y in range(len(hc['day_x'])):
             cl = hc['day_close'][y]  # 分钟收盘价
-            dx = hc['day_x'][y]  # 分钟
+            dx = hc['day_x'][y]  # 日期时间
             pcyk = 0  # 分钟平仓盈亏
             if dx not in day_time:
                 if cc == 0:

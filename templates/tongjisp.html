@@ -29,7 +29,7 @@
         <td>{{ i.5|floatformat:0 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>
             <td>{{ i.8 }}</td>
             <td>
-                <a style="color:#0000ff;" href="{% url 'tongji' %}?{% if rq_type == '4' %}type=5{% else %}type=2{% endif %}&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}" target="_blank">
+                <a style="color:#0000ff;" href="{% url 'tongji' %}?{% if rq_type == '4' %}type=5{% else %}type=2{% endif %}&datetimes={{ rq_date }}&id={{ i.1 }}&end_date={{ end_date }}" target="_blank">
                     <img src="{% static 'images/b7.ico' %}" style="width:30px;height:30px;margin-bottom:1px;" title="开始回测"/>
                 </a>
             </td>

@@ -1,9 +1,20 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+import pyquery
+import urllib.request as request
+import redis
+import sys
+import psutil
 import json
-import urllib
 import h5py
 import numpy as np
+import time, base64
+import datetime
+import random
+import zmq
+import socket
+import requests
+
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
 from django.http import HttpResponse
@@ -12,19 +23,9 @@ from django.views.decorators.csrf import csrf_exempt
 from pytdx.hq import TdxHq_API
 # from selenium import webdriver
 # from selenium.webdriver import ActionChains
-import time, base64
 from django.http import HttpResponse
-import datetime
-import random
-import zmq
 from zmq import Context
-import socket
-import requests
-import pyquery
-import urllib.request as request
-import redis
-import sys
-import psutil
+from collections import defaultdict
 
 from mysite import HSD
 from mysite.HSD import get_ip_name
@@ -1211,14 +1212,13 @@ def gxjy(rq):
                 hys = [data[-1]]
             else:
                 hys = [data[i] for i in range(length)
-                       if i < length - 1 and ((data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
-                                              or (data[i + 1][0][:-4] != data[i][0][
-                                                                         :-4] and i == length - 1))  # and data[i][4]!=0
+                       if i < length - 1 and (data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
+                                              # or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
             if start_date and end_date:
-                data = [i for i in data if start_date<=i[1]<=end_date]
+                data = [i for i in data if start_date<=i[1][:10]<=end_date]
             h.closeConn()
             return render(rq, 'gxjy.html', {'data': data, 'hys': hys,'start_date':start_date,'end_date':end_date})
         elif rq.is_ajax() and types == 'js':  # 计算数据
@@ -1232,8 +1232,7 @@ def gxjy(rq):
             else:
                 hys = [data[i] for i in range(length)
                        if i < length - 1 and ((data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
-                                              or (data[i + 1][0][:-4] != data[i][0][
-                                                                         :-4] and i == length - 1))  # and data[i][4]!=0
+                                              or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
@@ -1259,15 +1258,29 @@ def gxjy(rq):
                 'allyk': [],    # 累积盈亏
                 'alljz': [],    # 累积净值
                 'allsxf': [],   # 累积手续费
-                'pie_name': [i[0] for i in pzs], # 饼图 产品名称
-                'pie_value': [{'value':i[1],'name':i[0]} for i in pzs], # 饼图的值
+                'pie_name': [i[0] for i in pzs], # 成交偏好（饼图） 产品名称
+                'pie_value': [{'value':i[1],'name':i[0]} for i in pzs], # 成交偏好 饼图的值
+                'bar_name': [], # 品种盈亏 名称
+                'bar_value': [],# 品种盈亏 净利润
             }
             # data ['bu1706', '2017-01-05 09:06:27', -4, 2680.0, -4, 11.21, 2680.0, 2635, 0, 0, 0, 0, 0, 2680.0, 2636, 0, -44.84, 0, 44.84, 0, 0, 0, '石油沥青', 0, 44.84],
+            name_jlr = {}  # 品种名称，净利润
+            data2 = []
             for de in dates:
                 zx_x.append(de[0])
-                yk = sum(i[23] for i in data if i[1][:10] == de[0]) + (prices[-1] if prices else 0)
+                yk,sxf = 0,0
+                for d in data:
+                    if d[1][:10] == de[0]:
+                        yk += d[23]
+                        sxf += d[24]
+                        name_jlr[d[22]] = d[16]
+                    else:
+                        data2.append(d)
+                #yk = sum(i[23] for i in data if i[1][:10] == de[0])
+                yk += (prices[-1] if prices else 0)
                 prices.append(yk)
-                sxf = sum(i[24] for i in data if i[1][:10] == de[0])+(hc['allsxf'][-1] if hc['allsxf'] else 0)
+                #sxf = sum(i[24] for i in data if i[1][:10] == de[0])
+                sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
                 hc['allsxf'].append(round(sxf,1))
                 rj = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == de[0])
                 if de[0] != ee[0][0] and rj != 0:
@@ -1275,12 +1288,17 @@ def gxjy(rq):
                     jzq = init_money / jz  # 净值权重
                 jz = (init_money+yk-hc['allsxf'][-1])/jzq if jzq!=0 else 0
                 hc['alljz'].append(round(jz,4))
+                data = data2
+                data2 = []
+
             zx_x2 = [i for i in zx_x if start_date<=i<=end_date]
             ind_s = zx_x.index(zx_x2[0])
             ind_e = zx_x.index(zx_x2[-1])+1
             zx_x = zx_x[ind_s:ind_e]
             prices = prices[ind_s:ind_e]
             hc['allyk'] = prices
+            hc['bar_name'] = [i for i in name_jlr]
+            hc['bar_value'] = [v for v in name_jlr.values()]
             return render(rq,'gxjy.html',{'zx_x': zx_x, 'hc': hc, 'start_date':start_date,'end_date':end_date})
         elif rq.method == "GET" and rq.is_ajax():
             start_date = rq.GET.get('start_date', '1970-01-01')
