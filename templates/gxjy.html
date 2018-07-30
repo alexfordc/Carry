@@ -100,12 +100,14 @@
     {% if zx_x %}
     <div align="center">
         <div style="position:absolute;left:100px;Z-index:100;">
-            <table width="380">
+            <table width="540">
                 <tr style="cursor:pointer;">
                     <td id="tuxian1">累积净值</td>
                     <td id="tuxian2">累积盈亏</td>
                     <td id="tuxian3">成交偏好</td>
                     <td id="tuxian4">品种盈亏</td>
+                    <td id="tuxian5">每周盈亏</td>
+                    <td id="tuxian6">每月盈亏</td>
                 </tr>
             </table>
         </div>
@@ -115,6 +117,24 @@
     <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
  <script type="text/javascript">
  var tu_name;
+
+// 实现随机生成十六进制颜色值
+function getColor(){
+  //定义字符串变量colorValue存放可以构成十六进制颜色值的值
+  var colorValue="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F";
+  //以","为分隔符，将colorValue字符串分割为字符数组["0","1",...,"f"]
+  var colorArray = colorValue.split(",");
+   var color="#";//定义一个存放十六进制颜色值的字符串变量，先将#存放进去
+    //使用for循环语句生成剩余的六位十六进制值
+   for(var i=0;i<6;i++){
+        //colorArray[Math.floor(Math.random()*16)]随机取出
+       // 由16个元素组成的colorArray的某一个值，然后将其加在color中，
+       //字符串相加后，得出的仍是字符串
+        color+=colorArray[Math.floor(Math.random()*16)];
+   }
+   return color;
+}
+
 function huatu(type,zx_x,zx_y,zx_y2){
 var myChart = echarts.init(document.getElementById('zhexiantu'));
 
@@ -230,7 +250,22 @@ toolbox: {
 };
 }else if(type=='bar'){
 myChart.clear();
-
+var colorList = [
+                  '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                   '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                   '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                ];
+if(colorList.length<zx_x.length){
+    var wh = 0;
+    var _sizes = zx_x.length-colorList.length;
+    while(wh<_sizes){
+        var col = getColor();
+        if(colorList.indexOf(col)<0 && col!="#FFFFFF"){
+            colorList.push(col);
+            wh ++;
+        }
+    }
+}
 option ={
     //backgroundColor:'#fdfdfd', // 背景颜色
     tooltip: {},
@@ -240,7 +275,7 @@ option ={
 
     },
     yAxis: {
-        type: 'value'
+        type: 'value',
     },
     /*series: [{
         name: '名称',
@@ -251,15 +286,12 @@ option ={
         {
             name: '品种净盈亏',
             type: 'bar',
+            barMaxWidth: 40, // 柱子的最大宽度
+            // barCateGoryGap: 20,
             itemStyle: {
                 normal: {
                     color: function(params) {
                         // build a color map as your need.
-                        var colorList = [
-                          '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-                           '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-                           '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
-                        ];
                         return colorList[params.dataIndex]
                     },
                     label: {
@@ -280,19 +312,7 @@ option ={
                                 + '"/>';
                     }
                 },
-                data: [
-                    {xAxis:0, y: 350, name:'Line', symbolSize:20, symbol: 'image://../asset/ico/折线图.png'},
-                    {xAxis:1, y: 350, name:'Bar', symbolSize:20, symbol: 'image://../asset/ico/柱状图.png'},
-                    {xAxis:2, y: 350, name:'Scatter', symbolSize:20, symbol: 'image://../asset/ico/散点图.png'},
-                    {xAxis:3, y: 350, name:'K', symbolSize:20, symbol: 'image://../asset/ico/K线图.png'},
-                    {xAxis:4, y: 350, name:'Pie', symbolSize:20, symbol: 'image://../asset/ico/饼状图.png'},
-                    {xAxis:5, y: 350, name:'Radar', symbolSize:20, symbol: 'image://../asset/ico/雷达图.png'},
-                    {xAxis:6, y: 350, name:'Chord', symbolSize:20, symbol: 'image://../asset/ico/和弦图.png'},
-                    {xAxis:7, y: 350, name:'Force', symbolSize:20, symbol: 'image://../asset/ico/力导向图.png'},
-                    {xAxis:8, y: 350, name:'Map', symbolSize:20, symbol: 'image://../asset/ico/地图.png'},
-                    {xAxis:9, y: 350, name:'Gauge', symbolSize:20, symbol: 'image://../asset/ico/仪表盘.png'},
-                    {xAxis:10, y: 350, name:'Funnel', symbolSize:20, symbol: 'image://../asset/ico/漏斗图.png'},
-                ]
+
             }
         }
     ],
@@ -310,7 +330,7 @@ myChart.setOption(option);
 
 function tuxiancolor(id){
     var id2 = "";
-    for(var i=1;i<=4;i++){
+    for(var i=1;i<=6;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
         $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
@@ -325,16 +345,18 @@ function tuxiancolor(id){
         tu_name=["累积利润","累积手续费"];
         huatu("line",{{zx_x|safe}},{{hc.allyk|safe}},{{hc.allsxf|safe}});
     }else if(id=='#tuxian3'){
-        tu_name=["成交偏好","日利润","持仓（0.1手）"];
+        tu_name=["成交偏好","",""];
         huatu("pie",{{hc.pie_name|safe}},{{hc.pie_value|safe}},"");
     }else if(id=='#tuxian4'){
-        tu_name=["","资金回测","持仓（0.1手）"];
+        tu_name=["品种盈亏","",""];
         huatu("bar",{{hc.bar_name|safe}},{{hc.bar_value|safe}},"");
+    }else if(id=='#tuxian5'){
+        tu_name=["每周盈亏","",""];
+        huatu("bar",{{hc.week_name|safe}},{{hc.week_value|safe}},"");
+    }else if(id=='#tuxian6'){
+        tu_name=["每月盈亏","",""];
+        huatu("bar",{{hc.month_name|safe}},{{hc.month_value|safe}},"");
     }
-    <!--else if(id=='#tuxian5'){-->
-        <!--tu_name=["收盘价（{{hcd.qcbs}}）","当天每单盈亏（{{hcd.samedatetime}}）"];-->
-        <!--huatu(tu_name,{{hcd.day_time|safe}},{{hcd.day_close|safe}},{{hcd.day_yk|safe}});-->
-    <!--}-->
 }
 $("#tuxian1").click(function(){
     tuxiancolor("#tuxian1");
@@ -347,6 +369,12 @@ $("#tuxian3").click(function(){
 });
 $("#tuxian4").click(function(){
     tuxiancolor("#tuxian4");
+});
+$("#tuxian5").click(function(){
+    tuxiancolor("#tuxian5");
+});
+$("#tuxian6").click(function(){
+    tuxiancolor("#tuxian6");
 });
 
 tuxiancolor("#tuxian1");

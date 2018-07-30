@@ -132,28 +132,105 @@ def get_allow_ip():
     return ip.split(',')
 
 
-def get_conn(dataName=None):
+class SqlPool:
+    _singleton = None
+    _conn = {}  # 连接池字典
+    _js = {}  # 连接数量字典
+    _minSize = 3  # 空闲时的连接数，需要最大连接达到
+    _maxSize = 10  # 最大连接数
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._singleton:
+            cls._singleton = super(SqlPool, cls).__new__(cls)
+        return cls._singleton
+
+    def __init__(self, name):
+        # name：数据库名称
+        self.re_conn(name)
+
+    def re_conn(self, name, res=False):
+        _conn = self._conn
+        _js = self._js
+        self.name = name
+        if name not in _conn or res:
+            _conn[name] = []
+            _js[name] = 0
+        if not _conn[name] and _js[name] <= self._maxSize:
+            conn = pymysql.connect(db=name, user=config['U']['us'], passwd=config['U']['ps'],
+                                                host=config['U']['hs'],
+                                                charset='utf8')
+            _conn[name].append(conn)
+            _js[name] += 1
+
+    def get_conn(self, name,closed=False):
+        ''' 获取连接 '''
+        _conn = self._conn
+        if closed:
+            self.re_conn(name, res=True)
+        if name not in _conn or not _conn[name]:
+            self.re_conn(name)
+        conn = _conn[name].pop()
+        return conn
+
+    def set_conn(self, name, conn):
+        ''' 每使用完连接后，需回收连接 '''
+        _conn = self._conn[name]
+        l_c = len(_conn)
+        if l_c < self._minSize:
+            _conn.append(conn)
+        else:
+            _js = self._js[name]
+            _js = _js-1 if _js>0 else l_c
+            conn.close()
+
+class SqlSingleton(object):
+    ''''' 单例模式，数据库连接池 '''
+    __instance = None
+    __conns = {}
+
+    def __new__(cls, *args, **kw):
+        if cls.__instance is None:
+            cls.__instance = super(SqlSingleton, cls).__new__(cls)
+        return cls.__instance
+
+    def __init__(self, db=None, isclose=False, size=5):
+        ''' db：数据库名称；size：每个数据库最大连接数量 '''
+        l = len(self.__conns)
+        dbs = str(db) + str(random.randint(0, size))
+        self.dbs = dbs
+        if l < size or dbs not in self.__conns or self.__conns[dbs]._closed or isclose:
+            self.__conns[dbs] = pymysql.connect(db=db, user=config['U']['us'], passwd=config['U']['ps'],
+                                                host=config['U']['hs'],
+                                                charset='utf8')
+
+    def __getattr__(self, name):
+        if name == 'conn':
+            return self.__conns[self.dbs]
+
+
+def get_conn(dataName=None, isclose=False):
     ''' 返回数据库连接 '''
-    if dataName == None:
-        return pymysql.connect(user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
-                               charset='utf8')
-    return pymysql.connect(db=dataName, user=config['U']['us'], passwd=config['U']['ps'], host=config['U']['hs'],
-                           charset='utf8')
+    return SqlPool(dataName).get_conn(dataName)
+    #return SqlSingleton(db=dataName, isclose=isclose).conn
 
 
-def getSqlData(conn, sql):
-    ''' 从数据库查询数据 '''
-    cur = conn.cursor()
-    cur.execute(sql)
-    return cur.fetchall()
-
-
-def closeConn(conn):
-    ''' 关闭数据库 '''
+def runSqlData(db, sql, params=None):
+    ''' 从数据库查询数据 conn：数据库连接；sql：SQL语句；params：参数'''
+    sp = SqlPool(db)
     try:
-        conn.close()
+        conn = sp.get_conn(db)
+        cur = conn.cursor()
+        cur.execute(sql, params)
     except:
-        pass
+        # 认为数据库已经中断连接，重连，再执行
+        conn = sp.get_conn(db,closed=True)#get_conn(conn.db, isclose=True)
+        cur = conn.cursor()
+        cur.execute(sql, params)
+    finally:
+        sp.set_conn(db,conn)
+    if sql[:6].upper() == 'SELECT':
+        return cur.fetchall()
+    conn.commit()  # 提交
 
 
 def get_tcp():
@@ -185,16 +262,20 @@ def format_int(*args):
     else:
         return (int(i) for i in args)
 
+
 IP_NAME = {}
+
+
 def get_ip_name(files):
     # 访客字典
     global IP_NAME
     if not IP_NAME and os.path.isfile(files):
-        with open(files,'r') as f:
+        with open(files, 'r') as f:
             IP_NAME = json.loads(f.read())
         return IP_NAME
     else:
         return IP_NAME
+
 
 def get_ip_address(ip):
     res = ''
@@ -276,14 +357,14 @@ def get_min_history():
     return jjres
 
 
-def get_history(conn):
+def get_history(db):
     '''返回数据格式为：(点数，时间)...'''
-    cur = conn.cursor()
     this_day = get_date()
-    cur.execute(SQL['get_history'].format(this_day, tuple(WEIGHT)))
-    result = cur.fetchall()
-    conn.commit()
-    conn.close()
+    result = runSqlData(db, SQL['get_history'].format(this_day, tuple(WEIGHT)))
+    if not result:
+        result = runSqlData(db, 'SELECT * FROM weight ORDER BY TIME DESC LIMIT 600')
+        result = list(result)
+        result.reverse()
     result1 = {}
     for name in WEIGHT:
         result1[name] = [[i[0], str(i[2])[-8:-3].replace(':', '')] for i in result if i[1] == name]
@@ -363,20 +444,17 @@ IDS = []  # 初始化账号列表
 
 
 def get_idName(cur=None):
-    conn = get_conn('carry_investment')
     sql = SQL['get_idName']
-    id_name = getSqlData(conn, sql)
-    conn.close()
+    id_name = runSqlData('carry_investment', sql)
+    # conn.close()
     id_name = {i: j for i, j in id_name}
     return id_name
 
 
 def tongji():
     global IDS
-    conn = get_conn('carry_investment')
-    results = getSqlData(conn, SQL['tongji'])
-    conn.commit()
-    conn.close()
+    results = runSqlData('carry_investment', SQL['tongji'])
+    # conn.close()
     IDS = [i[0] for i in results]
     return results
 
@@ -393,12 +471,10 @@ def order_detail(dates=None, end_date=None):
         dates = get_date(-30)
         end_date = get_date(1)
     end_date = dtf(end_date) + datetime.timedelta(days=1)
-    conn = get_conn('carry_investment')
     sql = SQL['order_detail']
     sql = sql.format(dates, end_date)
-    data = getSqlData(conn, sql)
-    conn.commit()
-    conn.close()
+    data = runSqlData('carry_investment', sql)
+    # conn.close()
     IDS = set([i[0] for i in data])
     return data
 
@@ -411,13 +487,12 @@ def sp_order_trade(size=None):
               29: '部分成交并删除已覆盘 ', 30: '交易所無效',
               }
 
-    conn = get_conn('carry_investment')
     timeStamp = time.mktime(time.strptime(str(datetime.datetime.now())[:10], '%Y-%m-%d'))
     # 时间，成交价，
     sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s" % timeStamp
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,AccNo,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
-    data = getSqlData(conn, sql_trade)
+    data = runSqlData('carry_investment', sql_trade)
 
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
@@ -458,28 +533,27 @@ def sp_order_trade(size=None):
     data = [res[j][i] for j in res for i in res[j]]
     data = [i for j in data for i in j]
     if size == 1:
-        conn.close()
+        # conn.close()
         return data
-    datagd = getSqlData(conn, sql_order)
+    datagd = runSqlData('carry_investment', sql_order)
     datagd = [[str(datetime.datetime.fromtimestamp(i[0]))[:19]] + list(i[1:9]) + ['买' if i[9] == 'B' else '卖'] + [
         status.get(i[10])] for i in datagd]
-    conn.close()
+    # conn.close()
     return data, datagd
 
 
 def sp_order_record(start_date=None, end_date=None):
     global IDS
     IDS = set()
-    conn = get_conn('carry_investment')
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
     endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
 
     sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
-                "WHERE TradeDate>={} and TradeDate<={} AND RecNo not in {}".format(std, endd,(14722630,14722737))
+                "WHERE TradeDate>={} and TradeDate<={} AND RecNo not in {}".format(std, endd, (14722630, 14722737))
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
-    data = getSqlData(conn, sql_trade)
-    #data = data[2:]  # 数据缺失导致
-    conn.close()
+    data = runSqlData('carry_investment', sql_trade)
+    # data = data[2:]  # 数据缺失导致
+    # conn.close()
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     users = {i[5] for i in data}
@@ -534,15 +608,11 @@ def calculate_earn(dates, end_date):
     '''计算所赚。参数：‘2018-01-01’
     返回值：[[开仓时间，单号，ID，平仓时间，价格，开仓0平仓1，做多0做空1，赚得金额，正向跟单，反向跟单]...]'''
     global IDS
-    conn = get_conn('carry_investment')
-    cur = conn.cursor()
     sql = SQL['calculate_earn']
     if dates:
         sql += " and F.`datetime`>'{}' and F.`datetime`<'{}'".format(dates, end_date)
-    cur.execute(sql)
-    com = cur.fetchall()
-    conn.commit()
-    conn.close()
+    com = runSqlData('carry_investment', sql)
+    # conn.close()
     result = []
     ticket = [i[1] for i in com]
     dt_tk = [(dtf(i[0]), i[1]) for i in com]
@@ -575,11 +645,6 @@ class Limit_up:
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
         self.this_up = False
         self.chineseName = {}  # 中文名称
-        try:
-            self.conn = get_conn('stock_data')
-            cur = self.conn.cursor()
-        except Exception as exc:
-            logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))(exc)
         time1 = -1
         # 获取存储股票代码文件的修改时间
         if os.path.isfile('log\\codes_gp.txt'):
@@ -587,9 +652,8 @@ class Limit_up:
             time1 = time.localtime(times)[2]
         # 若不是在同一天修改的，则重新写入
         if time.localtime()[2] != time1:
-            cur.execute(SQL['limit_init'])
-            codes = cur.fetchall()
-            self.conn.close()
+            codes = runSqlData('stock_data', SQL['limit_init'])
+            # self.conn.close()
             # 获取股票代码
             codes = [i for i in codes if i[1][:3] in ('600', '000', '300', '601', '002', '603')]
             self.chineseName = {i[0] + i[1]: i[2] for i in codes if
@@ -786,10 +850,9 @@ class Zbjs(ZB):
         super(Zbjs, self).__init__()
 
     def main(self, _ma=60):
-        conn = get_conn('carry_investment')
         sql = 'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(
             _ma)
-        data = getSqlData(conn, sql)
+        data = runSqlData('carry_investment', sql)
         dyn = self.dynamic_index(data)
         dyn.send(None)
         req = None
@@ -800,13 +863,13 @@ class Zbjs(ZB):
         dyn.close()
         self.sendNone(dyn)
 
-    def get_hkHSI_date(self, conn, size=60, database=None):
+    def get_hkHSI_date(self, db, size=60, database=None):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
         if database != None:
             tab_name = self.tab_name.get(database, 'wh_same_month_min')  # futures_min
             sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} WHERE prodcode='HSI' GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
                 tab_name)
-            data = getSqlData(conn, sql)
+            data = runSqlData(db, sql)
             data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
             return data
         data = requests.get(
@@ -816,7 +879,7 @@ class Zbjs(ZB):
         data = {de[0]: [float(de[2]) - float(de[1]), float(de[3]) - float(de[4])] for de in data}
         return data
 
-    def get_data(self, conn, dates, dates2, database):
+    def get_data(self, db, dates, dates2, database):
         ''' 从指定数据库获取指定日期的数据 '''
         if database == '1':
             sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM wh_same_month_min WHERE prodcode='HSI' AND datetime>='{}' AND datetime<='{}'".format(
@@ -825,24 +888,24 @@ class Zbjs(ZB):
             # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
             sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
                 self.tab_name['2'], dates, dates2)
-        return getSqlData(conn, sql)
+        return runSqlData(db, sql)
 
     def main2(self, _ma, _dates, end_date, _fa, database, reverse=False, param=None):
         end_date = dtf(end_date) + datetime.timedelta(days=1)
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0, 'zs': 0, 'ydzs': 0, 'zy': 0}
-        conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
-        # prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
+        #conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
+        # prodcode = runSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates,end_date))
         all_price = []
         is_inst_date = []
         # for code in prodcode:
         # da = self.get_data(conn, _dates, end_date, database,code[0])
-        da = self.get_data(conn, _dates, end_date, database)
+        da = self.get_data('carry_investment', _dates, end_date, database)
         self.zdata = da
         res, first_time = self.trd(_fa, reverse=reverse, param=param)
 
-        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+        hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
 
         res_key = list(res.keys())
         for i in res_key:
@@ -888,7 +951,7 @@ class Zbjs(ZB):
         huizong['least2'] = min(all_price) if all_price else 0
         huizong['most2'] = max(all_price) if all_price else 0
 
-        closeConn(conn)  # 关闭数据库连接
+        # closeConn(conn)  # 关闭数据库连接
         return _res, huizong, first_time
 
     def main_all(self, _dates, end_date, database, reverse=True, param=None):
@@ -898,13 +961,12 @@ class Zbjs(ZB):
                 'avg_day': 0, 'least2': 0, 'most2': 0, 'first_time': None}
             for k in self.xzfa
         }
-        conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
-        # prodcode = getSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
-        conn.commit()
-        hk = self.get_hkHSI_date(conn=conn)  # 当日波动
+        #conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
+        # prodcode = runSqlData(conn,"SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date))
+        hk = self.get_hkHSI_date(db='carry_investment')  # 当日波动
         all_price = {}
         # for code in prodcode:
-        da = self.get_data(conn, _dates, end_date, database)
+        da = self.get_data('carry_investment', _dates, end_date, database)
         self.zdata = da
         res, first_time = self.trd_all(reverse=reverse, param=param)
         res_key = list(res.keys())
@@ -952,26 +1014,26 @@ class Zbjs(ZB):
         else:
             _res = res
 
-        closeConn(conn)  # 关闭数据库连接
+        # closeConn(conn)  # 关闭数据库连接
         return _res, _huizong
 
     def main_new(self, _ma, _dates, end_date, database, reverse=False, param=None):
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
-        conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
-        prodcode = getSqlData(conn,
+        #conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
+        prodcode = runSqlData('carry_investment',
                               "SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(
                                   _dates, end_date))
         all_price = []
         is_inst_date = []
         # for code in prodcode:
         # da = self.get_data(conn, _dates, end_date, database,code[0])
-        da = self.get_data(conn, _dates, end_date, database)
+        da = self.get_data('carry_investment', _dates, end_date, database)
         self.zdata = da
         res, first_time = self.trd_new(reverse=reverse, param=param)
 
-        hk = self.get_hkHSI_date(conn=conn, database=database)  # 当日波动
+        hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
 
         res_key = list(res.keys())
         for i in res_key:
@@ -1009,7 +1071,7 @@ class Zbjs(ZB):
         huizong['least2'] = min(all_price)
         huizong['most2'] = max(all_price)
 
-        closeConn(conn)  # 关闭数据库连接
+        # closeConn(conn)  # 关闭数据库连接
         return _res, huizong, first_time
 
     def get_future(self, this_date):
@@ -1062,16 +1124,14 @@ class RedisHelper:
             break
 
 
-def day_this_mins(start_date,end_date, code='HSI'):
+def day_this_mins(start_date, end_date, code='HSI'):
     """ 获取指定时间段的分钟数据，转换为指定分钟的分钟数据"""
-    conn = get_conn('carry_investment')
     sql = "SELECT DATE_FORMAT(datetime,'%d/%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' " \
           "AND DATE_FORMAT(datetime,'%Y-%m-%d')>='{}' AND DATE_FORMAT(datetime,'%Y-%m-%d')<='{}' ORDER BY datetime".format(
         code, start_date, end_date)  # AND DATE_FORMAT(DATETIME,'%H')<17
-    d = getSqlData(conn, sql)
+    d = runSqlData('carry_investment', sql)
     times = [i[0] for i in d]
     datas = [i[1] for i in d]
-    conn.close()
     return times, datas
 
 
@@ -1276,7 +1336,7 @@ def huice_day(res, init_money):
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
         for j in res[i]['datetimes']:
-            #if i == keys[-1]:
+            # if i == keys[-1]:
             st = j[6] if j[2] == '多' else -j[6]
             sameday.append([j[0], st, j[4]])
             sameday.append([j[1], -st, j[5]])
@@ -1284,11 +1344,12 @@ def huice_day(res, init_money):
 
     try:
         sameday.sort()
-        hc['day_time'] = [sa[0][-11:-3].replace(' ','/') for sa in sameday]
+        hc['day_time'] = [sa[0][-11:-3].replace(' ', '/') for sa in sameday]
         from copy import deepcopy
         day_time = deepcopy(hc['day_time'])
         # hc['day_yk'] = [sa[1] for sa in sameday]
-        hc['day_x'], hc['day_close'] = day_this_mins(keys[0],keys[-1])
+        hc['day_x'], hc['day_close'] = day_this_mins(keys[0], keys[-1])
+
         def get_ind(l, x, s):
             if s > 0:
                 inde = l.index(x) + 1
@@ -1365,10 +1426,8 @@ class GXJY:
         self.code_name = {'bu': '石油沥青', 'rb': '螺纹钢', 'ru': '橡胶', 'j': '冶金焦炭',
                           'al': '铝', 'AP': '苹果', 'CF': '棉花'}
         self.bs = {'bu': 10, 'rb': 10, 'ru': 10, 'j': 100, 'al': 5, 'AP': 10, 'CF': 5}
-        self.conn = get_conn('carry_investment')
+        self.code_bs = {self.code_name[i]: self.bs[i] for i in self.code_name}
 
-    def closeConn(self):
-        self.conn.close()
 
     def gx_lsjl(self, folder):
         data = pd.DataFrame()
@@ -1381,7 +1440,6 @@ class GXJY:
 
     def to_sql(self, data, table):
         """ 写入数据到指定的数据表"""
-        cur = self.conn.cursor()
         if table == 'gx_record':
             sql = "INSERT IGNORE INTO gx_record(datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code," \
                   "system_code,cj_code,insure,jgq,currency) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -1389,7 +1447,7 @@ class GXJY:
                 r[0] = str(r[0])
                 dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8] + ' ' + str(r[13])
                 try:
-                    cur.execute(sql, (
+                    runSqlData('carry_investment', sql, (
                         dt, r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], str(r[9]), r[10], r[11], r[12], r[14],
                         r[15],
                         r[16]))
@@ -1404,10 +1462,9 @@ class GXJY:
                 dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8]
                 fx = '证券转出' if r[3] > 0 else '银行转入'
                 try:
-                    cur.execute(sql, (dt, r[1], fx, r[3], r[4], r[5], r[6], r[7], r[8]))
+                    runSqlData('carry_investment', sql, (dt, r[1], fx, r[3], r[4], r[5], r[6], r[7], r[8]))
                 except Exception as exc:
                     pass  # print(exc)
-        self.conn.commit()
 
     def get_gxjy_sql(self, code=None):
         """ 得到数据表 gx_record 的数据，格式化指定的格式用以 ray 函数调用 """
@@ -1415,8 +1472,7 @@ class GXJY:
         if code and code[:-4] in self.bs:
             sql += " AND code LIKE '{}%'".format(code[:-4])
         ds = []
-        data = getSqlData(self.conn, sql)
-        self.conn.commit()
+        data = runSqlData('carry_investment', sql)
         for i in data:
             bs = -i[4] if i[2] == '卖出' else i[4]
             price = i[3]
@@ -1434,7 +1490,7 @@ class GXJY:
               "system_code,cj_code,insure,jgq,currency FROM gx_record where 1=1"
         if code and code[:-4] in self.bs:
             sql += " AND code LIKE '{}%'".format(code[:-4])
-        p = getSqlData(self.conn, sql)  # pd.read_sql(sql, conn)
+        p = runSqlData('carry_investment', sql)  # pd.read_sql(sql, conn)
         p2 = []
         for i in p:
             p2.append((str(i[0]),) + i[1:] + (self.code_name.get(i[2][:-4]),))
@@ -1443,13 +1499,13 @@ class GXJY:
     def get_dates(self):
         """ 获取所有的交易日期 """
         sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d') FROM gx_record GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d') ORDER BY DATETIME"
-        dates = getSqlData(self.conn, sql)
+        dates = runSqlData('carry_investment', sql)
         return dates
 
     def entry_exit(self):
         """ 获取出入金信息 """
         sql = "SELECT DATE_FORMAT(datetime,'%Y-%m-%d'),direction,`out`,enter FROM gx_entry_exit;"
-        ee = getSqlData(self.conn, sql)
+        ee = runSqlData('carry_investment', sql)
         return ee
 
     def datas(self):
@@ -1598,13 +1654,14 @@ class GXJY:
                 res.append(
                     [msg[3], dtstr, msg[0], pri, data['jy'], yscb, cb, jcb,
                      cbyl, data['pcyl_all'], data['all'], pjyl, huihuapj, zcb, jzcb, data['all'] * self.bs[msg[3][:-4]],
-                     jlr, jpjlr, round(data['cost']+(res[-1][18] if res else 0), 2), data['wcds'], data['dbs'], struct,
+                     jlr, jpjlr, round(data['cost'] + (res[-1][18] if res else 0), 2), data['wcds'], data['dbs'],
+                     struct,
                      self.code_name.get(msg[3][:-4]), cbyl * self.bs[msg[3][:-4]], data['cost']])
                 cbyl = 0
             data['dbs'] += 1 if data['jy'] == 0 else 0  # 序号
             is_ind = ind
         dts.close()
-        return res,pz
+        return res, pz
 
     def ray(self, df, group=None):
         res = []
@@ -1622,16 +1679,17 @@ class GXJY:
                 # df2 = df[df.iloc[:, 3] == code]
                 df2 = df[df.code.apply(lambda x: x[:-4]) == code]
                 if group == 'date':
-                    rs,pz = self.transfer(df2, dates)
+                    rs, pz = self.transfer(df2, dates)
                 else:
-                    rs,pz = self.transfer(df2, struct)
+                    rs, pz = self.transfer(df2, struct)
                     struct = 0 if struct == 1 else 1
                 res += rs
-                pzs = dict(pz,**pzs)
+                pzs = dict(pz, **pzs)
 
         columns = ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本', '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利',
                    '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
         # res = pd.DataFrame(res, columns=columns)
-        pzs = [(self.code_name.get(k),v/2) for k,v in pzs.items()]
-        pzs = sorted(pzs,key=lambda x: x[1],reverse=True)
-        return res,pzs
+        pzs = [(self.code_name.get(k), v / 2) for k, v in pzs.items()]
+        pzs = sorted(pzs, key=lambda x: x[1], reverse=True)
+        return res, pzs
+

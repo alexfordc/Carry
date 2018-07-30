@@ -127,16 +127,13 @@ def stockData(rq):
 
 def stockDatas(rq):
     '''历史股票数据分页显示'''
-    conn = HSD.get_conn('stockDate')
-    conn1 = HSD.get_conn('stock_data')
-    cur1 = conn1.cursor()
-    cur = conn.cursor()
+    conn = 'stockDate'
+    conn1 = 'stock_data'
     rq_data = rq.GET.get('code')
     dinamic = rq.GET.get('dinamic')
     code_data = read_from_cache('stock_code')
     if not code_data:
-        cur1.execute('SELECT * FROM STOCK_CODE')
-        code_data = cur1.fetchall()
+        code_data = HSD.runSqlData(conn1,'SELECT * FROM STOCK_CODE')
         write_to_cache('stock_code', code_data)
     if dinamic and rq_data:
         rq_data = rq_data.upper()
@@ -179,11 +176,9 @@ def stockDatas(rq):
                         rq_data in i[3] if i[3] else None) or rq_data in i[4]]
         try:
             res_code = {i[-1] + i[0]: i[1] for i in res_data}
-            cur1.execute(
-                'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str(
+            data = HSD.runSqlData(conn1,'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str(
                     [i for i in res_code])[1:-1])
-            # cur.execute('select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 and code="%s"'%rq_data)
-            data = np.array(cur1.fetchall())
+            data = np.array(data)
             data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
             data = data.tolist()
         except:
@@ -197,8 +192,8 @@ def stockDatas(rq):
         except:
             curPage, allPage = 1, 1
         if curPage == 1 and allPage == 1:
-            cur1.execute('select COUNT(1) from moment_hours WHERE amout>0')
-            count = cur1.fetchall()[0][0]
+            count = HSD.runSqlData(conn1,'select COUNT(1) from moment_hours WHERE amout>0')
+            count = count[0][0]
             allPage = int(count / PAGE_SIZE) if count % PAGE_SIZE == 0 else int(count / PAGE_SIZE) + 1
         if pageType == 'up':
             curPage -= 1
@@ -210,10 +205,9 @@ def stockDatas(rq):
             curPage = allPage
         data = read_from_cache('data_house' + str(curPage))
         if not data:
-            cur1.execute(
-                'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 limit %s,%s' % (
+            data = HSD.runSqlData(conn1,'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 limit %s,%s' % (
                     curPage - 1, PAGE_SIZE))
-            data = np.array(cur1.fetchall())
+            data = np.array(data)
             data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
             data = data.tolist()
             write_to_cache('data_house' + str(curPage), data)
@@ -221,8 +215,6 @@ def stockDatas(rq):
         res_code = {i[-1] + i[0]: i[1] for i in code_data}
         # print(res_code.get('sz000001'))
 
-    conn.close()
-    conn1.close()
     # {'data': data,'curPage':curPage,'allPage':allPage}
     data = [i + [res_code.get(i[7])] for i in data] if data else None
     return render(rq, 'stockDatas.html', locals())
@@ -297,7 +289,7 @@ def get_zx_zt(zt=False, zx=False, status=None):
     if zx:  # 折线图
         result = read_from_cache('history_weight' + str(status))
         if not is_time(result, 0.15):
-            result = HSD.get_min_history() if status else HSD.get_history(HSD.get_conn('stock_data'))
+            result = HSD.get_min_history() if status else HSD.get_history('stock_data')
             # result = HSD.get_min_history()
             result['times'] = str(datetime.datetime.now()).split('.')[0]
             write_to_cache('history_weight' + str(status), result)
@@ -334,17 +326,12 @@ def getData(rq):
     if rq.method == 'GET' and rq.is_ajax():
         dt, _ = get_zx_zt(zt=True)
         # data, times = data[:-2], data[-2]
-
         # for i in data:
         #     counts += i[0]
         # HSD.logging.info(counts)
         # dt = {"jinJian": dt, 'times': times[10:], 'counts': counts}  # "dt1":dt1,
         if types == '2':
-            conn = HSD.get_conn('stock_data')
-            cur = conn.cursor()
-            cur.execute('SELECT TIME,SUM(number) FROM weight GROUP BY TIME')
-            wei_sum = cur.fetchall()
-            conn.close()
+            wei_sum = HSD.runSqlData('stock_data', 'SELECT TIME,SUM(number) FROM weight GROUP BY TIME')
             dt1 = [{'ZX': str(i[0])[10:], 'ZY': i[1]} for i in wei_sum]
             dt['dt1'] = dt1
         return JsonResponse(dt, safe=False)
@@ -399,26 +386,20 @@ def tongji_adus(rq, dates):
         ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
         en = ys.get(en.upper())
         try:
-            conn = HSD.get_conn('carry_investment')
-            cur = conn.cursor()
+            # conn = HSD.get_conn('carry_investment')
             if types == 'update' and name and en and name != 'None':
                 if en:
                     sql = "UPDATE account_info SET trader_name='{}',available='{}' WHERE id={}".format(name, en, id)
-                    cur.execute(sql)
-                    conn.commit()
+                    HSD.runSqlData('carry_investment',sql)
                     messages = '修改成功'
             elif types == 'delete' and id and en == '0':
                 sql = "delete from account_info where id={}".format(id)
-                cur.execute(sql)
-                conn.commit()
+                HSD.runSqlData('carry_investment',sql)
                 messages = '删除成功'
             else:
                 messages = '操作失败'
         except:
-            conn.rollback()
             messages = '操作失败'
-        finally:
-            conn.close()
     else:
         messages = '验证码错误！'
     return messages
@@ -462,6 +443,27 @@ def tongji(rq):
 
     rq_date = rq.GET.get('datetimes')
     end_date = rq.GET.get('end_date')
+    page = rq.GET.get('page')
+    if page == 'up' and rq_date and end_date:
+        rq_date = datetime.datetime.strptime(rq_date,'%Y-%m-%d')
+        rq_week = rq_date.weekday()
+        if rq_week == 0:
+            rq_date = str(rq_date+datetime.timedelta(days=-3))[:10]
+        elif rq_week == 6:
+            rq_date = str(rq_date + datetime.timedelta(days=-2))[:10]
+        else:
+            rq_date = str(rq_date + datetime.timedelta(days=-1))[:10]
+        end_date = rq_date
+    elif page == 'down' and rq_date and end_date:
+        rq_date = datetime.datetime.strptime(rq_date,'%Y-%m-%d')
+        rq_week = rq_date.weekday()
+        if rq_week == 4:
+            rq_date = str(rq_date+datetime.timedelta(days=3))[:10]
+        elif rq_week == 5:
+            rq_date = str(rq_date + datetime.timedelta(days=2))[:10]
+        else:
+            rq_date = str(rq_date + datetime.timedelta(days=1))[:10]
+        end_date = rq_date
     rq_id = rq.GET.get('id')
     rq_type = rq.GET.get('type')
     user = rq.GET.get('user')
@@ -561,10 +563,8 @@ def tongji(rq):
                 huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
                     'most']
         hcd = {}
-        conn = HSD.get_conn('carry_investment')
         sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
-        init_money = HSD.getSqlData(conn, sql)
-        conn.close()
+        init_money = HSD.runSqlData('carry_investment', sql)
         init_money = init_money[0][0] if init_money else 10000
         if rq_date == end_date:
             hcd = HSD.huice_day(res,init_money)
@@ -722,8 +722,7 @@ def getList():
     dates = read_from_cache('kline_date')
     database = read_from_cache('kline_database')
     if dates and database:
-        conn = HSD.get_conn(data_dict[database][0])
-        cur = conn.cursor()
+        # conn = HSD.get_conn(data_dict[database][0])
         if len(dates) == 10:
             dates2 = HSD.dtf(dates) + datetime.timedelta(days=1)
         else:
@@ -734,10 +733,7 @@ def getList():
 
         sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" AND datetime<="%s"' % (
         data_dict[database][1], dates, dates2)
-        cur.execute(sql)
-        res = list(cur.fetchall())
-        conn.commit()
-        conn.close()
+        res = list(HSD.runSqlData(data_dict[database][0], sql))
         if len(res) > 0:
             res = [
                 [int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]]
@@ -1150,11 +1146,7 @@ def huice(rq):
 
 def account_info_update(rq):
     ''' 刷新交易统计表 '''
-    conn = HSD.get_conn('carry_investment')
-    cur = conn.cursor()
-    cur.execute("CALL account_info_update")
-    conn.commit()
-    conn.close()
+    HSD.runSqlData('carry_investment', "CALL account_info_update")
     return redirect('tongji')
 
 
@@ -1219,7 +1211,7 @@ def gxjy(rq):
                 data = sorted(data, key=lambda x: x[1])
             if start_date and end_date:
                 data = [i for i in data if start_date<=i[1][:10]<=end_date]
-            h.closeConn()
+            # h.closeConn()
             return render(rq, 'gxjy.html', {'data': data, 'hys': hys,'start_date':start_date,'end_date':end_date})
         elif rq.is_ajax() and types == 'js':  # 计算数据
             start_date = rq.GET.get('start_date','1970-01-01')
@@ -1236,7 +1228,7 @@ def gxjy(rq):
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
-            h.closeConn()
+            # h.closeConn()
             data = [i for i in data if start_date<=i[1]<=end_date]
             return JsonResponse({'data': data, 'hys': hys})
         elif types == 'tjt':  # 折线图
@@ -1247,10 +1239,11 @@ def gxjy(rq):
             #pie = {'name':,'value':}
             dates = h.get_dates()
             ee = h.entry_exit()
-            h.closeConn()
+            # h.closeConn()
             init_money = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == ee[0][0]) # 入金
             jz = 1     # 初始净值
             jzq = init_money / jz  # 初始净值权重
+            allje = init_money  # 总金额
             # zx_x = [i[0] for i in dates]
             # prices = [sum(i[8] for i in data if i[1][:10] == dt) for dt in zx_x]
             zx_x, prices = [], []
@@ -1260,23 +1253,36 @@ def gxjy(rq):
                 'allsxf': [],   # 累积手续费
                 'pie_name': [i[0] for i in pzs], # 成交偏好（饼图） 产品名称
                 'pie_value': [{'value':i[1],'name':i[0]} for i in pzs], # 成交偏好 饼图的值
-                'bar_name': [], # 品种盈亏 名称
-                'bar_value': [],# 品种盈亏 净利润
+                'bar_name': [],     # 品种盈亏 名称
+                'bar_value': [],    # 品种盈亏 净利润
+                'week_name': [],    # 每周盈亏 名称
+                'week_value': [],   # 每周盈亏 净利润
+                'month_name': [],   # 每月盈亏 名称
+                'month_value': [],  # 每月盈亏 净利润
             }
             # data ['bu1706', '2017-01-05 09:06:27', -4, 2680.0, -4, 11.21, 2680.0, 2635, 0, 0, 0, 0, 0, 2680.0, 2636, 0, -44.84, 0, 44.84, 0, 0, 0, '石油沥青', 0, 44.84],
-            name_jlr = {}  # 品种名称，净利润
+            name_jlr = defaultdict(float)   # 品种名称，净利润
+            week_jlr = defaultdict(float)   # 每周，净利润
+            month_jlr = defaultdict(float)  # 每月，净利润
             data2 = []
-            for de in dates:
+            code_bs = h.code_bs
+            for xh,de in enumerate(dates):
                 zx_x.append(de[0])
                 yk,sxf = 0,0
+                f_date = datetime.datetime.strptime(de[0], '%Y-%m-%d').isocalendar()[:2]
+                week = str(f_date[0])+'-'+str(f_date[1]) # 星期
+                month = de[0][:7]   # 月
                 for d in data:
                     if d[1][:10] == de[0]:
                         yk += d[23]
                         sxf += d[24]
-                        name_jlr[d[22]] = d[16]
+                        lr = d[8] * code_bs[d[22]]
+                        name_jlr[d[22]] += lr
+                        week_jlr[week] += lr
+                        month_jlr[month] += lr
                     else:
                         data2.append(d)
-                #yk = sum(i[23] for i in data if i[1][:10] == de[0])
+
                 yk += (prices[-1] if prices else 0)
                 prices.append(yk)
                 #sxf = sum(i[24] for i in data if i[1][:10] == de[0])
@@ -1285,7 +1291,7 @@ def gxjy(rq):
                 rj = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == de[0])
                 if de[0] != ee[0][0] and rj != 0:
                     init_money += rj
-                    jzq = init_money / jz  # 净值权重
+                    jzq = (jzq*jz+rj)/jz    # 净值权重
                 jz = (init_money+yk-hc['allsxf'][-1])/jzq if jzq!=0 else 0
                 hc['alljz'].append(round(jz,4))
                 data = data2
@@ -1296,15 +1302,26 @@ def gxjy(rq):
             ind_e = zx_x.index(zx_x2[-1])+1
             zx_x = zx_x[ind_s:ind_e]
             prices = prices[ind_s:ind_e]
+            f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
+            week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
+            f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
+            week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
+            month_jlr = {k:v for k,v in month_jlr.items() if start_date <= k <= end_date}
+            week_jlr = {k:v for k,v in week_jlr.items() if week <= k <= week2}
             hc['allyk'] = prices
             hc['bar_name'] = [i for i in name_jlr]
-            hc['bar_value'] = [v for v in name_jlr.values()]
+            hc['bar_value'] = [round(v,1) for v in name_jlr.values()]
+            week_jlr = {k:v for k,v in week_jlr.items() if v!=0}
+            hc['week_name'] = [i for i in week_jlr]
+            hc['week_value'] = [round(v,1) for v in week_jlr.values()]
+            hc['month_name'] = [i for i in month_jlr]
+            hc['month_value'] = [round(v,1) for v in month_jlr.values()]
             return render(rq,'gxjy.html',{'zx_x': zx_x, 'hc': hc, 'start_date':start_date,'end_date':end_date})
         elif rq.method == "GET" and rq.is_ajax():
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
-            h.closeConn()
+            # h.closeConn()
             init_data = [i for i in init_data if start_date<=i[0]<=end_date]
             return JsonResponse({"init_data": init_data})
         elif types == 'hc':
@@ -1359,10 +1376,10 @@ def gxjy(rq):
             huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
             huizong['least2'] = min(all_price)
             huizong['most2'] = max(all_price)
-            conn = HSD.get_conn('carry_investment')
+            # conn = HSD.get_conn('carry_investment')
             sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
-            init_money = HSD.getSqlData(conn, sql)
-            conn.close()
+            init_money = HSD.runSqlData('carry_investment', sql)
+            #conn.close()
             init_money = init_money[0][0]
             hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
@@ -1374,11 +1391,12 @@ def gxjy(rq):
             else:
                 start_date,end_date = init_data[0][0][:10],init_data[-1][0][:10]
             response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date':start_date, 'end_date':end_date})
-        h.closeConn()  # 关闭数据库
+        # h.closeConn()  # 关闭数据库
     else:
         response = redirect('index')
 
     return response
+
 
 def systems(rq):
     return render(rq,'systems.html')

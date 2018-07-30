@@ -85,18 +85,36 @@
 
     </table>
     </div>
- <div style="margin-left:40%;"><br/>
+ <div style="margin-left:30%;"><br/>
      <div>
      <input type="button" onclick="javascript:doSubmitForm(1)" class="button green" value="模拟交易">
      <input type="button" onclick="javascript:tongjiss()" class="button green" value="实时交易">
     <input type="button" onclick="javascript:doSubmitForm(4)" class="button green" value="实盘交易">
+         <a href="javascript:pageChoice('up');" class="button green" >上一天</a>
+        <a href="javascript:pageChoice('down');" class="button green" >下一天</a>
     <input type="button" onclick="JavaScript:window.history.back();" class="button green"  value="返回">
      </div>
      <a style="position:relative;left:20px;" href="{% url 'account_update' %}" ><img width="30" src="{% static 'images/b9.ico' %}" title="刷新"></a>
-
  </div>
+    <!--<div style="margin-left:45%;margin-top:0;"><br/>-->
+        <!--{% if dates == end_date %}-->
+        <!--<a href="javascript:pageChoice('up');" class="button green" >昨&nbsp;&nbsp;天</a>-->
+        <!--<a href="javascript:pageChoice('down');" class="button green" >明&nbsp;&nbsp;天</a>-->
+         <!--{% endif %}-->
+    <!--</div>-->
 </form>
 <script type="text/javascript">
+function pageChoice(type){
+   var url = window.location.href; //?datetimes=2018-07-31&id=0&type=1&end_date=2018-07-31&when=0&page=down' {% url 'tongji' %}?datetimes={{ i.0 }}&id={{ i.1 }}&rq_ts={{ end_date }}
+        //+ '&page='+type;
+   if(url.indexOf("type=")>0){
+       var tp = new RegExp("(^|&)type=([^&]*)(&|$)", "i");
+       tp = window.location.search.substr(1).match(tp);
+       tp = unescape(tp[2]);
+    url = "{% url 'tongji' %}?datetimes={{ dates }}&id={{ rq_id }}&type="+tp+"&end_date={{ end_date }}"+"&page="+type;
+    window.location.href = url;
+   }
+}
 function doSubmitForm(ty){
         if(ty==null){
         var tongji_form=document.getElementById('tongji_form');
