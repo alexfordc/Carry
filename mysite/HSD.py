@@ -123,16 +123,16 @@ def get_date(d=None):
     return str(datetime.datetime.now())[:10]
 
 
-def get_ud():
-    return config['U']['ud']
+def get_config(root,son):
+    ''' 获取配置文件的值 '''
+    if root in config and son in config[root]:
+        return config[root][son]
+    return '()'
 
-
-def get_allow_ip():
-    ip = config['IP']['ip']
-    return ip.split(',')
 
 
 class SqlPool:
+    """ 单例模式，数据库连接池 """
     _singleton = None
     _conn = {}  # 连接池字典
     _js = {}  # 连接数量字典
@@ -183,54 +183,32 @@ class SqlPool:
             _js = _js-1 if _js>0 else l_c
             conn.close()
 
-class SqlSingleton(object):
-    ''''' 单例模式，数据库连接池 '''
-    __instance = None
-    __conns = {}
-
-    def __new__(cls, *args, **kw):
-        if cls.__instance is None:
-            cls.__instance = super(SqlSingleton, cls).__new__(cls)
-        return cls.__instance
-
-    def __init__(self, db=None, isclose=False, size=5):
-        ''' db：数据库名称；size：每个数据库最大连接数量 '''
-        l = len(self.__conns)
-        dbs = str(db) + str(random.randint(0, size))
-        self.dbs = dbs
-        if l < size or dbs not in self.__conns or self.__conns[dbs]._closed or isclose:
-            self.__conns[dbs] = pymysql.connect(db=db, user=config['U']['us'], passwd=config['U']['ps'],
-                                                host=config['U']['hs'],
-                                                charset='utf8')
-
-    def __getattr__(self, name):
-        if name == 'conn':
-            return self.__conns[self.dbs]
-
-
-def get_conn(dataName=None, isclose=False):
-    ''' 返回数据库连接 '''
-    return SqlPool(dataName).get_conn(dataName)
-    #return SqlSingleton(db=dataName, isclose=isclose).conn
 
 
 def runSqlData(db, sql, params=None):
     ''' 从数据库查询数据 conn：数据库连接；sql：SQL语句；params：参数'''
     sp = SqlPool(db)
+    data = None
     try:
         conn = sp.get_conn(db)
         cur = conn.cursor()
         cur.execute(sql, params)
+        conn.commit()  # 提交
+        data = cur.fetchall()
     except:
         # 认为数据库已经中断连接，重连，再执行
-        conn = sp.get_conn(db,closed=True)#get_conn(conn.db, isclose=True)
-        cur = conn.cursor()
-        cur.execute(sql, params)
+        try:
+            conn = sp.get_conn(db,closed=True)#get_conn(conn.db, isclose=True)
+            cur = conn.cursor()
+            cur.execute(sql, params)
+            conn.commit()  # 提交
+            data = cur.fetchall()
+        except:
+            return
     finally:
         sp.set_conn(db,conn)
-    if sql[:6].upper() == 'SELECT':
-        return cur.fetchall()
-    conn.commit()  # 提交
+    return data
+
 
 
 def get_tcp():
@@ -558,12 +536,13 @@ def sp_order_record(start_date=None, end_date=None):
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     users = {i[5] for i in data}
     prods = {i[4] for i in data}
-    res = []
+    resAll = []
     huizong = {}
     for user in users:
         for prod in prods:
             kc = []
             data2 = []
+            res = []
             upk = user + prod
             for i in ran:
                 if not (data[i][5] == user and data[i][4] == prod):
@@ -578,6 +557,7 @@ def sp_order_record(start_date=None, end_date=None):
                 try:
                     for j in range(dt[3]):
                         kc.append(dt)
+                        # dt ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
                         if data2 and abs(dt[7]) < abs(data2[-1][7]):
                             stop = kc.pop()
                             start = kc.pop()
@@ -600,8 +580,12 @@ def sp_order_record(start_date=None, end_date=None):
             if upk in huizong:
                 sl = round(huizong[upk][7] / huizong[upk][6] * 100, 1) if huizong[upk][6] > 0 else 0
                 huizong[upk].append(sl)
+            # ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+            kc = [[k[5],k[4],k[0],k[1],None,None,None,'多' if k[6] == 'B' else '空',1,'未平仓'] for k in kc]
+            res = sorted(kc+res,key=lambda x:x[2])
+            resAll += res
         IDS.add(user)
-    return res, huizong
+    return resAll, huizong
 
 
 def calculate_earn(dates, end_date):

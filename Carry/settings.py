@@ -57,8 +57,7 @@ ROOT_URLCONF = 'Carry.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +69,16 @@ TEMPLATES = [
         },
     },
 ]
+
+"""
+# 开启缓存加载模版
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
+"""
 
 WSGI_APPLICATION = 'Carry.wsgi.application'
 NEVER_REDIS_TIMEOUT=365*24*60*60 #此条可以省略
@@ -89,6 +98,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'CONN_MAX_AGE': 600, # 持久化数据库连接600秒
     }
 }
 

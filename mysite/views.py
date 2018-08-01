@@ -26,6 +26,7 @@ from pytdx.hq import TdxHq_API
 from django.http import HttpResponse
 from zmq import Context
 from collections import defaultdict
+from hashlib import md5
 
 from mysite import HSD
 from mysite.HSD import get_ip_name
@@ -89,6 +90,37 @@ def index(rq):
     record_from(rq)
     return render(rq, 'index.html')
 
+@csrf_exempt
+def login(rq):
+    if rq.method == 'POST' and rq.is_ajax():
+        username = rq.POST.get('user_name')
+        password = rq.POST.get('user_password')
+        print(username,password)
+        ups = HSD.get_config('U','userps')
+        password = eval(ups)
+        password = md5(password.encode())
+        password = password.hexdigest()
+        sele = models.Users.objects.filter(name=username,password=password)
+        if sele:
+            rq.session['users'] = username
+            return JsonResponse({"result":"yess","users":username})
+    return JsonResponse({"result":"no"})
+
+@csrf_exempt
+def register(rq):
+    if rq.method == 'POST' and rq.is_ajax():
+        username = rq.POST.get('user_name')
+        password = rq.POST.get('user_password')
+        print(username,password)
+        ups = HSD.get_config('U','userps')
+        password = eval(ups)
+        password = md5(password.encode())
+        password = password.hexdigest()
+        sele = models.Users.objects.filter(name=username,password=password)
+        if sele:
+            rq.session['users'] = username
+            return JsonResponse({"result":"yess","users":username})
+    return JsonResponse({"result":"no"})
 
 def page_not_found(rq):  # 404页面
     return render(rq,'404.html')
@@ -382,7 +414,7 @@ def tongji_adus(rq, dates):
     en = rq.POST.get('en')
     passwd = rq.POST.get('pass')
     types = rq.POST.get('types')
-    if passwd == eval(HSD.get_ud()) and id:
+    if passwd == eval(HSD.get_config('U','ud')) and id:
         ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
         en = ys.get(en.upper())
         try:
@@ -484,7 +516,7 @@ def tongji(rq):
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '5' and rq_date and end_date and rq_id!='0': # and client in HSD.get_allow_ip():
+    if rq_type == '5' and rq_date and end_date and rq_id!='0' and client in HSD.get_config('IP','ip'):
         results2, _ = HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0]==rq_id]
         res = {}
@@ -517,7 +549,7 @@ def tongji(rq):
 
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd':hcd})
 
-    if rq_type == '4' and rq_date and end_date: # and client in HSD.get_allow_ip():
+    if rq_type == '4' and rq_date and end_date and client in HSD.get_config('IP','ip'):
         results2, huizong = HSD.sp_order_record(rq_date,end_date)
         if user:
             results2 = [i for i in results2 if i[0]==user]
@@ -526,7 +558,7 @@ def tongji(rq):
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3': # and client in HSD.get_allow_ip():
+    if rq_type == '3' and client in HSD.get_config('IP','ip'):
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消",0: "挂单", 1: "开仓", 2: "平仓"}
@@ -671,6 +703,8 @@ def tongji(rq):
         #results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
         if results2:
             return render(rq, 'tongji.html', locals())
+    if rq_type in ('3','4','5'):
+        users = None
     if rq_date and rq_id == '0':
         results = HSD.calculate_earn(rq_date, end_date)
         huizong = []
@@ -1174,7 +1208,7 @@ def gxjy(rq):
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     client = rq.META.get('REMOTE_ADDR')
-    if client in HSD.get_allow_ip():
+    if client in HSD.get_config('IP','ip'):
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')
@@ -1236,6 +1270,7 @@ def gxjy(rq):
             end_date = rq.GET.get('end_date', '2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
             data,pzs = h.ray(dd)
+            #print(pzs)
             #pie = {'name':,'value':}
             dates = h.get_dates()
             ee = h.entry_exit()

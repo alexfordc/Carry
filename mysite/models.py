@@ -10,6 +10,14 @@ class Clj(models.Model):
     def __unicode__(self):
         return self.name
 
+class Users(models.Model):
+    name = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)
+    enabled = models.CharField(max_length=3)
+
+    def __unicode__(self):
+        return self.name
+
 '''
 class Transaction_data(models.Model):
     date=models.DateTimeField()

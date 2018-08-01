@@ -20,6 +20,8 @@ from mysite import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$',views.index,name='index'),
+    url(r'^login/$',views.login,name='login'),
+    url(r'^register/$', views.register, name='register'),
     url(r'^stockData/$',views.stockData,name='stockData'),
     url(r'^stockDatas/$',views.stockDatas,name='stockDatas'),
     url(r'^updates/$',views.redis_update),

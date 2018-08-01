@@ -35,8 +35,8 @@ class ZB(object):
                "", "止损100个点。"],
         "14": ["收盘价大于60均线 与 dea大于0，则做多；收盘价小于60均线 与 dea小于0，则平仓。",
                "收盘价小于60均线 与 dea小于0，则做空；收盘价大于60均线 与 dea大于0，则平仓。", "止损100个点。"],
-        "15": ["出现三波上涨（以macd区间区分） 与 底背离，则做多；macd小于0，则平仓。",
-               "出现三波下跌（以macd区间区分） 与 顶背离，则做空；macd大于0，则平仓。", "止损100个点。"],
+        "15": ["出现三波上涨（以macd区间区分） 与 底背离，则做空；收盘价大于60均线 与 价差除以标准差>1.5，则平仓。",
+               "出现三波下跌（以macd区间区分） 与 顶背离，则做多；收盘价小于60均线 与 价差除以标准差<-1.5，则平仓。", "止损100个点。"],
     }
     def __init__(self):
         #self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
@@ -1756,12 +1756,12 @@ class ZB(object):
 
             kctj_d = deviation == -1  # 底背离
             kctj_k = deviation == 1 # 顶背离
-            pctj_d = clo>mas #macd<0  # mul > 1.5
-            pctj_k = clo<mas #macd>0  # mul < -1.5
+            pctj_d = clo>mas and mul > 1.5
+            pctj_k = clo<mas and mul < -1.5
 
             if sb != reg:
-                tj_d += 1 if macd>0 and last_clo and clo>last_clo and clo<60 else 0
-                tj_k += 1 if macd<0 and last_clo and clo<last_clo and clo>60 else 0
+                tj_d += 1 if macd<0 and last_clo and clo<last_clo else 0
+                tj_k += 1 if macd>0 and last_clo and clo>last_clo else 0
                 sb = reg
                 last_clo = clo
 

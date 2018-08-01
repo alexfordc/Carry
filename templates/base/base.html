@@ -245,7 +245,54 @@ var $container = $('#works-container');
         <ol id="xinwen_ol" ></ol>
     </div>
 </div>
+    <div align="center" id="user_login_div" style="display:none; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+border:1px solid #888; background-color:green; text-align:center"><p id="login_message">请先登录</p><br/>
 
+        <p><input type="text"  id="user_name" name="user_name" placeholder="请输入账号"></p><br/>
+    <p><input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
+    <input type="button" id="user_login" onclick="javascript:userLogin('login');" value="登录">&nbsp;&nbsp;&nbsp;
+    <input type="button" onclick="javascript:userLogin(null)" value="取 消">
+
+<!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
+        </div>
+<script>
+function show_login(){
+    var div=$("#user_login_div").css('display');
+    if(div=="none"){
+        $("#user_login_div").css("display","block");
+    }else{
+        $("#user_login_div").css("display","none");
+    }
+}
+function userLogin(type){
+    if(type==null){
+        show_login();
+    }else{
+        var user_name = $("#user_name").val();
+        var user_password = $("#user_password").val();
+        if(user_name=='' || user_name==null || user_password=='' || user_password==null){
+            alert('用户名或密码不能为空！');
+        }else{
+            var data = {"user_name":user_name,"user_password":user_password};
+            $.ajax({
+                type: "POST",
+                url: "/login/",
+                data:data,
+                dataType: "json",
+                success:function(res){
+                    if(res.result=="yes"){
+                        var mes = "欢迎您："+res.users+"，登录成功！"
+                        alert(mes);
+                        show_login();
+                    }else{
+                        $("#login_message").text("登录失败！请确认用户名与密码是否输入正确！");
+                    }
+                }
+            });
+        }
+    }
+}
+</script>
 <div style="display:none;width:402px;height:500px;border:1px solid #afafaf;position:absolute;left:100px;top:100px;z-index:100;" id="mainDiv2">
         <div id="loginbox">
             <div style="width:260px;margin:200px auto;color:red;">
