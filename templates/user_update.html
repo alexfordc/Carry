@@ -1,0 +1,73 @@
+
+{% extends 'base/base.html' %}
+{% block title %}用户修改{% endblock %}
+{% block script %}
+<style>
+    .errorlist{color:red;}
+    .captcha{margin-top:10px;}
+</style>
+{% endblock %}
+{% block center_cen %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+
+<div align="center"><p id="error_info" style="color:green;">欢迎！{{ message }}</p><br/>
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <legend>用户修改</legend>
+        <table>
+            <tr><th><label for="id_name">用户名:</label></th><td><input type="text" name="name" maxlength="20" required id="id_name" /></td></tr>
+            <tr><th><label for="id_password">原始密码:</label></th><td><input type="password" name="password" required id="id_password" /></td></tr>
+            <tr><th><label for="id_phone">手机:</label></th><td><input type="text" name="phone" maxlength="11" required id="id_phone" /></td></tr>
+            <tr><th><label for="id_email">邮箱:</label></th><td><input type="email" name="email" maxlength="36" id="id_email" /></td></tr>
+            <tr><th><label for="id_passwordr">确认密码:</label></th><td><input type="password" name="passwordr" required id="id_passwordr" /></td></tr>
+
+            </table>
+    </form>
+    {{ message }}
+</div>
+<script>
+    $("#id_captcha_1").css('width','100').attr('placeholder','输入验证码');
+    $(".captcha").css('cursor','pointer');
+$(".captcha").click(function(){
+    console.log('click');
+    $.getJSON("/captcha/refresh/",
+        function(result){
+        $('.captcha').attr('src',result['image_url']);
+        $('#id_captcha_0').val(result['key']);
+    });
+});
+
+$("#id_name").blur(function(){
+    var name=$("#id_name").val();
+    if(name==null || name==""){
+        $("#error_info").css('color','red').html("用户名不能为空");
+    }else{
+    /*$.ajax({
+        type:"GET",
+        url:"/register/",
+        data:{"name":name},
+        success:callBack
+    });*/
+    $.get("/register/",{"name":name},callBack);
+    }
+    function callBack(datas){
+            if(datas==1){
+                //$("#ajax").css('color','red').html('此号已被注册!');
+                $("#id_name").attr('placeholder','请输入用户名');
+                $("#error_info").css('color','red').html("此账户名已被注册，请更换其他账户名！");
+            }else{
+                $("#error_info").css('color','green').html("此账户名可以注册！");
+            }
+        }
+});
+$("#id_passwordr").blur(function(){
+    if($("#id_passwordr").val()!=$("#id_password").val()){
+        $("#error_info").css('color','red').html("两次密码输入不一致");
+    }else{
+        $("#error_info").css('color','green').html("欢迎！");
+    }
+});
+
+</script>
+{% endblock %}

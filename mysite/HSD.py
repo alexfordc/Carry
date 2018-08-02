@@ -21,7 +21,7 @@ from pyquery import PyQuery
 from mysite.DataIndex import ZB
 
 config = configparser.ConfigParser()
-config.read('log\\conf.conf')
+config.read('log\\conf.conf',encoding='utf-8')
 
 logging.basicConfig(
     filename='log\\logging.log',
@@ -282,7 +282,6 @@ def get_data(url=None):
     rq = str(datetime.datetime.now())[:11]
     ti = re.findall('datetime="(.*?)"current', req)[0][-10:]
     s1 = rq + ti  # 时间
-    # print(s)
     result = [(int(i[0]), i[1].replace('\'', '').replace('A', '')) for i in s if i[0] != '0']
     result.sort()
     result.reverse()
@@ -1448,7 +1447,7 @@ class GXJY:
                 try:
                     runSqlData('carry_investment', sql, (dt, r[1], fx, r[3], r[4], r[5], r[6], r[7], r[8]))
                 except Exception as exc:
-                    pass  # print(exc)
+                    pass
 
     def get_gxjy_sql(self, code=None):
         """ 得到数据表 gx_record 的数据，格式化指定的格式用以 ray 函数调用 """

@@ -229,7 +229,7 @@ $('tr').css({'height': '30'});
 
 //提交
 function formSubmit(id,name,en,pass,types){
-        var form = $("<form method='POST' action=''>{% csrf_token %}</form>");
+        var form = $("<form method='POST' action='{% url 'tongji_update_del' %}'>{% csrf_token %}</form>");
         form.append($("<input type='text'>").val(id).attr('name','id'));
         form.append($("<input type='text'>").val(name).attr('name','name'));
         form.append($("<input type='text'>").val(en).attr('name','en'));

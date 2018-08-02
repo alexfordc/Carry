@@ -205,6 +205,17 @@ var $container = $('#works-container');
                         </ul>
                     </li>
                     <li><a href="{% url 'index' %}" id="guanyu_msg">关于我们</a></li>
+                    <li><a href="javascript:show_login(1)" id="user_info">{{ user_name|default:"登录" }}</a>
+                        {% if user_name %}
+                        <ul>
+                            <li class="no-border-top" ><a href="">添加模拟账号</a></li>
+                            <li class="no-border-top" ><a href="">添加真实账号</a></li>
+                            <li class="no-border-top" ><a href="">添加工作日志</a></li>
+                            <li class="no-border-top" ><a href="">修改我的资料</a></li>
+                            <li class="no-border-top" ><a onclick="javascript:user_logout();" style="cursor:pointer;">退出</a></li>
+                        </ul>
+                        {% endif %}
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -245,28 +256,54 @@ var $container = $('#works-container');
         <ol id="xinwen_ol" ></ol>
     </div>
 </div>
-    <div align="center" id="user_login_div" style="display:none; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
-border:1px solid #888; background-color:green; text-align:center"><p id="login_message">请先登录</p><br/>
+    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
 
         <p><input type="text"  id="user_name" name="user_name" placeholder="请输入账号"></p><br/>
     <p><input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
     <input type="button" id="user_login" onclick="javascript:userLogin('login');" value="登录">&nbsp;&nbsp;&nbsp;
-    <input type="button" onclick="javascript:userLogin(null)" value="取 消">
+    <input type="button" onclick="javascript:userLogin(null)" value="取 消">&nbsp;&nbsp;&nbsp;
+        <a id="user_register" onclick="javascript:userRegister();" style="font-size:14px;cursor:pointer;color:white;" >前往注册</a>
 
 <!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
         </div>
 <script>
-function show_login(){
+function show_login(ts){
     var div=$("#user_login_div").css('display');
-    if(div=="none"){
-        $("#user_login_div").css("display","block");
+    if($("#user_info").text()=="登录"){
+        if(div=="none"){
+            $("#user_login_div").css("display","block");
+            $("#user_name").focus(); // 获得焦点
+           $('#user_password').bind('keyup', function(event) {
+        　　if (event.keyCode == "13") {
+        　　　　//回车执行
+        　　　　$('#user_login').click();
+               }
+            });
+        }else{
+            $("#user_login_div").css("display","none");
+        }
     }else{
+        // 已经登录
         $("#user_login_div").css("display","none");
+        if(ts==1){
+            location.href = "{% url 'index' %}";
+        }
     }
+}
+function user_logout(){
+    $.get("{% url 'logout' %}","",function(res){
+        if(res=='yes'){
+            $("#user_info").text("登录");
+        }
+    });
+}
+function userRegister(){
+    window.location.href = "{% url 'register' %}";
 }
 function userLogin(type){
     if(type==null){
-        show_login();
+        show_login(0);
     }else{
         var user_name = $("#user_name").val();
         var user_password = $("#user_password").val();
@@ -282,8 +319,9 @@ function userLogin(type){
                 success:function(res){
                     if(res.result=="yes"){
                         var mes = "欢迎您："+res.users+"，登录成功！"
+                        $("#user_info").text(res.users);
                         alert(mes);
-                        show_login();
+                        show_login(0);
                     }else{
                         $("#login_message").text("登录失败！请确认用户名与密码是否输入正确！");
                     }

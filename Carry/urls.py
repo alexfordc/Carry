@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$',views.index,name='index'),
     url(r'^login/$',views.login,name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'^register/$', views.register, name='register'),
     url(r'^stockData/$',views.stockData,name='stockData'),
     url(r'^stockDatas/$',views.stockDatas,name='stockDatas'),
@@ -30,8 +31,9 @@ urlpatterns = [
     url(r'^zt/$',views.zhutu,name='zhutu'),
     url(r'^zx/$',views.zhexian,name='zhexian'),
     url(r'^tj/$',views.tongji,name='tongji'),
+    url(r'^tongji_update_del/$',views.tongji_update_del,name='tongji_update_del'),
     url(r'^ts/$',views.tools,name='tools'),
-
+    url(r'^captcha/',include('captcha.urls')),
     url(r'^zhutu2/$',views.zhutu2,name='zhutu2'),
 
     url(r'^kline/$',views.kline,name='kline'),

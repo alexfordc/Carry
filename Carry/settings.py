@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import djcelery
+from mysite.HSD import get_config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,8 +40,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
+    'captcha',
     'mysite',
 )
+
+
+djcelery.setup_loader()     #加载djcelery
+BROKER_URL = 'redis://127.0.0.1:6379/0'  #'pyamqp://guest@localhost//'    #配置broker
+BROKER_POOL_LIMIT = 0
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'  #配置backend
+CELERY_IMPORTS = ('mysite.tasks',)
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -91,14 +103,21 @@ CACHES={
     },
 }
 
+# 优化session会话
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'CONN_MAX_AGE': 600, # 持久化数据库连接600秒
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'a667',
+        'USER': get_config('U','us'),
+        'PASSWORD': get_config('U','ps'),
+        'HOST': get_config('U','hs'),
+        'PORT': 3306,
+        'CONN_MAX_AGE': 1200, # 持久化数据库连接1200秒
     }
 }
 

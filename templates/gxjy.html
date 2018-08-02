@@ -100,7 +100,7 @@
     {% if zx_x %}
     <div align="center">
         <div style="position:absolute;left:100px;Z-index:100;">
-            <table width="540">
+            <table width="630">
                 <tr style="cursor:pointer;">
                     <td id="tuxian1">累积净值</td>
                     <td id="tuxian2">累积盈亏</td>
@@ -108,6 +108,7 @@
                     <td id="tuxian4">品种盈亏</td>
                     <td id="tuxian5">每周盈亏</td>
                     <td id="tuxian6">每月盈亏</td>
+                    <td id="tuxian7">账号余额</td>
                 </tr>
             </table>
         </div>
@@ -196,8 +197,8 @@ toolbox: {
         symbolSize: 1,
         itemStyle: {
             normal: {
-                color: '#00f', // rgb(97,183,236)
-                lineStyle: { color: '#00f' }
+                color: '#61b7ec', // rgb(97,183,236)
+                lineStyle: { color: '#61b7ec' }
             }
         },
         data: zx_y2
@@ -330,7 +331,7 @@ myChart.setOption(option);
 
 function tuxiancolor(id){
     var id2 = "";
-    for(var i=1;i<=6;i++){
+    for(var i=1;i<=7;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
         $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
@@ -356,6 +357,9 @@ function tuxiancolor(id){
     }else if(id=='#tuxian6'){
         tu_name=["每月盈亏","",""];
         huatu("bar",{{hc.month_name|safe}},{{hc.month_value|safe}},"");
+    }else if(id=='#tuxian7'){
+        tu_name=["账号余额","入金",""];
+        huatu("line",{{zx_x|safe}},{{hc.amount|safe}},{{hc.eae|safe}});
     }
 }
 $("#tuxian1").click(function(){
@@ -375,6 +379,9 @@ $("#tuxian5").click(function(){
 });
 $("#tuxian6").click(function(){
     tuxiancolor("#tuxian6");
+});
+$("#tuxian7").click(function(){
+    tuxiancolor("#tuxian7");
 });
 
 tuxiancolor("#tuxian1");

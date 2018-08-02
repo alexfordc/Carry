@@ -19,6 +19,7 @@ from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
 from django.http import HttpResponse
 from django.core.cache import cache
+from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from pytdx.hq import TdxHq_API
 # from selenium import webdriver
@@ -28,13 +29,19 @@ from zmq import Context
 from collections import defaultdict
 from hashlib import md5
 
+from mysite import forms
 from mysite import HSD
 from mysite.HSD import get_ip_name
 from mysite import models
+from mysite import viewUtil
+# from mysite.tasks import record_from_a,record_from_w
 from mysite.sub_client import sub_ticker, getTickData
+
+# * * * * * * * * * * * * * * * * * * * * * * * *  ^_^ Util function ^_^ * * * * * * * * * * * * * * * * * * * * * * * *
 
 # 分页的一页数量
 PAGE_SIZE = 28
+
 
 # 从缓存读数据
 def read_from_cache(user_name):
@@ -42,7 +49,7 @@ def read_from_cache(user_name):
     try:
         value = cache.get(key)
     except Exception as exc:
-        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+        viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
         value = None
     if value:
         data = json.loads(value)
@@ -57,7 +64,7 @@ def write_to_cache(user_name, data):
     try:
         cache.set(key, json.dumps(data), settings.NEVER_REDIS_TIMEOUT)
     except Exception as exc:
-        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+        viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
 
 
 # 更新缓存
@@ -66,6 +73,14 @@ def redis_update(rq):
     cache.delete('user_id_of_' + 'stock_code')
 
     return render(rq, 'index.html')
+
+
+def getLogin(ses):
+    """ 返回用户名与权限 """
+    if 'users' in ses:
+        name, qx = ses['users']['name'], ses['users']['jurisdiction']
+        return name, qx
+    return None, None
 
 
 def record_from(rq):
@@ -78,204 +93,14 @@ def record_from(rq):
     if ip not in IP_NAME:
         address = HSD.get_ip_address(ip)
         IP_NAME[ip] = address
-        with open(files,'w') as f:
-            f.write(json.dumps(IP_NAME))
+        # with open(files, 'w') as f:
+        #     f.write(json.dumps(IP_NAME))
+        viewUtil.record_log(files, IP_NAME, 'w')
     # 2018-07-20 15:24:53.419241----江苏----192.168.2.204----192.168.2.204:8000/tj/
     info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
-    with open('log\\visitor\\log-%s.txt'%dt[:9], 'a') as f:
-        f.write(info)
-
-
-def index(rq):
-    record_from(rq)
-    return render(rq, 'index.html')
-
-@csrf_exempt
-def login(rq):
-    if rq.method == 'POST' and rq.is_ajax():
-        username = rq.POST.get('user_name')
-        password = rq.POST.get('user_password')
-        print(username,password)
-        ups = HSD.get_config('U','userps')
-        password = eval(ups)
-        password = md5(password.encode())
-        password = password.hexdigest()
-        sele = models.Users.objects.filter(name=username,password=password)
-        if sele:
-            rq.session['users'] = username
-            return JsonResponse({"result":"yess","users":username})
-    return JsonResponse({"result":"no"})
-
-@csrf_exempt
-def register(rq):
-    if rq.method == 'POST' and rq.is_ajax():
-        username = rq.POST.get('user_name')
-        password = rq.POST.get('user_password')
-        print(username,password)
-        ups = HSD.get_config('U','userps')
-        password = eval(ups)
-        password = md5(password.encode())
-        password = password.hexdigest()
-        sele = models.Users.objects.filter(name=username,password=password)
-        if sele:
-            rq.session['users'] = username
-            return JsonResponse({"result":"yess","users":username})
-    return JsonResponse({"result":"no"})
-
-def page_not_found(rq):  # 404页面
-    return render(rq,'404.html')
-
-
-def stockData(rq):
-    '''指定股票历史数据，以K线图显示'''
-    code = rq.GET.get('code')
-    data = read_from_cache(code)  # 从Redis读取数据
-    if not data:
-        '''
-        conn = get_conn('stockDate')
-        #conn = pymysql.connect(db='', user='', passwd='')
-        cur = conn.cursor()
-        cur.execute('select date,open,close,low,high from transaction_data WHERE code="%s" ORDER BY DATE' % code)
-        data = np.array(cur.fetchall())
-        conn.close()
-        data[:, 0] = [i.strftime('%Y/%m/%d') for i in data[:, 0]]
-        data=data.tolist()
-        '''
-        if socket.gethostname() != 'doc':
-            h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r')  # r'D:\tools\Tools\stock_data.hdf5'
-        else:
-            h5 = h5py.File(r'D:\tools\Tools\stock_data.hdf5')
-        data1 = h5['stock/' + code + '.day'][:].tolist()
-        data = []
-        for i in range(len(data1)):
-            d = str(data1[i][0])
-            data.append(
-                [d[:4] + '/' + d[4:6] + '/' + d[6:8]] + [data1[i][1]] + [data1[i][4]] + [data1[i][3]] + [data1[i][2]])
-
-        write_to_cache(code, data)  # 写入数据到Redis
-
-    return render(rq, 'stockData.html', {'data': json.dumps(data), 'code': code})
-
-
-def stockDatas(rq):
-    '''历史股票数据分页显示'''
-    conn = 'stockDate'
-    conn1 = 'stock_data'
-    rq_data = rq.GET.get('code')
-    dinamic = rq.GET.get('dinamic')
-    code_data = read_from_cache('stock_code')
-    if not code_data:
-        code_data = HSD.runSqlData(conn1,'SELECT * FROM STOCK_CODE')
-        write_to_cache('stock_code', code_data)
-    if dinamic and rq_data:
-        rq_data = rq_data.upper()
-        isPage = False
-        api = TdxHq_API()
-        data = list()
-        res_data = [i for i in code_data if
-                    rq_data in i[0] or rq_data in i[1] or rq_data in i[2] or (
-                        rq_data in i[3] if i[3] else None) or rq_data in i[4]]
-        try:
-            res_code = {i[-1] + i[0]: i[1] for i in res_data}
-
-            # cur.execute('select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 and code="%s"'%rq_data)
-            # data = np.array(cur.fetchall())
-            # data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
-            # data = data.tolist()
-
-            with api.connect('119.147.212.81', 7709) as apis:
-                xd = 0
-                for i in res_code:
-                    if i[1] == 'z':
-                        data1 = apis.get_security_bars(3, 0, i[2:], 0, 1)
-                    elif i[1] == 'h':
-                        data1 = apis.get_security_bars(3, 1, i[2:], 0, 1)
-                    else:
-                        break
-                    data.append(
-                        [data1[0]['datetime'], data1[0]['open'], data1[0]['high'], data1[0]['low'], data1[0]['close'],
-                         data1[0]['amount'], data1[0]['vol'], i])
-                    if xd > 28:  # 限定显示的条数
-                        break
-                    xd += 1
-        except:
-            pass
-    elif rq_data:
-        rq_data = rq_data.upper()
-        isPage = False
-        res_data = [i for i in code_data if
-                    rq_data in i[0] or rq_data in i[1] or rq_data in i[2] or (
-                        rq_data in i[3] if i[3] else None) or rq_data in i[4]]
-        try:
-            res_code = {i[-1] + i[0]: i[1] for i in res_data}
-            data = HSD.runSqlData(conn1,'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str(
-                    [i for i in res_code])[1:-1])
-            data = np.array(data)
-            data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
-            data = data.tolist()
-        except:
-            data = None
-    else:
-        isPage = True
-        try:
-            curPage = int(rq.GET.get('curPage', '1'))
-            allPage = int(rq.GET.get('allPage', '1'))
-            pageType = rq.GET.get('pageType')
-        except:
-            curPage, allPage = 1, 1
-        if curPage == 1 and allPage == 1:
-            count = HSD.runSqlData(conn1,'select COUNT(1) from moment_hours WHERE amout>0')
-            count = count[0][0]
-            allPage = int(count / PAGE_SIZE) if count % PAGE_SIZE == 0 else int(count / PAGE_SIZE) + 1
-        if pageType == 'up':
-            curPage -= 1
-        elif pageType == 'down':
-            curPage += 1
-        if curPage < 1:
-            curPage = 1
-        if curPage > allPage:
-            curPage = allPage
-        data = read_from_cache('data_house' + str(curPage))
-        if not data:
-            data = HSD.runSqlData(conn1,'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 limit %s,%s' % (
-                    curPage - 1, PAGE_SIZE))
-            data = np.array(data)
-            data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
-            data = data.tolist()
-            write_to_cache('data_house' + str(curPage), data)
-
-        res_code = {i[-1] + i[0]: i[1] for i in code_data}
-        # print(res_code.get('sz000001'))
-
-    # {'data': data,'curPage':curPage,'allPage':allPage}
-    data = [i + [res_code.get(i[7])] for i in data] if data else None
-    return render(rq, 'stockDatas.html', locals())
-
-
-def showPicture(rq):
-    '''获取指定代码的K线图，显示到页面上'''
-    code = rq.GET.get('code')
-    if code:
-        # d1=urllib.request.urlopen('http://image.sinajs.cn/newchart/daily/n/%s.gif'%code).read()
-        # with open('D:\\b.gif','wb') as f:
-        #    f.write(d1)
-        d = 'http://image.sinajs.cn/newchart/daily/n/%s.gif' % code
-        return render(rq, 'stock_min.html', {'picture': d})
-    else:
-        return redirect('stockDatas')
-
-
-def is_time(data, minutes):
-    '''判断是否在指定时间内'''
-    if not data:
-        return False
-    sj = data[-1] if isinstance(data, list) else data['times']
-    if data and datetime.datetime.now() - datetime.datetime.strptime(sj,
-                                                                     '%Y-%m-%d %H:%M:%S') < datetime.timedelta(
-        minutes=minutes):
-        return True
-    else:
-        return False
+    # with open('log\\visitor\\log-%s.txt' % dt[:9], 'a') as f:
+    #     f.write(info)
+    viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
 
 
 def get_zx_zt(zt=False, zx=False, status=None):
@@ -315,8 +140,8 @@ def get_zx_zt(zt=False, zx=False, status=None):
             } if d[0] < 0 else d[0]
         } for d in data]
         counts = sum(i[0] for i in data)
-        name_code = {j:i[2:] for i,j in HSD.CODE_NAME.items()}
-        zt_data = {"jinJian": dt, 'times': times[10:], 'counts': counts, 'name_code':name_code}
+        name_code = {j: i[2:] for i, j in HSD.CODE_NAME.items()}
+        zt_data = {"jinJian": dt, 'times': times[10:], 'counts': counts, 'name_code': name_code}
 
     if zx:  # 折线图
         result = read_from_cache('history_weight' + str(status))
@@ -352,16 +177,256 @@ def get_zx_zt(zt=False, zx=False, status=None):
     return zt_data, zx_data
 
 
+def tongji_adus(rq):
+    """ 修改与删除交易统计表 """
+    user_name,qx = getLogin(rq.session)
+    id = rq.POST.get('id')
+    name = rq.POST.get('name')
+    en = rq.POST.get('en')
+    passwd = rq.POST.get('pass')
+    types = rq.POST.get('types')
+    if (qx == 3 or passwd == eval(HSD.get_config('U', 'ud'))) and id:
+        ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
+        en = ys.get(en.upper())
+        try:
+            if types == 'update' and name and en and name != 'None':
+                name = name.strip()
+                if en:
+                    sql = "UPDATE account_info SET trader_name={},available={} WHERE id={}".format(name, en, id)
+                    HSD.runSqlData('carry_investment', sql)
+                    messages = '修改成功'
+            elif types == 'delete' and id and en == '0':
+                sql = "delete from account_info where id={}".format(id)
+                HSD.runSqlData('carry_investment', sql)
+                messages = '删除成功'
+            else:
+                messages = '操作失败'
+        except:
+            messages = '操作失败'
+    else:
+        messages = '验证码错误！'
+    return messages
+
+
+
+# ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
+
+def index(rq):
+    record_from(rq)
+    user_name = None
+    if 'users' in rq.session:
+        user_name, qx = getLogin(rq.session)
+    return render(rq, 'index.html', {'user_name': user_name})
+
+
+@csrf_exempt
+def login(rq):
+    """ 用户登录 """
+    if rq.method == 'POST' and rq.is_ajax():
+        username = rq.POST.get('user_name')
+        password = rq.POST.get('user_password')
+        ups = HSD.get_config('U', 'userps')
+        password = eval(ups)
+        password = md5(password.encode())
+        password = password.hexdigest()
+        try:
+            user = models.Users.objects.get(name=username)
+            if user.password == password:
+                rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction}
+                return JsonResponse({"result": "yes", "users": username})
+        except:
+            pass
+    return JsonResponse({"result": "no"})
+
+
+def logout(rq):
+    if rq.is_ajax() and 'users' in rq.session:
+        del rq.session['users']
+    return HttpResponse('yes')
+
+def update(rq):
+    pass
+
+def register(rq):
+    """ 用户注册 """
+    if rq.method == 'GET' and rq.is_ajax():
+        name = rq.GET.get('name')
+        names = models.Users.objects.filter(name=name)
+        if names:
+            datas = 1
+        else:
+            datas = 0
+        return HttpResponse(datas)
+    elif rq.method == 'GET':
+        form = forms.UsersForm()
+        return render(rq, 'user_register.html', {'form': form})
+    elif rq.method == 'POST':
+        message = ''
+        form = forms.UsersForm(rq.POST)
+        if form.is_valid():
+            # ['name', 'password', 'phone', 'email']
+            name = rq.POST['name'].strip()
+            password = rq.POST['password'].strip()
+            phone = rq.POST['phone'].strip()
+            email = rq.POST.get('email')
+            if name and password and phone and not models.Users.objects.filter(name=name):
+                ups = HSD.get_config('U', 'userps')
+                password = eval(ups)
+                password = md5(password.encode()).hexdigest()
+                users = models.Users.objects.create(name=name, password=password, phone=phone, email=email, enabled=1,
+                                                    jurisdiction=1)
+                users.save()
+                message = "注册成功！"
+            else:
+                message = "注册失败！请确认输入的信息是否正确！"
+
+        return render(rq, 'user_register.html', {'form': form, 'message': message})
+
+
+def page_not_found(rq):
+    """ 404页面 """
+    return render(rq, '404.html')
+
+
+def stockData(rq):
+    """ 指定股票历史数据，以K线图显示 """
+    code = rq.GET.get('code')
+    data = read_from_cache(code)  # 从Redis读取数据
+    if not data:
+        if socket.gethostname() != 'doc':
+            h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r')  # r'D:\tools\Tools\stock_data.hdf5'
+        else:
+            h5 = h5py.File(r'D:\tools\Tools\stock_data.hdf5')
+        data1 = h5['stock/' + code + '.day'][:].tolist()
+        data = []
+        for i in range(len(data1)):
+            d = str(data1[i][0])
+            data.append(
+                [d[:4] + '/' + d[4:6] + '/' + d[6:8]] + [data1[i][1]] + [data1[i][4]] + [data1[i][3]] + [data1[i][2]])
+
+        write_to_cache(code, data)  # 写入数据到Redis
+
+    return render(rq, 'stockData.html', {'data': json.dumps(data), 'code': code})
+
+
+def stockDatas(rq):
+    """ 历史股票数据分页显示 """
+    conn = 'stockDate'
+    conn1 = 'stock_data'
+    rq_data = rq.GET.get('code')
+    dinamic = rq.GET.get('dinamic')
+    code_data = read_from_cache('stock_code')
+    if not code_data:
+        code_data = HSD.runSqlData(conn1, 'SELECT * FROM STOCK_CODE')
+        write_to_cache('stock_code', code_data)
+    if dinamic and rq_data:
+        rq_data = rq_data.upper()
+        isPage = False
+        api = TdxHq_API()
+        data = list()
+        res_data = [i for i in code_data if
+                    rq_data in i[0] or rq_data in i[1] or rq_data in i[2] or (
+                        rq_data in i[3] if i[3] else None) or rq_data in i[4]]
+        try:
+            res_code = {i[-1] + i[0]: i[1] for i in res_data}
+
+            with api.connect('119.147.212.81', 7709) as apis:
+                xd = 0
+                for i in res_code:
+                    if i[1] == 'z':
+                        data1 = apis.get_security_bars(3, 0, i[2:], 0, 1)
+                    elif i[1] == 'h':
+                        data1 = apis.get_security_bars(3, 1, i[2:], 0, 1)
+                    else:
+                        break
+                    data.append(
+                        [data1[0]['datetime'], data1[0]['open'], data1[0]['high'], data1[0]['low'], data1[0]['close'],
+                         data1[0]['amount'], data1[0]['vol'], i])
+                    if xd > 28:  # 限定显示的条数
+                        break
+                    xd += 1
+        except:
+            pass
+    elif rq_data:
+        rq_data = rq_data.upper()
+        isPage = False
+        res_data = [i for i in code_data if
+                    rq_data in i[0] or rq_data in i[1] or rq_data in i[2] or (
+                        rq_data in i[3] if i[3] else None) or rq_data in i[4]]
+        try:
+            res_code = {i[-1] + i[0]: i[1] for i in res_data}
+            data = HSD.runSqlData(conn1,
+                                  'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str(
+                                      [i for i in res_code])[1:-1])
+            data = np.array(data)
+            data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
+            data = data.tolist()
+        except:
+            data = None
+    else:
+        isPage = True
+        try:
+            curPage = int(rq.GET.get('curPage', '1'))
+            allPage = int(rq.GET.get('allPage', '1'))
+            pageType = rq.GET.get('pageType')
+        except:
+            curPage, allPage = 1, 1
+        if curPage == 1 and allPage == 1:
+            count = HSD.runSqlData(conn1, 'select COUNT(1) from moment_hours WHERE amout>0')
+            count = count[0][0]
+            allPage = int(count / PAGE_SIZE) if count % PAGE_SIZE == 0 else int(count / PAGE_SIZE) + 1
+        if pageType == 'up':
+            curPage -= 1
+        elif pageType == 'down':
+            curPage += 1
+        if curPage < 1:
+            curPage = 1
+        if curPage > allPage:
+            curPage = allPage
+        data = read_from_cache('data_house' + str(curPage))
+        if not data:
+            data = HSD.runSqlData(conn1,
+                                  'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 limit %s,%s' % (
+                                      curPage - 1, PAGE_SIZE))
+            data = np.array(data)
+            data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
+            data = data.tolist()
+            write_to_cache('data_house' + str(curPage), data)
+
+        res_code = {i[-1] + i[0]: i[1] for i in code_data}
+
+    data = [i + [res_code.get(i[7])] for i in data] if data else None
+    return render(rq, 'stockDatas.html', locals())
+
+
+def showPicture(rq):
+    """ 获取指定代码的K线图，显示到页面上 """
+    code = rq.GET.get('code')
+    if code:
+        d = 'http://image.sinajs.cn/newchart/daily/n/%s.gif' % code
+        return render(rq, 'stock_min.html', {'picture': d})
+    else:
+        return redirect('stockDatas')
+
+
+def is_time(data, minutes):
+    """ 判断是否在指定时间内 """
+    if not data:
+        return False
+    sj = data[-1] if isinstance(data, list) else data['times']
+    if data and datetime.datetime.now() - datetime.datetime.strptime(sj,
+                                                                     '%Y-%m-%d %H:%M:%S') < datetime.timedelta(
+        minutes=minutes):
+        return True
+    else:
+        return False
+
+
 def getData(rq):
-    '''ajax请求数据'''
+    """ 恒生权重股柱状图，ajax请求 """
     types = rq.GET.get('types')
     if rq.method == 'GET' and rq.is_ajax():
         dt, _ = get_zx_zt(zt=True)
-        # data, times = data[:-2], data[-2]
-        # for i in data:
-        #     counts += i[0]
-        # HSD.logging.info(counts)
-        # dt = {"jinJian": dt, 'times': times[10:], 'counts': counts}  # "dt1":dt1,
         if types == '2':
             wei_sum = HSD.runSqlData('stock_data', 'SELECT TIME,SUM(number) FROM weight GROUP BY TIME')
             dt1 = [{'ZX': str(i[0])[10:], 'ZY': i[1]} for i in wei_sum]
@@ -370,17 +435,21 @@ def getData(rq):
 
 
 def zhutu(rq):
-    '''柱状图'''
+    """ 柱状图 """
     record_from(rq)
-    return render(rq, 'zhutu.html')
+    user_name, qx = getLogin(rq.session)
+    return render(rq, 'zhutu.html', {'user_name': user_name})
 
 
 def zhutu_zhexian(rq):
+    """ 合图 """
     record_from(rq)
-    return render(rq, 'zt_zx.html')
+    user_name, qx = getLogin(rq.session)
+    return render(rq, 'zt_zx.html', {'user_name': user_name})
 
 
 def zhutu_zhexian_ajax(rq):
+    """ 恒生权重股合图，ajax请求 """
     status = rq.GET.get('s')
     tm = time.localtime()
     tm = tm.tm_sec > 45  # 每分钟清除折线图缓存一次
@@ -392,15 +461,14 @@ def zhutu_zhexian_ajax(rq):
 
 
 def zhexian(rq):
-    '''折线图'''
+    """ 折线图 """
     record_from(rq)
     status = rq.GET.get('s')
     if status and status is not '1':
         return redirect('index')
     _, result = get_zx_zt(zx=True, status=status)
-
-    # names = [i.strip() for i in names]
-
+    user_name, qx = getLogin(rq.session)
+    result['user_name'] = user_name
     return render(rq, 'zhexian.html', result)
 
 
@@ -408,94 +476,26 @@ def zhutu2(rq):
     return render(rq, 'zhutu2.html')
 
 
-def tongji_adus(rq, dates):
-    id = rq.POST.get('id')
-    name = rq.POST.get('name')
-    en = rq.POST.get('en')
-    passwd = rq.POST.get('pass')
-    types = rq.POST.get('types')
-    if passwd == eval(HSD.get_config('U','ud')) and id:
-        ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
-        en = ys.get(en.upper())
-        try:
-            # conn = HSD.get_conn('carry_investment')
-            if types == 'update' and name and en and name != 'None':
-                if en:
-                    sql = "UPDATE account_info SET trader_name='{}',available='{}' WHERE id={}".format(name, en, id)
-                    HSD.runSqlData('carry_investment',sql)
-                    messages = '修改成功'
-            elif types == 'delete' and id and en == '0':
-                sql = "delete from account_info where id={}".format(id)
-                HSD.runSqlData('carry_investment',sql)
-                messages = '删除成功'
-            else:
-                messages = '操作失败'
-        except:
-            messages = '操作失败'
-    else:
-        messages = '验证码错误！'
-    return messages
+def tongji_update_del(rq):
+    messagess = ''
+    if rq.method == 'POST':
+        messagess = tongji_adus(rq)
+    herys = viewUtil.tongji_first()
+    ids = HSD.IDS
+    return render(rq, 'tongji.html', locals())
 
-def tongji_huice(res,huizong):
-    all_price = []
-    res_key = list(res.keys())
-    for i in res_key:
-        mony = res[i]['mony']
-        huizong['yk'] += mony
-        huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-
-        mtsl = [j[3] for j in res[i]['datetimes']]
-        all_price += mtsl
-        if 'ylds' not in res[i]:
-            res[i]['ylds'] = 0
-        if mtsl:
-            ylds = len([sl for sl in mtsl if sl > 0])
-            res[i]['ylds'] += ylds  # 盈利单数
-            res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
-        else:
-            res[i]['shenglv'] = 0
-
-    huizong['shenglv'] += len([p for p in all_price if p > 0])
-    huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
-    huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
-    res_size = len(res)
-    huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-    huizong['least2'] = min(all_price)
-    huizong['most2'] = max(all_price)
-    return res,huizong
 
 def tongji(rq):
     """ rq_type: '1':'历史查询','2':'模拟回测','3':'实时交易数据', '4':'实盘交易记录'，'5':'实盘回测' """
     record_from(rq)
+    user_name, qx = getLogin(rq.session)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
-    messagess = ''
-    if rq.method == 'POST':
-        messagess = tongji_adus(rq, dates)
 
     rq_date = rq.GET.get('datetimes')
     end_date = rq.GET.get('end_date')
     page = rq.GET.get('page')
-    if page == 'up' and rq_date and end_date:
-        rq_date = datetime.datetime.strptime(rq_date,'%Y-%m-%d')
-        rq_week = rq_date.weekday()
-        if rq_week == 0:
-            rq_date = str(rq_date+datetime.timedelta(days=-3))[:10]
-        elif rq_week == 6:
-            rq_date = str(rq_date + datetime.timedelta(days=-2))[:10]
-        else:
-            rq_date = str(rq_date + datetime.timedelta(days=-1))[:10]
-        end_date = rq_date
-    elif page == 'down' and rq_date and end_date:
-        rq_date = datetime.datetime.strptime(rq_date,'%Y-%m-%d')
-        rq_week = rq_date.weekday()
-        if rq_week == 4:
-            rq_date = str(rq_date+datetime.timedelta(days=3))[:10]
-        elif rq_week == 5:
-            rq_date = str(rq_date + datetime.timedelta(days=2))[:10]
-        else:
-            rq_date = str(rq_date + datetime.timedelta(days=1))[:10]
-        end_date = rq_date
+    rq_date, end_date = viewUtil.tongji_ud(page, rq_date, end_date)
     rq_id = rq.GET.get('id')
     rq_type = rq.GET.get('type')
     user = rq.GET.get('user')
@@ -503,26 +503,27 @@ def tongji(rq):
     this_d = datetime.datetime.now()
     this_day = str(this_d)[:10]
     date_d = {
-        'd': this_day,      # 当天
-        'w': HSD.get_date(-this_d.weekday()), # 当周
-        'm': HSD.get_date(-this_d.day+1),     # 当月
+        'd': this_day,  # 当天
+        'w': HSD.get_date(-this_d.weekday()),  # 当周
+        'm': HSD.get_date(-this_d.day + 1),  # 当月
     }
     if when in date_d:
-        rq_date, end_date = date_d[when],this_day
+        rq_date, end_date = date_d[when], this_day
 
-    rq_id = '0' if rq_id == 'None' or rq_id=='' else rq_id
+    rq_id = '0' if rq_id == 'None' or rq_id == '' else rq_id
     dates = rq_date if rq_date and rq_date != 'None' else dates
-
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '5' and rq_date and end_date and rq_id!='0' and client in HSD.get_config('IP','ip'):
+    if rq_type == '5' and rq_date and end_date and rq_id != '0' and client in HSD.get_config('IP', 'ip'):
         results2, _ = HSD.sp_order_record(rq_date, end_date)
-        results2 = [i for i in results2 if i[0]==rq_id]
+        results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
         for i in results2:
+            if not i[5]:
+                continue
             dt = i[2][:10]
             if dt not in res:
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
@@ -541,33 +542,36 @@ def tongji(rq):
         init_money = 10000  # 入金
         hcd = None
         if rq_date == end_date:
-            hcd = HSD.huice_day(res,init_money)
+            hcd = HSD.huice_day(res, init_money)
 
-        res,huizong = tongji_huice(res,huizong)
+        res, huizong = viewUtil.tongji_huice(res, huizong)
 
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd':hcd})
+        return render(rq, 'hc.html',
+                      {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name})
 
-    if rq_type == '4' and rq_date and end_date and client in HSD.get_config('IP','ip'):
-        results2, huizong = HSD.sp_order_record(rq_date,end_date)
+    if rq_type == '4' and rq_date and end_date and client in HSD.get_config('IP', 'ip'):
+        results2, huizong = HSD.sp_order_record(rq_date, end_date)
         if user:
-            results2 = [i for i in results2 if i[0]==user]
+            results2 = [i for i in results2 if i[0] == user]
         ids = HSD.IDS
         # results2: [['01-0520186-00', 'MHIN8', '2018-07-16 09:41:13', 28548.0, '2018-07-16 09:41:57', 28518.0, -30.0, '多', 1, '已平仓']...]
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3' and client in HSD.get_config('IP','ip'):
+    if rq_type == '3' and client in HSD.get_config('IP', 'ip'):
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
-        status = {-1: "取消",0: "挂单", 1: "开仓", 2: "平仓"}
-        monijy = [[id_name[i[0]] if i[0] in id_name else i[0], str(i[1]), i[2], ('空' if i[6]%2 else '多'), i[7],
+        status = {-1: "取消", 0: "挂单", 1: "开仓", 2: "平仓"}
+        monijy = [[id_name[i[0]] if i[0] in id_name else i[0], str(i[1]), i[2], ('空' if i[6] % 2 else '多'), i[7],
                    status.get(i[8]), i[9], i[10]] for i in monijy]
         sjjy, ssjygd = HSD.sp_order_trade()
         if rq.is_ajax():
-            return JsonResponse({'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
-        return render(rq, 'tongji.html', {'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name})
+            return JsonResponse(
+                {'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name, 'user_name': user_name})
+        return render(rq, 'tongji.html',
+                      {'monijy': monijy, 'sjjy': sjjy, 'ssjygd': ssjygd, 'id_name': id_name, 'user_name': user_name})
 
     if rq_type == '2' and rq_date and end_date and rq_id != '0':
         results2 = HSD.order_detail(rq_date, end_date)
@@ -587,7 +591,7 @@ def tongji(rq):
                 elif i[6] == 1:
                     res[dt]['kong'] += 1
                 res[dt]['mony'] += i[5]
-                xx = [str(i[1]), str(i[3]), '空' if i[6]%2 else '多', i[5], i[2], i[4],i[7]]
+                xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7]]
                 res[dt]['datetimes'].append(xx)
 
                 huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
@@ -599,25 +603,26 @@ def tongji(rq):
         init_money = HSD.runSqlData('carry_investment', sql)
         init_money = init_money[0][0] if init_money else 10000
         if rq_date == end_date:
-            hcd = HSD.huice_day(res,init_money)
-            #return render(rq, 'hc_day.html', {'hcd': hcd})
-        res, huizong = tongji_huice(res, huizong)
+            hcd = HSD.huice_day(res, init_money)
+            # return render(rq, 'hc_day.html', {'hcd': hcd})
+        res, huizong = viewUtil.tongji_huice(res, huizong)
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-        return render(rq, 'hc.html', {'hc': hc, 'hcd':hcd, 'huizong': huizong, 'init_money': init_money, })
+        return render(rq, 'hc.html',
+                      {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name})
 
     if rq_type == '1' and rq_date:
         result9 = HSD.order_detail(rq_date, end_date)
         huizong = {}
         results2 = []
         if result9:
-            result9 = sorted(result9,key=lambda x:x[1])
+            result9 = sorted(result9, key=lambda x: x[1])
             last = {}
             jc = {}
             len_result9 = len(result9)
             for i in result9:
                 c = i[0]
-                if rq_id!='0' and str(c)!=rq_id:
+                if rq_id != '0' and str(c) != rq_id:
                     continue
                 name = id_name[c] if c in id_name else c
                 dt = i[1][:10]
@@ -628,51 +633,51 @@ def tongji(rq):
                 if dt not in huizong[c][-1]:
                     huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1]
 
-                h1 = i[5]                           # 盈亏
-                h2 = i[7] if i[6] % 2 == 0 else 0   # 多单数量
-                h3 = i[7] if i[6] % 2 == 1 else 0   # 空单数量
-                h4 = 1                              # 下单总数
-                h5 = i[7] if i[5] > 0 else 0        # 赢利单数
-                #h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
-                h7 = name                           # 姓名
+                h1 = i[5]  # 盈亏
+                h2 = i[7] if i[6] % 2 == 0 else 0  # 多单数量
+                h3 = i[7] if i[6] % 2 == 1 else 0  # 空单数量
+                h4 = 1  # 下单总数
+                h5 = i[7] if i[5] > 0 else 0  # 赢利单数
+                # h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
+                h7 = name  # 姓名
                 huizong[c][2] += h1
                 huizong[c][3] += h2
                 huizong[c][4] += h3
                 huizong[c][5] += h4
                 huizong[c][6] += h5
-                #huizong[c][7] = h6
+                # huizong[c][7] = h6
                 huizong[c][8] = h7
                 huizong[c][-1][dt][2] += h1
                 huizong[c][-1][dt][3] += h2
                 huizong[c][-1][dt][4] += h3
                 huizong[c][-1][dt][5] += h4
                 huizong[c][-1][dt][6] += h5
-                #huizong[c][-1][dt][7] = h6
+                # huizong[c][-1][dt][7] = h6
                 huizong[c][-1][dt][8] = h7
                 # i: (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
                 # 正向加仓，反向加仓
-                last[c] = [las for las in last[c] if i[1]<las[3]]
-                if last[c] and i[1]<=last[c][-1][3] and (last[c][-1][6]%2 and i[6]%2):
-                    jcyk = sum(la[2] for la in last[c])/len(last[c])-i[2]
-                    if jcyk>0:
+                last[c] = [las for las in last[c] if i[1] < las[3]]
+                if last[c] and i[1] <= last[c][-1][3] and (last[c][-1][6] % 2 and i[6] % 2):
+                    jcyk = sum(la[2] for la in last[c]) / len(last[c]) - i[2]
+                    if jcyk > 0:
                         huizong[c][9] += 1
                         huizong[c][-1][dt][9] += 1
-                        jc[c].append([i[1],jcyk])
+                        jc[c].append([i[1], jcyk])
                     else:
                         huizong[c][10] += 1
                         huizong[c][-1][dt][10] += 1
-                        jc[c].append([i[1],jcyk])
-                elif last[c] and i[1]<=last[c][-1][3] and (not last[c][-1][6]%2 and not i[6]%2):
-                    jcyk = i[2]-sum(la[2] for la in last[c]) / len(last[c])
-                    if jcyk>0:
+                        jc[c].append([i[1], jcyk])
+                elif last[c] and i[1] <= last[c][-1][3] and (not last[c][-1][6] % 2 and not i[6] % 2):
+                    jcyk = i[2] - sum(la[2] for la in last[c]) / len(last[c])
+                    if jcyk > 0:
                         huizong[c][9] += 1
                         huizong[c][-1][dt][9] += 1
-                        jc[c].append([i[1],jcyk])
+                        jc[c].append([i[1], jcyk])
                     else:
                         huizong[c][10] += 1
                         huizong[c][-1][dt][10] += 1
-                        jc[c].append([i[1],jcyk])
-                results2.append(i[:9]+(name,))                   # 交易明细
+                        jc[c].append([i[1], jcyk])
+                results2.append(i[:9] + (name,))  # 交易明细
                 last[c].append(i)
                 # 最大持仓
                 lzd = len(last[c])
@@ -682,7 +687,7 @@ def tongji(rq):
             for c in jc:
                 jcss = []
                 for dt in huizong[c][-1]:
-                    jcs = [i[1] for i in jc[c] if i[0][:10]==dt]
+                    jcs = [i[1] for i in jc[c] if i[0][:10] == dt]
                     jc_z = [s for s in jcs if s > 0]
                     jc_k = [s for s in jcs if s <= 0]
                     huizong[c][-1][dt][7] = huizong[c][-1][dt][6] / huizong[c][-1][dt][5] * 100  # 胜率
@@ -693,17 +698,17 @@ def tongji(rq):
                 jc_z = [s for s in jcss if s > 0]
                 jc_k = [s for s in jcss if s <= 0]
                 huizong[c][7] = huizong[c][6] / huizong[c][5] * 100  # 胜率
-                huizong[c][11] = sum(jc_z)/len(jc_z) if jc_z else 0 # 总共，平均每单赚多少钱加仓
-                huizong[c][12] = sum(jc_k)/len(jc_k) if jc_k else 0 # 总共，平均每单亏多少钱加仓
+                huizong[c][11] = sum(jc_z) / len(jc_z) if jc_z else 0  # 总共，平均每单赚多少钱加仓
+                huizong[c][12] = sum(jc_k) / len(jc_k) if jc_k else 0  # 总共，平均每单亏多少钱加仓
         if rq_id != '0':
             results2 = [result for result in results2 if rq_id == str(result[0])]
 
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
-        #results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
+        # results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
         if results2:
             return render(rq, 'tongji.html', locals())
-    if rq_type in ('3','4','5'):
+    if rq_type in ('3', '4', '5'):
         users = None
     if rq_date and rq_id == '0':
         results = HSD.calculate_earn(rq_date, end_date)
@@ -725,20 +730,24 @@ def tongji(rq):
         if results:
             return render(rq, 'tongji.html', locals())
 
-    herys = None
-    try:
-        herys = HSD.tongji()
-    except Exception as exc:
-        HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
-    if not herys:
-        return redirect('index')
+    # herys = None
+    # try:
+    #     herys = HSD.tongji()
+    # except Exception as exc:
+    #     HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+    # if not herys:
+    #     return redirect('index')
+    # ids = HSD.IDS
+    # return render(rq, 'tongji.html', locals())
+    herys = viewUtil.tongji_first()
     ids = HSD.IDS
     return render(rq, 'tongji.html', locals())
 
 
 def tools(rq):
     cljs = models.Clj.objects.all()
-    return render(rq, 'tools.html', {'cljs': cljs})
+    user_name, qx = getLogin(rq.session)
+    return render(rq, 'tools.html', {'cljs': cljs, 'user_name': user_name})
 
 
 def kline(rq):
@@ -747,7 +756,8 @@ def kline(rq):
     write_to_cache('kline_date', date)
     database = rq.GET.get('database', '1')
     write_to_cache('kline_database', database)
-    return render(rq, 'kline.html', {'date': date})
+    user_name, qx = getLogin(rq.session)
+    return render(rq, 'kline.html', {'date': date, 'user_name': user_name})
 
 
 def getList():
@@ -766,7 +776,7 @@ def getList():
             dates2 = str(dates2)[:10]
 
         sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" AND datetime<="%s"' % (
-        data_dict[database][1], dates, dates2)
+            data_dict[database][1], dates, dates2)
         res = list(HSD.runSqlData(data_dict[database][0], sql))
         if len(res) > 0:
             res = [
@@ -820,7 +830,6 @@ def getkline(rq):
     size = rq.POST.get('size')
     size = int(size) if size else 0
     types = rq.POST.get('type')  # 获取分钟类型
-    # print('.....................',types,size)
     # 1min 5min 15min 30min 1hour 1day 1week
     if rq.is_ajax() and size > 0:
         lists, _ch = getList()
@@ -835,8 +844,8 @@ def getkline(rq):
                 'marketName': "凯瑞投资",
                 'moneyType': "CNY",
                 'symbol': 'carry',
-                'url': '官网地址',  #（选填）
-                'topTickers': [],  #（选填）
+                'url': '官网地址',  # （选填）
+                'topTickers': [],  # （选填）
             }
         }
         return HttpResponse(json.dumps(data), content_type="application/json")
@@ -901,6 +910,7 @@ def getwebsocket(rq):
 
 def zhangting(rq, t):
     record_from(rq)
+    user_name, qx = getLogin(rq.session)
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
     rq_date = rq.GET.get('date', dates)
@@ -908,9 +918,9 @@ def zhangting(rq, t):
         zt = ZT.read_code()
         zt = sorted(zt, key=lambda x: x[2])  # 以第3个参数排序
         zt.reverse()
-        return render(rq, 'zhangting.html', {'zt_today': zt, 'dates': dates})
+        return render(rq, 'zhangting.html', {'zt_today': zt, 'dates': dates, 'user_name': user_name})
     if not rq_date:
-        return render(rq, 'zhangting.html', {'jyzt': False, 'dates': dates})
+        return render(rq, 'zhangting.html', {'jyzt': False, 'dates': dates, 'user_name': user_name})
     if t == 'tomorrow':
         datet = HSD.dtf(rq_date)
         day = datet.weekday()
@@ -925,12 +935,14 @@ def zhangting(rq, t):
                 zt_tomorrow[i][0] = zt_tomorrow[i][0][2:]
                 zt_tomorrow[i][2] = range(zt_tomorrow[i][2])  # ['★' for j in range(zt_tomorrow[i][2])]
         return render(rq, 'zhangting.html',
-                      {'jyzt': True, 'zt_tomorrow': zt_tomorrow, 'dates': rq_date, 'up': date_up, 'down': date_down})
+                      {'jyzt': True, 'zt_tomorrow': zt_tomorrow, 'dates': rq_date, 'up': date_up, 'down': date_down,
+                       'user_name': user_name})
 
     return redirect('page_not_found')
 
 
 def moni(rq):
+    user_name, qx = getLogin(rq.session)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     fa = rq.GET.get('fa')
@@ -957,18 +969,19 @@ def moni(rq):
             return render(rq, 'moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
-                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
         except Exception as exc:
-            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now())[:10]  # + datetime.timedelta(days=1)
     return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
 
 
 def newMoni(rq):
+    user_name, qx = getLogin(rq.session)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1038,20 +1051,21 @@ def newMoni(rq):
                            "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
                            "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
                            "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
-                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,
+                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,'user_name': user_name
                            })
         except Exception as exc:
-            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'new_moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
+                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
 
 
 def moni_all(rq):
     record_from(rq)
+    user_name, qx = getLogin(rq.session)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1117,22 +1131,21 @@ def moni_all(rq):
                 ress[i][min_yk[0]]['min_yk'] = 1
             return render(rq, 'moniAll.html',
                           {'ress': ress, 'huizongs': huizong, 'fa_doc': zbjs.fa_doc, 'dates': dates,
-                           'end_date': end_date,
+                           'end_date': end_date,'user_name': user_name,
                            'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
-            HSD.logging.error("文件：views.py 第{}行出错： {}".format(sys._getframe().f_lineno, exc))
+            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'moniAll.html',
                   {'dates': dates, 'end_date': end_date, 'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds,
-                   'cqdc': cqdc})
-
-
+                   'cqdc': cqdc,'user_name': user_name})
 
 
 def gdzd(rq):
+    user_name, qx = getLogin(rq.session)
     gdzds = read_from_cache('gdzds')
     gdzds = gdzds if gdzds else {}
     i = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
@@ -1143,10 +1156,11 @@ def gdzd(rq):
         gd, zd, gs, zs = zbjs.get_future(str(datetime.datetime.now())[:10])
         gd = gd * 30 if gd > 0 else 10
         zd = zd * 30 if zd > 0 else 10
-    return render(rq, 'zdzd.html', {'gd': gd, 'zd': zd})
+    return render(rq, 'zdzd.html', {'gd': gd, 'zd': zd,'user_name': user_name})
 
 
 def huice(rq):
+    user_name, qx = getLogin(rq.session)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     fa = rq.GET.get('fa')
@@ -1170,12 +1184,12 @@ def huice(rq):
                                                   reverse=reverse, param=param)
             hc, huizong = HSD.huices(res, huizong, init_money, dates, end_date)
         except Exception as exc:
-            HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
             return redirect('index')
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong})
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong,'user_name': user_name})
 
-    return render(rq, 'hc.html')
+    return render(rq, 'hc.html', {'user_name': user_name})
 
 
 def account_info_update(rq):
@@ -1203,12 +1217,17 @@ def journalism(rq):
     return redirect('index')
 
 
+def gxjy_refresh(rq):
+    pass
+
+
 def gxjy(rq):
     record_from(rq)
+    user_name, qx = getLogin(rq.session)
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     client = rq.META.get('REMOTE_ADDR')
-    if client in HSD.get_config('IP','ip'):
+    if client in HSD.get_config('IP', 'ip'):
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')
@@ -1219,94 +1238,87 @@ def gxjy(rq):
 
         if types == 'sx':  # 刷新
             try:
-                data = h.gx_lsjl(folder1)
-                data = data.fillna('')
-                data = data.sort_values(['日期', '成交时间'])
-                h.to_sql(data, 'gx_record')
-                data = h.gx_lsjl(folder2)
-                h.to_sql(data, 'gx_entry_exit')
+                viewUtil.gxjy_refresh(h, folder1, folder2)
                 init_data = h.get_gxjy_sql_all()
-                response = render(rq, 'gxjy.html', {'init_data': init_data})
+                response = render(rq, 'gxjy.html', {'init_data': init_data,'user_name': user_name})
             except Exception as exc:
-                HSD.logging.error("文件：views.py 第{}行报错： {}".format(sys._getframe().f_lineno, exc))
+                viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
                 response = redirect('index')
         elif not rq.is_ajax() and types == 'js':  # 计算数据
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data,_ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
+            data, _ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
             length = len(data)
             if code:
                 hys = [data[-1]]
             else:
                 hys = [data[i] for i in range(length)
                        if i < length - 1 and (data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
-                                              # or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
+                       # or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
             if start_date and end_date:
-                data = [i for i in data if start_date<=i[1][:10]<=end_date]
-            # h.closeConn()
-            return render(rq, 'gxjy.html', {'data': data, 'hys': hys,'start_date':start_date,'end_date':end_date})
+                data = [i for i in data if start_date <= i[1][:10] <= end_date]
+
+            return render(rq, 'gxjy.html', {'data': data, 'hys': hys, 'start_date': start_date, 'end_date': end_date,'user_name': user_name})
         elif rq.is_ajax() and types == 'js':  # 计算数据
-            start_date = rq.GET.get('start_date','1970-01-01')
-            end_date = rq.GET.get('end_date','2100-01-01')
+            start_date = rq.GET.get('start_date', '1970-01-01')
+            end_date = rq.GET.get('end_date', '2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data,_ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
+            data, _ = h.ray(dd, group=group) if group == 'date' else h.ray(dd)
             length = len(data)
             if code:
                 hys = [data[-1]]
             else:
                 hys = [data[i] for i in range(length)
                        if i < length - 1 and ((data[i + 1][0][:-4] != data[i][0][:-4])  # and data[i][4]!=0
-                                              or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
+                                              or (data[i + 1][0][:-4] != data[i][0][
+                                                                         :-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
                 data = sorted(data, key=lambda x: x[1])
             # h.closeConn()
-            data = [i for i in data if start_date<=i[1]<=end_date]
+            data = [i for i in data if start_date <= i[1] <= end_date]
             return JsonResponse({'data': data, 'hys': hys})
         elif types == 'tjt':  # 折线图
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
-            data,pzs = h.ray(dd)
-            #print(pzs)
-            #pie = {'name':,'value':}
+            data, pzs = h.ray(dd)
             dates = h.get_dates()
             ee = h.entry_exit()
-            # h.closeConn()
-            init_money = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == ee[0][0]) # 入金
-            jz = 1     # 初始净值
-            jzq = init_money / jz  # 初始净值权重
-            allje = init_money  # 总金额
-            # zx_x = [i[0] for i in dates]
-            # prices = [sum(i[8] for i in data if i[1][:10] == dt) for dt in zx_x]
+            init_money = 0
+            jz = 1  # 初始净值
+            jzq = 0  # init_money / jz  # 初始净值权重
+            allje = 0  # init_money  # 总金额
+            eae = []  # 出入金
             zx_x, prices = [], []
             hc = {
-                'allyk': [],    # 累积盈亏
-                'alljz': [],    # 累积净值
-                'allsxf': [],   # 累积手续费
-                'pie_name': [i[0] for i in pzs], # 成交偏好（饼图） 产品名称
-                'pie_value': [{'value':i[1],'name':i[0]} for i in pzs], # 成交偏好 饼图的值
-                'bar_name': [],     # 品种盈亏 名称
-                'bar_value': [],    # 品种盈亏 净利润
-                'week_name': [],    # 每周盈亏 名称
-                'week_value': [],   # 每周盈亏 净利润
-                'month_name': [],   # 每月盈亏 名称
+                'allyk': [],  # 累积盈亏
+                'alljz': [],  # 累积净值
+                'allsxf': [],  # 累积手续费
+                'pie_name': [i[0] for i in pzs],  # 成交偏好（饼图） 产品名称
+                'pie_value': [{'value': i[1], 'name': i[0]} for i in pzs],  # 成交偏好 饼图的值
+                'bar_name': [],  # 品种盈亏 名称
+                'bar_value': [],  # 品种盈亏 净利润
+                'week_name': [],  # 每周盈亏 名称
+                'week_value': [],  # 每周盈亏 净利润
+                'month_name': [],  # 每月盈亏 名称
                 'month_value': [],  # 每月盈亏 净利润
+                'eae': [],  # 出入金
+                'amount': [],  # 账号总金额
             }
-            # data ['bu1706', '2017-01-05 09:06:27', -4, 2680.0, -4, 11.21, 2680.0, 2635, 0, 0, 0, 0, 0, 2680.0, 2636, 0, -44.84, 0, 44.84, 0, 0, 0, '石油沥青', 0, 44.84],
-            name_jlr = defaultdict(float)   # 品种名称，净利润
-            week_jlr = defaultdict(float)   # 每周，净利润
+            name_jlr = defaultdict(float)  # 品种名称，净利润
+            week_jlr = defaultdict(float)  # 每周，净利润
             month_jlr = defaultdict(float)  # 每月，净利润
             data2 = []
             code_bs = h.code_bs
-            for xh,de in enumerate(dates):
+            for de in dates:
                 zx_x.append(de[0])
-                yk,sxf = 0,0
+                yk, sxf = 0, 0
                 f_date = datetime.datetime.strptime(de[0], '%Y-%m-%d').isocalendar()[:2]
-                week = str(f_date[0])+'-'+str(f_date[1]) # 星期
-                month = de[0][:7]   # 月
+                week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
+                month = de[0][:7]  # 月
                 for d in data:
                     if d[1][:10] == de[0]:
                         yk += d[23]
@@ -1317,47 +1329,48 @@ def gxjy(rq):
                         month_jlr[month] += lr
                     else:
                         data2.append(d)
-
                 yk += (prices[-1] if prices else 0)
                 prices.append(yk)
-                #sxf = sum(i[24] for i in data if i[1][:10] == de[0])
                 sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
-                hc['allsxf'].append(round(sxf,1))
-                rj = sum(i[3] if '转入' in i[1] else -i[2] for i in ee if i[0] == de[0])
-                if de[0] != ee[0][0] and rj != 0:
-                    init_money += rj
-                    jzq = (jzq*jz+rj)/jz    # 净值权重
-                jz = (init_money+yk-hc['allsxf'][-1])/jzq if jzq!=0 else 0
-                hc['alljz'].append(round(jz,4))
+                hc['allsxf'].append(round(sxf, 1))
+                rj = sum(i[3] - i[2] for i in ee if i[0] <= de[0])
+                if rj != init_money and rj != 0:
+                    jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
+                    init_money = rj
+                amount = init_money + yk - hc['allsxf'][-1]
+                hc['amount'].append(amount)
+                hc['eae'].append(init_money)
+                jz = amount / jzq if jzq != 0 else 0
+                hc['alljz'].append(round(jz, 4))
                 data = data2
                 data2 = []
 
-            zx_x2 = [i for i in zx_x if start_date<=i<=end_date]
+            zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
             ind_s = zx_x.index(zx_x2[0])
-            ind_e = zx_x.index(zx_x2[-1])+1
+            ind_e = zx_x.index(zx_x2[-1]) + 1
             zx_x = zx_x[ind_s:ind_e]
             prices = prices[ind_s:ind_e]
             f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
             week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
             f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
             week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
-            month_jlr = {k:v for k,v in month_jlr.items() if start_date <= k <= end_date}
-            week_jlr = {k:v for k,v in week_jlr.items() if week <= k <= week2}
+            month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
+            week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
             hc['allyk'] = prices
             hc['bar_name'] = [i for i in name_jlr]
-            hc['bar_value'] = [round(v,1) for v in name_jlr.values()]
-            week_jlr = {k:v for k,v in week_jlr.items() if v!=0}
+            hc['bar_value'] = [round(v, 1) for v in name_jlr.values()]
+            week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
             hc['week_name'] = [i for i in week_jlr]
-            hc['week_value'] = [round(v,1) for v in week_jlr.values()]
+            hc['week_value'] = [round(v, 1) for v in week_jlr.values()]
             hc['month_name'] = [i for i in month_jlr]
-            hc['month_value'] = [round(v,1) for v in month_jlr.values()]
-            return render(rq,'gxjy.html',{'zx_x': zx_x, 'hc': hc, 'start_date':start_date,'end_date':end_date})
+            hc['month_value'] = [round(v, 1) for v in month_jlr.values()]
+            return render(rq, 'gxjy.html', {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date,'user_name': user_name})
         elif rq.method == "GET" and rq.is_ajax():
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
             # h.closeConn()
-            init_data = [i for i in init_data if start_date<=i[0]<=end_date]
+            init_data = [i for i in init_data if start_date <= i[0] <= end_date]
             return JsonResponse({"init_data": init_data})
         elif types == 'hc':
             # Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit
@@ -1414,18 +1427,18 @@ def gxjy(rq):
             # conn = HSD.get_conn('carry_investment')
             sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
             init_money = HSD.runSqlData('carry_investment', sql)
-            #conn.close()
+            # conn.close()
             init_money = init_money[0][0]
             hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-            return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, })
+            return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name })
         else:  # 原始数据
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
             if start_date and end_date:
-                init_data = [i for i in init_data if start_date<=i[0][:10]<=end_date]
+                init_data = [i for i in init_data if start_date <= i[0][:10] <= end_date]
             else:
-                start_date,end_date = init_data[0][0][:10],init_data[-1][0][:10]
-            response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date':start_date, 'end_date':end_date})
+                start_date, end_date = init_data[0][0][:10], init_data[-1][0][:10]
+            response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date': start_date, 'end_date': end_date, 'user_name': user_name})
         # h.closeConn()  # 关闭数据库
     else:
         response = redirect('index')
@@ -1434,16 +1447,18 @@ def gxjy(rq):
 
 
 def systems(rq):
-    return render(rq,'systems.html')
+    user_name,qx = getLogin(rq.session)
+    return render(rq, 'systems.html',{'user_name': user_name})
+
 
 def get_system(rq):
-    nc = psutil.virtual_memory().percent    # 内存使用率%
-    cpu = psutil.cpu_percent(0)             # cup 使用率%
+    nc = psutil.virtual_memory().percent  # 内存使用率%
+    cpu = psutil.cpu_percent(0)  # cup 使用率%
 
     dt = str(datetime.datetime.now())[11:19]
 
-    zx = {'nc': nc,'cpu':cpu, 'times': dt}
-    return JsonResponse({'zx': zx }, safe=False)
+    zx = {'nc': nc, 'cpu': cpu, 'times': dt}
+    return JsonResponse({'zx': zx}, safe=False)
 
 
 def liaotianshiList(rq):
