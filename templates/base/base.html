@@ -26,6 +26,7 @@
 <script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.tipsy.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/grayscale-image.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/md5.js' %}"></script>
 
     <!--<script type="text/javascript" src="{% static 'js/spig.js' %}"></script>-->
 
@@ -208,9 +209,9 @@ var $container = $('#works-container');
                     <li><a href="javascript:show_login(1)" id="user_info">{{ user_name|default:"登录" }}</a>
                         {% if user_name %}
                         <ul>
-                            <li class="no-border-top" ><a href="">添加模拟账号</a></li>
-                            <li class="no-border-top" ><a href="">添加真实账号</a></li>
-                            <li class="no-border-top" ><a href="">添加工作日志</a></li>
+                            <li class="no-border-top" ><a href="{% url 'add_simulation_account' %}">添加模拟账户</a></li>
+                            <li class="no-border-top" ><a href="{% url 'add_real_account' %}">添加真实账户</a></li>
+                            <li class="no-border-top" ><a href="{% url 'add_work_log' %}">添加工作日志</a></li>
                             <li class="no-border-top" ><a href="">修改我的资料</a></li>
                             <li class="no-border-top" ><a onclick="javascript:user_logout();" style="cursor:pointer;">退出</a></li>
                         </ul>
@@ -287,7 +288,7 @@ function show_login(ts){
         // 已经登录
         $("#user_login_div").css("display","none");
         if(ts==1){
-            location.href = "{% url 'index' %}";
+            location.href = "{% url 'user_information' %}";
         }
     }
 }
@@ -310,7 +311,7 @@ function userLogin(type){
         if(user_name=='' || user_name==null || user_password=='' || user_password==null){
             alert('用户名或密码不能为空！');
         }else{
-            var data = {"user_name":user_name,"user_password":user_password};
+            var data = {"user_name":user_name,"user_password":hex_md5(user_password)};
             $.ajax({
                 type: "POST",
                 url: "/login/",
@@ -323,7 +324,7 @@ function userLogin(type){
                         alert(mes);
                         show_login(0);
                     }else{
-                        $("#login_message").text("登录失败！请确认用户名与密码是否输入正确！");
+                        $("#login_message").text(res.result);
                     }
                 }
             });

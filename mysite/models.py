@@ -16,7 +16,7 @@ class Clj(models.Model):
 class Users(models.Model):
     """ 用户 """
     CHICO_ZT = [[0, '未启用'], [1, '启用']]
-    CHICO_QX = [[1, '普通用户'], [2, '内部用户'], [3,'管理员']]
+    CHICO_QX = [[1, '普通用户'], [2, '内部用户'], [3, '管理员']]
     name = models.CharField('用户名', max_length=20, unique=True)
     password = models.CharField('密码', max_length=40)
     phone = models.CharField('手机号', max_length=11)
@@ -28,10 +28,13 @@ class Users(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class WorkLog(models.Model):
     """ 工作日志 """
-    belonged = models.ForeignKey('Users')  # 所属用户
+    belonged = models.ForeignKey('Users', verbose_name='所属用户')  # 所属用户
     startDate = models.DateField('填写日期', auto_now_add=True)
     date = models.DateField('所属工作日期')
     title = models.CharField('标题', max_length=50)
@@ -45,9 +48,17 @@ class WorkLog(models.Model):
         return self.belonged
 
 
+class SimulationAccount(models.Model):
+    """ 模拟交易账户 """
+    CHICO_ZT = [[0, '未启用'], [1, '启用']]
+    belonged = models.ForeignKey('Users', verbose_name='所属用户')  # 所属用户
+    host = models.CharField('交易账号', max_length=20)
+    enabled = models.IntegerField('状态', choices=CHICO_ZT, default=0)  # 1：启用，0：未启用
+
+
 class TradingAccount(models.Model):
-    """ 交易账户 """
-    belonged = models.ForeignKey('Users')  # 所属用户
+    """ 真实交易账户 """
+    belonged = models.ForeignKey('Users', verbose_name='所属用户')  # 所属用户
     host = models.CharField('账户', max_length=40)
     port = models.IntegerField('端口')
     license = models.CharField('许可证', max_length=30)

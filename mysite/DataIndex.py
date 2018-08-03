@@ -8,7 +8,7 @@ from collections import deque, namedtuple
 class ZB(object):
     fa_doc = {
         '1': ["出现4次(收盘价小于60均线，价差除以标准差<-1.5）)则做多；若出现macd>0与收盘价大于60均线，则平仓。",
-              "出现3次(收盘价大于60均线，价差除以标准差>1.5）)则做空；若出现macd<0与收盘价小于60均线，则平仓。","止损100个点"],
+              "出现4次(收盘价大于60均线，价差除以标准差>1.5）)则做空；若出现macd<0与收盘价小于60均线与diff往上回转3个点，则平仓。","止损100个点"],
         '2': ["若出现前阳价差除以标准差>1.5与后阴价差除以标准差<-1.5重合，则做多；若出现前阴价差除以标准差<-1.5与后阳价差除以标准差>1.5倍重合，则平仓。",
               "若出现前阴价差除以标准差<-1.5与后阳价差除以标准差>1.5重合，则做空；若出现前阳价差除以标准差>1.5与后阴价差除以标准差<-1.5倍重合，则平仓。","止损100个点"],
         '3': ["收盘价小于60均线 与 价差除以标准差>1.5，则做多；若前阳价差除以标准差>1.5倍 与 后阴价差除以标准差<-1.5倍重合，则平仓。",
@@ -395,6 +395,7 @@ class ZB(object):
         first_time = []
         tj_d=0
         tj_k=0
+        last_diff = 10000
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
@@ -403,19 +404,23 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, ope, clo, macd, mas, std, reg, mul, cd, high,low = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
-                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low']
+            datetimes, ope, clo, macd, mas, std, reg, mul, cd, high,low,diff = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
+                'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['diff']
             if mul > 1.5:
                 res[dates]['dy'] += 1
             elif mul < -1.5:
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
+            last_diff = diff if last_diff == 10000 else last_diff
+
             # 反向做单
             kctj_d = clo<mas and mul<-1.5
             kctj_k = clo>mas and mul>1.5
             pctj_d = (macd>0 and clo>mas)
-            pctj_k = (macd<0 and clo<mas)
+            pctj_k = (macd<0 and clo<mas and diff - last_diff>3)
+
+            last_diff = diff
 
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
@@ -432,7 +437,7 @@ class ZB(object):
                     zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9<=datetimes.hour<16:
                 tj_k+=1
-                if tj_k>2:
+                if tj_k>3:
                     jg_k=clo
                     startMony_k=clo
                     str_time2=str(datetimes)

@@ -84,6 +84,7 @@ def getLogin(ses):
 
 
 def record_from(rq):
+    """ 访客登记 """
     if rq.is_ajax():
         return
     dt = str(datetime.datetime.now())
@@ -93,17 +94,18 @@ def record_from(rq):
     if ip not in IP_NAME:
         address = HSD.get_ip_address(ip)
         IP_NAME[ip] = address
-        # with open(files, 'w') as f:
-        #     f.write(json.dumps(IP_NAME))
         viewUtil.record_log(files, IP_NAME, 'w')
-    # 2018-07-20 15:24:53.419241----江苏----192.168.2.204----192.168.2.204:8000/tj/
     info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
-    # with open('log\\visitor\\log-%s.txt' % dt[:9], 'a') as f:
-    #     f.write(info)
     viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
 
 
 def get_zx_zt(zt=False, zx=False, status=None):
+    """
+    :param zt: 是否返回柱状图数据
+    :param zx: 是否返回折线图数据
+    :param status: 数据库名称，如不为None则从数据库获取折线图数据，否则从网络获取
+    :return: 柱图 折线图 的数据
+    """
     zt_data, zx_data = None, None
     if zt:  # 柱状图
         data = read_from_cache('weight')
@@ -179,7 +181,7 @@ def get_zx_zt(zt=False, zx=False, status=None):
 
 def tongji_adus(rq):
     """ 修改与删除交易统计表 """
-    user_name,qx = getLogin(rq.session)
+    user_name, qx = getLogin(rq.session)
     id = rq.POST.get('id')
     name = rq.POST.get('name')
     en = rq.POST.get('en')
@@ -208,14 +210,12 @@ def tongji_adus(rq):
     return messages
 
 
-
 # ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
 
 def index(rq):
+    """ 主页面 """
     record_from(rq)
-    user_name = None
-    if 'users' in rq.session:
-        user_name, qx = getLogin(rq.session)
+    user_name, qx = getLogin(rq.session)
     return render(rq, 'index.html', {'user_name': user_name})
 
 
@@ -225,27 +225,85 @@ def login(rq):
     if rq.method == 'POST' and rq.is_ajax():
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
+        message = "登录失败！请确认用户名与密码是否输入正确！"
         try:
             user = models.Users.objects.get(name=username)
             timestamp = user.creationTime
             ups = HSD.get_config('U', 'userps')
             password = eval(ups)
             password = md5(password.encode()).hexdigest()
-            if user.password == password:
+            if user.password != password:
+                pass
+            elif user.password == password and user.enabled == 1:
                 rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction}
                 return JsonResponse({"result": "yes", "users": username})
+            elif user.enabled != 1:
+                message = "登录失败！您的账户尚未启用！"
         except:
             pass
-    return JsonResponse({"result": "no"})
+    return JsonResponse({"result": message})
 
 
 def logout(rq):
+    """ 登出"""
     if rq.is_ajax() and 'users' in rq.session:
         del rq.session['users']
     return HttpResponse('yes')
 
-def update(rq):
+
+def update_data(rq):
+    """ 修改账号资料 """
     pass
+
+def user_information(rq):
+    """ 用户资料信息 """
+    record_from(rq)
+    user_name, qx = getLogin(rq.session)
+    if user_name and rq.method == 'GET':
+        user = models.Users.objects.get(name=user_name)
+        work = models.WorkLog.objects.filter(belonged=user)
+        real_account = models.TradingAccount.objects.filter(belonged=user)
+        account = models.SimulationAccount.objects.filter(belonged=user)
+        return render(rq, 'user_information.html', {"user_name": user_name,"work":work,"real_account":real_account,'account':account})
+
+def add_work_log(rq):
+    """ 添加工作日志"""
+    record_from(rq)
+    user_name, qx = getLogin(rq.session)
+    if user_name and rq.method == 'GET':
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_work_log": True,"operation":"工作日志"})
+    elif user_name and rq.method == 'POST':
+        date = rq.POST['date'].strip()
+        date = date.replace('/','-')
+        title = rq.POST['title']
+        body = rq.POST['body']
+        if '_save' in rq.POST:  # 保存
+            user = models.Users.objects.get(name=user_name)
+            work = models.WorkLog.objects.create(belonged=user,date=date,title=title,body=body)
+            work.save()
+        elif '_addanother' in rq.POST:  # 保存并增加另一个
+            pass
+        elif '_continue' in rq.POST:  # 保存并继续编辑
+            pass
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_work_log": True, "operation":"工作日志"})
+
+
+def add_simulation_account(rq):
+    """ 添加模拟账户 """
+    record_from(rq)
+    user_name, qx = getLogin(rq.session)
+    if user_name:
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_simulation_account":True,"operation":"模拟账户"})
+
+
+def add_real_account(rq):
+    """ 添加真实账户 """
+    record_from(rq)
+    user_name, qx = getLogin(rq.session)
+    if user_name:
+        return render(rq, 'user_add_data.html',
+                      {"user_name": user_name, "add_real_account": True, "operation": "真实账户"})
+
 
 def register(rq):
     """ 用户注册 """
@@ -264,12 +322,12 @@ def register(rq):
         message = ''
         form = forms.UsersForm(rq.POST)
         if form.is_valid():
-            # ['name', 'password', 'phone', 'email']
             name = rq.POST['name'].strip()
             password = rq.POST['password'].strip()
             phone = rq.POST['phone'].strip()
             email = rq.POST.get('email')
-            if name and password and phone and not models.Users.objects.filter(name=name):
+            if name and password and phone and len(phone) == 11 and phone[:2] in (
+            '13', '14', '15', '18') and not models.Users.objects.filter(name=name):
                 ups = HSD.get_config('U', 'userps')
                 timestamp = str(int(time.time() * 10))
                 password = eval(ups)
@@ -544,7 +602,7 @@ def tongji(rq):
         init_money = 10000  # 入金
         hcd = None
         if rq_date == end_date:
-            hcd = HSD.huice_day(res, init_money)
+            hcd = HSD.huice_day(res, init_money, real=True)
 
         res, huizong = viewUtil.tongji_huice(res, huizong)
 
@@ -593,7 +651,7 @@ def tongji(rq):
                 elif i[6] == 1:
                     res[dt]['kong'] += 1
                 res[dt]['mony'] += i[5]
-                xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7]]
+                xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7], i[11]]
                 res[dt]['datetimes'].append(xx)
 
                 huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
@@ -605,7 +663,7 @@ def tongji(rq):
         init_money = HSD.runSqlData('carry_investment', sql)
         init_money = init_money[0][0] if init_money else 10000
         if rq_date == end_date:
-            hcd = HSD.huice_day(res, init_money)
+            hcd = HSD.huice_day(res, init_money, real=False)
             # return render(rq, 'hc_day.html', {'hcd': hcd})
         res, huizong = viewUtil.tongji_huice(res, huizong)
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
@@ -971,7 +1029,8 @@ def moni(rq):
             return render(rq, 'moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
-                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
+                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
+                           'user_name': user_name})
         except Exception as exc:
             viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
     dates = datetime.datetime.now()
@@ -979,7 +1038,7 @@ def moni(rq):
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now())[:10]  # + datetime.timedelta(days=1)
     return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
+                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
 
 
 def newMoni(rq):
@@ -1053,7 +1112,7 @@ def newMoni(rq):
                            "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
                            "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
                            "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
-                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed,'user_name': user_name
+                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed, 'user_name': user_name
                            })
         except Exception as exc:
             viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
@@ -1062,7 +1121,7 @@ def newMoni(rq):
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'new_moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,'user_name': user_name})
+                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
 
 
 def moni_all(rq):
@@ -1133,7 +1192,7 @@ def moni_all(rq):
                 ress[i][min_yk[0]]['min_yk'] = 1
             return render(rq, 'moniAll.html',
                           {'ress': ress, 'huizongs': huizong, 'fa_doc': zbjs.fa_doc, 'dates': dates,
-                           'end_date': end_date,'user_name': user_name,
+                           'end_date': end_date, 'user_name': user_name,
                            'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
         except Exception as exc:
             viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
@@ -1143,7 +1202,7 @@ def moni_all(rq):
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'moniAll.html',
                   {'dates': dates, 'end_date': end_date, 'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds,
-                   'cqdc': cqdc,'user_name': user_name})
+                   'cqdc': cqdc, 'user_name': user_name})
 
 
 def gdzd(rq):
@@ -1158,7 +1217,7 @@ def gdzd(rq):
         gd, zd, gs, zs = zbjs.get_future(str(datetime.datetime.now())[:10])
         gd = gd * 30 if gd > 0 else 10
         zd = zd * 30 if zd > 0 else 10
-    return render(rq, 'zdzd.html', {'gd': gd, 'zd': zd,'user_name': user_name})
+    return render(rq, 'zdzd.html', {'gd': gd, 'zd': zd, 'user_name': user_name})
 
 
 def huice(rq):
@@ -1189,7 +1248,7 @@ def huice(rq):
             viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
             return redirect('index')
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong,'user_name': user_name})
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name})
 
     return render(rq, 'hc.html', {'user_name': user_name})
 
@@ -1242,7 +1301,7 @@ def gxjy(rq):
             try:
                 viewUtil.gxjy_refresh(h, folder1, folder2)
                 init_data = h.get_gxjy_sql_all()
-                response = render(rq, 'gxjy.html', {'init_data': init_data,'user_name': user_name})
+                response = render(rq, 'gxjy.html', {'init_data': init_data, 'user_name': user_name})
             except Exception as exc:
                 viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
                 response = redirect('index')
@@ -1262,7 +1321,8 @@ def gxjy(rq):
             if start_date and end_date:
                 data = [i for i in data if start_date <= i[1][:10] <= end_date]
 
-            return render(rq, 'gxjy.html', {'data': data, 'hys': hys, 'start_date': start_date, 'end_date': end_date,'user_name': user_name})
+            return render(rq, 'gxjy.html', {'data': data, 'hys': hys, 'start_date': start_date, 'end_date': end_date,
+                                            'user_name': user_name})
         elif rq.is_ajax() and types == 'js':  # 计算数据
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
@@ -1366,7 +1426,8 @@ def gxjy(rq):
             hc['week_value'] = [round(v, 1) for v in week_jlr.values()]
             hc['month_name'] = [i for i in month_jlr]
             hc['month_value'] = [round(v, 1) for v in month_jlr.values()]
-            return render(rq, 'gxjy.html', {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date,'user_name': user_name})
+            return render(rq, 'gxjy.html', {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date,
+                                            'user_name': user_name})
         elif rq.method == "GET" and rq.is_ajax():
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
@@ -1433,14 +1494,16 @@ def gxjy(rq):
             init_money = init_money[0][0]
             hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-            return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name })
+            return render(rq, 'hc.html',
+                          {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name})
         else:  # 原始数据
             init_data = h.get_gxjy_sql_all(code) if code else h.get_gxjy_sql_all()
             if start_date and end_date:
                 init_data = [i for i in init_data if start_date <= i[0][:10] <= end_date]
             else:
                 start_date, end_date = init_data[0][0][:10], init_data[-1][0][:10]
-            response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date': start_date, 'end_date': end_date, 'user_name': user_name})
+            response = render(rq, 'gxjy.html', {'init_data': init_data, 'start_date': start_date, 'end_date': end_date,
+                                                'user_name': user_name})
         # h.closeConn()  # 关闭数据库
     else:
         response = redirect('index')
@@ -1449,8 +1512,8 @@ def gxjy(rq):
 
 
 def systems(rq):
-    user_name,qx = getLogin(rq.session)
-    return render(rq, 'systems.html',{'user_name': user_name})
+    user_name, qx = getLogin(rq.session)
+    return render(rq, 'systems.html', {'user_name': user_name})
 
 
 def get_system(rq):

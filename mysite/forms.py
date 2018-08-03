@@ -9,7 +9,7 @@ from django.core.validators import RegexValidator
 
 
 class UsersForm(forms.ModelForm):
-    passwordr = fields.CharField(max_length=20)
+    passwordr = fields.CharField(max_length=40)
     captcha = CaptchaField()
 
     class Meta:

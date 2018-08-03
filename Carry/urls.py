@@ -20,9 +20,17 @@ from mysite import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$',views.index,name='index'),
+
+    # 用户相关操作
     url(r'^login/$',views.login,name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^update_data/$', views.update_data, name='update_data'),
+    url(r'^add_work_log/$', views.add_work_log, name='add_work_log'),
+    url(r'^add_simulation_account/$', views.add_simulation_account, name='add_simulation_account'),
+    url(r'^add_real_account/$', views.add_real_account, name='add_real_account'),
+    url(r'^user_information/$', views.user_information, name='user_information'),
+
     url(r'^stockData/$',views.stockData,name='stockData'),
     url(r'^stockDatas/$',views.stockDatas,name='stockDatas'),
     url(r'^updates/$',views.redis_update),

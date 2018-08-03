@@ -11,8 +11,8 @@
     {% load staticfiles %}
     <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
 
-<div align="center"><p id="error_info" style="color:green;">欢迎！{{ message }}</p><br/>
-    <form action="{% url 'register' %}" method="POST">
+<div align="center"><p id="error_info" style="color:green;">{{ message|default:"欢迎！" }}</p><br/>
+    <form action="{% url 'register' %}" method="POST" id="form_register">
         {% csrf_token %}
         <fieldset>
             <legend>用户注册</legend>
@@ -20,13 +20,19 @@
                 {{ form.as_table }}
             </table>
            <br/>
-            <input type="submit" value="注册">
+            <input type="button" onclick="form_register();" value="注册">
             <input type="button" onclick="javascript:show_login();" value="前往登录">
         </fieldset>
     </form>
     {{ message }}
 </div>
 <script>
+function form_register(){
+    var form = document.getElementById("form_register");
+    var value = form["password"].value;
+    form["password"].value = hex_md5(value);
+    form.submit();
+}
     $("#id_captcha_1").css('width','100').attr('placeholder','输入验证码');
     $(".captcha").css('cursor','pointer');
 $(".captcha").click(function(){

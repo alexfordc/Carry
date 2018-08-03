@@ -109,7 +109,7 @@ SQL = {
     'get_idName': 'SELECT id,trader_name FROM account_info',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
     "order_detail": "SELECT Account_ID,DATE_ADD(DATE_FORMAT(OpenTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),OpenPrice,DATE_ADD(DATE_FORMAT(CloseTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),"
-                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit,Ticket FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 computer_name = socket.gethostname()  # 计算机名称
@@ -451,7 +451,6 @@ def order_detail(dates=None, end_date=None):
     sql = SQL['order_detail']
     sql = sql.format(dates, end_date)
     data = runSqlData('carry_investment', sql)
-    # conn.close()
     IDS = set([i[0] for i in data])
     return data
 
@@ -1286,7 +1285,8 @@ def huices(res, huizong, init_money, dates, end_date):
     return hc, huizong
 
 
-def huice_day(res, init_money):
+def huice_day(res, init_money,real=False):
+    """ res：交易详细记录，init_money：入金，real：是否是实盘 """
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
     jyts = len(keys)
@@ -1318,13 +1318,18 @@ def huice_day(res, init_money):
         je = round(res[i]['mony'])
         zx_x.append(i[-5:-3] + i[-2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
-        for j in res[i]['datetimes']:
-            # if i == keys[-1]:
-            st = j[6] if j[2] == '多' else -j[6]
-            sameday.append([j[0], st, j[4]])
-            sameday.append([j[1], -st, j[5]])
-            hc['samedatetime'] = i
 
+        for j in res[i]['datetimes']:
+            if real:
+                st = j[6] if j[2] == '多' else -j[6]
+                sameday.append([j[0], st, j[4]])
+                sameday.append([j[1], -st, j[5]])
+                hc['samedatetime'] = i
+            else:
+                st = j[6] if j[2] == '多' else -j[6]
+                sameday.append([j[0], st, j[4], j[7]])
+                sameday.append([j[1], -st, j[5], j[7]])
+                hc['samedatetime'] = i
     try:
         sameday.sort()
         hc['day_time'] = [sa[0][-11:-3].replace(' ', '/') for sa in sameday]
@@ -1341,6 +1346,7 @@ def huice_day(res, init_money):
                 return l.index(x)
 
         syc = []  # 开仓价
+        syc2 = []  # 模拟时的单号
         cc = 0  # 持仓
         zjhcs = 0
         for y in range(len(hc['day_x'])):
@@ -1351,9 +1357,9 @@ def huice_day(res, init_money):
                 if cc == 0:
                     yk = 0
                 elif cc < 0:
-                    yk = sum(syc) - len(syc) * cl
+                    yk = sum(syc) - len(syc) * cl  # (sum(syc) if real else sum(sycs[0] for sycs in syc))
                 else:
-                    yk = len(syc) * cl - sum(syc)
+                    yk = len(syc) * cl - sum(syc) # (sum(syc) if real else sum(sycs[0] for sycs in syc))
                 hc['day_yk'].append(round(sum(hc['day_pcyk']) + yk, 1))
             else:
                 yk = 0  # 分钟盈亏
@@ -1361,23 +1367,49 @@ def huice_day(res, init_money):
                 for c2 in range(reg):
                     sind = get_ind(day_time, dx, c2)
                     same = sameday[sind]
-                    syc.append(same[2])
-                    if same[1] == 1:
-                        if cc < 0:
-                            pop = -(syc.pop() - syc.pop())
-                            yk += pop
-                            pcyk += pop
-                            yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
-                        else:
-                            yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
-                    elif same[1] == -1:
-                        if cc > 0:
-                            pop = syc.pop() - syc.pop()
-                            yk += pop
-                            pcyk += pop
-                            yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
-                        else:
-                            yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
+                    if real:  # 实盘
+                        syc.append(same[2])
+                        if same[1] == 1:
+                            if cc < 0:
+                                pop = -(syc.pop() - syc.pop())
+                                yk += pop
+                                pcyk += pop
+                                yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
+                            else:
+                                yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
+                        elif same[1] == -1:
+                            if cc > 0:
+                                pop = syc.pop() - syc.pop()
+                                yk += pop
+                                pcyk += pop
+                                yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
+                            else:
+                                yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
+                    else:
+                        syc.append(same[2])
+                        syc2.append(same[3])
+                        if same[1] == 1:
+                            if syc2.count(syc2[-1]) == 2:
+                                o2 = syc2.index(syc2[-1])
+                                pop = -(syc.pop() - syc.pop(o2))
+                                yk += pop
+                                pcyk += pop
+                                yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
+                                syc2.pop()
+                                syc2.pop(o2)
+                            else:
+                                yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
+                        elif same[1] == -1:
+                            if syc2.count(syc2[-1]) == 2:
+                                o2 = syc2.index(syc2[-1])
+                                pop = syc.pop() - syc.pop(o2)
+                                yk += pop
+                                pcyk += pop
+                                yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
+                                syc2.pop()
+                                syc2.pop(o2)
+                            else:
+                                yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
                     cc += same[1]
                 hc['day_yk'].append(round(sum(hc['day_pcyk']) + yk, 1))
 

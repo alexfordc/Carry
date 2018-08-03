@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Clj, Users, WorkLog, TradingAccount
+from .models import Clj, Users, WorkLog, TradingAccount, SimulationAccount
 
 
 # Register your models here.
@@ -20,7 +20,12 @@ class TradingAccountAdmin(admin.ModelAdmin):
     list_display = ('belonged', 'host')
 
 
+class SimulationAccountAdmin(admin.ModelAdmin):
+    list_display = ('belonged', 'host', 'enabled')
+
+
 admin.site.register(Clj, CljAdmin)
 admin.site.register(Users, UsersAdmin)
 admin.site.register(WorkLog, WorkLogAdmin)
 admin.site.register(TradingAccount,TradingAccountAdmin)
+admin.site.register(SimulationAccount,SimulationAccountAdmin)
