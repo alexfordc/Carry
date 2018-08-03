@@ -9,7 +9,7 @@ class CljAdmin(admin.ModelAdmin):
 
 
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ('name', 'password', 'phone', 'email', 'enabled', 'jurisdiction')
+    list_display = ('name', 'password', 'phone', 'email', 'enabled', 'jurisdiction', 'creationTime')
 
 
 class WorkLogAdmin(admin.ModelAdmin):

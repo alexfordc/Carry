@@ -225,12 +225,12 @@ def login(rq):
     if rq.method == 'POST' and rq.is_ajax():
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
-        ups = HSD.get_config('U', 'userps')
-        password = eval(ups)
-        password = md5(password.encode())
-        password = password.hexdigest()
         try:
             user = models.Users.objects.get(name=username)
+            timestamp = user.creationTime
+            ups = HSD.get_config('U', 'userps')
+            password = eval(ups)
+            password = md5(password.encode()).hexdigest()
             if user.password == password:
                 rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction}
                 return JsonResponse({"result": "yes", "users": username})
@@ -271,10 +271,12 @@ def register(rq):
             email = rq.POST.get('email')
             if name and password and phone and not models.Users.objects.filter(name=name):
                 ups = HSD.get_config('U', 'userps')
+                timestamp = str(int(time.time() * 10))
                 password = eval(ups)
                 password = md5(password.encode()).hexdigest()
+
                 users = models.Users.objects.create(name=name, password=password, phone=phone, email=email, enabled=1,
-                                                    jurisdiction=1)
+                                                    jurisdiction=1, creationTime=timestamp)
                 users.save()
                 message = "注册成功！"
             else:

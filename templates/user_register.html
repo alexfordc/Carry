@@ -45,11 +45,11 @@ $("#id_name").blur(function(){
     }else{
     /*$.ajax({
         type:"GET",
-        url:"/register/",
+        url:"{% url 'register' %}",
         data:{"name":name},
         success:callBack
     });*/
-    $.get("/register/",{"name":name},callBack);
+    $.get("{% url 'register' %}",{"name":name},callBack);
     }
     function callBack(datas){
             if(datas==1){
@@ -62,8 +62,13 @@ $("#id_name").blur(function(){
         }
 });
 $("#id_passwordr").blur(function(){
-    if($("#id_passwordr").val()!=$("#id_password").val()){
-        $("#error_info").css('color','red').html("两次密码输入不一致");
+    var password = $("#id_password").val();
+    if(password==null || password==""){
+        $("#error_info").css('color','red').html("密码不能为空！");
+    }else if($("#id_passwordr").val()!=password){
+        $("#error_info").css('color','red').html("两次密码输入不一致！");
+    }else if(password.length<6){
+        $("#error_info").css('color','red').html("密码长度需为6--18位！");
     }else{
         $("#error_info").css('color','green').html("欢迎！");
     }

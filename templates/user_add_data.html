@@ -1,0 +1,196 @@
+
+{% extends 'base/base.html' %}
+{% block title %}用户注册{% endblock %}
+{% block script %}
+{% load staticfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+{% endblock %}
+{% block center_cen %}
+
+
+<!-- Container -->
+<div id="container">
+
+<div class="breadcrumbs">
+<a href="/">首页</a>
+&rsaquo; <a href="/admin/mysite/">Mysite</a>
+&rsaquo; <a href="/admin/mysite/worklog/">Work logs</a>
+&rsaquo; 增加 work log
+</div>
+
+
+
+
+
+
+
+    <!-- Content -->
+    <div id="content" class="colM">
+
+        <h1>增加 work log</h1>
+        <div id="content-main">
+
+
+
+<form enctype="multipart/form-data" action="" method="post" id="worklog_form" novalidate><input type='hidden' name='csrfmiddlewaretoken' value='JbZpzg58JgHomxpkCbayJObcc4ELFGskNGtsAS3apAEfnM2v1btdmjf3CRQ7QE9W' />
+<div>
+
+
+
+
+
+
+
+  <fieldset class="module aligned ">
+
+
+
+        <div class="form-row field-belonged">
+
+
+                <div>
+
+
+                        <label class="required" for="id_belonged">Belonged:</label>
+
+                            <div class="related-widget-wrapper">
+    <select name="belonged" required id="id_belonged">
+  <option value="" selected>---------</option>
+
+  <option value="1">Users object</option>
+
+</select>
+
+        <a class="related-widget-wrapper-link change-related" id="change_id_belonged"
+            data-href-template="/admin/mysite/users/__fk__/change/?_to_field=id&amp;_popup=1"
+            title="更改选中的users"><img src="/static/admin/img/icon-changelink.svg" alt="修改"/></a><a class="related-widget-wrapper-link add-related" id="add_id_belonged"
+            href="/admin/mysite/users/add/?_to_field=id&amp;_popup=1"
+            title="增加另一个 users"><img src="/static/admin/img/icon-addlink.svg" alt="增加"/></a>
+
+</div>
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-date">
+
+
+                <div>
+
+
+                        <label class="required" for="id_date">所属工作日期:</label>
+
+                            <input type="text" name="date" class="vDateField" size="10" required id="id_date" />
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-title">
+
+
+                <div>
+
+
+                        <label class="required" for="id_title">标题:</label>
+
+                            <input type="text" name="title" class="vTextField" maxlength="50" required id="id_title" />
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-body">
+
+
+                <div>
+
+
+                        <label class="required" for="id_body">详细内容:</label>
+
+                            <textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="300" required id="id_body">
+</textarea>
+
+
+
+                </div>
+
+        </div>
+
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="submit-row">
+<input type="submit" value="保存" class="default" name="_save" />
+
+
+<input type="submit" value="保存并增加另一个" name="_addanother" />
+<input type="submit" value="保存并继续编辑" name="_continue" />
+</div>
+
+
+
+    <script type="text/javascript"
+            id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+
+                data-model-name="worklog"
+            >
+    </script>
+
+
+
+
+<script type="text/javascript"
+        id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
+
+</div>
+</form></div>
+
+
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+{% endblock %}

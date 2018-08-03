@@ -23,6 +23,7 @@ class Users(models.Model):
     email = models.EmailField('邮箱', max_length=36, null=True, blank=True)
     enabled = models.IntegerField('状态', choices=CHICO_ZT, default=0)  # 1：启用，0：未启用
     jurisdiction = models.IntegerField('用户权限', choices=CHICO_QX, default=1)  # 1：普通用户，2：内部用户，3：管理员
+    creationTime = models.CharField('创建时间', max_length=12)
 
     def __unicode__(self):
         return self.name
