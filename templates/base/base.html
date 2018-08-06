@@ -259,7 +259,7 @@ var $container = $('#works-container');
 </div>
     <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
 border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
-
+        <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
         <p><input type="text"  id="user_name" name="user_name" placeholder="请输入账号"></p><br/>
     <p><input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
     <input type="button" id="user_login" onclick="javascript:userLogin('login');" value="登录">&nbsp;&nbsp;&nbsp;
@@ -308,13 +308,14 @@ function userLogin(type){
     }else{
         var user_name = $("#user_name").val();
         var user_password = $("#user_password").val();
+        var csrf = $("#csrfmiddlewaretoken input").val();
         if(user_name=='' || user_name==null || user_password=='' || user_password==null){
             alert('用户名或密码不能为空！');
         }else{
-            var data = {"user_name":user_name,"user_password":hex_md5(user_password)};
+            var data = {"user_name":user_name,"user_password":hex_md5(user_password),"csrfmiddlewaretoken":csrf};
             $.ajax({
                 type: "POST",
-                url: "/login/",
+                url: "{% url 'login' %}",
                 data:data,
                 dataType: "json",
                 success:function(res){

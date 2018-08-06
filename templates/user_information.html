@@ -5,20 +5,32 @@
 
 {% endblock %}
 {% block center_cen %}
+{% load staticfiles %}
+<div align="center" id="detailed_content_div" style="display:none; left:50%; bottom:50%;width:360px; position: fixed;
+border:1px solid #888; background-color:green; text-align:center">
+        </div>
+<div style="color:green;">{{ msg }}</div>
 <div align="center">
     <table border="1" width="800">
         <caption>工作日志</caption>
-        <tr><th>日期</th><th>标题</th><th>内容</th></tr>
+        <tr><th>用户名</th><th>日期</th><th>标题</th><th>内容</th><th>操作</th></tr>
 {% for w in work %}
-    <tr><td>{{ w.date }}</td><td>{{ w.title }}</td><td>{{ w.body }}</td></tr>
+    <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" onmouseout="hides()" class="bodys">{{ w.4|truncatechars:12 }}</td>
+        <td><a href="{% url 'update_work_log' %}?id={{w.5}}" title="修改"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-left:20px;margin-top:8px;margin-bottom:5px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--<a onclick="confirm('确定要删除吗？')?location.href='{% url 'del_work_log' %}?id={{w.5}}':''" href="javascript:;" title="删除">删除</a> -->
+        <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_work_log' %}?id={{w.5}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:8px;margin-bottom:5px;"></a> </td>
+    </tr>
 {% endfor %}
     </table>
     <hr/>
     <table border="1" width="800">
         <caption>我的模拟账户</caption>
-        <tr><th>账号</th><th>是否启用</th></tr>
+        <tr><th>账号</th><th>是否启用</th><th>操作</th></tr>
     {% for a in account %}
-    <tr><td>{{ a.host }}</td><td>{{ a.enabled }}</td></tr>
+    <tr><td>{{ a.host }}</td><td>
+        {% if a.enabled == 0 %}No{% else %}Yes{% endif %}
+    </td>
+    <td><a onclick="return confirm('确定要删除吗？')" href="{% url 'del_simulation_account' %}?id={{a.id}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-left:20px;margin-top:5px;margin-bottom:5px;"></a></td></tr>
     {% endfor %}
     </table>
     <hr/>
@@ -30,5 +42,21 @@
     {% endfor %}
     </table>
 </div>
+<script>
+var xx=0,yy=0;
+function shows(body){
+    var div = $("#detailed_content_div");
+    div.show();
+    div.text("  "+body);
+    div.css({'left':xx-600,'top':yy,'height':body.length*1+20});
+}
+function hides(){
+   $("#detailed_content_div").hide();
+}
 
+$('.bodys').mousemove(function(e) {
+    xx = e.originalEvent.x ||e.originalEvent.layerX || 0;
+    yy = e.originalEvent.y ||e.originalEvent.layerY || 0;
+});
+</script>
 {% endblock %}

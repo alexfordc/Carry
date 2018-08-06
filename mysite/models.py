@@ -41,8 +41,8 @@ class WorkLog(models.Model):
     body = models.TextField('详细内容', max_length=300)
 
     class Meta:
-        """ 以所属工作日期逆序 """
-        ordering = ('-date',)
+        """ 以所属工作日期逆序 与 id 排序 """
+        ordering = ('-date','id')
 
     def __unicode__(self):
         return self.belonged
@@ -52,7 +52,7 @@ class SimulationAccount(models.Model):
     """ 模拟交易账户 """
     CHICO_ZT = [[0, '未启用'], [1, '启用']]
     belonged = models.ForeignKey('Users', verbose_name='所属用户')  # 所属用户
-    host = models.CharField('交易账号', max_length=20)
+    host = models.CharField('交易账号', max_length=20,unique=True)
     enabled = models.IntegerField('状态', choices=CHICO_ZT, default=0)  # 1：启用，0：未启用
 
 
