@@ -7,28 +7,30 @@ from threading import Thread
 from mysite import HSD
 
 
-
 def asyncs(func):
     """ 执行不需要返回结果的程序 """
-    def wrapper(*args,**kwargs):
-        t = Thread(target=func,args=args,kwargs=kwargs)
+
+    def wrapper(*args, **kwargs):
+        t = Thread(target=func, args=args, kwargs=kwargs)
         t.start()
+
     return wrapper
 
+
 @asyncs
-def record_log(files,info,types):
+def record_log(files, info, types):
     """ 访问日志 """
     if types == 'w':
-        with open(files,'w') as f:
+        with open(files, 'w') as f:
             f.write(json.dumps(info))
     elif types == 'a':
         with open(files, 'a') as f:
             f.write(info)
 
-def error_log(files,line,exc):
+
+def error_log(files, line, exc):
     """ 错误日志 """
     HSD.logging.error("文件：{} 第{}行报错： {}".format(files, line, exc))
-
 
 
 def tongji_huice(res, huizong):
@@ -60,17 +62,19 @@ def tongji_huice(res, huizong):
     huizong['most2'] = max(all_price)
     return res, huizong
 
+
 def tongji_first():
     """ 最初进入统计的页面 """
     herys = None
     try:
         herys = HSD.tongji()
     except Exception as exc:
-        HSD.logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0],sys._getframe().f_lineno, exc))
+        HSD.logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
 
     return herys
 
-def tongji_ud(page,rq_date,end_date):
+
+def tongji_ud(page, rq_date, end_date):
     """ 交易统计表上一天、下一天计算"""
     if page == 'up' and rq_date and end_date:
         rq_date = datetime.datetime.strptime(rq_date, '%Y-%m-%d')
@@ -94,8 +98,9 @@ def tongji_ud(page,rq_date,end_date):
         end_date = rq_date
     return rq_date, end_date
 
+
 @asyncs
-def gxjy_refresh(h,folder1,folder2):
+def gxjy_refresh(h, folder1, folder2):
     """ 国信国内期货交易刷新 """
     data = h.gx_lsjl(folder1)
     data = data.fillna('')
