@@ -35,18 +35,15 @@
 <canvas width="1880" height="917"></canvas>
 
 <div class="beg-login-box box box-login layui-anim-up" id="login">
-<div align="center"><p id="error_info" style="color:green;position:absolute;">{{ message|default:"欢迎！" }}</p><br/>
+<div align="center"><p id="error_info" style="color:green;position:absolute;font-size:16px;">{{ message|default:"欢迎！" }}</p><br/>
     <form action="{% url 'register' %}" method="POST" id="form_register">
-        {% csrf_token %}
-        <fieldset>
-            <legend>用户注册</legend>
+        {% csrf_token %}<br/>
             <table>
                 {{ form.as_table }}
             </table>
            <br/>
             <input type="button" class="layui-btn layui-btn-radius" onclick="form_register();" value="注册">&nbsp;&nbsp;
             <input type="button" class="layui-btn layui-btn-radius" onclick="javascript:show_login();" value="前往登录">
-        </fieldset>
     </form>
 </div>
     </div>
@@ -80,7 +77,7 @@ $("#id_name").blur(function(){
     var name=$("#id_name").val();
     name = name.replace(/^\s\s*/,'').replace(/\s\s*$/,'');
     if(name==null || name==""){
-        $("#error_info").css('color','red').html("用户名不能为空");
+        $("#error_info").css('color','red').html("用户名不能为空！");
     }else if(name.length<2 || name.length>20){
         $("#error_info").css('color','red').html("用户名的长度需大于1小于10");
     }else{

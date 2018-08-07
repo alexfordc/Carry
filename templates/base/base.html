@@ -30,7 +30,7 @@
 
     <!--<script type="text/javascript" src="{% static 'js/spig.js' %}"></script>-->
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />-->
 <script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>
 <script src="{% static 'js/liaotianshi/socket.io.js' %}"></script>
     <script src="{% static 'js/liaotianshi/html2canvas.js' %}"></script>
@@ -222,43 +222,43 @@ var $container = $('#works-container');
         </div>
     </header><div style="position:absolute;top:24px;right:20px;color:green;font-size:14px;">{{logins}}</div>
     <!--<div class="wrapper">-->
-    <div class="palette" id="palette_colors">
-        <div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">
-            <div data-color="#e169c3" class="palette_color"></div>
-            <div data-color="#b569e1" class="palette_color"></div>
-            <div data-color="#7169e1" class="palette_color"></div>
-            <div data-color="#69b8e1" class="palette_color"></div>
-            <div data-color="#69e1d4" class="palette_color"></div>
-            <div data-color="#6ce169" class="palette_color"></div>
-            <div data-color="#bee169" class="palette_color"></div>
-            <div data-color="#e1a169" class="palette_color"></div>
-            <div data-color="#83091d" class="palette_color"></div>
-            <div data-color="#fdfdfd" class="palette_color"></div> <!-- fdfdfd cce8cf-->
-        </div>
-        <div class="palette_color__main" style="z-index:999;width:60px;height:60px;
-    background: -webkit-radial-gradient(circle, red, yellow, green,blue);
-    background: -o-radial-gradient(circle, red, yellow, green,blue);
-    background: -moz-radial-gradient(circle, red, yellow, green,blue);
-    background: radial-gradient(circle, red, yellow, green,blue); /* 标准的语法（必须放在最后） */
-"></div>
-    </div>
+    <!--<div class="palette" id="palette_colors">-->
+        <!--<div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">-->
+            <!--<div data-color="#e169c3" class="palette_color"></div>-->
+            <!--<div data-color="#b569e1" class="palette_color"></div>-->
+            <!--<div data-color="#7169e1" class="palette_color"></div>-->
+            <!--<div data-color="#69b8e1" class="palette_color"></div>-->
+            <!--<div data-color="#69e1d4" class="palette_color"></div>-->
+            <!--<div data-color="#6ce169" class="palette_color"></div>-->
+            <!--<div data-color="#bee169" class="palette_color"></div>-->
+            <!--<div data-color="#e1a169" class="palette_color"></div>-->
+            <!--<div data-color="#83091d" class="palette_color"></div>-->
+            <!--<div data-color="#fdfdfd" class="palette_color"></div> &lt;!&ndash; fdfdfd cce8cf&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="palette_color__main" style="z-index:999;width:60px;height:60px;-->
+    <!--background: -webkit-radial-gradient(circle, red, yellow, green,blue);-->
+    <!--background: -o-radial-gradient(circle, red, yellow, green,blue);-->
+    <!--background: -moz-radial-gradient(circle, red, yellow, green,blue);-->
+    <!--background: radial-gradient(circle, red, yellow, green,blue); /* 标准的语法（必须放在最后） */-->
+<!--"></div>-->
+    <!--</div>-->
     <!--小人-->
-    <div id="spig" class="spig">
-    <div id="message"></div>
-    <div id="mumu" class="mumu"></div>
-        <div id="liaotian_div" align="center" style="display: none;">
-        <input type="text" id="liaotian_textarea" size="14" maxlength="20" >
-        <input type="submit" id="liaotian_submit" value="Send"/>
-    </div>
-</div>
+    <!--<div id="spig" class="spig">-->
+    <!--<div id="message"></div>-->
+    <!--<div id="mumu" class="mumu"></div>-->
+        <!--<div id="liaotian_div" align="center" style="display: none;">-->
+        <!--<input type="text" id="liaotian_textarea" size="14" maxlength="20" >-->
+        <!--<input type="submit" id="liaotian_submit" value="Send"/>-->
+    <!--</div>-->
+<!--</div>-->
 <audio id="chatAudio"><source id="source_play" ></audio>
     <!--新闻-->
     <div id="xinwen" class="xinwen" style="border:5px solid red;width:300px;position:fixed;right:1px;top:1px;display:none;">
         <ol id="xinwen_ol" ></ol>
     </div>
 </div>
-    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:200px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
-border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
+    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:390px; height:200px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p>
         <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
         <p>用户名：<input type="text"  id="user_name" name="user_name" placeholder="请输入用户名"></p><br/>
     <p>&nbsp;密&nbsp;码&nbsp;：<input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
@@ -266,8 +266,7 @@ border:1px solid #888; background-color:green; text-align:center"><p id="login_m
     <input type="button" onclick="javascript:userLogin(null)" value="取 消">&nbsp;&nbsp;&nbsp;
         <a id="user_register" onclick="javascript:userRegister();" style="font-size:14px;cursor:pointer;color:white;" >前往注册</a>
 
-<!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
-        </div>
+    </div>
 <script>
 function show_login(ts){
     var div=$("#user_login_div").css('display');
@@ -333,59 +332,13 @@ function userLogin(type){
     }
 }
 </script>
-<div style="display:none;width:402px;height:500px;border:1px solid #afafaf;position:absolute;left:100px;top:100px;z-index:100;" id="mainDiv2">
-        <div id="loginbox">
-            <div style="width:260px;margin:200px auto;color:red;">
-                <p style="color:green;">当前在线的聊天室有：<span id="liaotianshilist"></span></p><br/>
-                请输入聊天室名称与您的昵称
-                <br/>
-                <br/>
-                <input type="text" style="width:180px;" placeholder="请输入聊天室名称" id="liaotianshiName" name="liaotianshiName" /><br/><br/>
-                <input type="text" style="width:180px;" placeholder="请输入用户名" id="username_lt" name="username_lt" />
-                <input type="button" style="width:50px;" value="提交" onclick="CHAT.usernameSubmit();"/>
-            </div>
-        </div>
-        <div id="chatbox" style="display:none;">
-            <div style="background:#3d3d3d;height: 28px; width: 100%;font-size:12px;">
-                <div style="line-height: 28px;color:#fff;">
-                    <span style="text-align:left;margin-left:10px;cursor:pointer;" id="mainDiv">聊天室</span>
-                    <span style="float:right; margin-right:10px;"><span id="showusername"></span> | 
-                    <a href="javascript:;" onclick="CHAT.hide()" style="color:#fff;">隐藏</a> |
-                    <a href="javascript:;" onclick="CHAT.logout()" style="color:#fff;">退出</a></span>
-                </div>
-            </div>
-            <div id="doc">
-                <div id="chat" style="overflow-y:auto;overflow-x:hidden;width:400px; height:450px;">
-                    <div id="message_lt" class="message_lt" >
-                <div id="onlinecount" style="background:#EFEFF4; font-size:12px; margin-top:1px; margin-left:10px; color:#666;">
-                </div>
-                    </div>
-                </div>
-                <div class="input_lts-box">
-                        <div class="input_lts" style="border:none;">
-                        <input type="text" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
-                        </div>
-                        <div class="action">
-                            <!--<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">-->
-                            <span id="uploadImg" style="font-size:12px; overflow:hidden; position:absolute;background-color:#0f0;margin-left:-28px;margin-top:2px;">
-                            <input type="file" size="1"  name="fulAvatar" id="file_upload" class="form-control"
-                                   style="cursor:pointer;position:absolute; z-index:100; margin-left:-100px;opacity:0;filter:alpha(opacity=0); margin-top:-5px;">
-                            <input type="button" value="🍀" id="uploadImg_button"><!--☯-->
-                            </span>
-                            <!--</form>-->
-                            <input type="button" value="☯" id="pingmujietu" style="cursor:pointer;">
-                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-4px;cursor:pointer;">提交</button>
-                        </div>
-                    </div>
-            </div>
-        </div>
-        </div>
-        <script type="text/javascript" src="/static/js/liaotianshi/client.js"></script>
+
+<!--<script type="text/javascript" src="/static/js/liaotianshi/client.js"></script>-->
 
 
 <script type="text/javascript">
-var _$paletteElement = $('.palette_color');
-var div = document.getElementById("palette_colors");
+//var _$paletteElement = $('.palette_color');
+//var div = document.getElementById("palette_colors");
 var dragFlag = false;
 var x,y;
 
@@ -404,12 +357,12 @@ function color_getCookie(name){
  if (arr != null) return unescape(arr[2]); return null;
 }
 
-div.onmousedown = function (e) {
+/*div.onmousedown = function (e) {
     e = e || window.event;
     x = e.clientX - div.offsetLeft + 1200;
     y = e.clientY - div.offsetTop + 580;
     dragFlag = true;
-};
+};*/
 document.onmousemove = function (e) {
     if (dragFlag) {
         e = e || window.event;
@@ -459,21 +412,22 @@ function _setColor(color){
     $('#header').css('background', color);
     document.body.style.background=color;
 }
-var color=color_getCookie('color_cookie');
-color = color==null?"#fff":color;
-$('#header').css('background', "#EFEFF4");
-//document.body.style.background=color;
+//var color=color_getCookie('color_cookie');
+//color = color==null?"#fff":color;
+//$('#header').css('background', "#EFEFF4");
+/*document.body.style.background=color;
 _colorizePaletteItems();
 _togglePalette();
 _initSetColor();
 _div_location(); //div定位
+*/
 
 var is_show = true;
 // 在特定页面不显示
-var is_show2=window.location.pathname;
+/*var is_show2=window.location.pathname;
 if(is_show2!='/'){
     $('#palette_colors').css("display","none");
-}
+}*/
 
 function xinwen_ajax(){
     $.ajax({

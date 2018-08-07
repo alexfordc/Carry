@@ -190,6 +190,7 @@ def tongji_adus(rq):
     en = rq.POST.get('en')
     passwd = rq.POST.get('pass')
     types = rq.POST.get('types')
+    dates = HSD.get_date()
     if (qx == 3 or passwd == eval(HSD.get_config('U', 'ud'))) and id:
         ys = {'YES': '1', 'NO': '0', '1': '1', '0': '0'}
         en = ys.get(en.upper())

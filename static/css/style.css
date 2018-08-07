@@ -214,7 +214,7 @@ ul#post_comment li{ list-style:none; width:100%; float:left; margin-bottom:30px;
 ul#post_comment li.page_title{ margin-bottom:0;}
 ul#post_comment li h3{ padding-bottom:14px; margin-bottom:0; padding-bottom:0;}
 ul#post_comment li img{ padding:4px; float:right; margin:0 0 0 10px; border:1px solid #f0f0f0; }
-ul#post_comment li div{ text-align:right; float:right; width:82%; padding:15px; background:#f6f6f6; border:1px solid #f0f0f0; -webkit-border-bottom-right-radius: 2px; -webkit-border-bottom-left-radius: 2px; -moz-border-radius-bottomright: 2px; -moz-border-radius-bottomleft: 2px;	-webkit-border-top-right-radius: 2px; -webkit-border-top-left-radius: 2px; -moz-border-radius-topright: 2px; -moz-border-radius-topleft: 2px;}	
+ul#post_comment li div{ text-align:right; float:right; width:82%; padding:15px; background:#f6f6f6; border:1px solid #f0f0f0; -webkit-border-bottom-right-radius: 2px; -webkit-border-bottom-left-radius: 2px; -moz-border-radius-bottomright: 2px; -moz-border-radius-bottomleft: 2px;	-webkit-border-top-right-radius: 2px; -webkit-border-top-left-radius: 2px; -moz-border-radius-topright: 2px; -moz-border-radius-topleft: 2px;}
 ul#post_comment li span{ font-size:11px; margin-bottom:10px;}
 ul#post_comment li span strong{ font-size:12px; font-weight:bold; color:#333;}
 ul#post_comment li small{ color:#999; margin-bottom:10px; font-size:11px;}
@@ -235,8 +235,8 @@ ul#post_comment li.reply div{ float:left; width:80%;}
 	-webkit-border-top-left-radius: 2px;
 	-moz-border-radius-topright: 2px;
 	-moz-border-radius-topleft: 2px;
-	
-	background: 
+
+	background:
 		-webkit-gradient(
 			linear,
 			left top,
@@ -245,7 +245,7 @@ ul#post_comment li.reply div{ float:left; width:80%;}
 			color-stop(4%, #f6f6f6),
 			to(#FFFFFF)
 		);
-	background: 
+	background:
 		-moz-linear-gradient(
 			top,
 			#FFFFFF,
@@ -261,8 +261,8 @@ ul#post_comment li.reply div{ float:left; width:80%;}
 	-webkit-border-top-left-radius: 2px;
 	-moz-border-radius-topright: 2px;
 	-moz-border-radius-topleft: 2px;
-	
-	background: 
+
+	background:
 		-webkit-gradient(
 			linear,
 			left top,
@@ -271,7 +271,7 @@ ul#post_comment li.reply div{ float:left; width:80%;}
 			color-stop(4%, #f6f6f6),
 			to(#FFFFFF)
 		);
-	background: 
+	background:
 		-moz-linear-gradient(
 			top,
 			#FFFFFF,
@@ -411,9 +411,9 @@ transition-property: height, width; }
 .portfolio h3 span a{ color:#999}
 .portfolio img{ -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px;}
 
-.portfolio3 h3{float:left;} 
+.portfolio3 h3{float:left;}
 
-.portfolio-detail h3{ margin-top:20px; float:left; font-size:16px;} 
+.portfolio-detail h3{ margin-top:20px; float:left; font-size:16px;}
 .portfolio-detail .thumb{ margin:0; width:100%; float:left; margin:20px 0 30px 0;}
 .portfolio-detail .thumb li{ float:left; list-style:none; margin-left:2%; margin-bottom:10px;}
 .portfolio-detail .thumb li a img{ width:93px;}
@@ -476,9 +476,9 @@ transition-property: height, width; }
 	background: -ms-linear-gradient(top, #ffffff 1%,#eaeaea 100%);
 	background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 );
-	box-shadow: 
-		0px 0px 0px 1px rgba(155,155,155,0.3), 
-		1px 0px 0px 0px rgba(255,255,255,0.9) inset, 
+	box-shadow:
+		0px 0px 0px 1px rgba(155,155,155,0.3),
+		1px 0px 0px 0px rgba(255,255,255,0.9) inset,
 		0px 2px 2px rgba(0,0,0,0.1);
 }
 .ac-container label strong{ color:red;}
@@ -565,7 +565,7 @@ transition-property: height, width; }
 -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px;
 	}
 .pagination li.page{ border:1px solid #d7d7d7; padding:8px 15px; margin-top:-2px;
-	background: 
+	background:
 		-webkit-gradient(
 			linear,
 			left bottom,
@@ -574,7 +574,7 @@ transition-property: height, width; }
 			color-stop(4%, #EEEEEE),
 			to(#FFFFFF)
 		);
-	background: 
+	background:
 		-moz-linear-gradient(
 			bottom,
 			#FFFFFF,
@@ -586,7 +586,7 @@ transition-property: height, width; }
 	-moz-border-radius: 4px;
 	-o-border-radius: 4px;
 	border-radius: 4px;
-	background: 
+	background:
 		-webkit-gradient(
 			linear,
 			left bottom,
@@ -595,7 +595,7 @@ transition-property: height, width; }
 			color-stop(4%, #EEEEEE),
 			to(#FFFFFF)
 		);
-	background: 
+	background:
 		-moz-linear-gradient(
 			bottom,
 			#FFFFFF,

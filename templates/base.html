@@ -12,6 +12,10 @@
 <link href="{% static 'css/prettyPhoto.css' %}" type="text/css" rel="stylesheet" media="screen">
 <link href="{% static 'css/tipsy.css' %}" type="text/css" rel="stylesheet" media="screen">
 
+    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/beijing_style.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/spigPet.css' %}">-->
+
 <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/css3-mediaqueries.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/modernizr-1.7.min.js' %}"></script>
@@ -22,6 +26,14 @@
 <script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.tipsy.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/grayscale-image.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/md5.js' %}"></script>
+
+    <!--<script type="text/javascript" src="{% static 'js/spig.js' %}"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />
+<script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>
+<script src="{% static 'js/liaotianshi/socket.io.js' %}"></script>
+    <script src="{% static 'js/liaotianshi/html2canvas.js' %}"></script>
 
 <!--menu-->
 <script type="text/javascript">
@@ -133,55 +145,55 @@ var $container = $('#works-container');
 {% block script %}{% endblock %}
 </head>
 <body>
-
     {% block center %}
         <div id="top-area">
     	<div id="top-wrap">
         	<ul class="social_media">
-            	<li class="first"><a href="#" class="tip" title="LinkedIn"><img src="{% static 'images/social-linkedin-32x32.png' %}" alt="LinkedIn" /></a></li>
-                <li><a href="#" class="tip" title="Dribbble"><img src="{% static 'images/social-dribbble-32x32.png' %}" alt="Dribbble" /></a></li>
-                <li><a href="#" class="tip" title="Facebook"><img src="{% static 'images/social-facebook-32x32.png' %}" alt="Facebook" /></a></li>
-                <li><a href="#" class="tip" title="Flickr"><img src="{% static 'images/social-flickr-32x32.png' %}" alt="Flickr" /></a></li>
-                <li><a href="#" class="tip" title="Twitter"><img src="{% static 'images/social-twitter-32x32.png' %}" alt="Twitter" /></a></li>
-            	<li><a href="#" class="tip" title="Wordpress"><img src="{% static 'images/social-wordpress-32x32.png' %}" alt="Wordpress" /></a></li>
-                <li><a href="#" class="tip" title="Skype"><img src="{% static 'images/social-skype-32x32.png' %}" alt="Skype" /></a></li>
-                <li><a href="#" class="tip" title="RSS"><img src="{% static 'images/social-rss-32x32.png' %}" alt="RSS" /></a></li>
+            	<li class="first"><a href="{% url 'index' %}" class="tip" title="首页">首页</a></li>
+                <li><a href="{% url 'zhutu' %}" class="tip" title="柱状图">柱图</a></li>
+                <li><a href="{% url 'zhexian' %}" class="tip" title="折线图">折线</a></li>
+                <li><a href="{% url 'tongji' %}" class="tip" title="交易统计表">统计</a></li>
+                <!--<li><a href="#" class="tip" title="Twitter"><img src="{% static 'images/social-twitter-32x32.png' %}" alt="Twitter" /></a></li>-->
+            	<!--<li><a href="#" class="tip" title="Wordpress"><img src="{% static 'images/social-wordpress-32x32.png' %}" alt="Wordpress" /></a></li>-->
+                <!--<li><a href="#" class="tip" title="Skype"><img src="{% static 'images/social-skype-32x32.png' %}" alt="Skype" /></a></li>-->
+                <!--<li><a href="#" class="tip" title="RSS"><img src="{% static 'images/social-rss-32x32.png' %}" alt="RSS" /></a></li>-->
             </ul>
     		<span id="gotop"><a href="#" title="Back to top">&dagger;</a></span>
         </div>
     </div>
 
-        <header>
+        <header id="header">
         <div id="header_wrap">
-            <h1 class="logo"><a href="{% url 'index' %}">Kleenex</a></h1>
+            <h1 class="logo"><a href="{% url 'index' %}">Kairui</a></h1>
             <nav id="smoothmenu1" class="ddsmoothmenu">
                 <ul>
-                    <li><a href="{% url 'index' %}" class="current no-border-left">首页</a></li>
+                    <li><a href="{% url 'index' %}" class="current no-border-left" id="index">首页</a></li>
                     <li><a href="{% url 'index' %}">服务支持</a>
                     	<ul>
-                        	<li class="no-border-top"><a href="{% url 'stockDatas' %}">股票信息</a></li>
-                            <!--<li class="no-border-top"><a href="">股票助手</a></li>-->
-                            <li class="no-border-top"><a href="{% url 'zhutu' %}">柱状图</a></li>
-                            <li class="no-border-top"><a href="{% url 'zhexian' %}">折线图</a></li>
-                            <li class="no-border-top"><a href="{% url 'zhexian' %}?s=1">折线图（慢而细）</a></li>
+                        	<li class="no-border-top" id="stockDatas_msg"><a class="close_websocket" href="{% url 'stockDatas' %}">股票信息</a></li>
+                            <li class="no-border-top" id="zhutu_msg"><a href="{% url 'zhutu' %}">柱状图</a></li>
+                            <!--<li class="no-border-top" id="zhutu2_msg"><a href="{% url 'zhutu2' %}">柱状图（点数折线图）</a></li>-->
+                            <li class="no-border-top" id="zhexian_msg"><a href="{% url 'zhexian' %}">折线图</a></li>
+                            <li class="no-border-top" id="zhexian2_msg"><a href="{% url 'zhexian' %}?s=1">折线图（慢而细）</a></li>
+                            <li class="no-border-top" ><a href="{% url 'zhutu_zhexian' %}">合 图</a></li>
+                            <li class="no-border-top" id="kline_msg"><a href="{% url 'kline' %}">K线图</a></li>
                         </ul>
                     </li>
                     <li><a href="{% url 'index' %}">资料</a>
                     <ul>
-                        <li class="no-border-top"><a href="{% url 'tongji' %}">交易统计</a></li>
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 1 %}">时间分组</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 2 %}">ID  分组</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 3 %}">多空分组</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 4 %}">时间与ID</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 5 %}">时间与空</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 6 %}">ID 与 空</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 7 %}">时间ID空</a></li>#}
-{#                        <li class="no-border-top"><a href="{% url 'tongji' 8 %}">详细数据</a></li>#}
+                        <li class="no-border-top" id="tongji_msg"><a href="{% url 'tongji' %}">交易统计表</a></li>
+                        <li class="no-border-top" id="moni_msg"><a href="{% url 'moni' %}">模拟测试表</a></li>
+                        <li class="no-border-top" ><a href="{% url 'moni_all' %}">方案荟萃</a></li>
+                        <li class="no-border-top" ><a href="{% url 'newMoni' %}">挖掘方案</a></li>
                     </ul>
                     </li>
                     <li><a href="{% url 'index' %}">产品介绍</a>
                     <ul>
-                        <li class="no-border-top"><a href="{% url 'tools' %}">友情链接</a></li>
+                        <li class="no-border-top" ><a href="{% url 'systems' %}">系统资源</a></li>
+                        <li class="no-border-top" id="tools_msg"><a href="{% url 'tools' %}">友情链接</a></li>
+                        <li class="no-border-top" id="today_msg"><a href="{% url 'zhangting' 'today' %}">已经涨停股票</a></li>
+                        <li class="no-border-top" id="tomorrow_msg"><a href="{% url 'zhangting' 'tomorrow' %}">将要涨停股票</a></li>
+
                         <!--<li><a href="portfolio2.html">Portfolio 2 Column</a></li>-->
 
                     </ul>
@@ -189,25 +201,486 @@ var $container = $('#works-container');
                     <li><a href="{% url 'index' %}">历史</a>
                     	<ul>
                         	<li class="no-border-top"><a href="">贰零一七年</a></li>
-                            <li><a href="">贰零一八年</a></li>
+                            <li><a href="{% url 'gdzd' %}">贰零一八年</a></li>
 
                         </ul>
                     </li>
-                    <li><a href="{% url 'index' %}">关于我们</a></li>
+                    <li><a href="{% url 'index' %}" id="guanyu_msg">关于我们</a></li>
+                    <li><a href="javascript:show_login(1)" id="user_info">{{ user_name|default:"登录" }}</a>
+                        {% if user_name %}
+                        <ul>
+                            <li class="no-border-top" ><a href="{% url 'add_simulation_account' %}">添加模拟账户</a></li>
+                            <li class="no-border-top" ><a href="{% url 'add_real_account' %}">添加真实账户</a></li>
+                            <li class="no-border-top" ><a href="{% url 'add_work_log' %}">添加工作日志</a></li>
+                            <li class="no-border-top" ><a href="">修改我的资料</a></li>
+                            <li class="no-border-top" ><a onclick="javascript:user_logout();" style="cursor:pointer;">退出</a></li>
+                        </ul>
+                        {% endif %}
+                    </li>
                 </ul>
             </nav>
         </div>
-    </header>
-        {% block center_cen %}{% endblock %}
-        <div style="height:100px;color: #fdfdfd;">.</div>
-    <footer style="position: fixed;bottom: -20px;">
-        <div id="copyright">
-        	<div id="copy-wrap">
-    			<p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>
-                    <a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>
+    </header><div style="position:absolute;top:24px;right:20px;color:green;font-size:14px;">{{logins}}</div>
+    <!--<div class="wrapper">-->
+    <div class="palette" id="palette_colors">
+        <div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">
+            <div data-color="#e169c3" class="palette_color"></div>
+            <div data-color="#b569e1" class="palette_color"></div>
+            <div data-color="#7169e1" class="palette_color"></div>
+            <div data-color="#69b8e1" class="palette_color"></div>
+            <div data-color="#69e1d4" class="palette_color"></div>
+            <div data-color="#6ce169" class="palette_color"></div>
+            <div data-color="#bee169" class="palette_color"></div>
+            <div data-color="#e1a169" class="palette_color"></div>
+            <div data-color="#83091d" class="palette_color"></div>
+            <div data-color="#fdfdfd" class="palette_color"></div> <!-- fdfdfd cce8cf-->
+        </div>
+        <div class="palette_color__main" style="z-index:999;width:60px;height:60px;
+    background: -webkit-radial-gradient(circle, red, yellow, green,blue);
+    background: -o-radial-gradient(circle, red, yellow, green,blue);
+    background: -moz-radial-gradient(circle, red, yellow, green,blue);
+    background: radial-gradient(circle, red, yellow, green,blue); /* 标准的语法（必须放在最后） */
+"></div>
+    </div>
+    <!--小人-->
+    <div id="spig" class="spig">
+    <div id="message"></div>
+    <div id="mumu" class="mumu"></div>
+        <div id="liaotian_div" align="center" style="display: none;">
+        <input type="text" id="liaotian_textarea" size="14" maxlength="20" >
+        <input type="submit" id="liaotian_submit" value="Send"/>
+    </div>
+</div>
+<audio id="chatAudio"><source id="source_play" ></audio>
+    <!--新闻-->
+    <div id="xinwen" class="xinwen" style="border:5px solid red;width:300px;position:fixed;right:1px;top:1px;display:none;">
+        <ol id="xinwen_ol" ></ol>
+    </div>
+</div>
+    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:200px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
+        <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
+        <p>用户名：<input type="text"  id="user_name" name="user_name" placeholder="请输入用户名"></p><br/>
+    <p>&nbsp;密&nbsp;码&nbsp;：<input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
+    <input type="button" id="user_login" onclick="javascript:userLogin('login');" value="登录">&nbsp;&nbsp;&nbsp;
+    <input type="button" onclick="javascript:userLogin(null)" value="取 消">&nbsp;&nbsp;&nbsp;
+        <a id="user_register" onclick="javascript:userRegister();" style="font-size:14px;cursor:pointer;color:white;" >前往注册</a>
+
+<!--<a href="javascript:closeLogin('update');">修 改</a><a href="javascript:closeLogin('delete');">删 除</a>-->
+        </div>
+<script>
+function show_login(ts){
+    var div=$("#user_login_div").css('display');
+    if($("#user_info").text()=="登录"){
+        if(div=="none"){
+            $("#user_login_div").css("display","block");
+            $("#user_name").focus(); // 获得焦点
+           $('#user_password').bind('keyup', function(event) {
+        　　if (event.keyCode == "13") {
+        　　　　//回车执行
+        　　　　$('#user_login').click();
+               }
+            });
+        }else{
+            $("#user_login_div").css("display","none");
+        }
+    }else{
+        // 已经登录
+        $("#user_login_div").css("display","none");
+        if(ts==1){
+            location.href = "{% url 'user_information' %}";
+        }
+    }
+}
+function user_logout(){
+    $.get("{% url 'logout' %}","",function(res){
+        if(res=='yes'){
+            $("#user_info").text("登录");
+        }
+    });
+}
+function userRegister(){
+    window.location.href = "{% url 'register' %}";
+}
+function userLogin(type){
+    if(type==null){
+        show_login(0);
+    }else{
+        var user_name = $("#user_name").val();
+        var user_password = $("#user_password").val();
+        var csrf = $("#csrfmiddlewaretoken input").val();
+        if(user_name=='' || user_name==null || user_password=='' || user_password==null){
+            alert('用户名或密码不能为空！');
+        }else{
+            var data = {"user_name":user_name,"user_password":hex_md5(user_password),"csrfmiddlewaretoken":csrf};
+            $.ajax({
+                type: "POST",
+                url: "{% url 'login' %}",
+                data:data,
+                dataType: "json",
+                success:function(res){
+                    if(res.result=="yes"){
+                        var mes = "欢迎您："+res.users+"，登录成功！"
+                        $("#user_info").text(res.users);
+                        alert(mes);
+                        show_login(0);
+                    }else{
+                        $("#login_message").text(res.result);
+                    }
+                }
+            });
+        }
+    }
+}
+</script>
+<div style="display:none;width:402px;height:500px;border:1px solid #afafaf;position:absolute;left:100px;top:100px;z-index:100;" id="mainDiv2">
+        <div id="loginbox">
+            <div style="width:260px;margin:200px auto;color:red;">
+                <p style="color:green;">当前在线的聊天室有：<span id="liaotianshilist"></span></p><br/>
+                请输入聊天室名称与您的昵称
+                <br/>
+                <br/>
+                <input type="text" style="width:180px;" placeholder="请输入聊天室名称" id="liaotianshiName" name="liaotianshiName" /><br/><br/>
+                <input type="text" style="width:180px;" placeholder="请输入用户名" id="username_lt" name="username_lt" />
+                <input type="button" style="width:50px;" value="提交" onclick="CHAT.usernameSubmit();"/>
             </div>
-    	</div>
-    </footer>
+        </div>
+        <div id="chatbox" style="display:none;">
+            <div style="background:#3d3d3d;height: 28px; width: 100%;font-size:12px;">
+                <div style="line-height: 28px;color:#fff;">
+                    <span style="text-align:left;margin-left:10px;cursor:pointer;" id="mainDiv">聊天室</span>
+                    <span style="float:right; margin-right:10px;"><span id="showusername"></span> | 
+                    <a href="javascript:;" onclick="CHAT.hide()" style="color:#fff;">隐藏</a> |
+                    <a href="javascript:;" onclick="CHAT.logout()" style="color:#fff;">退出</a></span>
+                </div>
+            </div>
+            <div id="doc">
+                <div id="chat" style="overflow-y:auto;overflow-x:hidden;width:400px; height:450px;">
+                    <div id="message_lt" class="message_lt" >
+                <div id="onlinecount" style="background:#EFEFF4; font-size:12px; margin-top:1px; margin-left:10px; color:#666;">
+                </div>
+                    </div>
+                </div>
+                <div class="input_lts-box">
+                        <div class="input_lts" style="border:none;">
+                        <input type="text" placeholder="请输入聊天内容，按Enter提交" id="content" name="content">
+                        </div>
+                        <div class="action">
+                            <!--<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data" style="margin-left:-28px;margin-top:2px;">-->
+                            <span id="uploadImg" style="font-size:12px; overflow:hidden; position:absolute;background-color:#0f0;margin-left:-28px;margin-top:2px;">
+                            <input type="file" size="1"  name="fulAvatar" id="file_upload" class="form-control"
+                                   style="cursor:pointer;position:absolute; z-index:100; margin-left:-100px;opacity:0;filter:alpha(opacity=0); margin-top:-5px;">
+                            <input type="button" value="🍀" id="uploadImg_button"><!--☯-->
+                            </span>
+                            <!--</form>-->
+                            <input type="button" value="☯" id="pingmujietu" style="cursor:pointer;">
+                            <button type="button" id="mjr_send" onclick="CHAT.submit('');" style="margin-top:-4px;cursor:pointer;">提交</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        <script type="text/javascript" src="/static/js/liaotianshi/client.js"></script>
+
+
+<script type="text/javascript">
+var _$paletteElement = $('.palette_color');
+var div = document.getElementById("palette_colors");
+var dragFlag = false;
+var x,y;
+
+
+//写入cookie，两个参数，一个是cookie的名称，一个是值
+function color_SetCookie(name,value,Days){
+ var Days=arguments[2] ? arguments[2] : 7; //此 cookie 默认保存 7 天
+ var exp = new Date();
+ exp.setTime(exp.getTime() + Days*24*60*60*1000);
+ document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+//取cookies函数
+function color_getCookie(name){
+ var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+ if (arr != null) return unescape(arr[2]); return null;
+}
+
+div.onmousedown = function (e) {
+    e = e || window.event;
+    x = e.clientX - div.offsetLeft + 1200;
+    y = e.clientY - div.offsetTop + 580;
+    dragFlag = true;
+};
+document.onmousemove = function (e) {
+    if (dragFlag) {
+        e = e || window.event;
+        var left=e.clientX - x + "px";
+        var top=e.clientY - y + "px";
+        div.style.left = left;
+        div.style.top  = top;
+        color_SetCookie("div_left",left);
+        color_SetCookie("div_top",top);
+    }
+};
+document.onmouseup = function (e) {
+    dragFlag = false;
+};
+function _div_location(){
+    var left=color_getCookie("div_left");
+    var top=color_getCookie("div_top");
+    if(left==null || top==null){
+        top="-600px";
+        left="-1500px";
+    }
+    div.style.left = left;
+    div.style.top  = top;
+}
+
+
+function _colorizePaletteItems(){
+    $.each(_$paletteElement, function(i){
+           $(this).css('background-color', $(this).data('color'));
+    });
+}
+function _togglePalette(){
+    $('.palette_color__main').on('click', function(){
+        $('.palette').toggleClass('palette__opened');
+    });
+}
+function _initSetColor(){
+    $('.palette_color').on('click', function(){
+        var color = $(this).data('color');
+        _setColor(color);
+    });
+}
+
+function _setColor(color){
+    $('.palette_color__main').css('background', color);
+    color_SetCookie('color_cookie',color);
+    $('#header').css('background', color);
+    document.body.style.background=color;
+}
+var color=color_getCookie('color_cookie');
+color = color==null?"#fff":color;
+$('#header').css('background', "#EFEFF4");
+//document.body.style.background=color;
+_colorizePaletteItems();
+_togglePalette();
+_initSetColor();
+_div_location(); //div定位
+
+var is_show = true;
+// 在特定页面不显示
+var is_show2=window.location.pathname;
+if(is_show2!='/'){
+    $('#palette_colors').css("display","none");
+}
+
+function xinwen_ajax(){
+    $.ajax({
+        url:"/journalism/",
+        success: function (result) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            var ol=$("#xinwen_ol");
+            ol.text("");
+            $.each(result, function (index, item) {
+                ol.append("<li>"+index+"："+item+"。<br/></li>");
+            });
+        },
+        error: function (errorMsg) {
+            //请求失败时执行该函数
+            //alert("请求数据失败!");
+        }
+    })
+}
+var ref=0;
+function xinwen_show2(){
+    var is_show=color_getCookie("xinwen_show");
+    var div=$("#xinwen");
+    if (is_show=="start"){
+    div.css('display','block');
+    xinwen_ajax();
+    ref = setInterval(function(){
+        xinwen_ajax();
+        },16000);
+    }else{
+        div.css('display','none');
+        clearInterval(ref);
+    }
+}
+function xinwen_show(){
+    if (document.getElementById("xinwen").style.display=="none"){
+        color_SetCookie("xinwen_show","start");
+        xinwen_show2();
+    }else{
+        color_SetCookie("xinwen_show","stop");
+        xinwen_show2();
+    }
+}
+xinwen_show2();
+// 聊天室
+function liaotianshi_show(){
+    var div=document.getElementById("mainDiv2");
+    if (div.style.display=="none"){
+        div.style.display='block';
+        var lts = "";
+        $.ajax({
+            url: '/liaotianshiList',
+            type: 'GET',
+            success: function(data){
+                $.each(data,function(k,v){
+                    lts+=k+"、";
+                });
+                $("#liaotianshilist").html("");
+                $("#liaotianshilist").append(lts.slice(0,-1));
+            }
+        });
+    }else{
+        div.style.display='none';
+    }
+}
+function liaotianshiCookieShow(){
+    var username=color_getCookie("liaotianshi_username");
+    var liaotianshiName=color_getCookie("liaotianshiName");
+    //alert(username+liaotianshiName);
+    if(username != "" & liaotianshiName != ""){
+        CHAT.usernameSubmit(username,liaotianshiName);
+    }
+}
+liaotianshiCookieShow();
+
+// 屏幕截图
+$(document).ready( function(){
+                $("#pingmujietu").on("click", function(event) {
+                        event.preventDefault();
+                        html2canvas(document.body, {
+                        allowTaint: true,
+                        taintTest: false,
+                        onrendered: function(canvas) {
+                            canvas.id = "mycanvas";
+                            //document.body.appendChild(canvas);
+                            //生成base64图片数据
+                            var dataUrl = canvas.toDataURL();
+                            uploadByForm(dataUrl);
+                            //var newImg = document.createElement("img");
+                            //newImg.src =  dataUrl;
+                            //document.body.appendChild(newImg);
+                        }
+                    });
+                });
+
+        });
+//form file 图片转换为base64编码
+function _addImgFileListener(obj, fun){
+        $(obj).change(function ()
+        {
+            try
+            {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function ()
+                {
+                    var img = new Image();
+                    img.src = reader.result;
+                    img.onload = function ()
+                    {
+                        var w = img.width, h = img.height;
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        $(canvas).attr({
+                            width: w,
+                            height: h
+                        });
+                        ctx.drawImage(img, 0, 0, w, h);
+                        var base64 = canvas.toDataURL('image/jpeg', 0.5);
+                        var result = {
+                            url: window.URL.createObjectURL(file),
+                            base64: base64,
+                            clearBase64: base64.substr(base64.indexOf(',') + 1),
+                            suffix: base64.substring(base64.indexOf('/') + 1, base64.indexOf(';')),
+                        };
+                        fun(result);
+                    }
+                }
+                reader.readAsDataURL(this.files[0]);
+            } catch (e)
+            {
+                _showMsg(e);
+            }
+        });
+    }
+
+
+/**
+     * ajax 上传base64编码图片
+     */
+function uploadByForm(imgData) {
+    //用form 表单直接 构造formData 对象; 就不需要下面的append 方法来为表单进行赋值了。
+    var formData; // = new FormData($("#myForm")[0]);
+    if (imgData!=""){
+        formData=imgData;
+    }
+    var url = "http://127.0.0.1:3000/uploader";
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        data: "formData="+formData,
+        /**
+         * 必须false才会避开jQuery对 formdata 的默认处理
+         * XMLHttpRequest会对 formdata 进行正确的处理
+         */
+        //processData: false,
+        /**
+         *必须false才会自动加上正确的Content-Type
+         */
+        //contentType: false,
+        success: function (data) {
+            //alert(data.newPath);
+            //$("img").attr({"src": data.newPath}).prependTo($("body"));
+        },
+        error: function (data) {
+            //alert(data.newPath);
+        }
+    });
+    CHAT.submit('tupian');
+}
+_addImgFileListener("#file_upload",function(data){
+    var d = data.base64;
+    uploadByForm(d);
+});
+
+$("#uploadImg").hover(
+    function(){
+            $("#uploadImg_button").val("发送本地图片");
+        } ,
+    function(){
+            $("#uploadImg_button").val("🍀") ;
+});
+$("#pingmujietu").hover(
+    function(){
+            $("#pingmujietu").val("截取整个网页");
+        } ,
+    function(){
+            $("#pingmujietu").val("☯");
+});
+
+
+</script>
+
+        {% block center_cen %}{% endblock %}
+        <div style="padding-left:40%;position:fixed;bottom:0;text-align:center;">
+            <p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>
+                    <a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>
+        </div>
+    <br><br>
+    <!--<footer style="position: fixed;bottom: 0;">-->
+        <!--<div id="copyright" >-->
+        	<!--<div id="copy-wrap">-->
+    			<!--<p>&copy; Copyright &copy; 2018.01.01<a target="_blank" href=""></a>-->
+                    <!--<a href="{% url 'index' %}" target="_blank" title="">凯瑞</a></p>-->
+            <!--</div>-->
+    	<!--</div>-->
+    <!--</footer>-->
     {% endblock %}
 </body>
 </html>
