@@ -257,7 +257,7 @@ var $container = $('#works-container');
         <ol id="xinwen_ol" ></ol>
     </div>
 </div>
-    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
+    <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:200px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
 border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
         <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
         <p>用户名：<input type="text"  id="user_name" name="user_name" placeholder="请输入用户名"></p><br/>
@@ -461,8 +461,8 @@ function _setColor(color){
 }
 var color=color_getCookie('color_cookie');
 color = color==null?"#fff":color;
-$('#header').css('background', color);
-document.body.style.background=color;
+$('#header').css('background', "#EFEFF4");
+//document.body.style.background=color;
 _colorizePaletteItems();
 _togglePalette();
 _initSetColor();

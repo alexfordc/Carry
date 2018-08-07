@@ -18,17 +18,34 @@ class UsersForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UsersForm, self).__init__(*args, **kwargs)
-        self.fields['name'].label = '用户名'
-        self.fields['password'].label = '密码'
-        self.fields['password'].widget = forms.PasswordInput()
-        self.fields['passwordr'].label = '确认密码'
-        self.fields['passwordr'].widget = forms.PasswordInput()
-        self.fields['phone'].label = '手机'
-        self.fields['email'].label = '邮箱'
-        self.fields['captcha'].label = '验证码'
+        self.fields['name'].label = ''
+        self.fields['name'].widget = forms.TextInput(attrs={"placeholder": "用户名"})
+        self.fields['password'].label = ''
+        self.fields['password'].widget = forms.PasswordInput(attrs={"placeholder": "密码"})
+        self.fields['passwordr'].label = ''  # ''确认密码'
+        self.fields['passwordr'].widget = forms.PasswordInput(attrs={"placeholder": "再次输入密码"})
+        self.fields['phone'].label = ''  # ''手机'
+        self.fields['phone'].widget = forms.TextInput(attrs={"placeholder": "手机号码"})
+        self.fields['email'].label = ''  # ''邮箱'
+        self.fields['email'].widget = forms.EmailInput(attrs={"placeholder": "邮箱（非必填）"})
+        self.fields['captcha'].label = ''  # '验证码'
+
+
+# class UsersForm(forms.ModelForm):
+#     name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control","placeholder": "请输入用户名"}))
+#     password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control","placeholder": "请输入密码"}))
+#     passwordr = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control","placeholder": "确认密码"}))
+#     phone = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control","placeholder": "请输入手机号码"}))
+#     email = forms.EmailField(widget=forms.TextInput(attrs={"class": "form-control","placeholder": "请输入邮箱账号"}))
+#     #captcha = CaptchaField()
 
 
 """
+username = forms.EmailField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "请输入邮箱账号", "value": "", "required": "required",}),
+                              max_length=50,error_messages={"required": "用户名不能为空",})
+password = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "请输入密码", "value": "", "required": "required",}),
+                          min_length=8, max_length=50,error_messages={"required": "密码不能为空",})
+
 
 class RegisterForm(forms.Form):
     username = fields.CharField(

@@ -17,7 +17,7 @@ class Users(models.Model):
     """ 用户 """
     CHICO_ZT = [[0, '未启用'], [1, '启用']]
     CHICO_QX = [[1, '普通用户'], [2, '内部用户'], [3, '管理员']]
-    name = models.CharField('用户名', max_length=20, unique=True)
+    name = models.CharField('用户名', max_length=10, unique=True)
     password = models.CharField('密码', max_length=40)
     phone = models.CharField('手机号', max_length=11)
     email = models.EmailField('邮箱', max_length=36, null=True, blank=True)

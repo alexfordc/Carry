@@ -446,7 +446,7 @@ def register(rq):
     """ 用户注册 """
     if rq.method == 'GET' and rq.is_ajax():
         name = rq.GET.get('name')
-        names = models.Users.objects.filter(name=name)
+        names = models.Users.objects.filter(name=name).exists()
         if names:
             datas = 1
         else:
@@ -463,14 +463,14 @@ def register(rq):
             password = rq.POST['password'].strip()
             phone = rq.POST['phone'].strip()
             email = rq.POST.get('email')
-            if name and password and phone and len(phone) == 11 and phone[:2] in (
+            if name and password and phone and 1<len(name)<10 and len(phone) == 11 and phone[:2] in (
                     '13', '14', '15', '18') and not models.Users.objects.filter(name=name):
                 ups = HSD.get_config('U', 'userps')
                 timestamp = str(int(time.time() * 10))
                 password = eval(ups)
                 password = md5(password.encode()).hexdigest()
 
-                users = models.Users.objects.create(name=name, password=password, phone=phone, email=email, enabled=1,
+                users = models.Users.objects.create(name=name, password=password, phone=phone, email=email, enabled=0,
                                                     jurisdiction=1, creationTime=timestamp)
                 users.save()
                 message = "注册成功！"
