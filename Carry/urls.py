@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^work/log/update/$', views.update_work_log, name='update_work_log'),
     url(r'^work/log/delete/$', views.del_work_log, name='del_work_log'),
     url(r'^simulation/account/delete/$', views.del_simulation_account, name='del_simulation_account'),
+    url(r'^simulation/account/offon/$', views.offon_simulation_account, name='offon_simulation_account'),
 
     url(r'^stockData/$',views.stockData,name='stockData'),
     url(r'^stockDatas/$',views.stockDatas,name='stockDatas'),

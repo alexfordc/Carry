@@ -164,7 +164,7 @@ var $container = $('#works-container');
 
         <header id="header">
         <div id="header_wrap">
-            <h1 class="logo"><a href="{% url 'index' %}">Kleenex</a></h1>
+            <h1 class="logo"><a href="{% url 'index' %}">Kairui</a></h1>
             <nav id="smoothmenu1" class="ddsmoothmenu">
                 <ul>
                     <li><a href="{% url 'index' %}" class="current no-border-left" id="index">首页</a></li>
@@ -220,7 +220,7 @@ var $container = $('#works-container');
                 </ul>
             </nav>
         </div>
-    </header>
+    </header><div style="position:absolute;top:24px;right:20px;color:green;font-size:14px;">{{logins}}</div>
     <!--<div class="wrapper">-->
     <div class="palette" id="palette_colors">
         <div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">
@@ -260,8 +260,8 @@ var $container = $('#works-container');
     <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:360px; height:150px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
 border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p><br/>
         <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
-        <p><input type="text"  id="user_name" name="user_name" placeholder="请输入账号"></p><br/>
-    <p><input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
+        <p>用户名：<input type="text"  id="user_name" name="user_name" placeholder="请输入用户名"></p><br/>
+    <p>&nbsp;密&nbsp;码&nbsp;：<input type="password" id="user_password" name="user_password"  placeholder="请输入密码" /></p><br/>
     <input type="button" id="user_login" onclick="javascript:userLogin('login');" value="登录">&nbsp;&nbsp;&nbsp;
     <input type="button" onclick="javascript:userLogin(null)" value="取 消">&nbsp;&nbsp;&nbsp;
         <a id="user_register" onclick="javascript:userRegister();" style="font-size:14px;cursor:pointer;color:white;" >前往注册</a>

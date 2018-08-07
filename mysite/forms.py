@@ -19,7 +19,7 @@ class UsersForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UsersForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = '用户名'
-        self.fields['password'].label = '用户密码'
+        self.fields['password'].label = '密码'
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['passwordr'].label = '确认密码'
         self.fields['passwordr'].widget = forms.PasswordInput()

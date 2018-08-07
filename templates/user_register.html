@@ -58,11 +58,10 @@ $("#id_name").blur(function(){
     }
     function callBack(datas){
             if(datas==1){
-                //$("#ajax").css('color','red').html('此号已被注册!');
                 $("#id_name").attr('placeholder','请输入用户名');
-                $("#error_info").css('color','red').html("此账户名已被注册，请更换其他账户名！");
+                $("#error_info").css('color','red').html("此用户名已被注册，请更换其他用户名！");
             }else{
-                $("#error_info").css('color','green').html("此账户名可以注册！");
+                $("#error_info").css('color','green').html("此用户名可以注册！");
             }
         }
 });

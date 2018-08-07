@@ -75,7 +75,7 @@ def redis_update(rq):
     return render(rq, 'index.html')
 
 
-def getLogin(ses,uid=False):
+def getLogin(ses, uid=False):
     """ 返回用户名与权限 """
     if 'users' in ses:
         if not uid:
@@ -215,12 +215,12 @@ def tongji_adus(rq):
 
 # ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
 
-def index(rq):
+def index(rq, logins=''):
     """ 主页面 """
     record_from(rq)
     user_name, qx = getLogin(rq.session)
-    return render(rq, 'index.html', {'user_name': user_name})
-
+    logins = "请先登录再访问您需要的页面！" if logins is False else logins
+    return render(rq, 'index.html', {'user_name': user_name, 'logins': logins})
 
 
 def login(rq):
@@ -238,7 +238,7 @@ def login(rq):
             if user.password != password:
                 pass
             elif user.password == password and user.enabled == 1:
-                rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction,"id":user.id}
+                rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction, "id": user.id}
                 return JsonResponse({"result": "yes", "users": username})
             elif user.enabled != 1:
                 message = "登录失败！您的账户尚未启用！"
@@ -258,29 +258,32 @@ def update_data(rq):
     """ 修改账号资料 """
     pass
 
+
 def user_information(rq):
     """ 用户资料信息 """
     record_from(rq)
     user_name, qx = getLogin(rq.session)
-    if user_name and qx<=2 and rq.method == 'GET':
+    if user_name and qx <= 2 and rq.method == 'GET':
         user = models.Users.objects.get(name=user_name)
         work = models.WorkLog.objects.filter(belonged=user)
-        week = ["一","二","三","四","五","六","日"]
-        work = [[user_name,i.date,week[i.date.weekday()],i.title,i.body,i.id] for i in work]
+        week = ["一", "二", "三", "四", "五", "六", "日"]
+        work = [[user_name, i.date, week[i.date.weekday()], i.title, i.body, i.id] for i in work]
         real_account = models.TradingAccount.objects.filter(belonged=user)
         account = models.SimulationAccount.objects.filter(belonged=user)
-        return render(rq, 'user_information.html', {"user_name": user_name,"work":work,"real_account":real_account,'account':account})
-    elif user_name and qx==3 and rq.method == 'GET':
+        return render(rq, 'user_information.html',
+                      {"user_name": user_name, "work": work, "real_account": real_account, 'account': account})
+    elif user_name and qx == 3 and rq.method == 'GET':
         users = models.Users.objects.all()
-        users = {i.id:i.name for i in users}
+        users = {i.id: i.name for i in users}
         work = models.WorkLog.objects.all()
         week = ["一", "二", "三", "四", "五", "六", "日"]
-        work = [[users[i.belonged_id],i.date, week[i.date.weekday()], i.title, i.body, i.id] for i in work]
+        work = [[users[i.belonged_id], i.date, week[i.date.weekday()], i.title, i.body, i.id] for i in work]
         real_account = models.TradingAccount.objects.all()
         account = models.SimulationAccount.objects.all()
         return render(rq, 'user_information.html',
                       {"user_name": user_name, "work": work, "real_account": real_account, 'account': account})
-    return redirect('/')
+    return index(rq, logins=False)
+
 
 def add_work_log(rq):
     """ 添加工作日志"""
@@ -288,39 +291,43 @@ def add_work_log(rq):
     user_name, qx = getLogin(rq.session)
     if user_name and rq.method == 'GET':
         date = HSD.get_date()
-        return render(rq, 'user_add_data.html', {"user_name": user_name, "date":date, "add_work_log": True,"operation":"工作日志"})
+        return render(rq, 'user_add_data.html',
+                      {"user_name": user_name, "date": date, "add_work_log": True, "operation": "工作日志"})
     elif user_name and rq.method == 'POST':
         date = rq.POST['date'].strip()
-        date = date.replace('/','-')
+        date = date.replace('/', '-')
         title = rq.POST['title']
         body = rq.POST['body']
         user = models.Users.objects.get(name=user_name)
         if '_save' in rq.POST:  # 保存
-            models.WorkLog.objects.create(belonged=user,date=date,title=title,body=body).save()
+            models.WorkLog.objects.create(belonged=user, date=date, title=title, body=body).save()
             return redirect('user_information')
         elif '_addanother' in rq.POST:  # 保存并增加另一个
             models.WorkLog.objects.create(belonged=user, date=date, title=title, body=body).save()
         elif '_continue' in rq.POST:  # 保存并继续编辑
             id = models.WorkLog.objects.order_by('id').last()
-            id = id.id+1 if id else 1
-            models.WorkLog.objects.create(id=id,belonged=user, date=date, title=title, body=body).save()
+            id = id.id + 1 if id else 1
+            models.WorkLog.objects.create(id=id, belonged=user, date=date, title=title, body=body).save()
             works = [date, title, body]
             return render(rq, 'user_update_data.html',
                           {"user_name": user_name, "work": works, "id": id, "update_work_log": True,
                            "operation": "工作日志"})
-        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_work_log": True, "operation":"工作日志"})
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_work_log": True, "operation": "工作日志"})
     return redirect('/')
+
 
 def update_work_log(rq):
     """ 修改工作日志 """
     record_from(rq)
-    user_name, qx, uid = getLogin(rq.session,uid=True)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
     if user_name and rq.method == 'GET':
         id = rq.GET.get('id')
-        work = models.WorkLog.objects.filter(id=id,belonged=uid)
+        work = models.WorkLog.objects.filter(id=id, belonged=uid)
         if work:
-            work = [[str(w.date),w.title,w.body] for w in work][0]
-            return render(rq, 'user_update_data.html', {"user_name": user_name, "work":work, "id":id, "update_work_log": True,"operation":"工作日志"})
+            work = [[str(w.date), w.title, w.body] for w in work][0]
+            return render(rq, 'user_update_data.html',
+                          {"user_name": user_name, "work": work, "id": id, "update_work_log": True,
+                           "operation": "工作日志"})
     elif user_name and rq.method == 'POST':
         msg = ""
         id = rq.POST['id']
@@ -329,7 +336,7 @@ def update_work_log(rq):
         body = rq.POST['body']
         if date and title and body:
             date = date.replace('/', '-')
-            models.WorkLog.objects.filter(id=id,belonged=uid).update(date=date, title=title, body=body)
+            models.WorkLog.objects.filter(id=id, belonged=uid).update(date=date, title=title, body=body)
             msg += "修改成功！"
         else:
             msg += "修改失败！"
@@ -338,12 +345,13 @@ def update_work_log(rq):
         elif '_addanother' in rq.POST:  # 保存并增加另一个
             return redirect('add_work_log')
         elif '_continue' in rq.POST:  # 保存并继续编辑
-            work = [date,title,body]
+            work = [date, title, body]
             return render(rq, 'user_update_data.html',
                           {"user_name": user_name, "work": work, "id": id, "update_work_log": True,
-                           "operation": "工作日志","msg":msg})
+                           "operation": "工作日志", "msg": msg})
 
     return redirect('/')
+
 
 def del_work_log(rq):
     """ 删除工作日志 """
@@ -354,21 +362,23 @@ def del_work_log(rq):
         if qx == 3:
             models.WorkLog.objects.filter(id=id).delete()
         else:
-            models.WorkLog.objects.filter(id=id,belonged=uid).delete()
+            models.WorkLog.objects.filter(id=id, belonged=uid).delete()
         return redirect('user_information')
     return redirect('/')
+
 
 def add_simulation_account(rq):
     """ 添加模拟账户 """
     record_from(rq)
-    user_name, qx, uid = getLogin(rq.session,uid=True)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
     if user_name and rq.method == 'GET':
-        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_simulation_account":True,"operation":"模拟账户"})
+        return render(rq, 'user_add_data.html',
+                      {"user_name": user_name, "add_simulation_account": True, "operation": "模拟账户"})
     elif user_name and rq.method == 'POST':
         host = rq.POST['host']
         enabled = rq.POST['enabled']
-        sql = "UPDATE account_info SET trader_name='{}',available={} WHERE id={}".format(user_name,enabled,host)
-        HSD.runSqlData('carry_investment',sql)
+        sql = "UPDATE account_info SET trader_name='{}',available={} WHERE id={}".format(user_name, enabled, host)
+        HSD.runSqlData('carry_investment', sql)
         try:
             if '_save' in rq.POST:  # 保存
                 models.SimulationAccount.objects.create(belonged_id=uid, host=host, enabled=enabled).save()
@@ -381,6 +391,21 @@ def add_simulation_account(rq):
                           {"user_name": user_name, "add_simulation_account": True, "operation": "模拟账户",
                            "msg": "添加失败！"})
     return redirect('/')
+
+def offon_simulation_account(rq):
+    """ 停用、启用模拟账户 """
+    record_from(rq)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
+    if user_name and rq.method == 'GET':
+        id = rq.GET.get('id')
+        enabled = rq.GET.get('enabled')
+        host = rq.GET.get('host')
+        models.SimulationAccount.objects.filter(id=id, belonged=uid).update(enabled=enabled)
+        sql = "UPDATE account_info SET available={} WHERE id={}".format(enabled, host)
+        HSD.runSqlData('carry_investment', sql)
+        return redirect('user_information')
+    return redirect('/')
+
 
 def del_simulation_account(rq):
     """ 删除模拟账户 """
@@ -439,7 +464,7 @@ def register(rq):
             phone = rq.POST['phone'].strip()
             email = rq.POST.get('email')
             if name and password and phone and len(phone) == 11 and phone[:2] in (
-            '13', '14', '15', '18') and not models.Users.objects.filter(name=name):
+                    '13', '14', '15', '18') and not models.Users.objects.filter(name=name):
                 ups = HSD.get_config('U', 'userps')
                 timestamp = str(int(time.time() * 10))
                 password = eval(ups)
@@ -687,7 +712,7 @@ def tongji(rq):
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
     client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '5' and rq_date and end_date and rq_id != '0' and (client in HSD.get_config('IP', 'ip') or user_name):
+    if rq_type == '5' and rq_date and end_date and rq_id != '0' and user_name:  # client in HSD.get_config('IP', 'ip')
         results2, _ = HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
@@ -723,7 +748,7 @@ def tongji(rq):
         return render(rq, 'hc.html',
                       {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name})
 
-    if rq_type == '4' and rq_date and end_date and (client in HSD.get_config('IP', 'ip') or user_name):
+    if rq_type == '4' and rq_date and end_date and user_name:  # client in HSD.get_config('IP', 'ip')
         results2, huizong = HSD.sp_order_record(rq_date, end_date)
         if user:
             results2 = [i for i in results2 if i[0] == user]
@@ -732,7 +757,7 @@ def tongji(rq):
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3' and (client in HSD.get_config('IP', 'ip') or user_name):
+    if rq_type == '3' and user_name:  # client in HSD.get_config('IP', 'ip')
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消", 0: "挂单", 1: "开仓", 2: "平仓"}
@@ -913,6 +938,8 @@ def tongji(rq):
     # return render(rq, 'tongji.html', locals())
     herys = viewUtil.tongji_first()
     ids = HSD.IDS
+    if not user_name:
+        logins = "请先登录再访问您需要的页面！"
     return render(rq, 'tongji.html', locals())
 
 
@@ -1390,9 +1417,6 @@ def journalism(rq):
     return redirect('index')
 
 
-def gxjy_refresh(rq):
-    pass
-
 
 def gxjy(rq):
     """国信交易"""
@@ -1401,7 +1425,7 @@ def gxjy(rq):
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     client = rq.META.get('REMOTE_ADDR')
-    if client in HSD.get_config('IP', 'ip') or user_name: # 内部网络或登录用户
+    if client in HSD.get_config('IP', 'ip') or user_name:  # 内部网络或登录用户
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')
@@ -1619,13 +1643,15 @@ def gxjy(rq):
                                                 'user_name': user_name})
         # h.closeConn()  # 关闭数据库
     else:
-        response = redirect('index')
+        response = index(rq, logins=False)
 
     return response
 
 
 def systems(rq):
     user_name, qx = getLogin(rq.session)
+    if not user_name:
+        return index(rq, False)
     return render(rq, 'systems.html', {'user_name': user_name})
 
 

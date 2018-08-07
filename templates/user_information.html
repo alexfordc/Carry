@@ -30,7 +30,9 @@ border:1px solid #888; background-color:green; text-align:center">
     <tr><td>{{ a.host }}</td><td>
         {% if a.enabled == 0 %}No{% else %}Yes{% endif %}
     </td>
-    <td><a onclick="return confirm('确定要删除吗？')" href="{% url 'del_simulation_account' %}?id={{a.id}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-left:20px;margin-top:5px;margin-bottom:5px;"></a></td></tr>
+        <td>&nbsp;&nbsp;<span>{% if a.enabled == 0 %}<a onclick="return confirm('确定启用？')" href="{% url 'offon_simulation_account' %}?id={{a.id}}&host={{a.host}}&enabled=1">启用</a>
+            {% else %}<a onclick="return confirm('确定停用？')" href="{% url 'offon_simulation_account' %}?id={{a.id}}&host={{a.host}}&enabled=0">停用</a>{% endif %}</span>&nbsp;&nbsp;
+        <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_simulation_account' %}?id={{a.id}}" title="删除">删除</a></td></tr>
     {% endfor %}
     </table>
     <hr/>
