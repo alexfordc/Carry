@@ -22,7 +22,7 @@ border:1px solid #888; background-color:green; text-align:center">
     </tr>
 {% endfor %}
     </table>
-    <hr/>
+    <br/><hr width="800"/>
     <table border="1" width="800">
         <caption>我的模拟账户</caption>
         <tr><th>账号</th><th>是否启用</th><th>操作</th></tr>
@@ -35,7 +35,7 @@ border:1px solid #888; background-color:green; text-align:center">
         <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_simulation_account' %}?id={{a.id}}" title="删除">删除</a></td></tr>
     {% endfor %}
     </table>
-    <hr/>
+    <br/><hr width="800"/>
     <table border="1" width="800">
         <caption>我的实盘账户</caption>
         <tr><th>账号</th><th>用户ID</th></tr>

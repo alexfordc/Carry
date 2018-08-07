@@ -783,10 +783,10 @@ def tongji(rq):
             if dt not in res:
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
             if i[8] in (1, 2):
-                if i[6] == 0:
-                    res[dt]['duo'] += 1
-                elif i[6] == 1:
+                if i[6]%2:
                     res[dt]['kong'] += 1
+                else:
+                    res[dt]['duo'] += 1
                 res[dt]['mony'] += i[5]
                 xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7], i[11]]
                 res[dt]['datetimes'].append(xx)
@@ -802,6 +802,7 @@ def tongji(rq):
         if rq_date == end_date:
             hcd = HSD.huice_day(res, init_money, real=False)
             # return render(rq, 'hc_day.html', {'hcd': hcd})
+
         res, huizong = viewUtil.tongji_huice(res, huizong)
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 

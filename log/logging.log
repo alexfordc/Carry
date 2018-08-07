@@ -3585,3 +3585,18 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\forms\fields.py", line 228, in __init__
     super(CharField, self).__init__(*args, **kwargs)
 TypeError: __init__() got an unexpected keyword argument 'attrs'
+exception.py[2018-08-07 16:44:28][ERROR]£ºInternal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 798, in tongji
+    print([[i['duo'],i['kong']] for i in res])
+  File "D:\tools\Tools\Carry\mysite\views.py", line 798, in <listcomp>
+    print([[i['duo'],i['kong']] for i in res])
+TypeError: string indices must be integers
