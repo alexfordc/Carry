@@ -186,7 +186,8 @@ class SqlPool:
 
 
 def runSqlData(db, sql, params=None):
-    ''' 从数据库查询数据 conn：数据库连接；sql：SQL语句；params：参数'''
+    """ 执行SQL语句，返回查询结果 db：数据库名称
+    (carry_investment,stock_data)；sql：SQL语句；params：参数 """
     sp = SqlPool(db)
     data = None
     try:

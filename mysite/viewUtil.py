@@ -108,3 +108,11 @@ def gxjy_refresh(h, folder1, folder2):
     h.to_sql(data, 'gx_record')
     data = h.gx_lsjl(folder2)
     h.to_sql(data, 'gx_entry_exit')
+
+
+def get_cfmmc_trade():
+    """ 国内期货数据，交易记录 """
+    # 合约, 成交序号, 成交时间, 买/卖, 投机/套保, 成交价, 手数, 成交额, 开/平, 手续费, 平仓盈亏, 实际成交日期, 帐号, 交易日期
+    sql = "SELECT * FROM cfmmc_trade_records"
+    data = HSD.runSqlData('carry_investment',sql)
+    return data

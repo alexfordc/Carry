@@ -18,6 +18,6 @@ def name_option(d, i):
     """ 返回用户名，如果没
     有对应的名称则返回原ID """
     if isinstance(d,dict):
-        name = d.get(i)
+        name = d.get(int(i) if isinstance(i,str) and i.isdigit() else i)
         return name if name else i
     return i

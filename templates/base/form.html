@@ -72,11 +72,17 @@
     {% load mvote %}
         {% for id in ids %}
             {% if forloop.first %}
-                {% if rq_id == '0' or rq_id == None %}<option value="{{ rq_id }}">全  部</option>{% else %}
+                {% if rq_id == '0' or rq_id == None %}
+                    <option value="{{ rq_id }}">全  部</option>
+                    <option value="{{ id }}">{{ id_name|name_option:id }}</option>
+                {% else %}
                     <option value="{{ rq_id }}">{{ id_name|name_option:rq_id }}</option>
-                    <option value="0">全  部</option>{% endif %}
+                    <option value="0">全  部</option>
+                    <option value="{{ id }}">{{ id_name|name_option:id }}</option>
                 {% endif %}
-            <option value="{{ id }}">{{ id_name|name_option:id }}</option>
+            {% else %}
+                <option value="{{ id }}">{{ id_name|name_option:id }}</option>
+            {% endif %}
         {% endfor %}
     </select>
         </td></tr>

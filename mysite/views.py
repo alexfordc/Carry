@@ -712,8 +712,8 @@ def tongji(rq):
     dates = rq_date if rq_date and rq_date != 'None' else dates
 
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
-    client = rq.META.get('REMOTE_ADDR')
-    if rq_type == '5' and rq_date and end_date and rq_id != '0' and user_name:  # client in HSD.get_config('IP', 'ip')
+
+    if rq_type == '5' and rq_date and end_date and rq_id != '0' and user_name:
         results2, _ = HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
@@ -745,11 +745,11 @@ def tongji(rq):
         res, huizong = viewUtil.tongji_huice(res, huizong)
 
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
-
+        hc_name = rq_id
         return render(rq, 'hc.html',
-                      {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name})
+                      {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name':hc_name})
 
-    if rq_type == '4' and rq_date and end_date and user_name:  # client in HSD.get_config('IP', 'ip')
+    if rq_type == '4' and rq_date and end_date and user_name:
         results2, huizong = HSD.sp_order_record(rq_date, end_date)
         if user:
             results2 = [i for i in results2 if i[0] == user]
@@ -758,7 +758,7 @@ def tongji(rq):
         # hc = HSD.huice_day(res)
         return render(rq, 'tongjisp.html', locals())
 
-    if rq_type == '3' and user_name:  # client in HSD.get_config('IP', 'ip')
+    if rq_type == '3' and user_name:
         results2 = HSD.order_detail()
         monijy = [i for i in results2 if i[8] != 2]
         status = {-1: "取消", 0: "挂单", 1: "开仓", 2: "平仓"}
@@ -806,9 +806,11 @@ def tongji(rq):
 
         res, huizong = viewUtil.tongji_huice(res, huizong)
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
-
+        hc_name = id_name.get(int(rq_id) if rq_id.isdigit() else rq_id)
+        if not hc_name:
+            hc_name = rq_id
         return render(rq, 'hc.html',
-                      {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name})
+                      {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name,'hc_name':hc_name})
 
     if rq_type == '1' and rq_date and user_name:
         result9 = HSD.order_detail(rq_date, end_date)
@@ -1426,8 +1428,7 @@ def gxjy(rq):
     user_name, qx = getLogin(rq.session)
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
-    client = rq.META.get('REMOTE_ADDR')
-    if client in HSD.get_config('IP', 'ip') or user_name:  # 内部网络或登录用户
+    if user_name:  # 内部网络或登录用户
         types = rq.GET.get('type')
         code = rq.GET.get('code')
         group = rq.GET.get('group')
@@ -1649,6 +1650,13 @@ def gxjy(rq):
 
     return response
 
+def cfmmc_trade(rq):
+    """ 期货交易数据 """
+    user_name, qx = getLogin(rq.session)
+    if not user_name:
+        return index(rq, False)
+    trade = viewUtil.get_cfmmc_trade()
+    return render(rq,'domestic_futures.html',{'trade':trade,'user_name': user_name})
 
 def systems(rq):
     user_name, qx = getLogin(rq.session)

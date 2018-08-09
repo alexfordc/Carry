@@ -42,6 +42,9 @@
 	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
 }
+
+tr{border:1px solid #999;}
+td,th{ border:0px;height:40px; }
 </style>
 {% endblock %}
 {% block center_cen %}
@@ -63,11 +66,11 @@
     <!--<a href="javascript:myajaxs('/gxjy/?type=tjt')">统计图</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
     <!--<a href="{% url 'gxjy' %}?type=sx">刷新</a>&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/><br/><br/>-->
     <div id="data_is_ajax" align="center">
-    <table border="1">
+    <table border="1" cellspacing="0" cellpadding="0">
         {% if hys %}
         <tr><th colspan="22" style="font-size:20px;">交易汇总</th></tr>
-        <tr><th>名称</th><th>合约</th><th>时间</th><th>开仓</th><th>当前价</th><th>持仓</th><th>原始成本</th><th>会话成本</th><th>净会话成本</th><th>此笔盈利</th><th>会话盈利</th>
-            <th>总盈利</th><th>总平均盈利</th><th>会话平均盈利</th><th>持仓成本</th><th>净持仓成本</th><th>利润</th><th>净利润</th><th>净平均利润</th><th>手续费</th><th>已平仓</th><th>序号</th></tr>
+        <tr><th>名称&nbsp;&nbsp;</th><th>合约&nbsp;&nbsp;</th><th>时间&nbsp;&nbsp;</th><th>开仓&nbsp;&nbsp;</th><th>当前价&nbsp;&nbsp;</th><th>持仓&nbsp;&nbsp;</th><th>原始成本&nbsp;&nbsp;</th><th>会话成本&nbsp;&nbsp;</th><th>净会话成本&nbsp;&nbsp;</th><th>此笔盈利&nbsp;&nbsp;</th><th>会话盈利&nbsp;&nbsp;</th>
+            <th>总盈利&nbsp;&nbsp;</th><th>总平均盈利&nbsp;&nbsp;</th><th>会话平均盈利&nbsp;&nbsp;</th><th>持仓成本&nbsp;&nbsp;</th><th>净持仓成本&nbsp;&nbsp;</th><th>利润&nbsp;&nbsp;</th><th>净利润&nbsp;&nbsp;</th><th>净平均利润&nbsp;&nbsp;</th><th>手续费&nbsp;&nbsp;</th><th>已平仓&nbsp;&nbsp;</th><th>序号</th></tr>
         {% for i in hys %}
         <tr bgcolor="{% cycle '#aaf' '#ccf' %}" style="font-size:14px;"><td><a href="{% url 'gxjy' %}?type=js&code={{i.0}}" style="color:blue;">{{i.22}}</a></td>
             <td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td>
@@ -84,11 +87,12 @@
             <td>{{i.14}}</td><td>{{i.15}}</td><td>{{i.16}}</td><td>{{i.17}}</td><td>{{i.18}}</td><td>{{i.19}}</td><td>{{i.20}}&nbsp;&nbsp;{{forloop.counter}}</td></tr>
         {% endfor %}
         {% elif init_data %}
-        <tr style="width:1000px;"><th colspan="18" style="font-size:20px;">交易数据</th></tr>
-        <tr><th>成交时间</th><th>交易所</th><th>合约号</th><th>买卖</th><th>开平仓</th><th>成交手数</th><th>成交价格</th><th>手续费</th>
-            <th>交易费</th><th>交易编码</th><th>席位号</th><th>系统号</th><th>成交号</th><th>投保</th><th>交割期</th><th>币种</th><th>名称</th><th>序号</th></tr>
+        <tr><th colspan="18" style="font-size:20px;">交易数据</th></tr>
+        <tr><th>成交时间&nbsp;&nbsp;</th><th>交易所&nbsp;&nbsp;</th><th>合约号&nbsp;&nbsp;</th><th>买卖&nbsp;&nbsp;</th><th>开平仓&nbsp;&nbsp;</th><th>成交手数&nbsp;&nbsp;</th>
+            <th>成交价格&nbsp;&nbsp;</th><th>手续费&nbsp;&nbsp;</th><th>交易费&nbsp;&nbsp;</th><th>交易编码&nbsp;&nbsp;</th><th>席位号&nbsp;&nbsp;</th><th>系统编号&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>成交号&nbsp;&nbsp;</th><th>投保&nbsp;&nbsp;</th><th>交割期&nbsp;&nbsp;</th><th>交易币种&nbsp;&nbsp;</th><th>名称&nbsp;&nbsp;</th><th>序号&nbsp;&nbsp;</th></tr>
         {% for i in init_data %}
-        <tr bgcolor="{% cycle '#aaf' '#ccf' %}"><td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td><td>{{i.7}}</td>
+        <tr><td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td><td>{{i.5}}</td><td>{{i.6}}</td><td>{{i.7}}</td>
             <td>{{i.8}}</td><td>{{i.9}}</td><td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12}}</td><td>{{i.13}}</td><td>{{i.14}}</td><td>{{i.15}}</td>
             <td><a href="{% url 'gxjy' %}?code={{i.2}}" style="color:blue;">{{i.16}}</a></td><td>{{forloop.counter}}</td>
         </tr>
