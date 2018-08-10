@@ -6,4 +6,5 @@
 *.log
 *.png
 *.jpg
-*pypass.py
+*.xml
+pypass.py
