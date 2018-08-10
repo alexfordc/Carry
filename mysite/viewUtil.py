@@ -137,8 +137,7 @@ class Cfmmc:
         self.session = requests.session()
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
         self._vercode_url = 'https://investorservice.cfmmc.com/veriCode.do?t='
-        self._conn = create_engine(
-            'mysql+pymysql://kairui:bf31ad0d-1e7739ca-db543@192.168.2.226:3306/carry_investment?charset=utf8')
+        self._conn = create_engine('')
         self.trade_records = None
         self.closed_position = None
         self.holding_position = None
