@@ -3911,3 +3911,26 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\requests\adapters.py", line 508, in send
     raise ConnectionError(e, request=request)
 requests.exceptions.ConnectionError: HTTPSConnectionPool(host='investorservice.cfmmc.com', port=443): Max retries exceeded with url: /login.do (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x000002B0DFEA2208>: Failed to establish a new connection: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。',))
+exception.py[2018-08-10 20:19:55][ERROR]：Internal Server Error: /cfmmc/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1679, in cfmmc_login
+    cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 149, in __init__
+    self._conn = create_engine('')
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sqlalchemy\engine\__init__.py", line 387, in create_engine
+    return strategy.create(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sqlalchemy\engine\strategies.py", line 50, in create
+    u = url.make_url(name_or_url)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sqlalchemy\engine\url.py", line 194, in make_url
+    return _parse_rfc1738_args(name_or_url)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\sqlalchemy\engine\url.py", line 243, in _parse_rfc1738_args
+    "Could not parse rfc1738 URL from string '%s'" % name)
+sqlalchemy.exc.ArgumentError: Could not parse rfc1738 URL from string ''

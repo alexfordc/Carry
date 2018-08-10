@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="功能升级">
-      <change afterPath="$PROJECT_DIR$/templates/cfmmc_data_local.html" afterDir="false" />
+    <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Carry/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Carry/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cfmmc_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cfmmc_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_add_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_add_data.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,8 +21,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="82" column="73" lean-forward="true" selection-start-line="82" selection-start-column="73" selection-end-line="82" selection-end-column="73" />
+            <state relative-caret-position="504">
+              <caret line="235" column="41" lean-forward="true" selection-start-line="235" selection-start-column="41" selection-end-line="235" selection-end-column="41" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#2893#5780#0" />
@@ -46,7 +36,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Carry/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="492">
               <caret line="66" column="63" selection-start-line="66" selection-start-column="63" selection-end-line="66" selection-end-column="63" />
             </state>
           </provider>
@@ -140,8 +130,8 @@
       <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="285" column="52" lean-forward="true" selection-start-line="285" selection-start-column="52" selection-end-line="285" selection-end-column="52" />
+            <state relative-caret-position="167">
+              <caret line="134" column="31" lean-forward="true" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -332,13 +322,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00057" summary="聊天室">
-      <created>1526277343639</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1526277343640</updated>
     </task>
     <task id="LOCAL-00058" summary="聊天室">
       <created>1526277507503</created>
@@ -676,7 +659,14 @@
       <option name="project" value="LOCAL" />
       <updated>1533865954016</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="功能升级">
+      <created>1533903575037</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1533903575037</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1088,29 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_data_local.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#1220#1226#0" expanded="true" />
-            <element signature="e#1226#1232#0" expanded="true" />
-            <element signature="e#1232#1238#0" expanded="true" />
-            <element signature="e#1238#1244#0" expanded="true" />
-            <element signature="e#1244#1250#0" expanded="true" />
-            <element signature="e#1250#1256#0" expanded="true" />
-            <element signature="e#1336#1342#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Carry/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="66" column="63" selection-start-line="66" selection-start-column="63" selection-end-line="66" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -1147,10 +1114,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Carry/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="66" column="63" selection-start-line="66" selection-start-column="63" selection-end-line="66" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="82" column="73" lean-forward="true" selection-start-line="82" selection-start-column="73" selection-end-line="82" selection-end-column="73" />
+        <state relative-caret-position="504">
+          <caret line="235" column="41" lean-forward="true" selection-start-line="235" selection-start-column="41" selection-end-line="235" selection-end-column="41" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#2893#5780#0" />
@@ -1160,10 +1134,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_data_local.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#1220#1226#0" expanded="true" />
+            <element signature="e#1226#1232#0" expanded="true" />
+            <element signature="e#1232#1238#0" expanded="true" />
+            <element signature="e#1238#1244#0" expanded="true" />
+            <element signature="e#1244#1250#0" expanded="true" />
+            <element signature="e#1250#1256#0" expanded="true" />
+            <element signature="e#1336#1342#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="285" column="52" lean-forward="true" selection-start-line="285" selection-start-column="52" selection-end-line="285" selection-end-column="52" />
+        <state relative-caret-position="167">
+          <caret line="134" column="31" lean-forward="true" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
