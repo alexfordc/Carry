@@ -321,4 +321,3 @@ def cfmmc_data_page(rq):
         start_date = ''
         end_date = ''
     return trade,start_date,end_date
-    #            print(f'{tradeDate}的{byType}数据下载失败，{e}')
