@@ -6,4 +6,4 @@
 *.log
 *.png
 *.jpg
-mysite/pypass.py
+*pypass.py

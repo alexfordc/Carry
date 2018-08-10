@@ -1,4 +1,3 @@
 
-
-def mypass():
+def mypass(p,t):
     pass
