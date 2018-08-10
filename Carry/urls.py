@@ -66,7 +66,9 @@ urlpatterns = [
     url(r'^systems/$', views.systems, name='systems'),
     url(r'^get_system/$', views.get_system, name='get_system'),
 
-    url(r'^cfmmc_trade/$', views.cfmmc_trade, name='cfmmc_trade'),
+    url(r'^cfmmc/login/$',views.cfmmc_login, name='cfmmc_login'),
+    url(r'^cfmmc/trade/$', views.cfmmc_trade, name='cfmmc_trade'),
+url(r'^cfmmc/data/$', views.cfmmc_data, name='cfmmc_data'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 

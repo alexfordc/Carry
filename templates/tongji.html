@@ -58,7 +58,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
       <td id="en{{i.0}}" contentEditable="true">{{ i.2|yesno:"Yes,No,未知" }}</td>
       <td>{{ i.3 }}</td>
       <td>{{ i.4 }}</td>
-        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;margin-bottom:5px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="删除"></td>
+        <td width="160"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-top:10px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:10px;cursor:pointer;" onclick="javascript:openLogin('{{i.0}}')" title="删除"></td>
     </tr>
         {% endfor %}
 

@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% block title %}投资者查询服务系统-中国期货市场监控中心{% endblock %}
+{% block script %}
+
+<script language="JavaScript">
+   javascript:window.history.forward(1);
+</script>
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+
+
+
+<a href="">数据显示</a>
+<form action="{% url 'cfmmc_data' %}" method="GET">
+开始日期：<input type="date" name="start_date">&nbsp;&nbsp;
+结束日期：<input type="date" name="end_date">&nbsp;&nbsp;
+<input type="submit" value="下载数据">
+</form>
+
+<script>
+    var success = '{{success}}';
+    alert(success);alert(success=='success');
+    if(confirm('是否希望保存用户信息到我的账户，以便下次登录？'))
+</script>
+{% endblock %}

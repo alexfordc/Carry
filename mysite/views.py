@@ -837,7 +837,8 @@ def tongji(rq):
                 h1 = i[5]  # 盈亏
                 h2 = i[7] if i[6] % 2 == 0 else 0  # 多单数量
                 h3 = i[7] if i[6] % 2 == 1 else 0  # 空单数量
-                h4 = 1  # 下单总数
+                # i (8965176, '2018-08-09 10:34:55', 28412.72, '1970-01-01 08:00:00', 28550.32, -137.6, 1, 1.0, 1, 28625.8, 28352.87, 53472349)
+                h4 = int(i[7])  # 下单总数
                 h5 = i[7] if i[5] > 0 else 0  # 赢利单数
                 # h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
                 h7 = name  # 姓名
@@ -1657,6 +1658,54 @@ def cfmmc_trade(rq):
         return index(rq, False)
     trade = viewUtil.get_cfmmc_trade()
     return render(rq,'domestic_futures.html',{'trade':trade,'user_name': user_name})
+
+import base64
+
+
+cfmmc_login_d = None
+token = None
+
+def cfmmc_login(rq):
+    """ cfmmc网站登录"""
+    user_name, qx = getLogin(rq.session)
+    if not user_name:
+        return index(rq, False)
+    global cfmmc_login_d,token
+    cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
+    token = cfmmc_login_d.getToken(cfmmc_login_d._login_url) if token is None else token
+    success = None
+    if rq.method == 'GET' and rq.is_ajax():
+        code = cfmmc_login_d.getCode()
+        code = base64.b64encode(code)
+        code = b"data:image/jpeg;base64," + code
+        return HttpResponse(code)
+    elif rq.method == 'POST':
+        userID = rq.POST['userID']
+        password = rq.POST['password']
+        vericode = rq.POST['vericode']
+        success=cfmmc_login_d.login(userID,password,token,vericode)
+        if success is True:
+            rq.session['user_cfmmc'] = {'userID':userID,'password':password}
+            return render(rq,'cfmmc_data.html',{'logins':'期货监控系统登录成功！','user_name': user_name,'success':'success'})
+        #cfmmc_login_d.save_settlement('2018-08-08','date')
+    #print(type(code),code)
+    code = cfmmc_login_d.getCode()
+    code = base64.b64encode(code)
+    code = b"data:image/jpeg;base64," + code
+    return render(rq,'cfmmc_login.html',{'code':code,'user_name': user_name,'success':success})
+
+def cfmmc_data(rq):
+    user_name, qx = getLogin(rq.session)
+    if not user_name:
+        return index(rq, False)
+    start_date = rq.GET.get('start_date')
+    #end_date = rq.GET.get('end_date')
+    status = cfmmc_login_d.save_settlement(start_date,'date')
+    print(status)
+    logins = '下载失败！'
+    if status:
+        logins = '下载数据成功！'
+    return render(rq,'cfmmc_data.html',{'logins':logins,'user_name': user_name})
 
 def systems(rq):
     user_name, qx = getLogin(rq.session)

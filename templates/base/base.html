@@ -8,32 +8,32 @@
 <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen" />
 <link href="{% static 'css/flexslider.css' %}" type="text/css" rel="stylesheet" media="screen">
 <link href="{% static 'css/jcarousel.css' %}" type="text/css" rel="stylesheet" media="screen" />
-<link rel="stylesheet" href="{% static 'css/mosaic.css' %}" type="text/css" media="screen" />
-<link href="{% static 'css/prettyPhoto.css' %}" type="text/css" rel="stylesheet" media="screen">
-<link href="{% static 'css/tipsy.css' %}" type="text/css" rel="stylesheet" media="screen">
+<!--<link rel="stylesheet" href="{% static 'css/mosaic.css' %}" type="text/css" media="screen" />-->
+<!--<link href="{% static 'css/prettyPhoto.css' %}" type="text/css" rel="stylesheet" media="screen">-->
+<!--<link href="{% static 'css/tipsy.css' %}" type="text/css" rel="stylesheet" media="screen">-->
 
-    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/beijing_style.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">-->
+<!--<link rel="stylesheet" href="{% static 'css/beijing_style.css' %}">-->
     <!--<link rel="stylesheet" href="{% static 'css/spigPet.css' %}">-->
 
 <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/css3-mediaqueries.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/modernizr-1.7.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/css3-mediaqueries.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'js/modernizr-1.7.min.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/ddsmoothmenu.js' %}"> </script>
 <script type="text/javascript" src="{% static 'js/jquery.flexslider-min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.jcarousel.min.js' %}"> </script>
 <script type="text/javascript" src="{% static 'js/mosaic.1.0.1.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/jquery.tipsy.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/grayscale-image.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/grayscale-image.js' %}"></script>-->
 <script type="text/javascript" src="{% static 'js/md5.js' %}"></script>
 
     <!--<script type="text/javascript" src="{% static 'js/spig.js' %}"></script>-->
 
     <!--<link rel="stylesheet" type="text/css" href="{% static 'css/styleliaotianshi.css' %}" />-->
-<script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>
-<script src="{% static 'js/liaotianshi/socket.io.js' %}"></script>
-    <script src="{% static 'js/liaotianshi/html2canvas.js' %}"></script>
+<!--<script src="{% static 'js/liaotianshi/json3.min.js' %}"></script>-->
+<!--<script src="{% static 'js/liaotianshi/socket.io.js' %}"></script>-->
+    <!--<script src="{% static 'js/liaotianshi/html2canvas.js' %}"></script>-->
 
 <!--menu-->
 <script type="text/javascript">
@@ -153,10 +153,6 @@ var $container = $('#works-container');
                 <li><a href="{% url 'zhutu' %}" class="tip" title="柱状图">柱图</a></li>
                 <li><a href="{% url 'zhexian' %}" class="tip" title="折线图">折线</a></li>
                 <li><a href="{% url 'tongji' %}" class="tip" title="交易统计表">统计</a></li>
-                <!--<li><a href="#" class="tip" title="Twitter"><img src="{% static 'images/social-twitter-32x32.png' %}" alt="Twitter" /></a></li>-->
-            	<!--<li><a href="#" class="tip" title="Wordpress"><img src="{% static 'images/social-wordpress-32x32.png' %}" alt="Wordpress" /></a></li>-->
-                <!--<li><a href="#" class="tip" title="Skype"><img src="{% static 'images/social-skype-32x32.png' %}" alt="Skype" /></a></li>-->
-                <!--<li><a href="#" class="tip" title="RSS"><img src="{% static 'images/social-rss-32x32.png' %}" alt="RSS" /></a></li>-->
             </ul>
     		<span id="gotop"><a href="#" title="Back to top">&dagger;</a></span>
         </div>
@@ -182,6 +178,7 @@ var $container = $('#works-container');
                     <li><a href="{% url 'index' %}">资料</a>
                     <ul>
                         <li class="no-border-top" id="tongji_msg"><a href="{% url 'tongji' %}">交易统计表</a></li>
+                        <li class="no-border-top" ><a href="{% url 'cfmmc_login' %}">期货监控中心</a></li>
                         <li class="no-border-top" id="moni_msg"><a href="{% url 'moni' %}">模拟测试表</a></li>
                         <li class="no-border-top" ><a href="{% url 'moni_all' %}">方案荟萃</a></li>
                         <li class="no-border-top" ><a href="{% url 'newMoni' %}">挖掘方案</a></li>
