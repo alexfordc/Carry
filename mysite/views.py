@@ -34,6 +34,7 @@ from mysite import HSD
 from mysite.HSD import get_ip_name
 from mysite import models
 from mysite import viewUtil
+from mysite import pypass
 # from mysite.tasks import record_from_a,record_from_w
 from mysite.sub_client import sub_ticker, getTickData
 
@@ -80,10 +81,13 @@ def getLogin(ses, uid=False):
     if 'users' in ses:
         if not uid:
             name, qx = ses['users']['name'], ses['users']['jurisdiction']
-            return name, qx
-        name, qx, id = ses['users']['name'], ses['users']['jurisdiction'], ses['users']['id']
-        return name, qx, id
-    return None, None
+            response = name, qx
+        else:
+            name, qx, id = ses['users']['name'], ses['users']['jurisdiction'], ses['users']['id']
+            response = name, qx, id
+    else:
+        response = (None, None, None) if uid else (None, None)
+    return response
 
 
 def record_from(rq):
@@ -1656,7 +1660,7 @@ def cfmmc_trade(rq):
     user_name, qx = getLogin(rq.session)
     if not user_name:
         return index(rq, False)
-    trade = viewUtil.get_cfmmc_trade()
+    trade = viewUtil.get_cfmmc_trade(host='')
     return render(rq,'domestic_futures.html',{'trade':trade,'user_name': user_name})
 
 import base64
@@ -1664,13 +1668,14 @@ import base64
 
 cfmmc_login_d = None
 token = None
+is_cfmmc_login = False
 
 def cfmmc_login(rq):
-    """ cfmmc网站登录"""
-    user_name, qx = getLogin(rq.session)
-    if not user_name:
-        return index(rq, False)
-    global cfmmc_login_d,token
+    """ 期货监控系统 登录"""
+    user_name, qx, uid = getLogin(rq.session,uid=True)
+    # if not user_name:
+    #     return index(rq, False)
+    global cfmmc_login_d,token,is_cfmmc_login
     cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
     token = cfmmc_login_d.getToken(cfmmc_login_d._login_url) if token is None else token
     success = None
@@ -1683,29 +1688,115 @@ def cfmmc_login(rq):
         userID = rq.POST['userID']
         password = rq.POST['password']
         vericode = rq.POST['vericode']
+        try:
+            tda = models.TradingAccount.objects.get(host=userID)
+            ct = tda.creationTime
+            if tda.belonged_id == uid and password[:8] == 'KR'+ct[-6:]:
+                password = pypass.cfmmc_decode(password[8:],ct)
+        except:
+            pass
+
         success=cfmmc_login_d.login(userID,password,token,vericode)
         if success is True:
-            rq.session['user_cfmmc'] = {'userID':userID,'password':password}
-            return render(rq,'cfmmc_data.html',{'logins':'期货监控系统登录成功！','user_name': user_name,'success':'success'})
-        #cfmmc_login_d.save_settlement('2018-08-08','date')
-    #print(type(code),code)
+            is_cfmmc_login = True
+            if not models.TradingAccount.objects.filter(host=userID).exists():
+                createTime = str(int(time.time() * 100))
+                password = pypass.cfmmc_encode(password,createTime)
+                rq.session['user_cfmmc'] = {'userID': userID, 'password': password, 'createTime': createTime}
+                response = {'logins':'期货监控系统登录成功！','user_name': user_name,'success':'success'}
+            else:
+                rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
+                response = {'logins': '期货监控系统登录成功！', 'user_name': user_name}
+            trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+            response['trade'] = trade
+            response['start_date'] = start_date
+            response['end_date'] = end_date
+            return render(rq,'cfmmc_data.html',response)
+
     code = cfmmc_login_d.getCode()
     code = base64.b64encode(code)
     code = b"data:image/jpeg;base64," + code
-    return render(rq,'cfmmc_login.html',{'code':code,'user_name': user_name,'success':success})
+    try:
+        tda = models.TradingAccount.objects.filter(belonged_id=uid).get(enabled=1)
+        host, password = (tda.host, tda.password) if tda.enabled == 1 else ('', '')
+        password = 'KR'+tda.creationTime[-6:]+password
+    except:
+        host, password = '', ''
+    return render(rq,'cfmmc_login.html',{'code':code,'user_name': user_name,'success':success,'host':host,'password':password})
 
 def cfmmc_data(rq):
+    """ 期货监控系统 下载数据 """
+    user_name, qx, uid = getLogin(rq.session,uid=True)
+    # if not user_name:
+    #     return index(rq, False)
+    start_date = rq.GET.get('start_date')
+    end_date = rq.GET.get('end_date')
+    try:
+        if is_cfmmc_login and start_date and end_date:
+            host = rq.session['user_cfmmc']['userID']
+            cfmmc_login_d.down_day_data_sql(host,start_date,end_date)
+            status = True
+        else:
+            status = False
+    except:
+        status = False
+    logins = '下载失败！可能由于数据已经被下载！' if is_cfmmc_login else '没有登录！'
+    if status:
+        logins = '数据成功下载！如果时间跨度过长，需等待几分钟！'
+    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+    return render(rq,'cfmmc_data.html',{'logins':logins,'user_name': user_name,'trade': trade,'start_date':start_date,'end_date':end_date})
+
+def cfmmc_logout(rq):
+    """ 期货监控系统 退出 """
+    global is_cfmmc_login
     user_name, qx = getLogin(rq.session)
+    # if not user_name:
+    #     return index(rq, False)
+    logins = '没有登录！'
+    if is_cfmmc_login:
+        try:
+            logins = '退出失败！'
+            if cfmmc_login_d.logout():
+                logins = '退出成功！'
+                is_cfmmc_login = False
+        except:
+            pass
+    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+    return render(rq, 'cfmmc_data.html',{'user_name': user_name, 'logins':logins,'trade': trade,'start_date':start_date,'end_date':end_date})
+
+def cfmmc_data_page(rq):
+    """ 期货监控系统 展示页面 """
+    user_name, qx, uid = getLogin(rq.session, uid=True)
+    # if not user_name:
+    #     return index(rq, False)
+    host = rq.GET.get('host')
+    if host:
+        rq.session['user_cfmmc'] = {'userID':host}
+    if 'user_cfmmc' not in rq.session:
+        return render(rq, 'cfmmc_data.html',{'user_name': user_name,'is_cfmmc_login':'no'})
+    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+    return render(rq, 'cfmmc_data.html',{'user_name': user_name,'trade': trade,'start_date':start_date,'end_date':end_date})
+
+def cfmmc_data_local(rq):
+    """ 本站期货交易数据 """
+    trade = viewUtil.get_cfmmc_trade()
+    return render(rq, 'cfmmc_data_local.html',{'trade': trade})
+
+def cfmmc_save(rq):
+    """ 保存期货监控系统的用户名与密码 """
+    user_name, qx, uid = getLogin(rq.session,uid=True)
     if not user_name:
         return index(rq, False)
-    start_date = rq.GET.get('start_date')
-    #end_date = rq.GET.get('end_date')
-    status = cfmmc_login_d.save_settlement(start_date,'date')
-    print(status)
-    logins = '下载失败！'
-    if status:
-        logins = '下载数据成功！'
-    return render(rq,'cfmmc_data.html',{'logins':logins,'user_name': user_name})
+    if rq.method == 'GET' and rq.is_ajax():
+        ty = rq.GET.get('type')
+        if ty == 'save' and 'user_cfmmc' in rq.session:
+            #rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
+            userID = rq.session['user_cfmmc']['userID']
+            password = rq.session['user_cfmmc']['password']
+            createTime = rq.session['user_cfmmc']['createTime']
+            models.TradingAccount.objects.create(belonged_id=uid,host=userID,password=password,creationTime=createTime).save()
+            return HttpResponse('yes')
+    return HttpResponse('no')
 
 def systems(rq):
     user_name, qx = getLogin(rq.session)

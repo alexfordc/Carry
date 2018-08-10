@@ -58,12 +58,16 @@ class SimulationAccount(models.Model):
 
 class TradingAccount(models.Model):
     """ 真实交易账户 """
+    CHICO_ZT = [[0, '未启用'], [1, '启用']]
     belonged = models.ForeignKey('Users', verbose_name='所属用户')  # 所属用户
-    host = models.CharField('账户', max_length=40)
-    port = models.IntegerField('端口')
-    license = models.CharField('许可证', max_length=30)
-    appid = models.CharField('ApppID', max_length=20)
-    userid = models.CharField('用户ID', max_length=20)
+    host = models.CharField('用户名', max_length=40)
+    port = models.IntegerField('端口',null=True,blank=True)
+    license = models.CharField('许可证', max_length=30,null=True,blank=True)
+    appid = models.CharField('ApppID', max_length=20,null=True,blank=True)
+    userid = models.CharField('用户ID', max_length=20,null=True,blank=True)
+    password = models.CharField('密码', max_length=50,null=True,blank=True)
+    enabled = models.IntegerField('状态', choices=CHICO_ZT, default=1)  # 1：启用，0：未启用
+    creationTime = models.CharField('创建时间', max_length=12, null=True, blank=True)
 
     def __unicode__(self):
         return self.belonged

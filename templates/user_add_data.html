@@ -84,38 +84,54 @@
 </form>
 
 {% elif add_real_account %}
-<form enctype="multipart/form-data" action="{% url 'add_real_account' %}" method="post" id="tradingaccount_form" novalidate>
-  {% csrf_token %}
+<form enctype="multipart/form-data" action="" method="post" id="tradingaccount_form">
+    {% csrf_token %}
 <div>
   <fieldset class="module aligned ">
         <div class="form-row field-host">
                 <div>
-                        <label class="required" for="id_host">账户:</label>
+                        <label class="required" for="id_host">用户名:</label>
                             <input type="text" name="host" class="vTextField" maxlength="40" required id="id_host" />
+                </div>
+        </div>
+      <div class="form-row field-password">
+                <div>
+                        <label for="id_password">密码:</label>
+                            <input type="text" name="password" class="vTextField" maxlength="50" id="id_password" />
+                </div>
+        </div>
+      <div class="form-row field-enabled">
+                <div>
+                        <label class="required" for="id_enabled">状态:</label>
+
+                            <select name="enabled" id="id_enabled">
+                                <option value="1" selected>启用</option>
+                                <option value="0">未启用</option>
+                            </select>
                 </div>
         </div>
         <div class="form-row field-port">
                 <div>
-                        <label class="required" for="id_port">端口:</label>
-                            <input type="number" name="port" class="vIntegerField" required id="id_port" />
+                        <label for="id_port">端口:</label>
+                            <input type="number" name="port" class="vIntegerField" id="id_port" />
                 </div>
         </div>
         <div class="form-row field-license">
                 <div>
-                        <label class="required" for="id_license">许可证:</label>
-                            <input type="text" name="license" class="vTextField" maxlength="30" required id="id_license" />
+                        <label for="id_license">许可证:</label>
+                            <input type="text" name="license" class="vTextField" maxlength="30" id="id_license" />
                 </div>
         </div>
         <div class="form-row field-appid">
                 <div>
-                        <label class="required" for="id_appid">ApppID:</label>
-                            <input type="text" name="appid" class="vTextField" maxlength="20" required id="id_appid" />
+                        <label for="id_appid">ApppID:</label>
+                            <input type="text" name="appid" class="vTextField" maxlength="20" id="id_appid" />
                 </div>
         </div>
         <div class="form-row field-userid">
                 <div>
-                        <label class="required" for="id_userid">用户ID:</label>
-                            <input type="text" name="userid" class="vTextField" maxlength="20" required id="id_userid" />
+                        <label for="id_userid">用户ID:</label>
+                            <input type="text" name="userid" class="vTextField" maxlength="20" id="id_userid" />
                 </div>
         </div>
 </fieldset>

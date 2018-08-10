@@ -9,8 +9,8 @@
 {% block center_cen %}
 {% load staticfiles %}
 
-<link href="https://investorservice.cfmmc.com/css/style.css" rel="stylesheet" type="text/css" />
-<link href="https://investorservice.cfmmc.com/css/content.css" rel="stylesheet" type="text/css">
+<link href="{% static 'css/cfmmc_style.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/cfmmc_content.css' %}" rel="stylesheet" type="text/css">
 
 
 
@@ -68,7 +68,7 @@ function refreshImage(){
 
 <p align="center">
     
-	<img border="0" src="https://investorservice.cfmmc.com/img/logo.gif" >
+	<img border="0" src="{% static 'images/cfmmc/logo.gif' %}" >
 </p>
 
 <h2 align="center">
@@ -89,14 +89,14 @@ function refreshImage(){
                <td width="170" height="30">&nbsp;</td>
                <td align="left" class="formtext" valign="top">
                   用户名
-                  <input type="text" name="userID" size="22" value="">
+                  <input type="text" name="userID" size="22" value="{{host}}">
                 </td>
             </tr>
             <tr>
             <td width="170" height="30">&nbsp;</td>
                <td align="left" class="formtext" valign="top">
                   密　码
-                  <input type="password" name="password" size="22" value="">
+                  <input type="password" name="password" size="22" value="{{password}}">
                 </td>
             </tr>
             <tr>
@@ -135,10 +135,10 @@ function refreshImage(){
       <tr>
         
         <td align="center" id="s">
-          <input type="image" name="imageField2" src="https://investorservice.cfmmc.com/img/log22.gif" />
+          <input type="image" name="imageField2" src="{% static 'images/cfmmc/log22.gif' %}" />
           
           　&nbsp;&nbsp;&nbsp;
-          <input type="image" name="imageField" src="https://investorservice.cfmmc.com/img/log9.gif" onclick="my_reset(document.forms['loginForm']);return false;"/>
+          <input type="image" name="imageField" src="{% static 'images/cfmmc/log9.gif' %}" onclick="my_reset(document.forms['loginForm']);return false;"/>
           </td>
         </tr>
 	  <tr>

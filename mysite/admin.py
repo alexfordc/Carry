@@ -17,7 +17,7 @@ class WorkLogAdmin(admin.ModelAdmin):
 
 
 class TradingAccountAdmin(admin.ModelAdmin):
-    list_display = ('belonged', 'host')
+    list_display = ('belonged', 'host','enabled')
 
 
 class SimulationAccountAdmin(admin.ModelAdmin):

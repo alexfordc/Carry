@@ -110,11 +110,16 @@ def gxjy_refresh(h, folder1, folder2):
     h.to_sql(data, 'gx_entry_exit')
 
 
-def get_cfmmc_trade():
+def get_cfmmc_trade(host=None,start_date=None,end_date=None):
     """ 国内期货数据，交易记录 """
     # 合约, 成交序号, 成交时间, 买/卖, 投机/套保, 成交价, 手数, 成交额, 开/平, 手续费, 平仓盈亏, 实际成交日期, 帐号, 交易日期
-    sql = "SELECT * FROM cfmmc_trade_records"
-    data = HSD.runSqlData('carry_investment',sql)
+    if host is None:
+        sql = "SELECT * FROM cfmmc_trade_records GROUP BY 帐号"
+    elif start_date and end_date:
+        sql = f"SELECT * FROM cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' ORDER BY 实际成交日期 DESC,成交时间 DESC"
+    else:
+        sql = "SELECT * FROM cfmmc_trade_records WHERE 帐号='{}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30".format(host)
+    data = HSD.runSqlData('carry_investment', sql)
     return data
 
 
@@ -137,14 +142,16 @@ class Cfmmc:
         self.session = requests.session()
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
         self._vercode_url = 'https://investorservice.cfmmc.com/veriCode.do?t='
-        self._conn = create_engine(
-            'mysql+pymysql://kairui:bf31ad0d-1e7739ca-db543@192.168.2.226:3306/carry_investment?charset=utf8')
+        us = HSD.get_config("U", "us")
+        ps = HSD.get_config("U", "ps")
+        hs = HSD.get_config("U", "hs")
+        self._conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
         self.trade_records = None
         self.closed_position = None
         self.holding_position = None
 
     def getToken(self, url):
-        from pyquery import PyQuery as pq
+        """获取token"""
         token_name = "org.apache.struts.taglib.html.TOKEN"
         ret = self.session.get(self._login_url)
         ret_text = pq(ret.text)
@@ -153,23 +160,26 @@ class Cfmmc:
                 return x.value
 
     def getCode(self):
+        """ 获取验证码 """
         t = int(datetime.datetime.now().timestamp() * 1000)
         vercode_url = f'{self._vercode_url}{t}'
         response = self.session.get(vercode_url)
-        #image = Image.open(BytesIO(response.content))
+        # image = Image.open(BytesIO(response.content))
         return response.content
 
     def _get_not_trade_date(self):
+        """获取非交易日"""
         t = int(datetime.datetime.now().timestamp() * 1000)
         url = f'https://investorservice.cfmmc.com/script/tradeDateList.js?t={t}'
         ret = self.session.get(url)
         if ret.ok:
-            #print('获取非交易日成功')
+            # print('获取非交易日成功')
             self._not_trade_list = eval(re.search('\[.*\]', ret.content.decode())[0])
         else:
             self._not_trade_list = []
 
     def login(self, userID, password, token, vercode):
+        """ 用户登录 """
         self._userID = userID
         self._password = password
         data = {
@@ -180,7 +190,7 @@ class Cfmmc:
         }
         ret = self.session.post(self._login_url, data=data, verify=False, timeout=5)
         if ret.ok:
-            #print('成功登录')
+            # print('成功登录')
             self._get_not_trade_date()
         successful_landing = False
         d = ret.text
@@ -195,7 +205,19 @@ class Cfmmc:
                 pass
         return successful_landing
 
+    def logout(self):
+        """ 退出登录 """
+        logout_url = 'https://investorservice.cfmmc.com/logout.do'
+        data = {
+            "deleteCookies": 'N',
+            "logout": "退出系统"}
+        ret = self.session.post(logout_url, data=data, verify=False, timeout=5)
+        if ret.ok:
+            # print('成功登出')
+            return True
+
     def save_settlement(self, tradeDate, byType):
+        """ 请求并保存某一天（tradeDate：2018-08-08），"""
         daily = 'https://investorservice.cfmmc.com/customer/setupViewCustomerDetailFromCompanyWithExcel.do'
         month = 'https://investorservice.cfmmc.com/customer/setupViewCustomerMonthDetailFromCompanyWithExcel.do'
         sp = 'https://investorservice.cfmmc.com/customer/setParameter.do'
@@ -249,10 +271,52 @@ class Cfmmc:
                 else:
                     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
 
-                trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',index=False)
-                closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment', if_exists='append',index=False)
-                holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment', if_exists='append',index=False)
-                #print(f'{tradeDate}的{byType}数据下载成功')
+                trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',
+                                     index=False)
+                closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
+                                       if_exists='append', index=False)
+                holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
+                                        if_exists='append', index=False)
+                sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
+                HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
+                # print(f'{tradeDate}的{byType}数据下载成功')
                 return True
             except Exception as e:
-                print(f'{tradeDate}的{byType}数据下载失败，{e}')
+                print(f'{tradeDate}的{byType}数据下载失败')
+
+    @asyncs
+    def down_day_data_sql(self,host, start_date, end_date):
+        """ 下载啄日数据并保存到SQL """
+        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+        days = (end_date - start_date).days + 1
+        try:
+            sql = "SELECT date FROM cfmmc_insert_date WHERE host='{}'".format(host)
+            dates = HSD.runSqlData('carry_investment', sql)
+            dates = [str(i[0]) for i in dates]
+        except:
+            dates = []
+        for d in range(days):
+            date = start_date+datetime.timedelta(d)
+            date = str(date)[:10]
+            if date not in self._not_trade_list and date not in dates:
+                self.save_settlement(date,'date')
+                time.sleep(0.1)
+
+def cfmmc_data_page(rq):
+    """ 期货监控系统 展示页面 数据返回"""
+    start_date = rq.GET.get('start_date')
+    end_date = rq.GET.get('end_date')
+    try:
+        host = rq.session['user_cfmmc']['userID']
+        if start_date and end_date and '20' in start_date and '20' in end_date:
+            trade = get_cfmmc_trade(host, start_date, end_date)
+        else:
+            trade = get_cfmmc_trade(host=host)
+        start_date = str(trade[-1][11])
+        end_date = str(trade[0][11])
+    except:
+        trade = None
+        start_date = ''
+        end_date = ''
+    return trade,start_date,end_date
