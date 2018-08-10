@@ -146,6 +146,7 @@ class Cfmmc:
         ps = HSD.get_config("U", "ps")
         hs = HSD.get_config("U", "hs")
         self._conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
+        self._conn = create_engine('')
         self.trade_records = None
         self.closed_position = None
         self.holding_position = None
@@ -320,3 +321,4 @@ def cfmmc_data_page(rq):
         start_date = ''
         end_date = ''
     return trade,start_date,end_date
+    #            print(f'{tradeDate}的{byType}数据下载失败，{e}')
