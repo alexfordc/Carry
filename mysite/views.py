@@ -789,9 +789,9 @@ def tongji(rq):
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
             if i[8] in (1, 2):
                 if i[6]%2:
-                    res[dt]['kong'] += 1
+                    res[dt]['kong'] += int(i[7])
                 else:
-                    res[dt]['duo'] += 1
+                    res[dt]['duo'] += int(i[7])
                 res[dt]['mony'] += i[5]
                 xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7], i[11]]
                 res[dt]['datetimes'].append(xx)
@@ -886,7 +886,8 @@ def tongji(rq):
                 results2.append(i[:9] + (name,))  # 交易明细
                 last[c].append(i)
                 # 最大持仓
-                lzd = len(last[c])
+                # lzd = len(last[c])
+                lzd = int(sum(i[7] for i in last[c]))
                 huizong[c][13] = lzd if lzd > huizong[c][13] else huizong[c][13]
                 huizong[c][-1][dt][13] = lzd if lzd > huizong[c][-1][dt][13] else huizong[c][-1][dt][13]
 

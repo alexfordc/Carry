@@ -17,6 +17,7 @@ import socket
 import redis
 import sys
 from pyquery import PyQuery
+from copy import deepcopy
 
 from mysite.DataIndex import ZB
 
@@ -1322,19 +1323,23 @@ def huice_day(res, init_money,real=False):
 
         for j in res[i]['datetimes']:
             if real:
-                st = j[6] if j[2] == '多' else -j[6]
-                sameday.append([j[0], st, j[4]])
-                sameday.append([j[1], -st, j[5]])
+                for vol in range(abs(int(j[6]))):
+                    # st = j[6] if j[2] == '多' else -j[6]
+                    st = 1 if j[2] == '多' else -1
+                    sameday.append([j[0], st, j[4]])
+                    sameday.append([j[1], -st, j[5]])
                 hc['samedatetime'] = i
             else:
-                st = j[6] if j[2] == '多' else -j[6]
-                sameday.append([j[0], st, j[4], j[7]])
-                sameday.append([j[1], -st, j[5], j[7]])
+                for vol in range(abs(int(j[6]))):
+                    # st = j[6] if j[2] == '多' else -j[6]
+                    st = 1 if j[2] == '多' else -1
+                    sameday.append([j[0], st, j[4], j[7]])
+                    sameday.append([j[1], -st, j[5], j[7]])
                 hc['samedatetime'] = i
     try:
         sameday.sort()
+        sameday2 = []
         hc['day_time'] = [sa[0][-11:-3].replace(' ', '/') for sa in sameday]
-        from copy import deepcopy
         day_time = deepcopy(hc['day_time'])
         # hc['day_yk'] = [sa[1] for sa in sameday]
         hc['day_x'], hc['day_close'] = day_this_mins(keys[0], keys[-1])
@@ -1365,9 +1370,11 @@ def huice_day(res, init_money,real=False):
             else:
                 yk = 0  # 分钟盈亏
                 reg = day_time.count(dx)
+                #reg = sum([abs(s[1]) for s in sameday if s[0][8:10]+'/'+s[0][11:16]==dx])
                 for c2 in range(reg):
                     sind = get_ind(day_time, dx, c2)
                     same = sameday[sind]
+                    sameday2.append(same)
                     if real:  # 实盘
                         syc.append(same[2])
                         if same[1] == 1:
@@ -1389,8 +1396,9 @@ def huice_day(res, init_money,real=False):
                     else:
                         syc.append(same[2])
                         syc2.append(same[3])
-                        if same[1] == 1:
-                            if syc2.count(syc2[-1]) == 2:
+
+                        if same[1] > 0:
+                            if syc2.count(syc2[-1]) >= 2 and sameday2[-1][1]!=sameday2[-2][1]:
                                 o2 = syc2.index(syc2[-1])
                                 pop = -(syc.pop() - syc.pop(o2))
                                 yk += pop
@@ -1398,10 +1406,13 @@ def huice_day(res, init_money,real=False):
                                 yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
                                 syc2.pop()
                                 syc2.pop(o2)
+                                sameday2.pop()
+                                sameday2.pop()
                             else:
                                 yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
-                        elif same[1] == -1:
-                            if syc2.count(syc2[-1]) == 2:
+                        elif same[1] < 0:
+                            if syc2.count(syc2[-1]) >= 2 and sameday2[-1][1]!=sameday2[-2][1]:
+                                #print(syc2[-1])
                                 o2 = syc2.index(syc2[-1])
                                 pop = syc.pop() - syc.pop(o2)
                                 yk += pop
@@ -1409,6 +1420,8 @@ def huice_day(res, init_money,real=False):
                                 yk += (len(syc) * cl - sum(syc) if c2 == reg - 1 else 0)
                                 syc2.pop()
                                 syc2.pop(o2)
+                                sameday2.pop()
+                                sameday2.pop()
                             else:
                                 yk += (sum(syc) - len(syc) * cl if c2 == reg - 1 else 0)
                     cc += same[1]
