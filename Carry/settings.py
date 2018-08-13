@@ -104,10 +104,10 @@ CACHES={
 }
 
 # 关闭浏览器，session失效
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False # True
 
-# 设置session，10个小时失效
-SESSION_COOKIE_AGE = 60*60*10
+# 设置session，120个小时失效
+SESSION_COOKIE_AGE = 60*60*120
 
 # 优化session会话
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

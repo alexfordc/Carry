@@ -73,6 +73,7 @@ urlpatterns = [
     url(r'^cfmmc/logout/$', views.cfmmc_logout, name='cfmmc_logout'),
     url(r'^cfmmc/dataPage/$', views.cfmmc_data_page, name='cfmmc_data_page'),
     url(r'^cfmmc/dataLocal/$', views.cfmmc_data_local, name='cfmmc_data_local'),
+    url(r'^cfmmc/huice/$', views.cfmmc_huice, name='cfmmc_huice'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 

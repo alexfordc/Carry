@@ -1,0 +1,367 @@
+{% extends 'base/base.html' %}
+{% block title %}国信交易{% endblock %}
+{% block script %}
+<style>
+    .button {
+    display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+	padding: .3em 1em .3em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	margin-right:10px;
+}
+
+/* green */
+.green {
+	color: #e8f0de;
+	border: solid 1px #538312;
+	background: #64991e;
+	width:90px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+	background: -moz-linear-gradient(top,  #7db72f,  #4e7d0e);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+}
+.green:hover {
+	background: #538018;
+	background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+	background: -moz-linear-gradient(top,  #6b9d28,  #436b0c);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+}
+.green:active {
+	color: #a9c08c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#4e7d0e), to(#7db72f));
+	background: -moz-linear-gradient(top,  #4e7d0e,  #7db72f);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
+}
+
+tr{border:1px solid #999;}
+td,th{ border:0px;height:40px; }
+</style>
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+
+    {% if zx_x %}
+    <div align="center">
+        <div style="position:relative;top:10px;">
+            <table width="720">
+                <tr style="cursor:pointer;">
+                    <td id="tuxian1">累积净值</td>
+                    <td id="tuxian2">累积盈亏</td>
+                    <td id="tuxian3">每日权益</td>
+                    <td id="tuxian4">成交偏好</td>
+                    <td id="tuxian5">品种盈亏</td>
+                    <td id="tuxian6">每周盈亏</td>
+                    <td id="tuxian7">每月盈亏</td>
+                    <td id="tuxian8">账号余额</td>
+                </tr>
+            </table>
+        </div>
+        <div id="zhexiantu" style="width:auto;height:600px"></div>
+    </div>
+{% endif %}
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+ <script type="text/javascript">
+ var tu_name;
+
+// 实现随机生成十六进制颜色值
+function getColor(){
+  //定义字符串变量colorValue存放可以构成十六进制颜色值的值
+  var colorValue="0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F";
+  //以","为分隔符，将colorValue字符串分割为字符数组["0","1",...,"f"]
+  var colorArray = colorValue.split(",");
+   var color="#";//定义一个存放十六进制颜色值的字符串变量，先将#存放进去
+    //使用for循环语句生成剩余的六位十六进制值
+   for(var i=0;i<6;i++){
+        //colorArray[Math.floor(Math.random()*16)]随机取出
+       // 由16个元素组成的colorArray的某一个值，然后将其加在color中，
+       //字符串相加后，得出的仍是字符串
+        color+=colorArray[Math.floor(Math.random()*16)];
+   }
+   return color;
+}
+
+function huatu(type,zx_x,zx_y,zx_y2){
+var myChart = echarts.init(document.getElementById('zhexiantu'));
+
+if(type=='line'){
+myChart.clear();
+option = {
+
+title:{
+    text:"账户：{{hc.host|truncatechars:9}}",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+    }
+},
+color:["#FF0000"],
+tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: zx_x
+        },
+toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+    xAxis: {
+        type: 'category',
+        data: zx_x
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        name: tu_name[0],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#ff6a4a',
+                lineStyle: { color: '#ff6a4a' }
+            }
+        },
+        data: zx_y
+    },{
+        name: tu_name[1],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#61b7ec', // rgb(97,183,236)
+                lineStyle: { color: '#61b7ec' }
+            }
+        },
+        data: zx_y2
+    }]
+};
+}else if(type=='pie'){
+    myChart.clear();
+    option = {
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'horizontal', //'vertical',
+        //x : '80%',
+        y : '80%',
+        data:zx_x
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true,
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 1548
+                    }
+                }
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'成交量',
+            type:'pie',
+            radius : '40%',
+            center: ['50%', '50%'],
+            data:zx_y
+        }
+    ]
+};
+}else if(type=='bar'){
+myChart.clear();
+var colorList = [
+                  '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                   '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                   '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                ];
+if(colorList.length<zx_x.length){
+    var wh = 0;
+    var _sizes = zx_x.length-colorList.length;
+    while(wh<_sizes){
+        var col = getColor();
+        if(colorList.indexOf(col)<0 && col!="#FFFFFF"){
+            colorList.push(col);
+            wh ++;
+        }
+    }
+}
+option ={
+    //backgroundColor:'#fdfdfd', // 背景颜色
+    tooltip: {},
+    xAxis: {
+        type: 'category',
+        data: zx_x,
+
+    },
+    yAxis: {
+        type: 'value',
+    },
+    /*series: [{
+        name: '名称',
+        type: 'bar',
+        data: zx_y
+    }],*/
+    series: [
+        {
+            name: '品种净盈亏',
+            type: 'bar',
+            barMaxWidth: 40, // 柱子的最大宽度
+            // barCateGoryGap: 20,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        // build a color map as your need.
+                        return colorList[params.dataIndex]
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{b}\n{c}'
+                    }
+                }
+            },
+            data: zx_y,
+            markPoint: {
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    formatter: function(params){
+                        return '<img src="'
+                                + params.data.symbol.replace('image://', '')
+                                + '"/>';
+                    }
+                },
+
+            }
+        }
+    ],
+    label:{
+        normal:{
+            show:true,
+            position:'top'
+        }
+    }
+};
+}
+
+myChart.setOption(option);
+}
+
+function tuxiancolor(id){
+    var id2 = "";
+    for(var i=1;i<=8;i++){
+        id2 = "#tuxian"+i;
+        if(id2==id){
+        $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
+        }else{
+        $("#tuxian"+i).css({"background-color":"#2b2b2b","width":"40px","color":"#f5f5f5"});
+        }
+    }
+    if(id=='#tuxian1'){
+        tu_name=["累积净值",""];
+        huatu("line",{{zx_x|safe}},{{hc.alljz|safe}},'');
+    }else if(id=='#tuxian2'){
+        tu_name=["累积利润","累积手续费"];
+        huatu("line",{{zx_x|safe}},{{hc.allyk|safe}},{{hc.allsxf|safe}});
+    }else if(id=='#tuxian3'){
+        tu_name=["客户权益","",""];
+        huatu("line",{{zx_x|safe}},{{hc.qy|safe}},"");
+    }else if(id=='#tuxian4'){
+        tu_name=["成交偏好","",""];
+        huatu("pie",{{hc.pie_name|safe}},{{hc.pie_value|safe}},"");
+    }else if(id=='#tuxian5'){
+        tu_name=["品种盈亏","",""];
+        huatu("bar",{{hc.bar_name|safe}},{{hc.bar_value|safe}},"");
+    }else if(id=='#tuxian6'){
+        tu_name=["每周盈亏","",""];
+        huatu("bar",{{hc.week_name|safe}},{{hc.week_value|safe}},"");
+    }else if(id=='#tuxian7'){
+        tu_name=["每月盈亏","",""];
+        huatu("bar",{{hc.month_name|safe}},{{hc.month_value|safe}},"");
+    }else if(id=='#tuxian8'){
+        tu_name=["账号余额","入金",""];
+        huatu("line",{{zx_x|safe}},{{hc.amount|safe}},{{hc.eae|safe}});
+    }
+}
+$("#tuxian1").click(function(){
+    tuxiancolor("#tuxian1");
+});
+$("#tuxian2").click(function(){
+    tuxiancolor("#tuxian2");
+});
+$("#tuxian3").click(function(){
+    tuxiancolor("#tuxian3");
+});
+$("#tuxian4").click(function(){
+    tuxiancolor("#tuxian4");
+});
+$("#tuxian5").click(function(){
+    tuxiancolor("#tuxian5");
+});
+$("#tuxian6").click(function(){
+    tuxiancolor("#tuxian6");
+});
+$("#tuxian7").click(function(){
+    tuxiancolor("#tuxian7");
+});
+$("#tuxian8").click(function(){
+    tuxiancolor("#tuxian8");
+});
+
+tuxiancolor("#tuxian1");
+
+
+
+function request(type){
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+    if(type=='ys'){
+        url = "{% url 'gxjy' %}"+"?start_date="+start_date+"&end_date="+end_date;
+    }else if(type=='js'){
+        url = "{% url 'gxjy' %}?type=js"+"&start_date="+start_date+"&end_date="+end_date;
+    }else if(type=='tu'){
+        url = "{% url 'gxjy' %}?type=tjt"+"&start_date="+start_date+"&end_date="+end_date;
+    }
+    location.href = url;
+}
+
+
+</script>
+
+{% endblock %}

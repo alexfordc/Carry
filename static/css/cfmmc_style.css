@@ -1,0 +1,92 @@
+﻿body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 18px;
+}
+.menu {
+	color: #FFFFFF;
+	text-decoration: none;
+	text-align:right;
+}
+.right{
+	color: #FFFFFF;
+	text-decoration: none;
+	line-height: 16px;
+}
+.dateright{
+	text-align:right;
+	font-size: 13px;
+	
+}
+.more {
+	color: #FFBE02;
+	text-decoration: none;
+	text-align:right;
+	font-weight: bold;
+}
+
+.table {
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 20px;
+	color: #27669C;
+	text-decoration: none;
+	border: 1px solid #97B7CF;
+}
+.center {
+    text-align:center;
+	}
+.ccenter {
+    color:#CCCCCC;
+    text-align:center;
+	}
+.js {
+	font-size: 12px;
+	font-weight: bold;
+	color: #0E5BB3;
+	text-decoration: none;
+}
+A.menu_1:link,active { FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150%}
+A.menu_1:visited { FONT-SIZE: 12px; COLOR: #FFFFFF; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.menu_1:hover { FONT-SIZE: 12px; COLOR: #FFFFCC; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.news_1:link,active { FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150%}
+A.news_1:visited { FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.news_1:hover { FONT-SIZE: 12px; COLOR: #FF0000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.left_1:link,active { FONT-SIZE: 12px; COLOR: #27669C; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150%}
+A.left_1:visited { FONT-SIZE: 12px; COLOR: #27669C; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.left_1:hover { FONT-SIZE: 12px; COLOR: #FF0000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.more_1:link,active { FONT-SIZE: 12px; COLOR: #FFBE02; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;	font-weight: bold;line-height:150%}
+A.more_1:visited { FONT-SIZE: 12px; COLOR: #FFBE02; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;	font-weight: bold;line-height:150% }
+A.more_1:hover { FONT-SIZE: 12px; COLOR: #FF0000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;	font-weight: bold;line-height:150% }
+A.down_1:link,active { FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150%}
+A.down_1:visited { FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+A.down_1:hover { FONT-SIZE: 12px; COLOR: #333333; FONT-FAMILY: "宋体"; TEXT-DECORATION: none;line-height:150% }
+.title {
+	font-size: 18px;
+	font-weight: bold;
+	color: #000099;
+	text-decoration: none;
+	text-align:center;
+}
+.newmore {
+	font-size:16px;
+	line-height: 20px;
+	}.input {
+	font-size: 12px;
+	color: #000000;
+}
+.rightclose {
+ 	text-align:right;
+	}
+.formtext {
+	font-size: 12px;
+	color: #1D4A74;
+}
+.formtishi {
+	font-size: 12px;
+	color: #2387D8;
+}

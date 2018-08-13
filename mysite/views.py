@@ -1488,7 +1488,7 @@ def gxjy(rq):
             # h.closeConn()
             data = [i for i in data if start_date <= i[1] <= end_date]
             return JsonResponse({'data': data, 'hys': hys})
-        elif types == 'tjt':  # 折线图
+        elif types == 'tjt':  # 可视化图形展示
             start_date = rq.GET.get('start_date', '1970-01-01')
             end_date = rq.GET.get('end_date', '2100-01-01')
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()
@@ -1780,8 +1780,9 @@ def cfmmc_data_page(rq):
 
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
+    user_name, qx = getLogin(rq.session)
     trade = viewUtil.get_cfmmc_trade()
-    return render(rq, 'cfmmc_data_local.html',{'trade': trade})
+    return render(rq, 'cfmmc_data_local.html',{'user_name': user_name, 'trade': trade})
 
 def cfmmc_save(rq):
     """ 保存期货监控系统的用户名与密码 """
@@ -1799,6 +1800,108 @@ def cfmmc_save(rq):
             return HttpResponse('yes')
     return HttpResponse('no')
 
+def cfmmc_huice(rq):
+    """ 期货回测 """
+    user_name, qx = getLogin(rq.session)
+    host = rq.POST.get('host')
+    if not host:
+        return redirect('/')
+    start_date = rq.POST.get('start_date', '1970-01-01')
+    end_date = rq.POST.get('end_date', '2100-01-01')
+    cfmmc = HSD.Cfmmc(host,start_date,end_date)
+    data = cfmmc.get_data()
+    pzs = cfmmc.varieties()
+    _qy = cfmmc.get_qy()
+    init_money = 0
+    base_money = cfmmc.init_money()  # 初始总资金
+    jz = 1  # 初始净值
+    jzq = 0 # base_money/jz  # init_money / jz  # 初始净值权重
+    allje = 0  # init_money  # 总金额
+    eae = []  # 出入金
+    zx_x, prices = [], []
+    hc = {
+        'allyk': [],  # 累积盈亏
+        'alljz': [],  # 累积净值
+        'allsxf': [],  # 累积手续费
+        'pie_name': [i[0] for i in pzs],  # 成交偏好（饼图） 产品名称
+        'pie_value': [{'value': i[1], 'name': i[0]} for i in pzs],  # 成交偏好 饼图的值
+        'qy': [],       # 客户权益
+        'bar_name': [],  # 品种盈亏 名称
+        'bar_value': [],  # 品种盈亏 净利润
+        'week_name': [],  # 每周盈亏 名称
+        'week_value': [],  # 每周盈亏 净利润
+        'month_name': [],  # 每月盈亏 名称
+        'month_value': [],  # 每月盈亏 净利润
+        'eae': [],  # 出入金
+        'amount': [],  # 账号总金额
+    }
+    name_jlr = defaultdict(float)  # 品种名称，净利润
+    week_jlr = defaultdict(float)  # 每周，净利润
+    month_jlr = defaultdict(float)  # 每月，净利润
+    data2 = []
+    dates = cfmmc.get_dates()
+    ee = cfmmc.get_rj()
+    # ee:('2017-03-17', '银行转入', 0.0, 100000.0), ('2017-04-11', '银行转入', 0.0, 100000.0), ('2017-05-03', '证券转出', 100000.0, 0.0)
+    for de in dates:
+        zx_x.append(de[0])
+        yk, sxf = 0, 0
+        f_date = datetime.datetime.strptime(de[0], '%Y-%m-%d').isocalendar()[:2]
+        week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
+        month = de[0][:7]  # 月
+        for d in data:
+            if d[0][:10] == de[0]:
+                sxf += d[3] if d[3] else 0
+                if not d[2]:
+                    continue
+                yk += d[2]
+                name_jlr[d[4]] += d[2]
+                week_jlr[week] += d[2]
+                month_jlr[month] += d[2]
+            else:
+                data2.append(d)
+        yk += (prices[-1] if prices else 0)
+        prices.append(yk)
+        sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
+        hc['allsxf'].append(round(sxf, 1))
+        rj = base_money + sum(i[1] for i in ee if i[0] <= de[0])
+        if rj != init_money and rj != 0:
+            jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
+            init_money = rj
+        amount = init_money + yk - hc['allsxf'][-1]
+        hc['amount'].append(amount)
+        hc['eae'].append(init_money)
+        jz = amount / jzq if jzq != 0 else jz
+        hc['alljz'].append(round(jz, 4))
+        hc['qy'].append(_qy[de[0]])
+        data = data2
+        data2 = []
+
+    zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
+    ind_s = zx_x.index(zx_x2[0])
+    ind_e = zx_x.index(zx_x2[-1]) + 1
+    zx_x = zx_x[ind_s:ind_e]
+    prices = prices[ind_s:ind_e]
+    f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
+    week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
+    f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
+    week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
+    month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
+    week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
+    hc['allyk'] = prices
+    hc['bar_name'] = [i for i in name_jlr]
+    hc['bar_value'] = [round(v, 1) for v in name_jlr.values()]
+    week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
+    hc['week_name'] = [i for i in week_jlr]
+    hc['week_value'] = [round(v, 1) for v in week_jlr.values()]
+    hc['month_name'] = [i for i in month_jlr]
+    hc['month_value'] = [round(v, 1) for v in month_jlr.values()]
+    hc['host'] = host
+    return render(rq, 'cfmmc_tu.html', {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date,
+                                    'user_name': user_name})
+
+    # return redirect('cfmmc_data_local')
+
+
 def systems(rq):
     user_name, qx = getLogin(rq.session)
     if not user_name:
@@ -1809,9 +1912,7 @@ def systems(rq):
 def get_system(rq):
     nc = psutil.virtual_memory().percent  # 内存使用率%
     cpu = psutil.cpu_percent(0)  # cup 使用率%
-
     dt = str(datetime.datetime.now())[11:19]
-
     zx = {'nc': nc, 'cpu': cpu, 'times': dt}
     return JsonResponse({'zx': zx}, safe=False)
 

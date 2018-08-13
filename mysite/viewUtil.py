@@ -243,6 +243,7 @@ class Cfmmc:
                 #                 with open(f_name, 'wb') as f:
                 #                     f.write(ret.content)
                 #                 print(f'{tradeDate}的{byType}数据下载成功')
+
                 trade_records = pd.read_excel(BytesIO(ret.content), sheetname='成交明细', header=9, na_values='--',
                                               dtype={'成交序号': np.str_, '平仓盈亏': np.float})
                 trade_records.drop([trade_records.index[-1]], inplace=True)
@@ -252,34 +253,47 @@ class Cfmmc:
                 holding_position = pd.read_excel(BytesIO(ret.content), sheetname='持仓明细', header=9,
                                                  dtype={'成交序号': np.str_, '交易编码': np.str_})
                 holding_position.drop([holding_position.index[-1]], inplace=True)
-                for df in [trade_records, closed_position, holding_position]:
+
+                # 客户交易结算日报
+                account_info = pd.read_excel(BytesIO(ret.content), sheetname='客户交易结算日报', header=10)
+                account_info_1 = account_info.iloc[0:6, [0, 2]]
+                account_info_1.columns = ['field', 'info']
+                account_info_2 = account_info.iloc[0:9, [5, 7]]
+                account_info_2.columns = ['field', 'info']
+                account_info = account_info_1.append(account_info_2).set_index('field').T
+                account_info['风险度'] = account_info['风险度'].apply(lambda x: float(x.strip('%')) / 100)
+
+                for df in [trade_records, closed_position, holding_position, account_info]:
                     df['帐号'] = _account
                     df['交易日期'] = _tradedate
 
-                if self.trade_records is None:
-                    self.trade_records = trade_records
-                else:
-                    self.trade_records = self.trade_records.append(trade_records, ignore_index=True)
+                # if self.trade_records is None:
+                #     self.trade_records = trade_records
+                # else:
+                #     self.trade_records = self.trade_records.append(trade_records, ignore_index=True)
+                #
+                # if self.closed_position is None:
+                #     self.closed_position = closed_position
+                # else:
+                #     self.closed_position = self.closed_position.append(closed_position, ignore_index=True)
+                #
+                # if self.holding_position is None:
+                #     self.holding_position = holding_position
+                # else:
+                #     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
 
-                if self.closed_position is None:
-                    self.closed_position = closed_position
-                else:
-                    self.closed_position = self.closed_position.append(closed_position, ignore_index=True)
-
-                if self.holding_position is None:
-                    self.holding_position = holding_position
-                else:
-                    self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
-
+                account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment', if_exists='append',
+                                    index=False)
+                sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
+                HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
                 trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',
                                      index=False)
                 closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
                                        if_exists='append', index=False)
                 holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
                                         if_exists='append', index=False)
-                sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
-                HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
                 # print(f'{tradeDate}的{byType}数据下载成功')
+
                 return True
             except Exception as e:
                 print(f'{tradeDate}的{byType}数据下载失败')

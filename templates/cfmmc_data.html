@@ -24,9 +24,10 @@ td,th{ border:0px;height:40px; }
         <a href="{% url 'cfmmc_logout' %}" style="color:blue;">退出期货监控系统</a>
 </form>
 <br/><hr/><br/>
-    <form action="" method="GET">
-开始日期：<input type='date' value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' value={{end_date}} id='end_date'>&nbsp;&nbsp;
-
+    <form action="" method="POST" id="cfmmc_huice_post">
+开始日期：<input type='date' name="start_date" value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' name="end_date" value={{end_date}} id='end_date'>&nbsp;&nbsp;
+{% csrf_token %}
+        <input type="hidden" name="host" value="{{ trade.0.12 }}">
     <input type="button" onclick="javascript:request('data')"  value="原数据">&nbsp;&nbsp;
      <input type="button" onclick="javascript:request('tu')"  value="统计图">
 
@@ -74,8 +75,12 @@ td,th{ border:0px;height:40px; }
         if(type=='data'){
             location.href="{% url 'cfmmc_data_page' %}?start_date="+start_date+"&end_date="+end_date;
         }else if(type=='tu'){
-
+            var post = $("#cfmmc_huice_post");
+            post.attr('action','{% url 'cfmmc_huice' %}');
+            post.attr('target','_blank');
+            post.submit();
         }
     }
+
 </script>
 {% endblock %}

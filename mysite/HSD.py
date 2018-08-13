@@ -191,6 +191,7 @@ def runSqlData(db, sql, params=None):
     (carry_investment,stock_data)；sql：SQL语句；params：参数 """
     sp = SqlPool(db)
     data = None
+    conn = None
     try:
         conn = sp.get_conn(db)
         cur = conn.cursor()
@@ -208,7 +209,8 @@ def runSqlData(db, sql, params=None):
         except:
             return
     finally:
-        sp.set_conn(db,conn)
+        if conn:
+            sp.set_conn(db,conn)
     return data
 
 
@@ -1722,3 +1724,60 @@ class GXJY:
         pzs = sorted(pzs, key=lambda x: x[1], reverse=True)
         return res, pzs
 
+class Cfmmc:
+    def __init__(self,host,start_date,end_date):
+        self.host = host
+        self.start_date = start_date
+        self.end_date = end_date
+        self.code_name = {'bu': '石油沥青', 'BU': '石油沥青', 'RB': '螺纹钢', 'RU': '橡胶', 'J': '冶金焦炭',
+                          'al': '铝', 'AL': '铝', 'AP': '苹果', 'CF': '棉花', 'TA':'精对苯二甲酸','V':'聚氯乙烯'}
+        self.sql = f"帐号='{self.host}' AND 交易日期>='{self.start_date}' AND 交易日期<='{self.end_date}'"
+
+    def varieties(self):
+        """ 品种,成交量。[('石油沥青':34),...] """
+        sql = f"SELECT 合约,SUM(手数) FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 合约"
+        d = runSqlData('carry_investment',sql)
+        dc = {}
+        for i in d:
+            k = re.sub('\d', '', i[0])
+            k = self.code_name[k]
+            if k not in dc:
+                dc[k] = 0
+            dc[k] += int(i[1])
+        dc = [(i,dc[i]) for i in dc]
+        dc = sorted(dc,key=lambda x:x[1],reverse=True)
+        return dc
+
+    def get_dates(self):
+        """ 指定时间区间的交易日期 """
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期"
+        dates = runSqlData('carry_investment', sql)
+        return dates
+
+    def get_data(self):
+        """ 指定时间区间以日期与合约分组的，交易日期，合约，平仓盈亏，手续费 """
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),手续费 FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期,合约"
+        data = runSqlData('carry_investment', sql)
+        data = [(i[0],i[1],i[2],i[3],self.code_name[re.sub('\d', '', i[1])]) for i in data]
+        return data
+
+    def get_rj(self):
+        """ 获取出入金 """
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),当日存取合计 FROM cfmmc_daily_settlement WHERE 当日存取合计!=0 AND {self.sql}"
+        data = runSqlData('carry_investment', sql)
+        return data
+
+    def init_money(self):
+        """ 获取初始入金 """
+        sql = f"SELECT 上日结存 FROM cfmmc_daily_settlement WHERE {self.sql} LIMIT 1"
+        d = runSqlData('carry_investment', sql)
+        if d:
+            return d[0][0]
+
+    def get_qy(self):
+        """ 客户权益 """
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),客户权益 FROM cfmmc_daily_settlement WHERE {self.sql}"
+        d = runSqlData('carry_investment', sql)
+        if d:
+            qy = {i[0]:i[1] for i in d}
+            return qy
