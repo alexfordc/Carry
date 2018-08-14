@@ -66,6 +66,7 @@ urlpatterns = [
     url(r'^systems/$', views.systems, name='systems'),
     url(r'^get_system/$', views.get_system, name='get_system'),
 
+    # 期货监控系统
     url(r'^cfmmc/login/$',views.cfmmc_login, name='cfmmc_login'),
     url(r'^cfmmc/trade/$', views.cfmmc_trade, name='cfmmc_trade'),
     url(r'^cfmmc/data/$', views.cfmmc_data, name='cfmmc_data'),

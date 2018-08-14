@@ -219,7 +219,7 @@ var $container = $('#works-container');
                 </ul>
             </nav>
         </div>
-    </header><div style="position:absolute;top:24px;right:20px;color:green;font-size:14px;">{{logins}}</div>
+    </header><div style="position:absolute;top:24px;right:20px;color:green;font-size:14px;" id="logins_infos">{{logins}}</div>
     <!--<div class="wrapper">-->
     <!--<div class="palette" id="palette_colors">-->
         <!--<div class="palette_item_wrapper" style="position: relative;top:124px;left:18px;z-index:999;width:50px;height:50px;">-->
@@ -267,6 +267,12 @@ border:1px solid #888; background-color:green; text-align:center"><p id="login_m
 
     </div>
 <script>
+var logins = '{{logins}}';
+if(logins!=''){
+    setTimeout(function(){
+        $("#logins_infos").css('display','none');
+    },6000);
+}
 function show_login(ts){
     var div=$("#user_login_div").css('display');
     if($("#user_info").text()=="登录"){

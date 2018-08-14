@@ -334,3 +334,33 @@ def cfmmc_data_page(rq):
         start_date = ''
         end_date = ''
     return trade,start_date,end_date
+
+def user_work_log(rq,WorkLog,user=None):
+    """ 工作日志分页 """
+    SIZE = 5  # 每页显示5条
+    try:
+        curPage = int(rq.GET.get('curPage', '1'))  # 第几页
+        allPage = int(rq.GET.get('allPage', '0'))  # 总页数
+        pageType = str(rq.GET.get('pageType', ''))  # 上/下页
+    except:
+        curPage = 1
+        allPage = 0
+        pageType = ''  # 若有误,则给其默认值
+    if curPage == 1 and allPage == 0:  # 只在第一次查询商品总条数
+        goodCount = WorkLog.objects.count() if user is None else WorkLog.objects.filter(belonged=user).count()
+        allPage = goodCount // SIZE if goodCount % SIZE == 0 else goodCount // SIZE + 1
+    if pageType == 'pageDown':  # 下一页
+        curPage += 1
+    elif pageType == 'pageUp':  # 上一页
+        curPage -= 1
+    if curPage < 1:
+        curPage = 1  # 如果小于最小则等于1
+    elif curPage > allPage:
+        curPage = allPage  # 若大于最大则等于最大页
+    startGood = (curPage - 1) * SIZE  # 切片开始处
+    endGood = startGood + SIZE  # 切片结束处
+    if user is None:
+        work = WorkLog.objects.all()[startGood:endGood]
+    else:
+        work = WorkLog.objects.filter(belonged=user)[startGood:endGood]
+    return work,allPage,curPage

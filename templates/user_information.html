@@ -7,21 +7,31 @@
 {% block center_cen %}
 {% load staticfiles %}
 <div align="center" id="detailed_content_div" style="display:none; left:50%; bottom:50%;width:360px; position: fixed;
-border:1px solid #888; background-color:green; text-align:center">
+border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
         </div>
+
 <div style="color:green;">{{ msg }}</div>
 <div align="center">
     <table border="1" width="800">
         <caption>工作日志</caption>
         <tr><th>用户名</th><th>日期</th><th>标题</th><th>内容</th><th>操作</th></tr>
 {% for w in work %}
-    <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" onmouseout="hides()" class="bodys">{{ w.4|truncatechars:12 }}</td>
+    <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" class="bodys">{{ w.4|truncatechars:12 }}</td>
         <td><a href="{% url 'update_work_log' %}?id={{w.5}}" title="修改"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-left:20px;margin-top:8px;margin-bottom:5px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <!--<a onclick="confirm('确定要删除吗？')?location.href='{% url 'del_work_log' %}?id={{w.5}}':''" href="javascript:;" title="删除">删除</a> -->
         <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_work_log' %}?id={{w.5}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:8px;margin-bottom:5px;"></a> </td>
     </tr>
 {% endfor %}
     </table>
+    <tr style="margin-left:30px;">
+            <td>{% ifnotequal curPage 1 %} <!--如果不是第一页-->
+    <a href="javascript:request_page('pageUp')">上一页</a>
+        {% else %}上一页{% endifnotequal %} <!--否则不能点击--></td>&nbsp;&nbsp;
+    <td>第<input type="text" value="{{ curPage }}" id="curPage" style="width:40px;">页，共{{ allPage }}页</td>&nbsp;&nbsp;
+        {% ifnotequal curPage allPage %} <!--如果不是最后一页-->
+    <td><a href="javascript:request_page('pageDown')">下一页</a>
+        {% else %}下一页{% endifnotequal %}</td>
+     </tr>
     <br/><hr width="800"/>
     <table border="1" width="800">
         <caption>我的模拟账户</caption>
@@ -49,16 +59,27 @@ var xx=0,yy=0;
 function shows(body){
     var div = $("#detailed_content_div");
     div.show();
-    div.text("  "+body);
+    div.html("&nbsp;&nbsp;"+body);
     div.css({'left':xx-600,'top':yy,'height':body.length*1+20});
 }
 function hides(){
-   $("#detailed_content_div").hide();
+    $("#detailed_content_div").hide();
 }
 
 $('.bodys').mousemove(function(e) {
     xx = e.originalEvent.x ||e.originalEvent.layerX || 0;
     yy = e.originalEvent.y ||e.originalEvent.layerY || 0;
 });
+$("#detailed_content_div").mouseleave(function(){
+    // 鼠标移开则隐藏
+    $("#detailed_content_div").hide();
+});
+
+function request_page(pageType){
+    $("#detailed_content_div").hide();
+    var curPage = $("#curPage").val();
+    location.href = "?curPage="+curPage+"&allPage={{ allPage }}&pageType="+pageType;
+}
+
 </script>
 {% endblock %}

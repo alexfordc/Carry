@@ -6,12 +6,12 @@ import psutil
 import json
 import h5py
 import numpy as np
-import time, base64
+import time
 import datetime
 import random
 import zmq
 import socket
-import requests
+import base64
 
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -24,7 +24,6 @@ from django.views.decorators.csrf import csrf_exempt
 from pytdx.hq import TdxHq_API
 # from selenium import webdriver
 # from selenium.webdriver import ActionChains
-from django.http import HttpResponse
 from zmq import Context
 from collections import defaultdict
 from hashlib import md5
@@ -270,23 +269,26 @@ def user_information(rq):
     user_name, qx = getLogin(rq.session)
     if user_name and qx <= 2 and rq.method == 'GET':
         user = models.Users.objects.get(name=user_name)
-        work = models.WorkLog.objects.filter(belonged=user)
         week = ["一", "二", "三", "四", "五", "六", "日"]
+        work, allPage, curPage = viewUtil.user_work_log(rq, models.WorkLog, user)
         work = [[user_name, i.date, week[i.date.weekday()], i.title, i.body, i.id] for i in work]
         real_account = models.TradingAccount.objects.filter(belonged=user)
         account = models.SimulationAccount.objects.filter(belonged=user)
         return render(rq, 'user_information.html',
-                      {"user_name": user_name, "work": work, "real_account": real_account, 'account': account})
+                      {"user_name": user_name, "work": work, "real_account": real_account, 'account': account,
+                       'allPage': allPage, 'curPage': curPage})
     elif user_name and qx == 3 and rq.method == 'GET':
         users = models.Users.objects.all()
         users = {i.id: i.name for i in users}
-        work = models.WorkLog.objects.all()
+        work, allPage, curPage = viewUtil.user_work_log(rq, models.WorkLog)
         week = ["一", "二", "三", "四", "五", "六", "日"]
         work = [[users[i.belonged_id], i.date, week[i.date.weekday()], i.title, i.body, i.id] for i in work]
         real_account = models.TradingAccount.objects.all()
         account = models.SimulationAccount.objects.all()
         return render(rq, 'user_information.html',
-                      {"user_name": user_name, "work": work, "real_account": real_account, 'account': account})
+                      {"user_name": user_name, "work": work, "real_account": real_account, 'account': account,
+                       'allPage': allPage, 'curPage': curPage})
+
     return index(rq, logins=False)
 
 
@@ -304,6 +306,7 @@ def add_work_log(rq):
         title = rq.POST['title']
         body = rq.POST['body']
         user = models.Users.objects.get(name=user_name)
+        body = body.replace('\r\n', '<br/>')
         if '_save' in rq.POST:  # 保存
             models.WorkLog.objects.create(belonged=user, date=date, title=title, body=body).save()
             return redirect('user_information')
@@ -397,6 +400,7 @@ def add_simulation_account(rq):
                            "msg": "添加失败！"})
     return redirect('/')
 
+
 def offon_simulation_account(rq):
     """ 停用、启用模拟账户 """
     record_from(rq)
@@ -468,7 +472,7 @@ def register(rq):
             password = rq.POST['password'].strip()
             phone = rq.POST['phone'].strip()
             email = rq.POST.get('email')
-            if name and password and phone and 1<len(name)<10 and len(phone) == 11 and phone[:2] in (
+            if name and password and phone and 1 < len(name) < 10 and len(phone) == 11 and phone[:2] in (
                     '13', '14', '15', '18') and not models.Users.objects.filter(name=name):
                 ups = HSD.get_config('U', 'userps')
                 timestamp = str(int(time.time() * 10))
@@ -751,7 +755,8 @@ def tongji(rq):
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
         hc_name = rq_id
         return render(rq, 'hc.html',
-                      {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name':hc_name})
+                      {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
+                       'hc_name': hc_name})
 
     if rq_type == '4' and rq_date and end_date and user_name:
         results2, huizong = HSD.sp_order_record(rq_date, end_date)
@@ -788,7 +793,7 @@ def tongji(rq):
             if dt not in res:
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
             if i[8] in (1, 2):
-                if i[6]%2:
+                if i[6] % 2:
                     res[dt]['kong'] += int(i[7])
                 else:
                     res[dt]['duo'] += int(i[7])
@@ -814,7 +819,8 @@ def tongji(rq):
         if not hc_name:
             hc_name = rq_id
         return render(rq, 'hc.html',
-                      {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name,'hc_name':hc_name})
+                      {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name,
+                       'hc_name': hc_name})
 
     if rq_type == '1' and rq_date and user_name:
         result9 = HSD.order_detail(rq_date, end_date)
@@ -1120,6 +1126,8 @@ def getwebsocket(rq):
 def zhangting(rq, t):
     record_from(rq)
     user_name, qx = getLogin(rq.session)
+    if not user_name:
+        return index(rq,logins=False)
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
     rq_date = rq.GET.get('date', dates)
@@ -1151,6 +1159,7 @@ def zhangting(rq, t):
 
 
 def moni(rq):
+    """ 模拟测试 """
     user_name, qx = getLogin(rq.session)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
@@ -1427,7 +1436,6 @@ def journalism(rq):
     return redirect('index')
 
 
-
 def gxjy(rq):
     """国信交易"""
     record_from(rq)
@@ -1656,29 +1664,28 @@ def gxjy(rq):
 
     return response
 
+
 def cfmmc_trade(rq):
     """ 期货交易数据 """
     user_name, qx = getLogin(rq.session)
     if not user_name:
         return index(rq, False)
     trade = viewUtil.get_cfmmc_trade(host='')
-    return render(rq,'domestic_futures.html',{'trade':trade,'user_name': user_name})
-
-import base64
+    return render(rq, 'domestic_futures.html', {'trade': trade, 'user_name': user_name})
 
 
-cfmmc_login_d = None
-token = None
-is_cfmmc_login = False
+cfmmc_login_d = None  # 期货监控系统类的实例化
+is_cfmmc_login = False  # 是否登录期货监控系统
+
 
 def cfmmc_login(rq):
     """ 期货监控系统 登录"""
-    user_name, qx, uid = getLogin(rq.session,uid=True)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
     # if not user_name:
     #     return index(rq, False)
-    global cfmmc_login_d,token,is_cfmmc_login
+    global cfmmc_login_d, token, is_cfmmc_login
     cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
-    token = cfmmc_login_d.getToken(cfmmc_login_d._login_url) if token is None else token
+    token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)
     success = None
     if rq.method == 'GET' and rq.is_ajax():
         code = cfmmc_login_d.getCode()
@@ -1692,19 +1699,19 @@ def cfmmc_login(rq):
         try:
             tda = models.TradingAccount.objects.get(host=userID)
             ct = tda.creationTime
-            if tda.belonged_id == uid and password[:8] == 'KR'+ct[-6:]:
-                password = pypass.cfmmc_decode(password[8:],ct)
+            if tda.belonged_id == uid and password[:8] == 'KR' + ct[-6:]:
+                password = pypass.cfmmc_decode(password[8:], ct)
         except:
             pass
 
-        success=cfmmc_login_d.login(userID,password,token,vericode)
+        success = cfmmc_login_d.login(userID, password, token, vericode)
         if success is True:
             is_cfmmc_login = True
             if not models.TradingAccount.objects.filter(host=userID).exists():
                 createTime = str(int(time.time() * 100))
-                password = pypass.cfmmc_encode(password,createTime)
+                password = pypass.cfmmc_encode(password, createTime)
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password, 'createTime': createTime}
-                response = {'logins':'期货监控系统登录成功！','user_name': user_name,'success':'success'}
+                response = {'logins': '期货监控系统登录成功！', 'user_name': user_name, 'success': 'success'}
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name}
@@ -1712,7 +1719,7 @@ def cfmmc_login(rq):
             response['trade'] = trade
             response['start_date'] = start_date
             response['end_date'] = end_date
-            return render(rq,'cfmmc_data.html',response)
+            return render(rq, 'cfmmc_data.html', response)
 
     code = cfmmc_login_d.getCode()
     code = base64.b64encode(code)
@@ -1720,14 +1727,16 @@ def cfmmc_login(rq):
     try:
         tda = models.TradingAccount.objects.filter(belonged_id=uid).get(enabled=1)
         host, password = (tda.host, tda.password) if tda.enabled == 1 else ('', '')
-        password = 'KR'+tda.creationTime[-6:]+password
+        password = 'KR' + tda.creationTime[-6:] + password
     except:
         host, password = '', ''
-    return render(rq,'cfmmc_login.html',{'code':code,'user_name': user_name,'success':success,'host':host,'password':password})
+    return render(rq, 'cfmmc_login.html',
+                  {'code': code, 'user_name': user_name, 'success': success, 'host': host, 'password': password})
+
 
 def cfmmc_data(rq):
     """ 期货监控系统 下载数据 """
-    user_name, qx, uid = getLogin(rq.session,uid=True)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
     # if not user_name:
     #     return index(rq, False)
     start_date = rq.GET.get('start_date')
@@ -1735,7 +1744,7 @@ def cfmmc_data(rq):
     try:
         if is_cfmmc_login and start_date and end_date:
             host = rq.session['user_cfmmc']['userID']
-            cfmmc_login_d.down_day_data_sql(host,start_date,end_date)
+            cfmmc_login_d.down_day_data_sql(host, start_date, end_date)
             status = True
         else:
             status = False
@@ -1745,7 +1754,9 @@ def cfmmc_data(rq):
     if status:
         logins = '数据成功下载！如果时间跨度过长，需等待几分钟！'
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    return render(rq,'cfmmc_data.html',{'logins':logins,'user_name': user_name,'trade': trade,'start_date':start_date,'end_date':end_date})
+    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date,'end_date': end_date}
+    return render(rq, 'cfmmc_data.html',resp)
+
 
 def cfmmc_logout(rq):
     """ 期货监控系统 退出 """
@@ -1763,7 +1774,9 @@ def cfmmc_logout(rq):
         except:
             pass
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    return render(rq, 'cfmmc_data.html',{'user_name': user_name, 'logins':logins,'trade': trade,'start_date':start_date,'end_date':end_date})
+    resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
+    return render(rq, 'cfmmc_data.html',resp)
+
 
 def cfmmc_data_page(rq):
     """ 期货监控系统 展示页面 """
@@ -1772,33 +1785,38 @@ def cfmmc_data_page(rq):
     #     return index(rq, False)
     host = rq.GET.get('host')
     if host:
-        rq.session['user_cfmmc'] = {'userID':host}
+        rq.session['user_cfmmc'] = {'userID': host}
     if 'user_cfmmc' not in rq.session:
-        return render(rq, 'cfmmc_data.html',{'user_name': user_name,'is_cfmmc_login':'no'})
+        return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    return render(rq, 'cfmmc_data.html',{'user_name': user_name,'trade': trade,'start_date':start_date,'end_date':end_date})
+    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
+    return render(rq, 'cfmmc_data.html',resp)
+
 
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
     user_name, qx = getLogin(rq.session)
     trade = viewUtil.get_cfmmc_trade()
-    return render(rq, 'cfmmc_data_local.html',{'user_name': user_name, 'trade': trade})
+    return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
+
 
 def cfmmc_save(rq):
     """ 保存期货监控系统的用户名与密码 """
-    user_name, qx, uid = getLogin(rq.session,uid=True)
+    user_name, qx, uid = getLogin(rq.session, uid=True)
     if not user_name:
         return index(rq, False)
     if rq.method == 'GET' and rq.is_ajax():
         ty = rq.GET.get('type')
         if ty == 'save' and 'user_cfmmc' in rq.session:
-            #rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
+            # rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
             userID = rq.session['user_cfmmc']['userID']
             password = rq.session['user_cfmmc']['password']
             createTime = rq.session['user_cfmmc']['createTime']
-            models.TradingAccount.objects.create(belonged_id=uid,host=userID,password=password,creationTime=createTime).save()
+            models.TradingAccount.objects.create(belonged_id=uid, host=userID, password=password,
+                                                 creationTime=createTime).save()
             return HttpResponse('yes')
     return HttpResponse('no')
+
 
 def cfmmc_huice(rq):
     """ 期货回测 """
@@ -1808,14 +1826,14 @@ def cfmmc_huice(rq):
         return redirect('/')
     start_date = rq.POST.get('start_date', '1970-01-01')
     end_date = rq.POST.get('end_date', '2100-01-01')
-    cfmmc = HSD.Cfmmc(host,start_date,end_date)
+    cfmmc = HSD.Cfmmc(host, start_date, end_date)
     data = cfmmc.get_data()
     pzs = cfmmc.varieties()
     _qy = cfmmc.get_qy()
     init_money = 0
     base_money = cfmmc.init_money()  # 初始总资金
     jz = 1  # 初始净值
-    jzq = 0 # base_money/jz  # init_money / jz  # 初始净值权重
+    jzq = 0  # 初始净值权重
     allje = 0  # init_money  # 总金额
     eae = []  # 出入金
     zx_x, prices = [], []
@@ -1825,7 +1843,7 @@ def cfmmc_huice(rq):
         'allsxf': [],  # 累积手续费
         'pie_name': [i[0] for i in pzs],  # 成交偏好（饼图） 产品名称
         'pie_value': [{'value': i[1], 'name': i[0]} for i in pzs],  # 成交偏好 饼图的值
-        'qy': [],       # 客户权益
+        'qy': [],  # 客户权益
         'bar_name': [],  # 品种盈亏 名称
         'bar_value': [],  # 品种盈亏 净利润
         'week_name': [],  # 每周盈亏 名称
@@ -1841,7 +1859,6 @@ def cfmmc_huice(rq):
     data2 = []
     dates = cfmmc.get_dates()
     ee = cfmmc.get_rj()
-    # ee:('2017-03-17', '银行转入', 0.0, 100000.0), ('2017-04-11', '银行转入', 0.0, 100000.0), ('2017-05-03', '证券转出', 100000.0, 0.0)
     for de in dates:
         zx_x.append(de[0])
         yk, sxf = 0, 0
@@ -1896,10 +1913,8 @@ def cfmmc_huice(rq):
     hc['month_name'] = [i for i in month_jlr]
     hc['month_value'] = [round(v, 1) for v in month_jlr.values()]
     hc['host'] = host
-    return render(rq, 'cfmmc_tu.html', {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date,
-                                    'user_name': user_name})
-
-    # return redirect('cfmmc_data_local')
+    resp = {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date, 'user_name': user_name}
+    return render(rq, 'cfmmc_tu.html', resp)
 
 
 def systems(rq):
@@ -1910,11 +1925,13 @@ def systems(rq):
 
 
 def get_system(rq):
-    nc = psutil.virtual_memory().percent  # 内存使用率%
-    cpu = psutil.cpu_percent(0)  # cup 使用率%
-    dt = str(datetime.datetime.now())[11:19]
-    zx = {'nc': nc, 'cpu': cpu, 'times': dt}
-    return JsonResponse({'zx': zx}, safe=False)
+    if rq.is_ajax():
+        nc = psutil.virtual_memory().percent  # 内存使用率%
+        cpu = psutil.cpu_percent(0)  # cup 使用率%
+        dt = str(datetime.datetime.now())[11:19]
+        zx = {'nc': nc, 'cpu': cpu, 'times': dt}
+        return JsonResponse({'zx': zx}, safe=False)
+    return page_not_found(rq)
 
 
 def liaotianshiList(rq):

@@ -67,10 +67,12 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                 <td>结束时间：<input type="date" name="end_date" id="end_date" value="{{ end_date }}"/></td>
                 <td>方案：<select name="fa" id="select_fa">
                     {% for i in fas %}
+                    {% if i != '5' and i != '7' %}
                     {% if fa == i %}
                     <option value={{i}} selected>方案{{i}}</option>
                     {% else %}
                     <option value={{i}} >方案{{i}}</option>
+                    {% endif %}
                     {% endif %}
                     {% endfor %}
                     </select></td>

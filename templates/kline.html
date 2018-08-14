@@ -187,7 +187,7 @@
             <!--</div>-->
             <div class="chart_dropdown" style="padding-left:15px;">
                 <div >
-                    <form action="/kline" method="GET">
+                    <form action="{% url 'kline' %}" method="GET">
                         <input style="height:24px;" type="date" name="date" value="{{date}}" id="search_date"/>
                         <select name="database" style="background-color:#DDDDDD;">
                             <option value="1">ticker数据</option>
