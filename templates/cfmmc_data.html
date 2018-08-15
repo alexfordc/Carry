@@ -29,8 +29,8 @@ td,th{ border:0px;height:40px; }
 {% csrf_token %}
         <input type="hidden" name="host" value="{{ trade.0.12 }}">
     <input type="button" onclick="javascript:request('data')"  value="原数据">&nbsp;&nbsp;
-     <input type="button" onclick="javascript:request('tu')"  value="统计图">
-
+     <input type="button" onclick="javascript:request('tu')"  value="统计图">&nbsp;&nbsp;
+    <input type="button" onclick="javascript:request('bs')" value="买卖点">
 </form><br/><br/>
     <div align="center">
     <table border="1">
@@ -79,6 +79,8 @@ td,th{ border:0px;height:40px; }
             post.attr('action','{% url 'cfmmc_huice' %}');
             post.attr('target','_blank');
             post.submit();
+        }else if(type=='bs'){
+            window.open("{% url 'cfmmc_bs' %}?code={{trade.0.0}}"+"&start_date="+start_date+"&end_date="+end_date);
         }
     }
 

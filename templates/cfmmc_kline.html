@@ -1,19 +1,20 @@
-﻿{% extends 'base/base.html' %}
+{% extends 'base/base.html' %}
+{% block title %}买卖点{% endblock %}
 {% block script %}
-
 {% endblock %}
 {% block center_cen %}
-    {% load staticfiles %}
-		<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
-	<!--为ECharts准备一个具备大小(宽高)的DOM-->
-	<div style="width: 2000px;height: 900px;">
-		<div id="main" style="width: 1800px;height: 800px;" align="center"></div>
-	</div>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 
-	<!--js代码-->
-	<script type="text/javascript">
-		var myChart=echarts.init(document.getElementById('main'));
-		//数据意义:开盘(open),收盘(close),最低(lowest),最高(height)
+<div id="messagecontainer">
+
+</div>
+<div style="height:900px">
+<div id="main" style="width: auto;height: 680px;" align="center"></div></div>
+    <script type="text/javascript">
+
+var myChart=echarts.init(document.getElementById('main'));
+		//数据:开盘(open),收盘(close),最低(lowest),最高(height)
 		var data0=splitData({{ data|safe }});
 	function splitData(rawData){
 		var categoryData=[];
@@ -47,7 +48,7 @@
 	}
 	option={
 		title:{//标题
-			text:'股票编码：{{ code }}',
+			text:'名称：{{ code_name }}',
 			left:10
 		},
 		tooltip:{//提示框
@@ -121,14 +122,14 @@
 						}
 					},
 					data:[ //标注的数据数组
-						{
+						/*{
 							name:'XX标点',
 							coord:['2017/5/18',2300], //指定数据的坐标位置
 							value:2300,
 							itemStyle:{ //图形样式
 								normal:{color:'rgb(41,60,85)'}
 							}
-						},
+						},*/
 						{
 							name:'highest value',
 							type:'max', //最大值
@@ -228,6 +229,8 @@
 			},
 		]
 	};
-	myChart.setOption(option); //使用刚刚指定的配置项和数据显示图表
-	</script>
+myChart.setOption(option);
+
+</script>
+
 {% endblock %}

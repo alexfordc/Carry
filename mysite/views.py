@@ -75,6 +75,18 @@ def redis_update(rq):
     return render(rq, 'index.html')
 
 
+def is_time(data, minutes):
+    """ 判断是否在指定时间内 """
+    if not data:
+        return False
+    sj = data[-1] if isinstance(data, list) else data['times']
+    if datetime.datetime.now() - datetime.datetime.strptime(sj, '%Y-%m-%d %H:%M:%S') < datetime.timedelta(
+            minutes=minutes):
+        return True
+    else:
+        return False
+
+
 def getLogin(ses, uid=False):
     """ 返回用户名与权限 """
     if 'users' in ses:
@@ -103,6 +115,12 @@ def record_from(rq):
         viewUtil.record_log(files, IP_NAME, 'w')
     info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
+
+
+def LogIn(rq, uid=False):
+    """ 访客登记 与 返回用户名与权限 """
+    record_from(rq)
+    return getLogin(rq.session, uid)
 
 
 def get_zx_zt(zt=False, zx=False, status=None):
@@ -221,8 +239,7 @@ def tongji_adus(rq):
 
 def index(rq, logins=''):
     """ 主页面 """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     logins = "请先登录再访问您需要的页面！" if logins is False else logins
     return render(rq, 'index.html', {'user_name': user_name, 'logins': logins})
 
@@ -265,8 +282,7 @@ def update_data(rq):
 
 def user_information(rq):
     """ 用户资料信息 """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     if user_name and qx <= 2 and rq.method == 'GET':
         user = models.Users.objects.get(name=user_name)
         week = ["一", "二", "三", "四", "五", "六", "日"]
@@ -294,8 +310,7 @@ def user_information(rq):
 
 def add_work_log(rq):
     """ 添加工作日志"""
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     if user_name and rq.method == 'GET':
         date = HSD.get_date()
         return render(rq, 'user_add_data.html',
@@ -326,8 +341,7 @@ def add_work_log(rq):
 
 def update_work_log(rq):
     """ 修改工作日志 """
-    record_from(rq)
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         id = rq.GET.get('id')
         work = models.WorkLog.objects.filter(id=id, belonged=uid)
@@ -363,8 +377,7 @@ def update_work_log(rq):
 
 def del_work_log(rq):
     """ 删除工作日志 """
-    record_from(rq)
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         id = rq.GET.get('id')
         if qx == 3:
@@ -377,8 +390,7 @@ def del_work_log(rq):
 
 def add_simulation_account(rq):
     """ 添加模拟账户 """
-    record_from(rq)
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         return render(rq, 'user_add_data.html',
                       {"user_name": user_name, "add_simulation_account": True, "operation": "模拟账户"})
@@ -403,8 +415,7 @@ def add_simulation_account(rq):
 
 def offon_simulation_account(rq):
     """ 停用、启用模拟账户 """
-    record_from(rq)
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         id = rq.GET.get('id')
         enabled = rq.GET.get('enabled')
@@ -418,8 +429,7 @@ def offon_simulation_account(rq):
 
 def del_simulation_account(rq):
     """ 删除模拟账户 """
-    record_from(rq)
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         id = rq.GET.get('id')
         if qx == 3:
@@ -443,8 +453,7 @@ def del_simulation_account(rq):
 
 def add_real_account(rq):
     """ 添加真实账户 """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     if user_name:
         return render(rq, 'user_add_data.html',
                       {"user_name": user_name, "add_real_account": True, "operation": "真实账户"})
@@ -453,6 +462,7 @@ def add_real_account(rq):
 
 def register(rq):
     """ 用户注册 """
+    record_from(rq)
     if rq.method == 'GET' and rq.is_ajax():
         name = rq.GET.get('name')
         names = models.Users.objects.filter(name=name).exists()
@@ -491,16 +501,19 @@ def register(rq):
 
 def page_not_found(rq):
     """ 404页面 """
+    record_from(rq)
     return render(rq, '404.html')
 
 
 def stockData(rq):
     """ 指定股票历史数据，以K线图显示 """
+    user_name, qx = LogIn(rq)
     code = rq.GET.get('code')
     data = read_from_cache(code)  # 从Redis读取数据
     if not data:
         if socket.gethostname() != 'doc':
-            h5 = h5py.File(r'E:\黄海军\资料\Carry\mysite\stock_data.hdf5', 'r')  # r'D:\tools\Tools\stock_data.hdf5'
+            h5 = h5py.File(r'E:\work_File\黄海军\资料\Carry\mysite\stock_data.hdf5',
+                           'r')  # r'D:\tools\Tools\stock_data.hdf5'
         else:
             h5 = h5py.File(r'D:\tools\Tools\stock_data.hdf5')
         data1 = h5['stock/' + code + '.day'][:].tolist()
@@ -512,11 +525,12 @@ def stockData(rq):
 
         write_to_cache(code, data)  # 写入数据到Redis
 
-    return render(rq, 'stockData.html', {'data': json.dumps(data), 'code': code})
+    return render(rq, 'stockData.html', {'data': json.dumps(data), 'code': code, 'user_name': user_name})
 
 
 def stockDatas(rq):
     """ 历史股票数据分页显示 """
+    user_name, qx = LogIn(rq)
     conn = 'stockDate'
     conn1 = 'stock_data'
     rq_data = rq.GET.get('code')
@@ -607,25 +621,13 @@ def stockDatas(rq):
 
 def showPicture(rq):
     """ 获取指定代码的K线图，显示到页面上 """
+    user_name, qx = LogIn(rq)
     code = rq.GET.get('code')
     if code:
         d = 'http://image.sinajs.cn/newchart/daily/n/%s.gif' % code
-        return render(rq, 'stock_min.html', {'picture': d})
+        return render(rq, 'stock_min.html', {'picture': d, 'user_name': user_name})
     else:
         return redirect('stockDatas')
-
-
-def is_time(data, minutes):
-    """ 判断是否在指定时间内 """
-    if not data:
-        return False
-    sj = data[-1] if isinstance(data, list) else data['times']
-    if data and datetime.datetime.now() - datetime.datetime.strptime(sj,
-                                                                     '%Y-%m-%d %H:%M:%S') < datetime.timedelta(
-        minutes=minutes):
-        return True
-    else:
-        return False
 
 
 def getData(rq):
@@ -642,15 +644,13 @@ def getData(rq):
 
 def zhutu(rq):
     """ 柱状图 """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     return render(rq, 'zhutu.html', {'user_name': user_name})
 
 
 def zhutu_zhexian(rq):
     """ 合图 """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     return render(rq, 'zt_zx.html', {'user_name': user_name})
 
 
@@ -668,12 +668,11 @@ def zhutu_zhexian_ajax(rq):
 
 def zhexian(rq):
     """ 折线图 """
-    record_from(rq)
+    user_name, qx = LogIn(rq)
     status = rq.GET.get('s')
     if status and status is not '1':
         return redirect('index')
     _, result = get_zx_zt(zx=True, status=status)
-    user_name, qx = getLogin(rq.session)
     result['user_name'] = user_name
     return render(rq, 'zhexian.html', result)
 
@@ -683,6 +682,7 @@ def zhutu2(rq):
 
 
 def tongji_update_del(rq):
+    user_name, qx = LogIn(rq)
     messagess = ''
     if rq.method == 'POST':
         messagess = tongji_adus(rq)
@@ -693,8 +693,7 @@ def tongji_update_del(rq):
 
 def tongji(rq):
     """ rq_type: '1':'历史查询','2':'模拟回测','3':'实时交易数据', '4':'实盘交易记录'，'5':'实盘回测' """
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
 
@@ -960,18 +959,17 @@ def tongji(rq):
 
 
 def tools(rq):
+    user_name, qx = LogIn(rq)
     cljs = models.Clj.objects.all()
-    user_name, qx = getLogin(rq.session)
     return render(rq, 'tools.html', {'cljs': cljs, 'user_name': user_name})
 
 
 def kline(rq):
-    record_from(rq)
+    user_name, qx = LogIn(rq)
     date = rq.GET.get('date', HSD.get_date())
     write_to_cache('kline_date', date)
     database = rq.GET.get('database', '1')
     write_to_cache('kline_database', database)
-    user_name, qx = getLogin(rq.session)
     return render(rq, 'kline.html', {'date': date, 'user_name': user_name})
 
 
@@ -1124,10 +1122,9 @@ def getwebsocket(rq):
 
 
 def zhangting(rq, t):
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     if not user_name:
-        return index(rq,logins=False)
+        return index(rq, logins=False)
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
     rq_date = rq.GET.get('date', dates)
@@ -1160,7 +1157,7 @@ def zhangting(rq, t):
 
 def moni(rq):
     """ 模拟测试 """
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     fa = rq.GET.get('fa')
@@ -1200,7 +1197,7 @@ def moni(rq):
 
 
 def newMoni(rq):
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1283,8 +1280,7 @@ def newMoni(rq):
 
 
 def moni_all(rq):
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1364,7 +1360,8 @@ def moni_all(rq):
 
 
 def gdzd(rq):
-    user_name, qx = getLogin(rq.session)
+    """ 高开，上涨 """
+    user_name, qx = LogIn(rq)
     gdzds = read_from_cache('gdzds')
     gdzds = gdzds if gdzds else {}
     i = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
@@ -1379,7 +1376,7 @@ def gdzd(rq):
 
 
 def huice(rq):
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     fa = rq.GET.get('fa')
@@ -1438,8 +1435,7 @@ def journalism(rq):
 
 def gxjy(rq):
     """国信交易"""
-    record_from(rq)
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     folder1 = r'\\192.168.2.226\公共文件夹\gx\历史成交'
     folder2 = r'\\192.168.2.226\公共文件夹\gx\出入金'
     if user_name:  # 内部网络或登录用户
@@ -1665,22 +1661,13 @@ def gxjy(rq):
     return response
 
 
-def cfmmc_trade(rq):
-    """ 期货交易数据 """
-    user_name, qx = getLogin(rq.session)
-    if not user_name:
-        return index(rq, False)
-    trade = viewUtil.get_cfmmc_trade(host='')
-    return render(rq, 'domestic_futures.html', {'trade': trade, 'user_name': user_name})
-
-
 cfmmc_login_d = None  # 期货监控系统类的实例化
 is_cfmmc_login = False  # 是否登录期货监控系统
 
 
 def cfmmc_login(rq):
     """ 期货监控系统 登录"""
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     # if not user_name:
     #     return index(rq, False)
     global cfmmc_login_d, token, is_cfmmc_login
@@ -1736,7 +1723,7 @@ def cfmmc_login(rq):
 
 def cfmmc_data(rq):
     """ 期货监控系统 下载数据 """
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     # if not user_name:
     #     return index(rq, False)
     start_date = rq.GET.get('start_date')
@@ -1754,8 +1741,8 @@ def cfmmc_data(rq):
     if status:
         logins = '数据成功下载！如果时间跨度过长，需等待几分钟！'
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date,'end_date': end_date}
-    return render(rq, 'cfmmc_data.html',resp)
+    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
+    return render(rq, 'cfmmc_data.html', resp)
 
 
 def cfmmc_logout(rq):
@@ -1775,12 +1762,12 @@ def cfmmc_logout(rq):
             pass
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
-    return render(rq, 'cfmmc_data.html',resp)
+    return render(rq, 'cfmmc_data.html', resp)
 
 
 def cfmmc_data_page(rq):
     """ 期货监控系统 展示页面 """
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     # if not user_name:
     #     return index(rq, False)
     host = rq.GET.get('host')
@@ -1790,12 +1777,12 @@ def cfmmc_data_page(rq):
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
-    return render(rq, 'cfmmc_data.html',resp)
+    return render(rq, 'cfmmc_data.html', resp)
 
 
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     trade = viewUtil.get_cfmmc_trade()
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
 
@@ -1817,10 +1804,30 @@ def cfmmc_save(rq):
             return HttpResponse('yes')
     return HttpResponse('no')
 
+import re
+
+def cfmmc_bs(rq):
+    """ 买卖点 """
+    user_name, qx, uid = LogIn(rq, uid=True)
+    if rq.method == 'GET':
+        code = rq.GET.get('code')
+        start_date = rq.GET.get('start_date')
+        end_date = rq.GET.get('end_date')
+        if not code or not start_date or not end_date:
+            return redirect('/')
+        code = re.sub('\d','',code)+'L8'
+        start_date = HSD.dtf(start_date)
+        end_date = HSD.dtf(end_date)
+        mongo = HSD.MongoDBData()
+        data = mongo.get_data(code,start_date,end_date)
+        code_name = HSD.FUTURE_NAME.get(code[:-2])
+        return render(rq,'cfmmc_kline.html',{'user_name':user_name,'data':data,'code_name':code_name})
+
+    return redirect('/')
 
 def cfmmc_huice(rq):
     """ 期货回测 """
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     host = rq.POST.get('host')
     if not host:
         return redirect('/')
@@ -1918,7 +1925,7 @@ def cfmmc_huice(rq):
 
 
 def systems(rq):
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = LogIn(rq)
     if not user_name:
         return index(rq, False)
     return render(rq, 'systems.html', {'user_name': user_name})

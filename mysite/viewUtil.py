@@ -2,6 +2,7 @@ import sys
 import datetime
 import json
 
+
 from threading import Thread
 
 from mysite import HSD
@@ -359,6 +360,8 @@ def user_work_log(rq,WorkLog,user=None):
         curPage = allPage  # 若大于最大则等于最大页
     startGood = (curPage - 1) * SIZE  # 切片开始处
     endGood = startGood + SIZE  # 切片结束处
+    if allPage < 1:
+        return [], 0, 0
     if user is None:
         work = WorkLog.objects.all()[startGood:endGood]
     else:

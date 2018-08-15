@@ -68,13 +68,13 @@ urlpatterns = [
 
     # 期货监控系统
     url(r'^cfmmc/login/$',views.cfmmc_login, name='cfmmc_login'),
-    url(r'^cfmmc/trade/$', views.cfmmc_trade, name='cfmmc_trade'),
     url(r'^cfmmc/data/$', views.cfmmc_data, name='cfmmc_data'),
     url(r'^cfmmc/save/$', views.cfmmc_save, name='cfmmc_save'),
     url(r'^cfmmc/logout/$', views.cfmmc_logout, name='cfmmc_logout'),
     url(r'^cfmmc/dataPage/$', views.cfmmc_data_page, name='cfmmc_data_page'),
     url(r'^cfmmc/dataLocal/$', views.cfmmc_data_local, name='cfmmc_data_local'),
     url(r'^cfmmc/huice/$', views.cfmmc_huice, name='cfmmc_huice'),
+    url(r'^cfmmc/bs/$', views.cfmmc_bs, name='cfmmc_bs'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 

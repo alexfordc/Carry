@@ -1,6 +1,6 @@
 
 {% extends 'base/base.html' %}
-{% block title %}用户修改{% endblock %}
+{% block title %}用户数据{% endblock %}
 {% block script %}
 
 {% endblock %}
@@ -12,8 +12,9 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
 
 <div style="color:green;">{{ msg }}</div>
 <div align="center">
-    <table border="1" width="800">
+    <table border="1" width="800" style="height:240px;">
         <caption>工作日志</caption>
+{% if work %}
         <tr><th>用户名</th><th>日期</th><th>标题</th><th>内容</th><th>操作</th></tr>
 {% for w in work %}
     <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" class="bodys">{{ w.4|truncatechars:12 }}</td>
@@ -22,7 +23,11 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
         <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_work_log' %}?id={{w.5}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:8px;margin-bottom:5px;"></a> </td>
     </tr>
 {% endfor %}
+{% else %}
+        <caption style="color:green;">暂无数据！<a href="{% url 'add_work_log' %}">添加？</a></caption>
+{% endif %}
     </table>
+    {% if allPage > 1 %}
     <tr style="margin-left:30px;">
             <td>{% ifnotequal curPage 1 %} <!--如果不是第一页-->
     <a href="javascript:request_page('pageUp')">上一页</a>
@@ -32,9 +37,11 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
     <td><a href="javascript:request_page('pageDown')">下一页</a>
         {% else %}下一页{% endifnotequal %}</td>
      </tr>
+    {% endif %}
     <br/><hr width="800"/>
     <table border="1" width="800">
         <caption>我的模拟账户</caption>
+{% if account %}
         <tr><th>账号</th><th>是否启用</th><th>操作</th></tr>
     {% for a in account %}
     <tr><td>{{ a.host }}</td><td>
@@ -44,14 +51,21 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
             {% else %}<a onclick="return confirm('确定停用？')" href="{% url 'offon_simulation_account' %}?id={{a.id}}&host={{a.host}}&enabled=0">停用</a>{% endif %}</span>&nbsp;&nbsp;
         <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_simulation_account' %}?id={{a.id}}" title="删除">删除</a></td></tr>
     {% endfor %}
+{% else %}
+        <caption style="color:green;">暂无数据！<a href="{% url 'add_simulation_account' %}">添加？</a></caption>
+{% endif %}
     </table>
     <br/><hr width="800"/>
     <table border="1" width="800">
         <caption>我的实盘账户</caption>
+{% if real_account %}
         <tr><th>账号</th><th>用户ID</th></tr>
     {% for r in real_account %}
     <tr><td>{{ r.host }}</td><td>{{ r.userid }}</td></tr>
     {% endfor %}
+{% else %}
+        <caption style="color:green;">暂无数据！<a href="{% url 'add_real_account' %}">添加？</a></caption>
+{% endif %}
     </table>
 </div>
 <script>

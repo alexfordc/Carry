@@ -16,6 +16,7 @@ import random
 import socket
 import redis
 import sys
+import pymongo
 from pyquery import PyQuery
 from copy import deepcopy
 
@@ -101,6 +102,18 @@ CODE_PRODUCT = {'hk00001': 27.006, 'hk00002': 18.945, 'hk00003': 83.928, 'hk0000
                 'hk01928': 24.222, 'hk01997': 12.144, 'hk02007': 74.48, 'hk02018': 7.332, 'hk02318': 52.136,
                 'hk02319': 27.489, 'hk02382': 7.131, 'hk02388': 37.005, 'hk02628': 74.41, 'hk03328': 87.53,
                 'hk03988': 794.409}
+
+# 国内期货代码、名称
+FUTURE_NAME = {
+    'I': '铁矿石', 'JD': '鸡蛋', 'FB': '纤维板', 'BB': '胶合板', 'PP': '聚丙烯', 'CS': '玉米淀粉', 'PM': '普 麦',
+    'WH': '强麦', 'SR': '白糖', 'OI': '菜籽油', 'RI': '早稻', 'LR': '晚稻', 'MA': '甲醇', 'FG': '玻璃', 'RS': '油菜籽',
+    'RM': '菜籽粕', 'TC': '动力煤(至604)', 'ZC': '动力煤(605起)', 'JR': '粳稻', 'SF': '硅铁', 'SM': '锰硅',
+    'IF': '沪深300指数', 'IH': '上证50指数', 'IC': '中证500指数', 'TF': '5年期国债', 'T': '10年期国债', 'CU': '铜',
+    'AL': '铝', 'ZN': '锌', 'RU': '橡胶', 'FU': '燃料油', 'AU': '黄金', 'AG': '白银', 'RB': '螺纹钢', 'WR': '线材',
+    'PB': '铅', 'BU': '石油沥青', 'HC': '热轧卷板', 'NI': '镍', 'SN': '锡', 'A': '黄 大豆1号', 'B': '黄大豆2号',
+    'M': '豆粕', 'C': '玉米', 'Y': '豆油', 'P': '棕榈油', 'L': '聚乙烯', 'V': '聚 氯乙烯', 'J': '冶金焦炭',
+    'JM': '焦煤', 'bu': '石油沥青', 'al': '铝', 'AP': '苹果', 'CF': '棉花', 'TA': ' 精对苯二甲酸'
+}
 
 SQL = {
     'get_history': 'select number,name,time from weight where time>"{}" AND name in {}',
@@ -213,7 +226,47 @@ def runSqlData(db, sql, params=None):
             sp.set_conn(db,conn)
     return data
 
+class MongoDBData:
+    _singleton = None
+    _coll = None
 
+    def __new__(cls, *args, **kwargs):
+        if not cls._singleton:
+            cls._singleton = super(MongoDBData, cls).__new__(cls)
+        return cls._singleton
+
+    def __init__(self):
+        if not self._coll:
+            self._coll = self.get_coll()
+
+    def get_coll(self):
+        client = pymongo.MongoClient('mongodb://192.168.2.226:27017')
+        db = client['Future']
+        coll = db['dominant_future_1min']
+        return coll
+
+    def data_day(self,code,date):
+        """ 获取一天的期货数据 """
+        day = datetime.timedelta(days=1)
+        data = self._coll.find({'datetime': {'$gte': date, '$lt': date+day}, 'code': code},
+                               projection=['datetime', 'open', 'high', 'low', 'close'])
+        # 时间，开盘，收盘，最低，最高
+        data = [[i['datetime'], i['open'], i['close'], i['low'], i['high']] for i in data]
+        data.sort()
+        d1, d2 = [], []
+        for i in data:
+            d2.append([str(i[0])]+i[1:]) if i[0].hour < 18 else d1.append([str(i[0])]+i[1:])
+        res = d1 + d2
+        return res
+
+    def get_data(self,code,sd,ed):
+        """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
+        days = (ed-sd).days
+        res = []
+        for i in range(days+1):
+            day = datetime.timedelta(days=i)
+            res += self.data_day(code,sd+day)
+        return res
 
 def get_tcp():
     ''' 返回IP地址 '''
@@ -1729,8 +1782,6 @@ class Cfmmc:
         self.host = host
         self.start_date = start_date
         self.end_date = end_date
-        self.code_name = {'bu': '石油沥青', 'BU': '石油沥青', 'RB': '螺纹钢', 'RU': '橡胶', 'J': '冶金焦炭',
-                          'al': '铝', 'AL': '铝', 'AP': '苹果', 'CF': '棉花', 'TA':'精对苯二甲酸','V':'聚氯乙烯'}
         self.sql = f"帐号='{self.host}' AND 交易日期>='{self.start_date}' AND 交易日期<='{self.end_date}'"
 
     def varieties(self):
@@ -1740,7 +1791,7 @@ class Cfmmc:
         dc = {}
         for i in d:
             k = re.sub('\d', '', i[0])
-            k = self.code_name[k]
+            k = FUTURE_NAME[k]
             if k not in dc:
                 dc[k] = 0
             dc[k] += int(i[1])
@@ -1758,7 +1809,7 @@ class Cfmmc:
         """ 指定时间区间以日期与合约分组的，交易日期，合约，平仓盈亏，手续费 """
         sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),手续费 FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期,合约"
         data = runSqlData('carry_investment', sql)
-        data = [(i[0],i[1],i[2],i[3],self.code_name[re.sub('\d', '', i[1])]) for i in data]
+        data = [(i[0],i[1],i[2],i[3],FUTURE_NAME[re.sub('\d', '', i[1])]) for i in data]
         return data
 
     def get_rj(self):
