@@ -111,6 +111,39 @@ var myChart=echarts.init(document.getElementById('main'));
                     borderColor0: '#14b143'
                 }
                 },
+                /*markPoint:{ //图表标注
+					label:{ //标注的文本
+						normal:{ //默认不显示标注
+							show:true,
+							//position:['20%','30%'],
+							formatter:function(param){ //标签内容控制器
+								return param!=null ? Math.round(param.value):'';
+							}
+						}
+					},
+					data:[ //标注的数据数组
+						{
+							name:'highest value',
+							type:'max', //最大值
+							valueDim:'highest'  //在highest维度上的最大值,最高价
+						},
+						{
+							name:'lowest value',
+							type:'min',
+							valueDim:'lowest' //最低价
+						},
+						{
+							name:'average value on close',
+							type:'average',
+							valueDim:'close' //收盘价
+						}
+					],
+					tooltip:{ //提示框
+						formatter:function(param){
+							return param.name+'<br>'+(param.data.coord || '');
+						}
+					}
+				},
 				markPoint:{ //图表标注
 					label:{ //标注的文本
 						normal:{ //默认不显示标注
@@ -122,14 +155,6 @@ var myChart=echarts.init(document.getElementById('main'));
 						}
 					},
 					data:[ //标注的数据数组
-						/*{
-							name:'XX标点',
-							coord:['2017/5/18',2300], //指定数据的坐标位置
-							value:2300,
-							itemStyle:{ //图形样式
-								normal:{color:'rgb(41,60,85)'}
-							}
-						},*/
 						{
 							name:'highest value',
 							type:'max', //最大值
@@ -189,7 +214,7 @@ var myChart=echarts.init(document.getElementById('main'));
 						valueDim:'close'
 					}
 					]
-				}
+				}*/
 			},
 			{ //MA5 5天内的收盘价之和/5
 				name:'  MA5',
@@ -226,7 +251,41 @@ var myChart=echarts.init(document.getElementById('main'));
 				lineStyle:{
 					normal:{opacity:0.5}
 				}
-			},
+			},{
+            name:'卖出',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'green';
+                 }
+                }
+            },
+
+            data: {{ sell|safe }}
+        },{
+            name:'买入',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:0,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'red';
+                 }
+                }
+            },
+
+            data: {{ buy|safe }}
+        },
 		]
 	};
 myChart.setOption(option);

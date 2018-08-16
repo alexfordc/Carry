@@ -256,10 +256,12 @@ class Cfmmc:
                 holding_position.drop([holding_position.index[-1]], inplace=True)
 
                 # 客户交易结算日报
-                account_info = pd.read_excel(BytesIO(ret.content), sheetname='客户交易结算日报', header=10)
-                account_info_1 = account_info.iloc[0:6, [0, 2]]
+                account_info = pd.read_excel(BytesIO(ret.content), sheetname='客户交易结算日报', header=4)
+                # _i = account_info[account_info.iloc[:, 0] == '期货期权账户资金状况'].index[0]
+                _i = account_info.index[account_info.iloc[:, 0] == '期货期权账户资金状况'][0]
+                account_info_1 = account_info.iloc[_i +1:_i + 7, [0, 2]]
                 account_info_1.columns = ['field', 'info']
-                account_info_2 = account_info.iloc[0:9, [5, 7]]
+                account_info_2 = account_info.iloc[_i + 1:_i + 10, [5, 7]]
                 account_info_2.columns = ['field', 'info']
                 account_info = account_info_1.append(account_info_2).set_index('field').T
                 account_info['风险度'] = account_info['风险度'].apply(lambda x: float(x.strip('%')) / 100)

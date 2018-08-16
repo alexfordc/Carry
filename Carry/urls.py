@@ -75,6 +75,7 @@ urlpatterns = [
     url(r'^cfmmc/dataLocal/$', views.cfmmc_data_local, name='cfmmc_data_local'),
     url(r'^cfmmc/huice/$', views.cfmmc_huice, name='cfmmc_huice'),
     url(r'^cfmmc/bs/$', views.cfmmc_bs, name='cfmmc_bs'),
+    url(r'^cfmmc/hc/$', views.cfmmc_hc, name='cfmmc_hc'),
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 
