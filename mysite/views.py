@@ -12,6 +12,7 @@ import random
 import zmq
 import socket
 import base64
+import re
 
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -837,16 +838,18 @@ def tongji(rq):
                 name = id_name[c] if c in id_name else c
                 dt = i[1][:10]
                 if c not in huizong:
-                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, {}]
+                    hy = i[12].split('$')[0] if '$' in i[12] else i[12]
+                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, hy, {}]
                     last[c] = []
                     jc[c] = []
                 if dt not in huizong[c][-1]:
-                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1]
+                    hy = i[12].split('$')[0] if '$' in i[12] else i[12]
+                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, hy]
 
                 h1 = i[5]  # 盈亏
                 h2 = i[7] if i[6] % 2 == 0 else 0  # 多单数量
                 h3 = i[7] if i[6] % 2 == 1 else 0  # 空单数量
-                # i (8965176, '2018-08-09 10:34:55', 28412.72, '1970-01-01 08:00:00', 28550.32, -137.6, 1, 1.0, 1, 28625.8, 28352.87, 53472349)
+                # i (8965391, '2018-08-17 09:58:21', 27215.18, '2018-08-17 10:15:59', 27264.75, -49.57, 1, 1.0, 2, 27264.75, 27114.75, 53680779, 'HSENG$.AUG8')
                 h4 = int(i[7])  # 下单总数
                 h5 = i[7] if i[5] > 0 else 0  # 赢利单数
                 # h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
@@ -865,7 +868,6 @@ def tongji(rq):
                 huizong[c][-1][dt][6] += h5
                 # huizong[c][-1][dt][7] = h6
                 huizong[c][-1][dt][8] = h7
-                # i: (8959325, '2018-07-03 09:24:18', 28287.84, '2018-07-03 09:30:00', 28328.05, -40.21, 1, 1.0, 2, 28328.05, 28187.84)
                 # 正向加仓，反向加仓
                 last[c] = [las for las in last[c] if i[1] < las[3]]
                 if last[c] and i[1] <= last[c][-1][3] and (last[c][-1][6] % 2 and i[6] % 2):
@@ -1673,15 +1675,16 @@ def cfmmc_login(rq):
     global cfmmc_login_d, token, is_cfmmc_login
     cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
     token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)
-    success = None
+    success = False
+    code_name = {}  # 合约代码对应中文名
     if rq.method == 'GET' and rq.is_ajax():
         code = cfmmc_login_d.getCode()
         code = base64.b64encode(code)
         code = b"data:image/jpeg;base64," + code
         return HttpResponse(code)
     elif rq.method == 'POST':
-        userID = rq.POST['userID']
-        password = rq.POST['password']
+        userID = rq.POST['userID'].strip()
+        password = rq.POST['password'].strip()
         vericode = rq.POST['vericode']
         try:
             tda = models.TradingAccount.objects.get(host=userID)
@@ -1694,18 +1697,31 @@ def cfmmc_login(rq):
         success = cfmmc_login_d.login(userID, password, token, vericode)
         if success is True:
             is_cfmmc_login = True
+            createTime = str(int(time.time() * 100))
             if not models.TradingAccount.objects.filter(host=userID).exists():
-                createTime = str(int(time.time() * 100))
                 password = pypass.cfmmc_encode(password, createTime)
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password, 'createTime': createTime}
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name, 'success': 'success'}
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name}
+            sql = "INSERT INTO cfmmc_user(host,password,cookie,download,creationTime) VALUES(%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE cookie=''"
+            HSD.runSqlData('carry_investment',sql,(userID,password,'',1,createTime))
             trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+            codes = set(i[0] for i in trade)  # 合约代码
+            code_name = viewUtil.cfmmc_code_name(codes)
+            if trade:  # 若已经有下载过数据，则下载3天之内的
+                start_date = HSD.get_date(-3)
+                end_date = HSD.get_date()
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date)
+            else:  # 若没下载过数据，则下载300天之内的
+                start_date = HSD.get_date(-300)
+                end_date = HSD.get_date()
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date)
             response['trade'] = trade
             response['start_date'] = start_date
             response['end_date'] = end_date
+            response['code_name'] = code_name
             return render(rq, 'cfmmc_data.html', response)
 
     code = cfmmc_login_d.getCode()
@@ -1752,8 +1768,8 @@ def cfmmc_logout(rq):
     # if not user_name:
     #     return index(rq, False)
     logins = '尚未登录--期货监控中心！'  # 账户记录退出！
-    # if 'user_cfmmc' in rq.session:
-    #     del rq.session['user_cfmmc']
+    if 'user_cfmmc' in rq.session:
+        del rq.session['user_cfmmc']
     if is_cfmmc_login:
         try:
             logins = '退出失败！'
@@ -1773,12 +1789,17 @@ def cfmmc_data_page(rq):
     # if not user_name:
     #     return index(rq, False)
     host = rq.GET.get('host')
+    rq_code_name = rq.GET.get('code_name')
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
     if 'user_cfmmc' not in rq.session:
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
+    codes = set(i[0] for i in trade)  # 合约代码
+    code_name = viewUtil.cfmmc_code_name(codes)
+    if rq_code_name and rq_code_name != '1':
+        trade = [i for i in trade if rq_code_name in i[0]]
+    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'code_name':code_name}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -1806,13 +1827,14 @@ def cfmmc_save(rq):
             return HttpResponse('yes')
     return HttpResponse('no')
 
-import re
 
 def cfmmc_bs(rq):
     """ 买卖点 """
     user_name, qx, uid = LogIn(rq, uid=True)
     if rq.method == 'POST':
-        code = rq.POST.get('code')
+        code = rq.POST.get('code_name')
+        if not code or code == '1':
+            code = rq.POST.get('code')
         start_date = rq.POST.get('start_date')
         end_date = rq.POST.get('end_date')
         host = rq.POST.get('host')
@@ -1820,7 +1842,7 @@ def cfmmc_bs(rq):
             return redirect('/')
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
         bs = cfmmc.get_bs(code)
-        code = re.sub('\d','',code)+'L8'
+        #code = re.sub('\d','',code)+'L8'
         start_date = HSD.dtf(start_date)
         end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
@@ -1830,11 +1852,11 @@ def cfmmc_bs(rq):
         for i in data:
             if i[0] in bs:
                 I = i[0]
-                (buy.append(bs[I][0]),sell.append('')) if bs[I][1]>1 else (buy.append(''),sell.append(bs[I][0]))
+                (buy.append(bs[I][0]),sell.append('')) if bs[I][1]>0 else (buy.append(''),sell.append(bs[I][0]))
             else:
                 buy.append('')
                 sell.append('')
-        code_name = HSD.FUTURE_NAME.get(code[:-2])
+        code_name = HSD.FUTURE_NAME.get(re.sub('\d','',code))
         return render(rq,'cfmmc_kline.html',{'user_name':user_name,'data':data,'buy':buy,'sell':sell,'code_name':code_name})
 
     return redirect('/')
@@ -1859,30 +1881,47 @@ def cfmmc_hc(rq):
                'least2': -50.98, 'most2': 101.15, 'kuilv': 34}
     hcd = None
 
-    res = {}
-    results2 = []
-    # [(8959325, '2018-07-16 09:16:20', 28584.32, '2018-07-16 09:30:31', 28540.18, 44.14, 1, 1.0, 2, 28623.69, 28456.86),
-    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-               'avg_day': 0, 'least2': 0, 'most2': 0}
-    for i in results2:
-        dt = str(i[1])[:10]
-        if dt not in res:
-            res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
-        if i[8] in (1, 2):
-            if i[6] % 2:
-                res[dt]['kong'] += int(i[7])
-            else:
-                res[dt]['duo'] += int(i[7])
-            res[dt]['mony'] += i[5]
-            xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7], i[11]]
-            res[dt]['datetimes'].append(xx)
+    # res = {}
+    # results2 = []
+    # # ['01-0202975-00', 'HSIQ8', '2018-08-15 20:33:46', 26767.0, '2018-08-15 23:42:37', 26840.0, 73.0, '多', 1, '已平仓']
+    # results2 = [i for i in results2 if i[0] == rq_id]
+    # res = {}
+    # huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+    #            'avg_day': 0, 'least2': 0, 'most2': 0}
+    # for i in results2:
+    #     if not i[5]:
+    #         continue
+    #     dt = i[2][:10]
+    #     if dt not in res:
+    #         res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+    #     if i[7] == '多':
+    #         res[dt]['duo'] += 1
+    #     elif i[7] == '空':
+    #         res[dt]['kong'] += 1
+    #     res[dt]['mony'] += i[6]
+    #     xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+    #     res[dt]['datetimes'].append(xx)
+    #
+    #     huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong[
+    #         'least']
+    #     huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong[
+    #         'most']
+    # init_money = 10000  # 入金
+    # hcd = None
+    # if rq_date == end_date:
+    #     hcd = HSD.huice_day(res, init_money, real=True)
+    #
+    # res, huizong = viewUtil.tongji_huice(res, huizong)
+    #
+    # hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+    # hc_name = rq_id
+    # return render(rq, 'cfmmc_hc.html',
+    #               {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
+    #                'hc_name': hc_name})
+    return render(rq, 'cfmmc_hc.html',
+                  {'hc': hc, 'huizong': huizong, 'hcd': hcd, 'user_name': user_name,
+                   })
 
-            huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
-                'least']
-            huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
-                'most']
-
-    return render(rq,'cfmmc_hc.html',{'hc':hc,'huizong':huizong,'user_name':user_name})
 
 def cfmmc_huice(rq):
     """ 期货回测，绘图 """
@@ -1917,15 +1956,16 @@ def cfmmc_huice(rq):
         'week_value': [],  # 每周盈亏 净利润
         'month_name': [],  # 每月盈亏 名称
         'month_value': [],  # 每月盈亏 净利润
-        'eae': [],  # 出入金
+        'alleae': [],  # 累积出入金
         'amount': [],  # 账号总金额
+        'eae': [],  # 出入金
     }
     name_jlr = defaultdict(float)  # 品种名称，净利润
     week_jlr = defaultdict(float)  # 每周，净利润
     month_jlr = defaultdict(float)  # 每月，净利润
     data2 = []
     dates = cfmmc.get_dates()
-    ee = cfmmc.get_rj()
+    ee = cfmmc.get_rj()  # 出入金
     for de in dates:
         zx_x.append(de[0])
         yk, sxf = 0, 0
@@ -1948,14 +1988,16 @@ def cfmmc_huice(rq):
         sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
         hc['allsxf'].append(round(sxf, 1))
         rj = base_money + sum(i[1] for i in ee if i[0] <= de[0])
-        # if rj != init_money:
-        #     jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
-        #     init_money = rj
-        init_money = rj
+        if rj != init_money:
+            # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
+            init_money = rj
+            hc['eae'].append(init_money-(hc['alleae'][-1] if hc['alleae'] else 0))
+        else:
+            hc['eae'].append('')
         amount = init_money + yk - hc['allsxf'][-1]
         hc['amount'].append(amount)
-        hc['eae'].append(init_money)
-        jz = amount / jzq if jzq != 0 else jz
+        hc['alleae'].append(init_money)
+        # jz = amount / jzq if jzq != 0 else jz
         jz2 = jzs[de[0]]
         hc['alljz'].append(round(jz2, 4))
         hc['qy'].append(_qy[de[0]])

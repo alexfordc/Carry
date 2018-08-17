@@ -73,7 +73,7 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <th>多单</th>
         <th>空单</th>
             <th>下单总数</th><th>赢利单数</th><th>准确率(%)</th>
-           <th></th><th>正向加仓</th><th>反向加仓</th><th>最大持仓</th><th>&nbsp;&nbsp;名  称</th>
+           <th>合约</th><th>正向加仓</th><th>反向加仓</th><th>最大持仓</th><th>&nbsp;&nbsp;名  称</th>
         </tr>
         {% for j,i in huizong.items %}
         <tr class="zhztr"> <!-- bgcolor="{% cycle '#f6f6f6' '#ffffff' %}" -->
@@ -85,8 +85,9 @@ border:1px solid #888; background-color:green; text-align:center"><br/><input ty
         <td>{{ i.5 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>
             <td>
                 <a value="{% url 'tongji' %}?type=2&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}" target="_blank">
+
                     <!--<img src="{% static 'images/b7.ico' %}" style="width:28px;height:28px;margin-bottom:1px;" title="开始回测"/>-->
-                </a>
+                </a>{{ i.14 }}
             </td>
             <td>{{ i.9 }} ({{ i.11|floatformat:0 }})</td><td>{{ i.10 }} ({{ i.12|floatformat:0 }})</td><td>{{ i.13 }}</td>
             <td>{{ i.8 }}</td> <!-- <a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}"></a> -->

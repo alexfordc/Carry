@@ -123,7 +123,7 @@ SQL = {
     'get_idName': 'SELECT id,trader_name FROM account_info',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
     "order_detail": "SELECT Account_ID,DATE_ADD(DATE_FORMAT(OpenTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),OpenPrice,DATE_ADD(DATE_FORMAT(CloseTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),"
-                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit,Ticket FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit,Ticket,Symbol FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 computer_name = socket.gethostname()  # 计算机名称
@@ -1848,16 +1848,25 @@ class Cfmmc:
         return res
 
     def get_jz(self):
-        """ 获取净值 """
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),上日结存,当日盈亏,当日手续费 FROM cfmmc_daily_settlement WHERE {self.sql} ORDER BY 交易日期"
+        """ 获取净值：
+            增长率=（当日盈亏-当日手续费）/ 上日结存
+            净值=（1 + 增长率）* （1 + 增长率2）* （1 + 增长率n）
+        """
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),上日结存,当日盈亏,当日手续费,当日存取合计 FROM cfmmc_daily_settlement WHERE {self.sql} ORDER BY 交易日期"
         d = runSqlData('carry_investment', sql)
         if not d:
             return
         s = []
         jzs = {}
         for i in d:
-            jz = s[-1] if s else 1
-            jz = (1 + (i[2] - i[3]) / i[1]) * jz
+            try:
+                jz = s[-1] if s else 1
+                if i[1] > 0:
+                    jz = (1 + (i[2] - i[3]) / i[1]) * jz
+                else:
+                    jz = (1 + (i[2] - i[3]) / (i[1]+(i[4] if i[4]>0 else 0))) * jz
+            except:
+                pass
             s.append(jz)
             jzs[i[0]] = jz
         return jzs

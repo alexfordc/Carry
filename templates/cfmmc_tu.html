@@ -53,7 +53,7 @@ td,th{ border:0px;height:40px; }
     {% if zx_x %}
     <div align="center">
         <div style="position:relative;top:10px;">
-            <table width="720">
+            <table width="810">
                 <tr style="cursor:pointer;">
                     <td id="tuxian1">累积净值</td>
                     <td id="tuxian2">累积盈亏</td>
@@ -63,6 +63,7 @@ td,th{ border:0px;height:40px; }
                     <td id="tuxian6">每周盈亏</td>
                     <td id="tuxian7">每月盈亏</td>
                     <td id="tuxian8">账号余额</td>
+                    <td id="tuxian9">累积入金</td>
                 </tr>
             </table>
         </div>
@@ -278,6 +279,75 @@ option ={
         }
     }
 };
+}else if(type=='linebar'){
+myChart.clear();
+option = {
+
+title:{
+    text:"账户：{{hc.host|truncatechars:9}}",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+    }
+},
+color:["#FF0000"],
+tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: zx_x
+        },
+toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+    xAxis: {
+        type: 'category',
+        data: zx_x
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        name: tu_name[0],
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#ff6a4a',
+                lineStyle: { color: '#ff6a4a' }
+            }
+        },
+        data: zx_y
+    },{
+        name: tu_name[1],
+        type: 'bar',
+        barMaxWidth: 10, // 柱子的最大宽度
+        // barCateGoryGap: 20,
+        itemStyle: {
+            normal: {
+                color: function(params) {
+                    // build a color map as your need.
+                    if(params.value>0){
+                        return 'red';
+                    }else{
+                        return 'green';
+                    }
+                }
+            }
+        },
+        data: zx_y2
+    }]
+};
 }
 
 myChart.setOption(option);
@@ -285,7 +355,7 @@ myChart.setOption(option);
 
 function tuxiancolor(id){
     var id2 = "";
-    for(var i=1;i<=8;i++){
+    for(var i=1;i<=9;i++){
         id2 = "#tuxian"+i;
         if(id2==id){
         $("#tuxian"+i).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5"});
@@ -315,8 +385,11 @@ function tuxiancolor(id){
         tu_name=["每月盈亏","",""];
         huatu("bar",{{hc.month_name|safe}},{{hc.month_value|safe}},"");
     }else if(id=='#tuxian8'){
-        tu_name=["账号余额","入金",""];
-        huatu("line",{{zx_x|safe}},{{hc.amount|safe}},{{hc.eae|safe}});
+        tu_name=["账号余额","累积入金",""];
+        huatu("line",{{zx_x|safe}},{{hc.amount|safe}},{{hc.alleae|safe}});
+    }else if(id=='#tuxian9'){
+        tu_name=["累积入金","入金",""];
+        huatu("linebar",{{zx_x|safe}},{{hc.alleae|safe}},{{hc.eae|safe}});
     }
 }
 $("#tuxian1").click(function(){
@@ -342,6 +415,9 @@ $("#tuxian7").click(function(){
 });
 $("#tuxian8").click(function(){
     tuxiancolor("#tuxian8");
+});
+$("#tuxian9").click(function(){
+    tuxiancolor("#tuxian9");
 });
 
 tuxiancolor("#tuxian1");

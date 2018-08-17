@@ -25,8 +25,16 @@ td,th{ border:0px;height:40px; }
 </form>
 <br/><hr/><br/>
     <form action="" method="POST" id="cfmmc_huice_post">
+        {% csrf_token %}
 开始日期：<input type='date' name="start_date" value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' name="end_date" value={{end_date}} id='end_date'>&nbsp;&nbsp;
-{% csrf_token %}
+        <select name="code_name" style="height:24px;">
+            {% for c,n in code_name.items %}
+                {% if forloop.first %}
+                    <option value="1">全部</option>
+                {% endif %}
+                <option value="{{c}}">{{n}}</option>
+            {% endfor %}
+        </select>&nbsp;&nbsp;
         <input type="hidden" name="host" value="{{ trade.0.12 }}">
         <input type="hidden" name="code" value="{{ trade.0.0 }}">
     <input type="button" onclick="javascript:request('data')"  value="原数据">&nbsp;&nbsp;
@@ -74,8 +82,9 @@ td,th{ border:0px;height:40px; }
     function request(type){
         var start_date=$("#start_date").val();
         var end_date=$("#end_date").val();
+        var code_name=$("select[name='code_name']").val();
         if(type=='data'){
-            location.href="{% url 'cfmmc_data_page' %}?start_date="+start_date+"&end_date="+end_date;
+            location.href="{% url 'cfmmc_data_page' %}?start_date="+start_date+"&end_date="+end_date+"&code_name="+code_name;
         }else if(type=='tu'){
             var post = $("#cfmmc_huice_post");
             post.attr('action','{% url 'cfmmc_huice' %}');

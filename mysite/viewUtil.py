@@ -1,8 +1,15 @@
 import sys
-import datetime
 import json
+import requests
+import pandas as pd
+import numpy as np
+import re
+import time
+import datetime
 
-
+from io import BytesIO
+from sqlalchemy import create_engine
+from pyquery import PyQuery as pq
 from threading import Thread
 
 from mysite import HSD
@@ -122,20 +129,6 @@ def get_cfmmc_trade(host=None,start_date=None,end_date=None):
         sql = "SELECT * FROM cfmmc_trade_records WHERE 帐号='{}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30".format(host)
     data = HSD.runSqlData('carry_investment', sql)
     return data
-
-
-import urllib3
-import requests
-import pandas as pd
-import numpy as np
-import re
-import time
-import datetime
-from PIL import Image
-from io import BytesIO
-import matplotlib.pyplot as plt
-from sqlalchemy import create_engine
-from pyquery import PyQuery as pq
 
 
 class Cfmmc:
@@ -284,22 +277,35 @@ class Cfmmc:
                 #     self.holding_position = holding_position
                 # else:
                 #     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
-
-                account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment', if_exists='append',
-                                    index=False)
-                sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
-                HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
-                trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',
-                                     index=False)
-                closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
-                                       if_exists='append', index=False)
-                holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
-                                        if_exists='append', index=False)
+                if byType == 'date':
+                    account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment', if_exists='append',
+                                        index=False)
+                    sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
+                    HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
+                    trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',
+                                         index=False)
+                    closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
+                                           if_exists='append', index=False)
+                    holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
+                                            if_exists='append', index=False)
+                elif byType == 'trade':
+                    account_info.to_sql('cfmmc_daily_settlement_trade', self._conn, schema='carry_investment',
+                                        if_exists='append',
+                                        index=False)
+                    sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
+                    HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 1))
+                    trade_records.to_sql('cfmmc_trade_records_trade', self._conn, schema='carry_investment',
+                                         if_exists='append',
+                                         index=False)
+                    closed_position.to_sql('cfmmc_closed_position_trade', self._conn, schema='carry_investment',
+                                           if_exists='append', index=False)
+                    holding_position.to_sql('cfmmc_holding_position_trade', self._conn, schema='carry_investment',
+                                            if_exists='append', index=False)
                 # print(f'{tradeDate}的{byType}数据下载成功')
 
                 return True
             except Exception as e:
-                print(f'{tradeDate}的{byType}数据下载失败')
+                print(f'{tradeDate}的{byType}数据下载失败\n{e}')
 
     @asyncs
     def down_day_data_sql(self,host, start_date, end_date):
@@ -307,18 +313,20 @@ class Cfmmc:
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
         days = (end_date - start_date).days + 1
-        try:
-            sql = "SELECT date FROM cfmmc_insert_date WHERE host='{}'".format(host)
-            dates = HSD.runSqlData('carry_investment', sql)
-            dates = [str(i[0]) for i in dates]
-        except:
-            dates = []
-        for d in range(days):
-            date = start_date+datetime.timedelta(d)
-            date = str(date)[:10]
-            if date not in self._not_trade_list and date not in dates:
-                self.save_settlement(date,'date')
-                time.sleep(0.1)
+        for byType in ['date','trade']:
+            try:
+                types = 0 if byType == 'date' else 1
+                sql = "SELECT date FROM cfmmc_insert_date WHERE host='{}' AND type={}".format(host,types)
+                dates = HSD.runSqlData('carry_investment', sql)
+                dates = [str(i[0]) for i in dates]
+            except:
+                dates = []
+            for d in range(days):
+                date = start_date+datetime.timedelta(d)
+                date = str(date)[:10]
+                if date not in self._not_trade_list and date not in dates:
+                    self.save_settlement(date, byType)
+                    time.sleep(0.1)
 
 def cfmmc_data_page(rq):
     """ 期货监控系统 展示页面 数据返回"""
@@ -337,6 +345,13 @@ def cfmmc_data_page(rq):
         start_date = ''
         end_date = ''
     return trade,start_date,end_date
+
+def cfmmc_code_name(codes):
+    """ 期货监控系统 获取产品代码对应的中文名称 """
+    _code = lambda c: re.search('\d+', c)[0] if re.search('\d+', c) else ''
+    codes = [(re.sub('\d', '', i), _code(i)) for i in codes]
+    code_name = {''.join(n): HSD.FUTURE_NAME.get(n[0], n[0]) + n[1] for n in codes}
+    return code_name
 
 def user_work_log(rq,WorkLog,user=None):
     """ 工作日志分页 """
