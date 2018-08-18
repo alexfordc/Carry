@@ -328,6 +328,16 @@ class Cfmmc:
                     self.save_settlement(date, byType)
                     time.sleep(0.1)
 
+def cfmmc_dsqd():
+    """ 自动运行下载下载 期货监控系统数据，需待完善 """
+    t = time.localtime()
+    d = datetime.datetime.now()
+    while 1:
+        n = 60 - t.tm_min + 1
+        if d.weekday() >= 5:
+            n = 60 * 60 * 6
+        time.sleep(n)
+
 def cfmmc_data_page(rq):
     """ 期货监控系统 展示页面 数据返回"""
     start_date = rq.GET.get('start_date')
