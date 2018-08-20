@@ -235,6 +235,16 @@ def tongji_adus(rq):
         messages = '验证码错误！'
     return messages
 
+def get_cfmmc_id_host(_id='Nones',select=False):
+    """ 从Redis获取id_host字典，如果为空或者select为True，则从数据库查询 """
+    id_host = read_from_cache('cfmmc_id_host')
+    if not id_host or select:
+        id_host = viewUtil.cfmmc_id_host()
+        write_to_cache('cfmmc_id_host', id_host) if id_host else 0
+    if _id is 'Nones':
+        return id_host
+    return id_host.get(_id)
+
 
 # ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
 
@@ -1587,7 +1597,7 @@ def gxjy(rq):
             # h.closeConn()
             init_data = [i for i in init_data if start_date <= i[0] <= end_date]
             return JsonResponse({"init_data": init_data})
-        elif types == 'hc':
+        elif types == 'hc':  # 这个模块暂时取消
             # Account_ID,DATE_ADD(OpenTime,INTERVAL 8 HOUR),OpenPrice,DATE_ADD(CloseTime,INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit
             # results2 = [[8959325, datetime.datetime(2018, 7, 3, 15, 53, 20), 28373.79, datetime.datetime(1970, 1, 1, 8, 0), 28381.82, -8.03, 1, 1.0, 1, 28435.82, 28275.82],...]
             """ dd=     bs    price                time    code   cost
@@ -1598,7 +1608,7 @@ def gxjy(rq):
             all_price = []
             huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                        'avg_day': 0, 'least2': 0, 'most2': 0}
-            for i in results2:
+            for i in []:
                 dt = str(i[1])[:10]
                 if dt not in res:
                     res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
@@ -1640,11 +1650,11 @@ def gxjy(rq):
             huizong['least2'] = min(all_price)
             huizong['most2'] = max(all_price)
             # conn = HSD.get_conn('carry_investment')
-            sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
+            sql = "SELECT origin_asset FROM account_info WHERE id={}".format('rq_id')
             init_money = HSD.runSqlData('carry_investment', sql)
             # conn.close()
             init_money = init_money[0][0]
-            hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+            hc, huizong = HSD.huices(res, huizong, init_money, 'rq_date', end_date)
 
             return render(rq, 'hc.html',
                           {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name})
@@ -1705,19 +1715,22 @@ def cfmmc_login(rq):
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name}
-            sql = "INSERT INTO cfmmc_user(host,password,cookie,download,creationTime) VALUES(%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE cookie=''"
-            HSD.runSqlData('carry_investment',sql,(userID,password,'',1,createTime))
+            # sql = "INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name=''"
+            # HSD.runSqlData('carry_investment',sql,(userID,password,'',1,createTime))
             trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
             codes = set(i[0] for i in trade)  # 合约代码
             code_name = viewUtil.cfmmc_code_name(codes)
             if trade:  # 若已经有下载过数据，则下载3天之内的
+                trade = []
                 start_date = HSD.get_date(-3)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date,password,createTime)
             else:  # 若没下载过数据，则下载300天之内的
                 start_date = HSD.get_date(-300)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date,password,createTime)
+
+            response['host_id'] = get_cfmmc_id_host(userID,True)
             response['trade'] = trade
             response['start_date'] = start_date
             response['end_date'] = end_date
@@ -1744,6 +1757,7 @@ def cfmmc_data(rq):
     #     return index(rq, False)
     start_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
+    host = None
     try:
         if is_cfmmc_login and start_date and end_date:
             host = rq.session['user_cfmmc']['userID']
@@ -1757,7 +1771,8 @@ def cfmmc_data(rq):
     if status:
         logins = '数据正在下载！如果时间跨度过长，需等待几分钟！'
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
-    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
+    host_id = get_cfmmc_id_host(host)
+    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'host_id':host_id}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -1790,16 +1805,24 @@ def cfmmc_data_page(rq):
     #     return index(rq, False)
     host = rq.GET.get('host')
     rq_code_name = rq.GET.get('code_name')
+
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
+
     if 'user_cfmmc' not in rq.session:
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
+    else:
+        host = rq.session['user_cfmmc'].get('userID')
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+    if not trade:
+        del rq.session['user_cfmmc']
+        return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'nos','logins':'暂无数据！可先登录期货监控中心'})
     codes = set(i[0] for i in trade)  # 合约代码
     code_name = viewUtil.cfmmc_code_name(codes)
+    host_id = get_cfmmc_id_host(host)
     if rq_code_name and rq_code_name != '1':
         trade = [i for i in trade if rq_code_name in i[0]]
-    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'code_name':code_name}
+    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'code_name':code_name,'host_id':host_id}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -1807,6 +1830,8 @@ def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
     user_name, qx = LogIn(rq)
     trade = viewUtil.get_cfmmc_trade()
+    id_host = get_cfmmc_id_host()
+    trade = [i+(id_host.get(i[12],i[12]),) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
 
 
@@ -1831,13 +1856,14 @@ def cfmmc_save(rq):
 def cfmmc_bs(rq):
     """ 买卖点 """
     user_name, qx, uid = LogIn(rq, uid=True)
-    if rq.method == 'POST':
-        code = rq.POST.get('code_name')
+    if rq.method == 'GET':
+        code = rq.GET.get('code_name')
         if not code or code == '1':
-            code = rq.POST.get('code')
-        start_date = rq.POST.get('start_date')
-        end_date = rq.POST.get('end_date')
-        host = rq.POST.get('host')
+            code = rq.GET.get('code')
+        start_date = rq.GET.get('start_date')
+        end_date = rq.GET.get('end_date')
+        host = rq.GET.get('host')
+        host = get_cfmmc_id_host(host)
         if not code or not start_date or not end_date or not host:
             return redirect('/')
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
@@ -1864,6 +1890,10 @@ def cfmmc_bs(rq):
 def cfmmc_hc(rq):
     """ 期货回测，数据，图 """
     user_name, qx = LogIn(rq)
+    host = rq.GET.get('host')
+    host = get_cfmmc_id_host(host)
+    hc,huizong = HSD.cfmmc_huice(host)
+
     hc = {'jyts': 4, 'jyys': 1, 'hlbfb': 6.82, 'dhl': 1.7, 'mhl': 6.82, 'ye': 10681.53, 'cgzd': [2, 3, 66.67],
           'cgzk': [16, 24, 66.67], 'avglr': 56.44055555555556, 'alllr': 1015.9300000000001, 'avgss': -37.15555555555555,
           'allss': -334.4, 'zzl': [2.7, 5.76, 6.91, 6.82], 'vol': [10, 5, 2, 10],
@@ -1880,6 +1910,7 @@ def cfmmc_hc(rq):
                'most': ['2018-08-16', 101.15], 'avg': 25.241851851851855, 'avg_day': 170.38250000000002,
                'least2': -50.98, 'most2': 101.15, 'kuilv': 34}
     hcd = None
+
 
     # res = {}
     # results2 = []
@@ -1926,11 +1957,12 @@ def cfmmc_hc(rq):
 def cfmmc_huice(rq):
     """ 期货回测，绘图 """
     user_name, qx = LogIn(rq)
-    host = rq.POST.get('host')
+    host = rq.GET.get('host')
     if not host:
         return redirect('/')
-    start_date = rq.POST.get('start_date', '1970-01-01')
-    end_date = rq.POST.get('end_date', '2100-01-01')
+    host = get_cfmmc_id_host(host)
+    start_date = rq.GET.get('start_date', '1970-01-01')
+    end_date = rq.GET.get('end_date', '2100-01-01')
     cfmmc = HSD.Cfmmc(host, start_date, end_date)
     data = cfmmc.get_data()
     pzs = cfmmc.varieties()

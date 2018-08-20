@@ -260,6 +260,9 @@ class MongoDBData:
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
+        re_code = re.search('\d+', code)
+        if re_code and len(re_code[0]) == 3:
+            code = code[:-3] + '1' + re_code[0]
         days = (ed - sd).days
         res = []
         for i in range(days + 1):
@@ -1180,7 +1183,7 @@ def huices(res, huizong, init_money, dates, end_date):
     jyts = len(keys)
     if not keys:
         return {}, huizong
-    jyys = int(keys[-1][-5:-3]) - int(keys[0][-5:-3]) + 1
+    jyys = (int(keys[-1][:4])*12+int(keys[-1][-5:-3])) - (int(keys[0][:4])*12+int(keys[0][-5:-3])) + 1
     hc = {
         'jyts': jyts,  # 交易天数
         'jyys': jyys,  # 交易月数
@@ -1864,9 +1867,84 @@ class Cfmmc:
                 if i[1] > 0:
                     jz = (1 + (i[2] - i[3]) / i[1]) * jz
                 else:
-                    jz = (1 + (i[2] - i[3]) / (i[1]+(i[4] if i[4]>0 else 0))) * jz
+                    jz = (1 + (i[2] - i[3]) / (i[1] + (i[4] if i[4] > 0 else 0))) * jz
             except:
                 pass
             s.append(jz)
             jzs[i[0]] = jz
         return jzs
+
+
+def cfmmc_huice(host):
+    """ 回测 """
+    # 日期时间，买卖，手数，开平，手续费，平仓盈亏，合约，交易日期 ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
+    trade_sql = f"SELECT CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`," \
+          f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 实际成交日期"
+    trade = runSqlData('carry_investment',trade_sql)
+    trade = list(trade)
+    # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
+    closed_sql = f"SELECT `买/卖`,开仓价,成交价,手数,平仓盈亏,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_closed_position_trade WHERE 帐号='{host}'" # ORDER BY 实际成交日期"
+    closed = runSqlData('carry_investment',closed_sql)
+    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
+                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    moneys = runSqlData('carry_investment',money_sql)
+    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
+    hc = {'jyts': 4, 'jyys': 1, 'hlbfb': 6.82, 'dhl': 1.7, 'mhl': 6.82, 'ye': 10681.53, 'cgzd': [2, 3, 66.67],
+          'cgzk': [16, 24, 66.67], 'avglr': 56.44055555555556, 'alllr': 1015.9300000000001, 'avgss': -37.15555555555555,
+          'allss': -334.4, 'zzl': [2.7, 5.76, 6.91, 6.82], 'vol': [10, 5, 2, 10],
+          'dayye': [10270.0, 10576.0, 10691.0, 10682.0],
+          'daylr': [270, 306, 115, -9], 'zjhcs': [0, 0, 0, 0.08], 'ccsj': 11.8, 'lryz': 3.04, 'std': 48.91,
+          'zjhc': 0.08,
+          'jingzhi': [10270.0, 10576.0, 10691.0, 10682.0], 'max_jz': 10691.0, 'zx_x': ['0813', '0814', '0815', '0816'],
+          'zx_y': [270, 576, 691, 682], 'this_day': (-0.09, -9.389999999999995, -9.389999999999995, 30.0, 10, 10, 3),
+          'this_week': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
+          'this_month': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
+          'this_year': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18]}
+
+    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 100000000],
+               'most': [0, -100000000], 'avg': 0, 'avg_day': 0,
+               'least2': 0, 'most2': 0, 'kuilv': 0}
+
+    for i in closed:
+        huizong['yk'] += i[4]
+        huizong['shenglv'] += i[3] if i[4] > 0 else 0
+        huizong['zl'] += i[3]
+        huizong['least'] = [i[5], i[4] / i[3]] if i[4] / i[3] < huizong['least'][1] else huizong['least']
+        huizong['most'] = [i[5], i[4] / i[3]] if i[4] / i[3] > huizong['most'][1] else huizong['most']
+
+    huizong['shenglv'] = round(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0
+    huizong['kuilv'] = 100 - huizong['shenglv']
+    huizong['least2'] = huizong['least'][1]
+    huizong['most2'] = huizong['most'][1]
+
+    keys = list(set(i[7] for i in trade))
+    keys.sort()
+    jyts = len(keys)
+    if not keys:
+        return {}, huizong
+    jyys = (int(keys[-1][:4]) * 12 + int(keys[-1][-5:-3])) - (int(keys[0][:4]) * 12 + int(keys[0][-5:-3])) + 1
+    hc = {
+        'jyts': jyts,  # 交易天数
+        'jyys': jyys,  # 交易月数
+        'hlbfb': round(huizong['yk'] / init_money * 100, 2),  # 总获利百分比
+        'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
+        'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
+        'ye': init_money + huizong['yk'],  # 余额
+        'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
+        'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
+        'avglr': 0,  # 平均获利
+        'alllr': 0,  # 总获利
+        'avgss': 0,  # 平均损失
+        'allss': 0,  # 总损失
+        'zzl': [],  # 增长率
+        'vol': [],  # 手数
+        'dayye': [],  # 每天余额
+        'daylr': [],  # 每天利润，不叠加
+        'zjhcs': [0],  # 资金回测
+    }
+    trade2 = []
+    for key in keys:
+        ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
+
+
+    return hc,huizong

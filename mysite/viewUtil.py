@@ -6,6 +6,7 @@ import numpy as np
 import re
 import time
 import datetime
+import xlrd
 
 from io import BytesIO
 from sqlalchemy import create_engine
@@ -118,7 +119,7 @@ def gxjy_refresh(h, folder1, folder2):
     h.to_sql(data, 'gx_entry_exit')
 
 
-def get_cfmmc_trade(host=None,start_date=None,end_date=None):
+def get_cfmmc_trade(host=None, start_date=None, end_date=None):
     """ 国内期货数据，交易记录 """
     # 合约, 成交序号, 成交时间, 买/卖, 投机/套保, 成交价, 手数, 成交额, 开/平, 手续费, 平仓盈亏, 实际成交日期, 帐号, 交易日期
     if host is None:
@@ -210,7 +211,20 @@ class Cfmmc:
             # print('成功登出')
             return True
 
-    def save_settlement(self, tradeDate, byType):
+    def read_xls_name(self,xls):
+        """ 获取 xls 表里面的名字 """
+        newwb = xlrd.open_workbook(xls)
+        table = newwb.sheets()[0]  # 第一张表
+        rows = table.nrows  # 行数
+        print_name = False
+        for i in range(rows):
+            for j in table.row_values(i):
+                if print_name and j.strip():
+                    return j
+                if j == '客户名称':
+                    print_name = True
+
+    def save_settlement(self, tradeDate, byType, name):
         """ 请求并保存某一天（tradeDate：2018-08-08），"""
         daily = 'https://investorservice.cfmmc.com/customer/setupViewCustomerDetailFromCompanyWithExcel.do'
         month = 'https://investorservice.cfmmc.com/customer/setupViewCustomerMonthDetailFromCompanyWithExcel.do'
@@ -238,13 +252,21 @@ class Cfmmc:
                 #                     f.write(ret.content)
                 #                 print(f'{tradeDate}的{byType}数据下载成功')
 
-                trade_records = pd.read_excel(BytesIO(ret.content), sheetname='成交明细', header=9, na_values='--',
+                ret_content = ret.content
+
+                # 查找用户的真实名称
+                if name is None:
+                    name = self.read_xls_name(ret_content)
+                else:
+                    name = None
+
+                trade_records = pd.read_excel(BytesIO(ret_content), sheetname='成交明细', header=9, na_values='--',
                                               dtype={'成交序号': np.str_, '平仓盈亏': np.float})
                 trade_records.drop([trade_records.index[-1]], inplace=True)
-                closed_position = pd.read_excel(BytesIO(ret.content), sheetname='平仓明细', header=9,
+                closed_position = pd.read_excel(BytesIO(ret_content), sheetname='平仓明细', header=9,
                                                 dtype={'成交序号': np.str_, '原成交序号': np.str_})
                 closed_position.drop([closed_position.index[-1]], inplace=True)
-                holding_position = pd.read_excel(BytesIO(ret.content), sheetname='持仓明细', header=9,
+                holding_position = pd.read_excel(BytesIO(ret_content), sheetname='持仓明细', header=9,
                                                  dtype={'成交序号': np.str_, '交易编码': np.str_})
                 holding_position.drop([holding_position.index[-1]], inplace=True)
 
@@ -252,7 +274,7 @@ class Cfmmc:
                 account_info = pd.read_excel(BytesIO(ret.content), sheetname='客户交易结算日报', header=4)
                 # _i = account_info[account_info.iloc[:, 0] == '期货期权账户资金状况'].index[0]
                 _i = account_info.index[account_info.iloc[:, 0] == '期货期权账户资金状况'][0]
-                account_info_1 = account_info.iloc[_i +1:_i + 7, [0, 2]]
+                account_info_1 = account_info.iloc[_i + 1:_i + 7, [0, 2]]
                 account_info_1.columns = ['field', 'info']
                 account_info_2 = account_info.iloc[_i + 1:_i + 10, [5, 7]]
                 account_info_2.columns = ['field', 'info']
@@ -278,11 +300,13 @@ class Cfmmc:
                 # else:
                 #     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
                 if byType == 'date':
-                    account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment', if_exists='append',
+                    account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment',
+                                        if_exists='append',
                                         index=False)
                     sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
                     HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
-                    trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment', if_exists='append',
+                    trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment',
+                                         if_exists='append',
                                          index=False)
                     closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
                                            if_exists='append', index=False)
@@ -303,40 +327,54 @@ class Cfmmc:
                                             if_exists='append', index=False)
                 # print(f'{tradeDate}的{byType}数据下载成功')
 
-                return True
+                return name
             except Exception as e:
                 print(f'{tradeDate}的{byType}数据下载失败\n{e}')
 
     @asyncs
-    def down_day_data_sql(self,host, start_date, end_date):
+    def down_day_data_sql(self, host, start_date, end_date,password=None,createTime=None):
         """ 下载啄日数据并保存到SQL """
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
         days = (end_date - start_date).days + 1
-        for byType in ['date','trade']:
+        name = None
+        if password and createTime:
+            try:
+                sql = f"SELECT name FROM cfmmc_user WHERE host='{host}'"
+                name = HSD.runSqlData('carry_investment',sql)
+                name = name[0][0]
+            except:
+                name = None
+        for byType in ['date', 'trade']:
             try:
                 types = 0 if byType == 'date' else 1
-                sql = "SELECT date FROM cfmmc_insert_date WHERE host='{}' AND type={}".format(host,types)
+                sql = "SELECT date FROM cfmmc_insert_date WHERE host='{}' AND type={}".format(host, types)
                 dates = HSD.runSqlData('carry_investment', sql)
                 dates = [str(i[0]) for i in dates]
             except:
                 dates = []
             for d in range(days):
-                date = start_date+datetime.timedelta(d)
+                date = start_date + datetime.timedelta(d)
                 date = str(date)[:10]
                 if date not in self._not_trade_list and date not in dates:
-                    self.save_settlement(date, byType)
+                    name = self.save_settlement(date, byType, name)
+                    if name:
+                        sql = f"INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
+                        HSD.runSqlData('carry_investment', sql, (host, password, '', 1, name, createTime))
                     time.sleep(0.1)
+
 
 def cfmmc_dsqd():
     """ 自动运行下载下载 期货监控系统数据，需待完善 """
     t = time.localtime()
     d = datetime.datetime.now()
     while 1:
-        n = 60 - t.tm_min + 1
-        if d.weekday() >= 5:
+        if d.weekday() < 5:
             n = 60 * 60 * 6
+        else:
+            n = 60 - t.tm_min + 1
         time.sleep(n)
+
 
 def cfmmc_data_page(rq):
     """ 期货监控系统 展示页面 数据返回"""
@@ -344,6 +382,7 @@ def cfmmc_data_page(rq):
     end_date = rq.GET.get('end_date')
     try:
         host = rq.session['user_cfmmc']['userID']
+
         if start_date and end_date and '20' in start_date and '20' in end_date:
             trade = get_cfmmc_trade(host, start_date, end_date)
         else:
@@ -354,7 +393,19 @@ def cfmmc_data_page(rq):
         trade = None
         start_date = ''
         end_date = ''
-    return trade,start_date,end_date
+    return trade, start_date, end_date
+
+
+def cfmmc_id_host():
+    """ 期货监控系统 id：host，host：id 双向字典 """
+    sql = "SELECT id,host FROM cfmmc_user"
+    hosts = HSD.runSqlData('carry_investment', sql)
+    id_host = {}
+    for i in hosts:
+        id_host[str(i[0])] = i[1]
+        id_host[i[1]] = i[0]
+    return id_host
+
 
 def cfmmc_code_name(codes):
     """ 期货监控系统 获取产品代码对应的中文名称 """
@@ -363,7 +414,8 @@ def cfmmc_code_name(codes):
     code_name = {''.join(n): HSD.FUTURE_NAME.get(n[0], n[0]) + n[1] for n in codes}
     return code_name
 
-def user_work_log(rq,WorkLog,user=None):
+
+def user_work_log(rq, WorkLog, user=None):
     """ 工作日志分页 """
     SIZE = 5  # 每页显示5条
     try:
@@ -393,4 +445,4 @@ def user_work_log(rq,WorkLog,user=None):
         work = WorkLog.objects.all()[startGood:endGood]
     else:
         work = WorkLog.objects.filter(belonged=user)[startGood:endGood]
-    return work,allPage,curPage
+    return work, allPage, curPage
