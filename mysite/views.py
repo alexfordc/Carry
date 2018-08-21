@@ -239,7 +239,7 @@ def get_cfmmc_id_host(_id='Nones',select=False):
     """ 从Redis获取id_host字典，如果为空或者select为True，则从数据库查询 """
     id_host = read_from_cache('cfmmc_id_host')
     if not id_host or select:
-        id_host = viewUtil.cfmmc_id_host()
+        id_host = viewUtil.cfmmc_id_hostName()
         write_to_cache('cfmmc_id_host', id_host) if id_host else 0
     if _id is 'Nones':
         return id_host
@@ -707,7 +707,6 @@ def tongji(rq):
     user_name, qx = LogIn(rq)
     dates = HSD.get_date()
     id_name = HSD.get_idName()
-
     rq_date = rq.GET.get('datetimes')
     end_date = rq.GET.get('end_date')
     page = rq.GET.get('page')
@@ -735,8 +734,8 @@ def tongji(rq):
         results2, _ = HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
-        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-                   'avg_day': 0, 'least2': 0, 'most2': 0}
+        huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
+                   'avg_day': 0, 'least2': [0, 1000], 'most2': [0, -1000]}
         for i in results2:
             if not i[5]:
                 continue
@@ -745,16 +744,18 @@ def tongji(rq):
                 res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
             if i[7] == '多':
                 res[dt]['duo'] += 1
+                _ykds = i[5] - i[3]  # 盈亏点数
             elif i[7] == '空':
                 res[dt]['kong'] += 1
+                _ykds = i[3] - i[5]  # 盈亏点数
             res[dt]['mony'] += i[6]
             xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
             res[dt]['datetimes'].append(xx)
 
-            huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong[
-                'least']
-            huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong[
-                'most']
+            huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
+            huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
+            huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
+            huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
         init_money = 10000  # 入金
         hcd = None
         if rq_date == end_date:
@@ -797,7 +798,7 @@ def tongji(rq):
         results2 = [result for result in results2 if (rq_id == str(result[0]) and result[8] != 0)]
         # [(8959325, '2018-07-16 09:16:20', 28584.32, '2018-07-16 09:30:31', 28540.18, 44.14, 1, 1.0, 2, 28623.69, 28456.86),
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-                   'avg_day': 0, 'least2': 0, 'most2': 0}
+                   'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
         for i in results2:
             dt = str(i[1])[:10]
             if dt not in res:
@@ -805,16 +806,18 @@ def tongji(rq):
             if i[8] in (1, 2):
                 if i[6] % 2:
                     res[dt]['kong'] += int(i[7])
+                    _ykds = i[2] - i[4]  # 盈亏点数
                 else:
                     res[dt]['duo'] += int(i[7])
+                    _ykds = i[4] - i[2]  # 盈亏点数
                 res[dt]['mony'] += i[5]
                 xx = [str(i[1]), str(i[3]), '空' if i[6] % 2 else '多', i[5], i[2], i[4], i[7], i[11]]
                 res[dt]['datetimes'].append(xx)
 
-                huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong[
-                    'least']
-                huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong[
-                    'most']
+                huizong['least'] = [dt, i[5]] if i[5] < huizong['least'][1] else huizong['least']
+                huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
+                huizong['most'] = [dt, i[5]] if i[5] > huizong['most'][1] else huizong['most']
+                huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
         hcd = {}
         sql = "SELECT origin_asset FROM account_info WHERE id={}".format(rq_id)
         init_money = HSD.runSqlData('carry_investment', sql)
@@ -1815,7 +1818,7 @@ def cfmmc_data_page(rq):
         host = rq.session['user_cfmmc'].get('userID')
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     if not trade:
-        del rq.session['user_cfmmc']
+        # del rq.session['user_cfmmc']
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'nos','logins':'暂无数据！可先登录期货监控中心'})
     codes = set(i[0] for i in trade)  # 合约代码
     code_name = viewUtil.cfmmc_code_name(codes)
@@ -1829,9 +1832,15 @@ def cfmmc_data_page(rq):
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
     user_name, qx = LogIn(rq)
-    trade = viewUtil.get_cfmmc_trade()
+    trades = viewUtil.get_cfmmc_trade()
     id_host = get_cfmmc_id_host()
-    trade = [i+(id_host.get(i[12],i[12]),) for i in trade]
+    trade = []
+    # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
+    for i in trades:
+        name = id_host.get(i[12]+'_name')
+        name = name[0]+'*'*(len(name)-1) if name else None
+        trade.append(i+(id_host.get(i[12],i[12]),name))
+    # trade = [i+(id_host.get(i[12],i[12]),id_host.get(i[12]+'_name')) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
 
 
@@ -1892,66 +1901,54 @@ def cfmmc_hc(rq):
     user_name, qx = LogIn(rq)
     host = rq.GET.get('host')
     host = get_cfmmc_id_host(host)
-    hc,huizong = HSD.cfmmc_huice(host)
+    rq_date = rq.GET.get('start_date')
+    end_date = rq.GET.get('end_date')
+    results2 = HSD.cfmmc_get_result(host,rq_date,end_date)
+    # rq_date = results2[0][2][:10]
+    # end_date = results2[-1][4][:10]
 
-    hc = {'jyts': 4, 'jyys': 1, 'hlbfb': 6.82, 'dhl': 1.7, 'mhl': 6.82, 'ye': 10681.53, 'cgzd': [2, 3, 66.67],
-          'cgzk': [16, 24, 66.67], 'avglr': 56.44055555555556, 'alllr': 1015.9300000000001, 'avgss': -37.15555555555555,
-          'allss': -334.4, 'zzl': [2.7, 5.76, 6.91, 6.82], 'vol': [10, 5, 2, 10],
-          'dayye': [10270.0, 10576.0, 10691.0, 10682.0],
-          'daylr': [270, 306, 115, -9], 'zjhcs': [0, 0, 0, 0.08], 'ccsj': 11.8, 'lryz': 3.04, 'std': 48.91,
-          'zjhc': 0.08,
-          'jingzhi': [10270.0, 10576.0, 10691.0, 10682.0], 'max_jz': 10691.0, 'zx_x': ['0813', '0814', '0815', '0816'],
-          'zx_y': [270, 576, 691, 682], 'this_day': (-0.09, -9.389999999999995, -9.389999999999995, 30.0, 10, 10, 3),
-          'this_week': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
-          'this_month': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
-          'this_year': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18]}
+    # results2[0]：['0060660900202549', 'J1709', '2017-04-11 14:37:30', 1741.5, '2017-06-05 11:02:42', 1412.0, 32950, '空', 1, '已平仓']
+    res = {}
+    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+               'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
+    for i in results2:
+        if not i[5]:
+            continue
+        dt = i[4][:10]
+        if dt not in res:
+            res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+        if i[7] == '多':
+            res[dt]['duo'] += 1
+            _ykds = i[5] - i[3]  # 盈亏点数
+        elif i[7] == '空':
+            res[dt]['kong'] += 1
+            _ykds = i[3] - i[5]  # 盈亏点数
+        res[dt]['mony'] += i[6]
+        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+        res[dt]['datetimes'].append(xx)
 
-    huizong = {'yk': 681.5300000000001, 'shenglv': 66, 'zl': 27, 'least': ['2018-08-16', -50.98],
-               'most': ['2018-08-16', 101.15], 'avg': 25.241851851851855, 'avg_day': 170.38250000000002,
-               'least2': -50.98, 'most2': 101.15, 'kuilv': 34}
+        huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
+        huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
+        huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
+        huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
+    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
+                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    moneys = HSD.runSqlData('carry_investment', money_sql)
+    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
+    init_money = init_money if init_money and init_money > 10000 else 10000  # 入金
     hcd = None
-
-
-    # res = {}
-    # results2 = []
-    # # ['01-0202975-00', 'HSIQ8', '2018-08-15 20:33:46', 26767.0, '2018-08-15 23:42:37', 26840.0, 73.0, '多', 1, '已平仓']
-    # results2 = [i for i in results2 if i[0] == rq_id]
-    # res = {}
-    # huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-    #            'avg_day': 0, 'least2': 0, 'most2': 0}
-    # for i in results2:
-    #     if not i[5]:
-    #         continue
-    #     dt = i[2][:10]
-    #     if dt not in res:
-    #         res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
-    #     if i[7] == '多':
-    #         res[dt]['duo'] += 1
-    #     elif i[7] == '空':
-    #         res[dt]['kong'] += 1
-    #     res[dt]['mony'] += i[6]
-    #     xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
-    #     res[dt]['datetimes'].append(xx)
-    #
-    #     huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong[
-    #         'least']
-    #     huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong[
-    #         'most']
-    # init_money = 10000  # 入金
-    # hcd = None
-    # if rq_date == end_date:
+    # if rq_date == end_date:  # 暂时取消一天的，或需要完善
     #     hcd = HSD.huice_day(res, init_money, real=True)
-    #
-    # res, huizong = viewUtil.tongji_huice(res, huizong)
-    #
-    # hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
-    # hc_name = rq_id
-    # return render(rq, 'cfmmc_hc.html',
-    #               {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
-    #                'hc_name': hc_name})
+
+    res, huizong = viewUtil.tongji_huice(res, huizong)
+
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+    hc_name = get_cfmmc_id_host(host+'_name')
+    hc_name = hc_name[0]+'*'*(len(hc_name)-1)
     return render(rq, 'cfmmc_hc.html',
-                  {'hc': hc, 'huizong': huizong, 'hcd': hcd, 'user_name': user_name,
-                   })
+                  {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
+                   'hc_name': hc_name})
+
 
 
 def cfmmc_huice(rq):

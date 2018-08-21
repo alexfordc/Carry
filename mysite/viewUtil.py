@@ -67,8 +67,8 @@ def tongji_huice(res, huizong):
     huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
     res_size = len(res)
     huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-    huizong['least2'] = min(all_price)
-    huizong['most2'] = max(all_price)
+    # huizong['least2'] = min(all_price)
+    # huizong['most2'] = max(all_price)
     return res, huizong
 
 
@@ -123,11 +123,11 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
     """ 国内期货数据，交易记录 """
     # 合约, 成交序号, 成交时间, 买/卖, 投机/套保, 成交价, 手数, 成交额, 开/平, 手续费, 平仓盈亏, 实际成交日期, 帐号, 交易日期
     if host is None:
-        sql = "SELECT * FROM cfmmc_trade_records GROUP BY 帐号"
+        sql = "SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 交易日期 IN (SELECT MAX(交易日期) FROM cfmmc_trade_records GROUP BY 帐号) GROUP BY 帐号"
     elif start_date and end_date:
-        sql = f"SELECT * FROM cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' ORDER BY 实际成交日期 DESC,成交时间 DESC"
+        sql = f"SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' ORDER BY 实际成交日期 DESC,成交时间 DESC"
     else:
-        sql = "SELECT * FROM cfmmc_trade_records WHERE 帐号='{}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30".format(host)
+        sql = f"SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 帐号='{host}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30"
     data = HSD.runSqlData('carry_investment', sql)
     return data
 
@@ -211,18 +211,24 @@ class Cfmmc:
             # print('成功登出')
             return True
 
-    def read_xls_name(self,xls):
+    def read_name(self,ret_content):
         """ 获取 xls 表里面的名字 """
-        newwb = xlrd.open_workbook(xls)
-        table = newwb.sheets()[0]  # 第一张表
-        rows = table.nrows  # 行数
-        print_name = False
-        for i in range(rows):
-            for j in table.row_values(i):
-                if print_name and j.strip():
-                    return j
-                if j == '客户名称':
-                    print_name = True
+        # newwb = xlrd.open_workbook(ret_content)
+        # table = newwb.sheets()[0]  # 第一张表
+        # rows = table.nrows  # 行数
+        # print_name = False
+        # for i in range(rows):
+        #     for j in table.row_values(i):
+        #         if print_name and j.strip():
+        #             return j
+        #         if j == '客户名称':
+        #             print_name = True
+        try:
+            p = pd.read_excel(BytesIO(ret_content))
+            name = p[p.ix[:, 0] == '客户名称'].ix[:, 2].values[0]
+            return name
+        except:
+            pass
 
     def save_settlement(self, tradeDate, byType, name):
         """ 请求并保存某一天（tradeDate：2018-08-08），"""
@@ -256,7 +262,7 @@ class Cfmmc:
 
                 # 查找用户的真实名称
                 if name is None:
-                    name = self.read_xls_name(ret_content)
+                    name = self.read_name(ret_content)
                 else:
                     name = None
 
@@ -396,14 +402,15 @@ def cfmmc_data_page(rq):
     return trade, start_date, end_date
 
 
-def cfmmc_id_host():
+def cfmmc_id_hostName():
     """ 期货监控系统 id：host，host：id 双向字典 """
-    sql = "SELECT id,host FROM cfmmc_user"
+    sql = "SELECT id,host,name FROM cfmmc_user"
     hosts = HSD.runSqlData('carry_investment', sql)
     id_host = {}
     for i in hosts:
         id_host[str(i[0])] = i[1]
         id_host[i[1]] = i[0]
+        id_host[i[1]+'_name'] = i[2]
     return id_host
 
 

@@ -1215,7 +1215,7 @@ def huices(res, huizong, init_money, dates, end_date):
     for i in keys:
         je = round(res[i]['mony'])
         jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
-        zx_x.append(i[-5:-3] + i[-2:])  # 日期
+        zx_x.append(''.join(i.split('-'))[2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
         hc['zzl'].append(round(zx_y[-1] / init_money * 100, 2))
         hc['vol'].append(res[i]['duo'] + res[i]['kong'])
@@ -1260,7 +1260,16 @@ def huices(res, huizong, init_money, dates, end_date):
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        hc['ccsj'] = round(ccsj / 60 / huizong['zl'], 1) if huizong['zl'] != 0 else 0  # 平均持仓时间
+        ccsj = ccsj / 60 / huizong['zl'] if huizong['zl'] != 0 else 0
+        if ccsj > 1440:
+            _ccsj = round(ccsj / 60 / 24, 2)  # 平均持仓时间
+            hc['ccsj'] = str(_ccsj) + ' 天'
+        elif ccsj > 60:
+            _ccsj = round(ccsj / 60, 2)  # 平均持仓时间
+            hc['ccsj'] = str(_ccsj) + ' 小时'
+        else:
+            _ccsj = round(ccsj, 2)  # 平均持仓时间
+            hc['ccsj'] = str(_ccsj) + ' 分钟'
         hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
         count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
         hc['std'] = round(count_var ** 0.5, 2)
@@ -1293,14 +1302,15 @@ def huices(res, huizong, init_money, dates, end_date):
         week = [str(this_date - datetime.timedelta(days=tw))[:10] for tw in
                 range(this_date.weekday() + 1)]  # 这个星期的日期
         month = [str(this_date - datetime.timedelta(days=td))[:10] for td in range(this_date.day)]  # 这个月的日期
-        time_date = time.strptime(dates, '%Y-%m-%d')
+        time_date = time.strptime(end_date, '%Y-%m-%d')
         year = [str(this_date - datetime.timedelta(days=ty))[:10] for ty in range(time_date.tm_yday)]  # 这一年的日期
         year.sort()
+
         this_week = [0, 0, 0, 0, 0, 0, 0]
         this_month = [0, 0, 0, 0, 0, 0, 0]
         this_year = [0, 0, 0, 0, 0, 0, 0]
-
-        for yd in year[year.index(keys[0]):]:
+        year_s = min(set(keys).intersection(set(year)))  # keys 与 year 的交集 的最小值
+        for yd in year[year.index(year_s):]:
             jg = res.get(yd)
             if not jg or len(jg['datetimes']) < 1:
                 continue
@@ -1342,6 +1352,7 @@ def huices(res, huizong, init_money, dates, end_date):
     hc['this_month'] = this_month
     hc['this_year'] = this_year
     huizong['kuilv'] = 100 - huizong['shenglv']
+
     return hc, huizong
 
 
@@ -1874,6 +1885,21 @@ class Cfmmc:
             jzs[i[0]] = jz
         return jzs
 
+def cfmmc_get_result(host,start_date,end_date):
+    """ 获取指定帐号的交易开平仓记录 """
+    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    dc = runSqlData('carry_investment',sql)
+    dc = {i[0]: i[1] for i in dc}
+    sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
+           f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
+           f" AND 原成交序号 in (SELECT 成交序号 from cfmmc_trade_records_trade WHERE 帐号='{host}')"
+    cl = runSqlData('carry_investment',sql2)
+    results2 = []
+    for i in cl:
+        _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '空' if '买' in i[6] else '多', i[7], i[8]]
+        results2.append(_d)
+    results2 = sorted(results2, key=lambda x: x[2])
+    return results2
 
 def cfmmc_huice(host):
     """ 回测 """
@@ -1901,35 +1927,24 @@ def cfmmc_huice(host):
           'this_month': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
           'this_year': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18]}
 
-    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 100000000],
-               'most': [0, -100000000], 'avg': 0, 'avg_day': 0,
-               'least2': 0, 'most2': 0, 'kuilv': 0}
-
-    for i in closed:
-        huizong['yk'] += i[4]
-        huizong['shenglv'] += i[3] if i[4] > 0 else 0
-        huizong['zl'] += i[3]
-        huizong['least'] = [i[5], i[4] / i[3]] if i[4] / i[3] < huizong['least'][1] else huizong['least']
-        huizong['most'] = [i[5], i[4] / i[3]] if i[4] / i[3] > huizong['most'][1] else huizong['most']
-
-    huizong['shenglv'] = round(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0
-    huizong['kuilv'] = 100 - huizong['shenglv']
-    huizong['least2'] = huizong['least'][1]
-    huizong['most2'] = huizong['most'][1]
-
-    keys = list(set(i[7] for i in trade))
-    keys.sort()
-    jyts = len(keys)
-    if not keys:
-        return {}, huizong
-    jyys = (int(keys[-1][:4]) * 12 + int(keys[-1][-5:-3])) - (int(keys[0][:4]) * 12 + int(keys[0][-5:-3])) + 1
+    huizong = {'yk': 0,                     # 总盈亏
+               'shenglv': 0,                # 胜率
+               'zl': 0,                     # 总成交量
+               'least': [0, 100000000],     # 最差交易：日期，金额
+               'most': [0, -100000000],     # 最好交易：日期，金额
+               'avg': 0,                    # 平均盈亏
+               'avg_day': 0,                # 平均每天盈亏
+               'least2': [0, 100000000],    # 最差交易：日期，点数
+               'most2': [0, -100000000],    # 最好交易：日期，点数
+               'kuilv': 0                   # 亏损比率
+               }
     hc = {
-        'jyts': jyts,  # 交易天数
-        'jyys': jyys,  # 交易月数
-        'hlbfb': round(huizong['yk'] / init_money * 100, 2),  # 总获利百分比
-        'dhl': round(huizong['yk'] / jyts / init_money * 100, 2),  # 日获利百分比
-        'mhl': round(huizong['yk'] / jyys / init_money * 100, 2),  # 月获利百分比
-        'ye': init_money + huizong['yk'],  # 余额
+        'jyts': 0,  # 交易天数
+        'jyys': 0,  # 交易月数
+        'hlbfb': 0,  # 总获利百分比
+        'dhl': 0,   # 日获利百分比
+        'mhl': 0,   # 月获利百分比
+        'ye': 0,    # 余额
         'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
         'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
         'avglr': 0,  # 平均获利
@@ -1941,7 +1956,84 @@ def cfmmc_huice(host):
         'dayye': [],  # 每天余额
         'daylr': [],  # 每天利润，不叠加
         'zjhcs': [0],  # 资金回测
+        'ccsj': 0,  # 持仓时间
+        'lryz': 0,  # 利润因子
+        'std': 0,   # 标准差
+        'zjhc': 0,  # 资金回测
+        'jingzhi': [],  # 净值
+        'max_jz': [],   # 最大净值
+        'zx_x': [],     # 日期，作为X轴
+        'zx_y': [],     # 总利润
+        'this_day': [],     # 一天
+        'this_week': [],    # 一星期
+        'this_month': [],   # 一个月
+        'this_year': [],    # 一年
     }
+    _alllr = 0  # 所有获利的手数
+    _allss = 0  # 所有亏损的手数
+    _days = {}  # 所有每天的数据
+    for i in closed:
+        # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
+        _vol = i[3]  # 手数
+        y_k = i[4]   # 盈亏
+        if i[5] not in _days:
+            _days[i[5]] = {
+                'zzl': [],
+                'vol': [],
+                'dayye': [],
+                'daylr': [],
+                'zjhcs': [0],
+            }
+        huizong['yk'] += i[4]
+        huizong['shenglv'] += i[3] if i[4] > 0 else 0
+        huizong['zl'] += _vol
+        huizong['least'] = [i[5], y_k / _vol] if y_k / _vol < huizong['least'][1] else huizong['least']
+        huizong['most'] = [i[5], y_k / _vol] if y_k / _vol > huizong['most'][1] else huizong['most']
+
+        if '买' in i[0]:
+            hc['cgzk'][1] += _vol
+            if y_k > 0:
+                hc['cgzk'][0] += _vol
+                hc['alllr'] += y_k
+                _alllr += _vol
+            else:
+                hc['allss'] += y_k
+                _allss += _vol
+        else:
+            hc['cgzd'][1] += _vol
+            if y_k > 0:
+                hc['cgzd'][0] += _vol
+                hc['alllr'] += y_k
+                _alllr += _vol
+            else:
+                hc['allss'] += y_k
+                _allss += _vol
+
+    huizong['shenglv'] = round(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0
+    huizong['kuilv'] = 100 - huizong['shenglv']
+    huizong['least2'] = huizong['least'][1]
+    huizong['most2'] = huizong['most'][1]
+
+    hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] > 0 else 0
+    hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] > 0 else 0
+    hc['alllr'] = hc['alllr']/_alllr
+    hc['allss'] = hc['allss']/_allss
+
+    keys = list(set(i[7] for i in trade))
+    keys.sort()
+    jyts = len(keys)
+    if not keys:
+        return {}, huizong
+
+    jyys = (int(keys[-1][:4]) * 12 + int(keys[-1][-5:-3])) - (int(keys[0][:4]) * 12 + int(keys[0][-5:-3])) + 1
+    hc['jyts'] = jyts
+    hc['jyys'] = jyys
+    hc['hlbfb'] = round(huizong['yk'] / init_money * 100, 2)
+    hc['dhl'] = round(huizong['yk'] / jyts / init_money * 100, 2)
+    hc['mhl'] = round(huizong['yk'] / jyys / init_money * 100, 2)
+    hc['ye'] = init_money + huizong['yk']
+
+
     trade2 = []
     for key in keys:
         ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')

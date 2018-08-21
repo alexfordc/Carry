@@ -5323,3 +5323,161 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\views.py", line 1895, in cfmmc_hc
     hc,huizong = HSD.cfmmc_huice(host)
 TypeError: 'NoneType' object is not iterable
+exception.py[2018-08-21 11:31:24][ERROR]：Internal Server Error: /cfmmc/hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1914, in cfmmc_hc
+    results2 = HSD.cfmmc_get_result(host)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1885, in cfmmc_get_result
+    for i in cl:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-08-21 11:32:04][ERROR]：Internal Server Error: /cfmmc/hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1914, in cfmmc_hc
+    results2 = HSD.cfmmc_get_result(host)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1887, in cfmmc_get_result
+    for i in cl:
+TypeError: 'NoneType' object is not iterable
+HSD.py[2018-08-21 11:33:01][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:35:48][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:36:14][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:36:42][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:36:47][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:37:20][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:40:22][ERROR]：文件 HSD.py 第1340行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:55:05][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 11:57:10][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 12:12:22][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:36:11][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:36:52][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:41:22][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:42:49][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:43:19][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:43:25][ERROR]：文件 HSD.py 第1349行报错：'2017-04-11' is not in list
+HSD.py[2018-08-21 13:46:56][ERROR]：文件 HSD.py 第1349行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 13:49:52][ERROR]：文件 HSD.py 第1349行报错：'2017-06-05' is not in list
+exception.py[2018-08-21 13:49:52][ERROR]：Internal Server Error: /cfmmc/hc/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1950, in cfmmc_hc
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1354, in huices
+    print(hc['this_day'])
+KeyError: 'this_day'
+HSD.py[2018-08-21 13:50:38][ERROR]：文件 HSD.py 第1349行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 13:51:42][ERROR]：文件 HSD.py 第1349行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 13:52:11][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 13:55:18][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:10:11][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:11:58][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:22:47][ERROR]：文件 HSD.py 第1352行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:24:36][ERROR]：文件 HSD.py 第1353行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:27:57][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:33:51][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:42:01][ERROR]：文件 HSD.py 第1350行报错：'2017-06-05' is not in list
+HSD.py[2018-08-21 14:42:30][ERROR]：文件 HSD.py 第1351行报错：'2017-06-05' is not in list
+base.py[2018-08-21 17:29:53][WARNING]：Not Found: /sss
+base.py[2018-08-21 17:29:53][WARNING]：Not Found: /favicon.ico
+base.py[2018-08-21 17:35:45][WARNING]：Not Found: /s
+base.py[2018-08-21 17:35:45][WARNING]：Not Found: /static/images/head404.png
+base.py[2018-08-21 17:35:45][WARNING]：Not Found: /static/images/txtbg404.png
+base.py[2018-08-21 17:35:46][WARNING]：Not Found: /s
+base.py[2018-08-21 17:35:46][WARNING]：Not Found: /static/images/head404.png
+base.py[2018-08-21 17:35:46][WARNING]：Not Found: /static/images/txtbg404.png
+base.py[2018-08-21 17:35:47][WARNING]：Not Found: /s
+base.py[2018-08-21 17:35:47][WARNING]：Not Found: /static/images/head404.png
+base.py[2018-08-21 17:35:47][WARNING]：Not Found: /static/images/txtbg404.png
+base.py[2018-08-21 17:36:39][WARNING]：Not Found: /sf
+base.py[2018-08-21 17:37:00][WARNING]：Not Found: /sf
+base.py[2018-08-21 17:37:02][WARNING]：Not Found: /sf
+base.py[2018-08-21 17:37:08][WARNING]：Not Found: /sf
+base.py[2018-08-21 17:37:24][WARNING]：Not Found: /sf
+base.py[2018-08-21 17:37:27][WARNING]：Not Found: /sfsd
+exception.py[2018-08-21 17:39:42][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in tongji
+    a = 4/0
+ZeroDivisionError: division by zero
+exception.py[2018-08-21 17:40:07][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in tongji
+    a = 4/0
+ZeroDivisionError: division by zero
+exception.py[2018-08-21 17:40:09][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in tongji
+    a = 4/0
+ZeroDivisionError: division by zero
+exception.py[2018-08-21 17:40:27][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in tongji
+    a = 4/0
+ZeroDivisionError: division by zero
+base.py[2018-08-21 17:43:52][WARNING]：Not Found: /sd
+exception.py[2018-08-21 17:45:01][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 710, in tongji
+    a = 4/0
+ZeroDivisionError: division by zero

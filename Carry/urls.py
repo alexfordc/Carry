@@ -79,8 +79,11 @@ urlpatterns = [
 
     url(r'^web/$', views.websocket_test,name='websocket_test'),
 
-    url(r'', views.page_not_found, name='page_not_found'),
+    # url(r'', views.page_not_found, name='page_not_found'),
 
 ]
 
-# handler404 = views.page_not_found #404页面
+handler404 = views.page_not_found  # 404 错误 page not found视图
+handler500 = views.page_not_found  # 500 错误 server error视图
+handler400 = views.page_not_found  # 500 错误 bad request视图
+
