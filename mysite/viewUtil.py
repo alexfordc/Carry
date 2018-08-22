@@ -133,6 +133,7 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
 
 
 class Cfmmc:
+    """ 期货监控系统，登录，下载数据，保存数据 """
     def __init__(self):
         self.session = requests.session()
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
@@ -422,9 +423,13 @@ def cfmmc_code_name(codes):
     return code_name
 
 
-def user_work_log(rq, WorkLog, user=None):
-    """ 工作日志分页 """
-    SIZE = 5  # 每页显示5条
+def user_work_log(rq, table, user=None, size=5):
+    """ 工作日志分页
+        rq：页面请求，
+        table：models的表对象，
+        user：用户，
+        size：没有显示的条目，默认5条
+     """
     try:
         curPage = int(rq.GET.get('curPage', '1'))  # 第几页
         allPage = int(rq.GET.get('allPage', '0'))  # 总页数
@@ -434,8 +439,8 @@ def user_work_log(rq, WorkLog, user=None):
         allPage = 0
         pageType = ''  # 若有误,则给其默认值
     if curPage == 1 and allPage == 0:  # 只在第一次查询商品总条数
-        goodCount = WorkLog.objects.count() if user is None else WorkLog.objects.filter(belonged=user).count()
-        allPage = goodCount // SIZE if goodCount % SIZE == 0 else goodCount // SIZE + 1
+        goodCount = table.objects.count() if user is None else table.objects.filter(belonged=user).count()
+        allPage = goodCount // size if goodCount % size == 0 else goodCount // size + 1
     if pageType == 'pageDown':  # 下一页
         curPage += 1
     elif pageType == 'pageUp':  # 上一页
@@ -444,12 +449,12 @@ def user_work_log(rq, WorkLog, user=None):
         curPage = 1  # 如果小于最小则等于1
     elif curPage > allPage:
         curPage = allPage  # 若大于最大则等于最大页
-    startGood = (curPage - 1) * SIZE  # 切片开始处
-    endGood = startGood + SIZE  # 切片结束处
+    startGood = (curPage - 1) * size  # 切片开始处
+    endGood = startGood + size  # 切片结束处
     if allPage < 1:
         return [], 0, 0
     if user is None:
-        work = WorkLog.objects.all()[startGood:endGood]
+        work = table.objects.all()[startGood:endGood]
     else:
-        work = WorkLog.objects.filter(belonged=user)[startGood:endGood]
+        work = table.objects.filter(belonged=user)[startGood:endGood]
     return work, allPage, curPage

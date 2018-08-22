@@ -17,7 +17,7 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
 {% if work %}
         <tr><th>用户名</th><th>日期</th><th>标题</th><th>内容</th><th>操作</th></tr>
 {% for w in work %}
-    <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" class="bodys">{{ w.4|truncatechars:12 }}</td>
+    <tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td onmouseover="shows('{{w.4}}')" class="bodys">{{ w.4|truncatechars:12|safe }}</td>
         <td><a href="{% url 'update_work_log' %}?id={{w.5}}" title="修改"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-left:20px;margin-top:8px;margin-bottom:5px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <!--<a onclick="confirm('确定要删除吗？')?location.href='{% url 'del_work_log' %}?id={{w.5}}':''" href="javascript:;" title="删除">删除</a> -->
         <a onclick="return confirm('确定要删除吗？')" href="{% url 'del_work_log' %}?id={{w.5}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:8px;margin-bottom:5px;"></a> </td>
@@ -59,14 +59,19 @@ border:1px solid #888; background-color:rgba(0,190,0,0.9); text-align:center">
     <table border="1" width="800">
         <caption>我的实盘账户</caption>
 {% if real_account %}
-        <tr><th>账号</th><th>用户ID</th></tr>
+        <tr><th>账号</th><th>用户ID</th><th></th></tr>
     {% for r in real_account %}
-    <tr><td>{{ r.host }}</td><td>{{ r.userid }}</td></tr>
+    <tr><td>{{ r.host }}</td><td>{{ r.userid }}</td>
+    <td><a onclick="return confirm('确定要删除吗？')" href="{% url 'del_real_account' %}?id={{r.id}}" title="删除">删除</a></td></tr>
     {% endfor %}
 {% else %}
         <caption style="color:green;">暂无数据！<a href="{% url 'add_real_account' %}">添加？</a></caption>
 {% endif %}
     </table>
+    {% if qx >= 2 %}
+        <br/><hr width="800"/>
+    <a href="{% url 'user_info_public_show' %}" style="color:blue;" title="内部用户权限及以上的用户都可查看的公工信息！">查看公共信息</a>
+    {% endif %}
 </div>
 <script>
 var xx=0,yy=0;
@@ -74,7 +79,7 @@ function shows(body){
     var div = $("#detailed_content_div");
     div.show();
     div.html("&nbsp;&nbsp;"+body);
-    div.css({'left':xx-600,'top':yy,'height':body.length*1+20});
+    div.css({'left':xx-600,'top':yy,'height':body.length*1+60});
 }
 function hides(){
     $("#detailed_content_div").hide();

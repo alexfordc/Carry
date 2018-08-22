@@ -28,7 +28,7 @@
                         <div class="form-row field-date">
                             <div>
                                 <label class="required" for="id_date">所属工作日期:</label>
-                                <input type="date" name="date" class="vDateField" size="10" value="{{work.0}}" required id="id_date" readonly/>
+                                <input type="date" name="date" class="vDateField" size="10" value="{{work.0}}" required id="id_date" />
                             </div>
                         </div>
                         <div class="form-row field-title">
@@ -41,7 +41,7 @@
                         <div class="form-row field-body">
                             <div>
                                 <label class="required" for="id_body">详细内容:</label>
-                                <textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="300" required id="id_body">{{work.2}}</textarea>
+                                <textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="300" required id="id_body">{{work.2|safe}}</textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -127,6 +127,36 @@
 </fieldset>
 <div class="submit-row">
 <input type="submit" value="保存" class="default" name="_save" />
+<input type="submit" value="保存并增加另一个" name="_addanother" />
+<input type="submit" value="保存并继续编辑" name="_continue" />
+</div>
+</div>
+</form>
+            {% elif update_info_public %}
+            <form enctype="multipart/form-data" action="" method="POST" id="infopublic_form">
+               {% csrf_token %}
+                <input type="hidden" name="id" value="{{id}}">
+<div>
+  <fieldset class="module aligned ">
+        <div class="form-row field-title">
+                <div>
+                        <label class="required" for="id_title">标题:</label>
+                            <input type="text" name="title" value="{{infopublic}}" class="vTextField" maxlength="50" required id="id_title" />
+                </div>
+
+        </div>
+        <!--<div class="form-row field-body">-->
+                <!--<div>-->
+                        <!--<label class="required" for="id_body">详细内容:</label>-->
+
+                            <!--<textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="600" required id="id_body">{{infopublic.1|safe}}</textarea>-->
+                <!--</div>-->
+
+        <!--</div>-->
+</fieldset>
+<div class="submit-row">
+<input type="submit" value="保存" class="default" name="_save" />
+    <p class="deletelink-box"><a style="height:20px;" onclick="return confirm('确定要删除吗？')" href="{% url 'user_info_public_delete' %}?id={{id}}" class="deletelink">删除</a></p>
 <input type="submit" value="保存并增加另一个" name="_addanother" />
 <input type="submit" value="保存并继续编辑" name="_continue" />
 </div>

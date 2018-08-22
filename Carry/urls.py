@@ -34,6 +34,13 @@ urlpatterns = [
     url(r'^work/log/delete/$', views.del_work_log, name='del_work_log'),
     url(r'^simulation/account/delete/$', views.del_simulation_account, name='del_simulation_account'),
     url(r'^simulation/account/offon/$', views.offon_simulation_account, name='offon_simulation_account'),
+    url(r'^user/info/public/add/$', views.user_info_public, name='user_info_public'),
+    url(r'^user/info/public/show/$', views.user_info_public_show, name='user_info_public_show'),
+    url(r'^user/info/public/update/$', views.user_info_public_update, name='user_info_public_update'),
+    url(r'^user/info/public/delete/$', views.user_info_public_delete, name='user_info_public_delete'),
+    url(r'^user/info/public/reply/$', views.user_info_public_reply, name='user_info_public_reply'),
+    url(r'^user/info/public/replyDel/$', views.user_info_public_replyDel, name='user_info_public_replyDel'),
+    url(r'^real/account/del/$', views.del_real_account, name='del_real_account'),
 
     url(r'^stockData/$',views.stockData,name='stockData'),
     url(r'^stockDatas/$',views.stockDatas,name='stockDatas'),

@@ -98,7 +98,7 @@ def getLogin(ses, uid=False):
             name, qx, id = ses['users']['name'], ses['users']['jurisdiction'], ses['users']['id']
             response = name, qx, id
     else:
-        response = (None, None, None) if uid else (None, None)
+        response = (None, 0, None) if uid else (None, 0)
     return response
 
 
@@ -303,7 +303,7 @@ def user_information(rq):
         account = models.SimulationAccount.objects.filter(belonged=user)
         return render(rq, 'user_information.html',
                       {"user_name": user_name, "work": work, "real_account": real_account, 'account': account,
-                       'allPage': allPage, 'curPage': curPage})
+                       'allPage': allPage, 'curPage': curPage, 'qx': qx})
     elif user_name and qx == 3 and rq.method == 'GET':
         users = models.Users.objects.all()
         users = {i.id: i.name for i in users}
@@ -314,7 +314,7 @@ def user_information(rq):
         account = models.SimulationAccount.objects.all()
         return render(rq, 'user_information.html',
                       {"user_name": user_name, "work": work, "real_account": real_account, 'account': account,
-                       'allPage': allPage, 'curPage': curPage})
+                       'allPage': allPage, 'curPage': curPage, 'qx': qx})
 
     return index(rq, logins=False)
 
@@ -332,7 +332,7 @@ def add_work_log(rq):
         title = rq.POST['title']
         body = rq.POST['body']
         user = models.Users.objects.get(name=user_name)
-        body = body.replace('\r\n', '<br/>')
+        body = body.replace('\r\n', '<br>')
         if '_save' in rq.POST:  # 保存
             models.WorkLog.objects.create(belonged=user, date=date, title=title, body=body).save()
             return redirect('user_information')
@@ -367,6 +367,7 @@ def update_work_log(rq):
         date = rq.POST['date'].strip()
         title = rq.POST['title']
         body = rq.POST['body']
+        body = body.replace('\r\n', '<br>')
         if date and title and body:
             date = date.replace('/', '-')
             models.WorkLog.objects.filter(id=id, belonged=uid).update(date=date, title=title, body=body)
@@ -470,6 +471,138 @@ def add_real_account(rq):
                       {"user_name": user_name, "add_real_account": True, "operation": "真实账户"})
     return redirect('/')
 
+def del_real_account(rq):
+    """ 删除真实账户 """
+    user_name, qx, uid = LogIn(rq,uid=True)
+    if user_name and rq.method == 'GET':
+        tid = rq.GET.get('id')
+        models.TradingAccount.objects.filter(belonged_id=uid,id=tid).delete()
+    return redirect('user_information')
+
+def user_info_public_show(rq):
+    """ 显示公共信息 """
+    user_name, qx = LogIn(rq)
+    if qx >= 2 and rq.method == 'GET':
+        users = models.Users.objects.all()
+        users = {i.id: i.name for i in users}
+        infopublic, allPage, curPage = viewUtil.user_work_log(rq, models.InfoPublic)
+        infobody = models.InfoBody.objects.all()
+        infopublic = [[i.title,str(i.startDate)[:10],i.id,[[users[j.belonged_id],j.body,str(j.startDate+datetime.timedelta(hours=8))[:16],j.id] for j in infobody if j.belongedTitle_id == i.id]] for i in infopublic]
+        return render(rq, 'user_info_public.html',
+                      {"user_name": user_name, "infopublic": infopublic,
+                       'allPage': allPage, 'curPage': curPage, 'qx': qx})
+
+    return index(rq, logins=False)
+
+def user_info_public(rq):
+    """ 公共信息 """
+    user_name, qx = LogIn(rq)
+    if qx >= 2 and rq.method == 'GET':
+        return render(rq, 'user_add_data.html',{"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
+    elif qx >= 2 and rq.method == 'POST':
+        title = rq.POST['title']
+        body = rq.POST['body']
+        user = models.Users.objects.get(name=user_name)
+        body = body.replace('\r\n', '<br>')
+        if '_save' in rq.POST:  # 保存
+            infopublic_save = models.InfoPublic.objects.create(belonged=user, title=title)
+            infopublic_save.save()
+            models.InfoBody.objects.create(belonged=user,belongedTitle_id=infopublic_save.id,body=body).save()
+            return redirect('user_info_public_show')
+        elif '_addanother' in rq.POST:  # 保存并增加另一个
+            infopublic_save = models.InfoPublic.objects.create(belonged=user, title=title)
+            infopublic_save.save()
+            models.InfoBody.objects.create(belonged=user, belongedTitle_id=infopublic_save.id, body=body).save()
+        elif '_continue' in rq.POST:  # 保存并继续编辑
+            id = models.InfoPublic.objects.order_by('id').last()
+            id = id.id + 1 if id else 1
+            infopublic_save = models.InfoPublic.objects.create(id=id, belonged=user, title=title)
+            infopublic_save.save()
+            models.InfoBody.objects.create(belonged=user, belongedTitle_id=infopublic_save.id, body=body).save()
+            infopublic = [title, body]
+            return render(rq, 'user_update_data.html',
+                          {"user_name": user_name, "infopublic": infopublic, "id": id, "add_info_public": True,
+                           "operation": "公共信息"})
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
+    return redirect('/')
+
+def user_info_public_reply(rq):
+    """ 添加公共消息回复 """
+    user_name, qx, uid = LogIn(rq,uid=True)
+    if qx >= 2 and rq.method == 'GET':
+        info_id = rq.GET.get('id')
+        if info_id:
+            return render(rq, 'user_add_data.html',{"user_name": user_name, "add_info_body": True, "operation": "回复",'id':info_id})
+    elif qx >= 2 and rq.method == 'POST':
+        id = rq.POST.get('id')
+        body = rq.POST.get('body')
+        if id and body:
+            infobody = models.InfoBody.objects.create(belonged_id=uid,belongedTitle_id=id,body=body)
+            infobody.save()
+
+        return redirect('user_info_public_show')
+    return redirect('/')
+
+def user_info_public_replyDel(rq):
+    """ 删除公共消息 回复 """
+    user_name, qx, uid = LogIn(rq, uid=True)
+    if user_name and rq.method == 'GET':
+        id = rq.GET.get('id')
+        if qx >= 2:
+            models.InfoBody.objects.filter(id=id).delete()
+        return redirect('user_info_public_show')
+    return redirect('/')
+
+def user_info_public_update(rq):
+    """ 修改公共消息 """
+    # update_info_public
+    user_name, qx, uid = LogIn(rq, uid=True)
+    if qx >= 2 and rq.method == 'GET':
+        id = rq.GET.get('id')
+        infopublic = models.InfoPublic.objects.filter(id=id, belonged=uid)
+        if infopublic:
+            infopublic = [w.title for w in infopublic][0]
+            return render(rq, 'user_update_data.html',
+                          {"user_name": user_name, "infopublic": infopublic, "id": id, "update_info_public": True,
+                           "operation": "公共信息"})
+    elif qx >= 2 and rq.method == 'POST':
+        msg = ""
+        id = rq.POST['id']
+        title = rq.POST['title']
+        # body = rq.POST['body']
+        # body = body.replace('\r\n','<br>')
+        infoupdate = models.InfoPublic.objects.filter(id=id, belonged=uid)
+        if title and infoupdate:
+            infoupdate.update(title=title)
+            msg += "修改成功！"
+        else:
+            msg += "修改失败！"
+        if '_save' in rq.POST:  # 保存
+            return redirect('user_info_public_show')
+        elif '_addanother' in rq.POST:  # 保存并增加另一个
+            return redirect('user_info_public')
+        elif '_continue' in rq.POST:  # 保存并继续编辑
+            infopublic = title
+            return render(rq, 'user_update_data.html',
+                          {"user_name": user_name, "infopublic": infopublic, "id": id, "update_info_public": True,
+                           "operation": "公共信息", "msg": msg})
+
+    return redirect('user_info_public_show')
+
+def user_info_public_delete(rq):
+    """ 删除公共消息 """
+    user_name, qx, uid = LogIn(rq, uid=True)
+    if user_name and rq.method == 'GET':
+        id = rq.GET.get('id')
+        if qx == 3:
+            # MonthScheme.objects.extra(where=['id IN ('+ idstring +')']).delete()
+            models.InfoBody.objects.filter(belongedTitle_id=id).delete()
+            models.InfoPublic.objects.filter(id=id).delete()
+        else:
+            models.InfoBody.objects.filter(belonged_id=uid, belongedTitle_id=id).delete()
+            models.InfoPublic.objects.filter(id=id, belonged=uid).delete()
+        return redirect('user_info_public_show')
+    return redirect('/')
 
 def register(rq):
     """ 用户注册 """

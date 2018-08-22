@@ -142,6 +142,57 @@
 </div>
 </div>
 </form>
+
+{% elif add_info_public %}
+<form enctype="multipart/form-data" action="{% url 'user_info_public' %}" method="post" id="infopublic_form">
+    {% csrf_token %}
+<div>
+  <fieldset class="module aligned ">
+
+        <div class="form-row field-title">
+                <div>
+                        <label class="required" for="id_title">标题:</label>
+                            <input type="text" name="title" class="vTextField" maxlength="50" value="{{infopublic.0}}" required id="id_title" />
+                </div>
+        </div>
+        <div class="form-row field-body">
+                <div>
+                        <label class="required" for="id_body">详细内容:</label>
+                            <textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="600" required id="id_body">{{infopublic.1}}
+</textarea>
+                </div>
+        </div>
+</fieldset>
+<div class="submit-row">
+<input type="submit" value="保存" class="default" name="_save" />
+<input type="submit" value="保存并增加另一个" name="_addanother" />
+<!--<input type="submit" value="保存并继续编辑" name="_continue" />-->
+</div>
+</div>
+</form>
+            {% elif add_info_body %}
+            <form enctype="multipart/form-data" action="" method="post" id="infobody_form">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{id}}">
+<div>
+
+  <fieldset class="module aligned ">
+        <div class="form-row field-body">
+                <div>
+                        <label class="required" for="id_body">内容:</label>
+                            <textarea name="body" cols="40" rows="10" class="vLargeTextField" maxlength="600" required id="id_body">
+</textarea>
+                </div>
+        </div>
+</fieldset>
+<div class="submit-row">
+<input type="submit" value="保存" class="default" name="_save" />
+
+<!--<input type="submit" value="保存并增加另一个" name="_addanother" />-->
+<!--<input type="submit" value="保存并继续编辑" name="_continue" />-->
+</div>
+</div>
+</form>
 {% endif %}
 
 </div>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Clj, Users, WorkLog, TradingAccount, SimulationAccount
+from .models import Clj, Users, WorkLog, TradingAccount, SimulationAccount, InfoPublic, InfoBody
 
 
 # Register your models here.
@@ -17,15 +17,25 @@ class WorkLogAdmin(admin.ModelAdmin):
 
 
 class TradingAccountAdmin(admin.ModelAdmin):
-    list_display = ('belonged', 'host','enabled')
+    list_display = ('belonged', 'host', 'enabled')
 
 
 class SimulationAccountAdmin(admin.ModelAdmin):
     list_display = ('belonged', 'host', 'enabled')
 
 
+class InfoPublicAdmin(admin.ModelAdmin):
+    list_display = ('belonged', 'startDate', 'title')
+
+
+class InfoBodyAdmin(admin.ModelAdmin):
+    list_display = ('belonged', 'belongedTitle', 'startDate', 'body')
+
+
 admin.site.register(Clj, CljAdmin)
 admin.site.register(Users, UsersAdmin)
 admin.site.register(WorkLog, WorkLogAdmin)
-admin.site.register(TradingAccount,TradingAccountAdmin)
-admin.site.register(SimulationAccount,SimulationAccountAdmin)
+admin.site.register(TradingAccount, TradingAccountAdmin)
+admin.site.register(SimulationAccount, SimulationAccountAdmin)
+admin.site.register(InfoPublic, InfoPublicAdmin)
+admin.site.register(InfoBody, InfoBodyAdmin)

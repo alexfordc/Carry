@@ -145,7 +145,7 @@ def get_config(root, son):
 
 
 class SqlPool:
-    """ 单例模式，数据库连接池 """
+    """ MySQL 数据库连接池，单例模式（继承需慎重） """
     _singleton = None
     _conn = {}  # 连接池字典
     _js = {}  # 连接数量字典
@@ -226,6 +226,7 @@ def runSqlData(db, sql, params=None):
 
 
 class MongoDBData:
+    """ MongoDB 数据库的连接与数据查询处理类，单例模式（继承需慎重）"""
     _singleton = None
     _coll = None
 
@@ -682,6 +683,8 @@ def calculate_earn(dates, end_date):
 
 
 class Limit_up:
+    """ 股票涨停板的处理类 """
+    __slots__ = ('cdate', 'this_up', 'chineseName', 'codes')
     def __init__(self):
         '''初始化，从数据库更新所有股票代码'''
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
@@ -1148,6 +1151,9 @@ class Zbjs(ZB):
 
 
 class RedisHelper:
+    """ Redis 数据库连接与发布消息 """
+    __slots__ = ('__conn', 'chan_pub', 'is_run')
+
     def __init__(self):
         self.__conn = redis.Redis(host='localhost')
         self.chan_pub = 'test'
@@ -1511,6 +1517,8 @@ def huice_day(res, init_money, real=False):
 
 
 class GXJY:
+    __slots__ = ('code_name2', 'code_name', 'bs', 'code_bs')
+
     def __init__(self):
         self.code_name2 = {'bu1706': '石油沥青', 'rb1705': '螺纹钢', 'ru1705': '橡胶', 'j1705': '冶金焦炭',
                            'ru1709': '橡胶', 'j1709': '冶金焦炭', 'al1711': '铝', 'rb1801': '螺纹钢',
@@ -1787,6 +1795,8 @@ class GXJY:
 
 
 class Cfmmc:
+    __slots__ = ('host', 'start_date', 'end_date', 'sql')
+
     def __init__(self, host, start_date, end_date):
         self.host = host
         self.start_date = start_date

@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% block title %}公共信息{% endblock %}
+{% block script %}
+
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+<div style="color:green;">{{ msg }}</div>
+<div align="center">
+    <h2>公共消息</h2><span><a href="{% url 'user_info_public' %}">添加</a></span>
+    <table border="0" style="width:1200px;word-break:keep-all;">
+{% if infopublic %}
+        <!--<tr><th width="80">用户名</th><th width="160">修改日期</th><th>标题</th><th>内容</th></tr>-->
+{% for w in infopublic %}
+        <tr class="row1">
+            <th style="font-size:14px;"><a href="{% url 'user_info_public_update' %}?id={{w.2}}" ><strong style="font-size:18px;color:green;">{{ w.0 }}</strong></a>&nbsp;&nbsp;
+            {{ w.1 }}</th></tr>
+            <tr><td style="font-family:宋体;">
+                {% for j in w.3 %}
+                <p><span style={% if j.0 == user_name %}"color:violet;"{% else %}"color:blue;"{% endif %}>{{j.0}}：</span><br>{{j.1|safe}}&nbsp;&nbsp;<span style="font-size:10px;">{{j.2}}</span>
+                {% if j.0 == user_name %}
+                        <a href="{% url 'user_info_public_replyDel' %}?id={{j.3}}" onclick="return confirm('确定要删除吗？')" style="font-size:12px;">删除</a>
+                    {% endif %}
+                </p>
+                {% endfor %}
+            </td>
+    <!--<tr><td>{{ w.0 }}</td><td>{{ w.1 }}（周{{ w.2}}）</td><td>{{ w.3 }}</td><td class="bodys">{{ w.4 }}</td>-->
+        <!--<td><a href="{% url 'update_work_log' %}?id={{w.5}}" title="修改"><img src="{% static 'images/b10.ico' %}" width="20" style="margin-left:20px;margin-top:8px;margin-bottom:5px;" ></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+            <!--&lt;!&ndash;<a onclick="confirm('确定要删除吗？')?location.href='{% url 'del_work_log' %}?id={{w.5}}':''" href="javascript:;" title="删除">删除</a> &ndash;&gt;-->
+        <!--<a onclick="return confirm('确定要删除吗？')" href="{% url 'del_work_log' %}?id={{w.5}}" title="删除"><img src="{% static 'images/b16.ico' %}" width="20" style="margin-top:8px;margin-bottom:5px;"></a> </td>-->
+            </tr><tr><td><p><a href="{% url 'user_info_public_reply' %}?id={{w.2}}" style="font-size:14px;">回复</a></p></td></tr>
+{% endfor %}
+{% else %}
+        <caption style="color:green;">暂无数据！<a href="{% url 'user_info_public' %}">添加？</a></caption>
+{% endif %}
+    </table>
+    {% if allPage > 1 %}
+    <tr style="margin-left:30px;">
+            <td>{% ifnotequal curPage 1 %} <!--如果不是第一页-->
+    <a href="javascript:request_page('pageUp')">上一页</a>
+        {% else %}上一页{% endifnotequal %} <!--否则不能点击--></td>&nbsp;&nbsp;
+    <td>第<input type="text" value="{{ curPage }}" id="curPage" style="width:40px;">页，共{{ allPage }}页</td>&nbsp;&nbsp;
+        {% ifnotequal curPage allPage %} <!--如果不是最后一页-->
+    <td><a href="javascript:request_page('pageDown')">下一页</a>
+        {% else %}下一页{% endifnotequal %}</td>
+     </tr>
+    {% endif %}
+
+</div>
+<script>
+
+function request_page(pageType){
+    $("#detailed_content_div").hide();
+    var curPage = $("#curPage").val();
+    location.href = "?curPage="+curPage+"&allPage={{ allPage }}&pageType="+pageType;
+}
+
+</script>
+{% endblock %}
