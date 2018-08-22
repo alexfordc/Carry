@@ -235,7 +235,8 @@ def tongji_adus(rq):
         messages = '验证码错误！'
     return messages
 
-def get_cfmmc_id_host(_id='Nones',select=False):
+
+def get_cfmmc_id_host(_id='Nones', select=False):
     """ 从Redis获取id_host字典，如果为空或者select为True，则从数据库查询 """
     id_host = read_from_cache('cfmmc_id_host')
     if not id_host or select:
@@ -471,13 +472,15 @@ def add_real_account(rq):
                       {"user_name": user_name, "add_real_account": True, "operation": "真实账户"})
     return redirect('/')
 
+
 def del_real_account(rq):
     """ 删除真实账户 """
-    user_name, qx, uid = LogIn(rq,uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if user_name and rq.method == 'GET':
         tid = rq.GET.get('id')
-        models.TradingAccount.objects.filter(belonged_id=uid,id=tid).delete()
+        models.TradingAccount.objects.filter(belonged_id=uid, id=tid).delete()
     return redirect('user_information')
+
 
 def user_info_public_show(rq):
     """ 显示公共信息 """
@@ -487,18 +490,21 @@ def user_info_public_show(rq):
         users = {i.id: i.name for i in users}
         infopublic, allPage, curPage = viewUtil.user_work_log(rq, models.InfoPublic)
         infobody = models.InfoBody.objects.all()
-        infopublic = [[i.title,str(i.startDate)[:10],i.id,[[users[j.belonged_id],j.body,str(j.startDate+datetime.timedelta(hours=8))[:16],j.id] for j in infobody if j.belongedTitle_id == i.id]] for i in infopublic]
+        infopublic = [[i.title, str(i.startDate)[:10], i.id,
+                       [[users[j.belonged_id], j.body, str(j.startDate + datetime.timedelta(hours=8))[:16], j.id] for j
+                        in infobody if j.belongedTitle_id == i.id]] for i in infopublic]
         return render(rq, 'user_info_public.html',
                       {"user_name": user_name, "infopublic": infopublic,
                        'allPage': allPage, 'curPage': curPage, 'qx': qx})
 
     return index(rq, logins=False)
 
+
 def user_info_public(rq):
     """ 公共信息 """
     user_name, qx = LogIn(rq)
     if qx >= 2 and rq.method == 'GET':
-        return render(rq, 'user_add_data.html',{"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
     elif qx >= 2 and rq.method == 'POST':
         title = rq.POST['title']
         body = rq.POST['body']
@@ -507,7 +513,7 @@ def user_info_public(rq):
         if '_save' in rq.POST:  # 保存
             infopublic_save = models.InfoPublic.objects.create(belonged=user, title=title)
             infopublic_save.save()
-            models.InfoBody.objects.create(belonged=user,belongedTitle_id=infopublic_save.id,body=body).save()
+            models.InfoBody.objects.create(belonged=user, belongedTitle_id=infopublic_save.id, body=body).save()
             return redirect('user_info_public_show')
         elif '_addanother' in rq.POST:  # 保存并增加另一个
             infopublic_save = models.InfoPublic.objects.create(belonged=user, title=title)
@@ -526,22 +532,25 @@ def user_info_public(rq):
         return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
     return redirect('/')
 
+
 def user_info_public_reply(rq):
     """ 添加公共消息回复 """
-    user_name, qx, uid = LogIn(rq,uid=True)
+    user_name, qx, uid = LogIn(rq, uid=True)
     if qx >= 2 and rq.method == 'GET':
         info_id = rq.GET.get('id')
         if info_id:
-            return render(rq, 'user_add_data.html',{"user_name": user_name, "add_info_body": True, "operation": "回复",'id':info_id})
+            return render(rq, 'user_add_data.html',
+                          {"user_name": user_name, "add_info_body": True, "operation": "回复", 'id': info_id})
     elif qx >= 2 and rq.method == 'POST':
         id = rq.POST.get('id')
         body = rq.POST.get('body')
         if id and body:
-            infobody = models.InfoBody.objects.create(belonged_id=uid,belongedTitle_id=id,body=body)
+            infobody = models.InfoBody.objects.create(belonged_id=uid, belongedTitle_id=id, body=body)
             infobody.save()
 
         return redirect('user_info_public_show')
     return redirect('/')
+
 
 def user_info_public_replyDel(rq):
     """ 删除公共消息 回复 """
@@ -552,6 +561,7 @@ def user_info_public_replyDel(rq):
             models.InfoBody.objects.filter(id=id).delete()
         return redirect('user_info_public_show')
     return redirect('/')
+
 
 def user_info_public_update(rq):
     """ 修改公共消息 """
@@ -589,6 +599,7 @@ def user_info_public_update(rq):
 
     return redirect('user_info_public_show')
 
+
 def user_info_public_delete(rq):
     """ 删除公共消息 """
     user_name, qx, uid = LogIn(rq, uid=True)
@@ -603,6 +614,7 @@ def user_info_public_delete(rq):
             models.InfoPublic.objects.filter(id=id, belonged=uid).delete()
         return redirect('user_info_public_show')
     return redirect('/')
+
 
 def register(rq):
     """ 用户注册 """
@@ -1860,13 +1872,13 @@ def cfmmc_login(rq):
                 trade = []
                 start_date = HSD.get_date(-3)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date,password,createTime)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
             else:  # 若没下载过数据，则下载300天之内的
                 start_date = HSD.get_date(-300)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date,password,createTime)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
 
-            response['host_id'] = get_cfmmc_id_host(userID,True)
+            response['host_id'] = get_cfmmc_id_host(userID, True)
             response['trade'] = trade
             response['start_date'] = start_date
             response['end_date'] = end_date
@@ -1908,7 +1920,8 @@ def cfmmc_data(rq):
         logins = '数据正在下载！如果时间跨度过长，需等待几分钟！'
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     host_id = get_cfmmc_id_host(host)
-    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'host_id':host_id}
+    resp = {'logins': logins, 'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,
+            'host_id': host_id}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -1952,13 +1965,15 @@ def cfmmc_data_page(rq):
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     if not trade:
         # del rq.session['user_cfmmc']
-        return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'nos','logins':'暂无数据！可先登录期货监控中心'})
+        return render(rq, 'cfmmc_data.html',
+                      {'user_name': user_name, 'is_cfmmc_login': 'nos', 'logins': '暂无数据！可先登录期货监控中心'})
     codes = set(i[0] for i in trade)  # 合约代码
     code_name = viewUtil.cfmmc_code_name(codes)
     host_id = get_cfmmc_id_host(host)
     if rq_code_name and rq_code_name != '1':
         trade = [i for i in trade if rq_code_name in i[0]]
-    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,'code_name':code_name,'host_id':host_id}
+    resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,
+            'code_name': code_name, 'host_id': host_id}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -1970,9 +1985,9 @@ def cfmmc_data_local(rq):
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
     for i in trades:
-        name = id_host.get(i[12]+'_name')
-        name = name[0]+'*'*(len(name)-1) if name else None
-        trade.append(i+(id_host.get(i[12],i[12]),name))
+        name = id_host.get(i[12] + '_name')
+        name = name[0] + '*' * (len(name) - 1) if name else None
+        trade.append(i + (id_host.get(i[12], i[12]), name))
     # trade = [i+(id_host.get(i[12],i[12]),id_host.get(i[12]+'_name')) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
 
@@ -2010,24 +2025,26 @@ def cfmmc_bs(rq):
             return redirect('/')
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
         bs = cfmmc.get_bs(code)
-        #code = re.sub('\d','',code)+'L8'
+        # code = re.sub('\d','',code)+'L8'
         start_date = HSD.dtf(start_date)
         end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
-        data = mongo.get_data(code,start_date,end_date)
+        data = mongo.get_data(code, start_date, end_date)
         buy = []
         sell = []
         for i in data:
             if i[0] in bs:
                 I = i[0]
-                (buy.append(bs[I][0]),sell.append('')) if bs[I][1]>0 else (buy.append(''),sell.append(bs[I][0]))
+                (buy.append(bs[I][0]), sell.append('')) if bs[I][1] > 0 else (buy.append(''), sell.append(bs[I][0]))
             else:
                 buy.append('')
                 sell.append('')
-        code_name = HSD.FUTURE_NAME.get(re.sub('\d','',code))
-        return render(rq,'cfmmc_kline.html',{'user_name':user_name,'data':data,'buy':buy,'sell':sell,'code_name':code_name})
+        code_name = HSD.FUTURE_NAME.get(re.sub('\d', '', code))
+        return render(rq, 'cfmmc_kline.html',
+                      {'user_name': user_name, 'data': data, 'buy': buy, 'sell': sell, 'code_name': code_name})
 
     return redirect('/')
+
 
 def cfmmc_hc(rq):
     """ 期货回测，数据，图 """
@@ -2036,7 +2053,7 @@ def cfmmc_hc(rq):
     host = get_cfmmc_id_host(host)
     rq_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
-    results2 = HSD.cfmmc_get_result(host,rq_date,end_date)
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
     # rq_date = results2[0][2][:10]
     # end_date = results2[-1][4][:10]
 
@@ -2076,12 +2093,11 @@ def cfmmc_hc(rq):
     res, huizong = viewUtil.tongji_huice(res, huizong)
 
     hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
-    hc_name = get_cfmmc_id_host(host+'_name')
-    hc_name = hc_name[0]+'*'*(len(hc_name)-1)
+    hc_name = get_cfmmc_id_host(host + '_name')
+    hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
     return render(rq, 'cfmmc_hc.html',
                   {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
                    'hc_name': hc_name})
-
 
 
 def cfmmc_huice(rq):
@@ -2153,7 +2169,7 @@ def cfmmc_huice(rq):
         if rj != init_money:
             # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
             init_money = rj
-            hc['eae'].append(init_money-(hc['alleae'][-1] if hc['alleae'] else 0))
+            hc['eae'].append(init_money - (hc['alleae'][-1] if hc['alleae'] else 0))
         else:
             hc['eae'].append('')
         amount = init_money + yk - hc['allsxf'][-1]

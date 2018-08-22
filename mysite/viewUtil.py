@@ -134,6 +134,7 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
 
 class Cfmmc:
     """ 期货监控系统，登录，下载数据，保存数据 """
+
     def __init__(self):
         self.session = requests.session()
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
@@ -212,7 +213,7 @@ class Cfmmc:
             # print('成功登出')
             return True
 
-    def read_name(self,ret_content):
+    def read_name(self, ret_content):
         """ 获取 xls 表里面的名字 """
         # newwb = xlrd.open_workbook(ret_content)
         # table = newwb.sheets()[0]  # 第一张表
@@ -339,7 +340,7 @@ class Cfmmc:
                 print(f'{tradeDate}的{byType}数据下载失败\n{e}')
 
     @asyncs
-    def down_day_data_sql(self, host, start_date, end_date,password=None,createTime=None):
+    def down_day_data_sql(self, host, start_date, end_date, password=None, createTime=None):
         """ 下载啄日数据并保存到SQL """
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
@@ -348,7 +349,7 @@ class Cfmmc:
         if password and createTime:
             try:
                 sql = f"SELECT name FROM cfmmc_user WHERE host='{host}'"
-                name = HSD.runSqlData('carry_investment',sql)
+                name = HSD.runSqlData('carry_investment', sql)
                 name = name[0][0]
             except:
                 name = None
@@ -411,7 +412,7 @@ def cfmmc_id_hostName():
     for i in hosts:
         id_host[str(i[0])] = i[1]
         id_host[i[1]] = i[0]
-        id_host[i[1]+'_name'] = i[2]
+        id_host[i[1] + '_name'] = i[2]
     return id_host
 
 
