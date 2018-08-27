@@ -14185,3 +14185,277 @@ Traceback (most recent call last):
     del self._session[key]
 KeyError: 'cfmmc_status'
 base.py[2018-08-27 10:32:32][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-08-27 11:37:08][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:37:30][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:38:56][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:39:32][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:39:45][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:41:00][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:41:38][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:41:47][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:41:56][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:42:10][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:42:30][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:42:37][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:42:41][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:44:55][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:45:08][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:47:05][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:50:12][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:50:48][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:51:29][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:52:38][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:53:56][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:57:34][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:58:05][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:58:22][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:58:29][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:58:41][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:58:48][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:59:18][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:59:34][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 11:59:56][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:00:20][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:00:52][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:06:19][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:07:54][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:08:18][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:09:20][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:09:50][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:10:45][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:12:38][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:13:34][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:13:58][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+HSD.py[2018-08-27 12:14:27][ERROR]：文件 HSD.py 第1356行报错：min() arg is an empty sequence
+base.py[2018-08-27 13:11:29][WARNING]：Not Found: /favicon.ico
+exception.py[2018-08-27 15:47:06][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2082, in cfmmc_bs
+    open_buy.append(round(_ob,2))
+TypeError: type str doesn't define __round__ method
+exception.py[2018-08-27 15:49:22][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2083, in cfmmc_bs
+    open_buy.append(rounds(_ob,2))
+TypeError: <lambda>() takes 1 positional argument but 2 were given
+exception.py[2018-08-27 15:49:48][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2083, in cfmmc_bs
+    open_buy.append(rounds(_ob,2))
+TypeError: <lambda>() takes 1 positional argument but 2 were given
+exception.py[2018-08-27 17:29:29][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2062, in cfmmc_bs
+    bs = cfmmc.get_bs(code,ttype)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1881, in get_bs
+    t5 = t5 - datetime.timedelta(minutes=d.minute % 5)
+AttributeError: 'tuple' object has no attribute 'minute'
+exception.py[2018-08-27 17:49:41][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.index.apply(lambda x: datetime.datetime.strftime(x, '%Y-%m-%d %H:%M:%S'))
+AttributeError: 'DatetimeIndex' object has no attribute 'apply'
+exception.py[2018-08-27 17:50:03][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.format(lambda x: datetime.datetime.strftime(x, '%Y-%m-%d %H:%M:%S'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\generic.py", line 3081, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'format'
+exception.py[2018-08-27 17:50:32][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\generic.py", line 3081, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'format'
+exception.py[2018-08-27 17:50:56][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.index.format(lambda x: datetime.datetime.strftime(x, '%Y-%m-%d %H:%M:%S'))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2331, in __setitem__
+    self._set_item(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2397, in _set_item
+    value = self._sanitize_column(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2568, in _sanitize_column
+    value = _sanitize_index(value, self.index, copy=False)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\series.py", line 2879, in _sanitize_index
+    raise ValueError('Length of values does not match length of ' 'index')
+ValueError: Length of values does not match length of index
+exception.py[2018-08-27 17:51:23][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2331, in __setitem__
+    self._set_item(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2397, in _set_item
+    value = self._sanitize_column(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2568, in _sanitize_column
+    value = _sanitize_index(value, self.index, copy=False)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\series.py", line 2879, in _sanitize_index
+    raise ValueError('Length of values does not match length of ' 'index')
+ValueError: Length of values does not match length of index
+exception.py[2018-08-27 17:51:24][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2331, in __setitem__
+    self._set_item(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2397, in _set_item
+    value = self._sanitize_column(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2568, in _sanitize_column
+    value = _sanitize_index(value, self.index, copy=False)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\series.py", line 2879, in _sanitize_index
+    raise ValueError('Length of values does not match length of ' 'index')
+ValueError: Length of values does not match length of index
+exception.py[2018-08-27 17:52:18][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data['datetime'] = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2331, in __setitem__
+    self._set_item(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2397, in _set_item
+    value = self._sanitize_column(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2568, in _sanitize_column
+    value = _sanitize_index(value, self.index, copy=False)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\series.py", line 2879, in _sanitize_index
+    raise ValueError('Length of values does not match length of ' 'index')
+ValueError: Length of values does not match length of index
+exception.py[2018-08-27 17:52:32][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2073, in cfmmc_bs
+    data.datetime = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\generic.py", line 3110, in __setattr__
+    self[name] = value
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2331, in __setitem__
+    self._set_item(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2397, in _set_item
+    value = self._sanitize_column(key, value)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\frame.py", line 2568, in _sanitize_column
+    value = _sanitize_index(value, self.index, copy=False)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\series.py", line 2879, in _sanitize_index
+    raise ValueError('Length of values does not match length of ' 'index')
+ValueError: Length of values does not match length of index
+exception.py[2018-08-27 17:53:26][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2072, in cfmmc_bs
+    data = data.resample('5T', closed='left', label='left').apply(ohlc_dict)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\resample.py", line 316, in aggregate
+    result, how = self._aggregate(arg, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\base.py", line 573, in _aggregate
+    result = _agg(arg, _agg_1dim)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\base.py", line 524, in _agg
+    result[fname] = func(fname, agg_how)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\base.py", line 507, in _agg_1dim
+    return colg.aggregate(how, _level=(_level or 0) + 1)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\groupby.py", line 2869, in aggregate
+    return getattr(self, func_or_funcs)(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\groupby.py", line 548, in __getattr__
+    return self._make_wrapper(attr)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\groupby.py", line 562, in _make_wrapper
+    raise AttributeError(msg)
+AttributeError: Cannot access attribute 'index' of 'SeriesGroupBy' objects, try using the 'apply' method

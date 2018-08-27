@@ -13,6 +13,7 @@ import zmq
 import socket
 import base64
 import re
+import math
 
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -2046,29 +2047,78 @@ def cfmmc_bs(rq):
             code = rq.GET.get('code')
         start_date = rq.GET.get('start_date')
         end_date = rq.GET.get('end_date')
+        ttype = rq.GET.get('ttype')
         host = rq.GET.get('host')
         host = get_cfmmc_id_host(host)
         if not code or not start_date or not end_date or not host:
             return redirect('/')
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
-        bs = cfmmc.get_bs(code)
-        # code = re.sub('\d','',code)+'L8'
         start_date = HSD.dtf(start_date)
         end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
         data = mongo.get_data(code, start_date, end_date)
-        buy = []
-        sell = []
-        for i in data:
-            if i[0] in bs:
-                I = i[0]
-                (buy.append(bs[I][0]), sell.append('')) if bs[I][1] > 0 else (buy.append(''), sell.append(bs[I][0]))
-            else:
-                buy.append('')
-                sell.append('')
+        rq_url = rq.META.get('QUERY_STRING')
+        rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else rq_url
         code_name = HSD.FUTURE_NAME.get(re.sub('\d', '', code))
-        return render(rq, 'cfmmc_kline.html',
-                      {'user_name': user_name, 'data': data, 'buy': buy, 'sell': sell, 'code_name': code_name})
+        if ttype == '5M':
+            code_name += '（5分钟）'
+            bs = cfmmc.get_bs(code,ttype)
+            # print(bs)
+            # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
+            ohlc_dict = {
+                'datetime':'first',
+                'open': 'first',
+                'close': 'last',
+                'low': 'min',
+                'high': 'max',
+            }
+            # d=df.resample('5t',how=ohlc_dict,closed='left',label='left')
+            data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+            data = data.resample('5T', closed='left', label='left').apply(ohlc_dict)
+            # data.datetime = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
+            data = data.dropna()
+        else:
+            code_name += '（1分钟）'
+            bs = cfmmc.get_bs(code)
+            # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
+
+        open_buy = []   # 开多仓
+        flat_buy = []   # 平多仓
+        open_sell = []  # 开空仓
+        flat_sell = []  # 平空仓
+        VOL = 1000      # 手数的最大值
+        rounds = lambda x: (round(x,round(math.log(VOL,10))) if x else x)
+        # print(data[:31])
+        for i in data.values:
+            # i：['2018-08-14 21:01:00', 6972.0, 6978.0, 6966.0, 6986.0]
+            if i[0] in bs:
+                _ob,_fb,_os,_fs = '','','',''
+                for b in bs[i[0]]:
+                    if b[2] == '开':
+                        if b[1] > 0:
+                            _ob = (int(b[0])+abs(b[1])/VOL) if not _ob else _ob+abs(b[1])/VOL
+                        else:
+                            _os = (int(b[0])+abs(b[1])/VOL) if not _os else _os+abs(b[1])/VOL
+                        # (open_buy.append(int(bs[I][0])+abs(bs[I][1])/100), open_sell.append('')) if bs[I][1] > 0 else (open_buy.append(''), open_sell.append(int(bs[I][0])+abs(bs[I][1])/100))
+                    else:
+                        if b[1] < 0:
+                            _fb = (int(b[0])+abs(b[1])/VOL) if not _fb else _fb+abs(b[1])/VOL
+                        else:
+                            _fs = (int(b[0])+abs(b[1])/VOL) if not _fs else _fs+abs(b[1])/VOL
+                        # (flat_buy.append(int(bs[I][0])+abs(bs[I][1])/100), flat_sell.append('')) if bs[I][1] < 0 else (flat_buy.append(''), flat_sell.append(int(bs[I][0])+abs(bs[I][1])/100))
+                open_buy.append(rounds(_ob))
+                flat_buy.append(rounds(_fb))
+                open_sell.append(rounds(_os))
+                flat_sell.append(rounds(_fs))
+            else:
+                open_buy.append('')
+                flat_buy.append('')
+                open_sell.append('')
+                flat_sell.append('')
+        data2=[list(i) for i in data.values]
+
+        return render(rq, 'cfmmc_kline.html',{'user_name': user_name, 'data': data2, 'open_buy': open_buy,
+                                              'flat_buy':flat_buy,'open_sell': open_sell, 'flat_sell':flat_sell, 'rq_url': rq_url, 'code_name': code_name})
 
     return redirect('/')
 

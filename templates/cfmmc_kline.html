@@ -9,8 +9,23 @@
 <div id="messagecontainer">
 
 </div>
+<div align="center">
+    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}">1分钟</a>&nbsp;&nbsp;
+    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=5M">5分钟</a>&nbsp;&nbsp;
+    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=5M"></a>30分钟&nbsp;&nbsp;
+    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=5M"></a>1小时&nbsp;&nbsp;
+    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=5M"></a>1日&nbsp;&nbsp;
+<hr/>
+</div>
 <div style="height:900px">
-<div id="main" style="width: auto;height: 680px;" align="center"></div></div>
+<div id="main" style="width: auto;height: 680px;" align="center"></div>
+    <p style="font-size:10px;">
+        &nbsp;&nbsp;说明：三角形<span style="font-size:20px;">△</span> 为开仓，圆形<span style="font-size:20px;">○</span>为平仓。
+        <span style="color:blue;">蓝色为空单</span> ，<span style="color:purple;">紫色为多单</span>。箭头朝上开多单，<br/>
+    &nbsp;&nbsp;箭头朝下开空单。开/平 仓价后面的小数位为成交量，例如：2400.002，成交量为002，就是2手。
+</p>
+</div>
+
     <script type="text/javascript">
 
 var myChart=echarts.init(document.getElementById('main'));
@@ -252,24 +267,23 @@ var myChart=echarts.init(document.getElementById('main'));
 					normal:{opacity:0.5}
 				}
 			},{
-            name:'卖出',
+            name:'开仓（空）',
             type:'scatter',
             symbol: 'arrow',//'star3',
             symbolSize: 12,
             smooth:true,
             symbolRotate:180,
-
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return 'green';
+                    return 'blue';
                  }
                 }
-            },
+            },// '#FCCE10','#E87C25','#27727B','#9BCA63'
 
-            data: {{ sell|safe }}
+            data: {{ open_sell|safe }}
         },{
-            name:'买入',
+            name:'开仓（多）',
             type:'scatter',
             symbol: 'arrow',//'star3',
             symbolSize: 12,
@@ -279,12 +293,46 @@ var myChart=echarts.init(document.getElementById('main'));
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return 'red';
+                    return 'purple';
                  }
                 }
             },
 
-            data: {{ buy|safe }}
+            data: {{ open_buy|safe }}
+        },{
+            name:'平仓（空）',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'blue';
+                 }
+                }
+            },
+
+            data: {{ flat_sell|safe }}
+        },{
+            name:'平仓（多）',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'purple';
+                 }
+                }
+            },
+
+            data: {{ flat_buy|safe }}
         },
 		]
 	};
