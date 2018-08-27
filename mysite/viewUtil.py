@@ -8,6 +8,7 @@ import time
 import datetime
 import xlrd
 
+from django.core.cache import cache
 from io import BytesIO
 from sqlalchemy import create_engine
 from pyquery import PyQuery as pq
@@ -17,7 +18,8 @@ from mysite import HSD
 
 
 def asyncs(func):
-    """ 执行不需要返回结果的程序 """
+    """ 执行不需要返回结果的程序，每执行一次程序添加一个线程
+    """
 
     def wrapper(*args, **kwargs):
         t = Thread(target=func, args=args, kwargs=kwargs)
@@ -242,15 +244,17 @@ class Cfmmc:
                           data={"org.apache.struts.taglib.html.TOKEN": _t, 'tradeDate': tradeDate, 'byType': byType})
         if len(tradeDate) == 10:
             if tradeDate in self._not_trade_list:
-                raise Exception(f'{tradeDate}为未非交易日')
+                # raise Exception(f'{tradeDate}为未非交易日')
+                return '_fail'
             ret = self.session.post(daily)
         elif len(tradeDate) == 7:
             ret = self.session.post(month)
         else:
-            raise Exception('请输入正确的tradeDate')
-
+            # raise Exception('请输入正确的tradeDate')
+            return '_fail'
         if ret.status_code != 200:
-            raise Exception('请求错误')
+            # raise Exception('请求错误')
+            return '_fail'
         else:
             try:
                 f_name = ret.headers['Content-Disposition'].strip('attachment; filename=')
@@ -338,14 +342,18 @@ class Cfmmc:
                 return name
             except Exception as e:
                 print(f'{tradeDate}的{byType}数据下载失败\n{e}')
+                return '_fail'
 
     @asyncs
-    def down_day_data_sql(self, host, start_date, end_date, password=None, createTime=None):
+    def down_day_data_sql(self, rq, host, start_date, end_date, password=None, createTime=None):
         """ 下载啄日数据并保存到SQL """
+        cache.set('cfmmc_status'+host, 'start')
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
         days = (end_date - start_date).days + 1
         name = None
+        is_success = False
+        is_run = False
         if password and createTime:
             try:
                 sql = f"SELECT name FROM cfmmc_user WHERE host='{host}'"
@@ -361,15 +369,23 @@ class Cfmmc:
                 dates = [str(i[0]) for i in dates]
             except:
                 dates = []
-            for d in range(days):
-                date = start_date + datetime.timedelta(d)
-                date = str(date)[:10]
-                if date not in self._not_trade_list and date not in dates:
-                    name = self.save_settlement(date, byType, name)
-                    if name:
-                        sql = f"INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
-                        HSD.runSqlData('carry_investment', sql, (host, password, '', 1, name, createTime))
-                    time.sleep(0.1)
+            try:
+                for d in range(days):
+                    date = start_date + datetime.timedelta(d)
+                    date = str(date)[:10]
+                    if date not in self._not_trade_list and date not in dates:
+                        name = self.save_settlement(date, byType, name)
+                        is_run = True
+                        if name and name != '_fail':
+                            sql = f"INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
+                            HSD.runSqlData('carry_investment', sql, (host, password, '', 1, name, createTime))
+                            is_success = True
+                        time.sleep(0.1)
+            except:
+                pass
+        s = ('True' if is_success else ('False' if is_run else 'not_run'))
+        cache.set('cfmmc_status' + host, s)
+
 
 
 def cfmmc_dsqd():

@@ -242,7 +242,7 @@ class MongoDBData:
     def get_coll(self):
         client = pymongo.MongoClient('mongodb://192.168.2.226:27017')
         db = client['Future']
-        coll = db['dominant_future_1min']
+        coll = db['future_1min']
         return coll
 
     def data_day(self, code, date):

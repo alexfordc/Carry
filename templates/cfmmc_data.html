@@ -103,5 +103,21 @@ td,th{ border:0px;height:40px; }
         }
     }
 
+
+var download_success = null;
+function cfmmc_isdownload_data(){
+    $.get("{% url 'cfmmc_isdownload_data' %}","",function(res){
+        if(res=='not_login'){
+            clearInterval(download_success);
+        }else if(res!='no'){
+            $("#logins_infos").css('display','').html(res);
+            setTimeout(function(){
+                $("#logins_infos").css('display','none');
+            },6000);
+            clearInterval(download_success);
+        }
+    });
+}
+download_success = setInterval("cfmmc_isdownload_data()",3000)
 </script>
 {% endblock %}

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import djcelery
+# import djcelery
 from mysite.HSD import get_config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,17 +40,25 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djcelery',
+    # 'djcelery',
     'captcha',
     'mysite',
 )
 
+# djcelery.setup_loader()
+# # 末尾添加
+# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'  # 这是使用了django-celery默认的数据库调度模型,任务执行周期都被存在你指定的orm数据库中
 
-djcelery.setup_loader()     #加载djcelery
-BROKER_URL = 'redis://127.0.0.1:6379/0'  #'pyamqp://guest@localhost//'    #配置broker
-BROKER_POOL_LIMIT = 0
-CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'  #配置backend
-CELERY_IMPORTS = ('mysite.tasks',)
+# def setup_loader():  # noqa
+#     os.environ.setdefault(
+#         b'CELERY_LOADER', b'djcelery.loaders.DjangoLoader',
+#     )
+
+# djcelery.setup_loader()     #加载djcelery
+# BROKER_URL = 'redis://127.0.0.1:6379/0'  #'pyamqp://guest@localhost//'    #配置broker
+# BROKER_POOL_LIMIT = 0
+# CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'  #配置backend
+# CELERY_IMPORTS = ('mysite.tasks',)
 
 
 MIDDLEWARE_CLASSES = (

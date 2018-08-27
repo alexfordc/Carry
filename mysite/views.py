@@ -35,7 +35,8 @@ from mysite.HSD import get_ip_name
 from mysite import models
 from mysite import viewUtil
 from mysite import pypass
-# from mysite.tasks import record_from_a,record_from_w
+# from mysite import tasks
+# from mysite.tasks import tasks_record_log,down_day_data_sql
 from mysite.sub_client import sub_ticker, getTickData
 
 # * * * * * * * * * * * * * * * * * * * * * * * *  ^_^ Util function ^_^ * * * * * * * * * * * * * * * * * * * * * * * *
@@ -114,8 +115,10 @@ def record_from(rq):
         address = HSD.get_ip_address(ip)
         IP_NAME[ip] = address
         viewUtil.record_log(files, IP_NAME, 'w')
+        # tasks_record_log.delay(files, IP_NAME, 'w')
     info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
+    # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
 
 
 def LogIn(rq, uid=False):
@@ -248,6 +251,7 @@ def get_cfmmc_id_host(_id='Nones', select=False):
 
 
 # ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
+
 
 def index(rq, logins=''):
     """ 主页面 """
@@ -1609,7 +1613,7 @@ def gxjy(rq):
 
         if types == 'sx':  # 刷新
             try:
-                viewUtil.gxjy_refresh(h, folder1, folder2)
+                viewUtil.gxjy_refresh.delay(h, folder1, folder2)
                 init_data = h.get_gxjy_sql_all()
                 response = render(rq, 'gxjy.html', {'init_data': init_data, 'user_name': user_name})
             except Exception as exc:
@@ -1870,14 +1874,16 @@ def cfmmc_login(rq):
             code_name = viewUtil.cfmmc_code_name(codes)
             if trade:  # 若已经有下载过数据，则下载3天之内的
                 trade = []
-                start_date = HSD.get_date(-3)
+                _start_date = HSD.get_date(-3)
+                start_date = _start_date # if _start_date<end_date else end_date
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
+                cfmmc_login_d.down_day_data_sql(rq, userID, start_date, end_date, password, createTime)
+                response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
             else:  # 若没下载过数据，则下载300天之内的
                 start_date = HSD.get_date(-300)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
-
+                cfmmc_login_d.down_day_data_sql(rq, userID, start_date, end_date, password, createTime)
+                response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
             response['host_id'] = get_cfmmc_id_host(userID, True)
             response['trade'] = trade
             response['start_date'] = start_date
@@ -1897,6 +1903,27 @@ def cfmmc_login(rq):
     return render(rq, 'cfmmc_login.html',
                   {'code': code, 'user_name': user_name, 'success': success, 'host': host, 'password': password})
 
+def cfmmc_isdownload_data(rq):
+    """ ajax 请求，判断是否下载数据成功！"""
+    if rq.is_ajax() and 'user_cfmmc' in rq.session:
+        host = rq.session['user_cfmmc']['userID']
+        res = cache.get('cfmmc_status'+host)
+        if not res:
+            return HttpResponse('not_login')
+
+        if res == 'True':
+            jg = '数据更新成功！'
+        elif res == 'False':
+            jg = '数据更新失败！'
+        elif res == 'not_run':
+            jg = '已经已经更新过！'
+        else:
+            jg='no'
+        cache.delete('cfmmc_status'+host) if jg != 'no' else 0
+        return HttpResponse(jg)
+    return HttpResponse('no')
+
+
 
 def cfmmc_data(rq):
     """ 期货监控系统 下载数据 """
@@ -1909,7 +1936,7 @@ def cfmmc_data(rq):
     try:
         if is_cfmmc_login and start_date and end_date:
             host = rq.session['user_cfmmc']['userID']
-            cfmmc_login_d.down_day_data_sql(host, start_date, end_date)
+            cfmmc_login_d.down_day_data_sql(rq, host, start_date, end_date)
             status = True
         else:
             status = False
