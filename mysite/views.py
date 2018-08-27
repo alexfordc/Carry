@@ -2080,46 +2080,7 @@ def cfmmc_hc(rq):
     host = get_cfmmc_id_host(host)
     rq_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
-    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
-    # rq_date = results2[0][2][:10]
-    # end_date = results2[-1][4][:10]
-
-    # results2[0]：['0060660900202549', 'J1709', '2017-04-11 14:37:30', 1741.5, '2017-06-05 11:02:42', 1412.0, 32950, '空', 1, '已平仓']
-    res = {}
-    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
-               'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
-    for i in results2:
-        if not i[5]:
-            continue
-        dt = i[4][:10]
-        if dt not in res:
-            res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
-        if i[7] == '多':
-            res[dt]['duo'] += 1
-            _ykds = i[5] - i[3]  # 盈亏点数
-        elif i[7] == '空':
-            res[dt]['kong'] += 1
-            _ykds = i[3] - i[5]  # 盈亏点数
-        res[dt]['mony'] += i[6]
-        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
-        res[dt]['datetimes'].append(xx)
-
-        huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
-        huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
-        huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
-        huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
-    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
-                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
-    moneys = HSD.runSqlData('carry_investment', money_sql)
-    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
-    init_money = init_money if init_money and init_money > 10000 else 10000  # 入金
-    hcd = None
-    # if rq_date == end_date:  # 暂时取消一天的，或需要完善
-    #     hcd = HSD.huice_day(res, init_money, real=True)
-
-    res, huizong = viewUtil.tongji_huice(res, huizong)
-
-    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+    hc,hcd,huizong,init_money = viewUtil.cfmmc_hc_data(host,rq_date,end_date)
     hc_name = get_cfmmc_id_host(host + '_name')
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
     return render(rq, 'cfmmc_hc.html',
@@ -2148,7 +2109,10 @@ def cfmmc_huice(rq):
     allje = 0  # init_money  # 总金额
     eae = []  # 出入金
     zx_x, prices = [], []
-    hc = {
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+    hc_name = get_cfmmc_id_host(host + '_name')
+    hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
+    hct = {
         'allyk': [],  # 累积盈亏
         'alljz': [],  # 累积净值
         'allsxf': [],  # 累积手续费
@@ -2190,22 +2154,22 @@ def cfmmc_huice(rq):
                 data2.append(d)
         yk += (prices[-1] if prices else 0)
         prices.append(yk)
-        sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
-        hc['allsxf'].append(round(sxf, 1))
+        sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
+        hct['allsxf'].append(round(sxf, 1))
         rj = base_money + sum(i[1] for i in ee if i[0] <= de[0])
         if rj != init_money:
             # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
             init_money = rj
-            hc['eae'].append(init_money - (hc['alleae'][-1] if hc['alleae'] else 0))
+            hct['eae'].append(init_money - (hct['alleae'][-1] if hct['alleae'] else 0))
         else:
-            hc['eae'].append('')
-        amount = init_money + yk - hc['allsxf'][-1]
-        hc['amount'].append(amount)
-        hc['alleae'].append(init_money)
+            hct['eae'].append('')
+        amount = init_money + yk - hct['allsxf'][-1]
+        hct['amount'].append(amount)
+        hct['alleae'].append(init_money)
         # jz = amount / jzq if jzq != 0 else jz
         jz2 = jzs[de[0]]
-        hc['alljz'].append(round(jz2, 4))
-        hc['qy'].append(_qy[de[0]])
+        hct['alljz'].append(round(jz2, 4))
+        hct['qy'].append(_qy[de[0]])
         data = data2
         data2 = []
 
@@ -2220,16 +2184,17 @@ def cfmmc_huice(rq):
     week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
     month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
     week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
-    hc['allyk'] = prices
-    hc['bar_name'] = [i for i in name_jlr]
-    hc['bar_value'] = [round(v, 1) for v in name_jlr.values()]
+    hct['allyk'] = prices
+    hct['bar_name'] = [i for i in name_jlr]
+    hct['bar_value'] = [round(v, 1) for v in name_jlr.values()]
     week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
-    hc['week_name'] = [i for i in week_jlr]
-    hc['week_value'] = [round(v, 1) for v in week_jlr.values()]
-    hc['month_name'] = [i for i in month_jlr]
-    hc['month_value'] = [round(v, 1) for v in month_jlr.values()]
-    hc['host'] = host
-    resp = {'zx_x': zx_x, 'hc': hc, 'start_date': start_date, 'end_date': end_date, 'user_name': user_name}
+    hct['week_name'] = [i for i in week_jlr]
+    hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
+    hct['month_name'] = [i for i in month_jlr]
+    hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
+    hct['host'] = host
+    resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date,'hc': hc, 'huizong': huizong,
+            'init_money': init_money, 'hcd': hcd, 'user_name': user_name,'hc_name': hc_name}
     return render(rq, 'cfmmc_tu.html', resp)
 
 

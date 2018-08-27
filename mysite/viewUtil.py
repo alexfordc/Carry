@@ -475,3 +475,48 @@ def user_work_log(rq, table, user=None, size=5):
     else:
         work = table.objects.filter(belonged=user)[startGood:endGood]
     return work, allPage, curPage
+
+
+def cfmmc_hc_data(host, rq_date, end_date):
+    """ 期货监控系统 回测数据 """
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+    # rq_date = results2[0][2][:10]
+    # end_date = results2[-1][4][:10]
+
+    # results2[0]：['0060660900202549', 'J1709', '2017-04-11 14:37:30', 1741.5, '2017-06-05 11:02:42', 1412.0, 32950, '空', 1, '已平仓']
+    res = {}
+    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
+               'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
+    for i in results2:
+        if not i[5]:
+            continue
+        dt = i[4][:10]
+        if dt not in res:
+            res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+        if i[7] == '多':
+            res[dt]['duo'] += 1
+            _ykds = i[5] - i[3]  # 盈亏点数
+        elif i[7] == '空':
+            res[dt]['kong'] += 1
+            _ykds = i[3] - i[5]  # 盈亏点数
+        res[dt]['mony'] += i[6]
+        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+        res[dt]['datetimes'].append(xx)
+
+        huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
+        huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
+        huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
+        huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
+    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
+                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    moneys = HSD.runSqlData('carry_investment', money_sql)
+    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
+    init_money = init_money if init_money and init_money > 10000 else 10000  # 入金
+    hcd = None
+    # if rq_date == end_date:  # 暂时取消一天的，或需要完善
+    #     hcd = HSD.huice_day(res, init_money, real=True)
+
+    res, huizong = tongji_huice(res, huizong)
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+
+    return hc,hcd,huizong,init_money
