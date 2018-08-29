@@ -347,7 +347,7 @@ class Cfmmc:
     @asyncs
     def down_day_data_sql(self, rq, host, start_date, end_date, password=None, createTime=None):
         """ 下载啄日数据并保存到SQL """
-        cache.set('cfmmc_status'+host, 'start')
+        cache.set('cfmmc_status' + host, 'start')
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
         days = (end_date - start_date).days + 1
@@ -385,7 +385,6 @@ class Cfmmc:
                 pass
         s = ('True' if is_success else ('False' if is_run else 'not_run'))
         cache.set('cfmmc_status' + host, s)
-
 
 
 def cfmmc_dsqd():
@@ -519,4 +518,135 @@ def cfmmc_hc_data(host, rq_date, end_date):
     res, huizong = tongji_huice(res, huizong)
     hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
 
-    return hc,hcd,huizong,init_money
+    return hc, hcd, huizong, init_money
+
+
+def future_data_cycle(data, bs, cycle):
+    """ data：精确到分钟的行情数据，bs：精确到秒的交易数据，
+        cycle：若等于1D就是日线，其他为数字（以分钟为单位）"""
+    bs0 = {}
+    for i in bs:
+        _key = i[0][:-3]
+        if _key not in bs0:
+            bs0[_key] = [list(i)]
+        else:
+            bs0[_key].append(list(i))
+    bs = bs0
+    data2 = []
+    bs2 = {}
+    _bs = []
+    _ts = set()
+    if cycle == '1D':  # 日线
+        for j in data:
+            ts = j[0][:10]
+            if ts not in _ts:
+                if _ts:
+                    data2.append([t, o, c, l, h, v])
+                    if _bs:
+                        bs2[t] = _bs
+                        _bs = []
+                _ts.add(ts)
+                t = j[0][:10] + ' 00:00:00'
+                o = j[1]
+                l = j[3]
+                h = j[4]
+                v = j[5]
+                if j[0][:-3] in bs:
+                    _bs += bs[j[0][:-3]]
+            else:
+                l = j[3] if j[3] < l else l
+                h = j[4] if j[4] > h else h
+                c = j[2]
+                v += j[5]
+                if j[0][:-3] in bs:
+                    _bs += bs[j[0][:-3]]
+        else:
+            data2.append([t, o, c, l, h, v])
+            if _bs:
+                bs2[t] = _bs
+    elif cycle == 1:  # 一分钟线
+        data2 = data
+        bs2 = {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
+        # for j in data:
+        #     data2.append([j[0], j[1], j[2], j[3], j[4]])
+        #     if j[0][:-3] in bs:
+        #         bs2[j[0]] = bs[j[0][:-3]]
+    else:  # 其它分钟线 5分钟，30分钟，60分钟
+        _init = True  # 是否需要初始化
+        _is_last_init = False  # 是否刚刚初始化
+        i = 1
+        for j in data:
+            ts = j[0][:10]
+            if _init or ts not in _ts:
+                _ts.add(ts)
+                o = j[1]
+                l = j[3]
+                h = j[4]
+                v = j[5]
+                i = 1
+                _init = False
+                _is_last_init = True
+                if j[0][:-3] in bs:
+                    _bs += bs[j[0][:-3]]
+            if i % cycle:
+                l = j[3] if j[3] < l else l
+                h = j[4] if j[4] > h else h
+                i += 1
+                if not _is_last_init:
+                    v += j[5]
+                    if j[0][:-3] in bs:
+                        _bs += bs[j[0][:-3]]
+            else:
+                l = j[3] if j[3] < l else l
+                h = j[4] if j[4] > h else h
+                v += j[5]
+                data2.append([j[0], o, j[2], l, h, v])
+                if _bs:
+                    bs2[j[0]] = _bs
+                    _bs = []
+                _init = True
+                i = 1
+            _is_last_init = False
+
+    return data2, bs2
+
+
+def future_macd(da, short=12, long=26, phyd=9):
+    ''' 各种指标初始化计算，动态计算 '''
+    # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
+    dc = []
+    da2 = []
+    # da2格式：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9  # tag：为涨跌趋势的标签（0或1）
+    # ['2015-10-16',18.4,18.58,18.33,18.79,67.00,1,0.04,0.11,0.09]
+    for i in range(len(da)):
+        _t = da[i][0]  # 时间
+        _o = da[i][1]  # 开盘价
+        _c = da[i][2]  # 收盘价
+        _l = da[i][3]  # 最低价
+        _h = da[i][4]  # 最高价
+
+        dc.append(
+            {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'datetimes': _t,
+             'open': _o, 'high': _h, 'low': _l, 'close': _c})
+        if i == 1:
+            ac = da[i - 1][4]
+            this_c = da[i][4]
+            dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
+            dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
+            # dc[i]['ema_short'] = sum([(short-j)*da[i-j][4] for j in range(short)])/(3*short)
+            # dc[i]['ema_long'] = sum([(long-j)*da[i-j][4] for j in range(long)])/(3*long)
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+            co = 1 if dc[i]['macd'] >= 0 else 0
+        elif i > 1:
+            n_c = da[i][4]
+            dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + n_c * 2 / short
+            dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + n_c * 2 / long
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+
+        da2.append(
+            [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
+    return da2

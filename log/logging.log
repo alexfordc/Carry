@@ -14459,3 +14459,430 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\pandas\core\groupby.py", line 562, in _make_wrapper
     raise AttributeError(msg)
 AttributeError: Cannot access attribute 'index' of 'SeriesGroupBy' objects, try using the 'apply' method
+exception.py[2018-08-28 09:22:24][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2056, in cfmmc_bs
+    start_date = HSD.dtf(start_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 288, in dtf
+    d = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 565, in _strptime_datetime
+    tt, fraction = _strptime(data_string, format)
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 362, in _strptime
+    (data_string, format))
+ValueError: time data '2018-08-1' does not match format '%Y-%m-%d %H:%M:%S'
+base.py[2018-08-28 09:22:24][WARNING]：Not Found: /favicon.ico
+viewUtil.py[2018-08-28 09:29:23][ERROR]：文件：manage.py 第70行报错： Object of type 'DataFrame' is not JSON serializable
+exception.py[2018-08-28 09:31:21][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2077, in cfmmc_bs
+    data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+AttributeError: 'NoneType' object has no attribute 'datetime'
+exception.py[2018-08-28 09:32:21][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2077, in cfmmc_bs
+    data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+AttributeError: 'list' object has no attribute 'datetime'
+exception.py[2018-08-28 09:59:58][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2059, in cfmmc_bs
+    data = read_from_cache('cfmmc_future_bs_' + start_date + code + end_date)
+TypeError: must be str, not datetime.datetime
+HSD.py[2018-08-28 10:35:05][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+exception.py[2018-08-28 11:35:22][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2093, in cfmmc_bs
+    data2 = [[i]+j[1:] for i,j in zip(data.index,data.values)]
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2093, in <listcomp>
+    data2 = [[i]+j[1:] for i,j in zip(data.index,data.values)]
+TypeError: unsupported operand type(s) for +: 'Timestamp' and 'float'
+exception.py[2018-08-28 11:35:44][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2093, in cfmmc_bs
+    data2 = [[str(i)]+j[1:] for i,j in zip(data.index,data.values)]
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2093, in <listcomp>
+    data2 = [[str(i)]+j[1:] for i,j in zip(data.index,data.values)]
+TypeError: must be str, not float
+HSD.py[2018-08-28 11:39:45][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:42:44][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:43:49][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:51:32][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:51:38][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:51:41][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 11:59:47][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+exception.py[2018-08-28 12:00:04][ERROR]：Internal Server Error: /cfmmc/dataPage/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1984, in cfmmc_data_page
+    if user_name and len(host)<=7:
+TypeError: object of type 'NoneType' has no len()
+exception.py[2018-08-28 16:23:20][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2090, in cfmmc_bs
+    data2 = viewUtil.future_data_cycle(data,5)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 534, in future_data_cycle
+    t = datetime.datetime.strptime(j[0], '%Y-%m-%d %H:%M:%S')
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 565, in _strptime_datetime
+    tt, fraction = _strptime(data_string, format)
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 362, in _strptime
+    (data_string, format))
+ValueError: time data 'd' does not match format '%Y-%m-%d %H:%M:%S'
+base.py[2018-08-28 16:23:20][WARNING]：Not Found: /favicon.ico
+exception.py[2018-08-28 16:24:19][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2090, in cfmmc_bs
+    data2 = viewUtil.future_data_cycle(data,5)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 535, in future_data_cycle
+    t = datetime.datetime.strptime(j[0], '%Y-%m-%d %H:%M:%S')
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 565, in _strptime_datetime
+    tt, fraction = _strptime(data_string, format)
+  File "D:\ProgramFiles\Anaconda3\lib\_strptime.py", line 362, in _strptime
+    (data_string, format))
+ValueError: time data 'd' does not match format '%Y-%m-%d %H:%M:%S'
+HSD.py[2018-08-28 16:29:56][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+HSD.py[2018-08-28 16:30:28][ERROR]：文件 HSD.py 第1357行报错：min() arg is an empty sequence
+exception.py[2018-08-28 20:18:29][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2097, in cfmmc_bs
+    data2 = viewUtil.future_data_cycle(data.values, 30)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 534, in future_data_cycle
+    l = j[3] if j[3] < l else l
+UnboundLocalError: local variable 'l' referenced before assignment
+base.py[2018-08-28 20:18:29][WARNING]：Not Found: /favicon.ico
+exception.py[2018-08-28 20:42:54][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2102, in cfmmc_bs
+    data2 = data2[['datetime', 'open', 'close', 'low', 'high']]
+TypeError: list indices must be integers or slices, not list
+exception.py[2018-08-29 09:22:11][ERROR]：Internal Server Error: /cfmmc/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1909, in cfmmc_login
+    {'code': code, 'user_name': user_name, 'success': success, 'users': users,'host':host,'password':password})
+UnboundLocalError: local variable 'users' referenced before assignment
+base.py[2018-08-29 09:22:11][WARNING]：Not Found: /favicon.ico
+exception.py[2018-08-29 09:25:24][ERROR]：Internal Server Error: /cfmmc/login/
+Traceback (most recent call last):
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1903, in cfmmc_login
+    users = [[i[1],'KR' + tdas.creationTime[-6:] + i[6]] for i in tdas]
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1903, in <listcomp>
+    users = [[i[1],'KR' + tdas.creationTime[-6:] + i[6]] for i in tdas]
+TypeError: 'TradingAccount' object does not support indexing
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1909, in cfmmc_login
+    print(exc)
+NameError: name 'Exc' is not defined
+exception.py[2018-08-29 09:25:48][ERROR]：Internal Server Error: /cfmmc/login/
+Traceback (most recent call last):
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1903, in cfmmc_login
+    users = [[i[1],'KR' + tdas.creationTime[-6:] + i[6]] for i in tdas]
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1903, in <listcomp>
+    users = [[i[1],'KR' + tdas.creationTime[-6:] + i[6]] for i in tdas]
+TypeError: 'TradingAccount' object does not support indexing
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1909, in cfmmc_login
+    print(exc)
+NameError: name 'Exc' is not defined
+exception.py[2018-08-29 10:10:14][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2121, in cfmmc_bs
+    data2 = viewUtil.future_data_cycle(data.values, ttype)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 539, in future_data_cycle
+    if i % cycle:
+TypeError: unsupported operand type(s) for %: 'int' and 'str'
+exception.py[2018-08-29 10:29:09][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2076, in cfmmc_bs
+    bs = cfmmc.get_bs(code, ttype)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1876, in get_bs
+    t5 = t5 + 5 - datetime.timedelta(minutes=t5.minute % 5)
+TypeError: unsupported operand type(s) for +: 'datetime.datetime' and 'int'
+exception.py[2018-08-29 10:59:06][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2167, in cfmmc_bs
+    _fs = (int(b[0]) + abs(b[1]) / VOL) if not _fs else _fs + abs(b[1]) / VOL
+ValueError: invalid literal for int() with base 10: '2018-08-28 14:06:00'
+exception.py[2018-08-29 11:20:31][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2158, in cfmmc_bs
+    stt = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')-datetime.timedelta(minutes=ttype[ttype])
+TypeError: string indices must be integers
+exception.py[2018-08-29 11:23:41][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2161, in cfmmc_bs
+    print(sst,'..................')
+NameError: name 'sst' is not defined
+exception.py[2018-08-29 13:21:27][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2175, in cfmmc_bs
+    _fb = (int(b[3]) + abs(b[1]) / VOL) if not _fb else _fb + abs(b[1]) / VOL
+TypeError: bad operand type for abs(): 'str'
+exception.py[2018-08-29 13:22:13][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2176, in cfmmc_bs
+    _fb = (int(b[3]) + abs(b[1]) / VOL) if not _fb else _fb + abs(b[1]) / VOL
+TypeError: bad operand type for abs(): 'str'
+exception.py[2018-08-29 13:36:29][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2166, in cfmmc_bs
+    if b[4] == '开':
+IndexError: tuple index out of range
+exception.py[2018-08-29 13:46:19][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2123, in cfmmc_bs
+    data2, bs = viewUtil.future_data_cycle(data.values, bs, 1)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 568, in future_data_cycle
+    bs2 = {j[0]:bs[j[0][:-3]] for j in data}
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 568, in <dictcomp>
+    bs2 = {j[0]:bs[j[0][:-3]] for j in data}
+KeyError: '2018-08-01 21:01'
+viewUtil.py[2018-08-29 13:48:41][ERROR]：文件：manage.py 第70行报错： Object of type 'ndarray' is not JSON serializable
+viewUtil.py[2018-08-29 13:48:53][ERROR]：文件：manage.py 第70行报错： Object of type 'ndarray' is not JSON serializable
+viewUtil.py[2018-08-29 13:49:02][ERROR]：文件：manage.py 第70行报错： Object of type 'ndarray' is not JSON serializable
+exception.py[2018-08-29 18:12:25][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2182, in cfmmc_bs
+    data2 = viewUtil.future_macd(data2)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 640, in future_macd
+    da2.append([_t, _o, _c, _l, _h, da[i][5], 0, dc[i]['macd'], dc[i]['diff'], dc[i]['dea']])
+IndexError: list index out of range
+exception.py[2018-08-29 18:25:43][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2182, in cfmmc_bs
+    data2 = viewUtil.future_macd(data2)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 640, in future_macd
+    da2.append([_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'],2), round(dc[i]['diff'],2), round(dc[i]['dea'],2)])
+IndexError: list index out of range
+exception.py[2018-08-29 18:29:16][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2182, in cfmmc_bs
+    data2 = viewUtil.future_macd(data2)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 645, in future_macd
+    da2.append([_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'],2), round(dc[i]['diff'],2), round(dc[i]['dea'],2)])
+IndexError: list index out of range
+exception.py[2018-08-29 18:31:40][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2182, in cfmmc_bs
+    data2 = viewUtil.future_macd(data2)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 645, in future_macd
+    da2.append([_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'],2), round(dc[i]['diff'],2), round(dc[i]['dea'],2)])
+IndexError: list index out of range

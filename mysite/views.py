@@ -62,10 +62,10 @@ def read_from_cache(user_name):
 
 
 # 写数据到缓存
-def write_to_cache(user_name, data):
+def write_to_cache(user_name, data, expiry_time=settings.NEVER_REDIS_TIMEOUT):
     key = 'user_id_of_' + user_name
     try:
-        cache.set(key, json.dumps(data), settings.NEVER_REDIS_TIMEOUT)
+        cache.set(key, json.dumps(data), expiry_time)
     except Exception as exc:
         viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
 
@@ -1876,7 +1876,7 @@ def cfmmc_login(rq):
             if trade:  # 若已经有下载过数据，则下载3天之内的
                 trade = []
                 _start_date = HSD.get_date(-3)
-                start_date = _start_date # if _start_date<end_date else end_date
+                start_date = _start_date if _start_date<end_date else end_date
                 end_date = HSD.get_date()
                 cfmmc_login_d.down_day_data_sql(rq, userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
@@ -1895,20 +1895,24 @@ def cfmmc_login(rq):
     code = cfmmc_login_d.getCode()
     code = base64.b64encode(code)
     code = b"data:image/jpeg;base64," + code
+    users = []
     try:
-        tda = models.TradingAccount.objects.filter(belonged_id=uid).get(enabled=1)
-        host, password = (tda.host, tda.password) if tda.enabled == 1 else ('', '')
-        password = 'KR' + tda.creationTime[-6:] + password
+        tdas = models.TradingAccount.objects.filter(belonged_id=uid, enabled=1)
+        users = [[i.host, 'KR' + i.creationTime[-6:] + i.password] for i in tdas]
+        host, password = (users[0][0], users[0][1])
+        users = [] if len(users) == 1 else users
     except:
         host, password = '', ''
     return render(rq, 'cfmmc_login.html',
-                  {'code': code, 'user_name': user_name, 'success': success, 'host': host, 'password': password})
+                  {'code': code, 'user_name': user_name, 'success': success, 'users': users, 'host': host,
+                   'password': password})
+
 
 def cfmmc_isdownload_data(rq):
     """ ajax 请求，判断是否下载数据成功！"""
     if rq.is_ajax() and 'user_cfmmc' in rq.session:
         host = rq.session['user_cfmmc']['userID']
-        res = cache.get('cfmmc_status'+host)
+        res = cache.get('cfmmc_status' + host)
         if not res:
             return HttpResponse('not_login')
 
@@ -1919,11 +1923,10 @@ def cfmmc_isdownload_data(rq):
         elif res == 'not_run':
             jg = '已经已经更新过！'
         else:
-            jg='no'
-        cache.delete('cfmmc_status'+host) if jg != 'no' else 0
+            jg = 'no'
+        cache.delete('cfmmc_status' + host) if jg != 'no' else 0
         return HttpResponse(jg)
     return HttpResponse('no')
-
 
 
 def cfmmc_data(rq):
@@ -1981,8 +1984,9 @@ def cfmmc_data_page(rq):
     # if not user_name:
     #     return index(rq, False)
     host = rq.GET.get('host')
+    if host and user_name and len(host) <= 7:
+        host = get_cfmmc_id_host(host)
     rq_code_name = rq.GET.get('code_name')
-
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
 
@@ -2052,73 +2056,133 @@ def cfmmc_bs(rq):
         host = get_cfmmc_id_host(host)
         if not code or not start_date or not end_date or not host:
             return redirect('/')
+        cache_keys = 'cfmmc_future_bs_' + start_date + code + end_date
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
         start_date = HSD.dtf(start_date)
         end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
-        data = mongo.get_data(code, start_date, end_date)
+
+        data = read_from_cache(cache_keys)
+        # if data:
+        #     import pandas
+        #     data = pandas.DataFrame(data, columns=['datetime', 'open', 'close', 'low', 'high'])
+        # else:
+        if not data:
+            data = mongo.get_data(code, start_date, end_date)
         rq_url = rq.META.get('QUERY_STRING')
         rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else rq_url
         code_name = HSD.FUTURE_NAME.get(re.sub('\d', '', code))
+        bs = cfmmc.get_bs(code, ttype)
+        # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
+
+        ohlc_dict = {
+            'datetime': 'first',
+            'open': 'first',
+            'close': 'last',
+            'low': 'min',
+            'high': 'max',
+        }
+        data2 = []
+        # future = Future(default_ips=(('112.74.214.43', 7727), ('120.24.0.77', 7727)))
         if ttype == '5M':
             code_name += '（5分钟）'
-            bs = cfmmc.get_bs(code,ttype)
-            # print(bs)
-            # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
-            ohlc_dict = {
-                'datetime':'first',
-                'open': 'first',
-                'close': 'last',
-                'low': 'min',
-                'high': 'max',
-            }
-            # d=df.resample('5t',how=ohlc_dict,closed='left',label='left')
-            data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
-            data = data.resample('5T', closed='left', label='left').apply(ohlc_dict)
-            # data.datetime = data.index.format(lambda x: datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',x))
-            data = data.dropna()
+            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+            # data = data.resample('5T', closed='left', label='left').apply(ohlc_dict)
+            # data = data.dropna()
+            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
+            data2,bs = viewUtil.future_data_cycle(data, bs, 5)
+        elif ttype == '30M':
+            code_name += '（30分钟）'
+            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+            # data = data.resample('30T', closed='left', label='left').apply(ohlc_dict)
+            # data = data.dropna()
+            # data2 = [[str(i)]+list(j)[1:] for i,j in zip(data.index,data.values)]
+            data2,bs = viewUtil.future_data_cycle(data, bs, 30)
+            # data2 = future.get_bar(code,start_date,end_date,ktype='30M')
+            # data2 = data2[['datetime', 'open', 'close', 'low', 'high']]
+            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data2.index, data2.values)]
+            # print(data2[:30])
+        elif ttype == '1H':
+            code_name += '（1小时）'
+            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+            # data = data.resample('60T', closed='left', label='left').apply(ohlc_dict)
+            # data = data.dropna()
+            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
+            data2,bs = viewUtil.future_data_cycle(data, bs, 60)
+        elif ttype == '1D':
+            code_name += '（1日）'
+            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
+            # data = data.resample('1440T', closed='left', label='left').apply(ohlc_dict)
+            # data = data.dropna()
+            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
+            data2,bs = viewUtil.future_data_cycle(data, bs, ttype)
         else:
             code_name += '（1分钟）'
-            bs = cfmmc.get_bs(code)
-            # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
+            # data2 = [list(i) for i in data.values]
+            data2, bs = viewUtil.future_data_cycle(data, bs, 1)
+            write_to_cache(cache_keys, data2, expiry_time=60 * 60 * 24)
+        # if not data2:
+        #     dataa = []
+        #     datap = []
+        #     _days = set()
+        #     for i, j in zip(data.index, data.values):
+        #         _day = str(i)[:10]
+        #         if _days and _day not in _days:
+        #             data2 += datap + dataa
+        #             dataa = []
+        #             datap = []
+        #         _days.add(_day)
+        #         if 6 <= i.hour < 18:
+        #             dataa.append([str(i)] + list(j)[1:])
+        #         else:
+        #             datap.append([str(i)] + list(j)[1:])
 
-        open_buy = []   # 开多仓
-        flat_buy = []   # 平多仓
+        open_buy = []  # 开多仓
+        flat_buy = []  # 平多仓
         open_sell = []  # 开空仓
         flat_sell = []  # 平空仓
-        VOL = 1000      # 手数的最大值
-        rounds = lambda x: (round(x,round(math.log(VOL,10))) if x else x)
-        # print(data[:31])
-        for i in data.values:
-            # i：['2018-08-14 21:01:00', 6972.0, 6978.0, 6966.0, 6986.0]
+        VOL = 1000  # 手数的最大值
+        rounds = lambda x: (round(x, round(math.log(VOL, 10))) if x else x)
+        ttypes = defaultdict(lambda :1)
+        ttypes['5M'] = 5
+        ttypes['30M'] = 30
+        ttypes['60M'] = 60
+        ttypes['1D'] = 1
+        for j,i in enumerate(data2):
+            # i = str(i[0])
+            bs2 = []
+            _ob, _fb, _os, _fs = '', '', '', ''
+            # if j != 0:
+            #     stt = data2[j - 1][0]
+            # else:
+            #     stt = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S') - (datetime.timedelta(minutes=ttypes[ttype]) if ttype!='1D' else datetime.timedelta(days=ttypes[ttype]))
+            #     stt = str(stt)
             if i[0] in bs:
-                _ob,_fb,_os,_fs = '','','',''
                 for b in bs[i[0]]:
-                    if b[2] == '开':
-                        if b[1] > 0:
-                            _ob = (int(b[0])+abs(b[1])/VOL) if not _ob else _ob+abs(b[1])/VOL
+                    # condition = (stt < b[0] <= i[0] and stt[:10]==b[0][:10]==i[0][:10]) if ttype != '1D' else (i[0][:10]==b[0][:10])
+                    # # print(stt,'..........',b[0],'..............',i[0])
+                    # if condition:
+                    if b[4] == '开':
+                        if b[2] == '买':
+                            _ob = (int(b[3]) + abs(b[1]) / VOL) if not _ob else _ob + abs(b[1]) / VOL
                         else:
-                            _os = (int(b[0])+abs(b[1])/VOL) if not _os else _os+abs(b[1])/VOL
-                        # (open_buy.append(int(bs[I][0])+abs(bs[I][1])/100), open_sell.append('')) if bs[I][1] > 0 else (open_buy.append(''), open_sell.append(int(bs[I][0])+abs(bs[I][1])/100))
+                            _os = (int(b[3]) + abs(b[1]) / VOL) if not _os else _os + abs(b[1]) / VOL
                     else:
-                        if b[1] < 0:
-                            _fb = (int(b[0])+abs(b[1])/VOL) if not _fb else _fb+abs(b[1])/VOL
+                        if b[2] == '买':
+                            _fs = (int(b[3]) + abs(b[1]) / VOL) if not _fs else _fs + abs(b[1]) / VOL
                         else:
-                            _fs = (int(b[0])+abs(b[1])/VOL) if not _fs else _fs+abs(b[1])/VOL
-                        # (flat_buy.append(int(bs[I][0])+abs(bs[I][1])/100), flat_sell.append('')) if bs[I][1] < 0 else (flat_buy.append(''), flat_sell.append(int(bs[I][0])+abs(bs[I][1])/100))
-                open_buy.append(rounds(_ob))
-                flat_buy.append(rounds(_fb))
-                open_sell.append(rounds(_os))
-                flat_sell.append(rounds(_fs))
-            else:
-                open_buy.append('')
-                flat_buy.append('')
-                open_sell.append('')
-                flat_sell.append('')
-        data2=[list(i) for i in data.values]
-
-        return render(rq, 'cfmmc_kline.html',{'user_name': user_name, 'data': data2, 'open_buy': open_buy,
-                                              'flat_buy':flat_buy,'open_sell': open_sell, 'flat_sell':flat_sell, 'rq_url': rq_url, 'code_name': code_name})
+                            _fb = (int(b[3]) + abs(b[1]) / VOL) if not _fb else _fb + abs(b[1]) / VOL
+                    # else:
+                    #     bs2.append(b)
+            # bs = bs2
+            open_buy.append(rounds(_ob))
+            flat_buy.append(rounds(_fb))
+            open_sell.append(rounds(_os))
+            flat_sell.append(rounds(_fs))
+        data2 = viewUtil.future_macd(data2)
+        return render(rq, 'cfmmc_kline2.html', {'user_name': user_name, 'data': data2, 'open_buy': open_buy,
+                                               'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
+                                               'rq_url': rq_url, 'code_name': code_name})
 
     return redirect('/')
 
@@ -2130,7 +2194,7 @@ def cfmmc_hc(rq):
     host = get_cfmmc_id_host(host)
     rq_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
-    hc,hcd,huizong,init_money = viewUtil.cfmmc_hc_data(host,rq_date,end_date)
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, rq_date, end_date)
     hc_name = get_cfmmc_id_host(host + '_name')
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
     return render(rq, 'cfmmc_hc.html',
@@ -2171,6 +2235,7 @@ def cfmmc_huice(rq):
         'qy': [],  # 客户权益
         'bar_name': [],  # 品种盈亏 名称
         'bar_value': [],  # 品种盈亏 净利润
+        'day_value': [],  # 每日盈亏 净利润
         'week_name': [],  # 每周盈亏 名称
         'week_value': [],  # 每周盈亏 净利润
         'month_name': [],  # 每月盈亏 名称
@@ -2202,6 +2267,7 @@ def cfmmc_huice(rq):
                 month_jlr[month] += d[2]
             else:
                 data2.append(d)
+        hct['day_value'].append(yk-sxf)
         yk += (prices[-1] if prices else 0)
         prices.append(yk)
         sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
@@ -2243,8 +2309,8 @@ def cfmmc_huice(rq):
     hct['month_name'] = [i for i in month_jlr]
     hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
     hct['host'] = host
-    resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date,'hc': hc, 'huizong': huizong,
-            'init_money': init_money, 'hcd': hcd, 'user_name': user_name,'hc_name': hc_name}
+    resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
+            'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
     return render(rq, 'cfmmc_tu.html', resp)
 
 

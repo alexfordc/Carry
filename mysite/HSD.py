@@ -249,9 +249,9 @@ class MongoDBData:
         """ 获取一天的期货数据 """
         day = datetime.timedelta(days=1)
         data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code},
-                               projection=['datetime', 'open', 'high', 'low', 'close'])
-        # 时间，开盘，收盘，最低，最高
-        data = [[i['datetime'], i['open'], i['close'], i['low'], i['high']] for i in data]
+                               projection=['datetime', 'open', 'high', 'low', 'close','trade'])
+        # 时间，开盘，收盘，最低，最高，成交量
+        data = [[i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']] for i in data]
         data.sort()
         d1, d2 = [], []
         for i in data:
@@ -269,7 +269,7 @@ class MongoDBData:
         for i in range(days + 1):
             day = datetime.timedelta(days=i)
             res += self.data_day(code, sd + day)
-        res = pd.DataFrame(res, columns=['datetime', 'open', 'close', 'low', 'high'])
+        # res = pd.DataFrame(res, columns=['datetime', 'open', 'close', 'low', 'high'])
         return res
 
 
@@ -1869,22 +1869,49 @@ class Cfmmc:
         """ 获取指定账户、产品的 交易日期时间：（成交价，手数） """
         sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql}"
         d = runSqlData('carry_investment', sql)
-        res = {} # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
-        if time_type is None:
-            for i in d:
-                if i[0] not in res:
-                    res[i[0]] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[i[0]].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        elif time_type == '5M':
+        res = {}  # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
+        if d:
+            return d
+        if time_type == '5M':
             for i in d:
                 t5 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
-                t5 = t5 - datetime.timedelta(minutes=t5.minute % 5)
+                t5 = t5 + datetime.timedelta(minutes=5 - t5.minute % 5)
                 t5 = str(t5)
                 if t5 not in res:
                     res[t5] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
                 else:
                     res[t5].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        elif time_type == '30M':
+            for i in d:
+                t30 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
+                t30 = t30 + datetime.timedelta(minutes=30 - t30.minute % 30)
+                t30 = str(t30)
+                if t30 not in res:
+                    res[t30] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+                else:
+                    res[t30].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        elif time_type == '1H':
+            for i in d:
+                h1 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
+                h1 = h1 + datetime.timedelta(minutes=60 - h1.minute % 60)
+                h1 = str(h1)
+                if h1 not in res:
+                    res[h1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+                else:
+                    res[h1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        elif time_type == '1D':
+            for i in d:
+                d1 = i[0][:10] + ' 00:00:00'
+                if d1 not in res:
+                    res[d1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+                else:
+                    res[d1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        else:
+            for i in d:
+                if i[0] not in res:
+                    res[i[0]] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+                else:
+                    res[i[0]].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
         return res
 
     def get_jz(self):

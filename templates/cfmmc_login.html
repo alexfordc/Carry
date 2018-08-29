@@ -90,6 +90,13 @@ function refreshImage(){
                <td align="left" class="formtext" valign="top">
                   用户名
                   <input type="text" name="userID" size="22" value="{{host}}">
+                   {% if users %}
+                   <select class="cfmmc_users_value">
+                       {% for user in users %}
+                            <option value="{{user.0}}_kairui_{{user.1}}">{{user.0}}</option>
+                       {% endfor %}
+                   </select>
+                   {% endif %}
                 </td>
             </tr>
             <tr>
@@ -236,8 +243,7 @@ function refreshImage(){
 	}
   </script>
   
-  <script type="text/javascript" language="Javascript1.1"> 
-
+  <script type="text/javascript" language="Javascript1.1">
 <!-- Begin 
 
      var bCancel = false; 
@@ -1148,7 +1154,12 @@ function validateTwoFieldsEqual(form) {
        return true;
     }
 
-  
+    $(".cfmmc_users_value").bind("change",function(){
+        var v = $(this).val();
+        var n = v.split('_kairui_');
+        $("input[name='userID']").attr("value",n[0]);
+        $("input[name='password']").attr("value",n[1]);
+    });
 
 
     /*$RCSfile: validateByte.js,v $ $Revision: 1.9 $ $Date: 2004/03/28 16:53:21 $ */
