@@ -612,7 +612,7 @@ def future_data_cycle(data, bs, cycle):
 
 
 def future_macd(da, short=12, long=26, phyd=9):
-    ''' 各种指标初始化计算，动态计算 '''
+    """ macd指标计算 """
     # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
     dc = []
     da2 = []
