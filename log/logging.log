@@ -14886,3 +14886,20 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 645, in future_macd
     da2.append([_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'],2), round(dc[i]['diff'],2), round(dc[i]['dea'],2)])
 IndexError: list index out of range
+exception.py[2018-08-30 08:29:43][ERROR]£ºInternal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2182, in cfmmc_bs
+    data2 = viewUtil.future_macd(data2)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 651, in future_macd
+    [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
+IndexError: list index out of range
+base.py[2018-08-30 08:29:43][WARNING]£ºNot Found: /favicon.ico
+base.py[2018-08-30 10:59:48][WARNING]£ºNot Found: /favicon.ico

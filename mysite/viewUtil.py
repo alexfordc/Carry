@@ -410,8 +410,9 @@ def cfmmc_data_page(rq):
             trade = get_cfmmc_trade(host, start_date, end_date)
         else:
             trade = get_cfmmc_trade(host=host)
+            end_date = HSD.get_date()
         start_date = str(trade[-1][11])
-        end_date = str(trade[0][11])
+
     except:
         trade = None
         start_date = ''
@@ -607,7 +608,8 @@ def future_data_cycle(data, bs, cycle):
                 _init = True
                 i = 1
             _is_last_init = False
-
+        else:
+            data2.append([j[0], o, j[2], l, h, v])
     return data2, bs2
 
 

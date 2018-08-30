@@ -15,7 +15,7 @@
     <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=30M">30分钟</a>&nbsp;&nbsp;
     <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=1H">1小时</a>&nbsp;&nbsp;
     <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=1D">1日</a>&nbsp;&nbsp;
-<hr/>
+<hr/><div id="show_hq_message" style="position:absolute;left:10px;"></div><br/><br/>
 </div>
 <div style="height:900px">
 <div id="main" style="width: auto;height: 680px;" align="center"></div>
@@ -117,12 +117,86 @@ var option = {
       text:'名称：{{ code_name }}',
 	  left:10
   },
-  tooltip: {
+  /*tooltip: {
       trigger: 'axis',
       axisPointer: {
           type: 'line'
       }
-  },
+  },*/
+  tooltip: {
+        trigger: 'axis',
+      axisPointer: {
+          type: 'line'
+      },
+        formatter: function(params, ticket, callback) {
+            /*var showContent = params.seriesName + "：" + params.value;
+            if (params.seriesIndex > 1) {
+                return showContent + "%";
+            }
+            return showContent;*/
+            var htmls = '时间：'+params[0].name+" ";
+            var htmls2 = '时间：'+params[0].name+"<br>";
+            for (var i = 0, l = params.length; i < l; i++) {
+                //res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'吨';
+                if(params[i].value){
+                    var p=params[i].value;
+                    if(typeof(p)=='object'){
+                        var nm=['','开盘','收盘','最低','最高','成交量','','MACD','DIFF','DEA'];
+                        for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+                            if(j==0||j==6){
+                                continue;
+                            }
+                            htmls += nm[j] + ':' + p[j] +' ';
+                            htmls2 += nm[j] + ':' + p[j] +'<br>';
+                        }
+                    }else if('MACD,DIFF,DEA,VOL'.indexOf(params[i].seriesName)<0){
+                        htmls += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>:' + params[i].value + ' ';
+                        htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>:' + params[i].value + '<br>';
+                    }
+                }
+            }
+            $("#show_hq_message").html(htmls);
+            return htmls2;
+        }
+    },
+    /*tooltip : {         // Option config. Can be overwrited by series or data
+        trigger: 'axis',
+        //show: true,   //default true
+        showDelay: 0,
+        hideDelay: 50,
+        transitionDuration:0,
+        backgroundColor : 'rgba(255,0,255,0.7)',
+        borderColor : '#f50',
+        borderRadius : 8,
+        borderWidth: 2,
+        padding: 10,    // [5, 10, 15, 20]
+        position : function(p) {
+            // 位置回调
+            // console.log && console.log(p);
+            return [p[0] + 10, p[1] - 10];
+        },
+        textStyle : {
+            color: 'yellow',
+            decoration: 'none',
+            fontFamily: 'Verdana, sans-serif',
+            fontSize: 15,
+            fontStyle: 'italic',
+            fontWeight: 'bold'
+        },
+        formatter: function (params,ticket,callback) {
+            console.log(params)
+            var res = 'Function formatter : <br/>' + params[0].name;
+            for (var i = 0, l = params.length; i < l; i++) {
+                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'吨';
+            }
+            setTimeout(function (){
+                // 仅为了模拟异步回调
+                callback(ticket, res);
+            }, 100)
+            return 'loading';
+        }
+        //formatter: "Template formatter: <br/>{b}<br/>{a}:{c}<br/>{a1}:{c1}"
+    },*/
   legend:{ //图例控件,点击图例控制哪些系列不显示
 		data:['日K','MA5','MA10','MA20','MA30','MA60'],
 		selected:{
@@ -212,7 +286,7 @@ var option = {
       end: 100
   }],
   series: [{
-          name: 'K线周期图表(matols.com)',
+          name: '行情K线',
           type: 'candlestick',
           data: data.datas,
           itemStyle: {
@@ -360,7 +434,7 @@ var option = {
 
             data: {{ flat_buy|safe }}
         },{
-          name: 'Vol',
+          name: 'VOL',
           type: 'bar',
           xAxisIndex: 1,
           yAxisIndex: 1,
@@ -398,7 +472,7 @@ var option = {
 		      }
 	      }
       },{
-          name: 'DIF',
+          name: 'DIFF',
           type: 'line',
           xAxisIndex: 2,
           yAxisIndex: 2,

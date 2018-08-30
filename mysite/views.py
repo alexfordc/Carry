@@ -2071,7 +2071,7 @@ def cfmmc_bs(rq):
             data = mongo.get_data(code, start_date, end_date)
         rq_url = rq.META.get('QUERY_STRING')
         rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else rq_url
-        code_name = HSD.FUTURE_NAME.get(re.sub('\d', '', code))
+        code_name = HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
         bs = cfmmc.get_bs(code, ttype)
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
 
