@@ -30,6 +30,7 @@
     <script type="text/javascript">
 
 var myChart=echarts.init(document.getElementById('main'));
+var is_show_box = true;
 		//数据：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
 		var data=splitData({{ data|safe }});
 		//数组处理
@@ -146,17 +147,19 @@ var option = {
                             if(j==0||j==6){
                                 continue;
                             }
-                            htmls += nm[j] + ':' + p[j] +' ';
-                            htmls2 += nm[j] + ':' + p[j] +'<br>';
+                            htmls += nm[j] + ': ' + p[j] +' ';
+                            htmls2 += nm[j] + ': ' + p[j] +'<br>';
                         }
                     }else if('MACD,DIFF,DEA,VOL'.indexOf(params[i].seriesName)<0){
-                        htmls += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>:' + params[i].value + ' ';
-                        htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>:' + params[i].value + '<br>';
+                        htmls += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + ' ';
+                        htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
                     }
                 }
             }
             $("#show_hq_message").html(htmls);
-            return htmls2;
+            if(is_show_box){
+                return htmls2;
+            }
         }
     },
     /*tooltip : {         // Option config. Can be overwrited by series or data
@@ -201,8 +204,8 @@ var option = {
 		data:['日K','MA5','MA10','MA20','MA30','MA60'],
 		selected:{
 		    // 默认不显示
-            'MA10': false,
-            'MA60': false
+            'MA5': false,
+            'MA20': false
 		}
 	},
   axisPointer: {
@@ -489,6 +492,9 @@ var option = {
 
 myChart.setOption(option);
 
+$("#main").dblclick(function(){
+    is_show_box = is_show_box?false:true;
+});
 </script>
 
 {% endblock %}
