@@ -2005,7 +2005,7 @@ def cfmmc_data_page(rq):
     if rq_code_name and rq_code_name != '1':
         trade = [i for i in trade if rq_code_name in i[0]]
     resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,
-            'code_name': code_name, 'host_id': host_id}
+            'code_name': code_name, 'host_id': host_id, 'rq_code_name':rq_code_name}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -2124,21 +2124,6 @@ def cfmmc_bs(rq):
             # data2 = [list(i) for i in data.values]
             data2, bs = viewUtil.future_data_cycle(data, bs, 1)
             write_to_cache(cache_keys, data2, expiry_time=60 * 60 * 24)
-        # if not data2:
-        #     dataa = []
-        #     datap = []
-        #     _days = set()
-        #     for i, j in zip(data.index, data.values):
-        #         _day = str(i)[:10]
-        #         if _days and _day not in _days:
-        #             data2 += datap + dataa
-        #             dataa = []
-        #             datap = []
-        #         _days.add(_day)
-        #         if 6 <= i.hour < 18:
-        #             dataa.append([str(i)] + list(j)[1:])
-        #         else:
-        #             datap.append([str(i)] + list(j)[1:])
 
         open_buy = []  # 开多仓
         flat_buy = []  # 平多仓
@@ -2154,7 +2139,6 @@ def cfmmc_bs(rq):
         ttypes['1D'] = 1
         _days = set()
         for j,i in enumerate(data2):
-            # i = str(i[0])
             _ob, _fb, _os, _fs = '', '', '', ''
             dt = i[0][:10]
             if dt not in _days:
@@ -2163,9 +2147,6 @@ def cfmmc_bs(rq):
                 yesterday_hold = hold[dt] if dt in hold else (0, 0)
             if i[0] in bs:
                 for b in bs[i[0]]:
-                    # condition = (stt < b[0] <= i[0] and stt[:10]==b[0][:10]==i[0][:10]) if ttype != '1D' else (i[0][:10]==b[0][:10])
-                    # # print(stt,'..........',b[0],'..............',i[0])
-                    # if condition:
                     if b[4] == '开':
                         if b[2] == '买':
                             _ob = (int(b[3]) + b[1] / VOL) if not _ob else _ob + b[1] / VOL
@@ -2180,9 +2161,7 @@ def cfmmc_bs(rq):
                         else:
                             _fb = (int(b[3]) + b[1] / VOL) if not _fb else _fb + b[1] / VOL
                             _ccb -= b[1]
-                    # else:
-                    #     bs2.append(b)
-            # bs = bs2
+
             open_buy.append(rounds(_ob))
             flat_buy.append(rounds(_fb))
             open_sell.append(rounds(_os))

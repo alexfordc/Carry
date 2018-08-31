@@ -31,7 +31,7 @@ td,th{ border:0px;height:40px; }
                 {% if forloop.first %}
                     <option value="1">全部</option>
                 {% endif %}
-                <option value="{{c}}">{{n}}</option>
+                <option value="{{c}}" {% if c == rq_code_name %}selected{% endif %}>{{n}}</option>
             {% endfor %}
         </select>&nbsp;&nbsp;
         <input type="hidden" name="host" value="{{ host_id }}">
