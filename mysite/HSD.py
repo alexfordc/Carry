@@ -1865,9 +1865,25 @@ class Cfmmc:
             qy = {i[0]: i[1] for i in d}
             return qy
 
+    def get_yesterday_hold(self, code):
+        """ 获取指定账户、产品的 交易日期时间 每天的昨日持仓 """
+        start_date = dtf(self.start_date)
+        start_date = start_date - datetime.timedelta(days=10)
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),SUM(买持仓),SUM(卖持仓) FROM cfmmc_holding_position WHERE 合约='{code}' AND 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' GROUP BY 交易日期"
+        sql_check = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_daily_settlement WHERE 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' ORDER BY 交易日期"
+        d = runSqlData('carry_investment', sql)
+        _check = runSqlData('carry_investment',sql_check)
+        _check = {_check[i][0]:_check[i-1][0] for i in range(1,len(_check))}
+        # if not d:
+        #     return {}
+        d = list(d)
+        d.sort()
+        d2 = {d[i][0]: ((d[i - 1][1] if d[i - 1][1] else 0, d[i - 1][2] if d[i - 1][2] else 0) if _check[d[i][0]]==d[i - 1][0] else (0, 0)) for i in range(1, len(d))}
+        return d2
+
     def get_bs(self, code, time_type=None):
         """ 获取指定账户、产品的 交易日期时间：（成交价，手数） """
-        sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql}"
+        sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql}"
         d = runSqlData('carry_investment', sql)
         res = {}  # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
         if d:

@@ -2075,6 +2075,7 @@ def cfmmc_bs(rq):
         _name = _name[0]+'*'*len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
         bs = cfmmc.get_bs(code, ttype)
+        hold = cfmmc.get_yesterday_hold(code)
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
 
         ohlc_dict = {
@@ -2143,6 +2144,7 @@ def cfmmc_bs(rq):
         flat_buy = []  # 平多仓
         open_sell = []  # 开空仓
         flat_sell = []  # 平空仓
+        holds = {}   # 持多仓, 持空仓
         VOL = 1000  # 手数的最大值
         rounds = lambda x: (round(x, round(math.log(VOL, 10))) if x else x)
         ttypes = defaultdict(lambda :1)
@@ -2150,15 +2152,15 @@ def cfmmc_bs(rq):
         ttypes['30M'] = 30
         ttypes['60M'] = 60
         ttypes['1D'] = 1
+        _days = set()
         for j,i in enumerate(data2):
             # i = str(i[0])
-            bs2 = []
             _ob, _fb, _os, _fs = '', '', '', ''
-            # if j != 0:
-            #     stt = data2[j - 1][0]
-            # else:
-            #     stt = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S') - (datetime.timedelta(minutes=ttypes[ttype]) if ttype!='1D' else datetime.timedelta(days=ttypes[ttype]))
-            #     stt = str(stt)
+            dt = i[0][:10]
+            if dt not in _days:
+                _days.add(dt)
+                _ccb, _ccs = 0, 0  # 持仓多，持仓空
+                yesterday_hold = hold[dt] if dt in hold else (0, 0)
             if i[0] in bs:
                 for b in bs[i[0]]:
                     # condition = (stt < b[0] <= i[0] and stt[:10]==b[0][:10]==i[0][:10]) if ttype != '1D' else (i[0][:10]==b[0][:10])
@@ -2166,14 +2168,18 @@ def cfmmc_bs(rq):
                     # if condition:
                     if b[4] == '开':
                         if b[2] == '买':
-                            _ob = (int(b[3]) + abs(b[1]) / VOL) if not _ob else _ob + abs(b[1]) / VOL
+                            _ob = (int(b[3]) + b[1] / VOL) if not _ob else _ob + b[1] / VOL
+                            _ccb += b[1]
                         else:
-                            _os = (int(b[3]) + abs(b[1]) / VOL) if not _os else _os + abs(b[1]) / VOL
+                            _os = (int(b[3]) + b[1] / VOL) if not _os else _os + b[1] / VOL
+                            _ccs += b[1]
                     else:
                         if b[2] == '买':
-                            _fs = (int(b[3]) + abs(b[1]) / VOL) if not _fs else _fs + abs(b[1]) / VOL
+                            _fs = (int(b[3]) + b[1] / VOL) if not _fs else _fs + b[1] / VOL
+                            _ccs -= b[1]
                         else:
-                            _fb = (int(b[3]) + abs(b[1]) / VOL) if not _fb else _fb + abs(b[1]) / VOL
+                            _fb = (int(b[3]) + b[1] / VOL) if not _fb else _fb + b[1] / VOL
+                            _ccb -= b[1]
                     # else:
                     #     bs2.append(b)
             # bs = bs2
@@ -2181,10 +2187,14 @@ def cfmmc_bs(rq):
             flat_buy.append(rounds(_fb))
             open_sell.append(rounds(_os))
             flat_sell.append(rounds(_fs))
+            holds[i[0]] = [
+                _ccb + yesterday_hold[0],
+                _ccs + yesterday_hold[1]
+            ]
         data2 = viewUtil.future_macd(data2)
         return render(rq, 'cfmmc_kline2.html', {'user_name': user_name, 'data': data2, 'open_buy': open_buy,
                                                'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
-                                               'rq_url': rq_url, 'code_name': code_name})
+                                               'holds':holds,'rq_url': rq_url, 'code_name': code_name})
 
     return redirect('/')
 
@@ -2310,6 +2320,8 @@ def cfmmc_huice(rq):
     hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
     hct['month_name'] = [i for i in month_jlr]
     hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
+    host = get_cfmmc_id_host(host+'_name')
+    host = host[0]+'*'*len(host[1])
     hct['host'] = host
     resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
             'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}

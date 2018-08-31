@@ -26,7 +26,7 @@
                     <td id="tuxiant7">每月盈亏</td>
                     <td id="tuxiant8">账号余额</td>
                     <td id="tuxiant9">累积入金</td>
-                    <td id="tuxiant10">详细回测</td>
+                    <td id="tuxiant10">统计数据</td>
                 </tr>
             </table>
         </div>
@@ -246,7 +246,7 @@ myChart.clear();
 optiont = {
 
 title:{
-    text:"账户：{{hc.host|truncatechars:9}}",
+    text:"账户：{{hct.host|truncatechars:9}}",
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -435,7 +435,7 @@ function request(type){
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
 
 <div id="leftColumn" class="relative" style="position:absolute;left:20%;display:none;width:875px;">
-                    <div class="floatLeft marginB10">
+                   <!-- <div class="floatLeft marginB10">
 <div class="ds1">
     <div class="ds2">
         <div class="ds3">
@@ -484,7 +484,7 @@ function request(type){
     </div>
 </div>
 
-</div>
+</div>-->
 
 <div class="floatLeft" style="width:660px;">
 
@@ -496,17 +496,16 @@ function request(type){
             <!--<div class="ds4">-->
                 <!--<div class="ds5">-->
                     <!--<div class="ds6">-->
-                        <div class="box_cont" style="height:348px" id="huicetuall">
+                        <!--<div class="box_cont" style="height:348px" id="huicetuall">
                             <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">增长率</span>&nbsp;&nbsp;
                                 <span id="tuxian2">余额</span>&nbsp;&nbsp;
                                 <span id="tuxian3">利润</span>&nbsp;&nbsp;
                                 <span id="tuxian4">资金回测</span>&nbsp;&nbsp;
                                 <span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>
                                 <span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>
-                                <!--<span id="tuxian5">当天盈亏</span>-->
                             </div>
                                 <div id="zhexiantu" style="width: 658;height: 318px;"></div>
-                           </div>
+                           </div>-->
                     <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
@@ -518,8 +517,6 @@ function request(type){
 </div>
 <div class="floatLeft" style="width:877px">
 
-
-
 <div class="ds1 marginB10" id="tradingContDiv">
     <div class="ds2">
         <div class="ds3">
@@ -530,7 +527,7 @@ function request(type){
                             <div class="boxTitle relative" id="advancedTitle2">
 
                                                             <ul class="titleNav">
-                                    <li class="bold">交易</li>
+                                    <li class="bold">交易&nbsp;&nbsp;{{hct.host|truncatechars:9}}</li>
 
                                                             </ul>
                             </div>
@@ -646,7 +643,7 @@ function request(type){
             </tr>
 
             <tr class="bg1">
-                <td>点:</td>
+                <td>总盈亏:</td>
                 <td class="alignR">{{huizong.yk|floatformat:"2"}}</td>
             </tr>
 

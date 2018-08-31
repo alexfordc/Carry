@@ -14903,3 +14903,31 @@ Traceback (most recent call last):
 IndexError: list index out of range
 base.py[2018-08-30 08:29:43][WARNING]£ºNot Found: /favicon.ico
 base.py[2018-08-30 10:59:48][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-08-30 16:43:09][ERROR]£ºInternal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2078, in cfmmc_bs
+    hold = cfmmc.get_yesterday_hold(code)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1874, in get_yesterday_hold
+    d = list(d)
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-08-30 16:48:25][ERROR]£ºInternal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2192, in cfmmc_bs
+    hold_buy.append(_ccb+yesterday_hold[0])
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
