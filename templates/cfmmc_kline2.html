@@ -19,7 +19,7 @@
     <div id="show_hq_message2" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
 </div>
 <div style="height:900px;">
-<div id="main" style="width: auto;height: 680px;" align="center"></div><br/><br/>
+<div id="main" style="width: auto;height: 750px;" align="center"></div><br/><br/>
     <p style="font-size:10px;">
         &nbsp;&nbsp;<strong>说明：</strong>三角形<span style="font-size:20px;">△</span> 为开仓，圆形<span style="font-size:20px;">○</span>为平仓。
         <span style="color:blue;">蓝色为空单</span> ，<span style="color:purple;">紫色为多单</span>。箭头朝上开多单，<br/>
@@ -166,6 +166,8 @@ var option = {
                             htmls += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + ' ';
                             htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
                         }
+                    }else if(i<3){
+                        htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
                     }
                 }
             }
@@ -230,23 +232,23 @@ var option = {
   grid: [           {
       left: '3%',
       right: '1%',
-      height: '60%'
+      height: '56%'
   },{
       left: '3%',
       right: '1%',
-      top: '71%',
+      top: '68%',
       height: '10%'
   },{
       left: '3%',
       right: '1%',
-      top: '82%',
-      height: '14%'
+      top: '78%',
+      height: '19%'
   }],
   xAxis: [{
       type: 'category',
       data: data.times,
       scale: true,
-      boundaryGap: false,
+      boundaryGap: true,//false,
       axisLine: { onZero: false },
       splitLine: { show: false },
       splitNumber: 20,
@@ -305,6 +307,8 @@ var option = {
   series: [{
           name: '行情K线',
           type: 'candlestick',
+          barMaxWidth: 30,
+          barCategoryGap:'20%',
           data: data.datas,
           itemStyle: {
               normal: {
@@ -453,6 +457,7 @@ var option = {
         },{
           name: 'VOL',
           type: 'bar',
+          barMaxWidth: 30,
           xAxisIndex: 1,
           yAxisIndex: 1,
           data: data.vols,
@@ -472,6 +477,7 @@ var option = {
       },{
           name: 'MACD',
           type: 'bar',
+          barMaxWidth: 30,
           xAxisIndex: 2,
           yAxisIndex: 2,
           data: data.macds,
@@ -505,6 +511,7 @@ var option = {
 };
 
 myChart.setOption(option);
+window.onresize = myChart.resize;
 
 $("#main").dblclick(function(){
     is_show_box = is_show_box?false:true;

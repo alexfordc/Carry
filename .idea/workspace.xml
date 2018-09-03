@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cfmmc_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_data.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cfmmc_kline.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_kline.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cfmmc_kline2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_kline2.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,27 +22,34 @@
     <favorites_list name="Carry" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="2004" column="44" lean-forward="true" selection-start-line="2004" selection-start-column="44" selection-end-line="2004" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#65582#77281#0" />
-                <element signature="e#86261#93778#0" />
-                <element signature="e#94476#98956#0" />
-              </folding>
+            <state relative-caret-position="348">
+              <caret line="1915" column="19" selection-start-line="1915" selection-start-column="19" selection-end-line="1915" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cfmmc_data.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
+      <file leaf-file-name="cfmmc_kline.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="31" column="49" lean-forward="true" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
+            <state relative-caret-position="-533">
+              <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cfmmc_kline2.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="281" column="21" lean-forward="true" selection-start-line="281" selection-start-column="21" selection-end-line="281" selection-end-column="21" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#2;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -47,56 +57,71 @@
       <file leaf-file-name="cfmmc_tu.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13225">
-              <caret line="529" column="67" selection-start-line="529" selection-start-column="67" selection-end-line="529" selection-end-column="67" />
+            <state relative-caret-position="543">
+              <caret line="294" column="20" selection-start-line="294" selection-start-column="20" selection-end-line="294" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cfmmc_data.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="567">
+              <caret line="112" column="46" selection-start-line="112" selection-start-column="46" selection-end-line="112" selection-end-column="46" />
               <folding>
-                <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#17463#17469#0" expanded="true" />
-                <element signature="e#17469#17475#0" expanded="true" />
+                <element signature="e#884#890#0" expanded="true" />
+                <element signature="e#890#896#0" expanded="true" />
+                <element signature="e#969#975#0" expanded="true" />
+                <element signature="e#975#981#0" expanded="true" />
+                <element signature="e#1340#1346#0" expanded="true" />
+                <element signature="e#1346#1352#0" expanded="true" />
+                <element signature="e#1558#1564#0" expanded="true" />
+                <element signature="e#1564#1570#0" expanded="true" />
+                <element signature="e#1645#1651#0" expanded="true" />
+                <element signature="e#1651#1657#0" expanded="true" />
+                <element signature="e#1730#1736#0" expanded="true" />
+                <element signature="e#1736#1742#0" expanded="true" />
+                <element signature="e#1990#1996#0" expanded="true" />
+                <element signature="e#1996#2002#0" expanded="true" />
+                <element signature="e#2002#2008#0" expanded="true" />
+                <element signature="e#2008#2014#0" expanded="true" />
+                <element signature="e#2014#2020#0" expanded="true" />
+                <element signature="e#2020#2026#0" expanded="true" />
+                <element signature="e#2026#2032#0" expanded="true" />
+                <element signature="e#2032#2038#0" expanded="true" />
+                <element signature="e#2051#2057#0" expanded="true" />
+                <element signature="e#2057#2063#0" expanded="true" />
+                <element signature="e#2063#2069#0" expanded="true" />
+                <element signature="e#2069#2075#0" expanded="true" />
+                <element signature="e#2088#2094#0" expanded="true" />
+                <element signature="e#2094#2100#0" expanded="true" />
+                <element signature="e#2112#2118#0" expanded="true" />
+                <element signature="e#2118#2124#0" expanded="true" />
+                <element signature="e#2138#2144#0" expanded="true" />
+                <element signature="e#2144#2150#0" expanded="true" />
+                <element signature="e#2175#2181#0" expanded="true" />
+                <element signature="e#2181#2187#0" expanded="true" />
+                <element signature="e#2198#2204#0" expanded="true" />
+                <element signature="e#2204#2210#0" expanded="true" />
+                <element signature="e#2222#2228#0" expanded="true" />
+                <element signature="e#2228#2234#0" expanded="true" />
+                <element signature="e#2246#2252#0" expanded="true" />
+                <element signature="e#2252#2258#0" expanded="true" />
+                <element signature="e#2270#2276#0" expanded="true" />
+                <element signature="e#2276#2282#0" expanded="true" />
+                <element signature="e#2308#2314#0" expanded="true" />
+                <element signature="e#2314#2320#0" expanded="true" />
+                <element signature="e#2335#2341#0" expanded="true" />
+                <element signature="e#2341#2347#0" expanded="true" />
+                <element signature="e#2347#2353#0" expanded="true" />
+                <element signature="e#2353#2359#0" expanded="true" />
+                <element signature="e#2370#2376#0" expanded="true" />
+                <element signature="e#2376#2382#0" expanded="true" />
+                <element signature="e#2382#2388#0" expanded="true" />
+                <element signature="e#2388#2394#0" expanded="true" />
+                <element signature="e#2407#2413#0" expanded="true" />
+                <element signature="e#2413#2419#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cfmmc_kline2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline2.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="154" column="48" selection-start-line="154" selection-start-column="48" selection-end-line="154" selection-end-column="48" />
-              <folding>
-                <element signature="e#339#345#0" expanded="true" />
-                <element signature="e#345#351#0" expanded="true" />
-                <element signature="e#416#422#0" expanded="true" />
-                <element signature="e#422#428#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#p#0;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#1;n#p#0;n#div#2;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hc.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/hc.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85550">
-              <caret line="3422" column="14" selection-start-line="3422" selection-start-column="14" selection-end-line="3422" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="1881" column="17" selection-start-line="1881" selection-start-column="17" selection-end-line="1881" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -104,8 +129,8 @@
       <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="444" column="20" lean-forward="true" selection-start-line="444" selection-start-column="20" selection-end-line="444" selection-end-column="20" />
+            <state relative-caret-position="628">
+              <caret line="389" column="19" selection-start-line="389" selection-start-column="19" selection-end-line="389" selection-end-column="19" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -211,13 +236,13 @@
         <option value="$USER_HOME$/Desktop/TdxData.py" />
         <option value="$PROJECT_DIR$/templates/cfmmc_login.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
-        <option value="$PROJECT_DIR$/templates/cfmmc_kline.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_tu.html" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
-        <option value="$PROJECT_DIR$/templates/cfmmc_kline2.html" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data.html" />
+        <option value="$PROJECT_DIR$/templates/cfmmc_kline.html" />
+        <option value="$PROJECT_DIR$/templates/cfmmc_kline2.html" />
       </list>
     </option>
   </component>
@@ -271,7 +296,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/tools/Tools/Carry/Carry/urls.py" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EveryDay/demo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -295,13 +320,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00080" summary="交易图">
-      <created>1531737146153</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1531737146153</updated>
     </task>
     <task id="LOCAL-00081" summary="交易图">
       <created>1531816704695</created>
@@ -639,22 +657,30 @@
       <option name="project" value="LOCAL" />
       <updated>1535680729290</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="K线可视化">
+      <created>1535710761240</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1535710761240</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09905163" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.5036881" side_tool="true" weight="0.15594329" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
       <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49578503" weight="0.44056708" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.18939394" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1005,21 +1031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13225">
-          <caret line="529" column="67" selection-start-line="529" selection-start-column="67" selection-end-line="529" selection-end-column="67" />
-          <folding>
-            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#17463#17469#0" expanded="true" />
-            <element signature="e#17469#17475#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -1027,60 +1038,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="154" column="48" selection-start-line="154" selection-start-column="48" selection-end-line="154" selection-end-column="48" />
-          <folding>
-            <element signature="e#339#345#0" expanded="true" />
-            <element signature="e#345#351#0" expanded="true" />
-            <element signature="e#416#422#0" expanded="true" />
-            <element signature="e#422#428#0" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#p#0;n#div#2;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="444" column="20" lean-forward="true" selection-start-line="444" selection-start-column="20" selection-end-line="444" selection-end-column="20" />
+        <state relative-caret-position="628">
+          <caret line="389" column="19" selection-start-line="389" selection-start-column="19" selection-end-line="389" selection-end-column="19" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="2004" column="44" lean-forward="true" selection-start-line="2004" selection-start-column="44" selection-end-line="2004" selection-end-column="44" />
+        <state relative-caret-position="567">
+          <caret line="112" column="46" selection-start-line="112" selection-start-column="46" selection-end-line="112" selection-end-column="46" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#65582#77281#0" />
-            <element signature="e#86261#93778#0" />
-            <element signature="e#94476#98956#0" />
+            <element signature="e#884#890#0" expanded="true" />
+            <element signature="e#890#896#0" expanded="true" />
+            <element signature="e#969#975#0" expanded="true" />
+            <element signature="e#975#981#0" expanded="true" />
+            <element signature="e#1340#1346#0" expanded="true" />
+            <element signature="e#1346#1352#0" expanded="true" />
+            <element signature="e#1558#1564#0" expanded="true" />
+            <element signature="e#1564#1570#0" expanded="true" />
+            <element signature="e#1645#1651#0" expanded="true" />
+            <element signature="e#1651#1657#0" expanded="true" />
+            <element signature="e#1730#1736#0" expanded="true" />
+            <element signature="e#1736#1742#0" expanded="true" />
+            <element signature="e#1990#1996#0" expanded="true" />
+            <element signature="e#1996#2002#0" expanded="true" />
+            <element signature="e#2002#2008#0" expanded="true" />
+            <element signature="e#2008#2014#0" expanded="true" />
+            <element signature="e#2014#2020#0" expanded="true" />
+            <element signature="e#2020#2026#0" expanded="true" />
+            <element signature="e#2026#2032#0" expanded="true" />
+            <element signature="e#2032#2038#0" expanded="true" />
+            <element signature="e#2051#2057#0" expanded="true" />
+            <element signature="e#2057#2063#0" expanded="true" />
+            <element signature="e#2063#2069#0" expanded="true" />
+            <element signature="e#2069#2075#0" expanded="true" />
+            <element signature="e#2088#2094#0" expanded="true" />
+            <element signature="e#2094#2100#0" expanded="true" />
+            <element signature="e#2112#2118#0" expanded="true" />
+            <element signature="e#2118#2124#0" expanded="true" />
+            <element signature="e#2138#2144#0" expanded="true" />
+            <element signature="e#2144#2150#0" expanded="true" />
+            <element signature="e#2175#2181#0" expanded="true" />
+            <element signature="e#2181#2187#0" expanded="true" />
+            <element signature="e#2198#2204#0" expanded="true" />
+            <element signature="e#2204#2210#0" expanded="true" />
+            <element signature="e#2222#2228#0" expanded="true" />
+            <element signature="e#2228#2234#0" expanded="true" />
+            <element signature="e#2246#2252#0" expanded="true" />
+            <element signature="e#2252#2258#0" expanded="true" />
+            <element signature="e#2270#2276#0" expanded="true" />
+            <element signature="e#2276#2282#0" expanded="true" />
+            <element signature="e#2308#2314#0" expanded="true" />
+            <element signature="e#2314#2320#0" expanded="true" />
+            <element signature="e#2335#2341#0" expanded="true" />
+            <element signature="e#2341#2347#0" expanded="true" />
+            <element signature="e#2347#2353#0" expanded="true" />
+            <element signature="e#2353#2359#0" expanded="true" />
+            <element signature="e#2370#2376#0" expanded="true" />
+            <element signature="e#2376#2382#0" expanded="true" />
+            <element signature="e#2382#2388#0" expanded="true" />
+            <element signature="e#2388#2394#0" expanded="true" />
+            <element signature="e#2407#2413#0" expanded="true" />
+            <element signature="e#2413#2419#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="31" column="49" lean-forward="true" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
+        <state relative-caret-position="348">
+          <caret line="1915" column="19" selection-start-line="1915" selection-start-column="19" selection-end-line="1915" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="294" column="20" selection-start-line="294" selection-start-column="20" selection-end-line="294" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-533">
+          <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_kline2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="281" column="21" lean-forward="true" selection-start-line="281" selection-start-column="21" selection-end-line="281" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#2;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

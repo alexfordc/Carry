@@ -1915,16 +1915,17 @@ def cfmmc_isdownload_data(rq):
         res = cache.get('cfmmc_status' + host)
         if not res:
             return HttpResponse('not_login')
-
-        if res == 'True':
-            jg = '数据更新成功！'
+        if '日' in res:
+            jg = res
+        elif res == 'True':
+            jg = '所有数据更新完毕！'
         elif res == 'False':
-            jg = '数据更新失败！'
+            jg = ''  # '部分数据更新失败！'
         elif res == 'not_run':
-            jg = '已经已经更新过！'
+            jg = '数据已经更新过！'
         else:
             jg = 'no'
-        cache.delete('cfmmc_status' + host) if jg != 'no' else 0
+        cache.delete('cfmmc_status' + host) if jg != 'no' and '日' not in res else 0
         return HttpResponse(jg)
     return HttpResponse('no')
 

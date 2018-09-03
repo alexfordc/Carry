@@ -110,7 +110,7 @@ function cfmmc_isdownload_data(){
     $.get("{% url 'cfmmc_isdownload_data' %}","",function(res){
         if(res=='not_login'){
             clearInterval(download_success);
-        }else if(res!='no'){
+        }else if(res!='no'&&res.indexOf('日')<0){
             $("#logins_infos").css('display','').html(res);
             setTimeout(function(){
                 $("#logins_infos").css('display','none');

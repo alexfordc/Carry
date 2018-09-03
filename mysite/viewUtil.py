@@ -385,6 +385,7 @@ class Cfmmc:
                             sql = f"INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
                             HSD.runSqlData('carry_investment', sql, (host, password, '', 1, name, createTime))
                             is_success = True
+                            cache.set('cfmmc_status' + host, f"{date}日前的数据更新成功！")
                         time.sleep(0.1)
             except:
                 pass
