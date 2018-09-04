@@ -1,0 +1,6 @@
+model_checkpoint_path: "crack_capcha95.ckpt-11700"
+all_model_checkpoint_paths: "..\\saved_model9\\crack_capcha91.ckpt-9300"
+all_model_checkpoint_paths: "..\\saved_model_highest\\crack_capcha.ckpt-9400"
+all_model_checkpoint_paths: "..\\saved_model_highest\\crack_capcha.ckpt-10500"
+all_model_checkpoint_paths: "..\\saved_model_highest\\crack_capcha.ckpt-11700"
+all_model_checkpoint_paths: "crack_capcha95.ckpt-11700"

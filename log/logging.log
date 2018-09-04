@@ -16569,3 +16569,151 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
     raise ConnectionError(self._error_message(e))
 redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+exception.py[2018-09-04 11:06:43][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2221, in cfmmc_huice
+    hc_name += host[:4]+'*'*len(host)-8+host[-4:]
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+base.py[2018-09-04 11:06:43][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-04 11:07:11][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2222, in cfmmc_huice
+    hc_name += host[:4]+'*'*len(host)-8+host[-4:]
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+exception.py[2018-09-04 11:07:37][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2222, in cfmmc_huice
+    hc_name += host[:4]+'*'*len(host)-8+host[-4:]
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+exception.py[2018-09-04 11:08:55][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2223, in cfmmc_huice
+    hc_name += host_fg[:4]+'*'*len(host_fg)-8+host_fg[-4:]
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+exception.py[2018-09-04 11:10:00][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2223, in cfmmc_huice
+    hc_name += host_fg[:4]+'*'*len(host_fg)-8+host_fg[-4:]
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+HSD.py[2018-09-04 11:16:24][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-04 11:16:52][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-04 11:17:14][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-04 11:17:28][ERROR]：文件 HSD.py 第1357行报错：division by zero
+exception.py[2018-09-04 16:55:54][ERROR]：Internal Server Error: /user/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 33, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 125, in has_key
+    return self.client.has_key(*args, **kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 473, in has_key
+    raise ConnectionInterrupted(connection=client, parent=e)
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\middleware.py", line 58, in process_response
+    request.session.save()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\backends\cache.py", line 57, in save
+    return self.create()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\backends\cache.py", line 44, in create
+    self._session_key = self._get_new_session_key()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\backends\base.py", line 164, in _get_new_session_key
+    if not self.exists(session_key):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\backends\cache.py", line 71, in exists
+    return session_key and (self.cache_key_prefix + session_key) in self._cache
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\cache\backends\base.py", line 203, in __contains__
+    return self.has_key(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\cache.py", line 40, in _decorator
+    raise e.parent
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django_redis\client\default.py", line 471, in has_key
+    return client.exists(key)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 951, in exists
+    return self.execute_command('EXISTS', name)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\client.py", line 673, in execute_command
+    connection.send_command(*args)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 610, in send_command
+    self.send_packed_command(self.pack_command(*args))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 585, in send_packed_command
+    self.connect()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\redis\connection.py", line 489, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. 由于目标计算机积极拒绝，无法连接。.
+base.py[2018-09-04 16:56:22][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-04 17:29:19][ERROR]：Internal Server Error: /cfmmc/dataPage/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2012, in cfmmc_data_page
+    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq,start_date,end_date)
+UnboundLocalError: local variable 'start_date' referenced before assignment
+exception.py[2018-09-04 17:30:26][ERROR]：Internal Server Error: /cfmmc/dataPage/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2013, in cfmmc_data_page
+    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq,start_date,end_date)
+UnboundLocalError: local variable 'start_date' referenced before assignment
+tf_logging.py[2018-09-04 18:09:44][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:10:54][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:21:55][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:23:07][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:24:06][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:43:06][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:46:22][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-04 18:53:01][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+HSD.py[2018-09-04 18:59:03][ERROR]：文件 HSD.py 第1357行报错：division by zero

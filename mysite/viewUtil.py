@@ -7,6 +7,7 @@ import re
 import time
 import datetime
 import xlrd
+import os
 
 from django.core.cache import cache
 from io import BytesIO
@@ -15,6 +16,8 @@ from pyquery import PyQuery as pq
 from threading import Thread
 
 from mysite import HSD
+from mysite.mycaptcha import Captcha
+from mysite import pypass
 
 
 def asyncs(func):
@@ -350,7 +353,7 @@ class Cfmmc:
                 return '_fail'
 
     @asyncs
-    def down_day_data_sql(self, rq, host, start_date, end_date, password=None, createTime=None):
+    def down_day_data_sql(self, host, start_date, end_date, password=None, createTime=None):
         """ 下载啄日数据并保存到SQL """
         cache.set('cfmmc_status' + host, 'start')
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
@@ -393,22 +396,87 @@ class Cfmmc:
         cache.set('cfmmc_status' + host, s)
 
 
-def cfmmc_dsqd():
-    """ 自动运行下载下载 期货监控系统数据，需待完善 """
-    t = time.localtime()
-    d = datetime.datetime.now()
-    while 1:
-        if d.weekday() < 5:
-            n = 60 * 60 * 6
+class Automatic:
+    _singleton = None
+    _no_start = True
+    def __new__(cls, *args, **kwargs):
+        if cls._singleton is None:
+            cls._singleton = super(Automatic, cls).__new__(cls)
+        return cls._singleton
+
+    def __init__(self):
+        if self._no_start:
+            self._no_start = False
+            self.cfmmc_dsqd()
+
+    @asyncs
+    def cfmmc_dsqd(self):
+        """ 自动运行下载数据 期货监控系统数据 """
+        sql = 'SELECT HOST,PASSWORD,creationTime FROM cfmmc_user WHERE download=1'
+        last_date = cache.get('cfmmc_Automatic_download')
+        last_date = last_date if last_date else 0
+        print('自动下载开始运行...')
+        if os.environ['COMPUTERNAME'].upper() == 'DOC':
+            model_path = r'D:\tools\Tools\Carry\mysite\myfile\captcha_model95'
         else:
-            n = 60 - t.tm_min + 1
-        time.sleep(n)
+            model_path = r'D:\Carry\mysite\myfile\captcha_model95'
+        while 1:
+            t = time.localtime()
+            d = datetime.datetime.now()
+            if d.weekday() < 5:
+                n = 60 * 60 * 6
+            else:
+                n = (60 - t.tm_min + 1) * 60
+            if t.tm_hour == 18 and last_date != t.tm_yday:
+                last_date = t.tm_yday
+                ca = Captcha(model_path)
+                cfmmc_login_d = Cfmmc()
+                data = HSD.runSqlData('carry_investment', sql)
+                for da in data:
+                    for i in range(20):  # 每个账号最多尝试登录20次
+                        try:
+                            token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)  # 获取token
+                            code = cfmmc_login_d.getCode()        # 获取验证码
+                            code = ca.check.send(BytesIO(code))   # 验证码
+                            password = pypass.cfmmc_decode(da[1], da[2])  # 密码
+                            success = cfmmc_login_d.login(da[0], password, token, code)  # 登录，返回成功与否
+                            if success is True:
+                                print(f"{da[0]} 第{i}次登录成功！")
+                                trade = get_cfmmc_trade(host=da[0])
+                                if trade:  # 若已经有下载过数据，则下载3天之内的
+                                    # start_date = str(trade[-1][11])
+                                    _start_date = HSD.get_date(-3)
+                                    end_date = trade[0][13]
+                                    start_date = _start_date if _start_date < end_date else end_date
+                                    end_date = HSD.get_date()
+                                    cfmmc_login_d.down_day_data_sql(da[0], start_date, end_date, password, da[2])
+                                    for run_time in range(300):
+                                        s = cache.get('cfmmc_status' + da[0])
+                                        if s in ('True','False','not_run'):
+                                            break
+                                        time.sleep(1)
+                                else:  # 若没下载过数据，则下载300天之内的
+                                    start_date = HSD.get_date(-300)
+                                    end_date = HSD.get_date()
+                                    cfmmc_login_d.down_day_data_sql(da[0], start_date, end_date, password, da[2])
+
+                                break
+                        except Exception as exc:
+                            print(exc)
+                        time.sleep(0.2)
+                    time.sleep(5)
+                cache.set('cfmmc_Automatic_download', last_date)
+            time.sleep(n)
 
 
-def cfmmc_data_page(rq):
+Automatic()
+
+
+def cfmmc_data_page(rq,start_date=None,end_date=None):
     """ 期货监控系统 展示页面 数据返回"""
-    start_date = rq.GET.get('start_date')
-    end_date = rq.GET.get('end_date')
+    if start_date is None or end_date is None:
+        start_date = rq.GET.get('start_date')
+        end_date = rq.GET.get('end_date')
     try:
         host = rq.session['user_cfmmc']['userID']
 

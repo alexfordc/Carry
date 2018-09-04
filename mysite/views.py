@@ -1878,12 +1878,12 @@ def cfmmc_login(rq):
                 _start_date = HSD.get_date(-3)
                 start_date = _start_date if _start_date<end_date else end_date
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(rq, userID, start_date, end_date, password, createTime)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
             else:  # 若没下载过数据，则下载300天之内的
                 start_date = HSD.get_date(-300)
                 end_date = HSD.get_date()
-                cfmmc_login_d.down_day_data_sql(rq, userID, start_date, end_date, password, createTime)
+                cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
             response['host_id'] = get_cfmmc_id_host(userID, True)
             response['trade'] = trade
@@ -1941,7 +1941,7 @@ def cfmmc_data(rq):
     try:
         if is_cfmmc_login and start_date and end_date:
             host = rq.session['user_cfmmc']['userID']
-            cfmmc_login_d.down_day_data_sql(rq, host, start_date, end_date)
+            cfmmc_login_d.down_day_data_sql(host, start_date, end_date)
             status = True
         else:
             status = False
@@ -1988,6 +1988,23 @@ def cfmmc_data_page(rq):
     if host and user_name and len(host) <= 7:
         host = get_cfmmc_id_host(host)
     rq_code_name = rq.GET.get('code_name')
+
+    when = rq.GET.get('when')
+    this_d = datetime.datetime.now()
+    this_t = time.localtime()
+    this_day = str(this_d)[:10]
+
+    if when == 'd':    # 当日
+        start_date, end_date = this_day, this_day
+    elif when == 'w':  # 当周
+        start_date, end_date = HSD.get_date(-this_d.weekday()), this_day
+    elif when == 'm':  # 当月
+        start_date, end_date = HSD.get_date(-this_d.day + 1), this_day
+    elif when == 'y':  # 当年
+        start_date, end_date = HSD.get_date(-this_t.tm_yday + 1), this_day
+    else:
+        start_date, end_date = None,None
+        when = '0'
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
 
@@ -1995,18 +2012,21 @@ def cfmmc_data_page(rq):
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
     else:
         host = rq.session['user_cfmmc'].get('userID')
-    trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
+    trade, _start_date, _end_date = viewUtil.cfmmc_data_page(rq,start_date,end_date)
+    if not start_date or not end_date:
+        start_date,end_date = _start_date,_end_date
     if not trade:
         # del rq.session['user_cfmmc']
         return render(rq, 'cfmmc_data.html',
-                      {'user_name': user_name, 'is_cfmmc_login': 'nos', 'logins': '暂无数据！可先登录期货监控中心'})
+                      {'user_name': user_name, 'is_cfmmc_login': 'nos', 'logins': '暂无数据！可先登录期货监控中心',
+                       'start_date': start_date, 'end_date': end_date,'when':when})
     codes = set(i[0] for i in trade)  # 合约代码
     code_name = viewUtil.cfmmc_code_name(codes)
     host_id = get_cfmmc_id_host(host)
-    if rq_code_name and rq_code_name != '1':
+    if rq_code_name and rq_code_name not in ('null','1'):
         trade = [i for i in trade if rq_code_name in i[0]]
     resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,
-            'code_name': code_name, 'host_id': host_id, 'rq_code_name':rq_code_name}
+            'code_name': code_name, 'host_id': host_id, 'rq_code_name':rq_code_name,'when':when}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -2218,6 +2238,7 @@ def cfmmc_huice(rq):
     hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
     hc_name = get_cfmmc_id_host(host + '_name')
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
+    hc_name = host[:4]+'***'+host[-4:]+' ( '+hc_name+' )'
     hct = {
         'allyk': [],  # 累积盈亏
         'alljz': [],  # 累积净值
@@ -2302,7 +2323,7 @@ def cfmmc_huice(rq):
     hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
     host = get_cfmmc_id_host(host+'_name')
     host = host[0]+'*'*len(host[1])
-    hct['host'] = host
+    hct['host'] = hc_name  # host
     resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
             'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
     return render(rq, 'cfmmc_tu.html', resp)

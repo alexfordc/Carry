@@ -2,8 +2,8 @@
 {% block title %}投资者查询服务系统-中国期货市场监控中心{% endblock %}
 {% block script %}
 <style>
-tr{border:1px solid #999;}
-td,th{ border:0px;height:40px; }
+.info_body tr{border:1px solid #999;}
+.info_body td,th{ border:0px;height:40px; }
 </style>
 <script language="JavaScript">
    javascript:window.history.forward(1);
@@ -15,8 +15,7 @@ td,th{ border:0px;height:40px; }
 <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 
 
-
-<div align="center">
+<!--<div align="center">-->
     <!--<form action="{% url 'cfmmc_data' %}" method="GET">-->
 <!--开始日期：<input type="date" name="start_date" value="{{start_date}}">&nbsp;&nbsp;-->
 <!--结束日期：<input type="date" name="end_date" value="{{end_date}}">&nbsp;&nbsp;-->
@@ -24,25 +23,9 @@ td,th{ border:0px;height:40px; }
 <!--</form>-->
 
 <!--<br/><hr/><br/>-->
-    <form action="" method="GET" id="cfmmc_huice_post">
-开始日期：<input type='date' name="start_date" value={{start_date}} id='start_date'>&nbsp;&nbsp;结束日期：<input type='date' name="end_date" value={{end_date}} id='end_date'>&nbsp;&nbsp;
-        <select name="code_name" style="height:24px;">
-            {% for c,n in code_name.items %}
-                {% if forloop.first %}
-                    <option value="1">全部</option>
-                {% endif %}
-                <option value="{{c}}" {% if c == rq_code_name %}selected{% endif %}>{{n}}</option>
-            {% endfor %}
-        </select>&nbsp;&nbsp;
-        <input type="hidden" name="host" value="{{ host_id }}">
-        <input type="hidden" name="code" value="{{ trade.0.0 }}">
-    <input type="button" onclick="javascript:request('data')"  value="原数据">&nbsp;&nbsp;
-     <input type="button" onclick="javascript:request('tu')"  value="统计图">&nbsp;&nbsp;
-    <input type="button" onclick="javascript:request('bs')" value="买卖点">&nbsp;&nbsp;
-    <!--<input type="button" onclick="javascript:request('hc')" value="回  测">&nbsp;&nbsp;-->
-        <a href="{% url 'cfmmc_logout' %}" style="color:blue;">退出</a>
-</form><br/><br/>
-    <div align="center">
+    {% include 'base/cfmmc_form.html' %}
+<br/>
+    <div align="center" class="info_body">
     <table border="1">
         <tr><th>合约&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th>成交序号&nbsp;&nbsp;&nbsp;&nbsp;</th><th>成交时间&nbsp;&nbsp;</th><th>买/卖&nbsp;&nbsp;</th><th>投机/套保&nbsp;&nbsp;</th>
             <th>成交价&nbsp;&nbsp;</th><th>手数&nbsp;&nbsp;</th><th>成交额&nbsp;&nbsp;</th><th>开/平&nbsp;&nbsp;</th><th>手续费&nbsp;&nbsp;</th>
@@ -58,7 +41,7 @@ td,th{ border:0px;height:40px; }
     </div>
 
 
-</div>
+<!--</div>-->
 <script>
     var success = '{{success}}';
     var user_name = '{{user_name}}'!='None';
@@ -83,8 +66,9 @@ td,th{ border:0px;height:40px; }
         var start_date=$("#start_date").val();
         var end_date=$("#end_date").val();
         var code_name=$("select[name='code_name']").val();
+        var when = $("input[name='when']:checked").val();
         if(type=='data'){
-            location.href="{% url 'cfmmc_data_page' %}?start_date="+start_date+"&end_date="+end_date+"&code_name="+code_name;
+            location.href="{% url 'cfmmc_data_page' %}?start_date="+start_date+"&end_date="+end_date+"&code_name="+code_name+"&when="+when;
         }else if(type=='tu'){
             var post = $("#cfmmc_huice_post");
             post.attr('action','{% url 'cfmmc_huice' %}');
