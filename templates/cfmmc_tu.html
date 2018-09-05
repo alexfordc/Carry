@@ -21,7 +21,7 @@
                     <td id="tuxiant3">每日权益</td>
                     <td id="tuxiant4">成交偏好</td>
                     <td id="tuxiant5">品种盈亏</td>
-                    <td id="tuxiant11">每日盈亏</td>
+                    <!--<td id="tuxiant11">每日盈亏</td>-->
                     <td id="tuxiant6">每周盈亏</td>
                     <td id="tuxiant7">每月盈亏</td>
                     <td id="tuxiant8">账号余额</td>
@@ -124,6 +124,13 @@ toolbox: {
 }else if(type=='pie'){
     myChart.clear();
     optiont = {
+    title:{
+    text:"账户：{{hct.host}}",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+        }
+    },
     tooltip : {
         trigger: 'item',
         formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -186,6 +193,13 @@ if(colorList.length<zx_x.length){
 }
 optiont ={
     //backgroundColor:'#fdfdfd', // 背景颜色
+    title:{
+    text:"账户：{{hct.host}}",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+        }
+    },
     tooltip: {},
     xAxis: {
         type: 'category',
@@ -205,7 +219,7 @@ optiont ={
             name: tu_name[0],
             type: 'bar',
             barMaxWidth: 40, // 柱子的最大宽度
-            // barCateGoryGap: 20,
+            barCateGoryGap: 20,
             itemStyle: {
                 normal: {
                     color: function(params) {
@@ -214,13 +228,13 @@ optiont ={
                     },
                     label: {
                         show: true,
-                        position: 'top',
+                        position: 'top',//'inside',//
                         formatter: '{b}\n{c}'
                     }
                 }
             },
             data: zx_y,
-            markPoint: {
+            /*markPoint: {
                 tooltip: {
                     trigger: 'item',
                     backgroundColor: 'rgba(0,0,0,0)',
@@ -231,7 +245,7 @@ optiont ={
                     }
                 },
 
-            }
+            }*/
         }
     ],
     label:{
@@ -246,7 +260,7 @@ myChart.clear();
 optiont = {
 
 title:{
-    text:"账户：{{hct.host|truncatechars:9}}",
+    text:"账户：{{hct.host}}",
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -310,6 +324,79 @@ toolbox: {
         data: zx_y2
     }]
 };
+}else if(type=='line2'){
+myChart.clear();
+optiont = {
+
+title:{
+    text:"账户：{{hct.host}}",
+    textStyle:{
+        color:'#00A600',
+        fontSize:18
+    }
+},
+color:["#FF0000"],
+tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: zx_x
+        },
+toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+    xAxis: {
+        type: 'category',
+        data: zx_x
+    },
+    yAxis: [{
+        type: 'value'
+    },{
+        type: 'value'
+    }],
+    series: [{
+        name: tu_name[0],
+        type: 'line',
+        yAxisIndex:0,
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#ff6a4a',
+                lineStyle: { color: '#ff6a4a' }
+            }
+        },
+        data: zx_y
+    },{
+        name: tu_name[1],
+        type: 'bar',
+        yAxisIndex:1,
+        barMaxWidth: 10, // 柱子的最大宽度
+        // barCateGoryGap: 20,
+        itemStyle: {
+            normal: {
+                color: function(params) {
+                    // build a color map as your need.
+                    if(params.value>0){
+                        return 'red';
+                    }else{
+                        return 'green';
+                    }
+                }
+            }
+        },
+        data: zx_y2
+    }]
+};
 }
 
 myChart.setOption(optiont);
@@ -341,24 +428,24 @@ function tuxiancolort(id){
         }
     }
     if(id=='#tuxiant1'){
-        tu_name=["累积净值",""];
-        huatut("line",{{zx_x|safe}},{{hct.alljz|safe}},'');
+        tu_name=["累积净值","每日盈亏"];
+        huatut("line2",{{zx_x|safe}},{{hct.alljz|safe}},{{hct.day_value|safe}});
     }else if(id=='#tuxiant2'){
         tu_name=["累积利润","累积手续费"];
         huatut("line",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.allsxf|safe}});
     }else if(id=='#tuxiant3'){
-        tu_name=["客户权益","",""];
-        huatut("line",{{zx_x|safe}},{{hct.qy|safe}},"");
+        tu_name=["每日权益","每日盈亏",""];
+        huatut("line2",{{zx_x|safe}},{{hct.qy|safe}},{{hct.day_value|safe}});
     }else if(id=='#tuxiant4'){
         tu_name=["成交偏好","",""];
         huatut("pie",{{hct.pie_name|safe}},{{hct.pie_value|safe}},"");
     }else if(id=='#tuxiant5'){
         tu_name=["品种盈亏","",""];
         huatut("bar",{{hct.bar_name|safe}},{{hct.bar_value|safe}},"");
-    }else if(id=='#tuxiant11'){
+    }/*else if(id=='#tuxiant11'){
         tu_name=["每日盈亏","",""];
         huatut("bar",{{zx_x|safe}},{{hct.day_value|safe}},"");
-    }else if(id=='#tuxiant6'){
+    }*/else if(id=='#tuxiant6'){
         tu_name=["每周盈亏","",""];
         huatut("bar",{{hct.week_name|safe}},{{hct.week_value|safe}},"");
     }else if(id=='#tuxiant7'){
@@ -405,9 +492,9 @@ $("#tuxiant9").click(function(){
 $("#tuxiant10").click(function(){
     tuxiancolort("#tuxiant10");
 });
-$("#tuxiant11").click(function(){
+/*$("#tuxiant11").click(function(){
     tuxiancolort("#tuxiant11");
-});
+});*/
 
 tuxiancolort("#tuxiant1");
 
@@ -435,56 +522,56 @@ function request(type){
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
 
 <div id="leftColumn" class="relative" style="position:absolute;left:20%;display:none;width:875px;">
-                   <!-- <div class="floatLeft marginB10">
-<div class="ds1">
-    <div class="ds2">
-        <div class="ds3">
-            <div class="ds4">
-                <div class="ds5">
-                    <div class="ds6">
-                        <div class="box_cont" style="width:195px; height:348px">
-                            <div class="boxTitle">
-                                <ul class="titleNav">
-                                    <li class="bold">信息</li>
-                                    <li class="on" onclick="switchTab('tabs9','stats',this);">统计</li>
-                                    <li class="off" onclick="switchTab('tabs9','gen',this);">一般</li>
-                                </ul>
-                            </div>
+                   <!--<div class="floatLeft marginB10">-->
+<!--<div class="ds1">-->
+    <!--<div class="ds2">-->
+        <!--<div class="ds3">-->
+            <!--<div class="ds4">-->
+                <!--<div class="ds5">-->
+                    <!--<div class="ds6">-->
+                        <!--<div class="box_cont" style="width:195px; height:348px">-->
+                            <!--<div class="boxTitle">-->
+                                <!--<ul class="titleNav">-->
+                                    <!--&lt;!&ndash;<li class="bold">信息</li>&ndash;&gt;-->
+                                    <!--<li class="on" onclick="switchTab('tabs9','stats',this);">统计</li>-->
+                                    <!--&lt;!&ndash;<li class="off" onclick="switchTab('tabs9','gen',this);">一般</li>&ndash;&gt;-->
+                                <!--</ul>-->
+                            <!--</div>-->
 
-                            <ul class="quickStats" id="stats" style="">
-                                <li class="font12 bold"><span class="floatLeft dotted" id="gainTip">获利:</span>
-                                    <span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>
-                                <li class="paddB5 borderB"><span class="floatLeft dotted" id="absGainTip">绝对收益:</span>
-                                    <span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>
+                            <!--<ul class="quickStats" id="stats" style="">-->
+                                <!--<li class="font12 bold"><span class="floatLeft dotted" id="gainTip">获利:</span>-->
+                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
+                                <!--<li class="paddB5 borderB"><span class="floatLeft dotted" id="absGainTip">绝对收益:</span>-->
+                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
 
-                                <li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl|floatformat:"2"}}%</span></li>
-                                <li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl|floatformat:"2"}}%</span></li>
-                                <li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc|floatformat:"2"}}%</span></li>
+                                <!--<li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl|floatformat:"2"}}%</span></li>-->
+                                <!--<li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl|floatformat:"2"}}%</span></li>-->
+                                <!--<li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc|floatformat:"2"}}%</span></li>-->
 
-                                <li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ￥{{hc.ye|floatformat:"2"}}</span></li>
-                                <li><span class="floatLeft">净值:</span><span class="floatNone">  ￥{{hc.ye|floatformat:"2"}} </span></li>
-                                <li><span class="floatLeft">最高:</span><span class="floatNone">￥{{hc.max_jz|floatformat:"2"}}</span>
-                                </li>
+                                <!--<li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ￥{{hc.ye|floatformat:"2"}}</span></li>-->
+                                <!--<li><span class="floatLeft">净值:</span><span class="floatNone">  ￥{{hc.ye|floatformat:"2"}} </span></li>-->
+                                <!--<li><span class="floatLeft">最高:</span><span class="floatNone">￥{{hc.max_jz|floatformat:"2"}}</span>-->
+                                <!--</li>-->
 
-                                <li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">￥{{huizong.yk|floatformat:"2"}}</span> </span></li>
-                                <li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">￥0.00</span></li>
-                                <li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> ￥{{init_money}}</span></li>
-                                <li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">￥0.00</span></li>
-                                <li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>
-                                <li>
-                                        <span class="floatLeft">交易者</span><span class="floatNone" id="totalTracking">{{hc_name}}</span>
-                                </li>
+                                <!--<li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">￥{{huizong.yk|floatformat:"2"}}</span> </span></li>-->
+                                <!--<li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">￥0.00</span></li>-->
+                                <!--<li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> ￥{{init_money}}</span></li>-->
+                                <!--<li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">￥0.00</span></li>-->
+                                <!--<li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>-->
+                                <!--<li>-->
+                                        <!--<span class="floatLeft">交易者</span><span class="floatNone" id="totalTracking">{{hc_name}}</span>-->
+                                <!--</li>-->
 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 
-</div>-->
+<!--</div>-->
 
 <div class="floatLeft" style="width:660px;">
 
@@ -500,10 +587,10 @@ function request(type){
                             <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">增长率</span>&nbsp;&nbsp;
                                 <span id="tuxian2">余额</span>&nbsp;&nbsp;
                                 <span id="tuxian3">利润</span>&nbsp;&nbsp;
-                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;
-                                <span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>
-                                <span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>
-                            </div>
+                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;-->
+                                <!--<span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>-->
+                                <!--<span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>-->
+                            <!--</div>
                                 <div id="zhexiantu" style="width: 658;height: 318px;"></div>
                            </div>-->
                     <!--</div>-->
@@ -516,7 +603,7 @@ function request(type){
 
 </div>
 <div class="floatLeft" style="width:877px">
-
+<!--
 <div class="ds1 marginB10" id="tradingContDiv">
     <div class="ds2">
         <div class="ds3">
@@ -608,8 +695,8 @@ function request(type){
             </div>
         </div>
     </div>
-</div>
-<div class="ds1">
+</div>-->
+<div class="ds1" style="width:900px;font-size:14px;">
 <div class="ds2">
 <div class="ds3">
 <div class="ds4">
@@ -620,7 +707,7 @@ function request(type){
 
 
   <ul class="titleNav">
-        <li class="bold">高级统计数据</li>
+        <li class="bold">账户：{{hc_name}}</li>
 
     </ul>
 </div>
@@ -657,12 +744,12 @@ function request(type){
             </tr>
             <tr>
 
-                <td>    手:</td>
-                <td class="alignR">{{huizong.zl}}</td>
+                <td>    盈亏比:</td>
+                <td class="alignR">{% widthratio hc.avglr hc.avgss -100 %} %</td>
             </tr>
             <tr class="bg1">
-                <td>委员会:</td>
-                <td class="alignR">￥0.00</td>
+                <td>总胜率:</td>
+                <td class="alignR">{{huizong.shenglv}} %</td>
             </tr>
 
 
@@ -730,15 +817,15 @@ function request(type){
 
 
                     <tr>
-                        <td><span class="dotted" id="zTip">Z评分 (概率):</span></td>
+                        <td><span class="dotted" id="zTip">历史最高额:</span></td>
                         <td class="alignR">
-                            -0.16 (12.72%)
+                            ￥{{huizong.max_amount}}
                         </td>
                     </tr>
 
                     <tr class="bg1">
-                        <td><span class="dotted" id="expTip">期待:</span></td>
-                        <td class="alignR">-732.2 点 / -￥7.32</td>
+                        <td><span class="dotted" id="expTip">存/取款:</span></td>
+                        <td class="alignR">￥{{huizong.deposit}} / {{huizong.draw}}</td>
                     </tr>
                                                             <tr>
                                                                 <td><span class="dotted" id="ahprTip">AHPR:</span></td>
@@ -785,7 +872,7 @@ function tuxiancolor(id){
         tu_name=["增长率","手数"];
         huatu(tu_name,{{hc.zx_x|safe}},{{hc.zzl|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["净值","手数"];
+        tu_name=["余额","手数"];
         huatu(tu_name,{{hc.zx_x|safe}},{{hc.dayye|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian3'){
         tu_name=["总利润","日利润"];
@@ -932,7 +1019,7 @@ option = {
         name: tu_name[1],
         type: 'bar',
         yAxisIndex: 1,
-        barWidth: 10,
+        barWidth: 5,
         itemStyle: {
             normal: {
                 barBorderRadius: 3,

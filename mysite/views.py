@@ -1990,21 +1990,7 @@ def cfmmc_data_page(rq):
     rq_code_name = rq.GET.get('code_name')
 
     when = rq.GET.get('when')
-    this_d = datetime.datetime.now()
-    this_t = time.localtime()
-    this_day = str(this_d)[:10]
-
-    if when == 'd':    # 当日
-        start_date, end_date = this_day, this_day
-    elif when == 'w':  # 当周
-        start_date, end_date = HSD.get_date(-this_d.weekday()), this_day
-    elif when == 'm':  # 当月
-        start_date, end_date = HSD.get_date(-this_d.day + 1), this_day
-    elif when == 'y':  # 当年
-        start_date, end_date = HSD.get_date(-this_t.tm_yday + 1), this_day
-    else:
-        start_date, end_date = None,None
-        when = '0'
+    when,start_date,end_date = viewUtil.this_day_week_month_year(when)
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
 
@@ -2070,8 +2056,11 @@ def cfmmc_bs(rq):
         code = rq.GET.get('code_name')
         if not code or code == '1':
             code = rq.GET.get('code')
-        start_date = rq.GET.get('start_date')
-        end_date = rq.GET.get('end_date')
+        when = rq.GET.get('when')
+        when, start_date, end_date = viewUtil.this_day_week_month_year(when)
+        if start_date is None:
+            start_date = rq.GET.get('start_date')
+            end_date = rq.GET.get('end_date')
         ttype = rq.GET.get('ttype')
         host = rq.GET.get('host')
         host = get_cfmmc_id_host(host)
@@ -2200,7 +2189,7 @@ def cfmmc_bs(rq):
 
 
 def cfmmc_hc(rq):
-    """ 期货回测，数据，图 """
+    """ 期货回测，数据，图。暂时取消使用 """
     user_name, qx = LogIn(rq)
     host = rq.GET.get('host')
     host = get_cfmmc_id_host(host)
@@ -2221,8 +2210,11 @@ def cfmmc_huice(rq):
     if not host:
         return redirect('/')
     host = get_cfmmc_id_host(host)
-    start_date = rq.GET.get('start_date', '1970-01-01')
-    end_date = rq.GET.get('end_date', '2100-01-01')
+    when = rq.GET.get('when')
+    when, start_date, end_date = viewUtil.this_day_week_month_year(when)
+    if start_date is None:
+        start_date = rq.GET.get('start_date', '1970-01-01')
+        end_date = rq.GET.get('end_date', '2100-01-01')
     cfmmc = HSD.Cfmmc(host, start_date, end_date)
     data = cfmmc.get_data()
     pzs = cfmmc.varieties()
@@ -2324,6 +2316,10 @@ def cfmmc_huice(rq):
     host = get_cfmmc_id_host(host+'_name')
     host = host[0]+'*'*len(host[1])
     hct['host'] = hc_name  # host
+    # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
+    huizong['max_amount'] = max(hct['amount'])  # 最高余额
+    huizong['deposit'] = sum(i[1] for i in ee if i[1]>0) # 存款
+    huizong['draw'] = sum(i[1] for i in ee if i[1]<0)    # 取款
     resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
             'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
     return render(rq, 'cfmmc_tu.html', resp)

@@ -726,3 +726,21 @@ def future_macd(da, short=12, long=26, phyd=9):
         da2.append(
             [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
     return da2
+
+def this_day_week_month_year(when):
+    """ 当日、当周、当月、当年的开始与结束时间计算"""
+    this_d = datetime.datetime.now()
+    this_t = time.localtime()
+    this_day = str(this_d)[:10]
+    if when == 'd':    # 当日
+        start_date, end_date = this_day, this_day
+    elif when == 'w':  # 当周
+        start_date, end_date = HSD.get_date(-this_d.weekday()), this_day
+    elif when == 'm':  # 当月
+        start_date, end_date = HSD.get_date(-this_d.day + 1), this_day
+    elif when == 'y':  # 当年
+        start_date, end_date = HSD.get_date(-this_t.tm_yday + 1), this_day
+    else:
+        start_date, end_date = None,None
+        when = '0'
+    return when,start_date,end_date

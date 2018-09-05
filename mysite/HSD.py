@@ -1811,7 +1811,7 @@ class Cfmmc:
         dc = {}
         for i in d:
             k = re.sub('\d', '', i[0])
-            k = FUTURE_NAME[k]
+            k = i[0]+'('+FUTURE_NAME[k]+')'
             if k not in dc:
                 dc[k] = 0
             dc[k] += int(i[1])
@@ -1841,7 +1841,7 @@ class Cfmmc:
                 v[2] += data2[i]
             res.append(v)
 
-        res = [(i[0], i[1], i[2], i[3], FUTURE_NAME[re.sub('\d', '', i[1])]) for i in res]
+        res = [(i[0], i[1], i[2], i[3], i[1]+'('+FUTURE_NAME[re.sub('\d', '', i[1])]+')') for i in res]
         return res
 
     def get_rj(self):
