@@ -81,7 +81,9 @@ urlpatterns = [
     url(r'^cfmmc/dataPage/$', views.cfmmc_data_page, name='cfmmc_data_page'),
     url(r'^cfmmc/dataLocal/$', views.cfmmc_data_local, name='cfmmc_data_local'),
     url(r'^cfmmc/huice/$', views.cfmmc_huice, name='cfmmc_huice'),
+    url(r'^cfmmc/huice/(?P<param>[d|w|m|y]\d{4,6}\w*)/$', views.cfmmc_huice, name='cfmmc_huice'),
     url(r'^cfmmc/bs/$', views.cfmmc_bs, name='cfmmc_bs'),
+    url(r'^cfmmc/bs/(?P<param>\w+)/$', views.cfmmc_bs, name='cfmmc_bs'),
     url(r'^cfmmc/hc/$', views.cfmmc_hc, name='cfmmc_hc'),
     url(r'^cfmmc/isdownload/data/$', views.cfmmc_isdownload_data, name='cfmmc_isdownload_data'),
 

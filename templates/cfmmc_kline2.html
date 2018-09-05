@@ -10,11 +10,11 @@
 
 </div>
 <div align="center">
-    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}">1分钟</a>&nbsp;&nbsp;
-    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=5M">5分钟</a>&nbsp;&nbsp;
-    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=30M">30分钟</a>&nbsp;&nbsp;
-    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=1H">1小时</a>&nbsp;&nbsp;
-    <a href="{% url 'cfmmc_bs' %}?{{ rq_url }}&ttype=1D">1日</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('{{ rq_url }}','1M')">1分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('{{ rq_url }}','5M')">5分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('{{ rq_url }}','30M')">30分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('{{ rq_url }}','1H')">1小时</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('{{ rq_url }}','1D')">1日</a>&nbsp;&nbsp;
 <hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
     <div id="show_hq_message2" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
 </div>
@@ -29,6 +29,13 @@
 </div>
 
     <script type="text/javascript">
+    function kline_request(rq_url,type){
+        if(rq_url.indexOf('=')<0){
+            location.href="{% url 'cfmmc_bs' %}"+rq_url+'_'+type;
+        }else{
+            location.href="{% url 'cfmmc_bs' %}?"+rq_url+'&ttype='+type;
+        }
+    }
 var holds = {{holds|safe}};
 var myChart=echarts.init(document.getElementById('main'));
 var is_show_box = true;

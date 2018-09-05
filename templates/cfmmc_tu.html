@@ -428,8 +428,8 @@ function tuxiancolort(id){
         }
     }
     if(id=='#tuxiant1'){
-        tu_name=["累积净值","每日盈亏"];
-        huatut("line2",{{zx_x|safe}},{{hct.alljz|safe}},{{hct.day_value|safe}});
+        tu_name=["累积净值",""];
+        huatut("line",{{zx_x|safe}},{{hct.alljz|safe}},"");
     }else if(id=='#tuxiant2'){
         tu_name=["累积利润","累积手续费"];
         huatut("line",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.allsxf|safe}});

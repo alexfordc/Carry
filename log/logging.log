@@ -16971,3 +16971,167 @@ HSD.py[2018-09-05 13:09:53][ERROR]：文件 HSD.py 第1357行报错：division by zero
 HSD.py[2018-09-05 13:10:14][ERROR]：文件 HSD.py 第1357行报错：division by zero
 HSD.py[2018-09-05 13:10:27][ERROR]：文件 HSD.py 第1357行报错：division by zero
 HSD.py[2018-09-05 13:10:34][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:18:01][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:18:13][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:18:27][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:18:55][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:20:51][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:31:12][ERROR]：文件 HSD.py 第1357行报错：division by zero
+base.py[2018-09-05 13:31:26][WARNING]：Not Found: /cfmmc/y1000
+base.py[2018-09-05 13:31:30][WARNING]：Not Found: /cfmmc/y1000/
+base.py[2018-09-05 13:31:33][WARNING]：Not Found: /cfmmc/y1000/
+base.py[2018-09-05 13:31:51][WARNING]：Not Found: /cfmmc/y1000
+base.py[2018-09-05 13:32:00][WARNING]：Not Found: /cfmmc/huice/y1000/
+base.py[2018-09-05 13:32:02][WARNING]：Not Found: /cfmmc/huice/y1000
+exception.py[2018-09-05 13:32:47][ERROR]：Internal Server Error: /cfmmc/huice/y1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2209, in cfmmc_huice
+    rq.GET['when'] = param[0]
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 434, in __setitem__
+    self._assert_mutable()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 431, in _assert_mutable
+    raise AttributeError("This QueryDict instance is immutable")
+AttributeError: This QueryDict instance is immutable
+exception.py[2018-09-05 13:32:50][ERROR]：Internal Server Error: /cfmmc/huice/y1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2209, in cfmmc_huice
+    rq.GET['when'] = param[0]
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 434, in __setitem__
+    self._assert_mutable()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\http\request.py", line 431, in _assert_mutable
+    raise AttributeError("This QueryDict instance is immutable")
+AttributeError: This QueryDict instance is immutable
+HSD.py[2018-09-05 13:33:49][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:33:52][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:42:36][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:42:43][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:43:12][ERROR]：文件 HSD.py 第1357行报错：division by zero
+base.py[2018-09-05 13:43:30][WARNING]：Not Found: /cfmmc/huice//y1000
+base.py[2018-09-05 13:43:47][WARNING]：Not Found: /cfmmc/huice//y1000
+HSD.py[2018-09-05 13:43:52][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:44:12][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:44:16][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:44:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:45:08][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:45:54][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:45:59][ERROR]：文件 HSD.py 第1357行报错：division by zero
+exception.py[2018-09-05 13:46:29][ERROR]：Internal Server Error: /cfmmc/huice/m1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2303, in cfmmc_huice
+    ind_s = zx_x.index(zx_x2[0])
+IndexError: list index out of range
+HSD.py[2018-09-05 13:48:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+base.py[2018-09-05 13:49:30][WARNING]：Not Found: /cfmmc/huice/y
+HSD.py[2018-09-05 13:50:05][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:50:26][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:53:12][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:53:35][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:53:38][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:54:06][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:54:06][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:54:30][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 13:54:33][ERROR]：文件 HSD.py 第1357行报错：division by zero
+exception.py[2018-09-05 14:16:59][ERROR]：Internal Server Error: /cfmmc/huice/y1001_1_5M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc_name = get_cfmmc_id_host(host + '_name')
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+exception.py[2018-09-05 14:20:50][ERROR]：Internal Server Error: /cfmmc/huice/y1001_1_5M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2247, in cfmmc_huice
+    hc_name = get_cfmmc_id_host(host + '_name')
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+exception.py[2018-09-05 14:21:03][ERROR]：Internal Server Error: /cfmmc/huice/y1001_J1901_5M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2247, in cfmmc_huice
+    hc_name = get_cfmmc_id_host(host + '_name')
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+exception.py[2018-09-05 14:22:36][ERROR]：Internal Server Error: /cfmmc/huice/y1001_J1901_5M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2248, in cfmmc_huice
+    hc_name = get_cfmmc_id_host(host + '_name')
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+exception.py[2018-09-05 14:23:41][ERROR]：Internal Server Error: /cfmmc/huice/y1001_J1901_5M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2248, in cfmmc_huice
+    hc_name = get_cfmmc_id_host(host + '_name')
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+base.py[2018-09-05 14:41:04][WARNING]：Not Found: /cfmmc/bs/y1001_J1901_5M/y1001_J1901_30M
+exception.py[2018-09-05 14:41:42][ERROR]：Internal Server Error: /cfmmc/bs/_30M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2059, in cfmmc_bs
+    when = param[0][0]
+IndexError: string index out of range
+base.py[2018-09-05 14:43:24][WARNING]：Not Found: /cfmmc/bs/y1001_J1901_5M/y1001_J1901_30M

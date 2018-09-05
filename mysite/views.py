@@ -2049,20 +2049,30 @@ def cfmmc_save(rq):
     return HttpResponse('no')
 
 
-def cfmmc_bs(rq):
+def cfmmc_bs(rq,param=None):
     """ 买卖点 """
     user_name, qx, uid = LogIn(rq, uid=True)
     if rq.method == 'GET':
-        code = rq.GET.get('code_name')
+        # when=y&host=1001&code=J1901&ttype=1D
+        if param is not None:
+            param = param.split('_')
+            when = param[0][0]
+            host = param[0][1:]
+            code = param[1]
+            ttype = param[2]
+        else:
+            code = rq.GET.get('code_name')
+            when = rq.GET.get('when')
+            ttype = rq.GET.get('ttype')
+            host = rq.GET.get('host')
         if not code or code == '1':
             code = rq.GET.get('code')
-        when = rq.GET.get('when')
+
         when, start_date, end_date = viewUtil.this_day_week_month_year(when)
         if start_date is None:
             start_date = rq.GET.get('start_date')
             end_date = rq.GET.get('end_date')
-        ttype = rq.GET.get('ttype')
-        host = rq.GET.get('host')
+
         host = get_cfmmc_id_host(host)
         if not code or not start_date or not end_date or not host:
             return redirect('/')
@@ -2080,7 +2090,7 @@ def cfmmc_bs(rq):
         if not data:
             data = mongo.get_data(code, start_date, end_date)
         rq_url = rq.META.get('QUERY_STRING')
-        rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else rq_url
+        rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (rq_url+'_'.join(param[:2]) if '=' not in rq_url else rq_url)
         _name = get_cfmmc_id_host(host+'_name')
         _name = _name[0]+'*'*len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
@@ -2203,14 +2213,19 @@ def cfmmc_hc(rq):
                    'hc_name': hc_name})
 
 
-def cfmmc_huice(rq):
+def cfmmc_huice(rq,param=None):
     """ 期货回测，绘图 """
+    if param is not None:
+        when = param[0]
+        host = param[1:]
+    else:
+        host = rq.GET.get('host')
+        when = rq.GET.get('when')
     user_name, qx = LogIn(rq)
-    host = rq.GET.get('host')
+
     if not host:
         return redirect('/')
     host = get_cfmmc_id_host(host)
-    when = rq.GET.get('when')
     when, start_date, end_date = viewUtil.this_day_week_month_year(when)
     if start_date is None:
         start_date = rq.GET.get('start_date', '1970-01-01')
@@ -2293,36 +2308,38 @@ def cfmmc_huice(rq):
         hct['qy'].append(_qy[de[0]])
         data = data2
         data2 = []
-
-    zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
-    ind_s = zx_x.index(zx_x2[0])
-    ind_e = zx_x.index(zx_x2[-1]) + 1
-    zx_x = zx_x[ind_s:ind_e]
-    prices = prices[ind_s:ind_e]
-    f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
-    week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
-    f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
-    week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
-    month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
-    week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
-    hct['allyk'] = prices
-    hct['bar_name'] = [i for i in name_jlr]
-    hct['bar_value'] = [round(v, 1) for v in name_jlr.values()]
-    week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
-    hct['week_name'] = [i for i in week_jlr]
-    hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
-    hct['month_name'] = [i for i in month_jlr]
-    hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
-    host = get_cfmmc_id_host(host+'_name')
-    host = host[0]+'*'*len(host[1])
-    hct['host'] = hc_name  # host
-    # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
-    huizong['max_amount'] = max(hct['amount'])  # 最高余额
-    huizong['deposit'] = sum(i[1] for i in ee if i[1]>0) # 存款
-    huizong['draw'] = sum(i[1] for i in ee if i[1]<0)    # 取款
-    resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
-            'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
-    return render(rq, 'cfmmc_tu.html', resp)
+    try:
+        zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
+        ind_s = zx_x.index(zx_x2[0])
+        ind_e = zx_x.index(zx_x2[-1]) + 1
+        zx_x = zx_x[ind_s:ind_e]
+        prices = prices[ind_s:ind_e]
+        f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
+        week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
+        f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
+        week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
+        month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
+        week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
+        hct['allyk'] = prices
+        hct['bar_name'] = [i for i in name_jlr]
+        hct['bar_value'] = [round(v, 1) for v in name_jlr.values()]
+        week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
+        hct['week_name'] = [i for i in week_jlr]
+        hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
+        hct['month_name'] = [i for i in month_jlr]
+        hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
+        host = get_cfmmc_id_host(host+'_name')
+        host = host[0]+'*'*len(host[1])
+        hct['host'] = hc_name  # host
+        # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
+        huizong['max_amount'] = max(hct['amount'])  # 最高余额
+        huizong['deposit'] = sum(i[1] for i in ee if i[1]>0) # 存款
+        huizong['draw'] = sum(i[1] for i in ee if i[1]<0)    # 取款
+        resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
+                'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
+        return render(rq, 'cfmmc_tu.html', resp)
+    except:
+        return redirect('/')
 
 
 def systems(rq):
