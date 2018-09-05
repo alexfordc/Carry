@@ -2287,7 +2287,7 @@ def cfmmc_huice(rq,param=None):
                 month_jlr[month] += d[2]
             else:
                 data2.append(d)
-        hct['day_value'].append(yk-sxf)
+        hct['day_value'].append(round(yk-sxf,2))
         yk += (prices[-1] if prices else 0)
         prices.append(yk)
         sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
@@ -2335,6 +2335,7 @@ def cfmmc_huice(rq,param=None):
         huizong['max_amount'] = max(hct['amount'])  # 最高余额
         huizong['deposit'] = sum(i[1] for i in ee if i[1]>0) # 存款
         huizong['draw'] = sum(i[1] for i in ee if i[1]<0)    # 取款
+        huizong['ykratio'] = abs(round(hc['avglr']/(hc['avgss'] if hc['avgss']!=0 else 1),2))
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
         return render(rq, 'cfmmc_tu.html', resp)

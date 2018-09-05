@@ -399,6 +399,7 @@ class Cfmmc:
 class Automatic:
     _singleton = None
     _no_start = True
+
     def __new__(cls, *args, **kwargs):
         if cls._singleton is None:
             cls._singleton = super(Automatic, cls).__new__(cls)
@@ -416,10 +417,13 @@ class Automatic:
         last_date = cache.get('cfmmc_Automatic_download')
         last_date = last_date if last_date else 0
         print('自动下载开始运行...')
-        if os.environ['COMPUTERNAME'].upper() == 'DOC':
-            model_path = r'D:\tools\Tools\Carry\mysite\myfile\captcha_model95'
+        computer_name = os.environ['COMPUTERNAME'].upper()
+        if computer_name == 'DOC':
+            model_path = r'D:\tools\Tools\Carry\mysite\myfile'
         else:
-            model_path = r'D:\Carry\mysite\myfile\captcha_model95'
+            model_path = r'D:\Carry\mysite\myfile'
+        with open(model_path + '\\' + 'cfmmc_dsqd_log.txt', 'a') as f:
+            f.write('自动下载开始运行...\n')
         while 1:
             t = time.localtime()
             d = datetime.datetime.now()
@@ -429,19 +433,27 @@ class Automatic:
                 n = (60 - t.tm_min + 1) * 60
             if t.tm_hour == 18 and last_date != t.tm_yday:
                 last_date = t.tm_yday
-                ca = Captcha(model_path)
+                ca = Captcha(model_path + '\\' + 'captcha_model95')
                 cfmmc_login_d = Cfmmc()
                 data = HSD.runSqlData('carry_investment', sql)
                 for da in data:
+                    sql_date = f"SELECT DATE_FORMAT(DATE,'%Y-%m-%d') FROM cfmmc_insert_date WHERE HOST='{da[0]}' ORDER BY DATE DESC LIMIT 1"
+                    is_down_date = HSD.runSqlData('carry_investment', sql_date)
+                    if d.weekday() > 4 or (is_down_date and is_down_date[0][0] == str(d)[:10]):
+                        continue
+                    if computer_name == 'DOC':  # 防止重复登录，在本机上不执行
+                        continue
                     for i in range(20):  # 每个账号最多尝试登录20次
                         try:
                             token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)  # 获取token
-                            code = cfmmc_login_d.getCode()        # 获取验证码
-                            code = ca.check.send(BytesIO(code))   # 验证码
+                            code = cfmmc_login_d.getCode()  # 获取验证码
+                            code = ca.check.send(BytesIO(code))  # 验证码
                             password = pypass.cfmmc_decode(da[1], da[2])  # 密码
                             success = cfmmc_login_d.login(da[0], password, token, code)  # 登录，返回成功与否
                             if success is True:
                                 print(f"{da[0]} 第{i}次登录成功！")
+                                with open(model_path + '\\' + 'cfmmc_dsqd_log.txt', 'a') as f:
+                                    f.write(f"{da[0]} 第{i}次登录成功！{d}\n")
                                 trade = get_cfmmc_trade(host=da[0])
                                 if trade:  # 若已经有下载过数据，则下载3天之内的
                                     # start_date = str(trade[-1][11])
@@ -452,7 +464,7 @@ class Automatic:
                                     cfmmc_login_d.down_day_data_sql(da[0], start_date, end_date, password, da[2])
                                     for run_time in range(300):
                                         s = cache.get('cfmmc_status' + da[0])
-                                        if s in ('True','False','not_run'):
+                                        if s in ('True', 'False', 'not_run'):
                                             break
                                         time.sleep(1)
                                 else:  # 若没下载过数据，则下载300天之内的
@@ -472,7 +484,7 @@ class Automatic:
 Automatic()
 
 
-def cfmmc_data_page(rq,start_date=None,end_date=None):
+def cfmmc_data_page(rq, start_date=None, end_date=None):
     """ 期货监控系统 展示页面 数据返回"""
     if start_date is None or end_date is None:
         start_date = rq.GET.get('start_date')
@@ -727,12 +739,13 @@ def future_macd(da, short=12, long=26, phyd=9):
             [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
     return da2
 
+
 def this_day_week_month_year(when):
     """ 当日、当周、当月、当年的开始与结束时间计算"""
     this_d = datetime.datetime.now()
     this_t = time.localtime()
     this_day = str(this_d)[:10]
-    if when == 'd':    # 当日
+    if when == 'd':  # 当日
         start_date, end_date = this_day, this_day
     elif when == 'w':  # 当周
         start_date, end_date = HSD.get_date(-this_d.weekday()), this_day
@@ -741,6 +754,6 @@ def this_day_week_month_year(when):
     elif when == 'y':  # 当年
         start_date, end_date = HSD.get_date(-this_t.tm_yday + 1), this_day
     else:
-        start_date, end_date = None,None
+        start_date, end_date = None, None
         when = '0'
-    return when,start_date,end_date
+    return when, start_date, end_date

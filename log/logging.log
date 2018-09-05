@@ -17135,3 +17135,59 @@ Traceback (most recent call last):
     when = param[0][0]
 IndexError: string index out of range
 base.py[2018-09-05 14:43:24][WARNING]：Not Found: /cfmmc/bs/y1001_J1901_5M/y1001_J1901_30M
+HSD.py[2018-09-05 15:17:25][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:21:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:22:02][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:22:29][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:22:34][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:23:11][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:25:00][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:25:12][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:28:04][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:28:42][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:29:16][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:30:03][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:30:05][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:30:40][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:31:22][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:33:16][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:33:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:34:20][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:34:46][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:35:47][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:36:07][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:36:29][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:36:38][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:36:46][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:37:01][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:37:14][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:38:18][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:39:40][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:40:16][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:40:17][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:40:54][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:09][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:10][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:34][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:44][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:53][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:41:56][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:43:11][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:43:23][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:43:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:45:36][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:45:38][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:45:40][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:46:13][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:46:44][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:46:58][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:47:02][ERROR]：文件 HSD.py 第1357行报错：division by zero
+HSD.py[2018-09-05 15:47:41][ERROR]：文件 HSD.py 第1357行报错：division by zero
+tf_logging.py[2018-09-05 18:21:46][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:31:51][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:33:26][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:36:10][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:37:15][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:38:47][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:39:20][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+tf_logging.py[2018-09-05 18:48:31][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
