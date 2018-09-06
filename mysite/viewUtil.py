@@ -573,10 +573,19 @@ def cfmmc_hc_data(host, rq_date, end_date):
     res = {}
     huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
+    pinzhong = []  # 所有品种
+    min_date = ''
+    max_date = ''
     for i in results2:
         if not i[5]:
             continue
+        if i[1] not in pinzhong:
+            pinzhong.append(i[1])
         dt = i[4][:10]
+        if min_date == '' or i[2][:10]<min_date:
+            min_date = i[2][:10]
+        if max_date == '' or dt>max_date:
+            max_date = dt
         if dt not in res:
             res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
         if i[7] == '多':
@@ -586,7 +595,7 @@ def cfmmc_hc_data(host, rq_date, end_date):
             res[dt]['kong'] += 1
             _ykds = i[3] - i[5]  # 盈亏点数
         res[dt]['mony'] += i[6]
-        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8], i[1]]
         res[dt]['datetimes'].append(xx)
 
         huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
@@ -602,8 +611,27 @@ def cfmmc_hc_data(host, rq_date, end_date):
     # if rq_date == end_date:  # 暂时取消一天的，或需要完善
     #     hcd = HSD.huice_day(res, init_money, real=True)
 
+    _re = re.compile(r'[A-z]+')
+    _pz = set(re.search(_re, i)[0] for i in pinzhong)
+    _pz = [i + 'L8' for i in _pz]
+    _redis = HSD.RedisPool()
+    pinzhong = _redis.get('cfmmc_hc_data_pinzhong')
+    if not pinzhong:
+        pinzhong = {}
+    mongo = HSD.MongoDBData()
+    is_cache_set = False
+    for p in _pz:
+        if p not in pinzhong or pinzhong[p]['min_date']>min_date or pinzhong[p]['max_date']<max_date:
+            pzs = mongo.get_data(p,min_date,max_date)
+            pzs = {i[0][:-3]: j for j, i in enumerate(pzs)}
+            pzs['min_date'] = min_date
+            pzs['max_date'] = max_date
+            pinzhong[p] = pzs
+            is_cache_set = True
+    if is_cache_set:
+        _redis.set('cfmmc_hc_data_pinzhong',pinzhong)
     res, huizong = tongji_huice(res, huizong)
-    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
 
     return hc, hcd, huizong, init_money
 

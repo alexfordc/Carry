@@ -2244,6 +2244,22 @@ def cfmmc_huice(rq,param=None):
     eae = []  # 出入金
     zx_x, prices = [], []
     hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+    # print(hc['allcchz'])
+    all_ccsjy,all_ccsjk = [],[]  # 持仓时间，盈利、亏损
+    all_pcsj = []  # 平仓时间，盈亏、亏损
+    all_ylje = []  # 做多、空，盈利、亏损金额
+    all_ylss = []  # 做多、空，盈利、亏损手数
+    all_rnje = []  # 日内、隔夜，盈利、亏损金额
+    all_rnss = []  # 日内、隔夜，盈利、亏损手数
+    for cc in hc['allcchz']:
+        cc0,cc1,cc2,cc3,cc5 = cc[0],cc[1],cc[2],cc[3],cc[5]
+        if cc[2]>0:
+            all_ccsjy.append([cc0,int(cc2)])
+            all_pcsj.append([cc5,int(cc2),cc3])
+        else:
+            all_ccsjk.append([cc0, int(-cc2)])
+            all_pcsj.append([cc5, int(cc2),cc3])
+    # print(all_pcsjk)
     hc_name = get_cfmmc_id_host(host + '_name')
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
     hc_name = host[:4]+'***'+host[-4:]+' ( '+hc_name+' )'
@@ -2264,6 +2280,9 @@ def cfmmc_huice(rq,param=None):
         'alleae': [],  # 累积出入金
         'amount': [],  # 账号总金额
         'eae': [],  # 出入金
+        'all_ccsjy': all_ccsjy,
+        'all_ccsjk': all_ccsjk,
+        'all_pcsj': all_pcsj,
     }
     name_jlr = defaultdict(float)  # 品种名称，净利润
     week_jlr = defaultdict(float)  # 每周，净利润
@@ -2278,6 +2297,7 @@ def cfmmc_huice(rq,param=None):
         week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
         month = de[0][:7]  # 月
         for d in data:
+            # d: ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') [持仓时间（分钟），(1:多、0:空)，盈亏，手数，（1:日内、0:隔夜)]
             if d[0][:10] == de[0]:
                 sxf += d[3] if d[3] else 0
                 if not d[2]:
@@ -2309,6 +2329,7 @@ def cfmmc_huice(rq,param=None):
         hct['qy'].append(_qy[de[0]])
         data = data2
         data2 = []
+
     try:
         zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
         ind_s = zx_x.index(zx_x2[0])

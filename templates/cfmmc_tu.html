@@ -27,6 +27,8 @@
                     <td id="tuxiant8">每月盈亏</td>
                     <td id="tuxiant9">账号余额</td>
                     <td id="tuxiant10">累积入金</td>
+                    <td id="tuxiant11">持仓时间</td>
+                    <td id="tuxiant12">平仓时间</td>
                 </tr>
             </table>
         </div><br/>
@@ -53,7 +55,7 @@ function getColor(){
    return color;
 }
 
-function huatut(type,zx_x,zx_y,zx_y2){
+function huatut(type,zx_x,zx_y,zx_y2,zx_y3){
 var myChart = echarts.init(document.getElementById('zhexiantut'));
 
 if(type=='line'){
@@ -363,7 +365,7 @@ tooltip: {
             }
         },
         legend: {
-            data: zx_x
+            data: tu_name
         },
 toolbox: {
             show: true,
@@ -380,9 +382,19 @@ toolbox: {
         data: zx_x
     },
     yAxis: [{
-        type: 'value'
+        type: 'value',
+        axisLine: {
+            lineStyle: {
+                color: 'blue'
+            }
+        }
     },{
-        type: 'value'
+        type: 'value',
+        axisLine: {
+            lineStyle: {
+                color: 'red'
+            }
+        }
     }],
     series: [{
         name: tu_name[0],
@@ -394,8 +406,8 @@ toolbox: {
         symbolSize: 1,
         itemStyle: {
             normal: {
-                color: '#ff6a4a',
-                lineStyle: { color: '#ff6a4a' }
+                color: 'purple', //#ff6a4a
+                lineStyle: { color: 'purple' }
             }
         },
         data: zx_y
@@ -410,15 +422,283 @@ toolbox: {
                 color: function(params) {
                     // build a color map as your need.
                     if(linebars[params.name]>0){
-                        return 'purple';
+                        return 'red';
                     }else{
-                        return 'blue';
+                        return 'green';
                     }
                 }
             }
         },
         data: linebar2 //zx_y2
+    },{
+        name: tu_name[2],
+        type: 'line',
+        yAxisIndex:0,
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 1,
+        itemStyle: {
+            normal: {
+                color: '#36969f', //#ff6a4a
+                lineStyle: { color: '#36969f' }
+            }
+        },
+        data: zx_y3
     }]
+};
+}else if(type=='scatter'){
+myChart.clear()
+optiont = {
+        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+            offset: 0,
+            color: '#f7f8fa'
+        }, {
+            offset: 1,
+            color: '#cdd0d5'
+        }]),
+    title : {
+        text: '持仓时间',
+        subtext: 'X轴为持仓分钟，Y轴为盈亏'
+    },
+    tooltip : {
+        trigger: 'axis',
+        /*showDelay : 0,
+        formatter : function (params) {
+            if (params.value.length > 1) {
+                return params.seriesName + ' :<br/>'
+                   + params.value[0] + 'cm '
+                   + params.value[1] + '';
+            }
+            else {
+                return params.seriesName + ' :<br/>'
+                   + params.name + ' : '
+                   + params.value + '';
+            }
+        },*/
+        axisPointer:{
+            show: true,
+            type : 'cross',
+            lineStyle: {
+                type : 'dashed',
+                width : 1
+            }
+        }
+    },
+    legend: {
+        data:['盈利','亏损']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataZoom : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    xAxis : [
+        {
+            type : 'value',
+            name: '时间',
+            scale:true,
+            axisLabel : {
+                formatter: '{value}'
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            name: '盈亏',
+            scale:true,
+            axisLabel : {
+                formatter: '￥{value}'
+            }
+        }
+    ],
+    series : [
+        {
+            name:'盈利',
+            type:'scatter',
+            data: zx_y,
+            symbolSize: function (data) {
+                return Math.sqrt(data[1])/ 5; // Math.sqrt(data[1]) / 5e2;
+            },
+            label: {
+                emphasis: {
+                    show: true,
+                    formatter: function (param) {
+                        return param.data;
+                    },
+                    position: 'top'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(120, 36, 50, 0.5)',
+                    shadowOffsetY: 5,
+                    color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                        offset: 0,
+                        color: 'rgb(251, 118, 123)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(204, 46, 72)'
+                    }])
+                }
+            },
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'亏损',
+            type:'scatter',
+            data: zx_y2,
+            symbolSize: function (data) {
+                return Math.sqrt(data[1])/ 5; // Math.sqrt(data[1]) / 5e2;
+            },
+            label: {
+                emphasis: {
+                    show: true,
+                    formatter: function (param) {
+                        return param.data;
+                    },
+                    position: 'top'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(25, 100, 150, 0.5)',
+                    shadowOffsetY: 5,
+                    color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                        offset: 0,
+                        color: 'rgb(129, 227, 238)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(25, 183, 207)'
+                    }])
+                }
+            },
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        }
+    ]
+};
+}else if(type=="scatter_date"){
+myChart.clear();
+
+optiont = {
+    title : {
+        text : '平仓时间',
+        subtext : '平仓时间'
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer:{
+            show: true,
+            type : 'cross',
+            lineStyle: {
+                type : 'dashed',
+                width : 1
+            }
+        }
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    dataZoom: {
+        show: true,
+        start : 30,
+        end : 70
+    },
+    legend : {
+        data : ['series1']
+    },
+    dataRange: {
+        min: 0,
+        max: 24,
+        orient: 'horizontal',
+        y: 30,
+        x: 'center',
+        //text:['高','低'],           // 文本，默认为数值文本
+        color:['lightgreen','orange'],
+        splitNumber: 8
+    },
+    grid: {
+        y2: 80
+    },
+    xAxis : [
+        {
+            type : 'time',
+            splitNumber:20
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    animation: false,
+    series : [
+        {
+            name:'平仓时间',
+            type:'scatter',
+            tooltip : {
+                trigger: 'axis',
+                formatter : function (params) {
+                    var date = new Date(params.value[0]);
+                    return params.seriesName
+                           + ' （'
+                           + date.getFullYear() + '-'
+                           + (date.getMonth() + 1) + '-'
+                           + date.getDate() + ' '
+                           + date.getHours() + ':'
+                           + date.getMinutes()
+                           +  '）<br/>'
+                           + params.value[1] + ', '
+                           + params.value[2];
+                },
+                axisPointer:{
+                    type : 'cross',
+                    lineStyle: {
+                        type : 'dashed',
+                        width : 1
+                    }
+                }
+            },
+            symbolSize: function (value){
+                return Math.round(value[2]*3);
+            },
+            data: zx_y
+        }
+    ]
 };
 }
 
@@ -428,7 +708,7 @@ myChart.setOption(optiont);
 function tuxiancolort(id){
     var id2 = "";
     var is_display = true;
-    for(var i=1;i<=11;i++){
+    for(var i=1;i<=12;i++){
         id2 = "#tuxiant"+i;
         if(id=="#tuxiant1" && is_display){
             $("#leftColumn").css("display","block");
@@ -457,35 +737,41 @@ function tuxiancolort(id){
         $("#zhexiantut").css("display","none");
         $("#leftColumn").css("display","block");
     }else if(id=='#tuxiant2'){
-        tu_name=["累积净值","每日盈亏"];
-        huatut("line2",{{zx_x|safe}},{{hct.alljz|safe}},{{hct.day_value|safe}});
+        tu_name=["累积净值","",""];
+        huatut("line",{{zx_x|safe}},{{hct.alljz|safe}},"","");
     }else if(id=='#tuxiant3'){
-        tu_name=["累积利润","累积手续费"];
-        huatut("line",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.allsxf|safe}});
+        tu_name=["累积利润","每日盈亏","累积手续费"];
+        huatut("line2",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.day_value|safe}},{{hct.allsxf|safe}});
     }else if(id=='#tuxiant4'){
         tu_name=["每日权益","每日盈亏",""];
-        huatut("line2",{{zx_x|safe}},{{hct.qy|safe}},{{hct.day_value|safe}});
+        huatut("line2",{{zx_x|safe}},{{hct.qy|safe}},{{hct.day_value|safe}},"");
     }else if(id=='#tuxiant5'){
         tu_name=["成交偏好","",""];
-        huatut("pie",{{hct.pie_name|safe}},{{hct.pie_value|safe}},"");
+        huatut("pie",{{hct.pie_name|safe}},{{hct.pie_value|safe}},"","");
     }else if(id=='#tuxiant6'){
         tu_name=["品种盈亏","",""];
-        huatut("bar",{{hct.bar_name|safe}},{{hct.bar_value|safe}},"");
+        huatut("bar",{{hct.bar_name|safe}},{{hct.bar_value|safe}},"","");
     }/*else if(id=='#tuxiant11'){
         tu_name=["每日盈亏","",""];
-        huatut("bar",{{zx_x|safe}},{{hct.day_value|safe}},"");
+        huatut("bar",{{zx_x|safe}},{{hct.day_value|safe}},"","");
     }*/else if(id=='#tuxiant7'){
         tu_name=["每周盈亏","",""];
-        huatut("bar",{{hct.week_name|safe}},{{hct.week_value|safe}},"");
+        huatut("bar",{{hct.week_name|safe}},{{hct.week_value|safe}},"","");
     }else if(id=='#tuxiant8'){
         tu_name=["每月盈亏","",""];
-        huatut("bar",{{hct.month_name|safe}},{{hct.month_value|safe}},"");
+        huatut("bar",{{hct.month_name|safe}},{{hct.month_value|safe}},"","");
     }else if(id=='#tuxiant9'){
         tu_name=["账号余额","累积入金",""];
-        huatut("line",{{zx_x|safe}},{{hct.amount|safe}},{{hct.alleae|safe}});
+        huatut("line",{{zx_x|safe}},{{hct.amount|safe}},{{hct.alleae|safe}},"");
     }else if(id=='#tuxiant10'){
         tu_name=["累积入金","入金",""];
-        huatut("linebar",{{zx_x|safe}},{{hct.alleae|safe}},{{hct.eae|safe}});
+        huatut("linebar",{{zx_x|safe}},{{hct.alleae|safe}},{{hct.eae|safe}},"");
+    }else if(id=='#tuxiant11'){
+        tu_name=["","",""];
+        huatut("scatter","",{{hct.all_ccsjy|safe}},{{hct.all_ccsjk|safe}},"");
+    }else if(id=='#tuxiant12'){
+        tu_name=["","",""];
+        huatut("scatter_date","",{{hct.all_pcsj|safe}},"","");
     }
 }
 $("#tuxiant1").click(function(){
@@ -518,9 +804,12 @@ $("#tuxiant9").click(function(){
 $("#tuxiant10").click(function(){
     tuxiancolort("#tuxiant10");
 });
-/*$("#tuxiant11").click(function(){
+$("#tuxiant11").click(function(){
     tuxiancolort("#tuxiant11");
-});*/
+});
+$("#tuxiant12").click(function(){
+    tuxiancolort("#tuxiant12");
+});
 
 tuxiancolort("#tuxiant1");
 

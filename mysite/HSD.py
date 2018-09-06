@@ -144,6 +144,55 @@ def get_config(root, son):
     return '()'
 
 
+def dtf(d):
+    """ 日期时间格式化 """
+    if isinstance(d, str):
+        d = d.strip()
+        if len(d) == 10:
+            d = datetime.datetime.strptime(d, '%Y-%m-%d')
+        else:
+            d = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
+        return d
+    elif isinstance(d, datetime.datetime):
+        d = datetime.datetime.strftime(d, '%Y-%m-%d %H:%M:%S')
+        return d
+    elif isinstance(d, datetime.date):
+        d = datetime.datetime.strftime(d, '%Y-%m-%d')
+        return d
+
+
+class RedisPool:
+    """ Redis 数据库存取 """
+    _singleton = None
+    _conn = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._singleton is None:
+            cls._singleton = super(RedisPool, cls).__new__(cls)
+        return cls._singleton
+
+    def __init__(self):
+        if self._conn is None:
+            self.conn()
+
+    def conn(self):
+        self._conn = redis.Redis(host='localhost')
+
+    def get(self,key):
+        try:
+            value = self._conn.get(key)
+        except:
+            self.conn()
+            value = self._conn.get(key)
+        return value and json.loads(value)
+
+    def set(self,key,value):
+        try:
+            self._conn.set(key,json.dumps(value))
+        except:
+            self.conn()
+            self._conn.set(key, json.dumps(value))
+
 class SqlPool:
     """ MySQL 数据库连接池，单例模式（继承需慎重） """
     _singleton = None
@@ -261,6 +310,10 @@ class MongoDBData:
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
+        if isinstance(sd,str):
+            sd = dtf(sd)
+        if isinstance(ed, str):
+            ed = dtf(ed)
         re_code = re.search('\d+', code)
         if re_code and len(re_code[0]) == 3:
             code = code[:-3] + '1' + re_code[0]
@@ -277,22 +330,6 @@ def get_tcp():
     ''' 返回IP地址 '''
     return config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
 
-
-def dtf(d):
-    """ 日期时间格式化 """
-    if isinstance(d, str):
-        d = d.strip()
-        if len(d) == 10:
-            d = datetime.datetime.strptime(d, '%Y-%m-%d')
-        else:
-            d = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
-        return d
-    elif isinstance(d, datetime.datetime):
-        d = datetime.datetime.strftime(d, '%Y-%m-%d %H:%M:%S')
-        return d
-    elif isinstance(d, datetime.date):
-        d = datetime.datetime.strftime(d, '%Y-%m-%d')
-        return d
 
 
 def format_int(*args):
@@ -1184,7 +1221,7 @@ def day_this_mins(start_date, end_date, code='HSI'):
     return times, datas
 
 
-def huices(res, huizong, init_money, dates, end_date):
+def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
     keys = [i for i in res if res[i]['datetimes']]
     keys.sort()
     jyts = len(keys)
@@ -1209,6 +1246,8 @@ def huices(res, huizong, init_money, dates, end_date):
         'dayye': [],  # 每天余额
         'daylr': [],  # 每天利润，不叠加
         'zjhcs': [0],  # 资金回测
+        'ccsj': 0,     # 平均每手持仓时间
+        'allcchz': [],       # 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间
     }
     jingzhi = []  # 净值
     zx_x = []
@@ -1219,6 +1258,7 @@ def huices(res, huizong, init_money, dates, end_date):
     count_ks = 0  # 总亏损
     avg = huizong['yk'] / huizong['zl']  # 平均盈亏
     count_var = 0
+    code_index = {}
     for i in keys:
         je = round(res[i]['mony'])
         jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
@@ -1234,6 +1274,8 @@ def huices(res, huizong, init_money, dates, end_date):
             # zdhc = zdhc2 if zdhc2 > zdhc else zdhc
             hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
         for j in res[i]['datetimes']:
+            # j: 开仓时间，平仓时间，多空，盈亏，开仓价格，平仓价格，手数
+            # j: ['2018-07-12 13:34:25', '2018-07-12 14:35:15', '空', -190, 3947.0, 3966.0, 1]
             if j[2] == '多':
                 hc['cgzd'][1] += 1
                 if j[3] > 0:
@@ -1250,13 +1292,21 @@ def huices(res, huizong, init_money, dates, end_date):
                 hc['avgss'] += 1
 
             # 计算持仓时间
-            start_d = j[0].replace(':', '-').replace(' ', '-')
-            start_d = start_d.split('-') + [0, 0, 0]
-            start_d = [int(sd) for sd in start_d]
-            end_d = j[1].replace(':', '-').replace(' ', '-')
-            end_d = end_d.split('-') + [0, 0, 0]
-            end_d = [int(ed) for ed in end_d]
-            ccsj += time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)) if end_d >= start_d else 0
+            if pinzhong is None:  # 按实际物理时间计算
+                start_d = j[0].replace(':', '-').replace(' ', '-')
+                start_d = start_d.split('-') + [0, 0, 0]
+                start_d = [int(sd) for sd in start_d]
+                end_d = j[1].replace(':', '-').replace(' ', '-')
+                end_d = end_d.split('-') + [0, 0, 0]
+                end_d = [int(ed) for ed in end_d]
+                ccsj += (time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)))*j[6] if end_d >= start_d else 0
+            else:  # 按K线的条数计算
+                if j[7] not in code_index:
+                    code_index[j[7]] = re.search(r'[A-z]+',j[7])[0] + 'L8'
+                this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+                ccsj += this_ccsj
+                allcchz = (this_ccsj,1 if j[2]=='多' else 0,j[3],j[6],1 if j[0][:10]==j[1][:10] else 0,j[1])
+                hc['allcchz'].append(allcchz)
             # 计算利润因子
             if j[3] > 0:
                 count_yl += j[3]
@@ -1267,15 +1317,20 @@ def huices(res, huizong, init_money, dates, end_date):
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        ccsj = ccsj / 60 / huizong['zl'] if huizong['zl'] != 0 else 0
-        if ccsj > 1440:
-            _ccsj = round(ccsj / 60 / 24, 2)  # 平均持仓时间
-            hc['ccsj'] = str(_ccsj) + ' 天'
-        elif ccsj > 60:
-            _ccsj = round(ccsj / 60, 2)  # 平均持仓时间
-            hc['ccsj'] = str(_ccsj) + ' 小时'
+        if pinzhong is None:
+            ccsj = ccsj / 60 / huizong['zl'] if huizong['zl'] != 0 else 0
+            if ccsj > 1440:
+                _ccsj = round(ccsj / 60 / 24, 2)  # 平均持仓时间
+                hc['ccsj'] = str(_ccsj) + ' 天'
+            elif ccsj > 60:
+                _ccsj = round(ccsj / 60, 2)  # 平均持仓时间
+                hc['ccsj'] = str(_ccsj) + ' 小时'
+            else:
+                _ccsj = round(ccsj, 2)  # 平均持仓时间
+                hc['ccsj'] = str(_ccsj) + ' 分钟'
         else:
-            _ccsj = round(ccsj, 2)  # 平均持仓时间
+            ccsj = ccsj / huizong['zl'] if huizong['zl'] != 0 else 0
+            _ccsj = round(ccsj)
             hc['ccsj'] = str(_ccsj) + ' 分钟'
         hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
         count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
@@ -1956,7 +2011,7 @@ class Cfmmc:
 
 def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
-    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
     dc = {i[0]: i[1] for i in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \

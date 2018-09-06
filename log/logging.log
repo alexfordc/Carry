@@ -17191,3 +17191,134 @@ tf_logging.py[2018-09-05 18:37:15][INFO]：Restoring parameters from D:\tools\Too
 tf_logging.py[2018-09-05 18:38:47][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
 tf_logging.py[2018-09-05 18:39:20][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
 tf_logging.py[2018-09-05 18:48:31][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha95.ckpt-11700
+exception.py[2018-09-06 14:47:32][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 618, in cfmmc_hc_data
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1274, in huices
+    this_ccsj = pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]]
+KeyError: '2017-12-29 13:56'
+base.py[2018-09-06 14:47:36][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-06 14:53:15][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 624, in cfmmc_hc_data
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1274, in huices
+    this_ccsj = pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]]
+KeyError: '2018-01-03 09:00'
+exception.py[2018-09-06 14:57:39][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 568, in cfmmc_hc_data
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1983, in cfmmc_get_result
+    dc = {i[0]: i[1] for i in dc}
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-06 14:57:44][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 568, in cfmmc_hc_data
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1983, in cfmmc_get_result
+    dc = {i[0]: i[1] for i in dc}
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-06 14:59:14][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2314, in cfmmc_huice
+    print(pinzhong)
+NameError: name 'pinzhong' is not defined
+exception.py[2018-09-06 17:32:12][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 618, in cfmmc_hc_data
+    pinzhong = _redis.get('cfmmc_hc_data_pinzhong')
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 187, in get
+    return json.loads(value)
+  File "D:\ProgramFiles\Anaconda3\lib\json\__init__.py", line 348, in loads
+    'not {!r}'.format(s.__class__.__name__))
+TypeError: the JSON object must be str, bytes or bytearray, not 'NoneType'
+exception.py[2018-09-06 17:34:06][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 191, in set
+    self._conn(key,json.dumps(value))
+TypeError: 'Redis' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 632, in cfmmc_hc_data
+    _redis.set('cfmmc_hc_data_pinzhong',pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 194, in set
+    self._conn(key, json.dumps(value))
+TypeError: 'Redis' object is not callable
+tf_logging.py[2018-09-06 18:00:46][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-06 18:53:40][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-06 18:59:55][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+HSD.py[2018-09-06 19:38:11][ERROR]：文件 HSD.py 第1412行报错：division by zero
+HSD.py[2018-09-06 19:38:14][ERROR]：文件 HSD.py 第1412行报错：division by zero
+HSD.py[2018-09-06 19:39:45][ERROR]：文件 HSD.py 第1412行报错：division by zero
