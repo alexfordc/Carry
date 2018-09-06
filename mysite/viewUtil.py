@@ -428,9 +428,9 @@ class Automatic:
             t = time.localtime()
             d = datetime.datetime.now()
             if d.weekday() < 5:
-                n = 60 * 60 * 6
+                n = (60 - t.tm_min) * 60
             else:
-                n = (60 - t.tm_min + 1) * 60
+                n = 60 * 60 * 6
             if t.tm_hour == 18 and last_date != t.tm_yday:
                 last_date = t.tm_yday
                 ca = Captcha(model_path + '\\' + 'captcha_model95')

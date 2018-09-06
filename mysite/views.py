@@ -118,8 +118,9 @@ def record_from(rq):
         viewUtil.record_log(files, IP_NAME, 'w')
         # tasks_record_log.delay(files, IP_NAME, 'w')
     info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
-    viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
-    # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
+    if '本地局域网' not in info:
+        viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
+        # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
 
 
 def LogIn(rq, uid=False):
