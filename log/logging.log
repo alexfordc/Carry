@@ -17322,3 +17322,187 @@ tf_logging.py[2018-09-06 18:59:55][INFO]：Restoring parameters from D:\tools\Too
 HSD.py[2018-09-06 19:38:11][ERROR]：文件 HSD.py 第1412行报错：division by zero
 HSD.py[2018-09-06 19:38:14][ERROR]：文件 HSD.py 第1412行报错：division by zero
 HSD.py[2018-09-06 19:39:45][ERROR]：文件 HSD.py 第1412行报错：division by zero
+base.py[2018-09-07 09:47:54][WARNING]：Not Found: /cfmmc/huice/y
+base.py[2018-09-07 09:47:54][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-07 09:48:00][WARNING]：Not Found: /cfmmc/huice/y
+base.py[2018-09-07 09:48:08][WARNING]：Not Found: /cfmmc/huice/y
+base.py[2018-09-07 09:48:16][WARNING]：Not Found: /cfmmc/huice/y
+base.py[2018-09-07 09:48:23][WARNING]：Not Found: /cfmmc/huice/m
+HSD.py[2018-09-07 09:52:41][ERROR]：文件 HSD.py 第1412行报错：division by zero
+exception.py[2018-09-07 09:53:09][ERROR]：Internal Server Error: /cfmmc/huice/m1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2255, in cfmmc_huice
+    for cc in hc['allcchz']:
+KeyError: 'allcchz'
+exception.py[2018-09-07 09:55:22][ERROR]：Internal Server Error: /cfmmc/huice/m1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2255, in cfmmc_huice
+    for cc in hc['allcchz']:
+KeyError: 'allcchz'
+HSD.py[2018-09-07 09:55:31][ERROR]：文件 HSD.py 第1412行报错：division by zero
+HSD.py[2018-09-07 09:59:21][ERROR]：文件 HSD.py 第1412行报错：division by zero
+HSD.py[2018-09-07 10:27:20][ERROR]：文件 HSD.py 第1412行报错：min() arg is an empty sequence
+exception.py[2018-09-07 16:57:40][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2246, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 634, in cfmmc_hc_data
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1275, in huices
+    hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
+UnboundLocalError: local variable 'zjhc' referenced before assignment
+HSD.py[2018-09-07 17:02:28][ERROR]：文件 HSD.py 第1414行报错：division by zero
+tf_logging.py[2018-09-07 18:00:25][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:09:23][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:15:26][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:30:52][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:38:55][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:44:55][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-07 18:56:44][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+exception.py[2018-09-07 19:27:26][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2361, in cfmmc_huice
+    print(len(dts),len(set(dts)))
+NameError: name 'dts' is not defined
+exception.py[2018-09-07 19:55:03][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1910, in get_data
+    for i in data:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-07 19:56:54][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1910, in get_data
+    for i in data:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-07 19:58:47][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1910, in get_data
+    for i in data:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-07 19:59:07][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1911, in get_data
+    for i in data:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-07 19:59:45][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1911, in get_data
+    for i in data:
+TypeError: 'NoneType' object is not iterable
+exception.py[2018-09-07 20:04:36][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1916, in get_data
+    data2[k][2] += i[2]
+TypeError: 'tuple' object does not support item assignment
+exception.py[2018-09-07 20:05:41][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2235, in cfmmc_huice
+    data = cfmmc.get_data()
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1917, in get_data
+    data2[k][2] += i[2]
+TypeError: 'tuple' object does not support item assignment
+HSD.py[2018-09-07 20:09:37][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-07 20:25:16][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-07 20:25:26][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-07 20:27:13][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-07 20:27:26][ERROR]：文件 HSD.py 第1415行报错：division by zero

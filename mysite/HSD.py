@@ -1253,6 +1253,8 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
     zx_x = []
     zx_y = []
     zdhc = 0
+    zjhc = 0
+    max_jz = 0
     ccsj = 0  # 总持仓时间
     count_yl = 0  # 总盈利
     count_ks = 0  # 总亏损
@@ -1261,7 +1263,8 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
     code_index = {}
     for i in keys:
         je = round(res[i]['mony'])
-        jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)
+        # 这里的净值计算是初始化一个不变的入金计算的，所以保留，没有采用
+        jingzhi.append(jingzhi[-1] + je if jingzhi else init_money + je)  # 净值
         zx_x.append(''.join(i.split('-'))[2:])  # 日期
         zx_y.append(zx_y[-1] + je if zx_y else je)  # 总盈亏，每天叠加
         hc['zzl'].append(round(zx_y[-1] / init_money * 100, 2))
@@ -1269,13 +1272,13 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
         hc['dayye'].append(zx_y[-1] + init_money)  # 每天余额
         hc['daylr'].append(je)  # 每天利润
         if len(jingzhi) > 1:
-            max_jz = max(jingzhi[:-1])
+            max_jz = jingzhi[-2] if jingzhi[-2]>max_jz else max_jz
             zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
             # zdhc = zdhc2 if zdhc2 > zdhc else zdhc
-            hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
+        hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
         for j in res[i]['datetimes']:
-            # j: 开仓时间，平仓时间，多空，盈亏，开仓价格，平仓价格，手数
-            # j: ['2018-07-12 13:34:25', '2018-07-12 14:35:15', '空', -190, 3947.0, 3966.0, 1]
+            # j: 开仓时间，平仓时间，多空，盈亏，开仓价格，平仓价格，手数，合约代码
+            # j: ['2018-08-31 13:44:41', '2018-09-03 09:01:03', '多', -1450, 2449.5, 2435.0, 1, 'J1901']
             if j[2] == '多':
                 hc['cgzd'][1] += 1
                 if j[3] > 0:
@@ -1305,7 +1308,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                     code_index[j[7]] = re.search(r'[A-z]+',j[7])[0] + 'L8'
                 this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
                 ccsj += this_ccsj
-                allcchz = (this_ccsj,1 if j[2]=='多' else 0,j[3],j[6],1 if j[0][:10]==j[1][:10] else 0,j[1])
+                allcchz = (this_ccsj,1 if j[2]=='多' else 0,j[3],j[6],1 if j[0][:10]==j[1][:10] else 0,j[1],j[7])
                 hc['allcchz'].append(allcchz)
             # 计算利润因子
             if j[3] > 0:
@@ -1330,8 +1333,8 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                 hc['ccsj'] = str(_ccsj) + ' 分钟'
         else:
             ccsj = ccsj / huizong['zl'] if huizong['zl'] != 0 else 0
-            _ccsj = round(ccsj)
-            hc['ccsj'] = str(_ccsj) + ' 分钟'
+            _ccsj = round(ccsj/60,2)
+            hc['ccsj'] = str(_ccsj) + ' 小时'
         hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
         count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
         hc['std'] = round(count_var ** 0.5, 2)
@@ -1880,9 +1883,9 @@ class Cfmmc:
         dates = runSqlData('carry_investment', sql)
         return dates
 
-    def get_data(self):
+    def get_data2(self):
         """ 指定时间区间以日期与合约分组的，交易日期，合约，平仓盈亏，手续费 """
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),手续费 FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期,合约"
+        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),SUM(手续费) FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期,合约"
         sql2 = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(持仓盈亏) FROM cfmmc_holding_position WHERE {self.sql} GROUP BY 交易日期,合约"
         data = runSqlData('carry_investment', sql)
         data = {i[0] + i[1]: [i[0], i[1], i[2], i[3]] for i in data}
@@ -1898,6 +1901,21 @@ class Cfmmc:
 
         res = [(i[0], i[1], i[2], i[3], i[1]+'('+FUTURE_NAME[re.sub('\d', '', i[1])]+')') for i in res]
         return res
+
+    def get_data(self):
+        """ ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') """
+        sql = f"SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE C.成交序号=T.成交序号 AND C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' AND C.交易日期<='{self.end_date}'"
+        data = runSqlData('carry_investment', sql)
+        data2 = {}
+        for i in data:
+            k = i[0]+i[1]
+            if k not in data2:
+                data2[k] = list(i) + [i[1]+'('+FUTURE_NAME[re.sub('\d', '', i[1])]+')']
+            else:
+                data2[k][2] += i[2]
+                data2[k][3] += i[3]
+        data = [data2[i] for i in data2]
+        return data
 
     def get_rj(self):
         """ 获取出入金 """
@@ -2011,7 +2029,7 @@ class Cfmmc:
 
 def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
-    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
     dc = {i[0]: i[1] for i in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
@@ -2028,8 +2046,8 @@ def cfmmc_get_result(host,start_date,end_date):
 def cfmmc_huice(host):
     """ 回测 """
     # 日期时间，买卖，手数，开平，手续费，平仓盈亏，合约，交易日期 ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
-    trade_sql = f"SELECT CONCAT(DATE_FORMAT(实际成交日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`," \
-          f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 实际成交日期"
+    trade_sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`," \
+          f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 交易日期"
     trade = runSqlData('carry_investment',trade_sql)
     trade = list(trade)
     # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
