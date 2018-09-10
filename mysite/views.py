@@ -2022,12 +2022,17 @@ def cfmmc_data_local(rq):
     user_name, qx = LogIn(rq)
     trades = viewUtil.get_cfmmc_trade()
     id_host = get_cfmmc_id_host()
+    hosts = list(id_host.values())
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
     for i in trades:
         name = id_host.get(i[12] + '_name')
         name = name[0] + '*' * (len(name) - 1) if name else None
-        trade.append(i + (id_host.get(i[12], i[12]), name))
+        if i[12] in hosts:
+            trade.append(i + (id_host.get(i[12], i[12]), name))
+            hosts.remove(i[12])
+        else:
+            break
     # trade = [i+(id_host.get(i[12],i[12]),id_host.get(i[12]+'_name')) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
 
@@ -2165,7 +2170,7 @@ def cfmmc_bs(rq,param=None):
             if dt not in _days:
                 _days.add(dt)
                 _ccb, _ccs = 0, 0  # 持仓多，持仓空
-                yesterday_hold = hold[dt] if dt in hold else (0, 0)
+                yesterday_hold = hold[dt] if dt in hold else (0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
             if i[0] in bs:
                 for b in bs[i[0]]:
                     if b[4] == '开':
@@ -2246,6 +2251,7 @@ def cfmmc_huice(rq,param=None):
     hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
     # print(hc['allcchz'])
     all_ccsjy,all_ccsjk = [],[]  # 持仓时间，盈利、亏损
+    all_ccsjss,all_ykss = [],[]   # 持仓时间、手数，盈亏、手数
     all_pcsj = []  # 平仓时间，盈亏、亏损
     all_pcsjn = []
     all_pcsjs = {}
@@ -2274,6 +2280,8 @@ def cfmmc_huice(rq,param=None):
         {'value': 0, 'name': '日内亏损手数'},
         {'value': 0, 'name': '隔夜亏损手数'}
     ]
+    if 'allcchz' not in hc:
+        hc['allcchz'] = []
     for cc in hc['allcchz']:
         # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
         # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')
@@ -2313,7 +2321,8 @@ def cfmmc_huice(rq,param=None):
                 all_rnje[3]['value'] += -cc2
                 all_rnss[3]['value'] += cc3
         all_pcsj_max = cc3 if cc3>all_pcsj_max else all_pcsj_max
-
+        all_ccsjss.append([math.ceil(cc0), cc3])
+        all_ykss.append([cc2+500-cc2%500 if cc2%500 else cc2, cc3])
     if all_pcsj_max%5:
         all_pcsj_max = all_pcsj_max + (5-all_pcsj_max%5)
     hc_name = get_cfmmc_id_host(host + '_name')
@@ -2321,6 +2330,15 @@ def cfmmc_huice(rq,param=None):
     hc_name = host[:4]+'***'+host[-4:]+' ( '+hc_name+' )'
     max_jz = 0  # 最大净值
     zjhc = 0    # 资金回测
+    # print(all_ykss)
+    all_ccsjss.sort()
+    all_ykss.sort()
+    all_ccsjss2 = defaultdict(int)
+    all_ykss2 = defaultdict(int)
+    for ccsj in all_ccsjss:
+        all_ccsjss2[ccsj[0]] += ccsj[1]
+    for ykss in all_ykss:
+        all_ykss2[ykss[0]] += ykss[1]
     hct = {
         'allyk': [],  # 累积盈亏
         'alljz': [],  # 累积净值
@@ -2349,6 +2367,10 @@ def cfmmc_huice(rq,param=None):
         'all_pcsjn': all_pcsjn,
         'all_pcsjs': all_pcsjs,
         'zjhc': [], # 资金回测
+        'ccsjss_x': list(all_ccsjss2.keys()),
+        'ccsjss_y': list(all_ccsjss2.values()),
+        'ykss_x': list(all_ykss2.keys()),
+        'ykss_y': list(all_ykss2.values()),
     }
     name_jlr = defaultdict(float)  # 品种名称，净利润
     week_jlr = defaultdict(float)  # 每周，净利润

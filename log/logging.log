@@ -17506,3 +17506,102 @@ HSD.py[2018-09-07 20:25:16][ERROR]：文件 HSD.py 第1415行报错：division by zero
 HSD.py[2018-09-07 20:25:26][ERROR]：文件 HSD.py 第1415行报错：division by zero
 HSD.py[2018-09-07 20:27:13][ERROR]：文件 HSD.py 第1415行报错：division by zero
 HSD.py[2018-09-07 20:27:26][ERROR]：文件 HSD.py 第1415行报错：division by zero
+exception.py[2018-09-10 10:50:26][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2277, in cfmmc_huice
+    for cc in hc['allcchz']:
+KeyError: 'allcchz'
+base.py[2018-09-10 10:50:26][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-10 10:52:25][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2278, in cfmmc_huice
+    for cc in hc['allcchz']:
+KeyError: 'allcchz'
+HSD.py[2018-09-10 10:53:41][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:56:18][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:56:43][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:57:06][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:57:31][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:57:51][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:58:10][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:58:23][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:58:43][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:59:10][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 10:59:30][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:05:15][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:22:59][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:25:58][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:37:42][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:38:10][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:38:58][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:39:37][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:40:22][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:41:32][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:42:58][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:44:00][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:44:43][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:46:46][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:47:55][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:50:58][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:51:14][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:58:18][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 11:58:56][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 12:10:34][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 12:12:59][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 12:13:57][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 12:15:33][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:08:02][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:08:36][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:10:41][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:10:56][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:11:29][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:11:59][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 14:12:06][ERROR]：文件 HSD.py 第1415行报错：division by zero
+HSD.py[2018-09-10 15:54:22][ERROR]：文件 HSD.py 第1415行报错：division by zero
+exception.py[2018-09-10 17:32:17][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2174, in cfmmc_bs
+    yesterday_hold = hold[dt] if dt in hold else ((holds[data2[j-1]][0],holds[data2[j-1]][1]) if holds else (0, 0))  # (0, 0)
+TypeError: unhashable type: 'list'
+tf_logging.py[2018-09-10 18:00:20][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-10 18:09:48][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-10 18:34:07][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+exception.py[2018-09-10 18:41:14][ERROR]：Internal Server Error: /cfmmc/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1875, in cfmmc_login
+    codes = set(i[0] for i in trade)  # 合约代码
+TypeError: 'NoneType' object is not iterable
+tf_logging.py[2018-09-10 18:47:46][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-10 18:56:35][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000

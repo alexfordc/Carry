@@ -32,8 +32,8 @@
                     <td class="tuxiant" id="tuxiant13">多空盈亏</td>
                     <td class="tuxiant" id="tuxiant14">日内隔夜</td>
                     <td class="tuxiant" id="tuxiant15">资金回测</td>
-                    <td id="tuxiant16"></td>
-                    <td id="tuxiant17"></td>
+                    <td class="tuxiant" id="tuxiant16">持仓分布</td>
+                    <td class="tuxiant" id="tuxiant17">盈亏分布</td>
                     <td id="tuxiant18"></td>
                     <td id="tuxiant19"></td>
                     <td id="tuxiant20"></td>
@@ -74,7 +74,7 @@ var myChart = echarts.init(document.getElementById('zhexiantut'));
 if(type=='line'){
 myChart.clear();
 optiont = {
-backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -145,7 +145,7 @@ toolbox: {
 }else if(type=='pie'){
     myChart.clear();
     optiont = {
-    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -204,7 +204,7 @@ toolbox: {
 }else if(type=='pie2'){
 myChart.clear();
 optiont = {
-    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -313,7 +313,7 @@ if(colorList.length<zx_x.length){
 }
 optiont ={
     //backgroundColor:'#fdfdfd', // 背景颜色
-    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -395,7 +395,7 @@ optiont ={
 }else if(type=='linebar'){
 myChart.clear();
 optiont = {
-backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -481,7 +481,7 @@ zx_y2.forEach(function(i,k){
     }
 });
 optiont = {
-backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
             color: '#f7f8fa'
         }, {
@@ -1025,16 +1025,26 @@ function tuxiancolort(id){
     }else if(id=='tuxiant15'){
         tu_name=["","资金回测",""];
         huatut("line2",{{zx_x|safe}},"",{{hct.zjhc|safe}},"");
+    }else if(id=='tuxiant16'){
+        tu_name=["持仓时间（小时）","手数",""];
+        huatut("bar",{{hct.ccsjss_x|safe}},{{hct.ccsjss_y|safe}},"","");
+    }else if(id=='tuxiant17'){
+        tu_name=["盈亏","手数",""];
+        huatut("bar",{{hct.ykss_x|safe}},{{hct.ykss_y|safe}},"","");
     }
 }
 
 var tuxiant_id = "tuxiant1";
+var inters = 2;
 
 $(".tuxiant").hover(function(){
     $(this).css({"background-color":"#ff6a4a","width":"40px","color":"#f5f5f5","fontSize":"14px"});
  },function(){
     if(tuxiant_id!=$(this).attr('id')){
-    $(this).css({"background-color":"#2b2b2b","width":"40px","color":"#f5f5f5","fontSize":"12px"});
+        $(this).css({"background-color":"#2b2b2b","width":"40px","color":"#f5f5f5","fontSize":"12px"});
+    }else{
+        var _a = $(this).attr('id');
+        inters = parseInt(_a.slice(7));
     }
  });
 
@@ -1059,13 +1069,12 @@ function request(type){
 }
 var setintervals = null;
 $("#tuxiant25").click(function(){
-    var inters = 3;
     if(setintervals==null){
         $(this).html('停止');
-        tuxiancolort("tuxiant2");
+        tuxiancolort("tuxiant"+inters);
         setintervals = setInterval(function(){
+            inters = inters<17?inters+1:2;
             tuxiancolort("tuxiant"+inters);
-            inters = inters<14?inters+1:2;
         },2000);
     }else{
         clearInterval(setintervals);
