@@ -2065,7 +2065,7 @@ def cfmmc_bs(rq,param=None):
             when = param[0][0]
             host = param[0][1:]
             code = param[1]
-            ttype = param[2]
+            ttype = param[2] if len(param)>2 else None
         else:
             code = rq.GET.get('code_name')
             when = rq.GET.get('when')
@@ -2095,12 +2095,23 @@ def cfmmc_bs(rq,param=None):
         # else:
         if not data:
             data = mongo.get_data(code, start_date, end_date)
+        data_len = len(data)  # 分钟数据总长度
+        dsise = 1200    # K线根数的限制
+        if not ttype and data_len > dsise:
+            if data_len > dsise * 60:
+                ttype = '1D'
+            elif data_len > dsise * 30:
+                ttype = '1H'
+            elif data_len > dsise * 5:
+                ttype = '30M'
+            else:
+                ttype = '5M'
+
         rq_url = rq.META.get('QUERY_STRING')
         rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (rq_url+'_'.join(param[:2]) if '=' not in rq_url else rq_url)
         _name = get_cfmmc_id_host(host+'_name')
         _name = _name[0]+'*'*len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
-        bs = cfmmc.get_bs(code, ttype)
         hold = cfmmc.get_yesterday_hold(code)
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
 
@@ -2115,41 +2126,60 @@ def cfmmc_bs(rq,param=None):
         # future = Future(default_ips=(('112.74.214.43', 7727), ('120.24.0.77', 7727)))
         if ttype == '5M':
             code_name += '（5分钟）'
-            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
-            # data = data.resample('5T', closed='left', label='left').apply(ohlc_dict)
-            # data = data.dropna()
-            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
-            data2,bs = viewUtil.future_data_cycle(data, bs, 5)
+            _kdata = cache_keys+'5M_data'
+            _kbs = cache_keys+'5M_bs'+host
+            data2 = read_from_cache(_kdata)
+            bs = read_from_cache(_kbs)
+            if not data2 or not bs:
+                bs = cfmmc.get_bs(code, ttype)
+                data2,bs = viewUtil.future_data_cycle(data, bs, 5)
+                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
         elif ttype == '30M':
             code_name += '（30分钟）'
-            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
-            # data = data.resample('30T', closed='left', label='left').apply(ohlc_dict)
-            # data = data.dropna()
-            # data2 = [[str(i)]+list(j)[1:] for i,j in zip(data.index,data.values)]
-            data2,bs = viewUtil.future_data_cycle(data, bs, 30)
-            # data2 = future.get_bar(code,start_date,end_date,ktype='30M')
-            # data2 = data2[['datetime', 'open', 'close', 'low', 'high']]
-            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data2.index, data2.values)]
-            # print(data2[:30])
+            _kdata = cache_keys + '30M_data'
+            _kbs = cache_keys + '30M_bs' + host
+            data2 = read_from_cache(_kdata)
+            bs = read_from_cache(_kbs)
+            if not data2 or not bs:
+                bs = cfmmc.get_bs(code, ttype)
+                data2,bs = viewUtil.future_data_cycle(data, bs, 30)
+                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
         elif ttype == '1H':
             code_name += '（1小时）'
-            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
-            # data = data.resample('60T', closed='left', label='left').apply(ohlc_dict)
-            # data = data.dropna()
-            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
-            data2,bs = viewUtil.future_data_cycle(data, bs, 60)
+            _kdata = cache_keys + '1H_data'
+            _kbs = cache_keys + '1H_bs' + host
+            data2 = read_from_cache(_kdata)
+            bs = read_from_cache(_kbs)
+            if not data2 or not bs:
+                bs = cfmmc.get_bs(code, ttype)
+                data2,bs = viewUtil.future_data_cycle(data, bs, 60)
+                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
         elif ttype == '1D':
             code_name += '（1日）'
-            # data.index = data.datetime.apply(lambda x: datetime.datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
-            # data = data.resample('1440T', closed='left', label='left').apply(ohlc_dict)
-            # data = data.dropna()
-            # data2 = [[str(i)] + list(j)[1:] for i, j in zip(data.index, data.values)]
-            data2,bs = viewUtil.future_data_cycle(data, bs, ttype)
+            _kdata = cache_keys + '1D_data'
+            _kbs = cache_keys + '1D_bs' + host
+            data2 = read_from_cache(_kdata)
+            bs = read_from_cache(_kbs)
+            if not data2 or not bs:
+                bs = cfmmc.get_bs(code, ttype)
+                data2,bs = viewUtil.future_data_cycle(data, bs, ttype)
+                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
         else:
             code_name += '（1分钟）'
-            # data2 = [list(i) for i in data.values]
-            data2, bs = viewUtil.future_data_cycle(data, bs, 1)
-            write_to_cache(cache_keys, data2, expiry_time=60 * 60 * 24)
+            _kdata = cache_keys + '1M_data'
+            _kbs = cache_keys + '1M_bs' + host
+            data2 = read_from_cache(_kdata)
+            bs = read_from_cache(_kbs)
+            if not data2 or not bs:
+                bs = cfmmc.get_bs(code, ttype)
+                data2, bs = viewUtil.future_data_cycle(data, bs, 1)
+                write_to_cache(cache_keys, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
+                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
 
         open_buy = []  # 开多仓
         flat_buy = []  # 平多仓
@@ -2164,6 +2194,7 @@ def cfmmc_bs(rq,param=None):
         ttypes['60M'] = 60
         ttypes['1D'] = 1
         _days = set()
+        # print(bs)
         for j,i in enumerate(data2):
             _ob, _fb, _os, _fs = '', '', '', ''
             dt = i[0][:10]
@@ -2171,17 +2202,18 @@ def cfmmc_bs(rq,param=None):
                 _days.add(dt)
                 _ccb, _ccs = 0, 0  # 持仓多，持仓空
                 yesterday_hold = hold[dt] if dt in hold else (0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
+            # print(i[0])
             if i[0] in bs:
                 for b in bs[i[0]]:
-                    if b[4] == '开':
-                        if b[2] == '买':
+                    if '开' in b[4]:
+                        if '买' in b[2]:
                             _ob = (int(b[3]) + b[1] / VOL) if not _ob else _ob + b[1] / VOL
                             _ccb += b[1]
                         else:
                             _os = (int(b[3]) + b[1] / VOL) if not _os else _os + b[1] / VOL
                             _ccs += b[1]
                     else:
-                        if b[2] == '买':
+                        if '买' in b[2]:
                             _fs = (int(b[3]) + b[1] / VOL) if not _fs else _fs + b[1] / VOL
                             _ccs -= b[1]
                         else:

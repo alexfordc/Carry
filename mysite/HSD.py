@@ -1945,13 +1945,11 @@ class Cfmmc:
         sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),SUM(买持仓),SUM(卖持仓) FROM cfmmc_holding_position WHERE 合约='{code}' AND 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' GROUP BY 交易日期"
         sql_check = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_daily_settlement WHERE 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' ORDER BY 交易日期"
         d = runSqlData('carry_investment', sql)
+        d = {i[0]:i for i in d}
         _check = runSqlData('carry_investment',sql_check)
-        _check = {_check[i][0]:_check[i-1][0] for i in range(1,len(_check))}
-        # if not d:
-        #     return {}
-        d = list(d)
-        d.sort()
-        d2 = {d[i][0]: ((d[i - 1][1] if d[i - 1][1] else 0, d[i - 1][2] if d[i - 1][2] else 0) if _check[d[i][0]]==d[i - 1][0] else (0, 0)) for i in range(1, len(d))}
+        _c = [i[0] for i in _check]
+
+        d2 = {_c[i]:((d[_c[i-1]][1] if d[_c[i-1]][1] else 0, d[_c[i-1]][2] if d[_c[i-1]][2] else 0) if _c[i-1] in d else (0, 0)) for i in range(1,len(_c))}
         return d2
 
     def get_bs(self, code, time_type=None):

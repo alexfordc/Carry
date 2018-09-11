@@ -81,7 +81,7 @@
         }else if(type=='bs'){//when=y&host=1001&code=J1901&ttype=1D
             if('dwmy'.indexOf(when)>=0){
                 code_name = code_name=='1'?'{{ trade.0.0 }}':code_name;
-                open("{% url 'cfmmc_bs' %}"+when+"{{ host_id }}_"+code_name+"_5M");
+                open("{% url 'cfmmc_bs' %}"+when+"{{ host_id }}_"+code_name);
             }else{
                 var post = $("#cfmmc_huice_post");
                 post.attr('action','{% url 'cfmmc_bs' %}');

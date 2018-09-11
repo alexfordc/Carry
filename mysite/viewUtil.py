@@ -501,7 +501,7 @@ def cfmmc_data_page(rq, start_date=None, end_date=None):
         start_date = str(trade[-1][11])
 
     except:
-        trade = None
+        trade = []
         start_date = ''
         end_date = ''
     return trade, start_date, end_date
