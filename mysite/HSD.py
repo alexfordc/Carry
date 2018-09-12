@@ -302,11 +302,7 @@ class MongoDBData:
         # 时间，开盘，收盘，最低，最高，成交量
         data = [[i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']] for i in data]
         data.sort()
-        d1, d2 = [], []
-        for i in data:
-            d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:])
-        res = d1 + d2
-        return res
+        return data
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
@@ -319,9 +315,12 @@ class MongoDBData:
             code = code[:-3] + '1' + re_code[0]
         days = (ed - sd).days
         res = []
-        for i in range(days + 1):
-            day = datetime.timedelta(days=i)
-            res += self.data_day(code, sd + day)
+
+        for j in range(days + 1):
+            d1, d2 = [], []
+            day = datetime.timedelta(days=j)
+            [d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:]) for i in self.data_day(code, sd + day)]
+            res += d1 + d2
         # res = pd.DataFrame(res, columns=['datetime', 'open', 'close', 'low', 'high'])
         return res
 
@@ -1954,7 +1953,7 @@ class Cfmmc:
 
     def get_bs(self, code, time_type=None):
         """ 获取指定账户、产品的 交易日期时间：（成交价，手数） """
-        sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql}"
+        sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql} ORDER BY 交易日期"
         d = runSqlData('carry_investment', sql)
         res = {}  # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
         if d:

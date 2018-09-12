@@ -18819,3 +18819,154 @@ base.py[2018-09-12 16:25:08][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-12 17:38:34][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-12 17:38:58][WARNING]：Not Found: /static/
 base.py[2018-09-12 17:39:03][WARNING]：Not Found: /static/
+base.py[2018-09-12 17:55:05][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-12 17:55:05][WARNING]：Not Found: /favicon.ico
+tf_logging.py[2018-09-12 18:00:05][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:00:07][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:00:16][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:06:42][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+base.py[2018-09-12 18:11:20][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-12 18:11:20][WARNING]：Not Found: /favicon.ico
+tf_logging.py[2018-09-12 18:16:20][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+exception.py[2018-09-12 18:18:56][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2097, in cfmmc_bs
+    data = mongo.get_data(code, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 325, in get_data
+    [res.append(*self.data_day(code, sd + datetime.timedelta(days=i))) for i in range(days + 1)]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 325, in <listcomp>
+    [res.append(*self.data_day(code, sd + datetime.timedelta(days=i))) for i in range(days + 1)]
+TypeError: append() takes exactly one argument (375 given)
+base.py[2018-09-12 18:18:56][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-12 18:19:36][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2179, in cfmmc_bs
+    data2, bs = viewUtil.future_data_cycle(data, bs, 1)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 681, in future_data_cycle
+    bs2 = {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 681, in <dictcomp>
+    bs2 = {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
+TypeError: unhashable type: 'list'
+exception.py[2018-09-12 18:20:05][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2097, in cfmmc_bs
+    data = mongo.get_data(code, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 325, in get_data
+    [res.append(*list(self.data_day(code, sd + datetime.timedelta(days=i)))) for i in range(days + 1)]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 325, in <listcomp>
+    [res.append(*list(self.data_day(code, sd + datetime.timedelta(days=i)))) for i in range(days + 1)]
+TypeError: append() takes exactly one argument (375 given)
+tf_logging.py[2018-09-12 18:21:48][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:27:21][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+exception.py[2018-09-12 18:27:34][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2157, in cfmmc_bs
+    data2,bs = viewUtil.future_data_cycle(data, bs, 60)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 691, in future_data_cycle
+    ts = j[0][:10]
+TypeError: 'datetime.datetime' object is not subscriptable
+exception.py[2018-09-12 18:27:48][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2157, in cfmmc_bs
+    data2,bs = viewUtil.future_data_cycle(data, bs, 60)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 691, in future_data_cycle
+    ts = j[0][:10]
+TypeError: 'datetime.datetime' object is not subscriptable
+tf_logging.py[2018-09-12 18:37:55][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:43:41][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+tf_logging.py[2018-09-12 18:57:32][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+exception.py[2018-09-12 18:57:52][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2146, in cfmmc_bs
+    data2,bs = viewUtil.future_data_cycle(data, bs, 30)
+ValueError: too many values to unpack (expected 2)
+exception.py[2018-09-12 19:01:20][ERROR]：Internal Server Error: /cfmmc/bs/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2202, in cfmmc_bs
+    dt = i[0][:10]
+IndexError: list index out of range
+exception.py[2018-09-12 19:04:10][ERROR]：Internal Server Error: /cfmmc/bs/y1001_J1901/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2199, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+UnboundLocalError: local variable 'data2bs' referenced before assignment
+base.py[2018-09-12 19:04:35][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-12 19:04:35][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-09-12 19:22:42][ERROR]：文件 HSD.py 第1414行报错：division by zero
+exception.py[2018-09-12 19:25:22][ERROR]：Internal Server Error: /cfmmc/bs/m1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2097, in cfmmc_bs
+    start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
+KeyError: 0

@@ -14,6 +14,7 @@ from io import BytesIO
 from sqlalchemy import create_engine
 from pyquery import PyQuery as pq
 from threading import Thread
+from collections import defaultdict
 
 from mysite import HSD
 from mysite.mycaptcha import Captcha
@@ -640,13 +641,8 @@ def cfmmc_hc_data(host, rq_date, end_date):
 def future_data_cycle(data, bs, cycle):
     """ data：精确到分钟的行情数据，bs：精确到秒的交易数据，
         cycle：若等于1D就是日线，其他为数字（以分钟为单位）"""
-    bs0 = {}
-    for i in bs:
-        _key = i[0][:-3]
-        if _key not in bs0:
-            bs0[_key] = [list(i)]
-        else:
-            bs0[_key].append(list(i))
+    bs0 = defaultdict(list)
+    [bs0[i[0][:-3]].append(list(i)) for i in bs]
     bs = bs0
     data2 = []
     bs2 = {}
@@ -657,10 +653,11 @@ def future_data_cycle(data, bs, cycle):
             ts = j[0][:10]
             if ts not in _ts:
                 if _ts:
-                    data2.append([t, o, c, l, h, v])
+                    # data2.append([t, o, c, l, h, v])
                     if _bs:
                         bs2[t] = _bs
                         _bs = []
+                    yield [t, o, c, l, h, v],bs2
                 _ts.add(ts)
                 t = j[0][:10] + ' 00:00:00'
                 o = j[1]
@@ -677,16 +674,18 @@ def future_data_cycle(data, bs, cycle):
                 if j[0][:-3] in bs:
                     _bs += bs[j[0][:-3]]
         else:
-            data2.append([t, o, c, l, h, v])
+            # data2.append([t, o, c, l, h, v])
             if _bs:
                 bs2[t] = _bs
+            yield [t, o, c, l, h, v], bs2
     elif cycle == 1:  # 一分钟线
         data2 = data
-        bs2 = {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
-        # for j in data:
-        #     data2.append([j[0], j[1], j[2], j[3], j[4]])
-        #     if j[0][:-3] in bs:
-        #         bs2[j[0]] = bs[j[0][:-3]]
+        bs2 = {} # {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
+        for j in data:
+            # data2.append([j[0], j[1], j[2], j[3], j[4]])
+            if j[0][:-3] in bs:
+                bs2[j[0]] = bs[j[0][:-3]]
+            yield [j[0], j[1], j[2], j[3], j[4]], bs2
     else:  # 其它分钟线 5分钟，30分钟，60分钟
         _init = True  # 是否需要初始化
         _is_last_init = False  # 是否刚刚初始化
@@ -716,31 +715,38 @@ def future_data_cycle(data, bs, cycle):
                 l = j[3] if j[3] < l else l
                 h = j[4] if j[4] > h else h
                 v += j[5]
-                data2.append([j[0], o, j[2], l, h, v])
+                # data2.append([j[0], o, j[2], l, h, v])
                 if _bs:
                     bs2[j[0]] = _bs
                     _bs = []
+                yield [j[0], o, j[2], l, h, v], bs2
                 _init = True
                 i = 1
             _is_last_init = False
         else:
-            data2.append([j[0], o, j[2], l, h, v])
-    return data2, bs2
+            # data2.append([j[0], o, j[2], l, h, v])
+            yield [j[0], o, j[2], l, h, v], bs2
+    # return data2, bs2
 
 
-def future_macd(da, short=12, long=26, phyd=9):
+def future_macd(short=12, long=26, phyd=9):
     """ macd指标计算 """
     # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
     dc = []
     da2 = []
+    da = []
     # da2格式：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9  # tag：为涨跌趋势的标签（0或1）
     # ['2015-10-16',18.4,18.58,18.33,18.79,67.00,1,0.04,0.11,0.09]
-    for i in range(len(da)):
-        _t = da[i][0]  # 时间
-        _o = da[i][1]  # 开盘价
-        _c = da[i][2]  # 收盘价
-        _l = da[i][3]  # 最低价
-        _h = da[i][4]  # 最高价
+    # for i in range(len(da)):
+    i = 0
+    while 1:
+        _da = yield da2
+        da.append(_da)
+        _t = _da[0]  # 时间
+        _o = _da[1]  # 开盘价
+        _c = _da[2]  # 收盘价
+        _l = _da[3]  # 最低价
+        _h = _da[4]  # 最高价
 
         dc.append(
             {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'datetimes': _t,
@@ -764,9 +770,9 @@ def future_macd(da, short=12, long=26, phyd=9):
             dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
             dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
 
-        da2.append(
-            [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
-    return da2
+        da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
+        i += 1
+    # return da2
 
 
 def this_day_week_month_year(when):

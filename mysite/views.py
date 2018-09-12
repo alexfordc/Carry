@@ -2084,8 +2084,8 @@ def cfmmc_bs(rq,param=None):
             return redirect('/')
         cache_keys = 'cfmmc_future_bs_' + start_date + code + end_date
         cfmmc = HSD.Cfmmc(host, start_date, end_date)
-        start_date = HSD.dtf(start_date)
-        end_date = HSD.dtf(end_date)
+        # start_date = HSD.dtf(start_date)
+        # end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
 
         data = read_from_cache(cache_keys)
@@ -2093,6 +2093,13 @@ def cfmmc_bs(rq,param=None):
         #     import pandas
         #     data = pandas.DataFrame(data, columns=['datetime', 'open', 'close', 'low', 'high'])
         # else:
+        bs = cfmmc.get_bs(code, ttype)
+        if bs:
+            start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
+            end_date = HSD.dtf(bs[-1][0][:10]) + datetime.timedelta(days=3)
+        else:
+            start_date = HSD.dtf(start_date)
+            end_date = HSD.dtf(end_date)
         if not data:
             data = mongo.get_data(code, start_date, end_date)
         data_len = len(data)  # 分钟数据总长度
@@ -2126,60 +2133,19 @@ def cfmmc_bs(rq,param=None):
         # future = Future(default_ips=(('112.74.214.43', 7727), ('120.24.0.77', 7727)))
         if ttype == '5M':
             code_name += '（5分钟）'
-            _kdata = cache_keys+'5M_data'
-            _kbs = cache_keys+'5M_bs'+host
-            data2 = read_from_cache(_kdata)
-            bs = read_from_cache(_kbs)
-            if not data2 or not bs:
-                bs = cfmmc.get_bs(code, ttype)
-                data2,bs = viewUtil.future_data_cycle(data, bs, 5)
-                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
+            data2bs = viewUtil.future_data_cycle(data, bs, 5)
         elif ttype == '30M':
             code_name += '（30分钟）'
-            _kdata = cache_keys + '30M_data'
-            _kbs = cache_keys + '30M_bs' + host
-            data2 = read_from_cache(_kdata)
-            bs = read_from_cache(_kbs)
-            if not data2 or not bs:
-                bs = cfmmc.get_bs(code, ttype)
-                data2,bs = viewUtil.future_data_cycle(data, bs, 30)
-                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
+            data2bs = viewUtil.future_data_cycle(data, bs, 30)
         elif ttype == '1H':
             code_name += '（1小时）'
-            _kdata = cache_keys + '1H_data'
-            _kbs = cache_keys + '1H_bs' + host
-            data2 = read_from_cache(_kdata)
-            bs = read_from_cache(_kbs)
-            if not data2 or not bs:
-                bs = cfmmc.get_bs(code, ttype)
-                data2,bs = viewUtil.future_data_cycle(data, bs, 60)
-                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
+            data2bs = viewUtil.future_data_cycle(data, bs, 60)
         elif ttype == '1D':
             code_name += '（1日）'
-            _kdata = cache_keys + '1D_data'
-            _kbs = cache_keys + '1D_bs' + host
-            data2 = read_from_cache(_kdata)
-            bs = read_from_cache(_kbs)
-            if not data2 or not bs:
-                bs = cfmmc.get_bs(code, ttype)
-                data2,bs = viewUtil.future_data_cycle(data, bs, ttype)
-                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
+            data2bs = viewUtil.future_data_cycle(data, bs, ttype)
         else:
             code_name += '（1分钟）'
-            _kdata = cache_keys + '1M_data'
-            _kbs = cache_keys + '1M_bs' + host
-            data2 = read_from_cache(_kdata)
-            bs = read_from_cache(_kbs)
-            if not data2 or not bs:
-                bs = cfmmc.get_bs(code, ttype)
-                data2, bs = viewUtil.future_data_cycle(data, bs, 1)
-                write_to_cache(cache_keys, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kdata, data2, expiry_time=60 * 60 * 120)
-                write_to_cache(_kbs, bs, expiry_time=60 * 60 * 120)
+            data2bs = viewUtil.future_data_cycle(data, bs, 1)
 
         open_buy = []  # 开多仓
         flat_buy = []  # 平多仓
@@ -2195,7 +2161,13 @@ def cfmmc_bs(rq,param=None):
         ttypes['1D'] = 1
         _days = set()
         # print(bs)
-        for j,i in enumerate(data2):
+        data3 = viewUtil.future_macd()
+        data3.send(None)
+        for i,bs in data2bs:#data2:
+            if not i:
+                continue
+            # data3.append(i)
+            data2.append(data3.send(i))
             _ob, _fb, _os, _fs = '', '', '', ''
             dt = i[0][:10]
             if dt not in _days:
@@ -2228,7 +2200,7 @@ def cfmmc_bs(rq,param=None):
                 _ccb + yesterday_hold[0],
                 _ccs + yesterday_hold[1]
             ]
-        data2 = viewUtil.future_macd(data2)
+        # data2 = viewUtil.future_macd(data3)
         return render(rq, 'cfmmc_kline2.html', {'user_name': user_name, 'data': data2, 'open_buy': open_buy,
                                                'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
                                                'holds':holds,'rq_url': rq_url, 'code_name': code_name})
