@@ -17690,3 +17690,1132 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'b' referenced before assignment
 tf_logging.py[2018-09-11 18:00:32][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
 tf_logging.py[2018-09-11 18:12:45][INFO]：Restoring parameters from D:\tools\Tools\Carry\mysite\myfile\captcha_model95\crack_capcha.ckpt-12000
+base.py[2018-09-12 09:09:40][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-09-12 09:10:25][ERROR]：文件 HSD.py 第1415行报错：division by zero
+log.py[2018-09-12 12:31:19][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 260, in index
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 12:31:52][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 260, in index
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 12:31:54][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 260, in index
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 12:38:41][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 260, in index
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 12:38:46][WARNING]：Not Found: /tu
+log.py[2018-09-12 12:38:54][WARNING]：Not Found: /zx
+log.py[2018-09-12 12:38:57][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 833, in zhexian
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 13:15:24][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 834, in zhexian
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 13:15:28][ERROR]：Internal Server Error: /zx/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 834, in zhexian
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 13:15:31][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 263, in index
+    return render(rq, 'index.html', {'user_name': user_name, 'logins': logins})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\urls\base.py", line 90, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\urls\resolvers.py", line 622, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'zhangting' with arguments '('today',)' not found. 1 pattern(s) tried: ['zhangting\\/\\(\\[a\\-z\\]\\*\\)\\/$']
+log.py[2018-09-12 13:27:12][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 859, in tongji
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 13:29:56][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 859, in tongji
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 129, in LogIn
+    return getLogin(rq.session, uid)
+AttributeError: 'WSGIRequest' object has no attribute 'session'
+log.py[2018-09-12 13:30:35][ERROR]：Internal Server Error: /user/register/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\captcha\fields.py", line 57, in fetch_captcha_store
+    reverse('captcha-image', args=('dummy',))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\urls\base.py", line 90, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\urls\resolvers.py", line 622, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'captcha-image' not found. 'captcha-image' is not a valid view function or pattern name.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\core\handlers\base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 639, in register
+    return render(rq, 'user_register.html', {'form': form})
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 904, in render_annotated
+    return self.render(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 987, in render
+    output = self.filter_expression.resolve(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 671, in resolve
+    obj = self.var.resolve(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 796, in resolve
+    value = self._resolve_lookup(context)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\template\base.py", line 858, in _resolve_lookup
+    current = current()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\forms\forms.py", line 284, in as_table
+    errors_on_separate_row=False,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\forms\forms.py", line 243, in _html_output
+    'field_name': bf.html_name,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\utils\html.py", line 397, in <lambda>
+    klass.__str__ = lambda self: mark_safe(klass_str(self))
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\forms\boundfield.py", line 33, in __str__
+    return self.as_widget()
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django\forms\boundfield.py", line 93, in as_widget
+    renderer=self.form.renderer,
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\captcha\fields.py", line 167, in render
+    self.fetch_captcha_store(name, value, attrs, self.generator)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\captcha\fields.py", line 59, in fetch_captcha_store
+    raise ImproperlyConfigured('Make sure you\'ve included captcha.urls as explained in the INSTALLATION section on http://readthedocs.org/docs/django-simple-captcha/en/latest/usage.html#installation')
+django.core.exceptions.ImproperlyConfigured: Make sure you've included captcha.urls as explained in the INSTALLATION section on http://readthedocs.org/docs/django-simple-captcha/en/latest/usage.html#installation
+HSD.py[2018-09-12 13:45:12][ERROR]：文件 HSD.py 第1415行报错：division by zero
+base.py[2018-09-12 15:29:35][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:29:35][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:29:39][WARNING]：Not Found: /static/kairui.ico
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:06][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:07][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:13][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:14][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:15][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+pg
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:57][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:30:58][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:00][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:31:14][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/admin/css/user.css
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/admin/css/forms.css
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/admin/css/user.css
+base.py[2018-09-12 15:31:18][WARNING]：Not Found: /static/admin/css/forms.css
+base.py[2018-09-12 15:31:20][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:31:20][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:31:20][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:31:20][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:17][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:18][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:21][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:35][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:36][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:37][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:38][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:32:42][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:32:51][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:33:00][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:33:15][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:33:27][WARNING]：Not Found: /static/kairui.ico
+base.py[2018-09-12 15:35:34][WARNING]：Not Found: /static/image/b7.ico
+base.py[2018-09-12 15:35:36][WARNING]：Not Found: /static/image/b7.ico
+base.py[2018-09-12 15:35:44][WARNING]：Not Found: /static/images/b7.ico
+base.py[2018-09-12 15:35:46][WARNING]：Not Found: /static/images/b7.ico
+base.py[2018-09-12 15:35:48][WARNING]：Not Found: /static/images/b7.ico
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:36:43][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:36:48][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:36:49][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:03][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:04][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:05][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:16][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:24][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/js/jquery-1.8.3.min.js
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/images/b9.ico
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/images/b16.ico
+base.py[2018-09-12 15:38:29][WARNING]：Not Found: /static/images/b10.ico
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:39][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:47][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:38:55][WARNING]：Not Found: /static/js/jquery.tipsy.js
+ured-3.jpg
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/css/radio.css
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:39:06][WARNING]：Not Found: /static/css/radio.css
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:24][WARNING]：Not Found: /static/css/radio.css
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/css/radio.css
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:25][WARNING]：Not Found: /static/css/radio.css
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:41:34][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:41:36][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:42:17][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:42:18][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:42:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:42:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:42:22][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:44:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:44:56][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:45:58][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:31][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:32][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:34][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:35][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:41][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:47:42][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+pg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:32][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:48:33][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:48:56][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:48:59][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:51:23][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:51:23][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:51:23][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:51:23][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:25][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:25][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:51:25][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:51:25][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:51:26][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:51:26][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:26][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:26][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:51:26][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:30][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:51:31][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:19][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:20][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:21][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:22][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/css/style.css
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/images/featured/featured-1.jpg
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.flexslider-min.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/images/featured/featured-2.jpg
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.jcarousel.min.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/images/featured/featured-3.jpg
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/mosaic.1.0.1.js
+base.py[2018-09-12 15:52:23][WARNING]：Not Found: /static/js/jquery.tipsy.js
+base.py[2018-09-12 15:52:34][WARNING]：Not Found: /static/js/ddsmoothmenu.js
+base.py[2018-09-12 15:54:36][WARNING]：Not Found: /static
+base.py[2018-09-12 16:25:08][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-12 17:38:34][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-12 17:38:58][WARNING]：Not Found: /static/
+base.py[2018-09-12 17:39:03][WARNING]：Not Found: /static/
