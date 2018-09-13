@@ -1305,7 +1305,11 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
             else:  # 按K线的条数计算
                 if j[7] not in code_index:
                     code_index[j[7]] = re.search(r'[A-z]+',j[7])[0] + 'L8'
-                this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+                try:
+                    this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+                except Exception as exc:
+                    this_ccsj = 0
+                    # print(exc)
                 ccsj += this_ccsj
                 allcchz = (this_ccsj,1 if j[2]=='多' else 0,j[3],j[6],1 if j[0][:10]==j[1][:10] else 0,j[1],j[7])
                 hc['allcchz'].append(allcchz)
@@ -1903,7 +1907,11 @@ class Cfmmc:
 
     def get_data(self):
         """ ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') """
-        sql = f"SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE C.成交序号=T.成交序号 AND C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' AND C.交易日期<='{self.end_date}'"
+        sql = f"SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM " \
+              f"cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE " \
+              f"(CASE WHEN LENGTH(C.成交序号)>8 THEN SUBSTR(C.成交序号,9,16) ELSE C.成交序号 END)=(CASE WHEN LENGTH(T.成交序号)>8 THEN SUBSTR(T.成交序号,9,16) ELSE T.成交序号 END) " \
+              f"AND C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' " \
+              f"AND C.交易日期<='{self.end_date}'"
         data = runSqlData('carry_investment', sql)
         data2 = {}
         for i in data:
@@ -2026,12 +2034,12 @@ class Cfmmc:
 
 def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
-    sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
-    dc = {i[0][-8:]: i[1] for i in dc}
+    dc = {i[0]: i[1] for i in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
-           f" AND 原成交序号 in (SELECT 成交序号 from cfmmc_trade_records_trade WHERE 帐号='{host}')"
+           f" AND 原成交序号 in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
     cl = runSqlData('carry_investment',sql2)
     results2 = []
     for i in cl:

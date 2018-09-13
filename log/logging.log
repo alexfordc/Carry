@@ -641,3 +641,72 @@ wsgi.py[2018-09-13 16:06:28][INFO]£º200 GET / (192.168.2.204) 8.02ms
 wsgi.py[2018-09-13 16:18:54][INFO]£º200 GET / (192.168.2.204) 168.45ms
 wsgi.py[2018-09-13 16:18:56][INFO]£º200 GET / (192.168.2.204) 195.53ms
 wsgi.py[2018-09-13 16:18:57][INFO]£º200 GET / (192.168.2.204) 6.98ms
+exception.py[2018-09-13 18:06:17][ERROR]£ºInternal Server Error: /cfmmc/huice/y1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2257, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 668, in cfmmc_hc_data
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1308, in huices
+    this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+KeyError: '2018-09-13 21:24'
+base.py[2018-09-13 18:06:30][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-09-13 18:08:37][ERROR]£ºInternal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2257, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 668, in cfmmc_hc_data
+    hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 1308, in huices
+    this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+KeyError: '2018-09-13 21:24'
+exception.py[2018-09-13 18:53:31][ERROR]£ºInternal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2257, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 602, in cfmmc_hc_data
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 2042, in cfmmc_get_result
+    _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '¿Õ' if 'Âò' in i[6] else '¶à', i[7], i[8]]
+KeyError: '00231017'
+exception.py[2018-09-13 18:54:10][ERROR]£ºInternal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2257, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 602, in cfmmc_hc_data
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 2042, in cfmmc_get_result
+    _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '¿Õ' if 'Âò' in i[6] else '¶à', i[7], i[8]]
+KeyError: '00455860'
