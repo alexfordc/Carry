@@ -268,6 +268,7 @@ def login(rq):
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
         message = "登录失败！请确认用户名与密码是否输入正确！"
+        iphone = ''
         try:
             user = models.Users.objects.get(name=username)
             timestamp = user.creationTime
@@ -280,10 +281,11 @@ def login(rq):
                 rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction, "id": user.id}
                 return JsonResponse({"result": "yes", "users": username})
             elif user.enabled != 1:
-                message = "登录失败！您的账户尚未启用！"
+                message = "您的账户尚未启用！请联系管理员！"
+                iphone = HSD.get_config('U', 'contact_manager')
         except:
             pass
-    return JsonResponse({"result": message})
+    return JsonResponse({"result": message,"iphone":iphone})
 
 
 def logout(rq):

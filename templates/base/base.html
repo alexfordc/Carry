@@ -175,7 +175,7 @@ var $container = $('#works-container');
                             <li class="no-border-top" id="kline_msg"><a href="{% url 'kline' %}">K线图</a></li>
                         </ul>
                     </li>
-                    <li><a href="{% url 'index' %}">资料</a>
+                    <li><a href="{% url 'cfmmc_data_local' %}">资料</a>
                     <ul>
                         <li class="no-border-top" id="tongji_msg"><a href="{% url 'tongji' %}">交易统计表</a></li>
                         <li class="no-border-top" ><a href="{% url 'cfmmc_login' %}">期货监控中心登录</a></li>
@@ -186,7 +186,7 @@ var $container = $('#works-container');
                         <li class="no-border-top" ><a href="{% url 'newMoni' %}">挖掘方案</a></li>
                     </ul>
                     </li>
-                    <li><a href="{% url 'index' %}">产品介绍</a>
+                    <li><a href="{% url 'systems' %}">产品介绍</a>
                     <ul>
                         <li class="no-border-top" ><a href="{% url 'systems' %}">系统资源</a></li>
                         <li class="no-border-top" id="tools_msg"><a href="{% url 'tools' %}">友情链接</a></li>
@@ -329,12 +329,20 @@ function userLogin(type){
                         alert(mes);
                         show_login(0);
                     }else{
-                        $("#login_message").text(res.result);
+                        var result = res.result;
+                        if(result.indexOf('未启用')>=0){
+                            $("#login_message").css('color','blue').html(result+"<a href='javascript:login_is_contacts("+res.iphone+")'>@</a>");
+                        }else{
+                            $("#login_message").css('color','blue').text(result);
+                        }
                     }
                 }
             });
         }
     }
+}
+function login_is_contacts(o){
+    $("#login_message").css('color','blue').text('手机：'+o);
 }
 </script>
 

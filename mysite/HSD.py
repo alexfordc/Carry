@@ -2028,7 +2028,7 @@ def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
     sql = f"SELECT 成交序号,CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
-    dc = {i[0]: i[1] for i in dc}
+    dc = {i[0][-8:]: i[1] for i in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
            f" AND 原成交序号 in (SELECT 成交序号 from cfmmc_trade_records_trade WHERE 帐号='{host}')"

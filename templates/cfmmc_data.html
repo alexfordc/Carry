@@ -4,6 +4,7 @@
 <style>
 .info_body tr{border:1px solid #999;}
 .info_body td,th{ border:0px;height:40px; }
+.transaction_time { color:red; }
 </style>
 <script language="JavaScript">
    javascript:window.history.forward(1);
@@ -31,7 +32,7 @@
             <th>成交价&nbsp;&nbsp;</th><th>手数&nbsp;&nbsp;</th><th>成交额&nbsp;&nbsp;</th><th>开/平&nbsp;&nbsp;</th><th>手续费&nbsp;&nbsp;</th>
             <th>平仓盈亏&nbsp;&nbsp;</th><th>实际成交日期&nbsp;&nbsp;&nbsp;&nbsp;</th><th>帐号&nbsp;&nbsp;&nbsp;&nbsp;</th><th>交易日期&nbsp;&nbsp;</th></tr>
         {% for i in trade %}
-        <tr><td>{{i.0}}</td><td>{{i.1}}</td><td>{{i.2}}</td><td>{{i.3}}</td><td>{{i.4}}</td>
+        <tr><td>{{i.0}}</td><td>{{i.1}}</td><td><span class="transaction_time">{{i.2}}</span></td><td>{{i.3}}</td><td>{{i.4}}</td>
             <td>{{i.5}}</td><td>{{i.6}}</td><td>{{i.7}}</td><td>{{i.8}}</td><td>{{i.9}}</td>
             <td>{{i.10}}</td><td>{{i.11}}</td><td>{{i.12|truncatechars:9}}</td><td>{{i.13}}</td>
         </tr>

@@ -321,37 +321,63 @@ class Cfmmc:
                 #     self.holding_position = holding_position
                 # else:
                 #     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
+                excs = ''
                 if byType == 'date':
-                    account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment',
-                                        if_exists='append',
-                                        index=False)
+                    try:
+                        account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment',
+                                            if_exists='append',
+                                            index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment',
+                                             if_exists='append',
+                                             index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
+                                               if_exists='append', index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
+                                                if_exists='append', index=False)
+                    except Exception as exc:
+                        excs += str(exc)
                     sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
                     HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
-                    trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment',
-                                         if_exists='append',
-                                         index=False)
-                    closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
-                                           if_exists='append', index=False)
-                    holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
-                                            if_exists='append', index=False)
                 elif byType == 'trade':
-                    account_info.to_sql('cfmmc_daily_settlement_trade', self._conn, schema='carry_investment',
-                                        if_exists='append',
-                                        index=False)
+                    try:
+                        account_info.to_sql('cfmmc_daily_settlement_trade', self._conn, schema='carry_investment',
+                                            if_exists='append',
+                                            index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        trade_records.to_sql('cfmmc_trade_records_trade', self._conn, schema='carry_investment',
+                                             if_exists='append',
+                                             index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        closed_position.to_sql('cfmmc_closed_position_trade', self._conn, schema='carry_investment',
+                                               if_exists='append', index=False)
+                    except Exception as exc:
+                        excs += str(exc)
+                    try:
+                        holding_position.to_sql('cfmmc_holding_position_trade', self._conn, schema='carry_investment',
+                                                if_exists='append', index=False)
+                    except Exception as exc:
+                        excs += str(exc)
                     sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
                     HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 1))
-                    trade_records.to_sql('cfmmc_trade_records_trade', self._conn, schema='carry_investment',
-                                         if_exists='append',
-                                         index=False)
-                    closed_position.to_sql('cfmmc_closed_position_trade', self._conn, schema='carry_investment',
-                                           if_exists='append', index=False)
-                    holding_position.to_sql('cfmmc_holding_position_trade', self._conn, schema='carry_investment',
-                                            if_exists='append', index=False)
                 # print(f'{tradeDate}的{byType}数据下载成功')
-
+                record_log('log\\error_log\\err.txt',excs+f'{tradeDate}\n','a')
                 return name
             except Exception as e:
-                print(f'{tradeDate}的{byType}数据下载失败\n{e}')
+                # print(f'{tradeDate}的{byType}数据下载失败\n{e}')
+                record_log('log\\error_log\\err.txt', f'{tradeDate}的{byType}数据下载失败\n{e}\n', 'a')
                 return '_fail'
 
     @asyncs
@@ -498,7 +524,7 @@ def cfmmc_data_page(rq, start_date=None, end_date=None):
             trade = get_cfmmc_trade(host, start_date, end_date)
         else:
             trade = get_cfmmc_trade(host=host)
-            end_date = HSD.get_date()
+            end_date = str(trade[0][11]) # HSD.get_date()
         start_date = str(trade[-1][11])
 
     except:
