@@ -1,0 +1,1 @@
+start hidecmd.exe redis.bat

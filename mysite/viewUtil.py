@@ -345,8 +345,6 @@ class Cfmmc:
                                                 if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
-                    sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
-                    HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 0))
                 elif byType == 'trade':
                     try:
                         account_info.to_sql('cfmmc_daily_settlement_trade', self._conn, schema='carry_investment',
@@ -370,10 +368,14 @@ class Cfmmc:
                                                 if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
-                    sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
-                    HSD.runSqlData('carry_investment', sql, (_account, _tradedate, 1))
+
                 # print(f'{tradeDate}的{byType}数据下载成功')
-                record_log('log\\error_log\\err.txt',excs+f'{tradeDate}\n','a')
+                if excs == '':
+                    sql = 'insert into cfmmc_insert_date(host,date,type) values(%s,%s,%s)'
+                    tt = 0 if byType == 'date' else (1 if byType == 'trade' else -1)
+                    HSD.runSqlData('carry_investment', sql, (_account, _tradedate, tt))
+                else:
+                    record_log('log\\error_log\\err.txt',excs+f'[viewUtil | Cfmmc.save_settlement]{tradeDate}\n','a')
                 return name
             except Exception as e:
                 # print(f'{tradeDate}的{byType}数据下载失败\n{e}')
@@ -442,7 +444,13 @@ class Automatic:
     def cfmmc_dsqd(self):
         """ 自动运行下载数据 期货监控系统数据 """
         sql = 'SELECT HOST,PASSWORD,creationTime FROM cfmmc_user WHERE download=1'
-        last_date = cache.get('cfmmc_Automatic_download')
+        while 1:
+            try:
+                last_date = cache.get('cfmmc_Automatic_download')
+                break
+            except:
+                "Redis 未启动"
+            time.sleep(10)
         last_date = last_date if last_date else 0
         print(f'自动下载开始运行...{datetime.datetime.now()}')
         computer_name = os.environ['COMPUTERNAME'].upper()
@@ -508,8 +516,6 @@ class Automatic:
                 cache.set('cfmmc_Automatic_download', last_date)
             time.sleep(n)
 
-
-Automatic()
 
 
 def cfmmc_data_page(rq, start_date=None, end_date=None):

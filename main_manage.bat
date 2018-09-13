@@ -1,1 +1,0 @@
-start hidecmd.exe manage.bat

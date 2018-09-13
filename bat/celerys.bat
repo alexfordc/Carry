@@ -1,0 +1,1 @@
+celery worker -A Carry
