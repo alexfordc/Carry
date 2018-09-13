@@ -2,63 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/bat/HIDECMD.EXE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/celerys.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/main.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/main_celery.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/main_redis.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/nginx.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/node.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/redis.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/serv.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/servs.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bat/stop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/fastcgi_params" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/koi-utf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/koi-win" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/mime.types" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/scgi_params" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/uwsgi_params" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/conf/win-utf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/README" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/geo2nginx.pl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/unicode2nginx/koi-utf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/unicode2nginx/unicode-to-nginx.pl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/unicode2nginx/win-utf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/vim/ftdetect/nginx.vim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/vim/ftplugin/nginx.vim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/vim/indent/nginx.vim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/contrib/vim/syntax/nginx.vim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/CHANGES" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/CHANGES.ru" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/OpenSSL.LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/PCRE.LICENCE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/README" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/docs/zlib.LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/html/50x.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/html/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nginx-1.12.2/nginx.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HIDECMD.EXE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerys.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_celery.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_manage.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_redis.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage - 副本.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serv.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/serv.py" beforeDir="false" afterPath="$PROJECT_DIR$/serv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/fa/Thumbs.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/fa/Thumbs.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -75,8 +22,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="2472" lean-forward="true" selection-start-line="2472" selection-end-line="2472" />
+            <state relative-caret-position="279">
+              <caret line="918" column="32" selection-start-line="918" selection-start-column="26" selection-end-line="918" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -102,52 +49,19 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3775">
-              <caret line="173" column="8" selection-start-line="173" selection-start-column="8" selection-end-line="173" selection-end-column="8" />
+            <state relative-caret-position="25">
+              <caret line="1221" selection-start-line="1221" selection-end-line="1221" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Carry/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="serv.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/serv.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#63#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="450" column="19" lean-forward="true" selection-start-line="450" selection-start-column="19" selection-end-line="450" selection-end-column="19" />
+            <state relative-caret-position="1413">
+              <caret line="439" lean-forward="true" selection-start-line="439" selection-end-line="439" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4125">
-              <caret line="165" column="81" selection-start-line="165" selection-start-column="67" selection-end-line="165" selection-end-column="81" />
-              <folding>
-                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -165,9 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>zdhc</find>
-      <find>max_zjhc</find>
-      <find>实际成交</find>
       <find>scatter_</find>
       <find>print</find>
       <find>height</find>
@@ -195,6 +106,9 @@
       <find>.ddsmoothmenu ul li a:hover{ color:#ffc000;}</find>
       <find>启用</find>
       <find>HSD</find>
+      <find>huices</find>
+      <find>sql</find>
+      <find>成交序号</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -256,14 +170,14 @@
         <option value="$PROJECT_DIR$/Carry/wsgi.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data_local.html" />
         <option value="$PROJECT_DIR$/serv.py" />
-        <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
         <option value="$PROJECT_DIR$/Carry/settings.py" />
         <option value="$PROJECT_DIR$/stop.py" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
       </list>
     </option>
   </component>
@@ -345,13 +259,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00006" summary="添加日志，模拟账户功能">
-      <created>1533627178207</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1533627178207</updated>
     </task>
     <task id="LOCAL-00007" summary="用户注册">
       <created>1533627242068</created>
@@ -689,7 +596,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536813615852</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="国内期货">
+      <created>1536829529361</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1536829529361</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1020,16 +934,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4125">
-          <caret line="165" column="81" selection-start-line="165" selection-start-column="67" selection-end-line="165" selection-end-column="81" />
-          <folding>
-            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -1065,17 +969,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3775">
-          <caret line="173" column="8" selection-start-line="173" selection-start-column="8" selection-end-line="173" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2337">
+          <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1086,29 +993,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="165" column="81" selection-start-line="165" selection-start-column="67" selection-end-line="165" selection-end-column="81" />
+          <folding>
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="2472" lean-forward="true" selection-start-line="2472" selection-end-line="2472" />
+        <state relative-caret-position="279">
+          <caret line="918" column="32" selection-start-line="918" selection-start-column="26" selection-end-line="918" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="1221" selection-start-line="1221" selection-end-line="1221" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="450" column="19" lean-forward="true" selection-start-line="450" selection-start-column="19" selection-end-line="450" selection-end-column="19" />
+        <state relative-caret-position="1413">
+          <caret line="439" lean-forward="true" selection-start-line="439" selection-end-line="439" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
