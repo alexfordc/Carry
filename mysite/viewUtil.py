@@ -160,7 +160,6 @@ class Cfmmc:
         hs = HSD.get_config("U", "hs")
         self._conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
 
-
     def getToken(self, url):
         """获取token"""
         token_name = "org.apache.struts.taglib.html.TOKEN"
@@ -363,7 +362,8 @@ class Cfmmc:
                     tt = 0 if byType == 'date' else (1 if byType == 'trade' else -1)
                     HSD.runSqlData('carry_investment', sql, (_account, _tradedate, tt))
                 else:
-                    record_log('log\\error_log\\err.txt',excs+f'[viewUtil | Cfmmc.save_settlement]{tradeDate}\n','a')
+                    record_log('log\\error_log\\err.txt', excs + f'[viewUtil | Cfmmc.save_settlement]{tradeDate}\n',
+                               'a')
                 return name
             except Exception as e:
                 # print(f'{tradeDate}的{byType}数据下载失败\n{e}')
@@ -505,7 +505,6 @@ class Automatic:
             time.sleep(n)
 
 
-
 def cfmmc_data_page(rq, start_date=None, end_date=None):
     """ 期货监控系统 展示页面 数据返回"""
     if start_date is None or end_date is None:
@@ -518,7 +517,7 @@ def cfmmc_data_page(rq, start_date=None, end_date=None):
             trade = get_cfmmc_trade(host, start_date, end_date)
         else:
             trade = get_cfmmc_trade(host=host)
-            end_date = str(trade[0][11]) # HSD.get_date()
+            end_date = str(trade[0][11])  # HSD.get_date()
         start_date = str(trade[-1][11])
 
     except:
@@ -604,9 +603,9 @@ def cfmmc_hc_data(host, rq_date, end_date):
         if i[1] not in pinzhong:
             pinzhong.append(i[1])
         dt = i[4][:10]
-        if min_date == '' or i[2][:10]<min_date:
+        if min_date == '' or i[2][:10] < min_date:
             min_date = i[2][:10]
-        if max_date == '' or dt>max_date:
+        if max_date == '' or dt > max_date:
             max_date = dt
         if dt not in res:
             res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
@@ -643,15 +642,15 @@ def cfmmc_hc_data(host, rq_date, end_date):
     mongo = HSD.MongoDBData()
     is_cache_set = False
     for p in _pz:
-        if p not in pinzhong or pinzhong[p]['min_date']>min_date or pinzhong[p]['max_date']<max_date:
-            pzs = mongo.get_data(p,min_date,max_date)
+        if p not in pinzhong or pinzhong[p]['min_date'] > min_date or pinzhong[p]['max_date'] < max_date:
+            pzs = mongo.get_data(p, min_date, max_date)
             pzs = {str(i[0])[:-3]: j for j, i in enumerate(pzs)}
             pzs['min_date'] = min_date
             pzs['max_date'] = max_date
             pinzhong[p] = pzs
             is_cache_set = True
     if is_cache_set:
-        _redis.set('cfmmc_hc_data_pinzhong',pinzhong)
+        _redis.set('cfmmc_hc_data_pinzhong', pinzhong)
     res, huizong = tongji_huice(res, huizong)
     hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date, pinzhong)
 
@@ -676,7 +675,7 @@ def future_data_cycle(data, bs, cycle):
                     if _bs:
                         bs2[t] = _bs
                         _bs = []
-                    yield [t, o, c, l, h, v],bs2
+                    yield [t, o, c, l, h, v], bs2
                 _ts.add(ts)
                 t = j0[:10] + ' 00:00:00'
                 o = j[1]
@@ -693,11 +692,14 @@ def future_data_cycle(data, bs, cycle):
                 if j0[:-3] in bs:
                     _bs += bs[j0[:-3]]
         else:
-            if j0[:-3] in bs:
-                _bs += bs[j0[:-3]]
-            if _bs:
-                bs2[t] = _bs
-            yield [t, o, c, l, h, v], bs2
+            try:
+                if j0[:-3] in bs:
+                    _bs += bs[j0[:-3]]
+                if _bs:
+                    bs2[t] = _bs
+                yield [t, o, c, l, h, v], bs2
+            except:
+                "没有数据"
     elif cycle == 1:  # 一分钟线
         bs2 = {}
         for j in data:
@@ -745,7 +747,10 @@ def future_data_cycle(data, bs, cycle):
                 i = 1
             _is_last_init = False
         else:
-            yield [j0, o, j[2], l, h, v], bs2
+            try:
+                yield [j0, o, j[2], l, h, v], bs2
+            except:
+                "没有数据"
 
 
 def future_macd(short=12, long=26, phyd=9):
@@ -783,7 +788,8 @@ def future_macd(short=12, long=26, phyd=9):
             dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
             dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
 
-        da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
+        da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2),
+               round(dc[i]['dea'], 2)]
         i += 1
 
 

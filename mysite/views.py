@@ -93,12 +93,21 @@ def is_time(data, minutes):
 def getLogin(ses, uid=False):
     """ 返回用户名与权限 """
     if 'users' in ses:
+        name, qx = ses['users']['name'], ses['users']['jurisdiction']
+        ses_key = read_from_cache(name)
         if not uid:
-            name, qx = ses['users']['name'], ses['users']['jurisdiction']
-            response = name, qx
+            if ses_key != ses.session_key:
+                response = 0, 0
+            else:
+                response = name, qx
         else:
-            name, qx, id = ses['users']['name'], ses['users']['jurisdiction'], ses['users']['id']
-            response = name, qx, id
+            id = ses['users']['id']
+            if ses_key != ses.session_key:
+                del ses['users']
+                response = 0, 0, 0
+            else:
+                response = name, qx, id
+
     else:
         response = (None, 0, None) if uid else (None, 0)
     return response
@@ -258,7 +267,12 @@ def get_cfmmc_id_host(_id='Nones', select=False):
 def index(rq, logins=''):
     """ 主页面 """
     user_name, qx = LogIn(rq)
-    logins = "请先登录再访问您需要的页面！" if logins is False else logins
+    if user_name == 0:
+        logins = "您的账户曾在另一地点登录！请重新登录！"
+        del rq.session['users']
+    else:
+        logins = "请先登录再访问您需要的页面！" if logins is False else logins
+
     return render(rq, 'index.html', {'user_name': user_name, 'logins': logins})
 
 
@@ -279,6 +293,7 @@ def login(rq):
                 pass
             elif user.password == password and user.enabled == 1:
                 rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction, "id": user.id}
+                write_to_cache(user.name,rq.session.session_key)
                 return JsonResponse({"result": "yes", "users": username})
             elif user.enabled != 1:
                 message = "您的账户尚未启用！请联系管理员！"
@@ -1121,7 +1136,10 @@ def tongji(rq):
     # return render(rq, 'tongji.html', locals())
     herys = viewUtil.tongji_first()
     ids = HSD.IDS
-    if not user_name:
+    if user_name == 0:
+        logins = "您的账户曾在另一地点登录！请重新登录！"
+        del rq.session['users']
+    elif not user_name:
         logins = "请先登录再访问您需要的页面！"
     return render(rq, 'tongji.html', locals())
 
