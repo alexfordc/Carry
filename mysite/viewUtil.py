@@ -149,6 +149,7 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
 
 class Cfmmc:
     """ 期货监控系统，登录，下载数据，保存数据 """
+    __slots__ = ('session', '_login_url', '_vercode_url', '_conn', '_not_trade_list', '_userID', '_password')
 
     def __init__(self):
         self.session = requests.session()
@@ -158,9 +159,7 @@ class Cfmmc:
         ps = HSD.get_config("U", "ps")
         hs = HSD.get_config("U", "hs")
         self._conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
-        self.trade_records = None
-        self.closed_position = None
-        self.holding_position = None
+
 
     def getToken(self, url):
         """获取token"""
@@ -310,20 +309,6 @@ class Cfmmc:
                     df['帐号'] = _account
                     df['交易日期'] = _tradedate
 
-                # if self.trade_records is None:
-                #     self.trade_records = trade_records
-                # else:
-                #     self.trade_records = self.trade_records.append(trade_records, ignore_index=True)
-                #
-                # if self.closed_position is None:
-                #     self.closed_position = closed_position
-                # else:
-                #     self.closed_position = self.closed_position.append(closed_position, ignore_index=True)
-                #
-                # if self.holding_position is None:
-                #     self.holding_position = holding_position
-                # else:
-                #     self.holding_position = self.holding_position.append(holding_position, ignore_index=True)
                 excs = ''
                 if byType == 'date':
                     try:
@@ -660,7 +645,7 @@ def cfmmc_hc_data(host, rq_date, end_date):
     for p in _pz:
         if p not in pinzhong or pinzhong[p]['min_date']>min_date or pinzhong[p]['max_date']<max_date:
             pzs = mongo.get_data(p,min_date,max_date)
-            pzs = {i[0][:-3]: j for j, i in enumerate(pzs)}
+            pzs = {str(i[0])[:-3]: j for j, i in enumerate(pzs)}
             pzs['min_date'] = min_date
             pzs['max_date'] = max_date
             pinzhong[p] = pzs
@@ -679,54 +664,54 @@ def future_data_cycle(data, bs, cycle):
     bs0 = defaultdict(list)
     [bs0[i[0][:-3]].append(list(i)) for i in bs]
     bs = bs0
-    data2 = []
     bs2 = {}
     _bs = []
     _ts = set()
     if cycle == '1D':  # 日线
         for j in data:
-            ts = j[0][:10]
+            j0 = str(j[0])
+            ts = j0[:10]
             if ts not in _ts:
                 if _ts:
-                    # data2.append([t, o, c, l, h, v])
                     if _bs:
                         bs2[t] = _bs
                         _bs = []
                     yield [t, o, c, l, h, v],bs2
                 _ts.add(ts)
-                t = j[0][:10] + ' 00:00:00'
+                t = j0[:10] + ' 00:00:00'
                 o = j[1]
                 l = j[3]
                 h = j[4]
                 v = j[5]
-                if j[0][:-3] in bs:
-                    _bs += bs[j[0][:-3]]
+                if j0[:-3] in bs:
+                    _bs += bs[j0[:-3]]
             else:
                 l = j[3] if j[3] < l else l
                 h = j[4] if j[4] > h else h
                 c = j[2]
                 v += j[5]
-                if j[0][:-3] in bs:
-                    _bs += bs[j[0][:-3]]
+                if j0[:-3] in bs:
+                    _bs += bs[j0[:-3]]
         else:
-            # data2.append([t, o, c, l, h, v])
+            if j0[:-3] in bs:
+                _bs += bs[j0[:-3]]
             if _bs:
                 bs2[t] = _bs
             yield [t, o, c, l, h, v], bs2
     elif cycle == 1:  # 一分钟线
-        data2 = data
-        bs2 = {} # {j[0]: bs[j[0][:-3]] for j in data if j[0][:-3] in bs}
+        bs2 = {}
         for j in data:
-            # data2.append([j[0], j[1], j[2], j[3], j[4]])
-            if j[0][:-3] in bs:
-                bs2[j[0]] = bs[j[0][:-3]]
-            yield [j[0], j[1], j[2], j[3], j[4]], bs2
+            j0 = str(j[0])
+            if j0[:-3] in bs:
+                bs2[j0] = bs[j0[:-3]]
+            yield [j0, j[1], j[2], j[3], j[4], j[5]], bs2
     else:  # 其它分钟线 5分钟，30分钟，60分钟
         _init = True  # 是否需要初始化
         _is_last_init = False  # 是否刚刚初始化
         i = 1
         for j in data:
-            ts = j[0][:10]
+            j0 = str(j[0])
+            ts = j0[:10]
             if _init or ts not in _ts:
                 _ts.add(ts)
                 o = j[1]
@@ -736,32 +721,31 @@ def future_data_cycle(data, bs, cycle):
                 i = 1
                 _init = False
                 _is_last_init = True
-                if j[0][:-3] in bs:
-                    _bs += bs[j[0][:-3]]
+                if j0[:-3] in bs:
+                    _bs += bs[j0[:-3]]
             if i % cycle:
                 l = j[3] if j[3] < l else l
                 h = j[4] if j[4] > h else h
                 i += 1
                 if not _is_last_init:
                     v += j[5]
-                    if j[0][:-3] in bs:
-                        _bs += bs[j[0][:-3]]
+                    if j0[:-3] in bs:
+                        _bs += bs[j0[:-3]]
             else:
                 l = j[3] if j[3] < l else l
                 h = j[4] if j[4] > h else h
                 v += j[5]
-                # data2.append([j[0], o, j[2], l, h, v])
+                if j0[:-3] in bs:
+                    _bs += bs[j0[:-3]]
                 if _bs:
-                    bs2[j[0]] = _bs
+                    bs2[j0] = _bs
                     _bs = []
-                yield [j[0], o, j[2], l, h, v], bs2
+                yield [j0, o, j[2], l, h, v], bs2
                 _init = True
                 i = 1
             _is_last_init = False
         else:
-            # data2.append([j[0], o, j[2], l, h, v])
-            yield [j[0], o, j[2], l, h, v], bs2
-    # return data2, bs2
+            yield [j0, o, j[2], l, h, v], bs2
 
 
 def future_macd(short=12, long=26, phyd=9):
@@ -770,9 +754,6 @@ def future_macd(short=12, long=26, phyd=9):
     dc = []
     da2 = []
     da = []
-    # da2格式：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9  # tag：为涨跌趋势的标签（0或1）
-    # ['2015-10-16',18.4,18.58,18.33,18.79,67.00,1,0.04,0.11,0.09]
-    # for i in range(len(da)):
     i = 0
     while 1:
         _da = yield da2
@@ -791,12 +772,9 @@ def future_macd(short=12, long=26, phyd=9):
             this_c = da[i][4]
             dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
             dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
-            # dc[i]['ema_short'] = sum([(short-j)*da[i-j][4] for j in range(short)])/(3*short)
-            # dc[i]['ema_long'] = sum([(long-j)*da[i-j][4] for j in range(long)])/(3*long)
             dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
             dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
             dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
-            co = 1 if dc[i]['macd'] >= 0 else 0
         elif i > 1:
             n_c = da[i][4]
             dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + n_c * 2 / short
@@ -807,7 +785,6 @@ def future_macd(short=12, long=26, phyd=9):
 
         da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
         i += 1
-    # return da2
 
 
 def this_day_week_month_year(when):

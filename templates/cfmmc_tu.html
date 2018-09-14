@@ -193,7 +193,7 @@ toolbox: {
     calculable : true,
     series : [
         {
-            name:tu_name[0],
+            name:tu_name[0]+"(成交额)",
             type:'pie',
             radius : '40%',
             center: ['50%', '50%'],
@@ -392,6 +392,213 @@ optiont ={
         }
     }
 };
+}else if(type=='bar2'){
+myChart.clear();
+var colorList = [
+                  '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                   '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                   '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                ];
+if(colorList.length<zx_x.length){
+    var wh = 0;
+    var _sizes = zx_x.length-colorList.length;
+    while(wh<_sizes){
+        var col = getColor();
+        if(colorList.indexOf(col)<0 && col!="#FFFFFF"){
+            colorList.push(col);
+            wh ++;
+        }
+    }
+}
+optiont ={
+    //backgroundColor:'#fdfdfd', // 背景颜色
+    backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
+            offset: 0,
+            color: '#f7f8fa'
+        }, {
+            offset: 1,
+            color: '#cdd0d5'
+        }]),
+    title:{
+        text:"账户：{{hct.host}}",
+        textStyle:{
+            color:'#00A600',
+            fontSize:18
+        }
+    },
+    tooltip: {},
+    toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+    xAxis: {
+        type: 'category',
+        data: zx_x,
+
+    },
+    yAxis: {
+        type: 'value',
+    },
+    /*series: [{
+        name: '名称',
+        type: 'bar',
+        data: zx_y
+    }],*/
+    series: [
+        {
+            name: tu_name[0],
+            type: 'bar',
+            barMaxWidth: 80, // 柱子的最大宽度
+            barCategoryGap: 0,
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        // build a color map as your need.
+                        return colorList[params.dataIndex]
+                    },
+                    /*label: {
+                        show: true,
+                        position: 'top',//'inside',//
+                        formatter: '{b}\n{c}'
+                    }*/
+                }
+            },
+            data: zx_y,
+            /*markPoint: {
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    formatter: function(params){
+                        return '<img src="'
+                                + params.data.symbol.replace('image://', '')
+                                + '"/>';
+                    }
+                },
+
+            }*/
+        }
+    ],
+    label:{
+        normal:{
+            show:false, // 柱子上取消显示数值
+            position:'top'
+        }
+    }
+};
+}else if(type=='bar3'){
+myChart.clear();
+
+optiont = {
+    backgroundColor: '#eee',
+    title:{
+        text:"账户：{{hct.host}}",
+        textStyle:{
+            color:'#00A600',
+            fontSize:18
+        }
+    },
+    legend: {
+        data: ['盈利', '亏损']
+    },
+    brush: {
+        toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+        xAxisIndex: 0
+    },
+    toolbox: {
+        show : true,
+        feature: {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : { show: true, type: [ 'stack', 'tiled', 'line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    tooltip: {},
+    xAxis: {
+        data: zx_x,
+        name: '时间（小时）',
+        silent: false,
+        axisLine: {onZero: true},
+        splitLine: {show: false},
+        splitArea: {show: false}
+    },
+    yAxis: {
+        inverse: false,
+        splitArea: {show: false}
+    },
+    grid: {
+        left: 100
+    },
+    visualMap: {
+        type: 'continuous',
+        dimension: 1,
+        text: ['盈利', '亏损'],
+        inverse: false,
+        itemHeight: 200,
+        calculable: true,
+        min: -2,
+        max: 6,
+        top: 60,
+        left: 10,
+        inRange: {
+            colorLightness: [0.4, 0.8]
+        },
+        outOfRange: {
+            color: '#090'
+        },
+        controller: {
+            inRange: {
+                color: ['#26712d','#d7504b']
+            }
+        }
+    },
+    series: [
+        {
+            name: '盈利',
+            type: 'bar',
+            stack: 'one',
+            itemStyle: {
+                normal: {
+                    color: '#d7504b'
+                },
+                emphasis: {
+                    barBorderWidth: 1,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowColor: 'rgba(0,0,0,0.5)'
+                }
+            },
+            data: zx_y
+        },
+        {
+            name: '亏损',
+            type: 'bar',
+            stack: 'one',
+            itemStyle: {
+                normal: {
+                    color: '#26712d'
+                },
+                emphasis: {
+                    barBorderWidth: 1,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowColor: 'rgba(0,0,0,0.5)'
+                }
+            },
+            data: zx_y2
+        }
+    ]
+};
+
 }else if(type=='linebar'){
 myChart.clear();
 optiont = {
@@ -532,7 +739,7 @@ toolbox: {
         type: 'value',
         axisLine: {
             lineStyle: {
-                color: 'blue'
+                color: 'purple'
             }
         }
     },{
@@ -1026,11 +1233,11 @@ function tuxiancolort(id){
         tu_name=["","资金回测",""];
         huatut("line2",{{zx_x|safe}},"",{{hct.zjhc|safe}},"");
     }else if(id=='tuxiant16'){
-        tu_name=["持仓时间（小时）","手数",""];
-        huatut("bar",{{hct.ccsjss_x|safe}},{{hct.ccsjss_y|safe}},"","");
+        tu_name=["持仓时间（小时）","盈亏",""];
+        huatut("bar3",{{hct.all_ccsjylks|safe}},{{hct.all_ccsjyl2|safe}},{{hct.all_ccsjks2|safe}},"");
     }else if(id=='tuxiant17'){
         tu_name=["盈亏","手数",""];
-        huatut("bar",{{hct.ykss_x|safe}},{{hct.ykss_y|safe}},"","");
+        huatut("bar2",{{hct.ykss_x|safe}},{{hct.ykss_y|safe}},"","");
     }
 }
 
@@ -1286,7 +1493,7 @@ $("#tuxiant25").click(function(){
     <td valign="top">
         <table class="advanced border0L" cellspacing="0">
             <tbody><tr class="bg1">
-                <td>交易:</td>
+                <td>交易(笔):</td>
                 <td class="alignR">{{huizong.zl}}</td>
             </tr>
             <tr>

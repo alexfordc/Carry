@@ -710,3 +710,158 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\HSD.py", line 2042, in cfmmc_get_result
     _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '¿Õ' if 'Âò' in i[6] else '¶à', i[7], i[8]]
 KeyError: '00455860'
+exception.py[2018-09-14 10:18:30][ERROR]£ºInternal Server Error: /cfmmc/bs/m1001_J1901_1M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2172, in cfmmc_bs
+    data2.append(data3.send(i))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 808, in future_macd
+    da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
+IndexError: list index out of range
+base.py[2018-09-14 10:18:30][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-09-14 10:43:20][ERROR]£ºInternal Server Error: /cfmmc/bs/m1001_J1901_1M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2172, in cfmmc_bs
+    data2.append(data3.send(i))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 808, in future_macd
+    da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
+IndexError: list index out of range
+exception.py[2018-09-14 10:47:17][ERROR]£ºInternal Server Error: /cfmmc/bs/m1001_J1901_1M/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2173, in cfmmc_bs
+    data2.append(data3.send(i))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 808, in future_macd
+    da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)]
+IndexError: list index out of range
+exception.py[2018-09-14 15:36:25][ERROR]£ºInternal Server Error: /cfmmc/bs/y1001_J1901/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2169, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 728, in future_data_cycle
+    for j in data:
+TypeError: 'NoneType' object is not iterable
+base.py[2018-09-14 15:36:25][WARNING]£ºNot Found: /favicon.ico
+exception.py[2018-09-14 15:47:48][ERROR]£ºInternal Server Error: /cfmmc/bs/y1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2156, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 729, in future_data_cycle
+    ts = j[0][:10]
+TypeError: 'datetime.datetime' object is not subscriptable
+exception.py[2018-09-14 16:45:22][ERROR]£ºInternal Server Error: /cfmmc/bs/m1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2156, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 726, in future_data_cycle
+    for j in data:
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 324, in get_data
+    for i in self.data_day(code, sd + day):
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 299, in data_day
+    data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code}, {sort: [['datetime',1]]},  # Model.find(condition, fields, {sort: [['_id', -1]]}, callback);
+NameError: name 'sort' is not defined
+exception.py[2018-09-14 16:45:37][ERROR]£ºInternal Server Error: /cfmmc/bs/m1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2156, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 726, in future_data_cycle
+    for j in data:
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 324, in get_data
+    for i in self.data_day(code, sd + day):
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 300, in data_day
+    projection=['datetime', 'open', 'high', 'low', 'close','trade'])
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\pymongo\collection.py", line 1400, in find
+    return Cursor(self, *args, **kwargs)
+TypeError: __init__() got multiple values for argument 'projection'
+exception.py[2018-09-14 16:46:02][ERROR]£ºInternal Server Error: /cfmmc/bs/m1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2156, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 726, in future_data_cycle
+    for j in data:
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 324, in get_data
+    for i in self.data_day(code, sd + day):
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 299, in data_day
+    data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code}, null, {'sort': [['datetime',1]]},  # Model.find(condition, fields, {sort: [['_id', -1]]}, callback);
+NameError: name 'null' is not defined
+exception.py[2018-09-14 16:46:21][ERROR]£ºInternal Server Error: /cfmmc/bs/m1000_RB1810/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2156, in cfmmc_bs
+    for i,bs in data2bs:#data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 726, in future_data_cycle
+    for j in data:
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 324, in get_data
+    for i in self.data_day(code, sd + day):
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 299, in data_day
+    data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code}, null, {sort: [['datetime',1]]},  # Model.find(condition, fields, {sort: [['_id', -1]]}, callback);
+NameError: name 'null' is not defined

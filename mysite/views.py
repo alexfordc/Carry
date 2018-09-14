@@ -2090,11 +2090,7 @@ def cfmmc_bs(rq,param=None):
         # end_date = HSD.dtf(end_date)
         mongo = HSD.MongoDBData()
 
-        data = read_from_cache(cache_keys)
-        # if data:
-        #     import pandas
-        #     data = pandas.DataFrame(data, columns=['datetime', 'open', 'close', 'low', 'high'])
-        # else:
+        # data = read_from_cache(cache_keys)
         bs = cfmmc.get_bs(code, ttype)
         if bs:
             start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
@@ -2102,9 +2098,9 @@ def cfmmc_bs(rq,param=None):
         else:
             start_date = HSD.dtf(start_date)
             end_date = HSD.dtf(end_date)
-        if not data:
-            data = mongo.get_data(code, start_date, end_date)
-        data_len = len(data)  # 分钟数据总长度
+        _days = (end_date - start_date).days
+        data = mongo.get_data(code, start_date, end_date)
+        data_len = (_days-_days//7*2)*500  # 分钟数据估计的总长度
         dsise = 1200    # K线根数的限制
         if not ttype and data_len > dsise:
             if data_len > dsise * 60:
@@ -2124,15 +2120,7 @@ def cfmmc_bs(rq,param=None):
         hold = cfmmc.get_yesterday_hold(code)
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
 
-        ohlc_dict = {
-            'datetime': 'first',
-            'open': 'first',
-            'close': 'last',
-            'low': 'min',
-            'high': 'max',
-        }
         data2 = []
-        # future = Future(default_ips=(('112.74.214.43', 7727), ('120.24.0.77', 7727)))
         if ttype == '5M':
             code_name += '（5分钟）'
             data2bs = viewUtil.future_data_cycle(data, bs, 5)
@@ -2261,6 +2249,9 @@ def cfmmc_huice(rq,param=None):
     all_pcsj = []  # 平仓时间，盈亏、亏损
     all_pcsjn = []
     all_pcsjs = {}
+    all_ccsjyl = defaultdict(int)  # 持仓时间，盈利
+    all_ccsjks = defaultdict(int)  # 持仓时间，亏损
+    all_ccsjylks = []  # 持仓时间
     all_pcsj_max = 0 # 平仓时间，手数的最大值
     all_ylje = [  # 做多、空，盈利、亏损金额
         {'value': 0, 'name': '做多盈利金额'},
@@ -2296,9 +2287,12 @@ def cfmmc_huice(rq,param=None):
             all_pcsjn.append(cc6)
             all_pcsjs[cc6] = []
         all_pcsjs[cc6].append([cc[5],cc2,cc3])
-        if cc[2]>0:
+        ccsj_sj = math.ceil(cc0 + 3 - cc0 % 3)
+        all_ccsjylks.append(math.ceil(cc0))
+        if cc2>0:
             all_ccsjy.append([cc0,int(cc2),cc3])
             all_pcsj.append([cc[5],int(cc2),cc3])  # {value:214, name:'多'},
+            all_ccsjyl[math.ceil(cc0)] += cc2
             if cc[1]==1:
                 all_ylje[0]['value'] += cc2
                 all_ylss[0]['value'] += cc3
@@ -2314,6 +2308,7 @@ def cfmmc_huice(rq,param=None):
         else:
             all_ccsjk.append([cc0, int(cc2),cc3])
             all_pcsj.append([cc[5], int(cc2),cc3])
+            all_ccsjks[math.ceil(cc0)] += cc2
             if cc[1]==1:
                 all_ylje[2]['value'] += -cc2
                 all_ylss[2]['value'] += cc3
@@ -2327,8 +2322,8 @@ def cfmmc_huice(rq,param=None):
                 all_rnje[3]['value'] += -cc2
                 all_rnss[3]['value'] += cc3
         all_pcsj_max = cc3 if cc3>all_pcsj_max else all_pcsj_max
-        all_ccsjss.append([math.ceil(cc0), cc3])
-        all_ykss.append([cc2+500-cc2%500 if cc2%500 else cc2, cc3])
+        all_ccsjss.append([ccsj_sj, cc3])
+        all_ykss.append([cc2+500-cc2%500, cc3])
     if all_pcsj_max%5:
         all_pcsj_max = all_pcsj_max + (5-all_pcsj_max%5)
     hc_name = get_cfmmc_id_host(host + '_name')
@@ -2339,12 +2334,19 @@ def cfmmc_huice(rq,param=None):
     # print(all_ykss)
     all_ccsjss.sort()
     all_ykss.sort()
+    all_ccsjylks = list(set(all_ccsjylks))
+    all_ccsjylks.sort()
     all_ccsjss2 = defaultdict(int)
     all_ykss2 = defaultdict(int)
     for ccsj in all_ccsjss:
         all_ccsjss2[ccsj[0]] += ccsj[1]
     for ykss in all_ykss:
         all_ykss2[ykss[0]] += ykss[1]
+    all_ccsjyl2 = []  # 持仓时间，盈利
+    all_ccsjks2 = []  # 持仓时间，亏损
+    for ccsjylks in all_ccsjylks:
+        all_ccsjyl2.append(all_ccsjyl.get(ccsjylks,0))
+        all_ccsjks2.append(all_ccsjks.get(ccsjylks,0))
     hct = {
         'allyk': [],  # 累积盈亏
         'alljz': [],  # 累积净值
@@ -2377,6 +2379,10 @@ def cfmmc_huice(rq,param=None):
         'ccsjss_y': list(all_ccsjss2.values()),
         'ykss_x': list(all_ykss2.keys()),
         'ykss_y': list(all_ykss2.values()),
+
+        'all_ccsjylks': all_ccsjylks,
+        'all_ccsjyl2': all_ccsjyl2,
+        'all_ccsjks2': all_ccsjks2,
     }
     name_jlr = defaultdict(float)  # 品种名称，净利润
     week_jlr = defaultdict(float)  # 每周，净利润

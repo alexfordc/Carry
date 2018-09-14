@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bat/serv.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bat/serv.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cfmmc_tu.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cfmmc_tu.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,26 +26,12 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="918" column="32" selection-start-line="918" selection-start-column="26" selection-end-line="918" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cfmmc_data_local.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cfmmc_data_local.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cfmmc_data.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+            <state relative-caret-position="306">
+              <caret line="2393" column="26" selection-start-line="2393" selection-start-column="26" selection-end-line="2393" selection-end-column="26" />
+              <folding>
+                <element signature="e#32157#45040#0" />
+                <element signature="e#86973#93080#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,8 +39,8 @@
       <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="1221" selection-start-line="1221" selection-end-line="1221" />
+            <state relative-caret-position="4700">
+              <caret line="210" selection-start-line="210" selection-end-line="210" />
             </state>
           </provider>
         </entry>
@@ -58,11 +48,20 @@
       <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1413">
-              <caret line="439" lean-forward="true" selection-start-line="439" selection-end-line="439" />
+            <state relative-caret-position="775">
+              <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cfmmc_tu.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="37375">
+              <caret line="1495" column="25" selection-start-line="1495" selection-start-column="25" selection-end-line="1495" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -79,36 +78,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scatter_</find>
-      <find>print</find>
-      <find>height</find>
-      <find>cfmmc_data_page</find>
-      <find>request</find>
-      <find>asynchronous</find>
-      <find>r'</find>
-      <find>MIDDLEWARE_CLASSES</find>
-      <find>INSTALLED_APPS</find>
-      <find>MIDDLEWARE</find>
-      <find>WSGI_APPLICATION</find>
-      <find>include</find>
-      <find>js/ddsmoothmenu.js</find>
-      <find>def index</find>
-      <find>SECRET_KEY</find>
-      <find>j</find>
-      <find>yield</find>
-      <find>data_day</find>
-      <find>future_macd</find>
-      <find>STATICFILES_DIRS</find>
-      <find>login</find>
-      <find>show_login</find>
-      <find>user_login</find>
-      <find>login_message</find>
-      <find>.ddsmoothmenu ul li a:hover{ color:#ffc000;}</find>
-      <find>启用</find>
-      <find>HSD</find>
       <find>huices</find>
       <find>sql</find>
       <find>成交序号</find>
+      <find>tuxiant16</find>
+      <find>future_macd</find>
+      <find>future_data_cycle</find>
+      <find>bar</find>
+      <find>ccsj_sj</find>
+      <find>bar2</find>
+      <find>tuxiant17</find>
+      <find>itemStyle</find>
+      <find>legend</find>
+      <find>linebar</find>
+      <find>pie</find>
+      <find>magicType</find>
+      <find>bar3</find>
+      <find>mongo.data_day</find>
+      <find>__slots__</find>
+      <find>def __new__</find>
+      <find>trade_records</find>
+      <find>self.trade_records</find>
+      <find>self.closed_position</find>
+      <find>self.holding_position</find>
+      <find>self.</find>
+      <find>class</find>
+      <find>write_to_cache</find>
+      <find>j[0]</find>
+      <find>data2</find>
+      <find>mongo</find>
+      <find>mongo.get_data</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -116,6 +115,7 @@
       <replace>hct</replace>
       <replace>path</replace>
       <replace>'</replace>
+      <replace>j0</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -161,7 +161,6 @@
         <option value="$PROJECT_DIR$/mysite/mycaptcha.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/templates/hc.html" />
-        <option value="$PROJECT_DIR$/templates/cfmmc_tu.html" />
         <option value="$PROJECT_DIR$/static/js/kline.draw.js" />
         <option value="$PROJECT_DIR$/templates/kline.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_kline2.html" />
@@ -175,6 +174,7 @@
         <option value="$PROJECT_DIR$/serv.py" />
         <option value="$PROJECT_DIR$/Carry/settings.py" />
         <option value="$PROJECT_DIR$/stop.py" />
+        <option value="$PROJECT_DIR$/templates/cfmmc_tu.html" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
@@ -197,7 +197,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -225,10 +224,16 @@
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="mysite" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Carry" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -259,20 +264,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00007" summary="用户注册">
-      <created>1533627242068</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1533627242068</updated>
-    </task>
-    <task id="LOCAL-00008" summary="用户注册">
-      <created>1533632508528</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1533632508528</updated>
     </task>
     <task id="LOCAL-00009" summary="用户注册">
       <created>1533632681827</created>
@@ -603,7 +594,21 @@
       <option name="project" value="LOCAL" />
       <updated>1536829529361</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="国内期货">
+      <created>1536838240069</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1536838240070</updated>
+    </task>
+    <task id="LOCAL-00057" summary="国内期货">
+      <created>1536838258884</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1536838258884</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -757,13 +762,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_celery.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="29" selection-start-column="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/main_celery.bat" />
     <entry file="file://$PROJECT_DIR$/Carry/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -790,13 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="535">
           <caret line="99" column="21" selection-start-line="99" selection-start-column="21" selection-end-line="99" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
         </state>
       </provider>
     </entry>
@@ -941,13 +933,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27017">
-          <caret line="1098" column="36" selection-start-line="1098" selection-start-column="36" selection-end-line="1098" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/cfmmc_data.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -969,27 +954,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/stop.py" />
     <entry file="file://$PROJECT_DIR$/serv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2337">
           <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -997,30 +966,52 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="165" column="81" selection-start-line="165" selection-start-column="67" selection-end-line="165" selection-end-column="81" />
-          <folding>
-            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37375">
+          <caret line="1495" column="25" selection-start-line="1495" selection-start-column="25" selection-end-line="1495" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-650">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="918" column="32" selection-start-line="918" selection-start-column="26" selection-end-line="918" selection-end-column="32" />
+        <state relative-caret-position="306">
+          <caret line="2393" column="26" selection-start-line="2393" selection-start-column="26" selection-end-line="2393" selection-end-column="26" />
+          <folding>
+            <element signature="e#32157#45040#0" />
+            <element signature="e#86973#93080#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1221" selection-start-line="1221" selection-end-line="1221" />
+        <state relative-caret-position="4700">
+          <caret line="210" selection-start-line="210" selection-end-line="210" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="89" column="6" selection-start-line="89" selection-start-column="6" selection-end-line="89" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1413">
-          <caret line="439" lean-forward="true" selection-start-line="439" selection-end-line="439" />
+        <state relative-caret-position="775">
+          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

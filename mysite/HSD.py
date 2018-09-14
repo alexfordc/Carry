@@ -200,7 +200,6 @@ class SqlPool:
     _js = {}  # 连接数量字典
     _minSize = 3  # 空闲时的连接数，需要最大连接达到
     _maxSize = 10  # 最大连接数
-
     def __new__(cls, *args, **kwargs):
         if not cls._singleton:
             cls._singleton = super(SqlPool, cls).__new__(cls)
@@ -298,11 +297,13 @@ class MongoDBData:
         """ 获取一天的期货数据 """
         day = datetime.timedelta(days=1)
         data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code},
-                               projection=['datetime', 'open', 'high', 'low', 'close','trade'])
+                               projection=['datetime', 'open', 'high', 'low', 'close','trade']).sort('datetime',1)
         # 时间，开盘，收盘，最低，最高，成交量
-        data = [[i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']] for i in data]
-        data.sort()
-        return data
+        # data = [[i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']] for i in data]
+        # data.sort()
+        # return data
+        for i in data:
+            yield [i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']]
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
@@ -314,15 +315,19 @@ class MongoDBData:
         if re_code and len(re_code[0]) == 3:
             code = code[:-3] + '1' + re_code[0]
         days = (ed - sd).days
-        res = []
 
         for j in range(days + 1):
-            d1, d2 = [], []
+            d2 = []
             day = datetime.timedelta(days=j)
-            [d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:]) for i in self.data_day(code, sd + day)]
-            res += d1 + d2
-        # res = pd.DataFrame(res, columns=['datetime', 'open', 'close', 'low', 'high'])
-        return res
+            # [d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:]) for i in self.data_day(code, sd + day)]
+            # res += d1 + d2
+            for i in self.data_day(code, sd + day):
+                if i[0].hour < 18:
+                    d2.append(i)
+                else:
+                    yield i
+            for i in d2:
+                yield i
 
 
 def get_tcp():
@@ -927,6 +932,7 @@ class Limit_up:
 
 
 class Zbjs(ZB):
+    __slots__ = ('tab_name', 'zdata', 'xzfa')
     def __init__(self):
         self.tab_name = {'1': 'wh_same_month_min', '2': 'wh_min', '3': 'handle_min', '4': 'index_min'}  # index_min
         super(Zbjs, self).__init__()
@@ -1588,7 +1594,8 @@ class GXJY:
                            'CF1901': '棉一号'}
         self.code_name = {'bu': '石油沥青', 'rb': '螺纹钢', 'ru': '橡胶', 'j': '冶金焦炭',
                           'al': '铝', 'AP': '苹果', 'CF': '棉花'}
-        self.bs = {'bu': 10, 'rb': 10, 'ru': 10, 'j': 100, 'al': 5, 'AP': 10, 'CF': 5}
+        self.bs = {'BU': 10, 'RB': 10, 'RU': 10, 'J': 100, 'AL': 5, 'AP': 10, 'CF': 5,
+                   'V': 5, 'TA': 5, 'bu': 10, 'rb': 10, 'ru': 10, 'j': 100, 'al': 5}
         self.code_bs = {self.code_name[i]: self.bs[i] for i in self.code_name}
 
     def gx_lsjl(self, folder):
@@ -1866,8 +1873,8 @@ class Cfmmc:
         self.sql = f"帐号='{self.host}' AND 交易日期>='{self.start_date}' AND 交易日期<='{self.end_date}'"
 
     def varieties(self):
-        """ 品种,成交量。[('石油沥青':34),...] """
-        sql = f"SELECT 合约,SUM(手数) FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 合约"
+        """ 品种,成交额。[('RB1810(螺纹钢)', 145078410),...] """
+        sql = f"SELECT 合约,SUM(成交额),SUM(手数) FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 合约"
         d = runSqlData('carry_investment', sql)
         dc = {}
         for i in d:
