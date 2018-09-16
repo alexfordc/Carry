@@ -985,3 +985,19 @@ ValueError: The view mysite.views.login didn't return an HttpResponse object. It
 HSD.py[2018-09-16 12:24:18][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
 HSD.py[2018-09-16 12:24:50][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
 HSD.py[2018-09-16 12:24:50][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+exception.py[2018-09-16 13:56:52][ERROR]：Internal Server Error: /cfmmc/bs/m1000_TA901/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2176, in cfmmc_bs
+    for i, bs in data2bs:  # data2:
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 674, in future_data_cycle
+    print(data[:3])
+TypeError: 'generator' object is not subscriptable
+base.py[2018-09-16 13:56:52][WARNING]：Not Found: /favicon.ico

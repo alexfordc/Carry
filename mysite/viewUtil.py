@@ -33,7 +33,6 @@ def asyncs(func):
     return wrapper
 
 
-
 @asyncs
 def record_log(files, info, types):
     """ 访问日志 """
@@ -41,7 +40,7 @@ def record_log(files, info, types):
         with open(files, 'w') as f:
             f.write(json.dumps(info))
     elif types == 'a':
-        info = str(datetime.datetime.now())+'----'+info
+        info = str(datetime.datetime.now()) + '----' + info
         with open(files, 'a') as f:
             f.write(info)
 
@@ -222,7 +221,7 @@ class Cfmmc:
         if not v:
             successful_landing = True
         else:
-            with errors('Cfmmc','login'):
+            with errors('Cfmmc', 'login'):
                 successful_landing = v[0].text.replace('\r', '').replace('\n', '').replace('\t', '').strip()
 
         return successful_landing
@@ -250,7 +249,7 @@ class Cfmmc:
         #             return j
         #         if j == '客户名称':
         #             print_name = True
-        with errors('Cfmmc','read_name'):
+        with errors('Cfmmc', 'read_name'):
             p = pd.read_excel(BytesIO(ret_content))
             name = p[p.ix[:, 0] == '客户名称'].ix[:, 2].values[0]
             return name
@@ -405,7 +404,7 @@ class Cfmmc:
                 dates = [str(i[0]) for i in dates]
             except:
                 dates = []
-            with errors('Cfmmc','down_day_data_sql'):
+            with errors('Cfmmc', 'down_day_data_sql'):
                 for d in range(days):
                     date = start_date + datetime.timedelta(d)
                     date = str(date)[:10]
@@ -442,7 +441,7 @@ class Automatic:
         """ 自动运行下载数据 期货监控系统数据 """
         sql = 'SELECT HOST,PASSWORD,creationTime FROM cfmmc_user WHERE download=1'
         while 1:
-            with errors('Automatic','cfmmc_dsqd'):
+            with errors('Automatic', 'cfmmc_dsqd'):
                 last_date = cache.get('cfmmc_Automatic_download')
                 break
 
@@ -476,7 +475,7 @@ class Automatic:
                     if computer_name == 'DOC':  # 防止重复登录，在本机上不执行
                         continue
                     for i in range(20):  # 每个账号最多尝试登录20次
-                        with errors('Automatic','cfmmc_dsqd'):
+                        with errors('Automatic', 'cfmmc_dsqd'):
                             token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)  # 获取token
                             code = cfmmc_login_d.getCode()  # 获取验证码
                             code = ca.check.send(BytesIO(code))  # 验证码
@@ -602,36 +601,36 @@ def cfmmc_hc_data(host, rq_date, end_date):
     pinzhong = []  # 所有品种
     min_date = ''
     max_date = ''
-    for i in results2:
-        if not i[5]:
+    for i0, i1, i2, i3, i4, i5, i6, i7, i8, i9 in results2:
+        if not i5:
             continue
-        if i[1] not in pinzhong:
-            pinzhong.append(i[1])
-        dt = i[4][:10]
-        if min_date == '' or i[2][:10] < min_date:
-            min_date = i[2][:10]
+        if i1 not in pinzhong:
+            pinzhong.append(i1)
+        dt = i4[:10]
+        if min_date == '' or i2[:10] < min_date:
+            min_date = i2[:10]
         if max_date == '' or dt > max_date:
             max_date = dt
         if dt not in res:
             res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
-        if i[7] == '多':
+        if i7 == '多':
             res[dt]['duo'] += 1
-            _ykds = i[5] - i[3]  # 盈亏点数
-        elif i[7] == '空':
+            _ykds = i5 - i3  # 盈亏点数
+        elif i7 == '空':
             res[dt]['kong'] += 1
-            _ykds = i[3] - i[5]  # 盈亏点数
-        res[dt]['mony'] += i[6]
-        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8], i[1]]
+            _ykds = i3 - i5  # 盈亏点数
+        res[dt]['mony'] += i6
+        xx = [i2, i4, i7, i6, i3, i5, i8, i1]
         res[dt]['datetimes'].append(xx)
 
-        huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
+        huizong['least'] = [dt, i6] if i6 < huizong['least'][1] else huizong['least']
         huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
-        huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
+        huizong['most'] = [dt, i6] if i6 > huizong['most'][1] else huizong['most']
         huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
     money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
                 f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
     moneys = HSD.runSqlData('carry_investment', money_sql)
-    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
+    init_money = sum(j1 if i != 0 else j0 for i, (j0, j1) in enumerate(moneys))
     init_money = init_money if init_money and init_money > 10000 else 10000  # 入金
     hcd = None
     # if rq_date == end_date:  # 暂时取消一天的，或需要完善
@@ -649,7 +648,7 @@ def cfmmc_hc_data(host, rq_date, end_date):
     for p in _pz:
         if p not in pinzhong or pinzhong[p]['min_date'] > min_date or pinzhong[p]['max_date'] < max_date:
             pzs = mongo.get_data(p, min_date, max_date)
-            pzs = {str(i[0])[:-3]: j for j, i in enumerate(pzs)}
+            pzs = {str(i)[:-3]: j for j, (i, *_) in enumerate(pzs)}
             pzs['min_date'] = min_date
             pzs['max_date'] = max_date
             pinzhong[p] = pzs
@@ -672,8 +671,8 @@ def future_data_cycle(data, bs, cycle):
     _bs = []
     _ts = set()
     if cycle == '1D':  # 日线
-        for j in data:
-            j0 = str(j[0])
+        for t0, o1, c2, l3, h4, v5 in data:
+            j0 = str(t0)
             ts = j0[:10]
             if ts not in _ts:
                 if _ts:
@@ -683,23 +682,26 @@ def future_data_cycle(data, bs, cycle):
                     yield [t, o, c, l, h, v], bs2
                 _ts.add(ts)
                 t = j0[:10] + ' 00:00:00'
-                o = j[1]
-                l = j[3]
-                h = j[4]
-                v = j[5]
-                if j0[:-3] in bs:
-                    _bs += bs[j0[:-3]]
+                o = o1
+                l = l3
+                h = h4
+                v = v5
+                j0_3 = j0[:-3]
+                if j0_3 in bs:
+                    _bs += bs[j0_3]
             else:
-                l = j[3] if j[3] < l else l
-                h = j[4] if j[4] > h else h
-                c = j[2]
-                v += j[5]
-                if j0[:-3] in bs:
-                    _bs += bs[j0[:-3]]
+                l = l3 if l3 < l else l
+                h = h4 if h4 > h else h
+                c = c2
+                v += v5
+                j0_3 = j0[:-3]
+                if j0_3 in bs:
+                    _bs += bs[j0_3]
         else:
             try:
-                if j0[:-3] in bs:
-                    _bs += bs[j0[:-3]]
+                j0_3 = j0[:-3]
+                if j0_3 in bs:
+                    _bs += bs[j0_3]
                 if _bs:
                     bs2[t] = _bs
                 yield [t, o, c, l, h, v], bs2
@@ -707,53 +709,57 @@ def future_data_cycle(data, bs, cycle):
                 "没有数据"
     elif cycle == 1:  # 一分钟线
         bs2 = {}
-        for j in data:
-            j0 = str(j[0])
-            if j0[:-3] in bs:
-                bs2[j0] = bs[j0[:-3]]
-            yield [j0, j[1], j[2], j[3], j[4], j[5]], bs2
+        for t0, o1, c2, l3, h4, v5 in data:
+            j0 = str(t0)
+            j0_3 = j0[:-3]
+            if j0_3 in bs:
+                bs2[j0] = bs[j0_3]
+            yield [j0, o1, c2, l3, h4, v5], bs2
     else:  # 其它分钟线 5分钟，30分钟，60分钟
         _init = True  # 是否需要初始化
         _is_last_init = False  # 是否刚刚初始化
         i = 1
-        for j in data:
-            j0 = str(j[0])
+        for t0, o1, c2, l3, h4, v5 in data:
+            # [datetime.datetime(2018, 9, 14, 14, 52), 7340.0, 7338.0, 7334.0, 7340.0, 2922]
+            j0 = str(t0)
             ts = j0[:10]
             if _init or ts not in _ts:
                 _ts.add(ts)
-                o = j[1]
-                l = j[3]
-                h = j[4]
-                v = j[5]
+                o = o1
+                l = l3
+                h = h4
+                v = v5
                 i = 1
                 _init = False
                 _is_last_init = True
-                if j0[:-3] in bs:
-                    _bs += bs[j0[:-3]]
+                j0_3 = j0[:-3]
+                if j0_3 in bs:
+                    _bs += bs[j0_3]
             if i % cycle:
-                l = j[3] if j[3] < l else l
-                h = j[4] if j[4] > h else h
+                l = l3 if l3 < l else l
+                h = h4 if h4 > h else h
                 i += 1
                 if not _is_last_init:
-                    v += j[5]
+                    v += v5
                     if j0[:-3] in bs:
                         _bs += bs[j0[:-3]]
             else:
-                l = j[3] if j[3] < l else l
-                h = j[4] if j[4] > h else h
-                v += j[5]
-                if j0[:-3] in bs:
-                    _bs += bs[j0[:-3]]
+                l = l3 if l3 < l else l
+                h = h4 if h4 > h else h
+                v += v5
+                j0_3 = j0[:-3]
+                if j0_3 in bs:
+                    _bs += bs[j0_3]
                 if _bs:
                     bs2[j0] = _bs
                     _bs = []
-                yield [j0, o, j[2], l, h, v], bs2
+                yield [j0, o, c2, l, h, v], bs2
                 _init = True
                 i = 1
             _is_last_init = False
         else:
             try:
-                yield [j0, o, j[2], l, h, v], bs2
+                yield [j0, o, c2, l, h, v], bs2
             except:
                 "没有数据"
 

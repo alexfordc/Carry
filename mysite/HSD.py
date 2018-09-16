@@ -303,7 +303,7 @@ class MongoDBData:
         # data.sort()
         # return data
         for i in data:
-            yield [i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']]
+            yield [i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']], i['datetime'].hour
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
@@ -321,8 +321,8 @@ class MongoDBData:
             day = datetime.timedelta(days=j)
             # [d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:]) for i in self.data_day(code, sd + day)]
             # res += d1 + d2
-            for i in self.data_day(code, sd + day):
-                if i[0].hour < 18:
+            for i,h in self.data_day(code, sd + day):
+                if h < 18:
                     d2.append(i)
                 else:
                     yield i
@@ -2043,15 +2043,16 @@ def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
     sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
-    dc = {i[0]: i[1] for i in dc}
+    print(dc[:3])
+    dc = {i0: i1 for i0, i1 in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
            f" AND 原成交序号 in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
     cl = runSqlData('carry_investment',sql2)
-    results2 = []
-    for i in cl:
-        _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '空' if '买' in i[6] else '多', i[7], i[8]]
-        results2.append(_d)
+    results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
+    # for i in cl:
+    #     _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '空' if '买' in i[6] else '多', i[7], i[8]]
+    #     results2.append(_d)
     results2 = sorted(results2, key=lambda x: x[2])
     return results2
 
