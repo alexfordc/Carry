@@ -95,16 +95,16 @@ def getLogin(ses, uid=False):
     if 'users' in ses:
         name, qx = ses['users']['name'], ses['users']['jurisdiction']
         ses_key = read_from_cache(name)
+        ses_key = ses_key.split('_') if ses_key else (None,'未知')
         if not uid:
-            if ses_key != ses.session_key:
-                response = 0, 0
+            if ses_key[0] != ses.session_key:
+                response = 0, ses_key[1]
             else:
                 response = name, qx
         else:
             id = ses['users']['id']
-            if ses_key != ses.session_key:
-                del ses['users']
-                response = 0, 0, 0
+            if ses_key[0] != ses.session_key:
+                response = 0, ses_key[1], 0
             else:
                 response = name, qx, id
 
@@ -113,9 +113,9 @@ def getLogin(ses, uid=False):
     return response
 
 
-def record_from(rq):
+def record_from(rq,login=False):
     """ 访客登记 """
-    if rq.is_ajax():
+    if not login and rq.is_ajax():
         return
     dt = str(datetime.datetime.now())
     ip = rq.META.get('REMOTE_ADDR')
@@ -126,10 +126,11 @@ def record_from(rq):
         IP_NAME[ip] = address
         viewUtil.record_log(files, IP_NAME, 'w')
         # tasks_record_log.delay(files, IP_NAME, 'w')
-    info = f"{dt}----{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
+    info = f"{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     if '本地局域网' not in info:
         viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
         # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
+    return IP_NAME[ip]
 
 
 def LogIn(rq, uid=False):
@@ -268,7 +269,7 @@ def index(rq, logins=''):
     """ 主页面 """
     user_name, qx = LogIn(rq)
     if user_name == 0:
-        logins = "您的账户曾在另一地点登录！请重新登录！"
+        logins = f"您曾在另一地点【{qx}】登录！请重新登录！"
         del rq.session['users']
     else:
         logins = "请先登录再访问您需要的页面！" if logins is False else logins
@@ -279,11 +280,12 @@ def index(rq, logins=''):
 def login(rq):
     """ 用户登录 """
     if rq.method == 'POST' and rq.is_ajax():
+        address = record_from(rq,True)
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
         message = "登录失败！请确认用户名与密码是否输入正确！"
         iphone = ''
-        try:
+        with viewUtil.errors('views','login'):
             user = models.Users.objects.get(name=username)
             timestamp = user.creationTime
             ups = HSD.get_config('U', 'userps')
@@ -293,14 +295,14 @@ def login(rq):
                 pass
             elif user.password == password and user.enabled == 1:
                 rq.session['users'] = {"name": user.name, "jurisdiction": user.jurisdiction, "id": user.id}
-                write_to_cache(user.name,rq.session.session_key)
+                write_to_cache(user.name, f'{rq.session.session_key}_{address}')
                 return JsonResponse({"result": "yes", "users": username})
             elif user.enabled != 1:
                 message = "您的账户尚未启用！请联系管理员！"
                 iphone = HSD.get_config('U', 'contact_manager')
-        except:
-            pass
-    return JsonResponse({"result": message,"iphone":iphone})
+
+        return JsonResponse({"result": message, "iphone": iphone})
+    return redirect('/')
 
 
 def logout(rq):
@@ -726,7 +728,7 @@ def stockDatas(rq):
         res_data = [i for i in code_data if
                     rq_data in i[0] or rq_data in i[1] or rq_data in i[2] or (
                         rq_data in i[3] if i[3] else None) or rq_data in i[4]]
-        try:
+        with viewUtil.errors('views', 'stockDatas'):
             res_code = {i[-1] + i[0]: i[1] for i in res_data}
 
             with api.connect('119.147.212.81', 7709) as apis:
@@ -744,8 +746,7 @@ def stockDatas(rq):
                     if xd > 28:  # 限定显示的条数
                         break
                     xd += 1
-        except:
-            pass
+
     elif rq_data:
         rq_data = rq_data.upper()
         isPage = False
@@ -865,7 +866,9 @@ def tongji_update_del(rq):
     messagess = ''
     if rq.method == 'POST':
         messagess = tongji_adus(rq)
-    herys = viewUtil.tongji_first()
+    # herys = viewUtil.tongji_first()
+    with viewUtil.errors():
+        herys = HSD.tongji()
     ids = HSD.IDS
     return render(rq, 'tongji.html', locals())
 
@@ -1134,10 +1137,12 @@ def tongji(rq):
     #     return redirect('index')
     # ids = HSD.IDS
     # return render(rq, 'tongji.html', locals())
-    herys = viewUtil.tongji_first()
+    # herys = viewUtil.tongji_first()
+    with viewUtil.errors():
+        herys = herys = HSD.tongji()
     ids = HSD.IDS
     if user_name == 0:
-        logins = "您的账户曾在另一地点登录！请重新登录！"
+        logins = f"您曾在另一地点【{qx}】登录！请重新登录！"
         del rq.session['users']
     elif not user_name:
         logins = "请先登录再访问您需要的页面！"
@@ -1424,7 +1429,7 @@ def newMoni(rq):
     zbjs = HSD.Zbjs()
     ma = 60
     if dates and end_date and (duo and pdd or kong and pkd):
-        try:
+        with viewUtil.errors('views', 'newMoni'):
             param = {
                 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
                 "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
@@ -1455,8 +1460,7 @@ def newMoni(rq):
                            "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
                            "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed, 'user_name': user_name
                            })
-        except Exception as exc:
-            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -1481,7 +1485,7 @@ def moni_all(rq):
     reverse = True if reverse else False
     zbjs = HSD.Zbjs()
     if dates and end_date:
-        try:
+        with viewUtil.errors('views', 'moni_all'):
             param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
             res, huizong = zbjs.main_all(_dates=dates, end_date=end_date, database=database, reverse=reverse,
                                          param=param)
@@ -1534,8 +1538,8 @@ def moni_all(rq):
                           {'ress': ress, 'huizongs': huizong, 'fa_doc': zbjs.fa_doc, 'dates': dates,
                            'end_date': end_date, 'user_name': user_name,
                            'database': database, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc})
-        except Exception as exc:
-            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+        # except Exception as exc:
+        #     viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -1870,13 +1874,11 @@ def cfmmc_login(rq):
         userID = rq.POST['userID'].strip()
         password = rq.POST['password'].strip()
         vericode = rq.POST['vericode']
-        try:
+        with viewUtil.errors('views', 'cfmmc_login'):
             tda = models.TradingAccount.objects.get(host=userID)
             ct = tda.creationTime
             if tda.belonged_id == uid and password[:8] == 'KR' + ct[-6:]:
                 password = pypass.cfmmc_decode(password[8:], ct)
-        except:
-            pass
 
         success = cfmmc_login_d.login(userID, password, token, vericode)
         if success is True:
@@ -1897,7 +1899,7 @@ def cfmmc_login(rq):
             if trade:  # 若已经有下载过数据，则下载3天之内的
                 trade = []
                 _start_date = HSD.get_date(-3)
-                start_date = _start_date if _start_date<end_date else end_date
+                start_date = _start_date if _start_date < end_date else end_date
                 end_date = HSD.get_date()
                 cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
@@ -1988,13 +1990,12 @@ def cfmmc_logout(rq):
     if 'user_cfmmc' in rq.session:
         del rq.session['user_cfmmc']
     if is_cfmmc_login:
-        try:
+        with viewUtil.errors('views', 'cfmmc_logout'):
             logins = '退出失败！'
             if cfmmc_login_d.logout():
                 logins = '退出成功！'
                 is_cfmmc_login = False
-        except:
-            pass
+
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
     return render(rq, 'cfmmc_data.html', resp)
@@ -2011,7 +2012,7 @@ def cfmmc_data_page(rq):
     rq_code_name = rq.GET.get('code_name')
 
     when = rq.GET.get('when')
-    when,start_date,end_date = viewUtil.this_day_week_month_year(when)
+    when, start_date, end_date = viewUtil.this_day_week_month_year(when)
     if host:
         rq.session['user_cfmmc'] = {'userID': host}
 
@@ -2019,21 +2020,21 @@ def cfmmc_data_page(rq):
         return render(rq, 'cfmmc_data.html', {'user_name': user_name, 'is_cfmmc_login': 'no'})
     else:
         host = rq.session['user_cfmmc'].get('userID')
-    trade, _start_date, _end_date = viewUtil.cfmmc_data_page(rq,start_date,end_date)
+    trade, _start_date, _end_date = viewUtil.cfmmc_data_page(rq, start_date, end_date)
     if not start_date or not end_date:
-        start_date,end_date = _start_date,_end_date
+        start_date, end_date = _start_date, _end_date
     host_id = get_cfmmc_id_host(host)
     if not trade:
         # del rq.session['user_cfmmc']
         return render(rq, 'cfmmc_data.html',
                       {'user_name': user_name, 'is_cfmmc_login': 'nos', 'logins': '暂无数据！可先登录期货监控中心',
-                       'start_date': start_date, 'end_date': end_date,'when':when,'host_id': host_id})
+                       'start_date': start_date, 'end_date': end_date, 'when': when, 'host_id': host_id})
     codes = set(i[0] for i in trade)  # 合约代码
     code_name = viewUtil.cfmmc_code_name(codes)
-    if rq_code_name and rq_code_name not in ('null','1'):
+    if rq_code_name and rq_code_name not in ('null', '1'):
         trade = [i for i in trade if rq_code_name in i[0]]
     resp = {'user_name': user_name, 'trade': trade, 'start_date': start_date, 'end_date': end_date,
-            'code_name': code_name, 'host_id': host_id, 'rq_code_name':rq_code_name,'when':when}
+            'code_name': code_name, 'host_id': host_id, 'rq_code_name': rq_code_name, 'when': when}
     return render(rq, 'cfmmc_data.html', resp)
 
 
@@ -2075,7 +2076,7 @@ def cfmmc_save(rq):
     return HttpResponse('no')
 
 
-def cfmmc_bs(rq,param=None):
+def cfmmc_bs(rq, param=None):
     """ 买卖点 """
     user_name, qx, uid = LogIn(rq, uid=True)
     if rq.method == 'GET':
@@ -2085,7 +2086,7 @@ def cfmmc_bs(rq,param=None):
             when = param[0][0]
             host = param[0][1:]
             code = param[1]
-            ttype = param[2] if len(param)>2 else None
+            ttype = param[2] if len(param) > 2 else None
         else:
             code = rq.GET.get('code_name')
             when = rq.GET.get('when')
@@ -2118,8 +2119,8 @@ def cfmmc_bs(rq,param=None):
             end_date = HSD.dtf(end_date)
         _days = (end_date - start_date).days
         data = mongo.get_data(code, start_date, end_date)
-        data_len = (_days-_days//7*2)*500  # 分钟数据估计的总长度
-        dsise = 1200    # K线根数的限制
+        data_len = (_days - _days // 7 * 2) * 500  # 分钟数据估计的总长度
+        dsise = 1200  # K线根数的限制
         if not ttype and data_len > dsise:
             if data_len > dsise * 60:
                 ttype = '1D'
@@ -2131,9 +2132,10 @@ def cfmmc_bs(rq,param=None):
                 ttype = '5M'
 
         rq_url = rq.META.get('QUERY_STRING')
-        rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (rq_url+'_'.join(param[:2]) if '=' not in rq_url else rq_url)
-        _name = get_cfmmc_id_host(host+'_name')
-        _name = _name[0]+'*'*len(_name[1:])
+        rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (
+            rq_url + '_'.join(param[:2]) if '=' not in rq_url else rq_url)
+        _name = get_cfmmc_id_host(host + '_name')
+        _name = _name[0] + '*' * len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
         hold = cfmmc.get_yesterday_hold(code)
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
@@ -2159,10 +2161,10 @@ def cfmmc_bs(rq,param=None):
         flat_buy = []  # 平多仓
         open_sell = []  # 开空仓
         flat_sell = []  # 平空仓
-        holds = {}   # 持多仓, 持空仓
+        holds = {}  # 持多仓, 持空仓
         VOL = 1000  # 手数的最大值
         rounds = lambda x: (round(x, round(math.log(VOL, 10))) if x else x)
-        ttypes = defaultdict(lambda :1)
+        ttypes = defaultdict(lambda: 1)
         ttypes['5M'] = 5
         ttypes['30M'] = 30
         ttypes['60M'] = 60
@@ -2171,7 +2173,7 @@ def cfmmc_bs(rq,param=None):
         # print(bs)
         data3 = viewUtil.future_macd()
         data3.send(None)
-        for i,bs in data2bs:#data2:
+        for i, bs in data2bs:  # data2:
             if not i:
                 continue
             # data3.append(i)
@@ -2181,7 +2183,8 @@ def cfmmc_bs(rq,param=None):
             if dt not in _days:
                 _days.add(dt)
                 _ccb, _ccs = 0, 0  # 持仓多，持仓空
-                yesterday_hold = hold[dt] if dt in hold else (0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
+                yesterday_hold = hold[dt] if dt in hold else (
+                0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
             # print(i[0])
             if i[0] in bs:
                 for b in bs[i[0]]:
@@ -2210,8 +2213,8 @@ def cfmmc_bs(rq,param=None):
             ]
         # data2 = viewUtil.future_macd(data3)
         return render(rq, 'cfmmc_kline2.html', {'user_name': user_name, 'data': data2, 'open_buy': open_buy,
-                                               'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
-                                               'holds':holds,'rq_url': rq_url, 'code_name': code_name})
+                                                'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
+                                                'holds': holds, 'rq_url': rq_url, 'code_name': code_name})
 
     return redirect('/')
 
@@ -2231,7 +2234,7 @@ def cfmmc_hc(rq):
                    'hc_name': hc_name})
 
 
-def cfmmc_huice(rq,param=None):
+def cfmmc_huice(rq, param=None):
     """ 期货回测，绘图 """
     if param is not None:
         when = param[0]
@@ -2262,15 +2265,15 @@ def cfmmc_huice(rq,param=None):
     zx_x, prices = [], []
     hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
     # print(hc['allcchz'])
-    all_ccsjy,all_ccsjk = [],[]  # 持仓时间，盈利、亏损
-    all_ccsjss,all_ykss = [],[]   # 持仓时间、手数，盈亏、手数
+    all_ccsjy, all_ccsjk = [], []  # 持仓时间，盈利、亏损
+    all_ccsjss, all_ykss = [], []  # 持仓时间、手数，盈亏、手数
     all_pcsj = []  # 平仓时间，盈亏、亏损
     all_pcsjn = []
     all_pcsjs = {}
     all_ccsjyl = defaultdict(int)  # 持仓时间，盈利
     all_ccsjks = defaultdict(int)  # 持仓时间，亏损
     all_ccsjylks = []  # 持仓时间
-    all_pcsj_max = 0 # 平仓时间，手数的最大值
+    all_pcsj_max = 0  # 平仓时间，手数的最大值
     all_ylje = [  # 做多、空，盈利、亏损金额
         {'value': 0, 'name': '做多盈利金额'},
         {'value': 0, 'name': '做空盈利金额'},
@@ -2300,55 +2303,55 @@ def cfmmc_huice(rq,param=None):
     for cc in hc['allcchz']:
         # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
         # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')
-        cc0,cc2,cc3,cc6 = round(cc[0]/60,2),cc[2],cc[3],cc[6]
+        cc0, cc2, cc3, cc6 = round(cc[0] / 60, 2), cc[2], cc[3], cc[6]
         if cc6 not in all_pcsjn:
             all_pcsjn.append(cc6)
             all_pcsjs[cc6] = []
-        all_pcsjs[cc6].append([cc[5],cc2,cc3])
+        all_pcsjs[cc6].append([cc[5], cc2, cc3])
         ccsj_sj = math.ceil(cc0 + 3 - cc0 % 3)
         all_ccsjylks.append(math.ceil(cc0))
-        if cc2>0:
-            all_ccsjy.append([cc0,int(cc2),cc3])
-            all_pcsj.append([cc[5],int(cc2),cc3])  # {value:214, name:'多'},
+        if cc2 > 0:
+            all_ccsjy.append([cc0, int(cc2), cc3])
+            all_pcsj.append([cc[5], int(cc2), cc3])  # {value:214, name:'多'},
             all_ccsjyl[math.ceil(cc0)] += cc2
-            if cc[1]==1:
+            if cc[1] == 1:
                 all_ylje[0]['value'] += cc2
                 all_ylss[0]['value'] += cc3
             else:
                 all_ylje[1]['value'] += cc2
                 all_ylss[1]['value'] += cc3
-            if cc[4]==1:
+            if cc[4] == 1:
                 all_rnje[0]['value'] += cc2
                 all_rnss[0]['value'] += cc3
             else:
                 all_rnje[1]['value'] += cc2
                 all_rnss[1]['value'] += cc3
         else:
-            all_ccsjk.append([cc0, int(cc2),cc3])
-            all_pcsj.append([cc[5], int(cc2),cc3])
+            all_ccsjk.append([cc0, int(cc2), cc3])
+            all_pcsj.append([cc[5], int(cc2), cc3])
             all_ccsjks[math.ceil(cc0)] += cc2
-            if cc[1]==1:
+            if cc[1] == 1:
                 all_ylje[2]['value'] += -cc2
                 all_ylss[2]['value'] += cc3
             else:
                 all_ylje[3]['value'] += -cc2
                 all_ylss[3]['value'] += cc3
-            if cc[4]==1:
+            if cc[4] == 1:
                 all_rnje[2]['value'] += -cc2
                 all_rnss[2]['value'] += cc3
             else:
                 all_rnje[3]['value'] += -cc2
                 all_rnss[3]['value'] += cc3
-        all_pcsj_max = cc3 if cc3>all_pcsj_max else all_pcsj_max
+        all_pcsj_max = cc3 if cc3 > all_pcsj_max else all_pcsj_max
         all_ccsjss.append([ccsj_sj, cc3])
-        all_ykss.append([cc2+500-cc2%500, cc3])
-    if all_pcsj_max%5:
-        all_pcsj_max = all_pcsj_max + (5-all_pcsj_max%5)
+        all_ykss.append([cc2 + 500 - cc2 % 500, cc3])
+    if all_pcsj_max % 5:
+        all_pcsj_max = all_pcsj_max + (5 - all_pcsj_max % 5)
     hc_name = get_cfmmc_id_host(host + '_name')
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
-    hc_name = host[:4]+'***'+host[-4:]+' ( '+hc_name+' )'
+    hc_name = host[:4] + '***' + host[-4:] + ' ( ' + hc_name + ' )'
     max_jz = 0  # 最大净值
-    zjhc = 0    # 资金回测
+    zjhc = 0  # 资金回测
     # print(all_ykss)
     all_ccsjss.sort()
     all_ykss.sort()
@@ -2363,8 +2366,8 @@ def cfmmc_huice(rq,param=None):
     all_ccsjyl2 = []  # 持仓时间，盈利
     all_ccsjks2 = []  # 持仓时间，亏损
     for ccsjylks in all_ccsjylks:
-        all_ccsjyl2.append(all_ccsjyl.get(ccsjylks,0))
-        all_ccsjks2.append(all_ccsjks.get(ccsjylks,0))
+        all_ccsjyl2.append(all_ccsjyl.get(ccsjylks, 0))
+        all_ccsjks2.append(all_ccsjks.get(ccsjylks, 0))
     hct = {
         'allyk': [],  # 累积盈亏
         'alljz': [],  # 累积净值
@@ -2392,7 +2395,7 @@ def cfmmc_huice(rq,param=None):
         'all_rnss': all_rnss,
         'all_pcsjn': all_pcsjn,
         'all_pcsjs': all_pcsjs,
-        'zjhc': [], # 资金回测
+        'zjhc': [],  # 资金回测
         'ccsjss_x': list(all_ccsjss2.keys()),
         'ccsjss_y': list(all_ccsjss2.values()),
         'ykss_x': list(all_ykss2.keys()),
@@ -2427,7 +2430,7 @@ def cfmmc_huice(rq,param=None):
             else:
                 data2.append(d)
 
-        hct['day_value'].append(round(yk-sxf,2))
+        hct['day_value'].append(round(yk - sxf, 2))
         yk += (prices[-1] if prices else 0)
         prices.append(yk)
         sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
@@ -2447,7 +2450,7 @@ def cfmmc_huice(rq,param=None):
         hct['alljz'].append(round(jz2, 4))
         hct['qy'].append(_qy[de[0]])
         max_jz = jz2 if jz2 > max_jz else max_jz
-        hct['zjhc'].append(round((max_jz-jz2)/max_jz*100,2))
+        hct['zjhc'].append(round((max_jz - jz2) / max_jz * 100, 2))
         data = data2
         data2 = []
     if hct['zjhc']:
@@ -2472,14 +2475,14 @@ def cfmmc_huice(rq,param=None):
         hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
         hct['month_name'] = [i for i in month_jlr]
         hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
-        host = get_cfmmc_id_host(host+'_name')
-        host = host[0]+'*'*len(host[1])
+        host = get_cfmmc_id_host(host + '_name')
+        host = host[0] + '*' * len(host[1])
         hct['host'] = hc_name  # host
         # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
         huizong['max_amount'] = max(hct['amount'])  # 最高余额
-        huizong['deposit'] = sum(i[1] for i in ee if i[1]>0) # 存款
-        huizong['draw'] = sum(i[1] for i in ee if i[1]<0)    # 取款
-        huizong['ykratio'] = abs(round(hc['avglr']/(hc['avgss'] if hc['avgss']!=0 else 1),2))
+        huizong['deposit'] = sum(i[1] for i in ee if i[1] > 0)  # 存款
+        huizong['draw'] = sum(i[1] for i in ee if i[1] < 0)  # 取款
+        huizong['ykratio'] = abs(round(hc['avglr'] / (hc['avgss'] if hc['avgss'] != 0 else 1), 2))
         huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}

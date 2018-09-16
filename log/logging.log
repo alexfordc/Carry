@@ -957,3 +957,31 @@ Traceback (most recent call last):
   File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\contrib\sessions\backends\base.py", line 57, in __getitem__
     return self._session[key]
 KeyError: 0
+base.py[2018-09-16 11:39:40][WARNING]：Not Found: /login
+base.py[2018-09-16 11:39:40][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-16 11:39:44][WARNING]：Not Found: /login/
+exception.py[2018-09-16 11:40:23][ERROR]：Internal Server Error: /user/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 304, in login
+    return JsonResponse({"result": message,"iphone":iphone})
+UnboundLocalError: local variable 'message' referenced before assignment
+exception.py[2018-09-16 11:40:44][ERROR]：Internal Server Error: /user/login/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.login didn't return an HttpResponse object. It returned None instead.
+HSD.py[2018-09-16 12:24:18][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-16 12:24:50][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-16 12:24:50][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence

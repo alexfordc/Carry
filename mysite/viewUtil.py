@@ -15,6 +15,7 @@ from sqlalchemy import create_engine
 from pyquery import PyQuery as pq
 from threading import Thread
 from collections import defaultdict
+from contextlib import contextmanager
 
 from mysite import HSD
 from mysite.mycaptcha import Captcha
@@ -32,6 +33,7 @@ def asyncs(func):
     return wrapper
 
 
+
 @asyncs
 def record_log(files, info, types):
     """ 访问日志 """
@@ -39,8 +41,19 @@ def record_log(files, info, types):
         with open(files, 'w') as f:
             f.write(json.dumps(info))
     elif types == 'a':
+        info = str(datetime.datetime.now())+'----'+info
         with open(files, 'a') as f:
             f.write(info)
+
+
+@contextmanager
+def errors(*fun_name):
+    """ 处理异常 """
+    try:
+        yield
+    except Exception as exc:
+        # print(f'{fun_name}{exc}')
+        record_log('log\\error_log\\err.txt', f'{fun_name}{exc}\n', 'a')
 
 
 def error_log(files, line, exc):
@@ -78,15 +91,15 @@ def tongji_huice(res, huizong):
     return res, huizong
 
 
-def tongji_first():
-    """ 最初进入统计的页面 """
-    herys = None
-    try:
-        herys = HSD.tongji()
-    except Exception as exc:
-        HSD.logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
-
-    return herys
+# def tongji_first():
+#     """ 最初进入统计的页面 """
+#     herys = None
+#     try:
+#         herys = HSD.tongji()
+#     except Exception as exc:
+#         HSD.logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
+#
+#     return herys
 
 
 def tongji_ud(page, rq_date, end_date):
@@ -209,10 +222,9 @@ class Cfmmc:
         if not v:
             successful_landing = True
         else:
-            try:
+            with errors('Cfmmc','login'):
                 successful_landing = v[0].text.replace('\r', '').replace('\n', '').replace('\t', '').strip()
-            except:
-                pass
+
         return successful_landing
 
     def logout(self):
@@ -238,12 +250,10 @@ class Cfmmc:
         #             return j
         #         if j == '客户名称':
         #             print_name = True
-        try:
+        with errors('Cfmmc','read_name'):
             p = pd.read_excel(BytesIO(ret_content))
             name = p[p.ix[:, 0] == '客户名称'].ix[:, 2].values[0]
             return name
-        except:
-            pass
 
     def save_settlement(self, tradeDate, byType, name):
         """ 请求并保存某一天（tradeDate：2018-08-08），"""
@@ -362,7 +372,7 @@ class Cfmmc:
                     tt = 0 if byType == 'date' else (1 if byType == 'trade' else -1)
                     HSD.runSqlData('carry_investment', sql, (_account, _tradedate, tt))
                 else:
-                    record_log('log\\error_log\\err.txt', excs + f'[viewUtil | Cfmmc.save_settlement]{tradeDate}\n',
+                    record_log('log\\error_log\\err.txt', f'[viewUtil | Cfmmc.save_settlement]{tradeDate}{excs}\n',
                                'a')
                 return name
             except Exception as e:
@@ -395,7 +405,7 @@ class Cfmmc:
                 dates = [str(i[0]) for i in dates]
             except:
                 dates = []
-            try:
+            with errors('Cfmmc','down_day_data_sql'):
                 for d in range(days):
                     date = start_date + datetime.timedelta(d)
                     date = str(date)[:10]
@@ -408,8 +418,7 @@ class Cfmmc:
                             is_success = True
                             cache.set('cfmmc_status' + host, f"{date}日前的数据更新成功！")
                         time.sleep(0.1)
-            except:
-                pass
+
         s = ('True' if is_success else ('False' if is_run else 'not_run'))
         cache.set('cfmmc_status' + host, s)
 
@@ -433,11 +442,10 @@ class Automatic:
         """ 自动运行下载数据 期货监控系统数据 """
         sql = 'SELECT HOST,PASSWORD,creationTime FROM cfmmc_user WHERE download=1'
         while 1:
-            try:
+            with errors('Automatic','cfmmc_dsqd'):
                 last_date = cache.get('cfmmc_Automatic_download')
                 break
-            except:
-                "Redis 未启动"
+
             time.sleep(10)
         last_date = last_date if last_date else 0
         print(f'自动下载开始运行...{datetime.datetime.now()}')
@@ -468,7 +476,7 @@ class Automatic:
                     if computer_name == 'DOC':  # 防止重复登录，在本机上不执行
                         continue
                     for i in range(20):  # 每个账号最多尝试登录20次
-                        try:
+                        with errors('Automatic','cfmmc_dsqd'):
                             token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)  # 获取token
                             code = cfmmc_login_d.getCode()  # 获取验证码
                             code = ca.check.send(BytesIO(code))  # 验证码
@@ -495,10 +503,8 @@ class Automatic:
                                     start_date = HSD.get_date(-300)
                                     end_date = HSD.get_date()
                                     cfmmc_login_d.down_day_data_sql(da[0], start_date, end_date, password, da[2])
-
                                 break
-                        except Exception as exc:
-                            print(exc)
+
                         time.sleep(0.2)
                     time.sleep(5)
                 cache.set('cfmmc_Automatic_download', last_date)
@@ -519,7 +525,6 @@ def cfmmc_data_page(rq, start_date=None, end_date=None):
             trade = get_cfmmc_trade(host=host)
             end_date = str(trade[0][11])  # HSD.get_date()
         start_date = str(trade[-1][11])
-
     except:
         trade = []
         start_date = ''
