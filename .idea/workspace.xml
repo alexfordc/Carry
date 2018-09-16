@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="641">
-              <caret line="2265" column="52" selection-start-line="2265" selection-start-column="52" selection-end-line="2265" selection-end-column="52" />
+            <state relative-caret-position="125">
+              <caret line="2429" column="17" lean-forward="true" selection-start-line="2429" selection-start-column="17" selection-end-line="2429" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -38,11 +38,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="2147" column="23" lean-forward="true" selection-start-line="2147" selection-start-column="23" selection-end-line="2147" selection-end-column="23" />
+            <state relative-caret-position="-3376">
+              <caret line="1889" column="8" selection-start-line="1889" selection-start-column="8" selection-end-line="1889" selection-end-column="8" />
+              <folding>
+                <element signature="e#88142#93104#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,8 +53,8 @@
       <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="592" column="35" selection-start-line="592" selection-start-column="19" selection-end-line="592" selection-end-column="35" />
+            <state relative-caret-position="-246">
+              <caret line="638" column="33" selection-start-line="638" selection-start-column="33" selection-end-line="638" selection-end-column="33" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#28615#31432#0" />
@@ -73,9 +76,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>bar3</find>
-      <find>__slots__</find>
-      <find>def __new__</find>
       <find>trade_records</find>
       <find>self.trade_records</find>
       <find>self.closed_position</find>
@@ -103,6 +103,9 @@
       <find>t</find>
       <find>self.data_day</find>
       <find>cfmmc_get_result</find>
+      <find>de[0]</find>
+      <find>for de,</find>
+      <find>cfmmc_huice</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -111,6 +114,7 @@
       <replace>path</replace>
       <replace>'</replace>
       <replace>j0</replace>
+      <replace>de</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -170,9 +174,9 @@
         <option value="$PROJECT_DIR$/Carry/settings.py" />
         <option value="$PROJECT_DIR$/stop.py" />
         <option value="$PROJECT_DIR$/templates/cfmmc_tu.html" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
-        <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
       </list>
     </option>
   </component>
@@ -259,13 +263,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00012" summary="功能升级">
-      <created>1533865228133</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1533865228134</updated>
     </task>
     <task id="LOCAL-00013" summary="功能升级">
       <created>1533865374637</created>
@@ -603,7 +600,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537072046225</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="国内期货可视化">
+      <created>1537080838198</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1537080838199</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -978,13 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="641">
-          <caret line="2265" column="52" selection-start-line="2265" selection-start-column="52" selection-end-line="2265" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Carry/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="767">
@@ -994,8 +991,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="592" column="35" selection-start-line="592" selection-start-column="19" selection-end-line="592" selection-end-column="35" />
+        <state relative-caret-position="-246">
+          <caret line="638" column="33" selection-start-line="638" selection-start-column="33" selection-end-line="638" selection-end-column="33" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#28615#31432#0" />
@@ -1006,8 +1003,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="2147" column="23" lean-forward="true" selection-start-line="2147" selection-start-column="23" selection-end-line="2147" selection-end-column="23" />
+        <state relative-caret-position="-3376">
+          <caret line="1889" column="8" selection-start-line="1889" selection-start-column="8" selection-end-line="1889" selection-end-column="8" />
+          <folding>
+            <element signature="e#88142#93104#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="2429" column="17" lean-forward="true" selection-start-line="2429" selection-start-column="17" selection-end-line="2429" selection-end-column="17" />
         </state>
       </provider>
     </entry>

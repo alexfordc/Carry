@@ -2043,7 +2043,6 @@ def cfmmc_get_result(host,start_date,end_date):
     """ 获取指定帐号的交易开平仓记录 """
     sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
-    print(dc[:3])
     dc = {i0: i1 for i0, i1 in dc}
     sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
@@ -2069,18 +2068,7 @@ def cfmmc_huice(host):
     money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
                 f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
     moneys = runSqlData('carry_investment',money_sql)
-    init_money = sum(j[1] if i != 0 else j[0] for i, j in enumerate(moneys))
-    hc = {'jyts': 4, 'jyys': 1, 'hlbfb': 6.82, 'dhl': 1.7, 'mhl': 6.82, 'ye': 10681.53, 'cgzd': [2, 3, 66.67],
-          'cgzk': [16, 24, 66.67], 'avglr': 56.44055555555556, 'alllr': 1015.9300000000001, 'avgss': -37.15555555555555,
-          'allss': -334.4, 'zzl': [2.7, 5.76, 6.91, 6.82], 'vol': [10, 5, 2, 10],
-          'dayye': [10270.0, 10576.0, 10691.0, 10682.0],
-          'daylr': [270, 306, 115, -9], 'zjhcs': [0, 0, 0, 0.08], 'ccsj': 11.8, 'lryz': 3.04, 'std': 48.91,
-          'zjhc': 0.08,
-          'jingzhi': [10270.0, 10576.0, 10691.0, 10682.0], 'max_jz': 10691.0, 'zx_x': ['0813', '0814', '0815', '0816'],
-          'zx_y': [270, 576, 691, 682], 'this_day': (-0.09, -9.389999999999995, -9.389999999999995, 30.0, 10, 10, 3),
-          'this_week': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
-          'this_month': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18],
-          'this_year': [6.82, 681.5300000000001, 681.5300000000001, 66.67, 27, 27, 18]}
+    init_money = sum(j1 if i != 0 else j0 for i, (j0,j1) in enumerate(moneys))
 
     huizong = {'yk': 0,                     # 总盈亏
                'shenglv': 0,                # 胜率
@@ -2188,10 +2176,9 @@ def cfmmc_huice(host):
     hc['mhl'] = round(huizong['yk'] / jyys / init_money * 100, 2)
     hc['ye'] = init_money + huizong['yk']
 
-
-    trade2 = []
-    for key in keys:
-        ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
+    # trade2 = []
+    # for key in keys:
+    #     ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
 
 
     return hc,huizong

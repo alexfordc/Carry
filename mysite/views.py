@@ -95,7 +95,7 @@ def getLogin(ses, uid=False):
     if 'users' in ses:
         name, qx = ses['users']['name'], ses['users']['jurisdiction']
         ses_key = read_from_cache(name)
-        ses_key = ses_key.split('_') if ses_key else (None,'未知')
+        ses_key = ses_key.split('_') if ses_key else (None, '未知')
         if not uid:
             if ses_key[0] != ses.session_key:
                 response = 0, ses_key[1]
@@ -113,7 +113,7 @@ def getLogin(ses, uid=False):
     return response
 
 
-def record_from(rq,login=False):
+def record_from(rq, login=False):
     """ 访客登记 """
     if not login and rq.is_ajax():
         return
@@ -280,12 +280,12 @@ def index(rq, logins=''):
 def login(rq):
     """ 用户登录 """
     if rq.method == 'POST' and rq.is_ajax():
-        address = record_from(rq,True)
+        address = record_from(rq, True)
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
         message = "登录失败！请确认用户名与密码是否输入正确！"
         iphone = ''
-        with viewUtil.errors('views','login'):
+        with viewUtil.errors('views', 'login'):
             user = models.Users.objects.get(name=username)
             timestamp = user.creationTime
             ups = HSD.get_config('U', 'userps')
@@ -1715,14 +1715,14 @@ def gxjy(rq):
             month_jlr = defaultdict(float)  # 每月，净利润
             data2 = []
             code_bs = h.code_bs
-            for de in dates:
-                zx_x.append(de[0])
+            for de, *_ in dates:
+                zx_x.append(de)
                 yk, sxf = 0, 0
-                f_date = datetime.datetime.strptime(de[0], '%Y-%m-%d').isocalendar()[:2]
+                f_date = datetime.datetime.strptime(de, '%Y-%m-%d').isocalendar()[:2]
                 week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
-                month = de[0][:7]  # 月
+                month = de[:7]  # 月
                 for d in data:
-                    if d[1][:10] == de[0]:
+                    if d[1][:10] == de:
                         yk += d[23]
                         sxf += d[24]
                         lr = d[8] * code_bs[d[22]]
@@ -1735,7 +1735,7 @@ def gxjy(rq):
                 prices.append(yk)
                 sxf += (hc['allsxf'][-1] if hc['allsxf'] else 0)
                 hc['allsxf'].append(round(sxf, 1))
-                rj = sum(i[3] - i[2] for i in ee if i[0] <= de[0])
+                rj = sum(i[3] - i[2] for i in ee if i[0] <= de)
                 if rj != init_money and rj != 0:
                     jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
                     init_money = rj
@@ -2184,7 +2184,7 @@ def cfmmc_bs(rq, param=None):
                 _days.add(dt)
                 _ccb, _ccs = 0, 0  # 持仓多，持仓空
                 yesterday_hold = hold[dt] if dt in hold else (
-                0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
+                    0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
             # print(i[0])
             if i[0] in bs:
                 for b in bs[i[0]]:
@@ -2300,27 +2300,27 @@ def cfmmc_huice(rq, param=None):
     ]
     if 'allcchz' not in hc:
         hc['allcchz'] = []
-    for cc in hc['allcchz']:
+    for cc0, cc1, cc2, cc3, cc4, cc5, cc6 in hc['allcchz']:
         # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
         # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')
-        cc0, cc2, cc3, cc6 = round(cc[0] / 60, 2), cc[2], cc[3], cc[6]
+        cc0 = round(cc0 / 60, 2)
         if cc6 not in all_pcsjn:
             all_pcsjn.append(cc6)
             all_pcsjs[cc6] = []
-        all_pcsjs[cc6].append([cc[5], cc2, cc3])
+        all_pcsjs[cc6].append([cc5, cc2, cc3])
         ccsj_sj = math.ceil(cc0 + 3 - cc0 % 3)
         all_ccsjylks.append(math.ceil(cc0))
         if cc2 > 0:
             all_ccsjy.append([cc0, int(cc2), cc3])
-            all_pcsj.append([cc[5], int(cc2), cc3])  # {value:214, name:'多'},
+            all_pcsj.append([cc5, int(cc2), cc3])  # {value:214, name:'多'},
             all_ccsjyl[math.ceil(cc0)] += cc2
-            if cc[1] == 1:
+            if cc1 == 1:
                 all_ylje[0]['value'] += cc2
                 all_ylss[0]['value'] += cc3
             else:
                 all_ylje[1]['value'] += cc2
                 all_ylss[1]['value'] += cc3
-            if cc[4] == 1:
+            if cc4 == 1:
                 all_rnje[0]['value'] += cc2
                 all_rnss[0]['value'] += cc3
             else:
@@ -2328,15 +2328,15 @@ def cfmmc_huice(rq, param=None):
                 all_rnss[1]['value'] += cc3
         else:
             all_ccsjk.append([cc0, int(cc2), cc3])
-            all_pcsj.append([cc[5], int(cc2), cc3])
+            all_pcsj.append([cc5, int(cc2), cc3])
             all_ccsjks[math.ceil(cc0)] += cc2
-            if cc[1] == 1:
+            if cc1 == 1:
                 all_ylje[2]['value'] += -cc2
                 all_ylss[2]['value'] += cc3
             else:
                 all_ylje[3]['value'] += -cc2
                 all_ylss[3]['value'] += cc3
-            if cc[4] == 1:
+            if cc4 == 1:
                 all_rnje[2]['value'] += -cc2
                 all_rnss[2]['value'] += cc3
             else:
@@ -2411,15 +2411,15 @@ def cfmmc_huice(rq, param=None):
     data2 = []
     dates = cfmmc.get_dates()
     ee = cfmmc.get_rj()  # 出入金
-    for de in dates:
-        zx_x.append(de[0])
+    for de, *_ in dates:
+        zx_x.append(de)
         yk, sxf = 0, 0
-        f_date = datetime.datetime.strptime(de[0], '%Y-%m-%d').isocalendar()[:2]
+        f_date = datetime.datetime.strptime(de, '%Y-%m-%d').isocalendar()[:2]
         week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
-        month = de[0][:7]  # 月
+        month = de[:7]  # 月
         for d in data:
             # d: ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)')
-            if d[0][:10] == de[0]:
+            if d[0][:10] == de:
                 sxf += d[3] if d[3] else 0
                 if not d[2]:
                     continue
@@ -2435,7 +2435,7 @@ def cfmmc_huice(rq, param=None):
         prices.append(yk)
         sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
         hct['allsxf'].append(round(sxf, 1))
-        rj = base_money + sum(i[1] for i in ee if i[0] <= de[0])
+        rj = base_money + sum(i[1] for i in ee if i[0] <= de)
         if rj != init_money:
             # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
             init_money = rj
@@ -2446,9 +2446,9 @@ def cfmmc_huice(rq, param=None):
         hct['amount'].append(amount)
         hct['alleae'].append(init_money)
         # jz = amount / jzq if jzq != 0 else jz
-        jz2 = jzs[de[0]]
+        jz2 = jzs[de]
         hct['alljz'].append(round(jz2, 4))
-        hct['qy'].append(_qy[de[0]])
+        hct['qy'].append(_qy[de])
         max_jz = jz2 if jz2 > max_jz else max_jz
         hct['zjhc'].append(round((max_jz - jz2) / max_jz * 100, 2))
         data = data2

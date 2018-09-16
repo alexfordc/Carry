@@ -591,8 +591,6 @@ def user_work_log(rq, table, user=None, size=5):
 def cfmmc_hc_data(host, rq_date, end_date):
     """ 期货监控系统 回测数据 """
     results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
-    # rq_date = results2[0][2][:10]
-    # end_date = results2[-1][4][:10]
 
     # results2[0]：['016681702757', 'J1901', '2018-08-30 09:08:12', 2544.5, '2018-08-30 10:06:14', 2528.0, -1650, '多', 1, '已平仓']
     res = {}
