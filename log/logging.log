@@ -1001,3 +1001,74 @@ Traceback (most recent call last):
     print(data[:3])
 TypeError: 'generator' object is not subscriptable
 base.py[2018-09-16 13:56:52][WARNING]：Not Found: /favicon.ico
+wsgi.py[2018-09-17 09:05:37][INFO]：200 GET / (192.168.2.204) 227.37ms
+wsgi.py[2018-09-17 09:05:55][INFO]：200 GET / (192.168.2.204) 145.41ms
+wsgi.py[2018-09-17 09:12:15][INFO]：200 GET / (192.168.2.204) 155.63ms
+wsgi.py[2018-09-17 09:12:16][INFO]：200 GET / (192.168.2.204) 202.74ms
+HSD.py[2018-09-17 09:43:49][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 09:45:15][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 10:17:43][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 10:19:08][ERROR]：文件 HSD.py 第1424行报错：division by zero
+exception.py[2018-09-17 12:20:05][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\middleware\clickjacking.py", line 32, in process_response
+    if response.get('X-Frame-Options') is not None:
+AttributeError: 'generator' object has no attribute 'get'
+base.py[2018-09-17 12:20:05][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-09-17 14:26:41][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:26:48][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:26:52][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:26:58][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:28:40][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:34:21][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:34:25][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:35:09][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:35:18][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:36:46][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:36:56][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:37:30][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:37:55][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:39:55][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:41:16][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 14:42:08][ERROR]：文件 HSD.py 第1424行报错：division by zero
+wsgi.py[2018-09-17 15:25:40][INFO]：200 GET / (192.168.2.204) 178.47ms
+wsgi.py[2018-09-17 15:25:41][INFO]：200 GET / (192.168.2.204) 174.51ms
+wsgi.py[2018-09-17 15:25:42][INFO]：200 GET / (192.168.2.204) 9.02ms
+wsgi.py[2018-09-17 15:25:44][INFO]：200 GET / (192.168.2.204) 10.03ms
+wsgi.py[2018-09-17 15:25:44][INFO]：200 GET / (192.168.2.204) 10.05ms
+exception.py[2018-09-17 17:02:33][ERROR]：Internal Server Error: /cfmmc/huice/m1000/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2263, in cfmmc_huice
+    funcs = (viewUtil.MyThread(cfmmc.get_data),viewUtil.MyThread(cfmmc.varieties),viewUtil.MyThread(cfmmc.get_qy),viewUtil.MyThread(cfmmc.init_money))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 831, in __init__
+    self.f_name = target.func.__name__
+AttributeError: 'function' object has no attribute 'func'
+HSD.py[2018-09-17 17:03:12][ERROR]：文件 HSD.py 第1424行报错：division by zero
+HSD.py[2018-09-17 17:10:11][ERROR]：文件 HSD.py 第1424行报错：division by zero
+exception.py[2018-09-17 17:25:41][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2268, in cfmmc_huice
+    _result = viewUtil.runThread(cfmmc.get_data,cfmmc.varieties,cfmmc.get_qy,cfmmc.init_money)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 843, in runThread
+    _funcs = [MyThread(*i) for i in funcs] #(viewUtil.MyThread(cfmmc.get_data), viewUtil.MyThread(cfmmc.varieties),viewUtil.MyThread(cfmmc.get_qy), viewUtil.MyThread(cfmmc.init_money))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 843, in <listcomp>
+    _funcs = [MyThread(*i) for i in funcs] #(viewUtil.MyThread(cfmmc.get_data), viewUtil.MyThread(cfmmc.varieties),viewUtil.MyThread(cfmmc.get_qy), viewUtil.MyThread(cfmmc.init_money))
+TypeError: type object argument after * must be an iterable, not method

@@ -819,3 +819,30 @@ def this_day_week_month_year(when):
         start_date, end_date = None, None
         when = '0'
     return when, start_date, end_date
+
+
+class MyThread(Thread):
+    """ 有返回值的多线程 """
+    __slots__ = ('func', 'args' ,'kwargs', 'f_name', 'result')
+    def __init__(self, target, *args,**kwargs):
+        super(MyThread, self).__init__()
+        self.func = target
+        self.args = args
+        self.kwargs = kwargs
+        self.f_name = target.__name__
+
+    def run(self):
+        self.result = self.func(*self.args,**self.kwargs)
+
+    def get_result(self):
+        try:
+            return self.f_name, self.result  # 如果子线程不使用join方法，此处可能会报没有self.result的错误
+        except Exception:
+            return None
+
+def runThread(*funcs):
+    """ 执行多线程 """
+    _funcs = [MyThread(*i) for i in funcs]
+    [i.start() for i in _funcs]
+    [i.join() for i in _funcs]
+    return dict(i.get_result() for i in _funcs)

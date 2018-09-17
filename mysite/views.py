@@ -2040,9 +2040,10 @@ def cfmmc_data_page(rq):
 
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
-    user_name, qx = LogIn(rq)
-    trades = viewUtil.get_cfmmc_trade()
-    id_host = get_cfmmc_id_host()
+    _results = viewUtil.runThread((LogIn,rq), (viewUtil.get_cfmmc_trade,), (get_cfmmc_id_host,))
+    user_name, qx = _results['LogIn']
+    trades = _results['get_cfmmc_trade']
+    id_host = _results['get_cfmmc_id_host']
     hosts = list(id_host.values())
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
@@ -2110,7 +2111,10 @@ def cfmmc_bs(rq, param=None):
         mongo = HSD.MongoDBData()
 
         # data = read_from_cache(cache_keys)
-        bs = cfmmc.get_bs(code, ttype)
+        _results = viewUtil.runThread((cfmmc.get_bs,code,ttype), (cfmmc.get_yesterday_hold,code))
+        bs = _results['get_bs']
+        hold = _results['get_yesterday_hold']
+
         if bs:
             start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
             end_date = HSD.dtf(bs[-1][0][:10]) + datetime.timedelta(days=3)
@@ -2137,7 +2141,7 @@ def cfmmc_bs(rq, param=None):
         _name = get_cfmmc_id_host(host + '_name')
         _name = _name[0] + '*' * len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
-        hold = cfmmc.get_yesterday_hold(code)
+
         # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
 
         data2 = []
@@ -2211,10 +2215,10 @@ def cfmmc_bs(rq, param=None):
                 _ccb + yesterday_hold[0],
                 _ccs + yesterday_hold[1]
             ]
-        # data2 = viewUtil.future_macd(data3)
-        return render(rq, 'cfmmc_kline2.html', {'user_name': user_name, 'data': data2, 'open_buy': open_buy,
-                                                'flat_buy': flat_buy, 'open_sell': open_sell, 'flat_sell': flat_sell,
-                                                'holds': holds, 'rq_url': rq_url, 'code_name': code_name})
+        resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
+                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'rq_url': rq_url, 'code_name': code_name}
+        # write_to_cache()
+        return render(rq, 'cfmmc_kline2.html', resp)
 
     return redirect('/')
 
@@ -2251,13 +2255,19 @@ def cfmmc_huice(rq, param=None):
     if start_date is None:
         start_date = rq.GET.get('start_date', '1970-01-01')
         end_date = rq.GET.get('end_date', '2100-01-01')
+    cfmmc_huice_key = f'cfmmc_huice_{host}_{start_date}_{end_date}'
+    resp = read_from_cache(cfmmc_huice_key)
+    if resp:
+        return render(rq, 'cfmmc_tu.html', resp)
     cfmmc = HSD.Cfmmc(host, start_date, end_date)
-    data = cfmmc.get_data()
-    pzs = cfmmc.varieties()
-    _qy = cfmmc.get_qy()
+    _results = viewUtil.runThread((cfmmc.get_data,), (cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
+    data = _results['get_data']
+    pzs = _results['varieties']
+    _qy = _results['get_qy']
+    base_money = _results['init_money']  # 初始总资金
+
     init_money = 0
     jzs = cfmmc.get_jz()
-    base_money = cfmmc.init_money()  # 初始总资金
     jz = 1  # 初始净值
     jzq = 0  # 初始净值权重
     allje = 0  # init_money  # 总金额
@@ -2465,16 +2475,16 @@ def cfmmc_huice(rq, param=None):
         week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
         f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
         week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
-        month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
-        week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2}
+        # month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
+        week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2 and v != 0}
         hct['allyk'] = prices
         hct['bar_name'] = [i for i in name_jlr]
-        hct['bar_value'] = [round(v, 1) for v in name_jlr.values()]
-        week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
+        hct['bar_value'] = [round(name_jlr[i], 1) for i in name_jlr]
+        # week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
         hct['week_name'] = [i for i in week_jlr]
-        hct['week_value'] = [round(v, 1) for v in week_jlr.values()]
-        hct['month_name'] = [i for i in month_jlr]
-        hct['month_value'] = [round(v, 1) for v in month_jlr.values()]
+        hct['week_value'] = [round(week_jlr[i], 1) for i in week_jlr]
+        hct['month_name'] = [i for i in month_jlr if start_date <= i <= end_date]
+        hct['month_value'] = [round(month_jlr[i], 1) for i in month_jlr if start_date <= i <= end_date]
         host = get_cfmmc_id_host(host + '_name')
         host = host[0] + '*' * len(host[1])
         hct['host'] = hc_name  # host
@@ -2486,6 +2496,7 @@ def cfmmc_huice(rq, param=None):
         huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
+        write_to_cache(cfmmc_huice_key, resp, expiry_time=60*60*24)
         return render(rq, 'cfmmc_tu.html', resp)
     except:
         return redirect('/')
