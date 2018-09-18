@@ -107,7 +107,6 @@ def getLogin(ses, uid=False):
                 response = 0, ses_key[1], 0
             else:
                 response = name, qx, id
-
     else:
         response = (None, 0, None) if uid else (None, 0)
     return response
@@ -184,7 +183,6 @@ def get_zx_zt(zt=False, zx=False, status=None):
         counts = sum(i[0] for i in data)
         name_code = {j: i[2:] for i, j in HSD.CODE_NAME.items()}
         zt_data = {"jinJian": dt, 'times': times[10:], 'counts': counts, 'name_code': name_code}
-
     if zx:  # 折线图
         result = read_from_cache('history_weight' + str(status))
         if not is_time(result, 0.15):
@@ -315,6 +313,52 @@ def logout(rq):
 def update_data(rq):
     """ 修改账号资料 """
     pass
+
+
+def user_update_info(rq):
+    """ 修改用户信息 """
+    user_name, qx = LogIn(rq)
+    if user_name and rq.method == 'GET':
+        phone, email = '', ''
+        with viewUtil.errors('views', 'user_update_password'):
+            user = models.Users.objects.get(name=user_name)
+            phone, email = user.phone, user.email
+        return render(rq, 'user_update_data.html',
+                      {"user_name": user_name, "user_update_info": True, "operation": "个人信息", "phone": phone,
+                       "email": email})
+    elif user_name and rq.method == 'POST':
+        password0 = rq.POST.get('password0').strip()
+        password1 = rq.POST.get('password1').strip()
+        password2 = rq.POST.get('password2').strip()
+        phone = rq.POST.get('phone').strip()
+        email = rq.POST.get('email').strip()
+        user = None
+        with viewUtil.errors('views', 'user_update_password'):
+            user = models.Users.objects.get(name=user_name)
+        if (password1 == password2 != password0) and user:
+            password = password0
+            ups = HSD.get_config('U', 'userps')
+            timestamp = user.creationTime
+            password = eval(ups)
+            password0 = md5(password.encode()).hexdigest()
+            if user.password == password0:
+                password = password1
+                timestamp = str(int(time.time() * 10))
+                password = eval(ups)
+                password = md5(password.encode()).hexdigest()
+                phone = phone or user.phone
+                email = email or user.email
+                models.Users.objects.filter(name=user_name).update(password=password, creationTime=timestamp,
+                                                                   phone=phone, email=email)
+                del rq.session['users']
+                msg = "修改成功！请重新登录！"
+            else:
+                msg = "密码错误！"
+        else:
+            msg = "修改失败！"
+        return render(rq, 'user_update_data.html',
+                      {"user_name": user_name, "user_update_info": True, "operation": "个人信息", "msg": msg,
+                       "phone": phone, "email": email})
 
 
 def user_information(rq):
@@ -2040,20 +2084,24 @@ def cfmmc_data_page(rq):
 
 def cfmmc_data_local(rq):
     """ 本站期货交易数据 """
-    _results = viewUtil.runThread((LogIn,rq), (viewUtil.get_cfmmc_trade,), (get_cfmmc_id_host,))
-    user_name, qx = _results['LogIn']
-    trades = _results['get_cfmmc_trade']
-    id_host = _results['get_cfmmc_id_host']
-    hosts = list(id_host.values())
+    # _results = viewUtil.runThread((LogIn,rq), (viewUtil.get_cfmmc_trade,), (get_cfmmc_id_host,))
+    # user_name, qx = _results['LogIn']
+    # trades = _results['get_cfmmc_trade']
+    # id_host = _results['get_cfmmc_id_host']
+    user_name, qx = LogIn(rq)
+    trades = viewUtil.get_cfmmc_trade()
+    id_host = get_cfmmc_id_host()
+    hosts_len = len(id_host)//3
+    hosts = set(id_host)
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
-    for i in trades:
+    for j,i in enumerate(trades):
         name = id_host.get(i[12] + '_name')
         name = name[0] + '*' * (len(name) - 1) if name else None
         if i[12] in hosts:
             trade.append(i + (id_host.get(i[12], i[12]), name))
             hosts.remove(i[12])
-        else:
+        elif j > hosts_len:
             break
     # trade = [i+(id_host.get(i[12],i[12]),id_host.get(i[12]+'_name')) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})
@@ -2111,10 +2159,11 @@ def cfmmc_bs(rq, param=None):
         mongo = HSD.MongoDBData()
 
         # data = read_from_cache(cache_keys)
-        _results = viewUtil.runThread((cfmmc.get_bs,code,ttype), (cfmmc.get_yesterday_hold,code))
+        _results = viewUtil.runThread((cfmmc.get_bs, code, ttype), (cfmmc.get_yesterday_hold, code))
         bs = _results['get_bs']
         hold = _results['get_yesterday_hold']
-
+        # bs = cfmmc.get_bs(code,ttype)
+        # hold = cfmmc.get_yesterday_hold(code)
         if bs:
             start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
             end_date = HSD.dtf(bs[-1][0][:10]) + datetime.timedelta(days=3)
@@ -2216,7 +2265,8 @@ def cfmmc_bs(rq, param=None):
                 _ccs + yesterday_hold[1]
             ]
         resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
-                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'rq_url': rq_url, 'code_name': code_name}
+                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'rq_url': rq_url,
+                'code_name': code_name}
         # write_to_cache()
         return render(rq, 'cfmmc_kline2.html', resp)
 
@@ -2260,11 +2310,17 @@ def cfmmc_huice(rq, param=None):
     if resp:
         return render(rq, 'cfmmc_tu.html', resp)
     cfmmc = HSD.Cfmmc(host, start_date, end_date)
-    _results = viewUtil.runThread((cfmmc.get_data,), (cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
-    data = _results['get_data']
-    pzs = _results['varieties']
-    _qy = _results['get_qy']
-    base_money = _results['init_money']  # 初始总资金
+
+    # _results = viewUtil.runThread((cfmmc.get_data,), (cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
+    # data = _results['get_data']
+    # pzs = _results['varieties']
+    # _qy = _results['get_qy']
+    # base_money = _results['init_money']  # 初始总资金
+
+    data = cfmmc.get_data()
+    pzs = cfmmc.varieties()
+    _qy = cfmmc.get_qy()
+    base_money = cfmmc.init_money()  # 初始总资金
 
     init_money = 0
     jzs = cfmmc.get_jz()
@@ -2496,7 +2552,8 @@ def cfmmc_huice(rq, param=None):
         huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
-        write_to_cache(cfmmc_huice_key, resp, expiry_time=60*60*24)
+        write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 12)
+
         return render(rq, 'cfmmc_tu.html', resp)
     except:
         return redirect('/')

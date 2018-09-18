@@ -40,7 +40,7 @@ def record_log(files, info, types):
         with open(files, 'w') as f:
             f.write(json.dumps(info))
     elif types == 'a':
-        info = str(datetime.datetime.now()) + '----' + info
+        info = f'{datetime.datetime.now()}----{info}'
         with open(files, 'a') as f:
             f.write(info)
 
@@ -823,8 +823,9 @@ def this_day_week_month_year(when):
 
 class MyThread(Thread):
     """ 有返回值的多线程 """
-    __slots__ = ('func', 'args' ,'kwargs', 'f_name', 'result')
-    def __init__(self, target, *args,**kwargs):
+    __slots__ = ('func', 'args', 'kwargs', 'f_name', 'result')
+
+    def __init__(self, target, *args, **kwargs):
         super(MyThread, self).__init__()
         self.func = target
         self.args = args
@@ -832,13 +833,14 @@ class MyThread(Thread):
         self.f_name = target.__name__
 
     def run(self):
-        self.result = self.func(*self.args,**self.kwargs)
+        self.result = self.func(*self.args, **self.kwargs)
 
     def get_result(self):
         try:
             return self.f_name, self.result  # 如果子线程不使用join方法，此处可能会报没有self.result的错误
         except Exception:
             return None
+
 
 def runThread(*funcs):
     """ 执行多线程 """

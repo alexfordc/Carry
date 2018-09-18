@@ -211,7 +211,7 @@ var $container = $('#works-container');
                             <li class="no-border-top" ><a href="{% url 'add_simulation_account' %}">添加模拟账户</a></li>
                             <li class="no-border-top" ><a href="{% url 'add_real_account' %}">添加真实账户</a></li>
                             <li class="no-border-top" ><a href="{% url 'add_work_log' %}">添加工作日志</a></li>
-                            <li class="no-border-top" ><a href="">修改我的资料</a></li>
+                            <li class="no-border-top" ><a href="{% url 'user_update_info' %}">修改我的资料</a></li>
                             <li class="no-border-top" ><a onclick="javascript:user_logout();" style="cursor:pointer;">退出</a></li>
                         </ul>
                         {% endif %}
@@ -649,5 +649,6 @@ $("#pingmujietu").hover(
     	<!--</div>-->
     <!--</footer>-->
     {% endblock %}
+<script type="text/javascript" src="https://js.users.51.la/19663449.js"></script>
 </body>
 </html>

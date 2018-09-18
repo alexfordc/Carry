@@ -9,7 +9,7 @@
 
 {% endblock %}
 {% block center_cen %}
-<div style="color:green;">{{ msg }}</div>
+<div style="color:green;" class="msg">&nbsp;&nbsp;{{ msg }}</div>
 <!-- Container -->
 <div id="container">
     <!-- Content -->
@@ -162,6 +162,53 @@
 </div>
 </div>
 </form>
+            {% elif user_update_info %}
+            <form action="{% url 'user_update_info' %}" method="post" id="user_form">
+                {% csrf_token %}
+<div>
+
+<fieldset class="module aligned">
+
+<div class="form-row">
+
+  <label class="required" for="id_password1">原密码:</label> <input type="password" name="password0" autofocus required id="id_password0" />
+
+</div>
+<fieldset class="module aligned">
+<div class="form-row field-phone">
+                <div>
+                        <label class="required" for="id_phone">手机号:</label>
+                            <input type="text" name="phone" value="{{phone}}" class="vTextField" maxlength="11" minlength="11" required id="id_phone" />
+                </div>
+        </div>
+        <div class="form-row field-email">
+                <div>
+                        <label for="id_email">邮箱:</label>
+                            <input type="email" name="email" value="{{email}}" class="vTextField" maxlength="36" id="id_email" />
+                </div>
+        </div>
+<div class="form-row">
+
+  <label class="required" for="id_password1">新密码:</label> <input type="password" name="password1" autofocus required id="id_password1" />
+
+</div>
+
+<div class="form-row">
+
+  <label class="required" for="id_password2">新密码(重复):</label> <input type="password" name="password2" required id="id_password2" />
+
+  <div class="help">为了校验，请输入与上面相同的密码。</div>
+
+</div>
+
+</fieldset>
+
+<div class="submit-row">
+<input type="submit" value="确定修改" class="default" />
+</div>
+
+</fieldset></div>
+</form>
 {% endif %}
 
 </div>
@@ -169,4 +216,21 @@
     </div>
     <div id="footer"></div>
 </div>
+<script>
+    $("#user_form").submit(function(){
+        var password1 = $("#id_password1").val();
+        var password2 = $("#id_password2").val();
+        if(password1.length<6){
+            $(".msg").html("&nbsp;&nbsp;密码太短！");
+            return false;
+        }else if(password1!=password2){
+            $(".msg").html("&nbsp;&nbsp;两次密码输入不一致！");
+            return false;
+        }
+        $("#id_password0").val(hex_md5($("#id_password0").val()));
+        $("#id_password1").val(hex_md5(password1));
+        $("#id_password2").val(hex_md5(password2));
+        return true;
+    });
+</script>
 {% endblock %}

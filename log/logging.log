@@ -1072,3 +1072,377 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 843, in <listcomp>
     _funcs = [MyThread(*i) for i in funcs] #(viewUtil.MyThread(cfmmc.get_data), viewUtil.MyThread(cfmmc.varieties),viewUtil.MyThread(cfmmc.get_qy), viewUtil.MyThread(cfmmc.init_money))
 TypeError: type object argument after * must be an iterable, not method
+HSD.py[2018-09-18 09:11:08][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-18 09:11:22][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-18 09:12:06][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-18 09:12:06][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+HSD.py[2018-09-18 09:12:30][ERROR]：文件 HSD.py 第1424行报错：min() arg is an empty sequence
+base.py[2018-09-18 11:14:24][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:14:42][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:16:07][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:16:13][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:16:16][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:16:54][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:02][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:03][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:07][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:11][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:29][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-18 11:17:53][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-18 11:28:48][ERROR]：Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 272, in index
+    user_name, qx = LogIn(rq)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 140, in LogIn
+    _requests = viewUtil.runThread([(record_from, rq), (getLogin, rq.session, uid)])
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 845, in runThread
+    _funcs = [MyThread(*i) for i in funcs]
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 845, in <listcomp>
+    _funcs = [MyThread(*i) for i in funcs]
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 832, in __init__
+    self.f_name = target.__name__
+AttributeError: 'tuple' object has no attribute '__name__'
+exception.py[2018-09-18 11:59:31][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 712, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 80, in get_zx_zt
+    _results = viewUtil.runThread((HSD._get_zt, ), (HSD._get_zx, status))
+AttributeError: module 'mysite.HSD' has no attribute '_get_zt'
+HSD.py[2018-09-18 12:18:11][ERROR]：文件 HSD.py 第1424行报错：division by zero
+exception.py[2018-09-18 12:28:02][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 696, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 72, in get_zx_zt
+    _results = viewUtil.runThread((viewUtil._get_zt, ), (viewUtil._get_zx, status))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 1020, in runThread
+    return dict(i.get_result() for i in _funcs)
+TypeError: cannot convert dictionary update sequence element #1 to a sequence
+exception.py[2018-09-18 12:28:05][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 696, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 72, in get_zx_zt
+    _results = viewUtil.runThread((viewUtil._get_zt, ), (viewUtil._get_zx, status))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 1020, in runThread
+    return dict(i.get_result() for i in _funcs)
+TypeError: cannot convert dictionary update sequence element #1 to a sequence
+exception.py[2018-09-18 12:28:10][ERROR]：Internal Server Error: /zhutu_zhexian_ajax/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 696, in zhutu_zhexian_ajax
+    zt, zx = get_zx_zt(zt=True, zx=True, status=status)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 72, in get_zx_zt
+    _results = viewUtil.runThread((viewUtil._get_zt, ), (viewUtil._get_zx, status))
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 1020, in runThread
+    return dict(i.get_result() for i in _funcs)
+TypeError: cannot convert dictionary update sequence element #1 to a sequence
+exception.py[2018-09-18 13:09:48][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2272, in cfmmc_huice
+    pzs = cfmmc.cvarieties()
+AttributeError: 'Cfmmc' object has no attribute 'cvarieties'
+exception.py[2018-09-18 13:36:13][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2278, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 852, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-5'.
+exception.py[2018-09-18 13:37:54][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 852, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-4'.
+exception.py[2018-09-18 13:38:29][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 852, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-4'.
+exception.py[2018-09-18 13:40:24][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-5'.
+exception.py[2018-09-18 13:42:41][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 854, in runAsyncio
+    a,b,c,d = loop.run_until_complete(asyncio.gather(*tasks))
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\tasks.py", line 596, in gather
+    fut = ensure_future(arg, loop=loop)
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\tasks.py", line 518, in ensure_future
+    loop = events.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-5'.
+exception.py[2018-09-18 13:43:11][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 854, in runAsyncio
+    a,b,c,d = loop.run_until_complete(asyncio.gather(*tasks))
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\tasks.py", line 596, in gather
+    fut = ensure_future(arg, loop=loop)
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\tasks.py", line 518, in ensure_future
+    loop = events.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-11'.
+exception.py[2018-09-18 13:43:39][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-5'.
+exception.py[2018-09-18 13:43:42][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-4'.
+exception.py[2018-09-18 13:43:43][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-11'.
+exception.py[2018-09-18 13:43:44][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-10'.
+exception.py[2018-09-18 13:43:44][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-17'.
+exception.py[2018-09-18 13:43:45][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-16'.
+exception.py[2018-09-18 13:43:45][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2279, in cfmmc_huice
+    data,pzs,_qy,base_money = viewUtil.runAsyncio(tasks)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 853, in runAsyncio
+    loop = asyncio.get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 676, in get_event_loop
+    return get_event_loop_policy().get_event_loop()
+  File "D:\ProgramFiles\Anaconda3\lib\asyncio\events.py", line 584, in get_event_loop
+    % threading.current_thread().name)
+RuntimeError: There is no current event loop in thread 'Thread-22'.
+base.py[2018-09-18 16:06:13][WARNING]：Not Found: /user/update/password

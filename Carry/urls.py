@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^user/info/public/reply/$', views.user_info_public_reply, name='user_info_public_reply'),
     url(r'^user/info/public/replyDel/$', views.user_info_public_replyDel, name='user_info_public_replyDel'),
     url(r'^real/account/del/$', views.del_real_account, name='del_real_account'),
+    url(r'^user/update/info/$', views.user_update_info, name='user_update_info'),
 
     url(r'^stockData/$', views.stockData, name='stockData'),
     url(r'^stockDatas/$', views.stockDatas, name='stockDatas'),
