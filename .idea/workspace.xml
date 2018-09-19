@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" beforeDir="false" afterPath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,11 +21,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="767">
-              <caret line="652" column="7" lean-forward="true" selection-start-line="652" selection-start-column="7" selection-end-line="652" selection-end-column="7" />
+            <state relative-caret-position="300">
+              <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="638">
+              <caret line="816" column="27" selection-start-line="816" selection-start-column="27" selection-end-line="816" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -38,10 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>del rq.session</find>
-      <find>for</find>
-      <find>try</find>
-      <find>mongo.data_day</find>
       <find>t</find>
       <find>self.data_day</find>
       <find>cfmmc_get_result</find>
@@ -68,6 +80,10 @@
       <find>user_name</find>
       <find>user_form</find>
       <find>datetime</find>
+      <find>sorted</find>
+      <find>sort</find>
+      <find>+</find>
+      <find>HttpResponse</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -93,8 +109,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/user_register.html" />
-        <option value="$PROJECT_DIR$/templates/tongjisp.html" />
         <option value="$PROJECT_DIR$/templates/gxjy.html" />
         <option value="$PROJECT_DIR$/templates/hc_day.html" />
         <option value="$PROJECT_DIR$/mysite/templatetags/mvote.py" />
@@ -130,20 +144,22 @@
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data_local.html" />
         <option value="$PROJECT_DIR$/serv.py" />
-        <option value="$PROJECT_DIR$/Carry/settings.py" />
         <option value="$PROJECT_DIR$/stop.py" />
         <option value="$PROJECT_DIR$/mysite/mycaptcha.py" />
         <option value="$PROJECT_DIR$/templates/base/loading.html" />
         <option value="$PROJECT_DIR$/templates/base/cfmmc_form.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_tu.html" />
-        <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/templates/user_update_data.html" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/../September_2018/2018-9-18/py排序.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
+        <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/../September_2018/2018-9-19/py模式.py" />
+        <option value="$PROJECT_DIR$/../September_2018/2018-9-19/c测试.py" />
+        <option value="$PROJECT_DIR$/Carry/settings.py" />
       </list>
     </option>
   </component>
@@ -175,7 +191,7 @@
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
-              <item name="bat" type="462c0819:PsiDirectoryNode" />
+              <item name="Carry" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
@@ -232,13 +248,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00016" summary="功能升级">
-      <created>1533903575037</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1533903575037</updated>
     </task>
     <task id="LOCAL-00017" summary="功能升级">
       <created>1533903886064</created>
@@ -576,12 +585,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537267026317</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="修改资料">
+      <created>1537318029239</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1537318029240</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12961012" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -649,13 +664,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/user_info_public.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="417">
@@ -861,13 +869,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/zt_zx.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -904,13 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="1894" selection-start-line="1894" selection-end-line="1894" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -939,20 +933,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="128" column="27" lean-forward="true" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../September_2018/2018-9-18/py排序.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -962,8 +942,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="767">
-          <caret line="652" column="7" lean-forward="true" selection-start-line="652" selection-start-column="7" selection-end-line="652" selection-end-column="7" />
+        <state relative-caret-position="367">
+          <caret line="636" column="44" selection-start-line="636" selection-start-column="44" selection-end-line="636" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="132" column="26" lean-forward="true" selection-start-line="132" selection-start-column="26" selection-end-line="132" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../September_2018/2018-9-19/py模式.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="816" column="27" selection-start-line="816" selection-start-column="27" selection-end-line="816" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../September_2018/2018-9-19/c测试.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Carry/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="27" column="7" lean-forward="true" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

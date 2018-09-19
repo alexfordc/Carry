@@ -1701,7 +1701,7 @@ def gxjy(rq):
                        # or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
-                data = sorted(data, key=lambda x: x[1])
+                data.sort(key=lambda x:x[1])
             if start_date and end_date:
                 data = [i for i in data if start_date <= i[1][:10] <= end_date]
 

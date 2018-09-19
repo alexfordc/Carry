@@ -683,8 +683,9 @@ def sp_order_record(start_date=None, end_date=None):
                 huizong[upk].append(sl)
             # ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
             kc = [[k[5], k[4], k[0], k[1], None, None, None, '多' if k[6] == 'B' else '空', 1, '未平仓'] for k in kc]
-            res = sorted(kc + res, key=lambda x: x[2])
-            resAll += res
+            res.extend(kc)
+            res.sort(key=lambda x: x[2])
+            resAll.extend(res)
         IDS.add(user)
     return resAll, huizong
 
@@ -1859,7 +1860,7 @@ class GXJY:
                    '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
         # res = pd.DataFrame(res, columns=columns)
         pzs = [(self.code_name.get(k), v / 2) for k, v in pzs.items()]
-        pzs = sorted(pzs, key=lambda x: x[1], reverse=True)
+        pzs.sort(key=lambda x: x[1],reverse=True)
         return res, pzs
 
 
@@ -1884,7 +1885,7 @@ class Cfmmc:
                 dc[k] = 0
             dc[k] += int(i[1])
         dc = [(i, dc[i]) for i in dc]
-        dc = sorted(dc, key=lambda x: x[1], reverse=True)
+        dc.sort(key=lambda x: x[1], reverse=True)
         return dc
 
     def get_dates(self):
@@ -2052,7 +2053,7 @@ def cfmmc_get_result(host,start_date,end_date):
     # for i in cl:
     #     _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '空' if '买' in i[6] else '多', i[7], i[8]]
     #     results2.append(_d)
-    results2 = sorted(results2, key=lambda x: x[2])
+    results2.sort(key=lambda x: x[2])
     return results2
 
 def cfmmc_huice(host):

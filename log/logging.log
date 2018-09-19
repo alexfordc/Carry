@@ -1446,3 +1446,25 @@ Traceback (most recent call last):
     % threading.current_thread().name)
 RuntimeError: There is no current event loop in thread 'Thread-22'.
 base.py[2018-09-18 16:06:13][WARNING]：Not Found: /user/update/password
+base.py[2018-09-19 10:14:27][WARNING]：Not Found: /favicon.ico
+wsgi.py[2018-09-19 10:34:55][INFO]：200 GET / (192.168.2.204) 155.44ms
+wsgi.py[2018-09-19 10:34:56][INFO]：200 GET / (192.168.2.204) 158.42ms
+wsgi.py[2018-09-19 10:34:57][INFO]：200 GET / (192.168.2.204) 10.03ms
+wsgi.py[2018-09-19 10:34:58][INFO]：200 GET / (192.168.2.204) 8.94ms
+wsgi.py[2018-09-19 10:35:33][INFO]：200 GET /cfmmc/dataLocal/ (192.168.2.204) 139.37ms
+wsgi.py[2018-09-19 10:43:28][INFO]：200 GET / (192.168.2.204) 10.00ms
+wsgi.py[2018-09-19 10:43:51][INFO]：200 GET / (192.168.2.204) 10.03ms
+wsgi.py[2018-09-19 10:43:59][INFO]：200 GET / (192.168.2.204) 13.03ms
+wsgi.py[2018-09-19 10:44:05][INFO]：200 GET / (192.168.2.204) 11.03ms
+wsgi.py[2018-09-19 10:44:31][INFO]：200 GET / (192.168.2.204) 16.05ms
+wsgi.py[2018-09-19 10:44:37][INFO]：200 GET /cfmmc/dataLocal/ (192.168.2.204) 33.09ms
+wsgi.py[2018-09-19 10:44:46][INFO]：200 GET /cfmmc/dataPage/?host=1001 (192.168.2.204) 32.08ms
+wsgi.py[2018-09-19 10:44:52][INFO]：200 GET /cfmmc/isdownload/data/ (192.168.2.204) 3.97ms
+HSD.py[2018-09-19 11:11:57][ERROR]：文件 HSD.py 第1425行报错：min() arg is an empty sequence
+HSD.py[2018-09-19 11:12:05][ERROR]：文件 HSD.py 第1425行报错：min() arg is an empty sequence
+HSD.py[2018-09-19 11:12:05][ERROR]：文件 HSD.py 第1425行报错：min() arg is an empty sequence
+base.py[2018-09-19 16:43:19][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-19 16:57:30][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-19 17:16:26][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-19 17:22:15][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-19 17:25:16][WARNING]：Not Found: /favicon.ico
