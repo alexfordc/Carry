@@ -1468,3 +1468,27 @@ base.py[2018-09-19 16:57:30][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-19 17:16:26][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-19 17:22:15][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-19 17:25:16][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-20 18:25:42][ERROR]：Internal Server Error: /cfmmc/huice/y1001/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2334, in cfmmc_huice
+    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\viewUtil.py", line 593, in cfmmc_hc_data
+    results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 2052, in cfmmc_get_result
+    results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
+  File "D:\tools\Tools\Carry\mysite\HSD.py", line 2052, in <listcomp>
+    results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
+KeyError: '0000000030037064'
+base.py[2018-09-20 18:25:42][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-20 18:31:46][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-20 18:31:58][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-09-20 18:33:01][ERROR]：文件 HSD.py 第1425行报错：division by zero
+base.py[2018-09-20 18:33:01][WARNING]：Not Found: /favicon.ico

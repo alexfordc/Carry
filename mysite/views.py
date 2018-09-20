@@ -2095,13 +2095,15 @@ def cfmmc_data_local(rq):
     hosts = set(id_host)
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
-    for j,i in enumerate(trades):
+    j = 0
+    for i in trades:
         name = id_host.get(i[12] + '_name')
         name = name[0] + '*' * (len(name) - 1) if name else None
         if i[12] in hosts:
             trade.append(i + (id_host.get(i[12], i[12]), name))
             hosts.remove(i[12])
-        elif j > hosts_len:
+            j += 1
+        elif j >= hosts_len:
             break
     # trade = [i+(id_host.get(i[12],i[12]),id_host.get(i[12]+'_name')) for i in trade]
     return render(rq, 'cfmmc_data_local.html', {'user_name': user_name, 'trade': trade})

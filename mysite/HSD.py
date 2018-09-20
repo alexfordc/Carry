@@ -2045,9 +2045,9 @@ def cfmmc_get_result(host,start_date,end_date):
     sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
     dc = runSqlData('carry_investment',sql)
     dc = {i0: i1 for i0, i1 in dc}
-    sql2 = f"SELECT 合约,原成交序号,开仓价,成交序号,成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
+    sql2 = f"SELECT 合约,(CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END),开仓价,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
-           f" AND 原成交序号 in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
+           f" AND (CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END) in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
     cl = runSqlData('carry_investment',sql2)
     results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
     # for i in cl:
