@@ -1492,3 +1492,24 @@ base.py[2018-09-20 18:31:46][WARNING]：Not Found: /favicon.ico
 base.py[2018-09-20 18:31:58][WARNING]：Not Found: /favicon.ico
 HSD.py[2018-09-20 18:33:01][ERROR]：文件 HSD.py 第1425行报错：division by zero
 base.py[2018-09-20 18:33:01][WARNING]：Not Found: /favicon.ico
+exception.py[2018-09-21 09:07:38][ERROR]：Internal Server Error: /cfmmc/huice/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 2324, in cfmmc_huice
+    f.write(json.dums(data))
+AttributeError: module 'json' has no attribute 'dums'
+base.py[2018-09-21 09:07:38][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:20:31][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:20:35][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:21:04][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:22:38][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:45:14][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 09:45:19][WARNING]：Not Found: /favicon.ico
+base.py[2018-09-21 10:03:14][WARNING]：Not Found: /favicon.ico

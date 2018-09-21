@@ -2307,19 +2307,21 @@ def cfmmc_huice(rq, param=None):
     if start_date is None:
         start_date = rq.GET.get('start_date', '1970-01-01')
         end_date = rq.GET.get('end_date', '2100-01-01')
-    cfmmc_huice_key = f'cfmmc_huice_{host}_{start_date}_{end_date}'
+
+    cfmmc = HSD.Cfmmc(host, start_date, end_date)
+
+    data = cfmmc.get_data()
+    _date = data.send(None)
+    cfmmc_huice_key = f'cfmmc_huice_{host}_{_date[0]}_{_date[1]}'
     resp = read_from_cache(cfmmc_huice_key)
     if resp:
         return render(rq, 'cfmmc_tu.html', resp)
-    cfmmc = HSD.Cfmmc(host, start_date, end_date)
 
-    # _results = viewUtil.runThread((cfmmc.get_data,), (cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
-    # data = _results['get_data']
+    # _results = viewUtil.runThread((cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
     # pzs = _results['varieties']
     # _qy = _results['get_qy']
     # base_money = _results['init_money']  # 初始总资金
 
-    data = cfmmc.get_data()
     pzs = cfmmc.varieties()
     _qy = cfmmc.get_qy()
     base_money = cfmmc.init_money()  # 初始总资金
@@ -2554,7 +2556,7 @@ def cfmmc_huice(rq, param=None):
         huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
-        write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 12)
+        write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 24)
 
         return render(rq, 'cfmmc_tu.html', resp)
     except:

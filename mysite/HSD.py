@@ -178,7 +178,7 @@ class RedisPool:
     def conn(self):
         self._conn = redis.Redis(host='localhost')
 
-    def get(self,key):
+    def get(self, key):
         try:
             value = self._conn.get(key)
         except:
@@ -186,12 +186,13 @@ class RedisPool:
             value = self._conn.get(key)
         return value and json.loads(value)
 
-    def set(self,key,value):
+    def set(self, key, value):
         try:
-            self._conn.set(key,json.dumps(value))
+            self._conn.set(key, json.dumps(value))
         except:
             self.conn()
             self._conn.set(key, json.dumps(value))
+
 
 class SqlPool:
     """ MySQL 数据库连接池，单例模式（继承需慎重） """
@@ -200,6 +201,7 @@ class SqlPool:
     _js = {}  # 连接数量字典
     _minSize = 3  # 空闲时的连接数，需要最大连接达到
     _maxSize = 10  # 最大连接数
+
     def __new__(cls, *args, **kwargs):
         if not cls._singleton:
             cls._singleton = super(SqlPool, cls).__new__(cls)
@@ -257,7 +259,8 @@ def runSqlData(db, sql, params=None):
         cur.execute(sql, params)
         conn.commit()  # 提交
         data = cur.fetchall()
-    except:
+    except Exception as exc:
+        print(exc)
         # 认为数据库已经中断连接，重连，再执行
         try:
             conn = sp.get_conn(db, closed=True)  # get_conn(conn.db, isclose=True)
@@ -297,7 +300,7 @@ class MongoDBData:
         """ 获取一天的期货数据 """
         day = datetime.timedelta(days=1)
         data = self._coll.find({'datetime': {'$gte': date, '$lt': date + day}, 'code': code},
-                               projection=['datetime', 'open', 'high', 'low', 'close','trade']).sort('datetime',1)
+                               projection=['datetime', 'open', 'high', 'low', 'close', 'trade']).sort('datetime', 1)
         # 时间，开盘，收盘，最低，最高，成交量
         # data = [[i['datetime'], i['open'], i['close'], i['low'], i['high'], i['trade']] for i in data]
         # data.sort()
@@ -307,7 +310,7 @@ class MongoDBData:
 
     def get_data(self, code, sd, ed):
         """ 获取指定时间区间的数据，参数：合约代码，开始日期，结束日期 """
-        if isinstance(sd,str):
+        if isinstance(sd, str):
             sd = dtf(sd)
         if isinstance(ed, str):
             ed = dtf(ed)
@@ -321,7 +324,7 @@ class MongoDBData:
             day = datetime.timedelta(days=j)
             # [d2.append([str(i[0])] + i[1:]) if i[0].hour < 18 else d1.append([str(i[0])] + i[1:]) for i in self.data_day(code, sd + day)]
             # res += d1 + d2
-            for i,h in self.data_day(code, sd + day):
+            for i, h in self.data_day(code, sd + day):
                 if h < 18:
                     d2.append(i)
                 else:
@@ -333,7 +336,6 @@ class MongoDBData:
 def get_tcp():
     ''' 返回IP地址 '''
     return config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
-
 
 
 def format_int(*args):
@@ -728,6 +730,7 @@ def calculate_earn(dates, end_date):
 class Limit_up:
     """ 股票涨停板的处理类 """
     __slots__ = ('cdate', 'this_up', 'chineseName', 'codes')
+
     def __init__(self):
         '''初始化，从数据库更新所有股票代码'''
         self.cdate = datetime.datetime(*time.localtime()[:3])  # 当前日期
@@ -934,6 +937,7 @@ class Limit_up:
 
 class Zbjs(ZB):
     __slots__ = ('tab_name', 'zdata', 'xzfa')
+
     def __init__(self):
         self.tab_name = {'1': 'wh_same_month_min', '2': 'wh_min', '3': 'handle_min', '4': 'index_min'}  # index_min
         super(Zbjs, self).__init__()
@@ -1233,7 +1237,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
     jyts = len(keys)
     if not keys:
         return {}, huizong
-    jyys = (int(keys[-1][:4])*12+int(keys[-1][-5:-3])) - (int(keys[0][:4])*12+int(keys[0][-5:-3])) + 1
+    jyys = (int(keys[-1][:4]) * 12 + int(keys[-1][-5:-3])) - (int(keys[0][:4]) * 12 + int(keys[0][-5:-3])) + 1
     hc = {
         'jyts': jyts,  # 交易天数
         'jyys': jyys,  # 交易月数
@@ -1252,8 +1256,8 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
         'dayye': [],  # 每天余额
         'daylr': [],  # 每天利润，不叠加
         'zjhcs': [0],  # 资金回测
-        'ccsj': 0,     # 平均每手持仓时间
-        'allcchz': [],       # 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间
+        'ccsj': 0,  # 平均每手持仓时间
+        'allcchz': [],  # 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间
     }
     jingzhi = []  # 净值
     zx_x = []
@@ -1278,7 +1282,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
         hc['dayye'].append(zx_y[-1] + init_money)  # 每天余额
         hc['daylr'].append(je)  # 每天利润
         if len(jingzhi) > 1:
-            max_jz = jingzhi[-2] if jingzhi[-2]>max_jz else max_jz
+            max_jz = jingzhi[-2] if jingzhi[-2] > max_jz else max_jz
             zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
             # zdhc = zdhc2 if zdhc2 > zdhc else zdhc
         hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
@@ -1308,17 +1312,18 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                 end_d = j[1].replace(':', '-').replace(' ', '-')
                 end_d = end_d.split('-') + [0, 0, 0]
                 end_d = [int(ed) for ed in end_d]
-                ccsj += (time.mktime(tuple(end_d)) - time.mktime(tuple(start_d)))*j[6] if end_d >= start_d else 0
+                ccsj += (time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))) * j[6] if end_d >= start_d else 0
             else:  # 按K线的条数计算
                 if j[7] not in code_index:
-                    code_index[j[7]] = re.search(r'[A-z]+',j[7])[0] + 'L8'
+                    code_index[j[7]] = re.search(r'[A-z]+', j[7])[0] + 'L8'
                 try:
-                    this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]])*j[6]
+                    this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]]) * j[6]
                 except Exception as exc:
                     this_ccsj = 0
                     # print(exc)
                 ccsj += this_ccsj
-                allcchz = (this_ccsj,1 if j[2]=='多' else 0,j[3],j[6],1 if j[0][:10]==j[1][:10] else 0,j[1],j[7])
+                allcchz = (
+                this_ccsj, 1 if j[2] == '多' else 0, j[3], j[6], 1 if j[0][:10] == j[1][:10] else 0, j[1], j[7])
                 hc['allcchz'].append(allcchz)
             # 计算利润因子
             if j[3] > 0:
@@ -1343,7 +1348,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                 hc['ccsj'] = str(_ccsj) + ' 分钟'
         else:
             ccsj = ccsj / huizong['zl'] if huizong['zl'] != 0 else 0
-            _ccsj = round(ccsj/60,2)
+            _ccsj = round(ccsj / 60, 2)
             hc['ccsj'] = str(_ccsj) + ' 小时'
         hc['lryz'] = round(count_yl / count_ks, 2) if count_ks != 0 else 0
         count_var = count_var / huizong['zl'] if huizong['zl'] != 0 else 0
@@ -1860,7 +1865,7 @@ class GXJY:
                    '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
         # res = pd.DataFrame(res, columns=columns)
         pzs = [(self.code_name.get(k), v / 2) for k, v in pzs.items()]
-        pzs.sort(key=lambda x: x[1],reverse=True)
+        pzs.sort(key=lambda x: x[1], reverse=True)
         return res, pzs
 
 
@@ -1880,7 +1885,7 @@ class Cfmmc:
         dc = {}
         for i in d:
             k = re.sub('\d', '', i[0])
-            k = i[0]+'('+FUTURE_NAME[k]+')'
+            k = i[0] + '(' + FUTURE_NAME[k] + ')'
             if k not in dc:
                 dc[k] = 0
             dc[k] += int(i[1])
@@ -1910,7 +1915,7 @@ class Cfmmc:
                 v[2] += data2[i]
             res.append(v)
 
-        res = [(i[0], i[1], i[2], i[3], i[1]+'('+FUTURE_NAME[re.sub('\d', '', i[1])]+')') for i in res]
+        res = [(i[0], i[1], i[2], i[3], i[1] + '(' + FUTURE_NAME[re.sub('\d', '', i[1])] + ')') for i in res]
         return res
 
     def get_data(self):
@@ -1921,16 +1926,20 @@ class Cfmmc:
               f"AND C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' " \
               f"AND C.交易日期<='{self.end_date}'"
         data = runSqlData('carry_investment', sql)
+        # 返回最小的日期，最大的日期
+        yield (min(data)[0], max(data)[0]) if data else ('', '')
+
         data2 = {}
         for i in data:
-            k = i[0]+i[1]
+            k = i[0] + i[1]
             if k not in data2:
-                data2[k] = list(i) + [i[1]+'('+FUTURE_NAME[re.sub('\d', '', i[1])]+')']
+                data2[k] = list(i) + [i[1] + '(' + FUTURE_NAME[re.sub('\d', '', i[1])] + ')']
             else:
                 data2[k][2] += i[2]
                 data2[k][3] += i[3]
-        data = [data2[i] for i in data2]
-        return data
+
+        for i in data2:
+            yield data2[i]
 
     def get_rj(self):
         """ 获取出入金 """
@@ -1960,11 +1969,13 @@ class Cfmmc:
         sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),SUM(买持仓),SUM(卖持仓) FROM cfmmc_holding_position WHERE 合约='{code}' AND 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' GROUP BY 交易日期"
         sql_check = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_daily_settlement WHERE 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' ORDER BY 交易日期"
         d = runSqlData('carry_investment', sql)
-        d = {i[0]:i for i in d}
-        _check = runSqlData('carry_investment',sql_check)
+        d = {i[0]: i for i in d}
+        _check = runSqlData('carry_investment', sql_check)
         _c = [i[0] for i in _check]
 
-        d2 = {_c[i]:((d[_c[i-1]][1] if d[_c[i-1]][1] else 0, d[_c[i-1]][2] if d[_c[i-1]][2] else 0) if _c[i-1] in d else (0, 0)) for i in range(1,len(_c))}
+        d2 = {_c[i]: ((d[_c[i - 1]][1] if d[_c[i - 1]][1] else 0, d[_c[i - 1]][2] if d[_c[i - 1]][2] else 0) if _c[
+                                                                                                                    i - 1] in d else (
+        0, 0)) for i in range(1, len(_c))}
         return d2
 
     def get_bs(self, code, time_type=None):
@@ -2040,55 +2051,58 @@ class Cfmmc:
             jzs[i[0]] = jz
         return jzs
 
-def cfmmc_get_result(host,start_date,end_date):
+
+def cfmmc_get_result(host, start_date, end_date):
     """ 获取指定帐号的交易开平仓记录 """
     sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
-    dc = runSqlData('carry_investment',sql)
+    dc = runSqlData('carry_investment', sql)
     dc = {i0: i1 for i0, i1 in dc}
     sql2 = f"SELECT 合约,(CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END),开仓价,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
            f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
            f" AND (CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END) in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
-    cl = runSqlData('carry_investment',sql2)
-    results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
+    cl = runSqlData('carry_investment', sql2)
+    results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for
+                i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
     # for i in cl:
     #     _d = [host, i[0], dc[i[1]], i[2], dc[i[3]], i[4], i[5], '空' if '买' in i[6] else '多', i[7], i[8]]
     #     results2.append(_d)
     results2.sort(key=lambda x: x[2])
     return results2
 
+
 def cfmmc_huice(host):
     """ 回测 """
     # 日期时间，买卖，手数，开平，手续费，平仓盈亏，合约，交易日期 ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
     trade_sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`," \
-          f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 交易日期"
-    trade = runSqlData('carry_investment',trade_sql)
+                f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 交易日期"
+    trade = runSqlData('carry_investment', trade_sql)
     trade = list(trade)
     # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
-    closed_sql = f"SELECT `买/卖`,开仓价,成交价,手数,平仓盈亏,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_closed_position_trade WHERE 帐号='{host}'" # ORDER BY 实际成交日期"
-    closed = runSqlData('carry_investment',closed_sql)
+    closed_sql = f"SELECT `买/卖`,开仓价,成交价,手数,平仓盈亏,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_closed_position_trade WHERE 帐号='{host}'"  # ORDER BY 实际成交日期"
+    closed = runSqlData('carry_investment', closed_sql)
     money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
                 f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
-    moneys = runSqlData('carry_investment',money_sql)
-    init_money = sum(j1 if i != 0 else j0 for i, (j0,j1) in enumerate(moneys))
+    moneys = runSqlData('carry_investment', money_sql)
+    init_money = sum(j1 if i != 0 else j0 for i, (j0, j1) in enumerate(moneys))
 
-    huizong = {'yk': 0,                     # 总盈亏
-               'shenglv': 0,                # 胜率
-               'zl': 0,                     # 总成交量
-               'least': [0, 100000000],     # 最差交易：日期，金额
-               'most': [0, -100000000],     # 最好交易：日期，金额
-               'avg': 0,                    # 平均盈亏
-               'avg_day': 0,                # 平均每天盈亏
-               'least2': [0, 100000000],    # 最差交易：日期，点数
-               'most2': [0, -100000000],    # 最好交易：日期，点数
-               'kuilv': 0                   # 亏损比率
+    huizong = {'yk': 0,  # 总盈亏
+               'shenglv': 0,  # 胜率
+               'zl': 0,  # 总成交量
+               'least': [0, 100000000],  # 最差交易：日期，金额
+               'most': [0, -100000000],  # 最好交易：日期，金额
+               'avg': 0,  # 平均盈亏
+               'avg_day': 0,  # 平均每天盈亏
+               'least2': [0, 100000000],  # 最差交易：日期，点数
+               'most2': [0, -100000000],  # 最好交易：日期，点数
+               'kuilv': 0  # 亏损比率
                }
     hc = {
         'jyts': 0,  # 交易天数
         'jyys': 0,  # 交易月数
         'hlbfb': 0,  # 总获利百分比
-        'dhl': 0,   # 日获利百分比
-        'mhl': 0,   # 月获利百分比
-        'ye': 0,    # 余额
+        'dhl': 0,  # 日获利百分比
+        'mhl': 0,  # 月获利百分比
+        'ye': 0,  # 余额
         'cgzd': [0, 0, 0],  # 成功的做多交易； 赚钱的单数，总单数，正确率
         'cgzk': [0, 0, 0],  # 成功的做空交易； 赚钱的单数，总单数，正确率
         'avglr': 0,  # 平均获利
@@ -2102,16 +2116,16 @@ def cfmmc_huice(host):
         'zjhcs': [0],  # 资金回测
         'ccsj': 0,  # 持仓时间
         'lryz': 0,  # 利润因子
-        'std': 0,   # 标准差
+        'std': 0,  # 标准差
         'zjhc': 0,  # 资金回测
         'jingzhi': [],  # 净值
-        'max_jz': [],   # 最大净值
-        'zx_x': [],     # 日期，作为X轴
-        'zx_y': [],     # 总利润
-        'this_day': [],     # 一天
-        'this_week': [],    # 一星期
-        'this_month': [],   # 一个月
-        'this_year': [],    # 一年
+        'max_jz': [],  # 最大净值
+        'zx_x': [],  # 日期，作为X轴
+        'zx_y': [],  # 总利润
+        'this_day': [],  # 一天
+        'this_week': [],  # 一星期
+        'this_month': [],  # 一个月
+        'this_year': [],  # 一年
     }
     _alllr = 0  # 所有获利的手数
     _allss = 0  # 所有亏损的手数
@@ -2119,7 +2133,7 @@ def cfmmc_huice(host):
     for i in closed:
         # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
         _vol = i[3]  # 手数
-        y_k = i[4]   # 盈亏
+        y_k = i[4]  # 盈亏
         if i[5] not in _days:
             _days[i[5]] = {
                 'zzl': [],
@@ -2160,8 +2174,8 @@ def cfmmc_huice(host):
 
     hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] > 0 else 0
     hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] > 0 else 0
-    hc['alllr'] = hc['alllr']/_alllr
-    hc['allss'] = hc['allss']/_allss
+    hc['alllr'] = hc['alllr'] / _alllr
+    hc['allss'] = hc['allss'] / _allss
 
     keys = list(set(i[7] for i in trade))
     keys.sort()
@@ -2181,5 +2195,4 @@ def cfmmc_huice(host):
     # for key in keys:
     #     ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
 
-
-    return hc,huizong
+    return hc, huizong
