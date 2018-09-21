@@ -4,7 +4,6 @@
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/logging.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/logging.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
     </list>
@@ -20,13 +19,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="2312" column="19" selection-start-line="2312" selection-start-column="19" selection-end-line="2312" selection-end-column="19" />
+            <state relative-caret-position="254">
+              <caret line="270" selection-start-line="270" selection-end-line="270" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#3973#6859#0" />
+                <element signature="e#6887#8012#0" />
+                <element signature="e#8069#8385#0" />
                 <element signature="e#80410#84215#0" />
                 <element signature="e#84253#84899#0" />
                 <element signature="e#84926#85856#0" />
@@ -39,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="1900" lean-forward="true" selection-start-line="1900" selection-end-line="1900" />
+            <state relative-caret-position="550">
+              <caret line="233" column="30" lean-forward="true" selection-start-line="233" selection-start-column="30" selection-end-line="233" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -60,7 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>de[0]</find>
       <find>for de,</find>
       <find>cfmmc_huice</find>
       <find>self.model_path</find>
@@ -90,6 +91,7 @@
       <find>成交序号</find>
       <find>cfmmc.get_data</find>
       <find>.get_dates</find>
+      <find>del rq.</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -164,8 +166,8 @@
         <option value="$PROJECT_DIR$/../September_2018/2018-9-20/test/html_model_dowm.py" />
         <option value="$PROJECT_DIR$/../September_2018/2018-9-18/py排序.py" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
       </list>
     </option>
   </component>
@@ -253,13 +255,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00019" summary="功能完善">
-      <created>1534158950012</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1534158950013</updated>
     </task>
     <task id="LOCAL-00020" summary="系统升级">
       <created>1534236680738</created>
@@ -597,7 +592,14 @@
       <option name="project" value="LOCAL" />
       <updated>1537440374685</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="功能完善">
+      <created>1537499788814</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1537499788814</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -676,6 +678,9 @@
           <caret line="113" selection-start-line="113" selection-end-line="113" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#3973#6859#0" />
+            <element signature="e#6887#8012#0" />
+            <element signature="e#8069#8385#0" />
             <element signature="e#80410#84215#0" />
             <element signature="e#84253#84899#0" />
             <element signature="e#84926#85856#0" />
@@ -700,6 +705,9 @@
           <caret line="133" selection-start-line="133" selection-end-line="133" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#3973#6859#0" />
+            <element signature="e#6887#8012#0" />
+            <element signature="e#8069#8385#0" />
             <element signature="e#80410#84215#0" />
             <element signature="e#84253#84899#0" />
             <element signature="e#84926#85856#0" />
@@ -733,12 +741,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="233" column="30" lean-forward="true" selection-start-line="233" selection-start-column="30" selection-end-line="233" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="2312" column="19" selection-start-line="2312" selection-start-column="19" selection-end-line="2312" selection-end-column="19" />
+        <state relative-caret-position="254">
+          <caret line="270" selection-start-line="270" selection-end-line="270" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#3973#6859#0" />
+            <element signature="e#6887#8012#0" />
+            <element signature="e#8069#8385#0" />
             <element signature="e#80410#84215#0" />
             <element signature="e#84253#84899#0" />
             <element signature="e#84926#85856#0" />
@@ -747,13 +765,6 @@
             <element signature="e#107332#107475#0" />
             <element signature="e#107502#107801#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="1900" lean-forward="true" selection-start-line="1900" selection-end-line="1900" />
         </state>
       </provider>
     </entry>

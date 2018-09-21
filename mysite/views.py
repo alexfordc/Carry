@@ -97,13 +97,13 @@ def getLogin(ses, uid=False):
         ses_key = read_from_cache(name)
         ses_key = ses_key.split('_') if ses_key else (None, '未知')
         if not uid:
-            if ses_key[0] != ses.session_key:
+            if ses_key[0] and ses_key[0] != ses.session_key:
                 response = 0, ses_key[1]
             else:
                 response = name, qx
         else:
             id = ses['users']['id']
-            if ses_key[0] != ses.session_key:
+            if ses_key[0] and ses_key[0] != ses.session_key:
                 response = 0, ses_key[1], 0
             else:
                 response = name, qx, id
