@@ -115,7 +115,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             <td>
                 <table border="1" style="width:650px;">
                     {% for i in v.datetimes %}
-                        <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ i.0 }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td>
+                        <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ v.time }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td>
                             <td style="width:150px;">
                                 {{ i.2 }}
                                 {% if i.4 == 1 %}

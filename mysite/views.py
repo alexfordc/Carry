@@ -1221,10 +1221,13 @@ def getList():
             dates = dates2 - datetime.timedelta(minutes=20)
             dates2 = dates2 + datetime.timedelta(days=1)
             dates2 = str(dates2)[:10]
-
-        sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" AND datetime<="%s"' % (
-            data_dict[database][1], dates, dates2)
-        res = list(HSD.runSqlData(data_dict[database][0], sql))
+        if database == '2':
+            data = HSD.MongoDBData(db='HKFuture', table='future_1min').get_hsi(dates, dates2)
+            res = [i for i in data]
+        else:
+            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" AND datetime<="%s"' % (
+                data_dict[database][1], dates, dates2)
+            res = list(HSD.runSqlData(data_dict[database][0], sql))
         if len(res) > 0:
             res = [
                 [int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]]
@@ -1633,10 +1636,10 @@ def huice(rq):
                                                   reverse=reverse, param=param)
             hc, huizong = HSD.huices(res, huizong, init_money, dates, end_date)
         except Exception as exc:
-            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+            HSD.logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
             return redirect('index')
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name})
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name,'hc_name': '方案 '+fa})
 
     return render(rq, 'hc.html', {'user_name': user_name})
 

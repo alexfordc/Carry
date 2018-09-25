@@ -19,7 +19,8 @@ import sys
 import pymongo
 from pyquery import PyQuery
 from copy import deepcopy
-
+import myconn
+from KRData.HKData import HKFuture
 from mysite.DataIndex import ZB
 
 config = configparser.ConfigParser()
@@ -278,23 +279,67 @@ def runSqlData(db, sql, params=None):
 
 class MongoDBData:
     """ MongoDB 数据库的连接与数据查询处理类，单例模式（继承需慎重）"""
-    _singleton = None
-    _coll = None
+    # _singleton = None
+    # _coll = None
+    #
+    # def __new__(cls, *args, **kwargs):
+    #     if not cls._singleton:
+    #         cls._singleton = super(MongoDBData, cls).__new__(cls)
+    #     return cls._singleton
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._singleton:
-            cls._singleton = super(MongoDBData, cls).__new__(cls)
-        return cls._singleton
-
-    def __init__(self):
-        if not self._coll:
-            self._coll = self.get_coll()
+    def __init__(self,db=None,table=None):
+        self.db_name = db
+        self.table = table
+        # if not self._coll:
+        #     self._coll = self.get_coll()
+        self._coll = self.get_coll()
 
     def get_coll(self):
         client = pymongo.MongoClient('mongodb://192.168.2.226:27017')
-        db = client['Future']
-        coll = db['future_1min']
+        self.db = client[self.db_name] if self.db_name else client['Future']
+        coll = self.db[self.table] if self.table else self.db['future_1min']
         return coll
+
+    def get_hsi(self,sd,ed,code='HSI'):
+        hf = HKFuture()
+        if not isinstance(sd, str):
+            sd = dtf(sd)
+        if not isinstance(ed, str):
+            ed = dtf(ed)
+        data = hf.get_bars(code, start=sd, end=ed)
+        for t, _, o, h, l, c, v in data.values:
+            yield [t, o, h, l, c, v]
+        # 待续
+        # if isinstance(sd, str):
+        #     sd = dtf(sd)
+        # if isinstance(ed, str):
+        #     ed = dtf(ed)
+        #
+        # codes = []
+        #
+        # data = self._coll.find({'datetime': {'$gte': sd, '$lte': ed}, 'code':{'$regex': code}},
+        #                  projection=['datetime', 'open', 'high', 'low', 'close', 'volume']).sort('datetime',1)  # 'HSI1808'
+        # # count = data.count()
+        # # data = [[i['datetime'], i['open'], i['high'], i['low'], i['close'], i['volume']] for i in data]
+        # # return data
+        # dates = set()
+        # _wk = 1
+        # while True:
+        #     if _wk == 1:
+        #         _sd = str(sd)
+        #     code = code[:3] + _sd[2:4] + _sd[5:7]
+        #     _ed = self.db['future_contract_info'].find({'CODE': code})[0]['EXPIRY_DATE']
+        #     if sd >= _ed:
+        #         _sd = str(sd+datetime.timedelta(weeks=_wk))
+        #         _wk += 1
+        #         continue
+        #     for i in data:
+        #         date = i['datetime']
+        #         if date not in dates:
+        #             dates.add(date)
+        #             if date > ed:
+        #                 return
+        #             yield [date, i['open'], i['high'], i['low'], i['close'], i['volume']]
 
     def data_day(self, code, date):
         """ 获取一天的期货数据 """
@@ -977,6 +1022,10 @@ class Zbjs(ZB):
         if database == '1':
             sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM wh_same_month_min WHERE prodcode='HSI' AND datetime>='{}' AND datetime<='{}'".format(
                 dates, dates2)
+        elif database == '2':
+            data = MongoDBData(db='HKFuture', table='future_1min').get_hsi(dates, dates2)
+            data = [i for i in data]
+            return data
         else:
             # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
             sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
@@ -998,7 +1047,7 @@ class Zbjs(ZB):
         self.zdata = da
         res, first_time = self.trd(_fa, reverse=reverse, param=param)
 
-        hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
+        # hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
 
         res_key = list(res.keys())
         for i in res_key:
@@ -1011,10 +1060,11 @@ class Zbjs(ZB):
             mony = res[i]['mony']
             huizong['yk'] += mony
             huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-            huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
-                'least']
-            huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
-                'most']
+            huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
+                'least']    # hk.get(i)[0], hk.get(i)[1]
+            huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
+                'most']  #, hk.get(i)[0], hk.get(i)[1]
+
             mtsl = []
             for j in res[i]['datetimes']:
                 mtsl.append(j[3])
@@ -1041,8 +1091,9 @@ class Zbjs(ZB):
         huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
         res_size = len(_res)
         huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-        huizong['least2'] = min(all_price) if all_price else 0
-        huizong['most2'] = max(all_price) if all_price else 0
+        huizong['least2'] = huizong['least'] # [min(all_price) if all_price else 0]
+        huizong['most2'] = huizong['most'] # [max(all_price) if all_price else 0]
+
 
         # closeConn(conn)  # 关闭数据库连接
         return _res, huizong, first_time
@@ -1312,7 +1363,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                 end_d = j[1].replace(':', '-').replace(' ', '-')
                 end_d = end_d.split('-') + [0, 0, 0]
                 end_d = [int(ed) for ed in end_d]
-                ccsj += (time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))) * j[6] if end_d >= start_d else 0
+                ccsj += (time.mktime(tuple(end_d)) - time.mktime(tuple(start_d))) if end_d >= start_d else 0
             else:  # 按K线的条数计算
                 if j[7] not in code_index:
                     code_index[j[7]] = re.search(r'[A-z]+', j[7])[0] + 'L8'
