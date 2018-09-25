@@ -19,7 +19,7 @@ import sys
 import pymongo
 from pyquery import PyQuery
 from copy import deepcopy
-import myconn
+
 from KRData.HKData import HKFuture
 from mysite.DataIndex import ZB
 
