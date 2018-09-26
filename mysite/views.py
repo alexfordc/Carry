@@ -32,7 +32,7 @@ from hashlib import md5
 
 from mysite import forms
 from mysite import HSD
-from mysite.HSD import get_ip_name
+from mysite.HSD import get_ip_name, logging
 from mysite import models
 from mysite import viewUtil
 from mysite import pypass
@@ -46,28 +46,26 @@ from mysite.sub_client import sub_ticker, getTickData
 PAGE_SIZE = 28
 
 
-# 从缓存读数据
 def read_from_cache(user_name):
+    """ 从缓存读数据 """
     key = 'user_id_of_' + user_name
     try:
         value = cache.get(key)
-    except Exception as exc:
-        viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
-        value = None
-    if value:
         data = json.loads(value)
-    else:
+    except Exception as exc:
+        logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         data = None
+
     return data
 
 
-# 写数据到缓存
 def write_to_cache(user_name, data, expiry_time=settings.NEVER_REDIS_TIMEOUT):
+    """ 写数据到缓存 """
     key = 'user_id_of_' + user_name
     try:
         cache.set(key, json.dumps(data), expiry_time)
     except Exception as exc:
-        viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+        logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
 
 
 # 更新缓存
@@ -1410,12 +1408,13 @@ def moni(rq):
     zbjs = HSD.Zbjs()
     ma = 60
     if dates and end_date and fa:
+        param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
+        t=time.time()
+        res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
+                                              reverse=reverse, param=param)
+        print(time.time()-t)
         try:
-            param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
-            res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
-                                                  reverse=reverse, param=param)
-            keys = sorted(res.keys())
-            keys.reverse()
+            keys = sorted(res.keys(),reverse=True)
             res = [dict(res[k], **{'time': k}) for k in keys]
             fa_doc = zbjs.fa_doc
             return render(rq, 'moni.html',
@@ -1424,7 +1423,7 @@ def moni(rq):
                            'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
                            'user_name': user_name})
         except Exception as exc:
-            viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+            logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
@@ -1636,7 +1635,7 @@ def huice(rq):
                                                   reverse=reverse, param=param)
             hc, huizong = HSD.huices(res, huizong, init_money, dates, end_date)
         except Exception as exc:
-            HSD.logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
+            logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
             return redirect('index')
 
         return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name,'hc_name': '方案 '+fa})
@@ -1689,7 +1688,7 @@ def gxjy(rq):
                 init_data = h.get_gxjy_sql_all()
                 response = render(rq, 'gxjy.html', {'init_data': init_data, 'user_name': user_name})
             except Exception as exc:
-                viewUtil.error_log(sys.argv[0], sys._getframe().f_lineno, exc)
+                logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
                 response = redirect('index')
         elif not rq.is_ajax() and types == 'js':  # 计算数据
             dd = h.get_gxjy_sql(code) if code else h.get_gxjy_sql()

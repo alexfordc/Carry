@@ -401,13 +401,16 @@ class ZB(object):
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
             datetimes, ope, clo, macd, mas, std, reg, mul, cd, high,low,diff = dt2['datetimes'], dt2['open'], dt2['close'], dt2[
                 'macd'], dt2['ma'], dt2['std'], dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['diff']
+            datetimes_hour = datetimes.hour
             if mul > 1.5:
                 res[dates]['dy'] += 1
             elif mul < -1.5:
@@ -419,7 +422,7 @@ class ZB(object):
             # 反向做单
             kctj_d = clo<mas and mul<-1.5
             kctj_k = clo>mas and mul>1.5
-            pctj_d = (macd>0 and clo>mas)
+            pctj_d = (macd>0 and clo>mas)  # and last_diff - diff>5)
             pctj_k = (macd<0 and clo<mas and diff - last_diff>3)
 
             last_diff = diff
@@ -428,7 +431,7 @@ class ZB(object):
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
 
-            if kctj_d and is_dk and 9<=datetimes.hour<16:
+            if kctj_d and is_dk and 9<=datetimes_hour<16:
                 tj_d+=1
                 if tj_d>3:
                     jg_d=clo
@@ -437,7 +440,7 @@ class ZB(object):
                     is_d=1
                     first_time = [str_time1,'多' ,clo]
                     zsjg = low-clo-1 if zsjg2 >= -10 else zsjg
-            elif kctj_k and is_dk and 9<=datetimes.hour<16:
+            elif kctj_k and is_dk and 9<=datetimes_hour<16:
                 tj_k+=1
                 if tj_k>3:
                     jg_k=clo
@@ -519,7 +522,9 @@ class ZB(object):
         first_time = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -618,7 +623,9 @@ class ZB(object):
         first_time = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -720,7 +727,9 @@ class ZB(object):
         first_time = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -814,7 +823,9 @@ class ZB(object):
         res = {}
         first_time = []
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             dt2 = dt3[-1]
@@ -881,7 +892,9 @@ class ZB(object):
         first_time = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -979,7 +992,9 @@ class ZB(object):
         res = {}
         first_time = []
         while 1:
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1069,7 +1084,9 @@ class ZB(object):
         _low=None
         svm=0
         while 1:
-            _while, res, dt3, dates = yield res,first_time
+            _while, dt3, dates = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1142,7 +1159,9 @@ class ZB(object):
         sb = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1263,7 +1282,9 @@ class ZB(object):
         count_c = 0
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1356,7 +1377,9 @@ class ZB(object):
         count_c = 0
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1449,7 +1472,9 @@ class ZB(object):
         k58s = []
         ydzs_k = 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1535,7 +1560,9 @@ class ZB(object):
         k5s = []
         ydzs_d = 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1631,7 +1658,9 @@ class ZB(object):
         first_time = []
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1747,7 +1776,9 @@ class ZB(object):
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1868,7 +1899,9 @@ class ZB(object):
         ydzs_d, ydzs_k = 0, 0  # 移动止损
         regs = 0
         while 1:
-            _while, res, dt3, dates, qzpc = yield res, first_time
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -1993,7 +2026,9 @@ class ZB(object):
         choices = lambda x,y,z: x if y == '0' else (z if y == '1' else True)
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
-            _while, res, dt3, dates, qzpc = yield res,first_time
+            _while, dt3, dates, qzpc = yield res,first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
             if not _while:
                 break
             is_dk = not (is_k or is_d)
@@ -2090,7 +2125,7 @@ class ZB(object):
 
     def trd(self,_fa,reverse=False,_ma=60,param=None):
         ''' 交易记录 '''
-        res={}
+        res, first_time = {}, []
         da = self.zdata
         if len(da)>_ma:
             data2=self.vis(da=da[:_ma],ma=_ma)
@@ -2101,19 +2136,20 @@ class ZB(object):
             fa = self.xzfa[_fa](-zsds, ydzs, zyds, cqdc,reverse=reverse)
             fa.send(None)
         else:
-            return
+            return res, first_time
         is_date = str(datetime.datetime.now())[:15]
+        da_1 = da[-1]
         for df2 in da:
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates=str(df2[0])[:10]
-            if dates not in res:
-                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0,}
             dt3 =data2.send(df2)
             datetimes=dt3[-1]['datetimes']
-            if _fa!="7" and ((datetimes.hour==16 and datetimes.minute>30) or datetimes.hour>16 or datetimes.hour<9):
-                continue
-            qzpc = True if (df2 == da[-1] and str(df2[0])[:15]!=is_date) else False
-            res,first_time=fa.send((True,res,dt3,dates,qzpc))
+            date_hour = datetimes.hour
+            # date_min = datetimes.minute
+            if not (date_hour > 16 or date_hour < 9):  # (date_hour == 16 and date_min > 30) or
+                # continue
+                qzpc = True if (df2 == da_1 and str(df2[0])[:15]!=is_date) else False
+                res,first_time=fa.send((True,dt3,dates,qzpc))
 
         # sss=[]
         # for i in res:
@@ -2122,7 +2158,6 @@ class ZB(object):
         #    f.write(json.dumps(sss))
         #self.sendNone(data2)
         #self.sendNone(fa)
-
         return res,first_time
 
     def trd_all(self, _ma=60,reverse=True,param=None):
@@ -2148,13 +2183,13 @@ class ZB(object):
             dt3 = data2.send(df2)
             datetimes = dt3[-1]['datetimes']
             for fa in fas:
-                if dates not in res[fa]:
-                    res[fa][dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
+                # if dates not in res[fa]:
+                #     res[fa][dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
                 if fa != "7" and ((datetimes.hour == 16 and datetimes.minute > 30) or datetimes.hour > 16 or datetimes.hour < 9):
                     continue
                 qzpc = True if (df2 == da[-1] and str(df2[0])[:15] != is_date) else False
                 try:
-                    res[fa], first_time[fa] = fas[fa].send((True, res[fa], dt3, dates, qzpc))
+                    res[fa], first_time[fa] = fas[fa].send((True, dt3, dates, qzpc))
                 except Exception as exc:
                     pass
 
@@ -2185,14 +2220,14 @@ class ZB(object):
         for df2 in da:
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates = str(df2[0])[:10]
-            if dates not in res:
-                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
+            # if dates not in res:
+            #     res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0}
             dt3 = data2.send(df2)
             datetimes = dt3[-1]['datetimes']
             if (datetimes.hour == 16 and datetimes.minute > 30) or datetimes.hour > 16 or datetimes.hour < 9:
                 continue
             qzpc = True if (df2 == da[-1] and str(df2[0])[:15] != is_date) else False
-            res, first_time = fa.send((True, res, dt3, dates, qzpc))
+            res, first_time = fa.send((True, dt3, dates, qzpc))
 
         return res, first_time
 

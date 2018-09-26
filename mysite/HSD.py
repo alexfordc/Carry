@@ -5,6 +5,7 @@ import datetime
 import pymysql
 import json
 import os
+import math
 import numpy as np
 import pandas as pd
 import logging
@@ -117,7 +118,7 @@ FUTURE_NAME = {
 }
 
 SQL = {
-    'get_history': 'select number,name,time from weight where time>"{}" AND name in {}',
+    'get_history': 'select name,number,time from weight where time>"{}" AND name in {}',
     'tongji': 'select id,trader_name,available,origin_asset,remain_asset from account_info order by available desc',
     "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
 	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
@@ -277,6 +278,8 @@ def runSqlData(db, sql, params=None):
     return data
 
 
+
+
 class MongoDBData:
     """ MongoDB 数据库的连接与数据查询处理类，单例模式（继承需慎重）"""
     # _singleton = None
@@ -301,45 +304,63 @@ class MongoDBData:
         return coll
 
     def get_hsi(self,sd,ed,code='HSI'):
-        hf = HKFuture()
-        if not isinstance(sd, str):
-            sd = dtf(sd)
-        if not isinstance(ed, str):
-            ed = dtf(ed)
-        data = hf.get_bars(code, start=sd, end=ed)
-        for t, _, o, h, l, c, v in data.values:
-            yield [t, o, h, l, c, v]
-        # 待续
-        # if isinstance(sd, str):
+        """
+        获取指定开始日期，结束日期，指定合约的恒指分钟数据
+        :param sd: 开始日期
+        :param ed: 结束日期
+        :param code: 合约代码
+        :return:
+        """
+        # hf = HKFuture()
+        # if not isinstance(sd, str):
         #     sd = dtf(sd)
-        # if isinstance(ed, str):
+        # if not isinstance(ed, str):
         #     ed = dtf(ed)
-        #
-        # codes = []
-        #
-        # data = self._coll.find({'datetime': {'$gte': sd, '$lte': ed}, 'code':{'$regex': code}},
-        #                  projection=['datetime', 'open', 'high', 'low', 'close', 'volume']).sort('datetime',1)  # 'HSI1808'
-        # # count = data.count()
-        # # data = [[i['datetime'], i['open'], i['high'], i['low'], i['close'], i['volume']] for i in data]
-        # # return data
-        # dates = set()
-        # _wk = 1
-        # while True:
-        #     if _wk == 1:
-        #         _sd = str(sd)
-        #     code = code[:3] + _sd[2:4] + _sd[5:7]
-        #     _ed = self.db['future_contract_info'].find({'CODE': code})[0]['EXPIRY_DATE']
-        #     if sd >= _ed:
-        #         _sd = str(sd+datetime.timedelta(weeks=_wk))
-        #         _wk += 1
-        #         continue
-        #     for i in data:
-        #         date = i['datetime']
-        #         if date not in dates:
-        #             dates.add(date)
-        #             if date > ed:
-        #                 return
-        #             yield [date, i['open'], i['high'], i['low'], i['close'], i['volume']]
+        # data = hf.get_bars(code, start=sd, end=ed)
+        # for t, _, o, h, l, c, v in data.values:
+        #     yield [t, o, h, l, c, v]
+
+
+        if isinstance(sd, str):
+            sd = dtf(sd)
+        if isinstance(ed, str):
+            ed = dtf(ed)
+        dates = set()
+        start_dates = [sd]
+        _month = sd.month
+        _year = sd.year
+        e_y = ed.year
+        e_m = ed.month
+        _while = 0
+
+        while _year<e_y or (_year == e_y and _month <= e_m):
+            _month = sd.month + _while
+            _year = sd.year + math.ceil(_month/12)-1
+            _month = _month%12 if _month%12 else 12
+            code = code[:3] + str(_year)[2:] + ('0'+str(_month) if _month<10 else str(_month))
+            try:
+                _ed = self.db['future_contract_info'].find({'CODE': code})[0]['EXPIRY_DATE']
+            except:
+                return
+            if _ed not in start_dates:
+                start_dates.append(_ed)
+            _while += 1
+            if sd >= _ed:
+                continue
+            _sd = start_dates[-2]
+
+            if _sd > ed:
+                return
+            data = self._coll.find({'datetime': {'$gte': _sd, '$lt': _ed}, 'code': code},
+                                   projection=['datetime', 'open', 'high', 'low', 'close', 'volume']).sort('datetime',
+                                                                                                           1)  # 'HSI1808'
+            for i in data:
+                date = i['datetime']
+                if date not in dates:
+                    dates.add(date)
+                    if date > ed:
+                        return
+                    yield [date, i['open'], i['high'], i['low'], i['close'], i['volume']]
 
     def data_day(self, code, date):
         """ 获取一天的期货数据 """
@@ -488,13 +509,15 @@ def get_history(db):
     '''返回数据格式为：(点数，时间)...'''
     this_day = get_date()
     result = runSqlData(db, SQL['get_history'].format(this_day, tuple(WEIGHT)))
+    result1 = {}
     if not result:
-        result = runSqlData(db, 'SELECT * FROM weight ORDER BY TIME DESC LIMIT 600')
+        result = runSqlData(db, 'SELECT name,number,time FROM weight ORDER BY TIME DESC LIMIT 600')
         result = list(result)
         result.reverse()
-    result1 = {}
+
     for name in WEIGHT:
-        result1[name] = [[i[0], str(i[2])[-8:-3].replace(':', '')] for i in result if i[1] == name]
+        result1[name] = [[i[1], str(i[2])[-11:-3].replace(' ', '/').replace(':', '')] for i in result if i[0] == name]
+
     return result1
 
 
@@ -522,17 +545,25 @@ def read_changes(url='http://qt.gtimg.cn/q'):
 def get_yesterday_price():
     '''获取昨日收盘指数价格'''
     this_time = time.localtime(time.time())[2]
+    _red_key = 'get_yesterday_price'
+    _redis = RedisPool()
+    res = _redis.get(_red_key)  # 先从Redis获取
+    if res and res[1] == this_time:  # 如果今天已经下载则直接返回
+        return res
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox / 57.0'}
     try:
         req = requests.get('https://cn.investing.com/indices/hang-sen-40', headers=headers).text
         req = re.sub('\s', '', req)
         p = re.findall('昨收:</span><spandir="ltr">(\d+,\d+.\d+)</span></li>', req)[0]
         p = p.replace(',', '')
-        return (float(p), this_time)
+        res = (float(p), this_time)
     except:
         data = requests.get('http://web.sqt.gtimg.cn/q=hkHSI').text
         data = data.split('=')[1].split('~')[3:6]
-        return (float(data[1]), this_time)
+        res = (float(data[1]), this_time)
+    _redis.set(_red_key, res)
+
+    return res
 
 
 def get_price():
@@ -1048,55 +1079,54 @@ class Zbjs(ZB):
         res, first_time = self.trd(_fa, reverse=reverse, param=param)
 
         # hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
-
         res_key = list(res.keys())
         for i in res_key:
-            if i in is_inst_date:
-                continue
-            is_inst_date.append(i)
-            if not res[i]['datetimes']:
-                del res[i]
-                continue
-            mony = res[i]['mony']
-            huizong['yk'] += mony
-            huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-            huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
-                'least']    # hk.get(i)[0], hk.get(i)[1]
-            huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
-                'most']  #, hk.get(i)[0], hk.get(i)[1]
+            if i not in is_inst_date:
+                # continue
+                is_inst_date.append(i)
+                # if not res[i]['datetimes']:
+                #     del res[i]
+                #     continue
+                mony = res[i]['mony']
+                huizong['yk'] += mony
+                huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
+                huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
+                    'least']    # hk.get(i)[0], hk.get(i)[1]
+                huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
+                    'most']  #, hk.get(i)[0], hk.get(i)[1]
 
-            mtsl = []
-            for j in res[i]['datetimes']:
-                mtsl.append(j[3])
-                if j[4] == -1 and j[3] < 0:
-                    huizong['zs'] += 1
-                elif j[4] == 1:
-                    huizong['zy'] += 1
-                elif j[4] == -1:
-                    huizong['ydzs'] += 1
-            all_price += mtsl
-            if not res[i].get('ylds'):
-                res[i]['ylds'] = 0
-            if mtsl:
-                ylds = len([sl for sl in mtsl if sl > 0])
-                res[i]['ylds'] += ylds  # 盈利单数
-                res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
-            else:
-                res[i]['shenglv'] = 0
+                mtsl = []
+                for j in res[i]['datetimes']:
+                    mtsl.append(j[3])
+                    if j[4] == -1 and j[3] < 0:
+                        huizong['zs'] += 1
+                    elif j[4] == 1:
+                        huizong['zy'] += 1
+                    elif j[4] == -1:
+                        huizong['ydzs'] += 1
+                all_price += mtsl
+                if not res[i].get('ylds'):
+                    res[i]['ylds'] = 0
+                if mtsl:
+                    ylds = len([sl for sl in mtsl if sl > 0])
+                    res[i]['ylds'] += ylds  # 盈利单数
+                    res[i]['shenglv'] = round(ylds / len(mtsl) * 100, 2)  # 每天胜率
+                else:
+                    res[i]['shenglv'] = 0
 
-        _res = dict(res, **_res)
+        # _res = dict(res, **_res)
 
         huizong['shenglv'] += len([p for p in all_price if p > 0])
         huizong['shenglv'] = int(huizong['shenglv'] / huizong['zl'] * 100) if huizong['zl'] > 0 else 0  # 胜率
         huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
-        res_size = len(_res)
+        res_size = len(res)
         huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
         huizong['least2'] = huizong['least'] # [min(all_price) if all_price else 0]
         huizong['most2'] = huizong['most'] # [max(all_price) if all_price else 0]
 
 
         # closeConn(conn)  # 关闭数据库连接
-        return _res, huizong, first_time
+        return res, huizong, first_time
 
     def main_all(self, _dates, end_date, database, reverse=True, param=None):
         _res = {}

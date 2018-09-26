@@ -51,7 +51,6 @@ def errors(*fun_name):
     try:
         yield
     except Exception as exc:
-        # print(f'{fun_name}{exc}')
         record_log('log\\error_log\\err.txt', f'{fun_name}{exc}\n', 'a')
 
 
@@ -381,7 +380,7 @@ class Cfmmc:
 
     @asyncs
     def down_day_data_sql(self, host, start_date, end_date, password=None, createTime=None):
-        """ 下载啄日数据并保存到SQL """
+        """ 下载啄日数据并保存到MySQL """
         cache.set('cfmmc_status' + host, 'start')
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')

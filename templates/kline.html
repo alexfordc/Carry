@@ -190,8 +190,8 @@
                     <form action="{% url 'kline' %}" method="GET">
                         <input style="height:24px;" type="date" name="date" value="{{date}}" id="search_date"/>
                         <select name="database" style="background-color:#DDDDDD;">
-                            <option value="1">ticker数据</option>
-                            <option value="2">同花顺数据</option>
+                            <option value="1">MySQL数据</option>
+                            <option value="2">MongoDB数据</option>
                         </select>
                     <input type="submit" style="height:25px;" value="查询" />
                     </form>
