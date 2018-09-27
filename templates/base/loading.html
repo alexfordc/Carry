@@ -1,0 +1,133 @@
+{% extends 'base/base.html' %}
+{% block title %}回测{% endblock %}
+{% block center_cen %}
+
+<div id="loadings" align="center"><span style="color:green;">运算中...</span> </div>
+
+<script>
+var y_loading = {};
+var y_load = document.getElementById("loadings");
+y_loading.Particle = function( opt ) {
+  this.radius = 7;
+  this.x = opt.x;
+  this.y = opt.y;
+  this.angle = opt.angle;
+  this.speed = opt.speed;
+  this.accel = opt.accel;
+  this.decay = 0.01;
+  this.life = 1;
+};
+
+y_loading.Particle.prototype.step = function( i ) {
+  this.speed += this.accel;
+  this.x += Math.cos( this.angle ) * this.speed;
+  this.y += Math.sin( this.angle ) * this.speed;
+  this.angle += y_loading.PI / 64;
+  this.accel *= 1.01;
+  this.life -= this.decay;
+  
+  if( this.life <= 0 ) {
+    y_loading.particles.splice( i, 1 );
+  }
+};
+
+y_loading.Particle.prototype.draw = function( i ) {
+  y_loading.ctx.fillStyle = y_loading.ctx.strokeStyle = 'hsla(' + ( y_loading.tick + ( this.life * 120 ) ) + ', 100%, 60%, ' + this.life + ')';
+  y_loading.ctx.beginPath();
+  if( y_loading.particles[ i - 1 ] ) {
+    y_loading.ctx.moveTo( this.x, this.y );
+    y_loading.ctx.lineTo( y_loading.particles[ i - 1 ].x, y_loading.particles[ i - 1 ].y );
+  }
+  y_loading.ctx.stroke();
+  
+  y_loading.ctx.beginPath();
+  y_loading.ctx.arc( this.x, this.y, Math.max( 0.001, this.life * this.radius ), 0, y_loading.TWO_PI );
+  y_loading.ctx.fill();
+  
+  var size = Math.random() * 1.25;
+  y_loading.ctx.fillRect( ~~( this.x + ( ( Math.random() - 0.5 ) * 35 ) * this.life ), ~~( this.y + ( ( Math.random() - 0.5 ) * 35 ) * this.life ), size, size );
+}
+
+y_loading.step = function() {
+  y_loading.particles.push( new y_loading.Particle({
+    x: y_loading.width / 2 + Math.cos( y_loading.tick / 20 ) * y_loading.min / 2,
+    y: y_loading.height / 2 + Math.sin( y_loading.tick / 20 ) * y_loading.min / 2,
+    angle: y_loading.globalRotation + y_loading.globalAngle,
+    speed: 0,
+    accel: 0.01
+  }));
+  
+  y_loading.particles.forEach( function( elem, index ) {
+    elem.step( index );
+  });
+  
+  y_loading.globalRotation += y_loading.PI / 6;
+  y_loading.globalAngle += y_loading.PI / 6;
+};
+
+y_loading.draw = function() {
+  y_loading.ctx.clearRect( 0, 0, y_loading.width, y_loading.height );
+  
+  y_loading.particles.forEach( function( elem, index ) {
+    elem.draw( index );
+  });
+};
+
+y_loading.init = function() {
+  y_loading.canvas = document.createElement( 'canvas' );
+  y_loading.ctx = y_loading.canvas.getContext( '2d' );
+  y_loading.width = 300;
+  y_loading.height = 300;
+  y_loading.canvas.width = y_loading.width * window.devicePixelRatio;
+  y_loading.canvas.height = y_loading.height * window.devicePixelRatio;
+  y_loading.canvas.style.width = y_loading.width + 'px';
+  y_loading.canvas.style.height = y_loading.height + 'px';
+  y_loading.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  y_loading.min = y_loading.width * 0.5;
+  y_loading.particles = [];
+  y_loading.globalAngle = 0;
+  y_loading.globalRotation = 0;
+  y_loading.tick = 0;
+  y_loading.PI = Math.PI;
+  y_loading.TWO_PI = y_loading.PI * 2;
+  y_loading.ctx.globalCompositeOperation = 'lighter';
+  y_load.appendChild( y_loading.canvas );
+  y_loading.loop();
+};
+
+y_loading.loop = function() {
+  requestAnimationFrame( y_loading.loop );
+  y_loading.step();
+  y_loading.draw();
+  y_loading.tick++;
+};
+
+y_loading.init();
+
+function request_load_ajax(){
+    //var data={"host":"{{host}}","when":"{{when}}"};
+    var rq_url = "{{rq_url}}";
+    var su_url = "{% url 'cfmmc_huice' %}?{{rq_url}}";
+    if(rq_url.indexOf("/cfmmc/huice/")>=0){
+        su_url = rq_url;
+    }
+    setInterval(function(){
+        $.ajax({
+            type: "GET",
+            url: su_url,
+            //data: data,
+            success: function(res){
+                if(res == 1){
+                    window.location.href=su_url;
+                }else if(res == 0){
+                    window.location.href="{% url 'index' %}";
+                }
+            }
+        });
+    },1000);
+
+}
+request_load_ajax();
+</script>
+
+{% endblock %}

@@ -1199,17 +1199,20 @@ def tools(rq):
 def kline(rq):
     user_name, qx = LogIn(rq)
     date = rq.GET.get('date', HSD.get_date())
-    write_to_cache('kline_date', date)
     database = rq.GET.get('database', '1')
-    write_to_cache('kline_database', database)
-    return render(rq, 'kline.html', {'date': date, 'user_name': user_name})
+    _key = f'{rq.session.session_key}_kline_date'
+    write_to_cache(_key, (date, database))
+
+    return render(rq, 'kline.html', {'date': date, 'user_name': user_name, 'database': database})
 
 
-def getList():
+def getList(rq):
     # 时间,开盘价,最高价,最低价,收盘价,成交量
     data_dict = {'1': ['carry_investment', 'wh_same_month_min'], '2': ['carry_investment', 'wh_min']}
-    dates = read_from_cache('kline_date')
-    database = read_from_cache('kline_database')
+    _key = f'{rq.session.session_key}_kline_date'
+    _dates = read_from_cache(_key)
+    dates, database = _dates if _dates else (None, None)
+    res = ()
     if dates and database:
         # conn = HSD.get_conn(data_dict[database][0])
         if len(dates) == 10:
@@ -1231,16 +1234,20 @@ def getList():
                 [int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]]
                 for i in res]
             _ch = []
+
             return res, _ch
 
     if len(res) > 0:
         res = [[int(time.mktime(time.strptime(str(i[0]), "%Y-%m-%d %H:%M:%S")) * 1000), i[1], i[2], i[3], i[4], i[5]]
                for i in res]
-    data2 = HSD.Zbjs().vis(res)
-    dc = data2.send(None)
-    data2.send(None)
+    dc = []
+    with viewUtil.errors('views.py', 'getList'):
+        data2 = HSD.Zbjs().vis(res)
+        dc = data2.send(None)
+        data2.close()
+    # data2.send(None)
     _ch = [d['cd'] for d in dc]
-    data2.close()
+
     return res, _ch
 
 
@@ -1280,7 +1287,7 @@ def getkline(rq):
     types = rq.POST.get('type')  # 获取分钟类型
     # 1min 5min 15min 30min 1hour 1day 1week
     if rq.is_ajax() and size > 0:
-        lists, _ch = getList()
+        lists, _ch = getList(rq)
         # _ch = [random.choice([0, 0, 0, 0, 0, 0]) for i in range(len(lists))]
         data = {
             'des': "注释",
@@ -1292,13 +1299,13 @@ def getkline(rq):
                 'marketName': "凯瑞投资",
                 'moneyType': "CNY",
                 'symbol': 'carry',
-                'url': '官网地址',  # （选填）
+                'url': 'www.a667.com',  # （选填）
                 'topTickers': [],  # （选填）
             }
         }
         return HttpResponse(json.dumps(data), content_type="application/json")
     elif rq.is_ajax() and size == 0:
-        lists, _ch = getList()
+        lists, _ch = getList(rq)
         # _ch = [random.choice([0, 0, 0, 0, 0, 0]) for i in range(len(lists))]
         data = {
             'des': "注释",
@@ -1310,7 +1317,7 @@ def getkline(rq):
                 'marketName': "凯瑞投资",
                 'moneyType': "CNY",
                 'symbol': 'carry',
-                'url': '官网地址',  # （选填）
+                'url': 'www.a667.com',  # （选填）
                 'topTickers': [],  # （选填）
             }
         }
@@ -1409,10 +1416,8 @@ def moni(rq):
     ma = 60
     if dates and end_date and fa:
         param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
-        t=time.time()
         res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
                                               reverse=reverse, param=param)
-        print(time.time()-t)
         try:
             keys = sorted(res.keys(),reverse=True)
             res = [dict(res[k], **{'time': k}) for k in keys]
@@ -2295,273 +2300,64 @@ def cfmmc_huice(rq, param=None):
     """ 期货回测，绘图 """
     if param is not None:
         when = param[0]
-        host = param[1:]
+        _host = param[1:]
     else:
-        host = rq.GET.get('host')
+        _host = rq.GET.get('host')
         when = rq.GET.get('when')
-    user_name, qx = LogIn(rq)
+    if rq.is_ajax() and rq.method == 'GET':
+        if not _host:
+            return HttpResponse(0)
+        host = get_cfmmc_id_host(_host)
+        when, start_date, end_date = viewUtil.this_day_week_month_year(when)
+        if start_date is None:
+            start_date = rq.GET.get('start_date', '1970-01-01')
+            end_date = rq.GET.get('end_date', '2100-01-01')
 
-    if not host:
-        return redirect('/')
-    host = get_cfmmc_id_host(host)
-    when, start_date, end_date = viewUtil.this_day_week_month_year(when)
-    if start_date is None:
-        start_date = rq.GET.get('start_date', '1970-01-01')
-        end_date = rq.GET.get('end_date', '2100-01-01')
+        cfmmc = HSD.Cfmmc(host, start_date, end_date)
+        data = cfmmc.get_data()
+        _date = data.send(None)
 
-    cfmmc = HSD.Cfmmc(host, start_date, end_date)
+        cfmmc_huice_key = f'cfmmc_huice_{host}_{_date[0]}_{_date[1]}'
+        red = HSD.RedisPool()
+        resp = red.get(cfmmc_huice_key)
 
-    data = cfmmc.get_data()
-    _date = data.send(None)
-    cfmmc_huice_key = f'cfmmc_huice_{host}_{_date[0]}_{_date[1]}'
-    resp = read_from_cache(cfmmc_huice_key)
-    if resp:
-        return render(rq, 'cfmmc_tu.html', resp)
-
-    # _results = viewUtil.runThread((cfmmc.varieties,), (cfmmc.get_qy,), (cfmmc.init_money,))
-    # pzs = _results['varieties']
-    # _qy = _results['get_qy']
-    # base_money = _results['init_money']  # 初始总资金
-
-    pzs = cfmmc.varieties()
-    _qy = cfmmc.get_qy()
-    base_money = cfmmc.init_money()  # 初始总资金
-
-    init_money = 0
-    jzs = cfmmc.get_jz()
-    jz = 1  # 初始净值
-    jzq = 0  # 初始净值权重
-    allje = 0  # init_money  # 总金额
-    eae = []  # 出入金
-    zx_x, prices = [], []
-    hc, hcd, huizong, init_money = viewUtil.cfmmc_hc_data(host, start_date, end_date)
-    # print(hc['allcchz'])
-    all_ccsjy, all_ccsjk = [], []  # 持仓时间，盈利、亏损
-    all_ccsjss, all_ykss = [], []  # 持仓时间、手数，盈亏、手数
-    all_pcsj = []  # 平仓时间，盈亏、亏损
-    all_pcsjn = []
-    all_pcsjs = {}
-    all_ccsjyl = defaultdict(int)  # 持仓时间，盈利
-    all_ccsjks = defaultdict(int)  # 持仓时间，亏损
-    all_ccsjylks = []  # 持仓时间
-    all_pcsj_max = 0  # 平仓时间，手数的最大值
-    all_ylje = [  # 做多、空，盈利、亏损金额
-        {'value': 0, 'name': '做多盈利金额'},
-        {'value': 0, 'name': '做空盈利金额'},
-        {'value': 0, 'name': '做多亏损金额'},
-        {'value': 0, 'name': '做空亏损金额'}
-    ]
-    all_ylss = [  # 做多、空，盈利、亏损手数
-        {'value': 0, 'name': '做多盈利手数'},
-        {'value': 0, 'name': '做空盈利手数'},
-        {'value': 0, 'name': '做多亏损手数'},
-        {'value': 0, 'name': '做空亏损手数'}
-    ]
-    all_rnje = [  # 日内、隔夜，盈利、亏损金额
-        {'value': 0, 'name': '日内盈利金额'},
-        {'value': 0, 'name': '隔夜盈利金额'},
-        {'value': 0, 'name': '日内亏损金额'},
-        {'value': 0, 'name': '隔夜亏损金额'}
-    ]
-    all_rnss = [  # 日内、隔夜，盈利、亏损手数
-        {'value': 0, 'name': '日内盈利手数'},
-        {'value': 0, 'name': '隔夜盈利手数'},
-        {'value': 0, 'name': '日内亏损手数'},
-        {'value': 0, 'name': '隔夜亏损手数'}
-    ]
-    if 'allcchz' not in hc:
-        hc['allcchz'] = []
-    for cc0, cc1, cc2, cc3, cc4, cc5, cc6 in hc['allcchz']:
-        # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
-        # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')
-        cc0 = round(cc0 / 60, 2)
-        if cc6 not in all_pcsjn:
-            all_pcsjn.append(cc6)
-            all_pcsjs[cc6] = []
-        all_pcsjs[cc6].append([cc5, cc2, cc3])
-        ccsj_sj = math.ceil(cc0 + 3 - cc0 % 3)
-        all_ccsjylks.append(math.ceil(cc0))
-        if cc2 > 0:
-            all_ccsjy.append([cc0, int(cc2), cc3])
-            all_pcsj.append([cc5, int(cc2), cc3])  # {value:214, name:'多'},
-            all_ccsjyl[math.ceil(cc0)] += cc2
-            if cc1 == 1:
-                all_ylje[0]['value'] += cc2
-                all_ylss[0]['value'] += cc3
-            else:
-                all_ylje[1]['value'] += cc2
-                all_ylss[1]['value'] += cc3
-            if cc4 == 1:
-                all_rnje[0]['value'] += cc2
-                all_rnss[0]['value'] += cc3
-            else:
-                all_rnje[1]['value'] += cc2
-                all_rnss[1]['value'] += cc3
+        if resp == 0:
+            red.delete(cfmmc_huice_key)
+            return HttpResponse(0)
+        elif not resp:
+            return HttpResponse(-1)
         else:
-            all_ccsjk.append([cc0, int(cc2), cc3])
-            all_pcsj.append([cc5, int(cc2), cc3])
-            all_ccsjks[math.ceil(cc0)] += cc2
-            if cc1 == 1:
-                all_ylje[2]['value'] += -cc2
-                all_ylss[2]['value'] += cc3
-            else:
-                all_ylje[3]['value'] += -cc2
-                all_ylss[3]['value'] += cc3
-            if cc4 == 1:
-                all_rnje[2]['value'] += -cc2
-                all_rnss[2]['value'] += cc3
-            else:
-                all_rnje[3]['value'] += -cc2
-                all_rnss[3]['value'] += cc3
-        all_pcsj_max = cc3 if cc3 > all_pcsj_max else all_pcsj_max
-        all_ccsjss.append([ccsj_sj, cc3])
-        all_ykss.append([cc2 + 500 - cc2 % 500, cc3])
-    if all_pcsj_max % 5:
-        all_pcsj_max = all_pcsj_max + (5 - all_pcsj_max % 5)
-    hc_name = get_cfmmc_id_host(host + '_name')
-    hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
-    hc_name = host[:4] + '***' + host[-4:] + ' ( ' + hc_name + ' )'
-    max_jz = 0  # 最大净值
-    zjhc = 0  # 资金回测
-    # print(all_ykss)
-    all_ccsjss.sort()
-    all_ykss.sort()
-    all_ccsjylks = list(set(all_ccsjylks))
-    all_ccsjylks.sort()
-    all_ccsjss2 = defaultdict(int)
-    all_ykss2 = defaultdict(int)
-    for ccsj in all_ccsjss:
-        all_ccsjss2[ccsj[0]] += ccsj[1]
-    for ykss in all_ykss:
-        all_ykss2[ykss[0]] += ykss[1]
-    all_ccsjyl2 = []  # 持仓时间，盈利
-    all_ccsjks2 = []  # 持仓时间，亏损
-    for ccsjylks in all_ccsjylks:
-        all_ccsjyl2.append(all_ccsjyl.get(ccsjylks, 0))
-        all_ccsjks2.append(all_ccsjks.get(ccsjylks, 0))
-    hct = {
-        'allyk': [],  # 累积盈亏
-        'alljz': [],  # 累积净值
-        'allsxf': [],  # 累积手续费
-        'pie_name': [i[0] for i in pzs],  # 成交偏好（饼图） 产品名称
-        'pie_value': [{'value': i[1], 'name': i[0]} for i in pzs],  # 成交偏好 饼图的值
-        'qy': [],  # 客户权益
-        'bar_name': [],  # 品种盈亏 名称
-        'bar_value': [],  # 品种盈亏 净利润
-        'day_value': [],  # 每日盈亏 净利润
-        'week_name': [],  # 每周盈亏 名称
-        'week_value': [],  # 每周盈亏 净利润
-        'month_name': [],  # 每月盈亏 名称
-        'month_value': [],  # 每月盈亏 净利润
-        'alleae': [],  # 累积出入金
-        'amount': [],  # 账号总金额
-        'eae': [],  # 出入金
-        'all_ccsjy': all_ccsjy,
-        'all_ccsjk': all_ccsjk,
-        'all_pcsj': all_pcsj,
-        'all_pcsj_max': all_pcsj_max,
-        'all_ylje': all_ylje,
-        'all_ylss': all_ylss,
-        'all_rnje': all_rnje,
-        'all_rnss': all_rnss,
-        'all_pcsjn': all_pcsjn,
-        'all_pcsjs': all_pcsjs,
-        'zjhc': [],  # 资金回测
-        'ccsjss_x': list(all_ccsjss2.keys()),
-        'ccsjss_y': list(all_ccsjss2.values()),
-        'ykss_x': list(all_ykss2.keys()),
-        'ykss_y': list(all_ykss2.values()),
+            return HttpResponse(1)
+    elif rq.method == 'GET':
+        user_name, qx = LogIn(rq)
 
-        'all_ccsjylks': all_ccsjylks,
-        'all_ccsjyl2': all_ccsjyl2,
-        'all_ccsjks2': all_ccsjks2,
-    }
-    name_jlr = defaultdict(float)  # 品种名称，净利润
-    week_jlr = defaultdict(float)  # 每周，净利润
-    month_jlr = defaultdict(float)  # 每月，净利润
-    data2 = []
-    dates = cfmmc.get_dates()
-    ee = cfmmc.get_rj()  # 出入金
-    for de, *_ in dates:
-        zx_x.append(de)
-        yk, sxf = 0, 0
-        f_date = datetime.datetime.strptime(de, '%Y-%m-%d').isocalendar()[:2]
-        week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
-        month = de[:7]  # 月
-        for d in data:
-            # d: ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)')
-            if d[0][:10] == de:
-                sxf += d[3] if d[3] else 0
-                if not d[2]:
-                    continue
-                yk += d[2]
-                name_jlr[d[4]] += d[2]
-                week_jlr[week] += d[2]
-                month_jlr[month] += d[2]
-            else:
-                data2.append(d)
+        if not _host:
+            return redirect('/')
+        host = get_cfmmc_id_host(_host)
+        when, start_date, end_date = viewUtil.this_day_week_month_year(when)
+        if start_date is None:
+            start_date = rq.GET.get('start_date', '1970-01-01')
+            end_date = rq.GET.get('end_date', '2100-01-01')
 
-        hct['day_value'].append(round(yk - sxf, 2))
-        yk += (prices[-1] if prices else 0)
-        prices.append(yk)
-        sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
-        hct['allsxf'].append(round(sxf, 1))
-        rj = base_money + sum(i[1] for i in ee if i[0] <= de)
-        if rj != init_money:
-            # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
-            init_money = rj
-            hct['eae'].append(init_money - (hct['alleae'][-1] if hct['alleae'] else 0))
+        cfmmc = HSD.Cfmmc(host, start_date, end_date)
+
+        data = cfmmc.get_data()
+        _date = data.send(None)
+        cfmmc_huice_key = f'cfmmc_huice_{host}_{_date[0]}_{_date[1]}'
+        red = HSD.RedisPool()
+        resp = red.get(cfmmc_huice_key)
+        if resp:
+            resp['user_name'] = user_name
+            return render(rq, 'cfmmc_tu.html', resp)
         else:
-            hct['eae'].append('')
-        amount = init_money + yk - hct['allsxf'][-1]
-        hct['amount'].append(amount)
-        hct['alleae'].append(init_money)
-        # jz = amount / jzq if jzq != 0 else jz
-        jz2 = jzs[de]
-        hct['alljz'].append(round(jz2, 4))
-        hct['qy'].append(_qy[de])
-        max_jz = jz2 if jz2 > max_jz else max_jz
-        hct['zjhc'].append(round((max_jz - jz2) / max_jz * 100, 2))
-        data = data2
-        data2 = []
-    if hct['zjhc']:
-        huizong['max_zjhc'] = max(hct['zjhc'])  # 最大回测
-    try:
-        zx_x2 = [i for i in zx_x if start_date <= i <= end_date]
-        ind_s = zx_x.index(zx_x2[0])
-        ind_e = zx_x.index(zx_x2[-1]) + 1
-        zx_x = zx_x[ind_s:ind_e]
-        prices = prices[ind_s:ind_e]
-        f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
-        week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
-        f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
-        week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
-        # month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
-        week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2 and v != 0}
-        hct['allyk'] = prices
-        hct['bar_name'] = [i for i in name_jlr]
-        hct['bar_value'] = [round(name_jlr[i], 1) for i in name_jlr]
-        # week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
-        hct['week_name'] = [i for i in week_jlr]
-        hct['week_value'] = [round(week_jlr[i], 1) for i in week_jlr]
-        hct['month_name'] = [i for i in month_jlr if start_date <= i <= end_date]
-        hct['month_value'] = [round(month_jlr[i], 1) for i in month_jlr if start_date <= i <= end_date]
-        host = get_cfmmc_id_host(host + '_name')
-        host = host[0] + '*' * len(host[1])
-        hct['host'] = hc_name  # host
-        # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
-        huizong['max_amount'] = max(hct['amount'])  # 最高余额
-        huizong['deposit'] = sum(i[1] for i in ee if i[1] > 0)  # 存款
-        huizong['draw'] = sum(i[1] for i in ee if i[1] < 0)  # 取款
-        huizong['ykratio'] = abs(round(hc['avglr'] / (hc['avgss'] if hc['avgss'] != 0 else 1), 2))
-        huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
-        resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
-                'init_money': init_money, 'hcd': hcd, 'user_name': user_name, 'hc_name': hc_name}
-        write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 24)
+            hc_name = get_cfmmc_id_host(host + '_name')
+            viewUtil.cfmmc_huice(data, host, start_date, end_date, hc_name, cfmmc_huice_key)
+            rq_url = rq.META.get('QUERY_STRING')
+            if not rq_url:
+                rq_url = rq.META.get('PATH_INFO')
+            return render(rq, 'base/loading.html',{'host':_host,'when':when,'rq_url':rq_url})
 
-        return render(rq, 'cfmmc_tu.html', resp)
-    except:
-        return redirect('/')
+
 
 
 def systems(rq):

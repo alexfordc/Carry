@@ -165,22 +165,28 @@ def dtf(d):
 
 class RedisPool:
     """ Redis 数据库存取 """
-    _singleton = None
+    # _singleton = None
     _conn = None
 
-    def __new__(cls, *args, **kwargs):
-        if cls._singleton is None:
-            cls._singleton = super(RedisPool, cls).__new__(cls)
-        return cls._singleton
+    # def __new__(cls, *args, **kwargs):
+    #     if cls._singleton is None:
+    #         cls._singleton = super(RedisPool, cls).__new__(cls)
+    #     return cls._singleton
 
     def __init__(self):
         if self._conn is None:
             self.conn()
 
     def conn(self):
+        """ 连接 Redis 数据库"""
         self._conn = redis.Redis(host='localhost')
 
     def get(self, key):
+        """
+        获取键对应的值
+        :param key: 键
+        :return: 值
+        """
         try:
             value = self._conn.get(key)
         except:
@@ -188,13 +194,32 @@ class RedisPool:
             value = self._conn.get(key)
         return value and json.loads(value)
 
-    def set(self, key, value):
+    def set(self, key, value, expiry=259200):
+        """
+        写入 Redis 数据库
+        :param key: 键
+        :param value: 值，可为 python 各种数据类型
+        :param expiry: 过期时间，默认3天
+        :return: None
+        """
         try:
             self._conn.set(key, json.dumps(value))
+            self._conn.expire(key, expiry)
         except:
             self.conn()
             self._conn.set(key, json.dumps(value))
 
+    def delete(self, key):
+        """
+        删除 键
+        :param key: 键
+        :return:
+        """
+        try:
+            self._conn.delete(key)
+        except:
+            self.conn()
+            self._conn.delete(key)
 
 class SqlPool:
     """ MySQL 数据库连接池，单例模式（继承需慎重） """
@@ -354,8 +379,15 @@ class MongoDBData:
             data = self._coll.find({'datetime': {'$gte': _sd, '$lt': _ed}, 'code': code},
                                    projection=['datetime', 'open', 'high', 'low', 'close', 'volume']).sort('datetime',
                                                                                                            1)  # 'HSI1808'
+
+            _frist = True
             for i in data:
                 date = i['datetime']
+                if _frist:
+                    _frist = False
+                    exclude_time = str(date)[:10]
+                    dates.add(datetime.datetime.strptime(exclude_time + ' 09:14:00', '%Y-%m-%d %H:%M:%S'))
+                    dates.add(datetime.datetime.strptime(exclude_time + ' 12:59:00', '%Y-%m-%d %H:%M:%S'))
                 if date not in dates:
                     dates.add(date)
                     if date > ed:
