@@ -264,8 +264,8 @@ def index(rq, logins=''):
     """ 主页面 """
     user_name, qx = LogIn(rq)
     if user_name == 0:
-        logins = f"您曾在另一地点【{qx}】登录！请重新登录！"
-        del rq.session['users']
+        logins = f"您上次登录地点是：【{qx}】"
+        # del rq.session['users']
     else:
         logins = "请先登录再访问您需要的页面！" if logins is False else logins
 
@@ -1183,8 +1183,8 @@ def tongji(rq):
         herys = herys = HSD.tongji()
     ids = HSD.IDS
     if user_name == 0:
-        logins = f"您曾在另一地点【{qx}】登录！请重新登录！"
-        del rq.session['users']
+        logins = f"您上次登录地点是：【{qx}】"
+        # del rq.session['users']
     elif not user_name:
         logins = "请先登录再访问您需要的页面！"
     return render(rq, 'tongji.html', locals())
@@ -1305,7 +1305,7 @@ def getkline(rq):
         }
         return HttpResponse(json.dumps(data), content_type="application/json")
     elif rq.is_ajax() and size == 0:
-        lists, _ch = getList(rq)
+        lists, _ch = getList(rq)  # 暂不更新  [], []  #
         # _ch = [random.choice([0, 0, 0, 0, 0, 0]) for i in range(len(lists))]
         data = {
             'des': "注释",
@@ -1325,6 +1325,7 @@ def getkline(rq):
 
     else:
         return redirect('index')
+
 
 
 @accept_websocket

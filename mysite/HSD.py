@@ -433,7 +433,7 @@ class MongoDBData:
 
 def get_tcp():
     ''' 返回IP地址 '''
-    return config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
+    return '192.168.2.204' # config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
 
 
 def format_int(*args):
@@ -1239,7 +1239,7 @@ class Zbjs(ZB):
         self.zdata = da
         res, first_time = self.trd_new(reverse=reverse, param=param)
 
-        hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
+        # hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
 
         res_key = list(res.keys())
         for i in res_key:
@@ -1252,9 +1252,13 @@ class Zbjs(ZB):
             mony = res[i]['mony']
             huizong['yk'] += mony
             huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
-            huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+            # huizong['least'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony < huizong['least'][1] else huizong[
+            #     'least']
+            # huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+            #     'most']
+            huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
                 'least']
-            huizong['most'] = [i, mony, hk.get(i)[0], hk.get(i)[1]] if mony > huizong['most'][1] else huizong[
+            huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
                 'most']
             mtsl = [j[3] for j in res[i]['datetimes']]
             all_price += mtsl
