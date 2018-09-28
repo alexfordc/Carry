@@ -20,6 +20,7 @@ import sys
 import pymongo
 from pyquery import PyQuery
 from copy import deepcopy
+from DBUtils.PersistentDB import PersistentDB
 
 from KRData.HKData import HKFuture
 from mysite.DataIndex import ZB
@@ -221,6 +222,7 @@ class RedisPool:
             self.conn()
             self._conn.delete(key)
 
+
 class SqlPool:
     """ MySQL 数据库连接池，单例模式（继承需慎重） """
     _singleton = None
@@ -274,7 +276,7 @@ class SqlPool:
             conn.close()
 
 
-def runSqlData(db, sql, params=None):
+def runSqlData2(db, sql, params=None):
     """ 执行SQL语句，返回查询结果 db：数据库名称
     (carry_investment,stock_data)；sql：SQL语句；params：参数 """
     sp = SqlPool(db)
@@ -302,11 +304,58 @@ def runSqlData(db, sql, params=None):
             sp.set_conn(db, conn)
     return data
 
+MYSQL_POOL = {}
 
+def GET_MYSQL_POOL(name):
+    """ 获取数据库连接池 """
+    global MYSQL_POOL
+    if name in MYSQL_POOL:
+        return MYSQL_POOL[name]
+    MYSQL_POOL[name] = PersistentDB(
+        creator=pymysql,  # 使用连接数据库的模块
+        maxusage=None,  # 一个连接最多被使用的次数，None为无限制
+        setsession=[],  # 开始会话前执行的命令
+        ping=0,  # ping MySQL服务端，检查服务是否可用
+        closeable=False,  # conn.close() 被忽略，供下次使用，直到线程关闭，自动关闭连接。而等于True时，conn.close()真的被关闭
+        threadlocal=None,  # 本线程独享值的对象，用于保存连接对象
+        host=config['U']['hs'],
+        port=3306,
+        user=config['U']['us'],
+        passwd=config['U']['ps'],
+        db=name,
+        charset='utf8'
+    )
+    return MYSQL_POOL[name]
+
+
+def runSqlData(db, sql, params=None):
+    """ 执行SQL语句，返回查询结果 db：数据库名称
+    (carry_investment,stock_data)；sql：SQL语句；params：参数 """
+    data = None
+    try:
+        conn = GET_MYSQL_POOL(db).connection()
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        conn.commit()  # 提交
+        data = cur.fetchall()
+    except Exception as exc:
+        # 认为数据库已经中断连接，重连，再执行
+        try:
+            conn = GET_MYSQL_POOL(db).connection()
+            cur = conn.cursor()
+            cur.execute(sql, params)
+            conn.commit()  # 提交
+            data = cur.fetchall()
+        finally:
+            conn.close()
+    finally:
+        conn.close()
+    return data
 
 
 class MongoDBData:
     """ MongoDB 数据库的连接与数据查询处理类，单例模式（继承需慎重）"""
+
     # _singleton = None
     # _coll = None
     #
@@ -315,7 +364,7 @@ class MongoDBData:
     #         cls._singleton = super(MongoDBData, cls).__new__(cls)
     #     return cls._singleton
 
-    def __init__(self,db=None,table=None):
+    def __init__(self, db=None, table=None):
         self.db_name = db
         self.table = table
         # if not self._coll:
@@ -328,7 +377,7 @@ class MongoDBData:
         coll = self.db[self.table] if self.table else self.db['future_1min']
         return coll
 
-    def get_hsi(self,sd,ed,code='HSI'):
+    def get_hsi(self, sd, ed, code='HSI'):
         """
         获取指定开始日期，结束日期，指定合约的恒指分钟数据
         :param sd: 开始日期
@@ -345,7 +394,6 @@ class MongoDBData:
         # for t, _, o, h, l, c, v in data.values:
         #     yield [t, o, h, l, c, v]
 
-
         if isinstance(sd, str):
             sd = dtf(sd)
         if isinstance(ed, str):
@@ -358,11 +406,11 @@ class MongoDBData:
         e_m = ed.month
         _while = 0
 
-        while _year<e_y or (_year == e_y and _month <= e_m):
+        while _year < e_y or (_year == e_y and _month <= e_m):
             _month = sd.month + _while
-            _year = sd.year + math.ceil(_month/12)-1
-            _month = _month%12 if _month%12 else 12
-            code = code[:3] + str(_year)[2:] + ('0'+str(_month) if _month<10 else str(_month))
+            _year = sd.year + math.ceil(_month / 12) - 1
+            _month = _month % 12 if _month % 12 else 12
+            code = code[:3] + str(_year)[2:] + ('0' + str(_month) if _month < 10 else str(_month))
             try:
                 _ed = self.db['future_contract_info'].find({'CODE': code})[0]['EXPIRY_DATE']
             except:
@@ -433,7 +481,7 @@ class MongoDBData:
 
 def get_tcp():
     ''' 返回IP地址 '''
-    return '192.168.2.204' # config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
+    return '192.168.2.204'  # config['U']['hs'] if computer_name != 'doc' else '192.168.2.204'
 
 
 def format_int(*args):
@@ -1123,9 +1171,9 @@ class Zbjs(ZB):
                 huizong['yk'] += mony
                 huizong['zl'] += (res[i]['duo'] + res[i]['kong'])
                 huizong['least'] = [i, mony] if mony < huizong['least'][1] else huizong[
-                    'least']    # hk.get(i)[0], hk.get(i)[1]
+                    'least']  # hk.get(i)[0], hk.get(i)[1]
                 huizong['most'] = [i, mony] if mony > huizong['most'][1] else huizong[
-                    'most']  #, hk.get(i)[0], hk.get(i)[1]
+                    'most']  # , hk.get(i)[0], hk.get(i)[1]
 
                 mtsl = []
                 for j in res[i]['datetimes']:
@@ -1153,9 +1201,8 @@ class Zbjs(ZB):
         huizong['avg'] = huizong['yk'] / huizong['zl'] if huizong['zl'] > 0 else 0  # 平均每单盈亏
         res_size = len(res)
         huizong['avg_day'] = huizong['yk'] / res_size if res_size > 0 else 0  # 平均每天盈亏
-        huizong['least2'] = huizong['least'] # [min(all_price) if all_price else 0]
-        huizong['most2'] = huizong['most'] # [max(all_price) if all_price else 0]
-
+        huizong['least2'] = huizong['least']  # [min(all_price) if all_price else 0]
+        huizong['most2'] = huizong['most']  # [max(all_price) if all_price else 0]
 
         # closeConn(conn)  # 关闭数据库连接
         return res, huizong, first_time
@@ -1440,7 +1487,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                     # print(exc)
                 ccsj += this_ccsj
                 allcchz = (
-                this_ccsj, 1 if j[2] == '多' else 0, j[3], j[6], 1 if j[0][:10] == j[1][:10] else 0, j[1], j[7])
+                    this_ccsj, 1 if j[2] == '多' else 0, j[3], j[6], 1 if j[0][:10] == j[1][:10] else 0, j[1], j[7])
                 hc['allcchz'].append(allcchz)
             # 计算利润因子
             if j[3] > 0:
@@ -2092,7 +2139,7 @@ class Cfmmc:
 
         d2 = {_c[i]: ((d[_c[i - 1]][1] if d[_c[i - 1]][1] else 0, d[_c[i - 1]][2] if d[_c[i - 1]][2] else 0) if _c[
                                                                                                                     i - 1] in d else (
-        0, 0)) for i in range(1, len(_c))}
+            0, 0)) for i in range(1, len(_c))}
         return d2
 
     def get_bs(self, code, time_type=None):

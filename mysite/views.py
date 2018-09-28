@@ -1440,6 +1440,16 @@ def moni(rq):
 
 def newMoni(rq):
     user_name, qx = LogIn(rq)
+    _max = rq.GET.get('MAX')
+    red = HSD.RedisPool()
+    red_key = 'newMoni_max_yk'
+    # 最高胜率，最高总盈亏，最高每单盈亏，最高每天盈亏
+    _maxs = {'1': 'shenglv', '2': 'yk', '3': 'avg', '4': 'avg_day'}
+    max_yk = red.get(red_key)  # resps
+    if _max in _maxs:
+        if max_yk and _max in max_yk:
+            return render(rq, 'new_moni.html', max_yk[_max])
+
     dates = rq.GET.get('dates')
     end_date = rq.GET.get('end_date')
     database = rq.GET.get('database', '1')
@@ -1479,6 +1489,7 @@ def newMoni(rq):
 
     zbjs = HSD.Zbjs()
     ma = 60
+
     if dates and end_date and (duo and pdd or kong and pkd):
         with viewUtil.errors('views', 'newMoni'):
             param = {
@@ -1498,8 +1509,8 @@ def newMoni(rq):
             keys.reverse()
             res = [dict(res[k], **{'time': k}) for k in keys]
             fa_doc = zbjs.fa_doc
-            return render(rq, 'new_moni.html',
-                          {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa,
+
+            resp = {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date,  # 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
                            'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
 
@@ -1510,14 +1521,25 @@ def newMoni(rq):
                            "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
                            "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
                            "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed, 'user_name': user_name
-                           })
+                           }
+            # print(dates,type(dates),end_date,type(end_date))
+            if not max_yk:
+                max_yk = {}
+            for i in _maxs:
+                if i not in max_yk:
+                    max_yk[i] = resp
+                elif max_yk[i]['huizong'][_maxs[i]]<=huizong[_maxs[i]]:
+                    max_yk[i] = resp
+            red.set(red_key, max_yk, 2592000)  # 保存30天
+            return render(rq, 'new_moni.html',resp)
 
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
     dates = str(dates - datetime.timedelta(days=day))[:10]
     end_date = str(datetime.datetime.now() + datetime.timedelta(days=1))[:10]
     return render(rq, 'new_moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
+                                        'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name,
+                                        })
 
 
 def moni_all(rq):

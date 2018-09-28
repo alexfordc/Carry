@@ -1,8 +1,11 @@
 {% extends 'base/base.html' %}
-{% block title %}模拟表{% endblock %}
+{% block title %}挖掘方案{% endblock %}
 {% block script %}
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/radio.css' %}" />
+<style>
+    .radio_label{ cursor:pointer; }
+</style>
 <script>
 function openLogin(id){
    document.getElementById(id).style.display="";
@@ -23,7 +26,7 @@ function huice(){
     var cqdc = document.getElementById("cqdc").value;
     //location.href="{% url 'huice' %}?dates="+dates+"&ts="+ts+"&fa="+fa+"&database="+database;
     // zsds, ydzs, zyds, cqdc
-    window.open("{% url 'huice' %}?dates="+dates+"&end_date="+end_date+"&fa="+fa+"&database="+database+"&zsds="+zsds+"&ydzs="+ydzs+"&zyds="+zyds+"&cqdc="+cqdc);
+    window.open("{% url 'huice' %}?dates="+dates+"&end_date="+end_date+"&database="+database+"&zsds="+zsds+"&ydzs="+ydzs+"&zyds="+zyds+"&cqdc="+cqdc);
 }
 
 </script>
@@ -267,9 +270,18 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             <tr><td>开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/></td>
                 <td>结束时间：<input type="date" name="end_date" id="end_date" value="{{ end_date }}"/></td>
                 <td><input type="button" value="回测" onclick="huice()"/></td>
-                <td><input type="button" id="zuoduo_cancel" value="取消选中" size="20"></td>
+                <td><input type="button" id="zuoduo_cancel" value="取消所有" size="20">
+                </td>
                 <td><input type="submit" value="测试" style="background-color:#ff0323;width:50px;" />&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/></td>
+            </tr>
+            <tr>
+                <td>最近测试的最高纪录：</td>
+                <td><input type="button" value="最高胜率" style="background-color:orange;" onclick="javascript:location.href='{% url 'newMoni' %}?MAX=1'"></td>
+                <td><input type="button" value="最高总盈亏" style="background-color:orange;" onclick="javascript:location.href='{% url 'newMoni' %}?MAX=2'"></td>
+                <td><input type="button" value="最高每单盈亏" style="background-color:orange;" onclick="javascript:location.href='{% url 'newMoni' %}?MAX=3'"></td>
+                <td><input type="button" value="最高每天盈亏" style="background-color:orange;" onclick="javascript:location.href='{% url 'newMoni' %}?MAX=4'"></td>
+            </tr>
         </table>
     </form><br/>
         <table border="1" align="center">
@@ -283,7 +295,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             <td><a style="color:blue;" href="{% url 'kline' %}?date={{ huizong.most.0 }}&database={{database}}">{{ huizong.most.0 }}</a><br>{{ huizong.most.1 }}</td>
             <td>涨幅：{{ huizong.most.2|floatformat:0 }} 点<br>波动：{{ huizong.most.3|floatformat:0 }} 点</td></tr>
         {% else %}
-        <h3 style="color:green;">请选择好参数并按《模拟测试》按钮进行测试！</h3>
+        <h3 style="color:green;">请选择好参数并按《测试》按钮进行测试！</h3>
         {% endif %}
         </table><br/>
     <table border="1" align="center">
@@ -328,6 +340,24 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             // 移除属性,两种方式都可以
             //moni_radio.removeAttr("checked");
             moni_radio.attr("checked",false);
+        });
+        var checkeds = new Array();
+        $(".radio_radio").click(function(){
+            var name = $(this).attr("name")
+            var val = $(this).val();
+            var _checked = name+val;
+            var _checked2 = val=='0'?name+1:name+0;
+            if(!checkeds[_checked] || checkeds[_checked2]%2){
+                checkeds[_checked] = 1;
+                checkeds[_checked2] = 0;
+            }else{
+                checkeds[_checked] ++;
+            }
+            if(checkeds[_checked]%2){
+                $(this).attr("checked",true);
+            }else{
+                $(this).attr("checked",false);
+            }
         });
     </script>
 {% endblock %}
