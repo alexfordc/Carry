@@ -130,10 +130,12 @@ def record_from(rq, login=False):
         IP_NAME[ip] = address
         viewUtil.record_log(files, IP_NAME, 'w')
         # tasks_record_log.delay(files, IP_NAME, 'w')
+    if login:
+        return IP_NAME[ip]
     info = f"{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
     # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
-    return IP_NAME[ip]
+
 
 
 def LogIn(rq, uid=False):

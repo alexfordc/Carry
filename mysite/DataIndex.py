@@ -37,8 +37,8 @@ class ZB(object):
                "收盘价小于60均线 与 dea小于0，则做空；收盘价大于60均线 与 dea大于0，则平仓。", "止损100个点。"],
         "15": ["60均线下方出现三波下跌（以macd区间区分） 与 底背离，则做多；收盘价大于60均线 与 价差除以标准差>1.5，则平仓。",
                "60均线上面出现三波上涨（以macd区间区分） 与 顶背离，则做空；收盘价小于60均线 与 价差除以标准差<-1.5，则平仓。", "止损100个点。"],
-        "16": ["当前MACD区域收盘价大于上一波价格新高，则做多；在第二波绿区平仓。",
-               "当前MACD区域收盘价小于上一波价格新低，则做空；在第二波红区平仓。", "止损100个点。"],
+        "16": ["60均线上方MACD红区当前价格大于上一波MACD红区、价格新高，则做多；在第二波绿区平仓。",
+               "60均线下方MACD绿区当前价格低于上一波MACD绿区、价格新低，则做空；在第二波红区平仓。", "止损100个点。"],
         "17": ["0轴上方MACD红区，则做多；第二波红绿区或小于60均线则平仓。",
                "0轴下方MACD绿区，则做空；第二波红绿区或大于60均线则平仓。", "止损100个点。"],
         "18": ["60均线上方三波MACD红区以上回归60均线，则做多；高位死叉与顶背离平仓。",
@@ -1988,8 +1988,8 @@ class ZB(object):
             # vv = sum(v[1] for v in sb[-3:-10:-2]) / len(sb[-3:-10:-2]) if len(sb[-3:-10:-2]) > 0 else 1
             kctj_d = (clo > mas and macd > 0 and sb[-1][2] > sb[-3][2]) if len(sb) > 2 else False
             kctj_k = (clo < mas and macd < 0 and sb[-1][2] < sb[-3][2]) if len(sb) > 2 else False
-            pctj_d = macd < 0 and reg - regs >= 3
-            pctj_k = macd > 0 and reg - regs >= 3
+            pctj_d = macd < 0 and reg - regs >= 5
+            pctj_k = macd > 0 and reg - regs >= 5
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
@@ -2116,8 +2116,8 @@ class ZB(object):
             # vv = sum(v[1] for v in sb[-3:-10:-2]) / len(sb[-3:-10:-2]) if len(sb[-3:-10:-2]) > 0 else 1
             kctj_d = macd > 0
             kctj_k = macd < 0
-            pctj_d = reg - regs >= 3 or clo < mas
-            pctj_k = reg - regs >= 3 or clo > mas
+            pctj_d = reg - regs >= 5 or clo < mas
+            pctj_k = reg - regs >= 5 or clo > mas
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
