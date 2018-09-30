@@ -34,6 +34,19 @@ def asyncs(func):
     return wrapper
 
 
+def caches(func):
+    """ 缓存装饰器 """
+    data = {}
+
+    def wrapper(*args, **kwargs):
+        key = f'{func.__name__}{args}{kwargs}'
+        if key not in data:
+            data[key] = func(*args, **kwargs)
+        return data[key]
+
+    return wrapper
+
+
 @asyncs
 def record_log(files, info, types):
     """ 访问日志 """
@@ -90,15 +103,24 @@ def tongji_huice(res, huizong):
     return res, huizong
 
 
-# def tongji_first():
-#     """ 最初进入统计的页面 """
-#     herys = None
-#     try:
-#         herys = HSD.tongji()
-#     except Exception as exc:
-#         HSD.logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
-#
-#     return herys
+@caches
+def thisday_transaction(thisday):
+    """ 查看当天期货是否有交易，返回当天的日期是否不等于最后的交易日期 """
+    """
+        http://blog.sina.com.cn/s/blog_404ee5f90102xxbs.html  # 接口讲解地址
+        以豆粕为例(MO)
+        实时数据：http://hq.sinajs.cn/list=MO
+        5分钟：http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0
+        15分钟：http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine15m?symbol=M0
+        30分钟：http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine30m?symbol=M0
+        60分钟：http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine60m?symbol=M0
+        日线：http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesDailyKLine?symbol=M0
+    """
+    url = "http://stock2.finance.sina.com.cn/futures/api/json.php/IndexService.getInnerFuturesMiniKLine5m?symbol=M0"
+    data = requests.get(url).text
+    data = json.loads(data)
+    date = data[0][0][:10]
+    return date != thisday
 
 
 def tongji_ud(page, rq_date, end_date):
@@ -467,10 +489,11 @@ class Automatic:
                 ca = Captcha(model_path + '\\' + 'captcha_model95')
                 cfmmc_login_d = Cfmmc()
                 data = HSD.runSqlData('carry_investment', sql)
+                is_rest = thisday_transaction(str(d)[:10])  # 今天是否休市
                 for da in data:
                     sql_date = f"SELECT DATE_FORMAT(DATE,'%Y-%m-%d') FROM cfmmc_insert_date WHERE HOST='{da[0]}' ORDER BY DATE DESC LIMIT 1"
                     is_down_date = HSD.runSqlData('carry_investment', sql_date)
-                    if d.weekday() > 4 or (is_down_date and is_down_date[0][0] == str(d)[:10]):
+                    if d.weekday() > 4 or (is_down_date and is_down_date[0][0] == str(d)[:10]) or is_rest:
                         continue
                     if computer_name == 'DOC':  # 防止重复登录，在本机上不执行
                         continue
@@ -851,7 +874,7 @@ def runThread(*funcs):
 
 
 @asyncs
-def cfmmc_huice(data, host, start_date, end_date,hc_name,red_key):
+def cfmmc_huice(data, host, start_date, end_date, hc_name, red_key):
     """
     期货回测，绘图
     :param data:        数据对象 yield
@@ -1104,13 +1127,14 @@ def cfmmc_huice(data, host, start_date, end_date,hc_name,red_key):
 
         resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
                 'init_money': init_money, 'hcd': hcd, 'hc_name': hc_name}
-        #write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 24)
+        # write_to_cache(cfmmc_huice_key, resp, expiry_time=60 * 60 * 24)
 
-        #return render(rq, 'cfmmc_tu.html', resp)
-        red.set(red_key,resp)
+        # return render(rq, 'cfmmc_tu.html', resp)
+        red.set(red_key, resp)
 
     except:
         red.set(red_key, 0)
+
 
 def get_cloud_file(path_root):
     """ 获取目录的文件 """

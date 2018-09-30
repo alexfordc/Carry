@@ -89,21 +89,27 @@ def is_time(data, minutes):
         return False
 
 
-def getLogin(ses, uid=False):
+def getLogin(rq, uid=False):
     """ 返回用户名与权限 """
+    ses = rq.session
     if 'users' in ses:
         name, qx = ses['users']['name'], ses['users']['jurisdiction']
         ses_key = read_from_cache(name)
         ses_key = ses_key.split('_') if ses_key else (None, '未知')
+        frist_key = ses.session_key
         if not uid:
-            if ses_key[0] and ses_key[0] != ses.session_key:
+            if ses_key[0] and ses_key[0] != frist_key:
                 response = 0, ses_key[1]
+                address = record_from(rq, True)
+                write_to_cache(name, f'{rq.session.session_key}_{address}')
             else:
                 response = name, qx
         else:
             id = ses['users']['id']
-            if ses_key[0] and ses_key[0] != ses.session_key:
+            if ses_key[0] and ses_key[0] != frist_key:
                 response = 0, ses_key[1], 0
+                address = record_from(rq, True)
+                write_to_cache(name, f'{rq.session.session_key}_{address}')
             else:
                 response = name, qx, id
     else:
@@ -133,7 +139,7 @@ def record_from(rq, login=False):
 def LogIn(rq, uid=False):
     """ 访客登记 与 返回用户名与权限 """
     record_from(rq)
-    return getLogin(rq.session, uid)
+    return getLogin(rq, uid)
 
 
 def get_zx_zt(zt=False, zx=False, status=None):
@@ -217,7 +223,7 @@ def get_zx_zt(zt=False, zx=False, status=None):
 
 def tongji_adus(rq):
     """ 修改与删除交易统计表 """
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = getLogin(rq)
     id = rq.POST.get('id')
     name = rq.POST.get('name')
     en = rq.POST.get('en')
@@ -261,11 +267,13 @@ def get_cfmmc_id_host(_id='Nones', select=False):
 # ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^  Request and response ^v^ ^v^ ^v^ ^v^ ^v^ ^v^ ^v^  ^v^ ^v^ ^v^
 
 
-def index(rq, logins=''):
+def index(rq, logins='', user_name=None, qx=''):
     """ 主页面 """
-    user_name, qx = LogIn(rq)
+    if user_name is None:
+        user_name, qx = LogIn(rq)
     if user_name == 0:
         logins = f"您上次登录地点是：【{qx}】"
+        user_name = rq.session['users'].get('name')
         # del rq.session['users']
     else:
         logins = "请先登录再访问您需要的页面！" if logins is False else logins
@@ -384,7 +392,7 @@ def user_information(rq):
                       {"user_name": user_name, "work": work, "real_account": real_account, 'account': account,
                        'allPage': allPage, 'curPage': curPage, 'qx': qx})
 
-    return index(rq, logins=False)
+    return index(rq, False, user_name, qx)
 
 
 def add_work_log(rq):
@@ -564,7 +572,7 @@ def user_info_public_show(rq):
                       {"user_name": user_name, "infopublic": infopublic,
                        'allPage': allPage, 'curPage': curPage, 'qx': qx})
 
-    return index(rq, logins=False)
+    return index(rq, False, user_name, qx)
 
 
 def user_info_public(rq):
@@ -689,22 +697,26 @@ def user_cloud_public(rq):
     if user_name and qx >= 2:
         path_root = 'D:\\cloud'  # 保存文件的目录
         if rq.method == 'POST':
-
             upload_file = rq.FILES.get('file')  # 获得文件
             if upload_file:
-                file_name = user_name + "_+_" + upload_file.name
+                r_file_name = re.findall(r'\w+\.[A-z]{1,4}', upload_file.name)
+                if r_file_name:
+                    r_file_name = r_file_name[-1]
+                else:
+                    r_file_name = str(int(time.time()*1000))[-10:]
+                file_name = user_name + "_+_" + r_file_name
                 folder_size = HSD.get_dirsize(path_root) / 1024 / 1024
                 file_size = upload_file.size / 1024 / 1024
                 path_file = os.path.join(path_root, file_name)
                 if folder_size + file_size > 10240:  # 限制整个目录最大装10G
-                    msg = f" {upload_file.name} 文件太大！"
+                    msg = f" {r_file_name} 文件太大！"
                 elif os.path.isfile(path_file):
-                    msg = f" {upload_file.name} 已经存在！"
+                    msg = f" {r_file_name} 已经存在！"
                 else:
                     with open(path_file, 'wb+') as f:
                         for chunk in upload_file.chunks():
                             f.write(chunk)
-                    msg = f" {upload_file.name} 上传成功!"
+                    msg = f" {r_file_name} 上传成功!"
             else:
                 msg = "请选择需要上传的文件！"
             clouds = viewUtil.get_cloud_file(path_root)
@@ -1452,7 +1464,7 @@ def getwebsocket(rq):
 def zhangting(rq, t):
     user_name, qx = LogIn(rq)
     if not user_name:
-        return index(rq, logins=False)
+        return index(rq, False, user_name, qx)
     dates = HSD.get_date()
     ZT = HSD.Limit_up()
     rq_date = rq.GET.get('date', dates)
@@ -2141,7 +2153,7 @@ def cfmmc_data(rq):
 def cfmmc_logout(rq):
     """ 期货监控系统 退出 """
     global is_cfmmc_login
-    user_name, qx = getLogin(rq.session)
+    user_name, qx = getLogin(rq)
     # if not user_name:
     #     return index(rq, False)
     logins = '尚未登录--期货监控中心！'  # 账户记录退出！
@@ -2225,9 +2237,9 @@ def cfmmc_data_local(rq):
 
 def cfmmc_save(rq):
     """ 保存期货监控系统的用户名与密码 """
-    user_name, qx, uid = getLogin(rq.session, uid=True)
+    user_name, qx, uid = getLogin(rq, uid=True)
     if not user_name:
-        return index(rq, False)
+        return index(rq, False, user_name, qx)
     if rq.method == 'GET' and rq.is_ajax():
         ty = rq.GET.get('type')
         if ty == 'save' and 'user_cfmmc' in rq.session:
@@ -2469,7 +2481,7 @@ def cfmmc_huice(rq, param=None):
 def systems(rq):
     user_name, qx = LogIn(rq)
     if not user_name:
-        return index(rq, False)
+        return index(rq, False, user_name, qx)
     return render(rq, 'systems.html', {'user_name': user_name})
 
 
