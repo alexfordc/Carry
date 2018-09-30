@@ -18,10 +18,11 @@ import socket
 import redis
 import sys
 import pymongo
+from os.path import join, getsize
 from pyquery import PyQuery
 from copy import deepcopy
-from DBUtils.PersistentDB import PersistentDB
-
+# from DBUtils.PersistentDB import PersistentDB
+from DBUtils.PooledDB import PooledDB
 from KRData.HKData import HKFuture
 from mysite.DataIndex import ZB
 
@@ -147,6 +148,14 @@ def get_config(root, son):
     return '()'
 
 
+def get_dirsize(dir):
+    """ 获取文件夹大小(bytes) """
+    size = 0
+    for root, dirs, files in os.walk(dir):
+        size += sum([getsize(join(root, name)) for name in files])
+    return size
+
+
 def dtf(d):
     """ 日期时间格式化 """
     if isinstance(d, str):
@@ -166,21 +175,24 @@ def dtf(d):
 
 class RedisPool:
     """ Redis 数据库存取 """
-    # _singleton = None
+    _shares = {}
     _conn = None
 
-    # def __new__(cls, *args, **kwargs):
-    #     if cls._singleton is None:
-    #         cls._singleton = super(RedisPool, cls).__new__(cls)
-    #     return cls._singleton
+    def __new__(cls, *args, **kwargs):
+        """ 共享模式 """
+        self = object.__new__(cls, *args, **kwargs)
+        self.__dict__ = cls._shares
+        return self
 
     def __init__(self):
         if self._conn is None:
-            self.conn()
+            self._conn = self.get_conn()
 
-    def conn(self):
+    def get_conn(self):
         """ 连接 Redis 数据库"""
-        self._conn = redis.Redis(host='localhost')
+        pool = redis.ConnectionPool()
+        conn = redis.Redis(connection_pool=pool)
+        return conn
 
     def get(self, key):
         """
@@ -190,9 +202,15 @@ class RedisPool:
         """
         try:
             value = self._conn.get(key)
+        except redis.ResponseError:
+            value = None
         except:
-            self.conn()
-            value = self._conn.get(key)
+            try:
+                self._conn = self.get_conn()
+                value = self._conn.get(key)
+            except Exception as exc:
+                value = None
+                logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         return value and json.loads(value)
 
     def set(self, key, value, expiry=259200):
@@ -207,7 +225,7 @@ class RedisPool:
             self._conn.set(key, json.dumps(value))
             self._conn.expire(key, expiry)
         except:
-            self.conn()
+            self._conn = self.get_conn()
             self._conn.set(key, json.dumps(value))
 
     def delete(self, key):
@@ -224,7 +242,7 @@ class RedisPool:
 
 
 class SqlPool:
-    """ MySQL 数据库连接池，单例模式（继承需慎重） """
+    """ MySQL 数据库连接池 """
     _singleton = None
     _conn = {}  # 连接池字典
     _js = {}  # 连接数量字典
@@ -233,7 +251,7 @@ class SqlPool:
 
     def __new__(cls, *args, **kwargs):
         if not cls._singleton:
-            cls._singleton = super(SqlPool, cls).__new__(cls)
+            cls._singleton = super(SqlPool, cls).__new__(cls, *args, **kwargs)
         return cls._singleton
 
     def __init__(self, name):
@@ -278,7 +296,8 @@ class SqlPool:
 
 def runSqlData2(db, sql, params=None):
     """ 执行SQL语句，返回查询结果 db：数据库名称
-    (carry_investment,stock_data)；sql：SQL语句；params：参数 """
+    (carry_investment,stock_data)；sql：SQL语句；params：参数
+    已经被 runSqlData 替代"""
     sp = SqlPool(db)
     data = None
     conn = None
@@ -304,20 +323,26 @@ def runSqlData2(db, sql, params=None):
             sp.set_conn(db, conn)
     return data
 
+
 MYSQL_POOL = {}
+
 
 def GET_MYSQL_POOL(name):
     """ 获取数据库连接池 """
     global MYSQL_POOL
     if name in MYSQL_POOL:
         return MYSQL_POOL[name]
-    MYSQL_POOL[name] = PersistentDB(
-        creator=pymysql,  # 使用连接数据库的模块
-        maxusage=None,  # 一个连接最多被使用的次数，None为无限制
-        setsession=[],  # 开始会话前执行的命令
-        ping=0,  # ping MySQL服务端，检查服务是否可用
-        closeable=False,  # conn.close() 被忽略，供下次使用，直到线程关闭，自动关闭连接。而等于True时，conn.close()真的被关闭
-        threadlocal=None,  # 本线程独享值的对象，用于保存连接对象
+
+    MYSQL_POOL[name] = PooledDB(
+        creator=pymysql,  # 使用链接数据库的模块
+        maxconnections=10,  # 连接池允许的最大连接数，0和None表示没有限制
+        mincached=2,  # 初始化时，连接池至少创建的空闲的连接，0表示不创建
+        maxcached=5,  # 连接池空闲的最多连接数，0和None表示没有限制
+        maxshared=3,
+        # 连接池中最多共享的连接数量，0和None表示全部共享，ps:其实并没有什么用，因为pymsql和MySQLDB等模块中的threadsafety都为1，所有值无论设置多少，_maxcahed永远为0，所以永远是所有链接共享
+        blocking=True,  # 链接池中如果没有可用共享连接后，是否阻塞等待，True表示等待，False表示不等待然后报错
+        setsession=[],  # 开始会话前执行的命令列表
+        ping=0,  # ping Mysql 服务端，检查服务是否可用
         host=config['U']['hs'],
         port=3306,
         user=config['U']['us'],
@@ -354,7 +379,7 @@ def runSqlData(db, sql, params=None):
 
 
 class MongoDBData:
-    """ MongoDB 数据库的连接与数据查询处理类，单例模式（继承需慎重）"""
+    """ MongoDB 数据库的连接与数据查询处理类 """
 
     # _singleton = None
     # _coll = None

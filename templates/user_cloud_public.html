@@ -1,0 +1,99 @@
+
+{% extends 'base/base.html' %}
+{% block title %}用户数据{% endblock %}
+{% block script %}
+<style>
+	.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+</style>
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+
+
+<div style="float:left;color:green;" >&nbsp;&nbsp;{{ msg|truncatechars:50 }}</div>
+<div align="center">
+
+    {% if qx >= 2 %}
+    {% if clouds %}
+    <table width="720">
+        <tr><th>文件名称</th><th>文件大小</th><th>上传者</th><th>上传时间</th><th>文件操作</th></tr>
+        {% for i in clouds %}
+            <tr><td>{{ i.0|truncatechars:15 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td><a href="{% url 'user_cloud_public_download' %}?name={{i.2}}&filename={{i.0}}">下载</a>&nbsp;&nbsp;
+                <a href="javascript:doPost('{% url 'user_cloud_public_delete' %}',{'name':'{{i.2}}','filename':'{{i.0}}'})" onclick="return confirm('确定要删除吗?')">删除</a> </td></tr>
+        {% endfor %}
+    </table><br/>
+    <form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">
+        {% csrf_token %}
+        <a href="javascript:;" class="file">上传
+            <input type="file" name="file" ></a></form>
+    {% else %}
+    <form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">
+        {% csrf_token %}
+        <span style="color:green;"><span class="upload">暂无文件！</span>&nbsp;&nbsp;<a href="javascript:;" class="file">上传？
+    <input type="file" name="file" id=""></a></span>
+        </form>
+    {% endif %}
+        <br/><hr width="800"/>
+    <a href="{% url 'user_info_public_show' %}" style="color:blue;" title="内部用户权限及以上的用户都可查看的公工信息！">公共信息</a>&nbsp;&nbsp;
+    <a href="{% url 'user_cloud_public' %}" style="color:blue;" title="每个会员都能上传下载的云盘！">公共云盘</a>
+    {% endif %}
+    </div>
+<script type="text/javascript">
+$(".file").on("change","input[type='file']",function(){
+    var filePath=$(this).val();
+    var sub = $(".form_upload");
+    if(filePath){
+        sub.submit();
+    }else{
+        $(".upload").html("");
+        $(".upload").html("您未上传文件！").show();
+        return false
+    }
+});
+
+function doPost(url,param){
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = url;
+    for(var i in param){
+        var input = document.createElement("input");
+        input.setAttribute("name",i);
+        input.setAttribute("value",param[i]);
+        form.appendChild(input);
+    }
+    var input = document.createElement("input");
+    input.setAttribute("name","csrfmiddlewaretoken");
+    input.setAttribute("value",$("input[name='csrfmiddlewaretoken']").val());
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+}
+
+</script>
+{% endblock %}

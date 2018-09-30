@@ -1111,3 +1111,21 @@ def cfmmc_huice(data, host, start_date, end_date,hc_name,red_key):
 
     except:
         red.set(red_key, 0)
+
+def get_cloud_file(path_root):
+    """ 获取目录的文件 """
+    clouds = []
+    for i in os.listdir(path_root):
+        ind = i.index('_+_')
+        path_file = os.path.join(path_root, i)
+        file_size = os.path.getsize(path_file)
+        times = str(datetime.datetime.fromtimestamp(os.path.getctime(path_file)))[:19]
+        if file_size >= 1024 * 1024:
+            file_size = str(round(file_size / 1024 / 1024, 2)) + ' MB'
+        elif file_size >= 1024:
+            file_size = str(round(file_size / 1024, 2)) + ' KB'
+        else:
+            file_size = str(file_size) + ' B'
+        # 文件名称，文件大小，上传者，上传时间
+        clouds.append([i[ind + 3:], file_size, i[:ind], times])
+    return clouds

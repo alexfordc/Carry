@@ -34,6 +34,8 @@
         <caption style="color:green;">暂无数据！<a href="{% url 'user_info_public' %}">添加？</a></caption>
 {% endif %}
     </table>
+    <a href="{% url 'user_info_public_show' %}" style="color:blue;" title="内部用户权限及以上的用户都可查看的公工信息！">公共信息</a>&nbsp;&nbsp;
+    <a href="{% url 'user_cloud_public' %}" style="color:blue;" title="每个会员都能上传下载的云盘！">公共云盘</a><br/>
     {% if allPage > 1 %}
     <tr style="margin-left:30px;">
             <td>{% ifnotequal curPage 1 %} <!--如果不是第一页-->

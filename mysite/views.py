@@ -13,10 +13,11 @@ import zmq
 import socket
 import base64
 import re
+import os
 import math
 
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
 from django.http import HttpResponse
@@ -551,7 +552,7 @@ def del_real_account(rq):
 def user_info_public_show(rq):
     """ 显示公共信息 """
     user_name, qx = LogIn(rq)
-    if qx >= 2 and rq.method == 'GET':
+    if user_name and qx >= 2 and rq.method == 'GET':
         users = models.Users.objects.all()
         users = {i.id: i.name for i in users}
         infopublic, allPage, curPage = viewUtil.user_work_log(rq, models.InfoPublic)
@@ -569,9 +570,9 @@ def user_info_public_show(rq):
 def user_info_public(rq):
     """ 公共信息 """
     user_name, qx = LogIn(rq)
-    if qx >= 2 and rq.method == 'GET':
+    if user_name and qx >= 2 and rq.method == 'GET':
         return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
-    elif qx >= 2 and rq.method == 'POST':
+    elif user_name and qx >= 2 and rq.method == 'POST':
         title = rq.POST['title']
         body = rq.POST['body']
         user = models.Users.objects.get(name=user_name)
@@ -602,12 +603,12 @@ def user_info_public(rq):
 def user_info_public_reply(rq):
     """ 添加公共消息回复 """
     user_name, qx, uid = LogIn(rq, uid=True)
-    if qx >= 2 and rq.method == 'GET':
+    if user_name and qx >= 2 and rq.method == 'GET':
         info_id = rq.GET.get('id')
         if info_id:
             return render(rq, 'user_add_data.html',
                           {"user_name": user_name, "add_info_body": True, "operation": "回复", 'id': info_id})
-    elif qx >= 2 and rq.method == 'POST':
+    elif user_name and qx >= 2 and rq.method == 'POST':
         id = rq.POST.get('id')
         body = rq.POST.get('body')
         if id and body:
@@ -633,7 +634,7 @@ def user_info_public_update(rq):
     """ 修改公共消息 """
     # update_info_public
     user_name, qx, uid = LogIn(rq, uid=True)
-    if qx >= 2 and rq.method == 'GET':
+    if user_name and qx >= 2 and rq.method == 'GET':
         id = rq.GET.get('id')
         infopublic = models.InfoPublic.objects.filter(id=id, belonged=uid)
         if infopublic:
@@ -681,6 +682,91 @@ def user_info_public_delete(rq):
         return redirect('user_info_public_show')
     return redirect('/')
 
+
+def user_cloud_public(rq):
+    """ 公共云 上传 """
+    user_name, qx = LogIn(rq)
+    if user_name and qx >= 2:
+        path_root = 'D:\\cloud'  # 保存文件的目录
+        if rq.method == 'POST':
+
+            upload_file = rq.FILES.get('file')  # 获得文件
+            if upload_file:
+                file_name = user_name + "_+_" + upload_file.name
+                folder_size = HSD.get_dirsize(path_root) / 1024 / 1024
+                file_size = upload_file.size / 1024 / 1024
+                path_file = os.path.join(path_root, file_name)
+                if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+                    msg = f" {upload_file.name} 文件太大！"
+                elif os.path.isfile(path_file):
+                    msg = f" {upload_file.name} 已经存在！"
+                else:
+                    with open(path_file, 'wb+') as f:
+                        for chunk in upload_file.chunks():
+                            f.write(chunk)
+                    msg = f" {upload_file.name} 上传成功!"
+            else:
+                msg = "请选择需要上传的文件！"
+            clouds = viewUtil.get_cloud_file(path_root)
+            return render(rq, 'user_cloud_public.html',
+                          {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
+        else:
+            clouds = viewUtil.get_cloud_file(path_root)
+            return render(rq, 'user_cloud_public.html', {'qx': qx, 'clouds': clouds, 'user_name': user_name})
+    return redirect('index')
+
+
+def user_cloud_public_download(rq):
+    """ 公共云 下载 """
+    user_name, qx = LogIn(rq)
+
+    # 定义分块下载函数
+    def file_iterator(files, chunk_size=1024):
+        with open(files, 'rb') as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+
+    if user_name and qx >= 2 and rq.method == 'GET':
+        path_root = 'D:\\cloud'  # 保存文件的目录
+        name = rq.GET.get('name')
+        file_name = rq.GET.get('filename')
+        path_file = os.path.join(path_root, name + '_+_' + file_name)
+        if os.path.isfile(path_file):
+            resp = StreamingHttpResponse(file_iterator(path_file))
+            resp['Content-Type'] = 'application/octet-stream'
+            resp['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
+            return resp
+        else:
+            msg = "文件不存在！"
+            clouds = viewUtil.get_cloud_file(path_root)
+            return render(rq, 'user_cloud_public.html',
+                          {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
+
+    return redirect('index')
+
+
+def user_cloud_public_delete(rq):
+    """ 公共云 删除 """
+    user_name, qx = LogIn(rq)
+    if user_name and qx >= 2 and rq.method == 'POST':
+        path_root = 'D:\\cloud'  # 保存文件的目录
+        name = rq.POST.get('name')
+        file_name = rq.POST.get('filename')
+        path_file = os.path.join(path_root, name + '_+_' + file_name)
+        if name != user_name:
+            msg = f" {file_name} 非本人上传！"
+        elif os.path.isfile(path_file):
+            os.remove(path_file)
+            msg = f" {file_name} 删除成功！"
+        else:
+            msg = f" {file_name} 文件不存在！"
+        clouds = viewUtil.get_cloud_file(path_root)
+        return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
+    return redirect('index')
 
 def register(rq):
     """ 用户注册 """
@@ -1327,7 +1413,6 @@ def getkline(rq):
         return redirect('index')
 
 
-
 @accept_websocket
 def getwebsocket(rq):
     zbjs = HSD.Zbjs().main()
@@ -1420,7 +1505,7 @@ def moni(rq):
         res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
                                               reverse=reverse, param=param)
         try:
-            keys = sorted(res.keys(),reverse=True)
+            keys = sorted(res.keys(), reverse=True)
             res = [dict(res[k], **{'time': k}) for k in keys]
             fa_doc = zbjs.fa_doc
             return render(rq, 'moni.html',
@@ -1511,27 +1596,27 @@ def newMoni(rq):
             fa_doc = zbjs.fa_doc
 
             resp = {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date,  # 'fas': zbjs.xzfa,
-                           'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
-                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
+                    'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
+                    'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
 
-                           "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
-                           "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
-                           "kong_avg": kong_avg, "kong_yidong": kong_yidong, "kong_chonghes": kong_chonghes,
-                           "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
-                           "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
-                           "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
-                           "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed, 'user_name': user_name
-                           }
+                    "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
+                    "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,
+                    "kong_avg": kong_avg, "kong_yidong": kong_yidong, "kong_chonghes": kong_chonghes,
+                    "kong_chonghed": kong_chonghed, "pdd_macd": pdd_macd, "pdd_avg": pdd_avg,
+                    "pdd_yidong": pdd_yidong, "pdd_chonghes": pdd_chonghes, "pdd_chonghed": pdd_chonghed,
+                    "pkd_macd": pkd_macd, "pkd_avg": pkd_avg, "pkd_yidong": pkd_yidong,
+                    "pkd_chonghes": pkd_chonghes, "pkd_chonghed": pkd_chonghed, 'user_name': user_name
+                    }
             # print(dates,type(dates),end_date,type(end_date))
             if not max_yk:
                 max_yk = {}
             for i in _maxs:
                 if i not in max_yk:
                     max_yk[i] = resp
-                elif max_yk[i]['huizong'][_maxs[i]]<=huizong[_maxs[i]]:
+                elif max_yk[i]['huizong'][_maxs[i]] <= huizong[_maxs[i]]:
                     max_yk[i] = resp
             red.set(red_key, max_yk, 2592000)  # 保存30天
-            return render(rq, 'new_moni.html',resp)
+            return render(rq, 'new_moni.html', resp)
 
     dates = datetime.datetime.now()
     day = dates.weekday() + 3
@@ -1666,7 +1751,7 @@ def huice(rq):
             logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
             return redirect('index')
 
-        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name,'hc_name': '方案 '+fa})
+        return render(rq, 'hc.html', {'hc': hc, 'huizong': huizong, 'user_name': user_name, 'hc_name': '方案 ' + fa})
 
     return render(rq, 'hc.html', {'user_name': user_name})
 
@@ -1730,7 +1815,7 @@ def gxjy(rq):
                        # or (data[i + 1][0][:-4] != data[i][0][:-4] and i == length - 1))  # and data[i][4]!=0
                        or i == length - 1]  # and data[i][4]!=0
             if group == 'date':
-                data.sort(key=lambda x:x[1])
+                data.sort(key=lambda x: x[1])
             if start_date and end_date:
                 data = [i for i in data if start_date <= i[1][:10] <= end_date]
 
@@ -2120,7 +2205,7 @@ def cfmmc_data_local(rq):
     user_name, qx = LogIn(rq)
     trades = viewUtil.get_cfmmc_trade()
     id_host = get_cfmmc_id_host()
-    hosts_len = len(id_host)//3
+    hosts_len = len(id_host) // 3
     hosts = set(id_host)
     trade = []
     # ('RB1810', '00037695', ' 21:02:15', '买', '投机', 3638.0, 3, 109140.0, ' 平', 11.3, 120.0, '2018-05-30', '0060660900202549', '2018-05-31')
@@ -2378,9 +2463,7 @@ def cfmmc_huice(rq, param=None):
             rq_url = rq.META.get('QUERY_STRING')
             if not rq_url:
                 rq_url = rq.META.get('PATH_INFO')
-            return render(rq, 'base/loading.html',{'host':_host,'when':when,'rq_url':rq_url})
-
-
+            return render(rq, 'base/loading.html', {'host': _host, 'when': when, 'rq_url': rq_url})
 
 
 def systems(rq):
