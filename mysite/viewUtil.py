@@ -1140,11 +1140,16 @@ def get_cloud_file(path_root):
     """ 获取目录的文件 """
     clouds = []
     for i in os.listdir(path_root):
-        ind = i.index('_+_')
+        try:
+            ind = i.index('_+_')
+        except:
+            continue
         path_file = os.path.join(path_root, i)
         file_size = os.path.getsize(path_file)
         times = str(datetime.datetime.fromtimestamp(os.path.getctime(path_file)))[:19]
-        if file_size >= 1024 * 1024:
+        if file_size >= 1024 * 1024 * 1024:
+            file_size = str(round(file_size / 1024 / 1024 / 1024, 2)) + ' GB'
+        elif file_size >= 1024 * 1024:
             file_size = str(round(file_size / 1024 / 1024, 2)) + ' MB'
         elif file_size >= 1024:
             file_size = str(round(file_size / 1024, 2)) + ' KB'
@@ -1153,3 +1158,28 @@ def get_cloud_file(path_root):
         # 文件名称，文件大小，上传者，上传时间
         clouds.append([i[ind + 3:], file_size, i[:ind], times])
     return clouds
+
+
+class FileWrapper:
+    """Wrapper to convert file-like objects to iterables"""
+
+    def __init__(self, filelike, blksize=64):
+        self.filelike = filelike
+        self.blksize = blksize
+        if hasattr(filelike,'close'):
+            self.close = filelike.close
+
+    def __getitem__(self,key):
+        data = self.filelike.read(self.blksize)
+        if data:
+            return data
+        raise IndexError
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        data = self.filelike.read(self.blksize)
+        if data:
+            return data
+        raise StopIteration

@@ -3,38 +3,50 @@
 {% block title %}用户数据{% endblock %}
 {% block script %}
 <style>
-	.file {
-    position: relative;
-    display: inline-block;
-    background: #D0EEFF;
-    border: 1px solid #99D3F5;
-    border-radius: 4px;
-    padding: 4px 12px;
-    overflow: hidden;
-    color: #1E88C7;
-    text-decoration: none;
-    text-indent: 0;
-    line-height: 20px;
+.webuploader-container {
+	position: relative;
 }
-.file input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
 }
-.file:hover {
-    background: #AADFFD;
-    border-color: #78C3F3;
-    color: #004974;
-    text-decoration: none;
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background: #00b7ee;
+	padding: 10px 15px;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
 }
+.webuploader-pick-hover {
+	background: #00a2d4;
+}
+
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+
 </style>
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.3/css/bootstrap.css">-->
+
+<!--引入JS-->
+<!--<script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.3.1/jquery.js"></script>-->
+<!--<script type="text/javascript" src="https://cdn.staticfile.org/webuploader/0.1.1/webuploader.js"></script>-->
+<!--<script type="text/javascript" src="https://cdn.staticfile.org/twitter-bootstrap/4.1.3/js/bootstrap.js"></script>-->
 {% endblock %}
 {% block center_cen %}
 {% load staticfiles %}
 
+<link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet" media="screen">
 
+<script type="text/javascript" src="{% static 'js/jquery/3.3.1/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/webuploader.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
 <div style="float:left;color:green;" >&nbsp;&nbsp;{{ msg|truncatechars:50 }}</div>
 <div align="center">
 
@@ -47,23 +59,81 @@
                 <a href="javascript:doPost('{% url 'user_cloud_public_delete' %}',{'name':'{{i.2}}','filename':'{{i.0}}'})" onclick="return confirm('确定要删除吗?')">删除</a> </td></tr>
         {% endfor %}
     </table><br/>
-    <form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">
-        {% csrf_token %}
-        <a href="javascript:;" class="file">上传
-            <input type="file" name="file" ></a></form>
+    <!--<form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">-->
+        <!--{% csrf_token %}-->
+        <!--<a href="javascript:;" class="file">上传-->
+            <!--<input type="file" name="file" ></a></form>-->
     {% else %}
-    <form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">
-        {% csrf_token %}
-        <span style="color:green;"><span class="upload">暂无文件！</span>&nbsp;&nbsp;<a href="javascript:;" class="file">上传？
-    <input type="file" name="file" id=""></a></span>
-        </form>
+    <!--<form action="{% url 'user_cloud_public' %}" method="POST" enctype="multipart/form-data" class="form_upload">-->
+        <!--{% csrf_token %}-->
+        <!--<span style="color:green;"><span class="upload">暂无文件！</span>&nbsp;&nbsp;<a href="javascript:;" class="file">上传？-->
+    <!--<input type="file" name="file" id=""></a></span>-->
+        <!--</form>-->
+    <span style="color:green;"><span class="upload">暂无文件！</span></span>
     {% endif %}
+    <div>
+        <!--用来存放文件信息-->
+        <div id="thelist" class="uploader-list"></div>
+        <div class="progress" style="width:800px;">         <!-- 进度条 -->
+                <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
+        </div>
+        <div class="btns">
+            <div id="picker">上传</div>
+            <!--<button id="ctlBtn" class="btn btn-default">开始上传</button>-->
+        </div>
+    </div>
         <br/><hr width="800"/>
     <a href="{% url 'user_info_public_show' %}" style="color:blue;" title="内部用户权限及以上的用户都可查看的公工信息！">公共信息</a>&nbsp;&nbsp;
     <a href="{% url 'user_cloud_public' %}" style="color:blue;" title="每个会员都能上传下载的云盘！">公共云盘</a>
     {% endif %}
     </div>
 <script type="text/javascript">
+$(document).ready(function() {
+        var task_id = WebUploader.Base.guid();        //产生task_id
+        var uploader = WebUploader.create({           //创建上传控件
+            //swf: 'https://cdn.staticfile.org/webuploader/0.1.1/Uploader.swf', //swf位置
+            server: '{% url 'fileupload' %}',                 //接收每一个分片的服务器地址
+            pick: '#picker',                          //填上传按钮的id选择器值
+            auto: true,                               //选择文件后，是否自动上传
+            chunked: true,                            //是否分片
+            chunkSize: 50 * 1024 * 1024,              //每个分片的大小，这里为50M
+            chunkRetry: 3,                            //某分片若上传失败，重试次数
+            threads: 2,                               //线程数量，考虑到服务器，这里就选了1
+            duplicate: true,                          //分片是否自动去重
+            formData: {                               //每次上传分片，一起携带的数据
+                task_id: task_id,
+            },
+        });
+
+        uploader.on('startUpload', function() {       //开始上传时，调用该方法
+            $('.progress-bar').css('width', '0%');
+            $('.progress-bar').text('0%');
+        });
+
+        uploader.on('uploadProgress', function(file, percentage) { //一个分片上传成功后，调用该方法
+            $('.progress-bar').css('width', percentage * 100 - 1 + '%');
+            $('.progress-bar').text(Math.floor(percentage * 100 - 1) + '%');
+        });
+
+        uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法
+            //上传的信息（文件唯一标识符，文件名）
+            var data = {'task_id': task_id, 'filename': file.source['name'] };
+            $.get('{% url 'fileMerge' %}', data);          //ajax携带data向该url发请求
+            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').text('上传完成');
+        });
+
+        uploader.on('uploadError', function(file) {   //上传过程中发生异常，调用该方法
+            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').text('上传失败');
+        });
+
+        uploader.on('uploadComplete', function(file) {//上传结束，无论文件最终是否上传成功，该方法都会被调用
+            $('.progress-bar').removeClass('active progress-bar-striped');
+        });
+
+    });
+
 $(".file").on("change","input[type='file']",function(){
     var filePath=$(this).val();
     var sub = $(".form_upload");

@@ -16,7 +16,7 @@ import re
 import os
 import math
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.http import JsonResponse, StreamingHttpResponse
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
@@ -716,7 +716,7 @@ def user_cloud_public(rq):
                     msg = f" {r_file_name} 已经存在！"
                 else:
                     with open(path_file, 'wb+') as f:
-                        for chunk in upload_file.chunks():
+                        for chunk in upload_file.chunks(2048):
                             f.write(chunk)
                     msg = f" {r_file_name} 上传成功!"
             else:
@@ -733,27 +733,44 @@ def user_cloud_public(rq):
 def user_cloud_public_download(rq):
     """ 公共云 下载 """
     user_name, qx = LogIn(rq)
-
+    red = HSD.RedisPool()
+    red_key = "user_cloud_public_download_is_download"
+    is_downs = red.get(red_key)
+    _d = user_name+str(datetime.datetime.now())[:18]
     # 定义分块下载函数
-    def file_iterator(files, chunk_size=1024):
-        with open(files, 'rb') as f:
-            while True:
+    def file_iterator(files, chunk_size=512):
+        f = open(files, 'rb')
+        red.set(red_key,'read')
+        while True:
+            try:
                 c = f.read(chunk_size)
-                if c:
-                    yield c
-                else:
-                    break
+            except:
+                f.close()
+                break
+            if c:
+                if len(c) < chunk_size:
+                    f.close()
+                yield c
+            else:
+                f.close()
+                break
+        red.set(red_key, _d)
 
+        # from wsgiref.util import FileWrapper
     if user_name and qx >= 2 and rq.method == 'GET':
         path_root = 'D:\\cloud'  # 保存文件的目录
         name = rq.GET.get('name')
         file_name = rq.GET.get('filename')
         path_file = os.path.join(path_root, name + '_+_' + file_name)
+
         if os.path.isfile(path_file):
-            resp = StreamingHttpResponse(file_iterator(path_file))
-            resp['Content-Type'] = 'application/octet-stream'
-            resp['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
-            return resp
+            if is_downs!=_d and is_downs!='read':
+                resp = StreamingHttpResponse(file_iterator(path_file))  #   viewUtil.FileWrapper(open(path_file,'rb'))
+                # red.set(red_key,_d)
+                resp['Content-Type'] = 'application/octet-stream'
+                resp['Content-Disposition'] = 'attachment;filename="{}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
+                return resp
+
         else:
             msg = "文件不存在！"
             clouds = viewUtil.get_cloud_file(path_root)
@@ -761,6 +778,58 @@ def user_cloud_public_download(rq):
                           {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
 
     return redirect('index')
+
+
+@csrf_exempt
+def fileupload(rq):
+    if rq.method == 'POST':
+        upload_file = rq.FILES.get('file')
+        task = rq.POST.get('task_id')  # 获取文件唯一标识符
+        chunk = rq.POST.get('chunk', 0)  # 获取该分片在所有分片中的序号
+        red = HSD.RedisPool()
+        _chunk = red.get('fileupload_chunk')
+        filename = '%s%s' % (task, chunk)  # 构成该分片唯一标识符
+        path_root = 'D:\\cloud'  # 保存文件的目录
+        with open(path_root+'/%s' % filename, 'wb+') as f:
+            for chunk in upload_file.chunks():
+                f.write(chunk)
+        # default_storage.save('./upload/%s' % filename,ContentFile(upload_file.read()))  # 保存分片到本地
+    return render_to_response('test.html')   # ,locals()
+
+@csrf_exempt
+def fileMerge(rq):
+    user_name, qx = LogIn(rq)
+    path_root = 'D:\\cloud'  # 保存文件的目录
+    task = rq.GET.get('task_id')
+    ext = rq.GET.get('filename', '')
+    upload_type = rq.GET.get('type')
+    if len(ext) == 0 and upload_type:
+        ext = upload_type.split('/')[1]
+    # ext = '' if len(ext) == 0 else '.%s' % ext  # 构建文件后缀名
+    chunk = 0
+    # if upload_file:
+    #     r_file_name = re.findall(r'\w+\.[A-z]{1,4}', upload_file.name)
+    #     if r_file_name:
+    #         r_file_name = r_file_name[-1]
+    #     else:
+    #         r_file_name = str(int(time.time() * 1000))[-10:]
+    #     file_name = user_name + "_+_" + r_file_name
+    #     folder_size = HSD.get_dirsize(path_root) / 1024 / 1024
+    #     file_size = upload_file.size / 1024 / 1024
+    #     path_file = os.path.join(path_root, file_name)
+    with open(path_root+'/%s%s' % (user_name + "_+_", ext), 'wb') as target_file:  # 创建新文件
+        while True:
+            try:
+                filename = path_root+'/%s%d' % (task, chunk)
+                source_file = open(filename, 'rb')  # 按序打开每个分片
+                target_file.write(source_file.read())  # 读取分片内容写入新文件
+                source_file.close()
+            except IOError:
+                break
+            chunk += 1
+            os.remove(filename)  # 删除该分片，节约空间
+    return render_to_response('test.html',locals())
+
 
 
 def user_cloud_public_delete(rq):
@@ -2510,3 +2579,8 @@ def websocket_test(rq):
         r = HSD.RedisHelper()
         r.main()
     return render(rq, "main.html")
+
+
+
+
+
