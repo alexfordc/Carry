@@ -47,15 +47,15 @@
 <script type="text/javascript" src="{% static 'js/jquery/3.3.1/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/webuploader.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-<div style="float:left;color:green;" >&nbsp;&nbsp;{{ msg|truncatechars:50 }}</div>
+<div style="position:relative;left:3px;top:3px;color:green;" >&nbsp;&nbsp;{{ msg|truncatechars:50 }}</div>
 <div align="center">
 
     {% if qx >= 2 %}
     {% if clouds %}
-    <table width="720">
+    <table width="800">
         <tr><th>文件名称</th><th>文件大小</th><th>上传者</th><th>上传时间</th><th>文件操作</th></tr>
         {% for i in clouds %}
-            <tr><td>{{ i.0|truncatechars:15 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td><a href="{% url 'user_cloud_public_download' %}?name={{i.2}}&filename={{i.0}}">下载</a>&nbsp;&nbsp;
+            <tr><td>{{ i.0|truncatechars:50 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td><a href="{% url 'user_cloud_public_download' %}?name={{i.2}}&filename={{i.0}}">下载</a>&nbsp;&nbsp;
                 <a href="javascript:doPost('{% url 'user_cloud_public_delete' %}',{'name':'{{i.2}}','filename':'{{i.0}}'})" onclick="return confirm('确定要删除吗?')">删除</a> </td></tr>
         {% endfor %}
     </table><br/>
@@ -119,12 +119,12 @@ $(document).ready(function() {
             //上传的信息（文件唯一标识符，文件名）
             var data = {'task_id': task_id, 'filename': file.source['name'] };
             $.get('{% url 'fileMerge' %}', data);          //ajax携带data向该url发请求
-            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').css({'width': '100%','background':'green'});
             $('.progress-bar').text('上传完成');
         });
 
         uploader.on('uploadError', function(file) {   //上传过程中发生异常，调用该方法
-            $('.progress-bar').css('width', '100%');
+            $('.progress-bar').css({'width': '100%','background':'red'});
             $('.progress-bar').text('上传失败');
         });
 

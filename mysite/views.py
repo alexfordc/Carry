@@ -17,10 +17,9 @@ import os
 import math
 
 from django.shortcuts import render, redirect, render_to_response
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse, HttpResponse, HttpResponseNotFound
 from django.conf import settings
 from dwebsocket.decorators import accept_websocket, require_websocket
-from django.http import HttpResponse
 from django.core.cache import cache
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -135,7 +134,6 @@ def record_from(rq, login=False):
     info = f"{IP_NAME[ip]}----{ip}----{rq.META.get('HTTP_HOST')}{rq.META.get('PATH_INFO')}\n"
     viewUtil.record_log('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
     # tasks_record_log.delay('log\\visitor\\log-%s.txt' % dt[:9], info, 'a')
-
 
 
 def LogIn(rq, uid=False):
@@ -581,7 +579,8 @@ def user_info_public(rq):
     """ 公共信息 """
     user_name, qx = LogIn(rq)
     if user_name and qx >= 2 and rq.method == 'GET':
-        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True,
+                                                 "operation": "公共信息"})
     elif user_name and qx >= 2 and rq.method == 'POST':
         title = rq.POST['title']
         body = rq.POST['body']
@@ -606,7 +605,8 @@ def user_info_public(rq):
             return render(rq, 'user_update_data.html',
                           {"user_name": user_name, "infopublic": infopublic, "id": id, "add_info_public": True,
                            "operation": "公共信息"})
-        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True, "operation": "公共信息"})
+        return render(rq, 'user_add_data.html', {"user_name": user_name, "add_info_public": True,
+                                                 "operation": "公共信息"})
     return redirect('/')
 
 
@@ -705,9 +705,9 @@ def user_cloud_public(rq):
                 if r_file_name:
                     r_file_name = r_file_name[-1]
                 else:
-                    r_file_name = str(int(time.time()*1000))[-10:]
+                    r_file_name = str(int(time.time() * 1000))[-10:]
                 file_name = user_name + "_+_" + r_file_name
-                folder_size = HSD.get_dirsize(path_root) / 1024 / 1024
+                folder_size = viewUtil.get_dirsize(path_root, int(time.time() / 10)) / 1024 / 1024
                 file_size = upload_file.size / 1024 / 1024
                 path_file = os.path.join(path_root, file_name)
                 if folder_size + file_size > 10240:  # 限制整个目录最大装10G
@@ -736,11 +736,12 @@ def user_cloud_public_download(rq):
     red = HSD.RedisPool()
     red_key = "user_cloud_public_download_is_download"
     is_downs = red.get(red_key)
-    _d = user_name+str(datetime.datetime.now())[:18]
+    _d = user_name + str(datetime.datetime.now())[:18]
+
     # 定义分块下载函数
     def file_iterator(files, chunk_size=512):
         f = open(files, 'rb')
-        red.set(red_key,'read')
+        red.set(red_key, 'read')
         while True:
             try:
                 c = f.read(chunk_size)
@@ -757,6 +758,7 @@ def user_cloud_public_download(rq):
         red.set(red_key, _d)
 
         # from wsgiref.util import FileWrapper
+
     if user_name and qx >= 2 and rq.method == 'GET':
         path_root = 'D:\\cloud'  # 保存文件的目录
         name = rq.GET.get('name')
@@ -764,8 +766,8 @@ def user_cloud_public_download(rq):
         path_file = os.path.join(path_root, name + '_+_' + file_name)
 
         if os.path.isfile(path_file):
-            if is_downs!=_d and is_downs!='read':
-                resp = StreamingHttpResponse(file_iterator(path_file))  #   viewUtil.FileWrapper(open(path_file,'rb'))
+            if is_downs != _d and is_downs != 'read':
+                resp = StreamingHttpResponse(file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
                 # red.set(red_key,_d)
                 resp['Content-Type'] = 'application/octet-stream'
                 resp['Content-Disposition'] = 'attachment;filename="{}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
@@ -782,54 +784,65 @@ def user_cloud_public_download(rq):
 
 @csrf_exempt
 def fileupload(rq):
+    """ 公共云 上传文件分片"""
     if rq.method == 'POST':
+        user_name, qx = LogIn(rq)
         upload_file = rq.FILES.get('file')
         task = rq.POST.get('task_id')  # 获取文件唯一标识符
         chunk = rq.POST.get('chunk', 0)  # 获取该分片在所有分片中的序号
-        red = HSD.RedisPool()
-        _chunk = red.get('fileupload_chunk')
+        # red = HSD.RedisPool()
+        # _chunk = red.get('fileupload_chunk')
         filename = '%s%s' % (task, chunk)  # 构成该分片唯一标识符
         path_root = 'D:\\cloud'  # 保存文件的目录
-        with open(path_root+'/%s' % filename, 'wb+') as f:
-            for chunk in upload_file.chunks():
-                f.write(chunk)
-        # default_storage.save('./upload/%s' % filename,ContentFile(upload_file.read()))  # 保存分片到本地
-    return render_to_response('test.html')   # ,locals()
+        if upload_file:
+            r_file_name = upload_file.name
+            path_file = path_root + '/%s%s' % (user_name + "_+_", upload_file)
+            folder_size = viewUtil.get_dirsize(path_root, task) / 1024 / 1024
+            file_size = upload_file.size / 1024 / 1024
+            if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+                msg = 'big'  # f" {r_file_name} 文件太大！"
+            elif os.path.isfile(path_file):
+                msg = 'existed'  # f" {r_file_name} 已经存在！"
+            else:
+                # 保存分片到本地
+                with open(path_root + '/%s' % filename, 'wb+') as f:
+                    for chunk in upload_file.chunks():
+                        f.write(chunk)
+                msg = 'success'  # f" {r_file_name} 上传成功!"
+        else:
+            msg = 'unselected'  # "请选择需要上传的文件！"
+        # print(msg)
+        if msg != 'success':
+            return HttpResponseNotFound('No')
+
+    return HttpResponse()
+
 
 @csrf_exempt
 def fileMerge(rq):
+    """ 公共云 组合分片"""
     user_name, qx = LogIn(rq)
     path_root = 'D:\\cloud'  # 保存文件的目录
     task = rq.GET.get('task_id')
-    ext = rq.GET.get('filename', '')
+    file_name = rq.GET.get('filename', '')
+    file_name = file_name.replace(' ', '').replace('\t', '').replace('\n', '')
     upload_type = rq.GET.get('type')
-    if len(ext) == 0 and upload_type:
-        ext = upload_type.split('/')[1]
-    # ext = '' if len(ext) == 0 else '.%s' % ext  # 构建文件后缀名
+    if len(file_name) == 0 and upload_type:
+        file_name = upload_type.split('/')[1]
     chunk = 0
-    # if upload_file:
-    #     r_file_name = re.findall(r'\w+\.[A-z]{1,4}', upload_file.name)
-    #     if r_file_name:
-    #         r_file_name = r_file_name[-1]
-    #     else:
-    #         r_file_name = str(int(time.time() * 1000))[-10:]
-    #     file_name = user_name + "_+_" + r_file_name
-    #     folder_size = HSD.get_dirsize(path_root) / 1024 / 1024
-    #     file_size = upload_file.size / 1024 / 1024
-    #     path_file = os.path.join(path_root, file_name)
-    with open(path_root+'/%s%s' % (user_name + "_+_", ext), 'wb') as target_file:  # 创建新文件
-        while True:
-            try:
-                filename = path_root+'/%s%d' % (task, chunk)
-                source_file = open(filename, 'rb')  # 按序打开每个分片
-                target_file.write(source_file.read())  # 读取分片内容写入新文件
-                source_file.close()
-            except IOError:
-                break
-            chunk += 1
-            os.remove(filename)  # 删除该分片，节约空间
-    return render_to_response('test.html',locals())
-
+    if os.path.isfile(path_root + '/%s%d' % (task, chunk)):
+        with open(path_root + '/%s%s' % (user_name + "_+_", file_name), 'wb') as target_file:  # 创建新文件
+            while True:
+                try:
+                    filename = path_root + '/%s%d' % (task, chunk)
+                    source_file = open(filename, 'rb')  # 按序打开每个分片
+                    target_file.write(source_file.read())  # 读取分片内容写入新文件
+                    source_file.close()
+                except IOError:
+                    break
+                chunk += 1
+                os.remove(filename)  # 删除该分片，节约空间
+    return HttpResponse()
 
 
 def user_cloud_public_delete(rq):
@@ -850,6 +863,7 @@ def user_cloud_public_delete(rq):
         clouds = viewUtil.get_cloud_file(path_root)
         return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
     return redirect('index')
+
 
 def register(rq):
     """ 用户注册 """
@@ -965,9 +979,11 @@ def stockDatas(rq):
                         rq_data in i[3] if i[3] else None) or rq_data in i[4]]
         try:
             res_code = {i[-1] + i[0]: i[1] for i in res_data}
-            data = HSD.runSqlData(conn1,
-                                  'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str(
-                                      [i for i in res_code])[1:-1])
+            sql = (
+                    'select date,open,high,low,close,amout,vol,code from '
+                    'moment_hours WHERE amout>0 AND code in (%s) limit 0,100' % str([i for i in res_code])[1:-1]
+            )
+            data = HSD.runSqlData(conn1, sql)
             data = np.array(data)
             data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
             data = data.tolist()
@@ -995,9 +1011,11 @@ def stockDatas(rq):
             curPage = allPage
         data = read_from_cache('data_house' + str(curPage))
         if not data:
-            data = HSD.runSqlData(conn1,
-                                  'select date,open,high,low,close,amout,vol,code from moment_hours WHERE amout>0 limit %s,%s' % (
-                                      curPage - 1, PAGE_SIZE))
+            sql = (
+                    'select date,open,high,low,close,amout,vol,code from '
+                    'moment_hours WHERE amout>0 limit %s,%s' % (curPage - 1, PAGE_SIZE)
+            )
+            data = HSD.runSqlData(conn1, sql)
             data = np.array(data)
             data[:, 0] = [i.strftime('%Y-%m-%d') for i in data[:, 0]]
             data = data.tolist()
@@ -1395,8 +1413,10 @@ def getList(rq):
             data = HSD.MongoDBData(db='HKFuture', table='future_1min').get_hsi(dates, dates2)
             res = [i for i in data]
         else:
-            sql = 'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" AND datetime<="%s"' % (
-                data_dict[database][1], dates, dates2)
+            sql = (
+                    'SELECT datetime,open,high,low,close,vol FROM %s WHERE prodcode="HSI" AND datetime>="%s" '
+                    'AND datetime<="%s"' % (data_dict[database][1], dates, dates2)
+            )
             res = list(HSD.runSqlData(data_dict[database][0], sql))
         if len(res) > 0:
             res = [
@@ -2579,8 +2599,3 @@ def websocket_test(rq):
         r = HSD.RedisHelper()
         r.main()
     return render(rq, "main.html")
-
-
-
-
-

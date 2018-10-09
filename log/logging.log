@@ -1,0 +1,439 @@
+exception.py[2018-10-09 09:56:10][ERROR]：Internal Server Error: /upload/complete/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 813, in fileMerge
+    file_size = upload_file.size / 1024 / 1024
+AttributeError: 'str' object has no attribute 'size'
+base.py[2018-10-09 10:02:24][WARNING]：Not Found: /favicon.ico
+exception.py[2018-10-09 10:02:28][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 811, in fileupload
+    {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
+UnboundLocalError: local variable 'msg' referenced before assignment
+exception.py[2018-10-09 10:08:23][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 10:41:59][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:41:59][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:42:00][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:42:00][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:42:01][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:42:01][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 10:42:01][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\views\decorators\csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 799, in fileupload
+    if folder_size + file_size > 10240:  # 限制整个目录最大装10G
+AttributeError: module 'mysite.HSD' has no attribute 'get_dirs'
+exception.py[2018-10-09 11:10:16][ERROR]：Internal Server Error: /user/cloud/public/delete
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 866, in user_cloud_public_delete
+    os.remove(path_file)
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\cloud\\黄海军_+_Anaconda3-5.0.1-Windows-x86_64.exe'
+exception.py[2018-10-09 11:26:55][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:27:40][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\middleware\clickjacking.py", line 32, in process_response
+    if response.get('X-Frame-Options') is not None:
+AttributeError: 'str' object has no attribute 'get'
+exception.py[2018-10-09 11:35:28][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\middleware\clickjacking.py", line 32, in process_response
+    if response.get('X-Frame-Options') is not None:
+AttributeError: type object 'Http404' has no attribute 'get'
+exception.py[2018-10-09 11:35:55][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\middleware\clickjacking.py", line 32, in process_response
+    if response.get('X-Frame-Options') is not None:
+AttributeError: 'Http404' object has no attribute 'get'
+exception.py[2018-10-09 11:37:35][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 131, in get_response
+    response = middleware_method(request, response)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\middleware\clickjacking.py", line 32, in process_response
+    if response.get('X-Frame-Options') is not None:
+AttributeError: 'Http404' object has no attribute 'get'
+base.py[2018-10-09 11:38:21][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:39:03][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:39:28][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:39:50][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:40:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:40:44][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:38][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:43:38][WARNING]：Not Found: /files/upload/
+exception.py[2018-10-09 11:44:22][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:22][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:22][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:22][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:23][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:23][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:23][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+exception.py[2018-10-09 11:44:23][ERROR]：Internal Server Error: /files/upload/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 198, in _get_response
+    "returned None instead." % (callback.__module__, view_name)
+ValueError: The view mysite.views.fileupload didn't return an HttpResponse object. It returned None instead.
+base.py[2018-10-09 11:44:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:44:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:44:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:44:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:45:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:45:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:45:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:45:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:45:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:46:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:48:02][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:48:14][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:48:42][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:49:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:49:20][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:49:44][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:49:54][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:50:29][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:50:56][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:09][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:09][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:51:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:52:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:52:16][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:04][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:04][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:05][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:05][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:05][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:05][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:25][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:25][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:26][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:26][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:26][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:26][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:27][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:27][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:53][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:53][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:53][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:53][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:54][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:54][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:54][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:54][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:55:59][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:33][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:33][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:56:34][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:24][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:24][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:24][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:24][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:25][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:25][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:47][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:47][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:48][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:48][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:48][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:48][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:49][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:57:49][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:58:56][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:59:18][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:59:29][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 11:59:48][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:00:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:00:16][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:00:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:00:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:00:49][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:06][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:07][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:07][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:07][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:01:07][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:35][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:35][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:36][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:02:37][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:00][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:01][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:02][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:02][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:03:02][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:17][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:17][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:17][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:18][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:18][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:19][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:19][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 12:28:19][WARNING]：Not Found: /files/upload/
+exception.py[2018-10-09 14:42:51][ERROR]：Internal Server Error: /tj/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1226, in tongji
+    {'hc': hc, 'hcd': hcd, 'huizong': huizong, 'init_money': init_money, 'user_name': user_name,
+UnboundLocalError: local variable 'hc' referenced before assignment
+base.py[2018-10-09 17:46:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:10][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:46:11][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:48:13][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:48:44][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:22][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:22][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:23][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:26][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:28][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:30][WARNING]：Not Found: /files/upload/
+base.py[2018-10-09 17:49:30][WARNING]：Not Found: /files/upload/

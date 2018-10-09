@@ -1,4 +1,3 @@
-import sys
 import json
 import requests
 import pandas as pd
@@ -66,6 +65,15 @@ def errors(*fun_name):
         yield
     except Exception as exc:
         record_log('log\\error_log\\err.txt', f'{fun_name}{exc}\n', 'a')
+
+
+@caches
+def get_dirsize(dir, task):
+    """ 获取文件夹大小(bytes) """
+    size = 0
+    for root, dirs, files in os.walk(dir):
+        size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
+    return size
 
 
 def error_log(files, line, exc):
@@ -163,20 +171,38 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
     """ 国内期货数据，交易记录 """
     # 合约, 成交序号, 成交时间, 买/卖, 投机/套保, 成交价, 手数, 成交额, 开/平, 手续费, 平仓盈亏, 实际成交日期, 帐号, 交易日期
     if host is None:
-        # sql = "SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 交易日期 IN (SELECT MAX(交易日期) FROM cfmmc_trade_records GROUP BY 帐号) GROUP BY 帐号"
-        sql = "SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END)," \
-              "DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records GROUP BY 交易日期,帐号 ORDER BY 交易日期 DESC"
+        # sql = "SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,
+        # 手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_
+        # records WHERE 交易日期 IN (SELECT MAX(交易日期) FROM cfmmc_trade_records GROUP BY 帐号) GROUP BY 帐号"
+        sql = (
+            "SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),"
+            "DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,"
+            "DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') "
+            "FROM cfmmc_trade_records GROUP BY 交易日期,帐号 ORDER BY 交易日期 DESC"
+        )
     elif start_date and end_date:
-        sql = f"SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END)," \
-              f"DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' ORDER BY 实际成交日期 DESC,成交时间 DESC"
+        sql = (
+            "SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),"
+            "DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,"
+            "DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records "
+            f"WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' "
+            "ORDER BY 实际成交日期 DESC,成交时间 DESC"
+        )
     else:
         # end_date = datetime.datetime.now()
         # start_date = end_date - datetime.timedelta(days=6)
         # end_date = str(end_date)[:10]
         # start_date = str(start_date)[:10]
-        sql = f"SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END)," \
-              f"DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 帐号='{host}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30"
-        # sql = f"SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}' ORDER BY 实际成交日期 DESC,成交时间 DESC"
+        sql = (
+            "SELECT 合约,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),"
+            "DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,`开/平`,手续费,平仓盈亏,"
+            "DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records "
+            f"WHERE 帐号='{host}' ORDER BY 实际成交日期 DESC,成交时间 DESC limit 30"
+        )
+        # sql = f"SELECT 合约,成交序号,DATE_FORMAT(成交时间,' %H:%i:%S'),`买/卖`,`投机/套保`,成交价,手数,成交额,
+        # `开/平`,手续费,平仓盈亏,DATE_FORMAT(实际成交日期,'%Y-%m-%d'),帐号,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM
+        # cfmmc_trade_records WHERE 帐号='{host}' AND 实际成交日期>='{start_date}' AND 实际成交日期<='{end_date}'
+        # ORDER BY 实际成交日期 DESC,成交时间 DESC"
     data = HSD.runSqlData('carry_investment', sql)
     return data
 
@@ -434,7 +460,10 @@ class Cfmmc:
                         name = self.save_settlement(date, byType, name)
                         is_run = True
                         if name and name != '_fail':
-                            sql = f"INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
+                            sql = (
+                                "INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) "
+                                f"VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name='{name}'"
+                            )
                             HSD.runSqlData('carry_investment', sql, (host, password, '', 1, name, createTime))
                             is_success = True
                             cache.set('cfmmc_status' + host, f"{date}日前的数据更新成功！")
@@ -491,7 +520,10 @@ class Automatic:
                 data = HSD.runSqlData('carry_investment', sql)
                 is_rest = thisday_transaction(str(d)[:10])  # 今天是否休市
                 for da in data:
-                    sql_date = f"SELECT DATE_FORMAT(DATE,'%Y-%m-%d') FROM cfmmc_insert_date WHERE HOST='{da[0]}' ORDER BY DATE DESC LIMIT 1"
+                    sql_date = (
+                        "SELECT DATE_FORMAT(DATE,'%Y-%m-%d') FROM cfmmc_insert_date "
+                        f"WHERE HOST='{da[0]}' ORDER BY DATE DESC LIMIT 1"
+                    )
                     is_down_date = HSD.runSqlData('carry_investment', sql_date)
                     if d.weekday() > 4 or (is_down_date and is_down_date[0][0] == str(d)[:10]) or is_rest:
                         continue
@@ -648,8 +680,10 @@ def cfmmc_hc_data(host, rq_date, end_date):
         huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
         huizong['most'] = [dt, i6] if i6 > huizong['most'][1] else huizong['most']
         huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
-    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
-                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    money_sql = (
+        f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND "
+        f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    )
     moneys = HSD.runSqlData('carry_investment', money_sql)
     init_money = sum(j1 if i != 0 else j0 for i, (j0, j1) in enumerate(moneys))
     init_money = init_money if init_money and init_money > 10000 else 10000  # 入金
@@ -1166,10 +1200,10 @@ class FileWrapper:
     def __init__(self, filelike, blksize=64):
         self.filelike = filelike
         self.blksize = blksize
-        if hasattr(filelike,'close'):
+        if hasattr(filelike, 'close'):
             self.close = filelike.close
 
-    def __getitem__(self,key):
+    def __getitem__(self, key):
         data = self.filelike.read(self.blksize)
         if data:
             return data
@@ -1183,3 +1217,4 @@ class FileWrapper:
         if data:
             return data
         raise StopIteration
+

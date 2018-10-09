@@ -1,4 +1,3 @@
-import requests
 import re
 import time
 import datetime
@@ -18,7 +17,6 @@ import socket
 import redis
 import sys
 import pymongo
-from os.path import join, getsize
 from pyquery import PyQuery
 from copy import deepcopy
 # from DBUtils.PersistentDB import PersistentDB
@@ -122,12 +120,15 @@ FUTURE_NAME = {
 SQL = {
     'get_history': 'select name,number,time from weight where time>"{}" AND name in {}',
     'tongji': 'select id,trader_name,available,origin_asset,remain_asset from account_info order by available desc',
-    "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,\
-	O.Profit from futures_comparison as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
+    "calculate_earn": "select F.`datetime`,F.`ticket`,O.Account_ID,F.`tickertime`,F.`tickerprice`,F.`openclose`,"
+                      "F.`longshort`,F.`HSI_ask`,F.`HSI_bid`,F.`MHI_ask`,F.`MHI_bid`,O.Profit from futures_comparison "
+                      "as F,order_detail as O where F.ticket=O.Ticket and O.Status=2 and O.Symbol like 'HSENG%'",
     'get_idName': 'SELECT id,trader_name FROM account_info',
     'limit_init': 'select bazaar,code,chineseName from stock_code where bazaar in ("sz","sh")',
-    "order_detail": "SELECT Account_ID,DATE_ADD(DATE_FORMAT(OpenTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),OpenPrice,DATE_ADD(DATE_FORMAT(CloseTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),"
-                    "ClosePrice,Profit,Type,Lots,Status,StopLoss,TakeProfit,Ticket,Symbol FROM order_detail WHERE Status!=-1 AND Status<6 AND OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
+    "order_detail": "SELECT Account_ID,DATE_ADD(DATE_FORMAT(OpenTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),OpenPrice,"
+                    "DATE_ADD(DATE_FORMAT(CloseTime,'%Y-%m-%d %H:%i:%S'),INTERVAL 8 HOUR),ClosePrice,Profit,Type,Lots,"
+                    "Status,StopLoss,TakeProfit,Ticket,Symbol FROM order_detail WHERE Status!=-1 AND Status<6 AND "
+                    "OpenTime>'{}' AND OpenTime<'{}' AND Symbol LIKE 'HSENG%'",
 }
 
 computer_name = socket.gethostname()  # 计算机名称
@@ -146,14 +147,6 @@ def get_config(root, son):
     if root in config and son in config[root]:
         return config[root][son]
     return '()'
-
-
-def get_dirsize(dir):
-    """ 获取文件夹大小(bytes) """
-    size = 0
-    for root, dirs, files in os.walk(dir):
-        size += sum([getsize(join(root, name)) for name in files])
-    return size
 
 
 def dtf(d):
@@ -672,8 +665,9 @@ def get_yesterday_price():
 
 
 def get_price():
-    '''获取并计算恒生指数成分股所贡献的点数，
-    返回数据格式为：[(34, '腾讯控股'), (27, '香港交易所'), (21, '建设银行'), (18, '中国银行'), (16, '工商银行')...]，时间'''
+    ''' 获取并计算恒生指数成分股所贡献的点数，
+    返回数据格式为：
+    [(34, '腾讯控股'), (27, '香港交易所'), (21, '建设银行'), (18, '中国银行'), (16, '工商银行')...]，时间 '''
     global YESTERDAT_PRICE
     zs = YESTERDAT_PRICE[0]
     if zs is None or YESTERDAT_PRICE[1] is not time.localtime(time.time())[2]:
@@ -742,7 +736,8 @@ def order_detail(dates=None, end_date=None):
 
 
 def sp_order_trade(size=None):
-    ''' :return data ['2018-07-13 09:49:09', 28608.0, 697, 1, 'MHIN8', '01-0520186-00', '卖', '已成交', 28608.0, 1, 0, 1, 14734039, -1, 0]'''
+    ''' return data ['2018-07-13 09:49:09', 28608.0, 697, 1, 'MHIN8', '01-0520186-00', '卖',
+        '已成交', 28608.0, 1, 0, 1, 14734039, -1, 0]'''
     status = {0: '发送中', 1: '工作中', 2: '无效', 3: '待定', 4: '新增中', 5: '更改中', 6: '删除中',
               7: '无效中', 8: '部分成交', 9: '已成交', 10: '已删除', 18: '等待批准',
               20: '成交已覆盘', 21: '删除已覆盘', 24: '同步异常中', 28: '部分成交已删除',
@@ -751,9 +746,15 @@ def sp_order_trade(size=None):
 
     timeStamp = time.mktime(time.strptime(str(datetime.datetime.now())[:10], '%Y-%m-%d'))
     # 时间，成交价，
-    sql_trade = "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate=%s" % timeStamp
+    sql_trade = (
+            "SELECT TradeTime,AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,"
+            f"RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate={timeStamp}"
+    )
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
-    sql_order = "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,AccNo,BuySell,STATUS FROM sp_order_records WHERE STATUS IN (1,2,3)"
+    sql_order = (
+        "SELECT TIMESTAMP,ProdCode,Price,StopLevel,IntOrderNo,Qty,TradedQty,TotalQty,AccNo,BuySell,STATUS "
+        "FROM sp_order_records WHERE STATUS IN (1,2,3)"
+    )
     data = runSqlData('carry_investment', sql_trade)
 
     ran = range(len(data))
@@ -810,8 +811,11 @@ def sp_order_record(start_date=None, end_date=None):
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
     endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
 
-    sql_trade = "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records " \
-                "WHERE TradeDate>={} and TradeDate<={} AND RecNo not in {}".format(std, endd, (14722630, 14722737))
+    sql_trade = (
+        "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,"
+        "OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate>={} and "
+        "TradeDate<={} AND RecNo not in {}".format(std, endd, (14722630, 14722737))
+    )
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = runSqlData('carry_investment', sql_trade)
     # data = data[2:]  # 数据缺失导致
@@ -1124,8 +1128,10 @@ class Zbjs(ZB):
         super(Zbjs, self).__init__()
 
     def main(self, _ma=60):
-        sql = 'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(
-            _ma)
+        sql = (
+            'SELECT a.datetime,a.open,a.high,a.low,a.close FROM futures_min a INNER JOIN (SELECT DATETIME FROM '
+            'futures_min ORDER BY DATETIME DESC LIMIT 0,{})b ON a.datetime=b.datetime'.format(_ma)
+        )
         data = runSqlData('carry_investment', sql)
         dyn = self.dynamic_index(data)
         dyn.send(None)
@@ -1141,8 +1147,10 @@ class Zbjs(ZB):
         ''' 从数据库或者网站获取恒生指数期货日线数据，放回数据结构为：{'2018-01-01':[open,close,high,low]...} '''
         if database != None:
             tab_name = self.tab_name.get(database, 'wh_same_month_min')  # futures_min
-            sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) FROM {} WHERE prodcode='HSI' GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(
-                tab_name)
+            sql = (
+                "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d'),OPEN,CLOSE,MAX(high),MIN(low) "
+                "FROM {} WHERE prodcode='HSI' GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d')".format(tab_name)
+            )
             data = runSqlData(db, sql)
             data = {de[0]: [de[2] - de[1], de[3] - de[4]] for de in data}
             return data
@@ -1156,16 +1164,19 @@ class Zbjs(ZB):
     def get_data(self, db, dates, dates2, database):
         ''' 从指定数据库获取指定日期的数据 '''
         if database == '1':
-            sql = "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM wh_same_month_min WHERE prodcode='HSI' AND datetime>='{}' AND datetime<='{}'".format(
-                dates, dates2)
+            sql = (
+                "SELECT DATETIME,OPEN,high,low,CLOSE,vol FROM wh_same_month_min "
+                "WHERE prodcode='HSI' AND datetime>='{}' AND datetime<='{}'".format(dates, dates2)
+            )
         elif database == '2':
             data = MongoDBData(db='HKFuture', table='future_1min').get_hsi(dates, dates2)
             data = [i for i in data]
             return data
         else:
-            # sql="SELECT datetime,open,high,low,close,vol FROM index_min WHERE code='HSIc1' AND datetime>'{}' AND datetime<'{}'".format(dates,dates2)
-            sql = "SELECT datetime,open,high,low,close FROM {} WHERE datetime>='{}' AND datetime<='{}'".format(
-                self.tab_name['2'], dates, dates2)
+            sql = (
+                "SELECT datetime,open,high,low,close FROM {} "
+                "WHERE datetime>='{}' AND datetime<='{}'".format(self.tab_name['2'], dates, dates2)
+            )
         return runSqlData(db, sql)
 
     def main2(self, _ma, _dates, end_date, _fa, database, reverse=False, param=None):
@@ -1300,9 +1311,11 @@ class Zbjs(ZB):
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                    'avg_day': 0, 'least2': 0, 'most2': 0}
         # conn = get_conn('carry_investment')  # if database == '1' else get_conn('stock_data')
-        prodcode = runSqlData('carry_investment',
-                              "SELECT prodcode FROM futures_min WHERE datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(
-                                  _dates, end_date))
+        # sql = (
+        #     "SELECT prodcode FROM futures_min WHERE "
+        #     "datetime>='{}' AND datetime<='{}' GROUP BY prodcode".format(_dates, end_date)
+        # )
+        # prodcode = runSqlData('carry_investment',sql)
         all_price = []
         is_inst_date = []
         # for code in prodcode:
@@ -1411,9 +1424,11 @@ class RedisHelper:
 
 def day_this_mins(start_date, end_date, code='HSI'):
     """ 获取指定时间段的分钟数据，转换为指定分钟的分钟数据"""
-    sql = "SELECT DATE_FORMAT(datetime,'%d/%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' " \
-          "AND DATE_FORMAT(datetime,'%Y-%m-%d')>='{}' AND DATE_FORMAT(datetime,'%Y-%m-%d')<='{}' ORDER BY datetime".format(
-        code, start_date, end_date)  # AND DATE_FORMAT(DATETIME,'%H')<17
+    sql = (
+        "SELECT DATE_FORMAT(datetime,'%d/%H:%i'),close FROM wh_same_month_min WHERE prodcode='{}' AND "
+        "DATE_FORMAT(datetime,'%Y-%m-%d')>='{}' AND DATE_FORMAT(datetime,'%Y-%m-%d')<='{}' "
+        "ORDER BY datetime".format(code, start_date, end_date)  # AND DATE_FORMAT(DATETIME,'%H')<17
+    )
     d = runSqlData('carry_investment', sql)
     times = [i[0] for i in d]
     datas = [i[1] for i in d]
@@ -1805,8 +1820,10 @@ class GXJY:
     def to_sql(self, data, table):
         """ 写入数据到指定的数据表"""
         if table == 'gx_record':
-            sql = "INSERT IGNORE INTO gx_record(datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code," \
-                  "system_code,cj_code,insure,jgq,currency) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql = (
+                "INSERT IGNORE INTO gx_record(datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code,"
+                "system_code,cj_code,insure,jgq,currency) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            )
             for r in data.values:
                 r[0] = str(r[0])
                 dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8] + ' ' + str(r[13])
@@ -1819,8 +1836,10 @@ class GXJY:
                     logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         elif table == 'gx_entry_exit':
 
-            sql = "INSERT IGNORE INTO gx_entry_exit(`datetime`,flow,direction,`out`,enter,currency,`type`,bank,abstract) " \
-                  "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql = (
+                "INSERT IGNORE INTO gx_entry_exit(`datetime`,flow,direction,`out`,enter,currency,`type`,"
+                "bank,abstract) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            )
             for r in data.values:
                 r[0] = str(r[0])
                 dt = r[0][:4] + '-' + r[0][4:6] + '-' + r[0][6:8]
@@ -1850,8 +1869,10 @@ class GXJY:
 
     def get_gxjy_sql_all(self, code=None):
         """ 获取数据库，原始数据，并增加一列名称 """
-        sql = "SELECT datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code," \
-              "system_code,cj_code,insure,jgq,currency FROM gx_record where 1=1"
+        sql = (
+            "SELECT datetime,exchange,code,busi,kp,vol,price,cost,jyf,jy_code,seat_code,system_code,cj_code,"
+            "insure,jgq,currency FROM gx_record where 1=1"
+        )
         if code and code[:-4] in self.bs:
             sql += " AND code LIKE '{}%'".format(code[:-4])
         p = runSqlData('carry_investment', sql)  # pd.read_sql(sql, conn)
@@ -1862,13 +1883,16 @@ class GXJY:
 
     def get_dates(self):
         """ 获取所有的交易日期 """
-        sql = "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d') FROM gx_record GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d') ORDER BY DATETIME"
+        sql = (
+            "SELECT DATE_FORMAT(DATETIME,'%Y-%m-%d') FROM gx_record GROUP BY DATE_FORMAT(DATETIME,'%Y-%m-%d') "
+            "ORDER BY DATETIME"
+        )
         dates = runSqlData('carry_investment', sql)
         return dates
 
     def entry_exit(self):
         """ 获取出入金信息 """
-        sql = "SELECT DATE_FORMAT(datetime,'%Y-%m-%d'),direction,`out`,enter FROM gx_entry_exit;"
+        sql = "SELECT DATE_FORMAT(datetime,'%Y-%m-%d'),direction,`out`,enter FROM gx_entry_exit"
         ee = runSqlData('carry_investment', sql)
         return ee
 
@@ -2050,8 +2074,9 @@ class GXJY:
                 res += rs
                 pzs = dict(pz, **pzs)
 
-        columns = ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本', '此笔盈利', '会话盈利', '总盈利', '总平均盈利', '会话平均盈利',
-                   '持仓成本', '净持仓成本', '利润', '净利润', '净平均利润', '手续费', '已平仓', '序号']
+        columns = ['合约', '时间', '开仓', '当前价', '持仓', '原始成本', '会话成本', '净会话成本', '此笔盈利',
+                   '会话盈利', '总盈利', '总平均盈利', '会话平均盈利','持仓成本', '净持仓成本', '利润', '净利润',
+                   '净平均利润', '手续费', '已平仓', '序号']
         # res = pd.DataFrame(res, columns=columns)
         pzs = [(self.code_name.get(k), v / 2) for k, v in pzs.items()]
         pzs.sort(key=lambda x: x[1], reverse=True)
@@ -2090,8 +2115,14 @@ class Cfmmc:
 
     def get_data2(self):
         """ 指定时间区间以日期与合约分组的，交易日期，合约，平仓盈亏，手续费 """
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),SUM(手续费) FROM cfmmc_trade_records WHERE {self.sql} GROUP BY 交易日期,合约"
-        sql2 = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(持仓盈亏) FROM cfmmc_holding_position WHERE {self.sql} GROUP BY 交易日期,合约"
+        sql = (
+            "SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(平仓盈亏),SUM(手续费) FROM cfmmc_trade_records "
+            f"WHERE {self.sql} GROUP BY 交易日期,合约"
+        )
+        sql2 = (
+            "SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),合约,SUM(持仓盈亏) FROM cfmmc_holding_position "
+            f"WHERE {self.sql} GROUP BY 交易日期,合约"
+        )
         data = runSqlData('carry_investment', sql)
         data = {i[0] + i[1]: [i[0], i[1], i[2], i[3]] for i in data}
         data2 = runSqlData('carry_investment', sql2)
@@ -2109,11 +2140,13 @@ class Cfmmc:
 
     def get_data(self):
         """ ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') """
-        sql = f"SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM " \
-              f"cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE " \
-              f"(CASE WHEN LENGTH(C.成交序号)>8 THEN SUBSTR(C.成交序号,9,16) ELSE C.成交序号 END)=(CASE WHEN LENGTH(T.成交序号)>8 THEN SUBSTR(T.成交序号,9,16) ELSE T.成交序号 END) " \
-              f"AND C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' " \
-              f"AND C.交易日期<='{self.end_date}'"
+        sql = (
+            "SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM "
+            "cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE "
+            "(CASE WHEN LENGTH(C.成交序号)>8 THEN SUBSTR(C.成交序号,9,16) ELSE C.成交序号 END)="
+            "(CASE WHEN LENGTH(T.成交序号)>8 THEN SUBSTR(T.成交序号,9,16) ELSE T.成交序号 END) AND "
+            f"C.帐号='{self.host}' AND C.交易日期>='{self.start_date}' AND C.交易日期<='{self.end_date}'"
+        )
         data = runSqlData('carry_investment', sql)
         # 返回最小的日期，最大的日期
         yield (min(data)[0], max(data)[0]) if data else ('', '')
@@ -2132,7 +2165,10 @@ class Cfmmc:
 
     def get_rj(self):
         """ 获取出入金 """
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),当日存取合计 FROM cfmmc_daily_settlement WHERE 当日存取合计!=0 AND {self.sql}"
+        sql = (
+            "SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),当日存取合计 FROM cfmmc_daily_settlement "
+            f"WHERE 当日存取合计!=0 AND {self.sql}"
+        )
         data = runSqlData('carry_investment', sql)
         return data
 
@@ -2155,8 +2191,15 @@ class Cfmmc:
         """ 获取指定账户、产品的 交易日期时间 每天的昨日持仓 """
         start_date = dtf(self.start_date)
         start_date = start_date - datetime.timedelta(days=10)
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),SUM(买持仓),SUM(卖持仓) FROM cfmmc_holding_position WHERE 合约='{code}' AND 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' GROUP BY 交易日期"
-        sql_check = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_daily_settlement WHERE 帐号='{self.host}' AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' ORDER BY 交易日期"
+        sql = (
+            "SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),SUM(买持仓),SUM(卖持仓) FROM cfmmc_holding_position "
+            f"WHERE 合约='{code}' AND 帐号='{self.host}' AND 交易日期>='{start_date}' AND "
+            f"交易日期<='{self.end_date}' GROUP BY 交易日期"
+        )
+        sql_check = (
+            f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_daily_settlement WHERE 帐号='{self.host}' "
+            f"AND 交易日期>='{start_date}' AND 交易日期<='{self.end_date}' ORDER BY 交易日期"
+        )
         d = runSqlData('carry_investment', sql)
         d = {i[0]: i for i in d}
         _check = runSqlData('carry_investment', sql_check)
@@ -2169,7 +2212,11 @@ class Cfmmc:
 
     def get_bs(self, code, time_type=None):
         """ 获取指定账户、产品的 交易日期时间：（成交价，手数） """
-        sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM cfmmc_trade_records WHERE 合约='{code}' AND {self.sql} ORDER BY 交易日期"
+        sql = (
+            "SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),"
+            "DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:00')),手数,`买/卖`,成交价,`开/平` FROM "
+            f"cfmmc_trade_records WHERE 合约='{code}' AND {self.sql} ORDER BY 交易日期"
+        )
         d = runSqlData('carry_investment', sql)
         res = {}  # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
         if d:
@@ -2221,7 +2268,10 @@ class Cfmmc:
             增长率=（当日盈亏-当日手续费）/ 上日结存
             净值=（1 + 增长率）* （1 + 增长率2）* （1 + 增长率n）
         """
-        sql = f"SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),上日结存,当日盈亏,当日手续费,当日存取合计 FROM cfmmc_daily_settlement WHERE {self.sql} ORDER BY 交易日期"
+        sql = (
+            "SELECT DATE_FORMAT(交易日期,'%Y-%m-%d'),上日结存,当日盈亏,当日手续费,当日存取合计 FROM "
+            f"cfmmc_daily_settlement WHERE {self.sql} ORDER BY 交易日期"
+        )
         d = runSqlData('carry_investment', sql)
         if not d:
             return
@@ -2243,12 +2293,21 @@ class Cfmmc:
 
 def cfmmc_get_result(host, start_date, end_date):
     """ 获取指定帐号的交易开平仓记录 """
-    sql = f"SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    sql = (
+        "SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),"
+        "CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(ADDDATE(成交时间,INTERVAL 1 MINUTE),' %H:%i:%S')) "
+        f"FROM cfmmc_trade_records_trade WHERE 帐号='{host}'"
+    )
     dc = runSqlData('carry_investment', sql)
     dc = {i0: i1 for i0, i1 in dc}
-    sql2 = f"SELECT 合约,(CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END),开仓价,(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),成交价,平仓盈亏,`买/卖`,手数,'已平仓' FROM" \
-           f" cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND 交易日期<='{end_date}'" \
-           f" AND (CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END) in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from cfmmc_trade_records_trade WHERE 帐号='{host}')"
+    sql2 = (
+        "SELECT 合约,(CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END),开仓价,"
+        "(CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END),成交价,平仓盈亏,`买/卖`,"
+        f"手数,'已平仓' FROM cfmmc_closed_position_trade WHERE 帐号='{host}' AND 交易日期>='{start_date}' AND "
+        f"交易日期<='{end_date}' AND (CASE WHEN LENGTH(原成交序号)>8 THEN SUBSTR(原成交序号,9,16) ELSE 原成交序号 END"
+        f") in (SELECT (CASE WHEN LENGTH(成交序号)>8 THEN SUBSTR(成交序号,9,16) ELSE 成交序号 END) from "
+        f"cfmmc_trade_records_trade WHERE 帐号='{host}')"
+    )
     cl = runSqlData('carry_investment', sql2)
     results2 = [[host, i0, dc[i1], i2, dc[i3], i4, i5, '空' if '买' in i6 else '多', i7, i8] for
                 i0, i1, i2, i3, i4, i5, i6, i7, i8 in cl]
@@ -2262,15 +2321,23 @@ def cfmmc_get_result(host, start_date, end_date):
 def cfmmc_huice(host):
     """ 回测 """
     # 日期时间，买卖，手数，开平，手续费，平仓盈亏，合约，交易日期 ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
-    trade_sql = f"SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`," \
-                f"手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE 帐号='{host}' order by 交易日期"
+    trade_sql = (
+        "SELECT CONCAT(DATE_FORMAT(交易日期,'%Y-%m-%d'),DATE_FORMAT(成交时间,' %H:%i:%S')),`买/卖`,手数,`开/平`,"
+        "手续费,平仓盈亏,合约,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_trade_records_trade WHERE "
+        f"帐号='{host}' order by 交易日期"
+    )
     trade = runSqlData('carry_investment', trade_sql)
     trade = list(trade)
     # 买卖，开仓价，平仓价，手数，平仓盈亏，交易日期 (' 卖', 17750.0, 14345.0, 1, -34050, '2017-04-25')
-    closed_sql = f"SELECT `买/卖`,开仓价,成交价,手数,平仓盈亏,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM cfmmc_closed_position_trade WHERE 帐号='{host}'"  # ORDER BY 实际成交日期"
+    closed_sql = (
+        "SELECT `买/卖`,开仓价,成交价,手数,平仓盈亏,DATE_FORMAT(交易日期,'%Y-%m-%d') FROM "
+        f"cfmmc_closed_position_trade WHERE 帐号='{host}'"  # ORDER BY 实际成交日期"
+    )
     closed = runSqlData('carry_investment', closed_sql)
-    money_sql = f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND " \
-                f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    money_sql = (
+        f"SELECT 上日结存,当日存取合计 FROM cfmmc_daily_settlement WHERE 帐号='{host}' AND "
+        f"(当日存取合计!=0 OR 交易日期 IN (SELECT MIN(交易日期) FROM cfmmc_daily_settlement WHERE 帐号='{host}'))"
+    )
     moneys = runSqlData('carry_investment', money_sql)
     init_money = sum(j1 if i != 0 else j0 for i, (j0, j1) in enumerate(moneys))
 
