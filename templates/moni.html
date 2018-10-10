@@ -101,7 +101,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     <table border="1" align="center">
     {% for v in res %}
         {% if forloop.first %}
-            <tr><th style="width:100px;">日期&nbsp;&nbsp;({{res|length}})天</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
+            <tr><th style="width:100px;">日期&nbsp;&nbsp;({{res_length}})天</th><th style="width:50px;">多单</th><th style="width:50px;">空单</th><th style="width:50px;">盈亏</th><th>大于1.5倍</th><th>小于-1.5倍</th><th>K线重合</th>
                 <th>详细数据
                 <table border="1" style="width:650px;">
                         <tr><th style="width:400px;">时间段</th><th style="width:150px;">多空</th><th>盈亏</th></tr>

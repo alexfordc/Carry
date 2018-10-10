@@ -48,7 +48,7 @@ def caches(func):
 
 @asyncs
 def record_log(files, info, types):
-    """ 访问日志 """
+    """ 写入文件 """
     if types == 'w':
         with open(files, 'w') as f:
             f.write(json.dumps(info))
@@ -56,6 +56,7 @@ def record_log(files, info, types):
         info = f'{datetime.datetime.now()}----{info}'
         with open(files, 'a') as f:
             f.write(info)
+
 
 
 @contextmanager

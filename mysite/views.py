@@ -741,7 +741,7 @@ def user_cloud_public_download(rq):
     # 定义分块下载函数
     def file_iterator(files, chunk_size=512):
         f = open(files, 'rb')
-        red.set(red_key, 'read')
+        red.set(red_key, 'read', expiry=6000)
         while True:
             try:
                 c = f.read(chunk_size)
@@ -755,10 +755,9 @@ def user_cloud_public_download(rq):
             else:
                 f.close()
                 break
-        red.set(red_key, _d)
+        red.set(red_key, _d, expiry=6000)
 
         # from wsgiref.util import FileWrapper
-
     if user_name and qx >= 2 and rq.method == 'GET':
         path_root = 'D:\\cloud'  # 保存文件的目录
         name = rq.GET.get('name')
@@ -766,6 +765,7 @@ def user_cloud_public_download(rq):
         path_file = os.path.join(path_root, name + '_+_' + file_name)
 
         if os.path.isfile(path_file):
+            print(is_downs , _d , is_downs)
             if is_downs != _d and is_downs != 'read':
                 resp = StreamingHttpResponse(file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
                 # red.set(red_key,_d)
@@ -805,7 +805,7 @@ def fileupload(rq):
                 msg = 'existed'  # f" {r_file_name} 已经存在！"
             else:
                 # 保存分片到本地
-                with open(path_root + '/%s' % filename, 'wb+') as f:
+                with open(f'{path_root}/{filename}', 'wb') as f:
                     for chunk in upload_file.chunks():
                         f.write(chunk)
                 msg = 'success'  # f" {r_file_name} 上传成功!"
@@ -835,9 +835,8 @@ def fileMerge(rq):
             while True:
                 try:
                     filename = path_root + '/%s%d' % (task, chunk)
-                    source_file = open(filename, 'rb')  # 按序打开每个分片
-                    target_file.write(source_file.read())  # 读取分片内容写入新文件
-                    source_file.close()
+                    with open(filename, 'rb') as source_file:  # 按序打开每个分片
+                        target_file.write(source_file.read())  # 读取分片内容写入新文件
                 except IOError:
                     break
                 chunk += 1
@@ -853,7 +852,7 @@ def user_cloud_public_delete(rq):
         name = rq.POST.get('name')
         file_name = rq.POST.get('filename')
         path_file = os.path.join(path_root, name + '_+_' + file_name)
-        if name != user_name:
+        if name != user_name and qx <= 2:
             msg = f" {file_name} 非本人上传！"
         elif os.path.isfile(path_file):
             os.remove(path_file)
@@ -862,6 +861,35 @@ def user_cloud_public_delete(rq):
             msg = f" {file_name} 文件不存在！"
         clouds = viewUtil.get_cloud_file(path_root)
         return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
+    return redirect('index')
+
+def user_cloud_public_show(rq):
+    """ 公共云 文件显示 """
+    user_name, qx = LogIn(rq)
+    if user_name and qx >= 2 and rq.method == 'POST':
+        path_root = 'D:\\cloud'  # 保存文件的目录
+        name = rq.POST.get('name')
+        file_name = rq.POST.get('filename')
+        path_file = os.path.join(path_root, name + '_+_' + file_name)
+        import chardet
+        if os.path.isfile(path_file):
+            if os.path.getsize(path_file) < 1024*1024:  # 最大显示1MB
+                with open(path_file, 'rb') as f:
+                    file_body = f.read()
+            else:
+                with open(path_file,'rb') as f:
+                    file_body = f.read(1000)
+            try:
+                file_body = file_body.decode(chardet.detect(file_body)['encoding'])
+            except:
+                file_body = str(file_body)
+
+            msg = f" {file_name} 内容！"
+        else:
+            msg = f" {file_name} 文件不存在！"
+        clouds = viewUtil.get_cloud_file(path_root)
+        return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name,
+                                                     'file_body': file_body})
     return redirect('index')
 
 
@@ -1609,13 +1637,14 @@ def moni(rq):
                                               reverse=reverse, param=param)
         try:
             keys = sorted(res.keys(), reverse=True)
-            res = [dict(res[k], **{'time': k}) for k in keys]
+            res_length = len(keys)
+            res = [dict(res[k], **{'time': k}) for k in keys[:300]]  # 限制最多显示300天交易详细记录
             fa_doc = zbjs.fa_doc
             return render(rq, 'moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
                            'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
                            'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
-                           'user_name': user_name})
+                           'user_name': user_name, 'res_length': res_length})
         except Exception as exc:
             logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
     dates = datetime.datetime.now()
@@ -1695,12 +1724,14 @@ def newMoni(rq):
                                                      reverse=reverse, param=param)
             keys = sorted(res.keys())
             keys.reverse()
-            res = [dict(res[k], **{'time': k}) for k in keys]
+            res_length = len(keys)
+            res = [dict(res[k], **{'time': k}) for k in keys[:300]]  # 限制最多显示300天交易详细记录
             fa_doc = zbjs.fa_doc
 
             resp = {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date,  # 'fas': zbjs.xzfa,
                     'fa_doc': fa_doc, 'fa_one': 'fa_doc.get(fa)', 'huizong': huizong, 'database': database,
                     'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
+                    'res_length': res_length,
 
                     "duo_macd": duo_macd, "duo_avg": duo_avg, "duo_yidong": duo_yidong,
                     "duo_chonghes": duo_chonghes, "duo_chonghed": duo_chonghed, "kong_macd": kong_macd,

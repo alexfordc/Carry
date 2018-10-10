@@ -56,8 +56,9 @@ urlpatterns = [
     url(r'^real/account/del/$', views.del_real_account, name='del_real_account'),
     url(r'^user/update/info/$', views.user_update_info, name='user_update_info'),
     url(r'^user/cloud/public/$', views.user_cloud_public, name='user_cloud_public'),
-    url(r'^user/cloud/public/download$', views.user_cloud_public_download, name='user_cloud_public_download'),
-    url(r'^user/cloud/public/delete', views.user_cloud_public_delete, name='user_cloud_public_delete'),
+    url(r'^user/cloud/public/download/$', views.user_cloud_public_download, name='user_cloud_public_download'),
+    url(r'^user/cloud/public/delete/$', views.user_cloud_public_delete, name='user_cloud_public_delete'),
+    url(r'^user/cloud/public/show/$', views.user_cloud_public_show, name='user_cloud_public_show'),
 
     url(r'^stockData/$', views.stockData, name='stockData'),
     url(r'^stockDatas/$', views.stockDatas, name='stockDatas'),
@@ -107,7 +108,7 @@ urlpatterns = [
     url(r'^web/$', views.websocket_test, name='websocket_test'),
 
     url(r'^files/upload/', views.fileupload,name='fileupload'),  # 图片分片上传
-    url(r'^upload/complete/', views.fileMerge,name='fileMerge'), # 上传成功合并
+    url(r'^upload/complete/', views.fileMerge,name='fileMerge'),  # 上传成功合并
 
     # url(r'', views.page_not_found, name='page_not_found'),
 

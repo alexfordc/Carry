@@ -30,7 +30,7 @@
 	opacity: 0.6;
 	pointer-events:none;
 }
-
+.file_table a{ color:blue; }
 </style>
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.3/css/bootstrap.css">-->
 
@@ -52,10 +52,11 @@
 
     {% if qx >= 2 %}
     {% if clouds %}
-    <table width="800">
+    <table width="1000" class="file_table">
         <tr><th>文件名称</th><th>文件大小</th><th>上传者</th><th>上传时间</th><th>文件操作</th></tr>
         {% for i in clouds %}
-            <tr><td>{{ i.0|truncatechars:50 }}</td><td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td><a href="{% url 'user_cloud_public_download' %}?name={{i.2}}&filename={{i.0}}">下载</a>&nbsp;&nbsp;
+            <tr><td><a href="javascript:doPost('{% url 'user_cloud_public_show' %}',{'name':'{{i.2}}','filename':'{{i.0}}'})" title="查看文件">{{ i.0|truncatechars:50 }}</a></td>
+                <td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td><a href="{% url 'user_cloud_public_download' %}?name={{i.2}}&filename={{i.0}}">下载</a>&nbsp;&nbsp;
                 <a href="javascript:doPost('{% url 'user_cloud_public_delete' %}',{'name':'{{i.2}}','filename':'{{i.0}}'})" onclick="return confirm('确定要删除吗?')">删除</a> </td></tr>
         {% endfor %}
     </table><br/>
@@ -74,7 +75,7 @@
     <div>
         <!--用来存放文件信息-->
         <div id="thelist" class="uploader-list"></div>
-        <div class="progress" style="width:800px;">         <!-- 进度条 -->
+        <div class="progress" style="width:1000px;">         <!-- 进度条 -->
                 <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:0%;"></div>
         </div>
         <div class="btns">
@@ -82,9 +83,15 @@
             <!--<button id="ctlBtn" class="btn btn-default">开始上传</button>-->
         </div>
     </div>
-        <br/><hr width="800"/>
-    <a href="{% url 'user_info_public_show' %}" style="color:blue;" title="内部用户权限及以上的用户都可查看的公工信息！">公共信息</a>&nbsp;&nbsp;
-    <a href="{% url 'user_cloud_public' %}" style="color:blue;" title="每个会员都能上传下载的云盘！">公共云盘</a>
+    <br/>
+    {% if file_body %}
+    {% load mvote %}
+    <div style="border:3px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;">
+        {{ file_body|linebreaksbrs }}
+    </div>
+    {% endif %}
+        <br/><hr width="1000"/>
+    {% include 'base/user_public.html' %}
     {% endif %}
     </div>
 <script type="text/javascript">
