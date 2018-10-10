@@ -9,6 +9,8 @@ class CljAdmin(admin.ModelAdmin):
 
 
 class UsersAdmin(admin.ModelAdmin):
+    search_fields = ('name', 'phone', 'email')
+    list_filter = ('enabled', 'jurisdiction')
     list_display = ('name', 'password', 'phone', 'email', 'enabled', 'jurisdiction', 'creationTime')
 
 

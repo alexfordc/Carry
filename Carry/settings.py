@@ -17,7 +17,6 @@ from mysite.HSD import get_config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -26,14 +25,14 @@ SECRET_KEY = '(r7p=ea-$vntrx1cmct9nvt+q30%pltyi47!qu0wbxff*-wplt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#TEMPLATE_DEBUG=True
+# TEMPLATE_DEBUG=True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
 INSTALLED_APPS = (
+    # 'suit',  # andmin 界面美化
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +43,27 @@ INSTALLED_APPS = (
     'captcha',
     'mysite',
 )
+
+# andmin 界面美化
+
+# DATETIME_FORMAT = 'Y-m-d H:i:s'
+#
+# DATE_FORMAT = 'Y-m-d'
+#
+# SUIT_CONFIG = {  # suit页面配置
+#     'ADMIN_NAME': '凯瑞投资管理平台',  # 登录界面提示
+#     'LIST_PER_PAGE': 20,  # 表中显示行数
+#     'MENU': ({'label': '用户管理', 'app': 'auth',
+#               'icon': 'icon-lock',  # 显示左边菜单的图标
+#               'models': ('auth.User', 'auth.Group')},  # 每一个字典表示左侧菜单的一栏
+#              {'label': '网站管理', 'app': 'mysite',
+#               'models': ('mysite.Cljs', 'mysite.Userss', 'mysite.WorkLogs', 'mysite.SimulationAccounts',
+#                          'mysite.TradingAccounts', 'mysite.InfoPublics', 'mysite.InfoBodys')
+#               },
+#              ),
+#     # label表示name，app表示上边的install的app，models表示用了哪些models
+# }
+
 
 # djcelery.setup_loader()
 # # 末尾添加
@@ -101,21 +121,21 @@ TEMPLATE_LOADERS = (
 """
 
 WSGI_APPLICATION = 'Carry.wsgi.application'
-NEVER_REDIS_TIMEOUT=365*24*60*60 #此条可以省略
+NEVER_REDIS_TIMEOUT = 365 * 24 * 60 * 60  # 此条可以省略
 
-CACHES={
-  'default':{
-    'BACKEND':'django_redis.cache.RedisCache',
-    'LOCATION':'127.0.0.1:6379',
-    'OPTIONS':{'CLIENT_CLASS':'django_redis.client.DefaultClient',},
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        'OPTIONS': {'CLIENT_CLASS': 'django_redis.client.DefaultClient', },
     },
 }
 
 # 关闭浏览器，session失效
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False # True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # True
 
 # 设置session，120个小时失效
-SESSION_COOKIE_AGE = 60*60*120
+SESSION_COOKIE_AGE = 60 * 60 * 120
 
 # 优化session会话
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -127,19 +147,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'a667',
-        'USER': get_config('U','us'),
-        'PASSWORD': get_config('U','ps'),
-        'HOST': get_config('U','hs'),
+        'USER': get_config('U', 'us'),
+        'PASSWORD': get_config('U', 'ps'),
+        'HOST': get_config('U', 'hs'),
         'PORT': 3306,
-        'CONN_MAX_AGE': 1200, # 持久化数据库连接1200秒
+        'CONN_MAX_AGE': 1200,  # 持久化数据库连接1200秒
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'zh-Hans' #en-us
+LANGUAGE_CODE = 'zh-Hans'  # en-us
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -154,4 +173,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
