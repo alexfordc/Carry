@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^user/cloud/public/download/$', views.user_cloud_public_download, name='user_cloud_public_download'),
     url(r'^user/cloud/public/delete/$', views.user_cloud_public_delete, name='user_cloud_public_delete'),
     url(r'^user/cloud/public/show/$', views.user_cloud_public_show, name='user_cloud_public_show'),
+    url(r'^user/cloud/public/code/$', views.user_cloud_public_runcode, name='user_cloud_public_runcode'),
 
     url(r'^stockData/$', views.stockData, name='stockData'),
     url(r'^stockDatas/$', views.stockDatas, name='stockDatas'),

@@ -83,18 +83,41 @@
             <!--<button id="ctlBtn" class="btn btn-default">开始上传</button>-->
         </div>
     </div>
+    <hr width="1000"/>
+    {% include 'base/user_public.html' %}
     <br/>
     {% if file_body %}
     {% load mvote %}
-    <div style="border:3px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;">
-        {{ file_body|linebreaksbrs }}
+    <div>
+        {% csrf_token %}
+            <input type="button" onclick="javascript:user_cloud_public_ajax();" value="执行Python代码" style="background-color:orange;"><br/>
+        <div id="codes_result" style="border:1px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;"></div>
+            <div id="textarea_codes"
+                 style="border:3px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;" contenteditable="true">{{ file_body|linebreaksbrs }}
+            </div>
     </div>
+
     {% endif %}
-        <br/><hr width="1000"/>
-    {% include 'base/user_public.html' %}
+
     {% endif %}
     </div>
 <script type="text/javascript">
+function user_cloud_public_ajax(){
+    var user_name = $("#user_info").text();
+    var csrf = $("#csrfmiddlewaretoken input").val();
+    var codes = $("#textarea_codes").html();
+    codes = codes.replace(new RegExp('<br>','g'),'\n').replace(new RegExp('<div>','g'),'\n').replace(new RegExp('</div>','g'),'\n').replace(new RegExp('&nbsp;','g'),' ');
+    var data = {"user_name":user_name,"csrfmiddlewaretoken":csrf,"codes":codes};
+    $.ajax({
+        type: "POST",
+        url: "{% url 'user_cloud_public_runcode' %}",
+        data:data,
+        dataType: "json",
+        success:function(res){
+            $("#codes_result").html("结果:<br>"+res.result);
+        }
+    });
+}
 $(document).ready(function() {
         var task_id = WebUploader.Base.guid();        //产生task_id
         var uploader = WebUploader.create({           //创建上传控件

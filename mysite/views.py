@@ -758,6 +758,7 @@ def user_cloud_public_download(rq):
         red.set(red_key, _d, expiry=6000)
 
         # from wsgiref.util import FileWrapper
+
     if user_name and qx >= 2 and rq.method == 'GET':
         path_root = 'D:\\cloud'  # 保存文件的目录
         name = rq.GET.get('name')
@@ -765,7 +766,7 @@ def user_cloud_public_download(rq):
         path_file = os.path.join(path_root, name + '_+_' + file_name)
 
         if os.path.isfile(path_file):
-            print(is_downs , _d , is_downs)
+            print(is_downs, _d, is_downs)
             if is_downs != _d and is_downs != 'read':
                 resp = StreamingHttpResponse(file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
                 # red.set(red_key,_d)
@@ -863,6 +864,7 @@ def user_cloud_public_delete(rq):
         return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name})
     return redirect('index')
 
+
 def user_cloud_public_show(rq):
     """ 公共云 文件显示 """
     user_name, qx = LogIn(rq)
@@ -873,11 +875,11 @@ def user_cloud_public_show(rq):
         path_file = os.path.join(path_root, name + '_+_' + file_name)
         import chardet
         if os.path.isfile(path_file):
-            if os.path.getsize(path_file) < 1024*1024:  # 最大显示1MB
+            if os.path.getsize(path_file) < 1024 * 1024:  # 最大显示1MB
                 with open(path_file, 'rb') as f:
                     file_body = f.read()
             else:
-                with open(path_file,'rb') as f:
+                with open(path_file, 'rb') as f:
                     file_body = f.read(1000)
             try:
                 file_body = file_body.decode(chardet.detect(file_body)['encoding'])
@@ -891,6 +893,29 @@ def user_cloud_public_show(rq):
         return render(rq, 'user_cloud_public.html', {'qx': qx, 'msg': msg, 'clouds': clouds, 'user_name': user_name,
                                                      'file_body': file_body})
     return redirect('index')
+
+
+def user_cloud_public_runcode(rq):
+    """ 公共云 代码执行 """
+    user_name, qx = LogIn(rq)
+    if rq.method == 'POST' and rq.is_ajax():
+        name = rq.POST.get('user_name')
+        codes = rq.POST.get('codes')
+        result = ''
+        if user_name == name and qx >= 2:
+            try:
+                folds = 'mysite\\log'
+                files = 'RunPy.py'
+                os.chdir(folds)
+                with open(files,'w', encoding='utf-8') as f:
+                    f.write(codes)
+                result = str(os.popen(f'python {files}').read())
+                os.chdir('../../')
+            except Exception as exc:
+                result = str(exc)
+        result = result.replace('\n','<br>').replace(r'D:\tools\Tools\Carry','My folder')
+        return JsonResponse({'result': result.replace('\n','<br>')})
+    return JsonResponse({'result': 'no'})
 
 
 def register(rq):
