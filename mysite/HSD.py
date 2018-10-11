@@ -10,18 +10,20 @@ import pandas as pd
 import logging
 import configparser
 import requests
-from sklearn.externals import joblib
-from collections import Counter
+import pickle
 import random
 import socket
 import redis
 import sys
 import pymongo
+
+from sklearn.externals import joblib
+from collections import Counter
 from pyquery import PyQuery
 from copy import deepcopy
 # from DBUtils.PersistentDB import PersistentDB
 from DBUtils.PooledDB import PooledDB
-from KRData.HKData import HKFuture
+# from KRData.HKData import HKFuture
 from mysite.DataIndex import ZB
 
 config = configparser.ConfigParser()
@@ -164,6 +166,16 @@ def dtf(d):
     elif isinstance(d, datetime.date):
         d = datetime.datetime.strftime(d, '%Y-%m-%d')
         return d
+
+
+def get_external_folder(f=None):
+    """ 获取外部保存文件的路径"""
+    if f == 'cloud':
+        return 'D:\\Kairui_data_file\\cloud'
+    elif f == 'huice':
+        return 'D:\\Kairui_data_file\\huice'
+    else:
+        return 'D:\\Kairui_data_file'
 
 
 class RedisPool:
@@ -874,6 +886,70 @@ def sp_order_record(start_date=None, end_date=None):
             res.sort(key=lambda x: x[2])
             resAll.extend(res)
         IDS.add(user)
+    return resAll, huizong
+
+
+def huice_order_record(user,datas):
+    """ 回测接口"""
+    # global IDS
+    # IDS = set()
+    resAll = []
+    huizong = {}
+
+    datas = datas['trades']
+
+    datas = datas[
+        ['trading_datetime', 'commission', 'last_price', 'last_quantity', 'position_effect', 'side', 'symbol']]
+    # 时间，手续费，价格，手数，开平，买卖，合约
+    # ('2018-05-02 09:10:00', 2.0, 2712.0, 1.0, 'OPEN', 'BUY', 'MAL8')
+    # ('2018-05-02 09:54:00', 6.0, 2704.0, 1.0, 'CLOSE_TODAY', 'SELL', 'MAL8')
+    # data = [tuple(i) for i in data.values]
+    # prods = {i[6] for i in data}
+    for prod in set(datas.symbol):
+        data = [tuple(i) for i in datas[datas['symbol']==prod].values]
+        kc = []
+        # data2 = []
+        res = []
+        upk = user + prod
+        for i in range(len(data)):
+            dt = list(data[i][:7])
+            # huizong: 日期，账号，合约，盈亏，多单数，空单数，总下单数，盈利单数
+            if upk not in huizong:
+                huizong[upk] = [dt[0][:10], user, prod, 0, 0, 0, 0, 0]
+
+            dt.append(sum(data[j][3] if data[j][6] == 'BUY' else -data[j][3] for j in range(0, i + 1)))
+            try:
+                for j in range(int(dt[3])):
+                    kc.append(dt)
+                    # dt ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+                    if dt[4] != 'OPEN':  # data2 and abs(dt[7]) < abs(data2[-1][7]):
+                        stop = kc.pop()
+                        start = kc.pop()
+                        yk = 0
+                        if dt[5] == 'BUY':  # 卖
+                            yk = (start[1] - stop[1])
+                            huizong[upk][5] += 1
+                        elif dt[5] == 'SELL':  # 买
+                            yk = (stop[1] - start[1])
+                            huizong[upk][4] += 1
+                        res.append(
+                            [user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[5] == 'SELL' else '空', 1,
+                             '已平仓'])
+                        huizong[upk][3] += yk
+                        huizong[upk][6] += 1
+                        huizong[upk][7] += (1 if yk > 0 else 0)
+                    # data2.append(dt)
+            except Exception as exc:
+                logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
+        if upk in huizong:
+            sl = round(huizong[upk][7] / huizong[upk][6] * 100, 1) if huizong[upk][6] > 0 else 0
+            huizong[upk].append(sl)
+        # ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+        kc = [[k[5], k[4], k[0], k[1], None, None, None, '多' if k[5] == 'BUY' else '空', 1, '未平仓'] for k in kc]
+        res.extend(kc)
+        res.sort(key=lambda x: x[2])
+        resAll.extend(res)
+    # IDS.add(user)
     return resAll, huizong
 
 

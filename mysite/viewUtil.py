@@ -8,6 +8,7 @@ import datetime
 import xlrd
 import math
 import os
+import pickle
 
 from django.core.cache import cache
 from io import BytesIO
@@ -1219,3 +1220,67 @@ class FileWrapper:
             return data
         raise StopIteration
 
+
+def file_iterator(files, chunk_size=512, red=None, red_key=None):
+    """ 分块下载函数 """
+    f = open(files, 'rb')
+    if red and red_key:
+        red.set(red_key, 'read', expiry=6000)
+    while True:
+        try:
+            c = f.read(chunk_size)
+        except:
+            f.close()
+            break
+        if c:
+            if len(c) < chunk_size:
+                f.close()
+            yield c
+        else:
+            f.close()
+            break
+
+
+
+def get_interface_huice(hc_name):
+    """ 回测接口"""
+    _folder = HSD.get_external_folder('huice')
+    # for user in users:
+    with open(os.path.join(_folder, hc_name), 'rb') as f:
+        datas = pickle.loads(f.read())
+    init_money = datas['summary']['FUTURE']  # 入金
+    results2, _ = HSD.huice_order_record(hc_name,datas)
+
+    res = {}
+    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
+               'avg_day': 0, 'least2': [0, 1000], 'most2': [0, -1000]}
+    for i in results2:
+        if not i[5]:
+            continue
+        dt = i[2][:10]
+        if dt not in res:
+            res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
+        if i[7] == '多':
+            res[dt]['duo'] += 1
+            _ykds = i[5] - i[3]  # 盈亏点数
+        elif i[7] == '空':
+            res[dt]['kong'] += 1
+            _ykds = i[3] - i[5]  # 盈亏点数
+        res[dt]['mony'] += i[6]
+        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+        res[dt]['datetimes'].append(xx)
+
+        huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
+        huizong['least2'] = [dt, _ykds] if _ykds < huizong['least2'][1] else huizong['least2']
+        huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
+        huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
+
+    hcd = None
+    # if rq_date == end_date:
+    #     hcd = HSD.huice_day(res, init_money, real=True)
+
+    res, huizong = tongji_huice(res, huizong)
+
+    hc, huizong = HSD.huices(res, huizong, init_money, None, str(datetime.datetime.now())[:10])
+    resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'hc_name': hc_name}
+    return resp

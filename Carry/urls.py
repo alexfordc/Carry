@@ -91,6 +91,7 @@ urlpatterns = [
     url(r'^gxjy/$', views.gxjy, name='gxjy'),
     url(r'^systems/$', views.systems, name='systems'),
     url(r'^get_system/$', views.get_system, name='get_system'),
+    url(r'^again/huice/$', views.interface_huice, name='interface_huice'),
 
     # 期货监控系统
     url(r'^cfmmc/login/$', views.cfmmc_login, name='cfmmc_login'),

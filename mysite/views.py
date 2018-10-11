@@ -697,7 +697,7 @@ def user_cloud_public(rq):
     """ 公共云 上传 """
     user_name, qx = LogIn(rq)
     if user_name and qx >= 2:
-        path_root = 'D:\\cloud'  # 保存文件的目录
+        path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         if rq.method == 'POST':
             upload_file = rq.FILES.get('file')  # 获得文件
             if upload_file:
@@ -738,42 +738,19 @@ def user_cloud_public_download(rq):
     is_downs = red.get(red_key)
     _d = user_name + str(datetime.datetime.now())[:18]
 
-    # 定义分块下载函数
-    def file_iterator(files, chunk_size=512):
-        f = open(files, 'rb')
-        red.set(red_key, 'read', expiry=6000)
-        while True:
-            try:
-                c = f.read(chunk_size)
-            except:
-                f.close()
-                break
-            if c:
-                if len(c) < chunk_size:
-                    f.close()
-                yield c
-            else:
-                f.close()
-                break
-        red.set(red_key, _d, expiry=6000)
-
-        # from wsgiref.util import FileWrapper
-
     if user_name and qx >= 2 and rq.method == 'GET':
-        path_root = 'D:\\cloud'  # 保存文件的目录
+        path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         name = rq.GET.get('name')
         file_name = rq.GET.get('filename')
         path_file = os.path.join(path_root, name + '_+_' + file_name)
 
         if os.path.isfile(path_file):
-            print(is_downs, _d, is_downs)
             if is_downs != _d and is_downs != 'read':
-                resp = StreamingHttpResponse(file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
-                # red.set(red_key,_d)
+                resp = StreamingHttpResponse(viewUtil.file_iterator(path_file, red=red, red_key=red_key))  # viewUtil.FileWrapper(open(path_file,'rb'))
+                red.set(red_key, _d, expiry=6000)
                 resp['Content-Type'] = 'application/octet-stream'
                 resp['Content-Disposition'] = 'attachment;filename="{}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
                 return resp
-
         else:
             msg = "文件不存在！"
             clouds = viewUtil.get_cloud_file(path_root)
@@ -794,7 +771,7 @@ def fileupload(rq):
         # red = HSD.RedisPool()
         # _chunk = red.get('fileupload_chunk')
         filename = '%s%s' % (task, chunk)  # 构成该分片唯一标识符
-        path_root = 'D:\\cloud'  # 保存文件的目录
+        path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         if upload_file:
             r_file_name = upload_file.name
             path_file = path_root + '/%s%s' % (user_name + "_+_", upload_file)
@@ -823,7 +800,7 @@ def fileupload(rq):
 def fileMerge(rq):
     """ 公共云 组合分片"""
     user_name, qx = LogIn(rq)
-    path_root = 'D:\\cloud'  # 保存文件的目录
+    path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
     task = rq.GET.get('task_id')
     file_name = rq.GET.get('filename', '')
     file_name = file_name.replace(' ', '').replace('\t', '').replace('\n', '')
@@ -849,7 +826,7 @@ def user_cloud_public_delete(rq):
     """ 公共云 删除 """
     user_name, qx = LogIn(rq)
     if user_name and qx >= 2 and rq.method == 'POST':
-        path_root = 'D:\\cloud'  # 保存文件的目录
+        path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         name = rq.POST.get('name')
         file_name = rq.POST.get('filename')
         path_file = os.path.join(path_root, name + '_+_' + file_name)
@@ -869,7 +846,7 @@ def user_cloud_public_show(rq):
     """ 公共云 文件显示 """
     user_name, qx = LogIn(rq)
     if user_name and qx >= 2 and rq.method == 'POST':
-        path_root = 'D:\\cloud'  # 保存文件的目录
+        path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         name = rq.POST.get('name')
         file_name = rq.POST.get('filename')
         path_file = os.path.join(path_root, name + '_+_' + file_name)
@@ -2623,6 +2600,57 @@ def cfmmc_huice(rq, param=None):
             if not rq_url:
                 rq_url = rq.META.get('PATH_INFO')
             return render(rq, 'base/loading.html', {'host': _host, 'when': when, 'rq_url': rq_url})
+
+
+def interface_huice(rq):
+    """ 回测接口"""
+    user_name, qx = LogIn(rq)
+    _folder = HSD.get_external_folder('huice')  # 保存文件的目录
+    if rq.method == 'GET':
+        _type = rq.GET.get('type')
+        hc_name = rq.GET.get('id')
+        if not hc_name:
+            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+            zx_x = []
+            hct = {}
+            start_date,end_date = '',''
+            hc = {}
+            huizong = {}
+            init_money = 0
+            hcd = None  # 无需
+            resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
+             'init_money': init_money, 'hcd': hcd, 'hc_name': hc_name,'user_name': user_name, 'clouds': clouds}
+            return render(rq, 'interface_huice.html', resp)
+        if _type == 'huice':
+            resp = viewUtil.get_interface_huice(hc_name)
+            resp['user_name'] = user_name
+            return render(rq, 'hc.html', resp)
+        elif _type == 'down' and qx >= 2:
+            path_file = os.path.join(_folder, hc_name)
+            if os.path.isfile(path_file):
+                resp = StreamingHttpResponse(viewUtil.file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
+                resp['Content-Type'] = 'application/octet-stream'
+                resp['Content-Disposition'] = 'attachment;filename="{}"'.format(hc_name)  # 此处file_name是要下载的文件的文件名称
+                return resp
+        elif _type == 'del' and qx >= 2:
+            path_file = os.path.join(_folder, hc_name)
+            if qx >= 2 and os.path.isfile(path_file):
+                os.remove(path_file)
+            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+            return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
+    elif rq.method == 'POST'and qx >= 2:
+        upload_file = rq.FILES.get('file')  # 获得文件
+        if upload_file:
+            file_name = upload_file.name
+            path_file = os.path.join(_folder, file_name)
+            if not os.path.isfile(path_file) and upload_file.size < 1024*1024*10:  # 限制文件最大10M
+                with open(path_file, 'wb+') as f:
+                    for chunk in upload_file.chunks():
+                        f.write(chunk)
+        clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+        return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
+
+    return redirect('index')
 
 
 def systems(rq):
