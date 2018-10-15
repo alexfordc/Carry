@@ -332,7 +332,7 @@ function userLogin(type){
                     }else{
                         var result = res.result;
                         if(result.indexOf('未启用')>=0){
-                            $("#login_message").css('color','blue').html(result+"<a href='javascript:login_is_contacts("+res.iphone+")'>@</a>");
+                            $("#login_message").css('color','blue').html("<a href='javascript:login_is_contacts("+res.iphone+","+res.qq+")'>"+result+"</a>");
                         }else{
                             $("#login_message").css('color','blue').text(result);
                         }
@@ -342,8 +342,8 @@ function userLogin(type){
         }
     }
 }
-function login_is_contacts(o){
-    $("#login_message").css('color','blue').text('手机：'+o);
+function login_is_contacts(i,q){
+    $("#login_message").css('color','blue').text('手机：'+i+'，'+'QQ：'+q);
 }
 </script>
 
@@ -650,6 +650,6 @@ $("#pingmujietu").hover(
     	<!--</div>-->
     <!--</footer>-->
     {% endblock %}
-<!--<script type="text/javascript" src="https://js.users.51.la/19663449.js"></script>-->
+<script type="text/javascript" src="https://js.users.51.la/19663449.js"></script>
 </body>
 </html>

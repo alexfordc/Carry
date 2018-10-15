@@ -894,63 +894,59 @@ def huice_order_record(user,datas):
     # global IDS
     # IDS = set()
     resAll = []
-    huizong = {}
+    data_ykall = {}
+    # huizong = {}
 
     datas = datas['trades']
 
     datas = datas[
-        ['trading_datetime', 'commission', 'last_price', 'last_quantity', 'position_effect', 'side', 'symbol']]
-    # 时间，手续费，价格，手数，开平，买卖，合约
-    # ('2018-05-02 09:10:00', 2.0, 2712.0, 1.0, 'OPEN', 'BUY', 'MAL8')
-    # ('2018-05-02 09:54:00', 6.0, 2704.0, 1.0, 'CLOSE_TODAY', 'SELL', 'MAL8')
-    # data = [tuple(i) for i in data.values]
-    # prods = {i[6] for i in data}
+        ['trading_datetime', 'transaction_cost', 'last_price', 'last_quantity', 'position_effect', 'side', 'symbol']]
+
     for prod in set(datas.symbol):
         data = [tuple(i) for i in datas[datas['symbol']==prod].values]
         kc = []
         # data2 = []
         res = []
-        upk = user + prod
+        # upk = user + prod
+
         for i in range(len(data)):
             dt = list(data[i][:7])
-            # huizong: 日期，账号，合约，盈亏，多单数，空单数，总下单数，盈利单数
-            if upk not in huizong:
-                huizong[upk] = [dt[0][:10], user, prod, 0, 0, 0, 0, 0]
-
             dt.append(sum(data[j][3] if data[j][6] == 'BUY' else -data[j][3] for j in range(0, i + 1)))
             try:
-                for j in range(int(dt[3])):
+                hands = int(dt[3])
+                for j in range(hands):
                     kc.append(dt)
-                    # dt ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+                    # dt ['2018-08-30 09:01:00', 11.2725, 12525.0, 2.0, 'CLOSE_TODAY', 'BUY', 'RUL8', -1810.0]
                     if dt[4] != 'OPEN':  # data2 and abs(dt[7]) < abs(data2[-1][7]):
                         stop = kc.pop()
                         start = kc.pop()
                         yk = 0
                         if dt[5] == 'BUY':  # 卖
-                            yk = (start[1] - stop[1])
-                            huizong[upk][5] += 1
+                            yk = (start[2] - stop[2]) #- (start[1] + stop[1]) / hands
+                            # huizong[upk][5] += 1
                         elif dt[5] == 'SELL':  # 买
-                            yk = (stop[1] - start[1])
-                            huizong[upk][4] += 1
+                            yk = (stop[2] - start[2]) #- (start[1] + stop[1]) / hands
+                            # huizong[upk][4] += 1
+                        _date = stop[0]
+                        date_prod = _date + prod
+                        # ['2018-10-08', 'J1901', -3300, 13.99, 'J1901(冶金焦炭)']
+                        if date_prod in data_ykall:
+                            data_ykall[date_prod][2] += yk
+                            data_ykall[date_prod][3] += start[1] + stop[1]
+                        else:
+                            data_ykall[date_prod] = [_date, prod, yk, start[1] + stop[1], prod]
                         res.append(
-                            [user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[5] == 'SELL' else '空', 1,
+                            [user, prod, start[0], start[2], stop[0], stop[2], yk, '多' if dt[5] == 'SELL' else '空', 1,
                              '已平仓'])
-                        huizong[upk][3] += yk
-                        huizong[upk][6] += 1
-                        huizong[upk][7] += (1 if yk > 0 else 0)
-                    # data2.append(dt)
             except Exception as exc:
                 logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
-        if upk in huizong:
-            sl = round(huizong[upk][7] / huizong[upk][6] * 100, 1) if huizong[upk][6] > 0 else 0
-            huizong[upk].append(sl)
-        # ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
-        kc = [[k[5], k[4], k[0], k[1], None, None, None, '多' if k[5] == 'BUY' else '空', 1, '未平仓'] for k in kc]
+
+        kc = [[user, k[6], k[0], k[2], None, None, None, '多' if k[5] == 'BUY' else '空', 1, '未平仓'] for k in kc]
         res.extend(kc)
         res.sort(key=lambda x: x[2])
         resAll.extend(res)
     # IDS.add(user)
-    return resAll, huizong
+    return resAll, data_ykall  # , huizong
 
 
 def calculate_earn(dates, end_date):
@@ -1563,7 +1559,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
         hc['daylr'].append(je)  # 每天利润
         if len(jingzhi) > 1:
             max_jz = jingzhi[-2] if jingzhi[-2] > max_jz else max_jz
-            zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2)
+            zjhc = round((max_jz - jingzhi[-1]) / max_jz * 100, 2) if max_jz != 0 else 0
             # zdhc = zdhc2 if zdhc2 > zdhc else zdhc
         hc['zjhcs'].append(zjhc if zjhc > 0 else 0)  # 资金回测
         for j in res[i]['datetimes']:
@@ -2215,7 +2211,8 @@ class Cfmmc:
         return res
 
     def get_data(self):
-        """ ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') """
+        """  时间，合约，平仓盈亏，手续费，合约（中文名）
+            ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)') """
         sql = (
             "SELECT DATE_FORMAT(C.交易日期,'%Y-%m-%d'),C.合约,C.平仓盈亏,T.手续费 FROM "
             "cfmmc_closed_position_trade as C,cfmmc_trade_records_trade as T WHERE "
@@ -2237,6 +2234,7 @@ class Cfmmc:
                 data2[k][3] += i[3]
 
         for i in data2:
+            print(data2[i])
             yield data2[i]
 
     def get_rj(self):

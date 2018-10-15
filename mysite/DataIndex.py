@@ -43,6 +43,8 @@ class ZB(object):
                "0轴下方MACD绿区，则做空；第二波红绿区或大于60均线则平仓。", "止损100个点。"],
         "18": ["60均线上方三波MACD红区以上回归60均线，则做多；高位死叉与顶背离平仓。",
                "60均线下方三波MACD绿区以上回归60均线，则做空；低位金叉与底背离平仓。", "止损100个点。"],
+        "19": ["60均线下方10均线上穿60均线，则做多；60均线上方盈利平仓。",
+               "60均线上方10均线下穿60均线，则做空；60均线下方盈利平仓。", "止损100个点。"],
     }
 
     def __init__(self):
@@ -50,7 +52,7 @@ class ZB(object):
         self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4, '5': self.fa5, '6': self.fa6,
                      '7': self.fa7, '9': self.fa9, '10': self.fa10, '11': self.fa11, '12': self.fa12, '13': self.fa13,
                      '14': self.fa14, '15': self.fa15, '16': self.fa16, '17': self.fa17,
-                     '18': self.fa18}  # 执行方案 '8':self.fa8, '5':self.fa5,
+                     '18': self.fa18, '19': self.fa19}  # 执行方案 '8':self.fa8, '5':self.fa5,
 
     @property
     def zdata(self):
@@ -109,14 +111,14 @@ class ZB(object):
 
         for i in range(len(da)):
             """
-            ma:移动平均值, var:方差, std:标准差, reg:Macd区间, mul:异动重合, k:KDJ的K值, overlap:diff与dea上/下交叉(1/-1),
-               deviation: 底/顶背离(1/-1)
+            ma60:移动平均值60均线, var:方差, std:标准差, reg:Macd区间, mul:异动重合, k:KDJ的K值, 
+            overlap:diff与dea上/下交叉(1/-1),deviation: 底/顶背离(1/-1)
             """
             dc.append(
-                {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma': 0, 'var': 0, 'std': 0, 'reg': 0,
+                {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma60': 0, 'var': 0, 'std': 0, 'reg': 0,
                  'mul': 0, 'datetimes': da[i][0], 'open': da[i][1], 'high': da[i][2], 'low': da[i][3],
                  'close': da[i][4], 'cd': 0, 'maidian': 0, 'open5': da[i][1], 'high5': da[i][2], 'low5': da[i][3],
-                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0})
+                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma10': 0, 'ma120': 0})
             if i == 1:
                 ac = da[i - 1][4]
                 this_c = da[i][4]
@@ -170,7 +172,8 @@ class ZB(object):
             k_5 += 1
 
             if i >= ma - 1:
-                dc[i]['ma'] = sum(da[i - j][4] for j in range(ma)) / ma  # 移动平均值 i-ma+1,i+1
+                dc[i]['ma60'] = sum(da[i - j][4] for j in range(ma)) / ma  # 移动平均值 60均线
+                dc[i]['ma10'] = sum(da[i - j][4] for j in range(10)) / 10  # 移动平均值 10均线
                 std_pj = sum(da[i - j][4] - da[i - j][1] for j in range(ma)) / ma
                 dc[i]['var'] = sum((da[i - j][4] - da[i - j][1] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
                 dc[i]['std'] = float(dc[i]['var'] ** 0.5)  # 标准差
@@ -233,13 +236,17 @@ class ZB(object):
         data = 1  # data future is list
         while data:
             data = yield dc
-            dc.popleft()
-            ind = 59  # len(dc)
+            len_dc = len(dc)
+            if len_dc > 120:
+                dc.popleft()
+                ind = len_dc-1
+            else:
+                ind = len_dc
             if isinstance(data, tuple) or isinstance(data, list):
-                dc.append({'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma': 0, 'var': 0, 'std': 0,
+                dc.append({'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma60': 0, 'var': 0, 'std': 0,
                            'reg': 0, 'mul': 0, 'datetimes': data[0], 'open': data[1], 'high': data[2], 'low': data[3],
                            'close': data[4], 'cd': 0, 'maidian': 0, 'open5': data[1], 'high5': data[2], 'low5': data[3],
-                           'close5': data[4], 'k': 50, 'overlap': 0, 'deviation': 0})
+                           'close5': data[4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma10': 0, 'ma120': 0})
                 try:
                     dc[ind]['ema_short'] = dc[ind - 1]['ema_short'] * (short - 2) / short + dc[ind][
                         'close'] * 2 / short  # 当日EMA(12)
@@ -249,7 +256,9 @@ class ZB(object):
                     dc[ind]['dea'] = dc[ind - 1]['dea'] * (phyd - 2) / phyd + dc[ind]['diff'] * 2 / phyd
                     dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
 
-                    dc[ind]['ma'] = sum(dc[ind - j]['close'] for j in range(ma)) / ma  # 移动平均值
+                    dc[ind]['ma60'] = sum(dc[ind - j]['close'] for j in range(ma)) / ma  # 移动平均值 60均线
+                    dc[ind]['ma10'] = sum(dc[ind - j]['close'] for j in range(10)) / 10  # 移动平均值 10均线
+                    dc[ind]['ma120'] = (sum(dc[ind - j]['close'] for j in range(120)) / 120) if ind >= 119 else 0  # 移动平均值 120均线
                     std_pj = sum(dc[ind - j]['close'] - dc[ind - j]['open'] for j in range(ma)) / ma
                     dc[ind]['var'] = sum(
                         (dc[ind - j]['close'] - dc[ind - j]['open'] - std_pj) ** 2 for j in range(ma)) / ma  # 方差
@@ -304,7 +313,7 @@ class ZB(object):
                     #         rsib += (-A)
                     # dc[i]['rsi'] = rsia / (rsia + rsib) * 100
                 except Exception as exc:
-                    print(exc)
+                    print('DataIndex.py vis', exc)
 
                 if dc[ind]['macd'] >= 0 and dc[ind - 1]['macd'] < 0:
                     co += 1
@@ -384,7 +393,7 @@ class ZB(object):
             dt2 = data2.send(data)
             if dt2:
                 dt2 = dt2[-1]
-            datetimes, clo, macd, mas, std, reg, mul = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'], dt2[
+            datetimes, clo, macd, mas, std, reg, mul = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2[
                 'std'], dt2['reg'], dt2['mul']
             # if mul>1.5:
             #     res[dates]['dy']+=1
@@ -440,7 +449,7 @@ class ZB(object):
                 datetimes, clo, macd, mas,
                 mul, cd, high, low, diff
             ) = (
-                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'],
+                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'],
                 dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['diff']
             )
             datetimes_hour = datetimes.hour
@@ -566,7 +575,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['mul'], \
+            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], \
                                                                dt2['cd'], dt2['high'], dt2['low'], dt2['maidian']
 
             if mul > 1.5:
@@ -671,7 +680,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['mul'], \
+            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], \
                                                                dt2['cd'], dt2['high'], dt2['low'], dt2['maidian']
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -779,7 +788,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, macd, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'], dt2[
+            datetimes, clo, macd, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2[
                 'mul'], dt2['cd'], dt2['high'], dt2['low']
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -878,7 +887,7 @@ class ZB(object):
             if not _while:
                 break
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['mul'], dt2['cd'], \
+            datetimes, clo, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], dt2['cd'], \
                                                       dt2['high'], dt2['low']
 
             if mul > 1.5:
@@ -947,7 +956,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['mul'], \
+            datetimes, clo, mas, mul, cd, high, low, maidian = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], \
                                                                dt2['cd'], dt2['high'], dt2['low'], dt2['maidian']
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -1051,7 +1060,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, macd, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'], dt2[
+            datetimes, clo, macd, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2[
                 'mul'], dt2['cd'], dt2['high'], dt2['low']
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -1340,7 +1349,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, mas, reg, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['reg'], dt2[
+            datetimes, clo, mas, reg, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['reg'], dt2[
                 'mul'], dt2['cd'], dt2['high'], dt2['low']
 
             if mul > 1.5:
@@ -1434,7 +1443,7 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, clo, mas, reg, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma'], dt2['reg'], dt2[
+            datetimes, clo, mas, reg, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['reg'], dt2[
                 'mul'], dt2['cd'], dt2['high'], dt2['low']
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -1711,7 +1720,7 @@ class ZB(object):
 
             dt2 = dt3[-1]
             datetimes, clo, mas, mul, cd, high, low, dea = dt2['datetimes'], dt2[
-                'close'], dt2['ma'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['dea']
+                'close'], dt2['ma60'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['dea']
 
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -1830,7 +1839,7 @@ class ZB(object):
                 datetimes, ope, clo, macd, mas, std,
                 reg, mul, cd, high, low, deviation
             ) = (
-                dt2['datetimes'], dt2['open'], dt2['close'], dt2['macd'], dt2['ma'], dt2['std'],
+                dt2['datetimes'], dt2['open'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['std'],
                 dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['deviation']
             )
             if mul > 1.5:
@@ -1962,7 +1971,7 @@ class ZB(object):
                     datetimes, clo, macd, mas,
                     cd, reg, mul, high, low
             ) = (
-                    dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'],
+                    dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'],
                     dt2['cd'], dt2['reg'], dt2['mul'], dt2['high'], dt2['low']
             )
             _append = True
@@ -2090,7 +2099,7 @@ class ZB(object):
                     datetimes, clo, macd, mas,
                     reg, mul, cd, high, low
             ) = (
-                    dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'],
+                    dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'],
                     dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low']
             )
             _append = True
@@ -2219,7 +2228,7 @@ class ZB(object):
                 datetimes, clo, macd, mas, std, reg,
                 mul, cd, high, low, deviation, overlap
             ) = (
-                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma'], dt2['std'], dt2['reg'],
+                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['std'], dt2['reg'],
                 dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['deviation'], dt2['overlap']
             )
 
@@ -2316,6 +2325,166 @@ class ZB(object):
                     first_time = []
                     ydzs_k = 0
 
+    def fa19(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
+        zsjg2 = zsjg
+        _zsjg_d, _zsjg_k = 0, 0
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        pd_pk = []  # 平多，平空
+        sb = []
+        ma10s, ma120s = [], []  # 10均线 与 120均线
+        ydzs_d, ydzs_k = 0, 0  # 移动止损
+        regs = 0
+        while 1:
+            # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0, }
+            if not _while:
+                break
+            is_dk = not (is_k == -1 or is_d == 1)
+            dt2 = dt3[-1]
+            (
+                datetimes, clo, macd, mas, reg,
+                mul, cd, high, low, ma10, ma120
+            ) = (
+                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['reg'],
+                dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['ma10'], dt2['ma120']
+            )
+            datetimes_hour = datetimes.hour
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            # _append = True
+            # if ((sb and sb[-1][0] != reg) or not sb):
+            #     sb.append([reg, macd, clo])
+            # elif sb[-1][0] == reg and macd < 0:
+            #     sb[-1][1] = macd if sb[-1][1] > macd else sb[-1][1]
+            #     sb[-1][2] = clo if sb[-1][2] > clo else sb[-1][2]
+            # elif sb[-1][0] == reg and macd > 0:
+            #     sb[-1][1] = macd if sb[-1][1] < macd else sb[-1][1]
+            #     sb[-1][2] = clo if sb[-1][2] < clo else sb[-1][2]
+            # else:
+            #     _append = False
+            # if len(sb) > 18:
+            #     sb.pop(0)
+
+            len_ma10s = len(ma10s)
+            if len_ma10s>8:
+                ma10s.pop(0)
+                ma120s.pop(0)
+
+            # 开平仓条件
+            kctj_d = (len_ma10s>7 and sum(i for i in ma120s[2:7])/5-sum(i for i in ma10s[2:7])/5>2 and ma10 - ma120 >2
+                      and ma10-ma10s[-1]>1 and clo < mas and ma10s[-2]<ma10s[-1])
+            kctj_k = (len_ma10s>7 and sum(i for i in ma10s[2:7])/5-sum(i for i in ma120s[2:7])/5>2 and ma120 - ma10 >2
+                      and ma10s[-1]-ma10>1 and clo >mas and ma10s[-2]<ma10s[-1])
+            # if is_d == 1 or is_k == -1:
+            #     if clo > mas:
+            #         pd_pk.append(1)
+            #     elif clo < mas:
+            #         pd_pk.append(-1)
+
+            pctj_d = clo > mas and is_d and clo-startMony_d>7 #len(pd_pk) >1 and pd_pk[-1]!=pd_pk[-2]
+            pctj_k = clo < mas and is_k and startMony_k-clo>7
+
+            ma10s.append(ma10)
+            ma120s.append(ma120)
+
+            if reverse:
+                kctj_d, kctj_k = kctj_k, kctj_d
+                pctj_d, pctj_k = pctj_k, pctj_d
+
+            if kctj_d and is_dk and 10 <= datetimes_hour < 16:
+                jg_d = clo
+                startMony_d = clo
+                str_time1 = str(datetimes)
+                is_d = 1
+                first_time = [str_time1, '多', clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
+                pd_pk = []  # 平多，平空
+            elif kctj_k and is_dk and 10 <= datetimes_hour < 16:
+                jg_k = clo
+                startMony_k = clo
+                str_time2 = str(datetimes)
+                is_k = -1
+                first_time = [str_time2, '空', clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
+                pd_pk = []  # 平多，平空
+
+            if is_d == 1:
+                ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
+                high_zs = ydzs_d - startMony_d
+                if high_zs >= ydzs:
+                    _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_d == 0:
+                    _zsjg_d = startMony_d + zsjg  # 止损所在价格点
+                if ((pctj_d or self.is_date(
+                        datetimes) or low <= _zsjg_d or high - startMony_d >= zyds) or qzpc) and str(
+                    datetimes) != str_time1:
+                    res[dates]['duo'] += 1
+                    if low > _zsjg_d and high - startMony_d < zyds:
+                        price = round(clo - startMony_d)
+                        zszy = 0  # 正常平仓
+                    elif low <= _zsjg_d:
+                        price = round(_zsjg_d - startMony_d, 2)
+                        zszy = -1  # 止损
+                    elif high - startMony_d >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(_zsjg_d - startMony_d if low<=_zsjg_d else (zyds if high-startMony_d>=zyds else clo-startMony_d))
+
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    is_d = 0
+                    first_time = []
+                    tj_d = 0
+                    _zsjg_d = 0
+                    ydzs_d = 0
+                    # elif clo - jg_d > 60:
+                    #     res[dates]['mony'] += (clo - jg_d)
+                    #     jg_d = clo
+            elif is_k == -1:
+                ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
+                low_zs = startMony_k - ydzs_k
+                if low_zs >= ydzs:
+                    _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_k == 0:
+                    _zsjg_k = startMony_k - zsjg  # 止损所在价格点
+                if ((pctj_k or self.is_date(
+                        datetimes) or high >= _zsjg_k or startMony_k - low >= zyds) or qzpc) and str(
+                    datetimes) != str_time2:
+                    res[dates]['kong'] += 1
+                    if high < _zsjg_k and startMony_k - low < zyds:
+                        price = round(startMony_k - clo)
+                        zszy = 0  # 正常平仓
+                    elif high >= _zsjg_k:
+                        price = round(startMony_k - _zsjg_k, 2)
+                        zszy = -1  # 止损
+                    elif startMony_k - low >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    is_k = 0
+                    first_time = []
+                    tj_k = 0
+                    _zsjg_k = 0
+                    ydzs_k = 0
+                    # elif jg_k - clo > 60:
+                    #     res[dates]['mony'] += (jg_k - clo)
+                    #     jg_k = clo
+
     def fa_new(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False, param=None):
         zsjg2 = zsjg
         _zsjg_d, _zsjg_k = 0, 0
@@ -2338,7 +2507,7 @@ class ZB(object):
             dt2 = dt3[-1]
             datetimes, ope, clo, macd, mas, std, reg, mul, cd, high, low, maidian = dt2['datetimes'], dt2['open'], dt2[
                 'close'], dt2[
-                                                                                        'macd'], dt2['ma'], dt2['std'], \
+                                                                                        'macd'], dt2['ma60'], dt2['std'], \
                                                                                     dt2['reg'], dt2['mul'], dt2['cd'], \
                                                                                     dt2['high'], dt2['low'], dt2[
                                                                                         'maidian']

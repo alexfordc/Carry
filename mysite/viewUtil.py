@@ -648,8 +648,7 @@ def user_work_log(rq, table, user=None, size=5):
 def cfmmc_hc_data(host, rq_date, end_date):
     """ 期货监控系统 回测数据 """
     results2 = HSD.cfmmc_get_result(host, rq_date, end_date)
-
-    # results2[0]：['016681702757', 'J1901', '2018-08-30 09:08:12', 2544.5, '2018-08-30 10:06:14', 2528.0, -1650, '多', 1, '已平仓']
+    # results2：[['016681702757', 'RB1810', '2018-06-01 11:05:07', 3749.0, '2018-06-04 21:32:58', 3754.0, -250, '空', 5, '已平仓'],...]
     res = {}
     huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
                'avg_day': 0, 'least2': [0, 1000, 0, 0], 'most2': [0, -1000, 0, 0]}
@@ -930,7 +929,6 @@ def cfmmc_huice(data, host, start_date, end_date, hc_name, red_key):
     pzs = cfmmc.varieties()
     _qy = cfmmc.get_qy()
     base_money = cfmmc.init_money()  # 初始总资金
-
     init_money = 0
     jzs = cfmmc.get_jz()
     jz = 1  # 初始净值
@@ -1155,7 +1153,7 @@ def cfmmc_huice(data, host, start_date, end_date, hc_name, red_key):
         host = host[0] + '*' * len(host[1])
         hct['host'] = hc_name  # host
         # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
-        huizong['max_amount'] = max(hct['amount'])  # 最高余额
+        huizong['max_amount'] = round(max(hct['amount']), 2)  # 最高余额
         huizong['deposit'] = sum(i[1] for i in ee if i[1] > 0)  # 存款
         huizong['draw'] = sum(i[1] for i in ee if i[1] < 0)  # 取款
         huizong['ykratio'] = abs(round(hc['avglr'] / (hc['avgss'] if hc['avgss'] != 0 else 1), 2))
@@ -1241,22 +1239,28 @@ def file_iterator(files, chunk_size=512, red=None, red_key=None):
             break
 
 
-
-def get_interface_huice(hc_name):
-    """ 回测接口"""
+def get_interface_datas(hc_name):
+    """ 从文件夹获取序列化的数据 """
     _folder = HSD.get_external_folder('huice')
-    # for user in users:
     with open(os.path.join(_folder, hc_name), 'rb') as f:
         datas = pickle.loads(f.read())
-    init_money = datas['summary']['FUTURE']  # 入金
-    results2, _ = HSD.huice_order_record(hc_name,datas)
+    return datas
 
+def get_interface_huice(hc_name, min_date=None, max_date=None):
+    """ 回测接口"""
+    datas = get_interface_datas(hc_name)
+    init_money = datas['summary']['FUTURE']  # 入金
+    results2,data_ykall = HSD.huice_order_record(hc_name,datas)
     res = {}
+    pinzhong = []  # 所有品种
+
     huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
                'avg_day': 0, 'least2': [0, 1000], 'most2': [0, -1000]}
     for i in results2:
         if not i[5]:
             continue
+        if i[1] not in pinzhong:
+            pinzhong.append(i[1])
         dt = i[2][:10]
         if dt not in res:
             res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
@@ -1267,7 +1271,7 @@ def get_interface_huice(hc_name):
             res[dt]['kong'] += 1
             _ykds = i[3] - i[5]  # 盈亏点数
         res[dt]['mony'] += i[6]
-        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8]]
+        xx = [i[2], i[4], i[7], i[6], i[3], i[5], i[8], i[1]]
         res[dt]['datetimes'].append(xx)
 
         huizong['least'] = [dt, i[6]] if i[6] < huizong['least'][1] else huizong['least']
@@ -1275,12 +1279,86 @@ def get_interface_huice(hc_name):
         huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
         huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
 
-    hcd = None
-    # if rq_date == end_date:
-    #     hcd = HSD.huice_day(res, init_money, real=True)
+    if min_date and max_date:
+        _re = re.compile(r'[A-z]+')
+        _pz = set(re.search(_re, i)[0] for i in pinzhong)
+        _pz = [i + 'L8' for i in _pz]
+        _redis = HSD.RedisPool()
+        pinzhong = _redis.get('cfmmc_hc_data_pinzhong')
+        if not pinzhong:
+            pinzhong = {}
+        mongo = HSD.MongoDBData()
+        is_cache_set = False
+        for p in _pz:
+            if p not in pinzhong or pinzhong[p]['min_date'] > min_date or pinzhong[p]['max_date'] < max_date:
+                pzs = mongo.get_data(p, min_date, max_date)
+                pzs = {str(i)[:-3]: j for j, (i, *_) in enumerate(pzs)}
+                pzs['min_date'] = min_date
+                pzs['max_date'] = max_date
+                pinzhong[p] = pzs
+                is_cache_set = True
+        if is_cache_set:
+            _redis.set('cfmmc_hc_data_pinzhong', pinzhong)
 
     res, huizong = tongji_huice(res, huizong)
 
-    hc, huizong = HSD.huices(res, huizong, init_money, None, str(datetime.datetime.now())[:10])
-    resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'hc_name': hc_name}
-    return resp
+    hc, huizong = HSD.huices(res, huizong, init_money, None, str(datetime.datetime.now())[:10], pinzhong)
+
+    yield hc, huizong, init_money
+    for i in data_ykall:
+        yield data_ykall[i]
+
+RESP = {
+'zx_x': ['2018-10-08', '2018-10-09', '2018-10-10', '2018-10-11'],
+
+'hct': {
+'allyk': [-3300, -14850, -5900, -12790],
+'alljz': [0.7258, 0.5978, 0.7015, 0.6412],
+'allsxf': [14.0, 71.6, 309.2, 412.8],
+'pie_name': ['J1901(冶金焦炭)', 'SR901(白糖)', 'M1901(豆粕)'],
+'pie_value': [{'value': 5825750, 'name': 'J1901(冶金焦炭)'}, {'value': 925870, 'name': 'SR901(白糖)'}, {'value': 421210, 'name': 'M1901(豆粕)'}],
+'qy': [71784.2, 59119.1, 69375.8, 99435.3],
+'bar_name': ['J1901(冶金焦炭)', 'SR901(白糖)', 'M1901(豆粕)'],
+'bar_value': [-13450.0, 970.0, -310.0],
+'day_value': [-3313.99, -11607.6, 8712.36, -6993.59],
+'week_name': ['2018-41'],
+'week_value': [-12790.0],
+'month_name': [],
+'month_value': [],
+'alleae': [30012.1, 30012.1, 30012.1, 66037.1],
+'amount': [26698.1, 15090.499999999998, 23802.899999999998, 52834.3],
+'eae': [30012.1, '', '', 36025.00000000001],
+'all_ccsjy': [[3.18, 4250, 1], [0.47, 600, 1], [1.65, 4450, 1], [0.95, 500, 1], [0.62, 150, 1], [1.2, 220, 2], [2.0, 330, 3], [0.13, 150, 1], [1.8, 270, 3], [0.1, 60, 2], [0.05, 50, 1], [0.2, 60, 1]],
+'all_ccsjk': [[0.4, -3300, 1], [7.18, -9900, 1], [1.52, -1650, 1], [0.07, -1700, 1], [2.67, -2900, 1], [0.7, -2100, 1], [0.45, -1850, 1], [0.2, -480, 2]],
+'all_pcsj': [['2018-10-08 09:01:02', -3300, 1], ['2018-10-09 10:31:47', -9900, 1], ['2018-10-09 14:24:43', -1650, 1], ['2018-10-10 09:10:36', 4250, 1], ['2018-10-10 09:47:02', 600, 1],
+			['2018-10-10 13:46:37', 4450, 1], ['2018-10-10 14:33:25', 500, 1], ['2018-10-10 14:28:54', 150, 1], ['2018-10-10 14:28:54', 220, 2], ['2018-10-10 14:32:59', 330, 3], ['2018-10-10 14:42:41', 150, 1],
+			['2018-10-10 14:50:29', -1700, 1], ['2018-10-11 09:01:03', -2900, 1], ['2018-10-11 09:46:48', -2100, 1], ['2018-10-11 10:59:40', -1850, 1], ['2018-10-11 21:49:29', 270, 3],
+			['2018-10-11 21:56:18', -480, 2], ['2018-10-11 22:01:39', 60, 2], ['2018-10-11 22:01:39', 50, 1], ['2018-10-11 22:10:25', 60, 1]],
+'all_pcsj_max': 5,
+'all_ylje': [{'value': 9520, 'name': '做多盈利金额'}, {'value': 1570, 'name': '做空盈利金额'}, {'value': 6930, 'name': '做多亏损金额'}, {'value': 16950, 'name': '做空亏损金额'}],
+'all_ylss': [{'value': 8, 'name': '做多盈利手数'}, {'value': 10, 'name': '做空盈利手数'}, {'value': 5, 'name': '做多亏损手数'}, {'value': 4, 'name': '做空亏损手数'}],
+'all_rnje': [{'value': 6840, 'name': '日内盈利金额'}, {'value': 4250, 'name': '隔夜盈利金额'}, {'value': 7780, 'name': '日内亏损金额'}, {'value': 16100, 'name': '隔夜亏损金额'}],
+'all_rnss': [{'value': 17, 'name': '日内盈利手数'}, {'value': 1, 'name': '隔夜盈利手数'}, {'value': 6, 'name': '日内亏损手数'}, {'value': 3, 'name': '隔夜亏损手数'}],
+'all_pcsjn': ['J1901', 'SR901', 'M1901'],
+'all_pcsjs': {'J1901': [['2018-10-08 09:01:02', -3300, 1], ['2018-10-09 10:31:47', -9900, 1], ['2018-10-09 14:24:43', -1650, 1], ['2018-10-10 09:10:36', 4250, 1], ['2018-10-10 09:47:02', 600, 1],
+['2018-10-10 13:46:37', 4450, 1], ['2018-10-10 14:33:25', 500, 1], ['2018-10-10 14:42:41', 150, 1], ['2018-10-10 14:50:29', -1700, 1], ['2018-10-11 09:01:03', -2900, 1],
+['2018-10-11 09:46:48', -2100, 1], ['2018-10-11 10:59:40', -1850, 1]], 'SR901': [['2018-10-10 14:28:54', 150, 1], ['2018-10-10 14:28:54', 220, 2], ['2018-10-10 14:32:59', 330, 3],
+['2018-10-11 21:49:29', 270, 3]], 'M1901': [['2018-10-11 21:56:18', -480, 2], ['2018-10-11 22:01:39', 60, 2], ['2018-10-11 22:01:39', 50, 1], ['2018-10-11 22:10:25', 60, 1]]},
+'zjhc': [0.0, 17.64, 3.36, 11.67], 'ccsjss_x': [3, 4, 6, 9], 'ccsjss_y': [24, 1, 1, 1], 'ykss_x': [-9500, -3000, -2500, -2000, -1500, 0, 500, 1000, 4500], 'ykss_y': [1, 1, 1, 1, 3, 2, 14, 2, 2],
+'all_ccsjylks': [1, 2, 3, 4, 8], 'all_ccsjyl2': [1570, 5270, 0, 4250, 0], 'all_ccsjks2': [-9430, -1650, -2900, 0, -9900], 'host': '0166***2757 ( 石* )'
+},
+
+'start_date': '2018-10-01',
+'end_date': '2018-10-12',
+
+'hc': {'jyts': 4, 'jyys': 1, 'hlbfb': -127.9, 'dhl': -31.97, 'mhl': -127.9, 'ye': -2790, 'cgzd': [7, 11, 63.64], 'cgzk': [5, 9, 55.56], 'avglr': 924.1666666666666, 'alllr': 11090, 'avgss': -2985.0, 'allss': -23880, 'zzl': [-33.0, -148.5, -59.0, -127.9], 'vol': [1, 2, 9, 8], 'dayye': [6700, -4850, 4100, -2790],
+'daylr': [-3300, -11550, 8950, -6890], 'zjhcs': [0, 0, 172.39, 38.81, 141.64], 'ccsj': '1.28 小时', 'allcchz': [[24, 0, -3300, 1, 0, '2018-10-08 09:01:02', 'J1901'], [431, 0, -9900, 1, 0, '2018-10-09 10:31:47', 'J1901'], [91, 0, -1650, 1, 1, '2018-10-09 14:24:43', 'J1901'], [191, 1, 4250, 1, 0, '2018-10-10 09:10:36', 'J1901'], [28, 0, 600, 1, 1, '2018-10-10 09:47:02', 'J1901'], [99, 1, 4450, 1, 1, '2018-10-10 13:46:37', 'J1901'], [57, 1, 500, 1, 1, '2018-10-10 14:33:25', 'J1901'], [37, 0, 150, 1, 1, '2018-10-10 14:28:54', 'SR901'], [72, 0, 220, 2, 1, '2018-10-10 14:28:54', 'SR901'], [120, 0, 330, 3, 1, '2018-10-10 14:32:59', 'SR901'], [8, 1, 150, 1, 1, '2018-10-10 14:42:41', 'J1901'], [4, 1, -1700, 1, 1, '2018-10-10 14:50:29', 'J1901'], [160, 1, -2900, 1, 0, '2018-10-11 09:01:03', 'J1901'], [42, 0, -2100, 1, 1, '2018-10-11 09:46:48', 'J1901'], [27, 1, -1850, 1, 1, '2018-10-11 10:59:40', 'J1901'], [108, 0, 270, 3, 1, '2018-10-11 21:49:29', 'SR901'], [12, 1, -480, 2, 1, '2018-10-11 21:56:18', 'M1901'], [6, 1, 60, 2, 1, '2018-10-11 22:01:39', 'M1901'], [3, 1, 50, 1, 1, '2018-10-11 22:01:39', 'M1901'], [12, 1, 60, 1, 1, '2018-10-11 22:10:25', 'M1901']],
+'lryz': 0.46, 'std': 2842.24, 'zjhc': 172.39, 'jingzhi': [6700, -4850, 4100, -2790], 'max_jz': 6700, 'zx_x': ['181008', '181009', '181010', '181011'], 'zx_y': [-3300, -14850, -5900, -12790], 'this_week': [-127.9, -12790, -12790, 60.0, 20, 20, 12], 'this_month': [-127.9, -12790, -12790, 60.0, 20, 20, 12],
+'this_year': [-127.9, -12790, -12790, 60.0, 20, 20, 12]},
+
+'huizong': {'yk': -12790, 'shenglv': 60, 'zl': 20, 'least': ['2018-10-09', -9900],
+'most': ['2018-10-10', 4450], 'avg': -639.5, 'avg_day': -3197.5, 'least2': ['2018-10-09', -99.0],
+'most2': ['2018-10-10', 44.5], 'kuilv': 40, 'max_zjhc': 17.64, 'max_amount': 52834.3, 'deposit': 36025.0,
+'draw': 0, 'ykratio': 0.31, 'huibaolv': 0.6412},
+
+'init_money': 66037.1, 'hcd': None, 'hc_name': '0166***2757 ( 石* )', 'user_name': '黄海军'}

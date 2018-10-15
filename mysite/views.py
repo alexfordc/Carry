@@ -302,10 +302,11 @@ def login(rq):
                 write_to_cache(user.name, f'{rq.session.session_key}_{address}')
                 return JsonResponse({"result": "yes", "users": username})
             elif user.enabled != 1:
-                message = "您的账户尚未启用！请联系管理员！"
-                iphone = HSD.get_config('U', 'contact_manager')
+                message = "您的账户尚未启用！请点击《联系管理员》"
+                iphone = HSD.get_config('U', 'contact_phone')
+                qq = HSD.get_config('U', 'contact_qq')
 
-        return JsonResponse({"result": message, "iphone": iphone})
+        return JsonResponse({"result": message, "iphone": iphone, "qq": qq})
     return redirect('/')
 
 
@@ -746,7 +747,8 @@ def user_cloud_public_download(rq):
 
         if os.path.isfile(path_file):
             if is_downs != _d and is_downs != 'read':
-                resp = StreamingHttpResponse(viewUtil.file_iterator(path_file, red=red, red_key=red_key))  # viewUtil.FileWrapper(open(path_file,'rb'))
+                resp = StreamingHttpResponse(viewUtil.file_iterator(path_file, red=red,
+                                                                    red_key=red_key))  # viewUtil.FileWrapper(open(path_file,'rb'))
                 red.set(red_key, _d, expiry=6000)
                 resp['Content-Type'] = 'application/octet-stream'
                 resp['Content-Disposition'] = 'attachment;filename="{}"'.format(file_name)  # 此处file_name是要下载的文件的文件名称
@@ -884,14 +886,14 @@ def user_cloud_public_runcode(rq):
                 folds = 'mysite\\log'
                 files = 'RunPy.py'
                 os.chdir(folds)
-                with open(files,'w', encoding='utf-8') as f:
+                with open(files, 'w', encoding='utf-8') as f:
                     f.write(codes)
                 result = str(os.popen(f'python {files}').read())
                 os.chdir('../../')
             except Exception as exc:
                 result = str(exc)
-        result = result.replace('\n','<br>').replace(r'D:\tools\Tools\Carry','My folder')
-        return JsonResponse({'result': result.replace('\n','<br>')})
+        result = result.replace('\n', '<br>').replace(r'D:\tools\Tools\Carry', 'My folder')
+        return JsonResponse({'result': result.replace('\n', '<br>')})
     return JsonResponse({'result': 'no'})
 
 
@@ -1640,7 +1642,7 @@ def moni(rq):
         try:
             keys = sorted(res.keys(), reverse=True)
             res_length = len(keys)
-            res = [dict(res[k], **{'time': k}) for k in keys[:300]]  # 限制最多显示300天交易详细记录
+            res = [dict(res[k], **{'time': k}) for k in keys if res[k]['datetimes']][:500]  # 限制最多显示300天交易详细记录
             fa_doc = zbjs.fa_doc
             return render(rq, 'moni.html',
                           {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
@@ -2185,8 +2187,8 @@ def cfmmc_login(rq):
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name}
-            # sql = "INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE name=''"
-            # HSD.runSqlData('carry_investment',sql,(userID,password,'',1,createTime))
+            sql = "INSERT INTO cfmmc_user(host,password,cookie,download,name,creationTime) VALUES(%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE cookie=''"
+            HSD.runSqlData('carry_investment', sql, (userID, password, '', 1, '', createTime))
             trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
             codes = set(i[0] for i in trade)  # 合约代码
             code_name = viewUtil.cfmmc_code_name(codes)
@@ -2611,24 +2613,268 @@ def interface_huice(rq):
         hc_name = rq.GET.get('id')
         if not hc_name:
             clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
-            zx_x = []
-            hct = {}
-            start_date,end_date = '',''
-            hc = {}
-            huizong = {}
-            init_money = 0
-            hcd = None  # 无需
-            resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc, 'huizong': huizong,
-             'init_money': init_money, 'hcd': hcd, 'hc_name': hc_name,'user_name': user_name, 'clouds': clouds}
-            return render(rq, 'interface_huice.html', resp)
+            return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
         if _type == 'huice':
-            resp = viewUtil.get_interface_huice(hc_name)
+            data_huice = viewUtil.get_interface_huice(hc_name)
+            hc, huizong, init_money = data_huice.send(None)
+            resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hc_name': hc_name}
             resp['user_name'] = user_name
             return render(rq, 'hc.html', resp)
+        elif _type == 'huice2':  # 回测、画图
+            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+
+            datas = viewUtil.get_interface_datas(hc_name)
+            summary, trades, portfolio, future_account, future_positions = datas['summary'], datas['trades'], datas[
+                'portfolio'], datas['future_account'], datas['future_positions']
+            start_date, end_date = summary['start_date'], summary['end_date']
+            # [('J1901(冶金焦炭)', 37794500), ('SR901(白糖)', 1427940), ('Y1901(豆油)', 704440),
+            #  ('J1809(冶金焦炭)', 501400), ('M1901(豆粕)', 421210), ('NI1811(镍)', 208200), ('CF901(棉花)', 160050), ('MA901(甲醇)', 128540)]
+            pzs = []
+            # {'2018-08-07': 268215.0, '2018-08-08': 268215.0, '2018-08-09': 268215.0, '2018-08-10': 264461.0, ...}
+            _qy = {str(i)[:10]:j for i,j in portfolio.total_value.items()}
+
+
+            # {'2018-08-08': 1.0, '2018-08-09': 1.0, '2018-08-10': 0.9860018268926048, ...}
+            jzs = {str(i)[:10]:j for i,j in portfolio.unit_net_value.items()}
+            jz = 1  # 初始净值
+            jzq = 0  # 初始净值权重
+            allje = 0  # init_money  # 总金额
+            eae = []  # 出入金
+            zx_x, prices = [str(i)[:10] for i in future_account.index], []
+
+            data_huice = viewUtil.get_interface_huice(hc_name, start_date, end_date)
+            hc, huizong, init_money = data_huice.send(None)
+            base_money = init_money  # 初始总资金
+
+            all_ccsjy, all_ccsjk = [], []  # 持仓时间，盈利、亏损
+            all_ccsjss, all_ykss = [], []  # 持仓时间、手数，盈亏、手数
+            all_pcsj = []  # 平仓时间，盈亏、亏损
+            all_pcsjn = []
+            all_pcsjs = {}
+            all_ccsjyl = defaultdict(int)  # 持仓时间，盈利
+            all_ccsjks = defaultdict(int)  # 持仓时间，亏损
+            all_ccsjylks = []  # 持仓时间
+            all_pcsj_max = 0  # 平仓时间，手数的最大值
+            all_ylje = [  # 做多、空，盈利、亏损金额
+                {'value': 0, 'name': '做多盈利金额'},
+                {'value': 0, 'name': '做空盈利金额'},
+                {'value': 0, 'name': '做多亏损金额'},
+                {'value': 0, 'name': '做空亏损金额'}
+            ]
+            all_ylss = [  # 做多、空，盈利、亏损手数
+                {'value': 0, 'name': '做多盈利手数'},
+                {'value': 0, 'name': '做空盈利手数'},
+                {'value': 0, 'name': '做多亏损手数'},
+                {'value': 0, 'name': '做空亏损手数'}
+            ]
+            all_rnje = [  # 日内、隔夜，盈利、亏损金额
+                {'value': 0, 'name': '日内盈利金额'},
+                {'value': 0, 'name': '隔夜盈利金额'},
+                {'value': 0, 'name': '日内亏损金额'},
+                {'value': 0, 'name': '隔夜亏损金额'}
+            ]
+            all_rnss = [  # 日内、隔夜，盈利、亏损手数
+                {'value': 0, 'name': '日内盈利手数'},
+                {'value': 0, 'name': '隔夜盈利手数'},
+                {'value': 0, 'name': '日内亏损手数'},
+                {'value': 0, 'name': '隔夜亏损手数'}
+            ]
+            if 'allcchz' not in hc:
+                hc['allcchz'] = []
+            for cc0, cc1, cc2, cc3, cc4, cc5, cc6 in hc['allcchz']:
+                # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
+                # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')
+                cc0 = round(cc0 / 60, 2)
+                if cc6 not in all_pcsjn:
+                    all_pcsjn.append(cc6)
+                    all_pcsjs[cc6] = []
+                all_pcsjs[cc6].append([cc5, cc2, cc3])
+                ccsj_sj = math.ceil(cc0 + 3 - cc0 % 3)
+                all_ccsjylks.append(math.ceil(cc0))
+                if cc2 > 0:
+                    all_ccsjy.append([cc0, int(cc2), cc3])
+                    all_pcsj.append([cc5, int(cc2), cc3])  # {value:214, name:'多'},
+                    all_ccsjyl[math.ceil(cc0)] += cc2
+                    if cc1 == 1:
+                        all_ylje[0]['value'] += cc2
+                        all_ylss[0]['value'] += cc3
+                    else:
+                        all_ylje[1]['value'] += cc2
+                        all_ylss[1]['value'] += cc3
+                    if cc4 == 1:
+                        all_rnje[0]['value'] += cc2
+                        all_rnss[0]['value'] += cc3
+                    else:
+                        all_rnje[1]['value'] += cc2
+                        all_rnss[1]['value'] += cc3
+                else:
+                    all_ccsjk.append([cc0, int(cc2), cc3])
+                    all_pcsj.append([cc5, int(cc2), cc3])
+                    all_ccsjks[math.ceil(cc0)] += cc2
+                    if cc1 == 1:
+                        all_ylje[2]['value'] += -cc2
+                        all_ylss[2]['value'] += cc3
+                    else:
+                        all_ylje[3]['value'] += -cc2
+                        all_ylss[3]['value'] += cc3
+                    if cc4 == 1:
+                        all_rnje[2]['value'] += -cc2
+                        all_rnss[2]['value'] += cc3
+                    else:
+                        all_rnje[3]['value'] += -cc2
+                        all_rnss[3]['value'] += cc3
+                all_pcsj_max = cc3 if cc3 > all_pcsj_max else all_pcsj_max
+                all_ccsjss.append([ccsj_sj, cc3])
+                all_ykss.append([cc2 + 500 - cc2 % 500, cc3])
+            if all_pcsj_max % 5:
+                all_pcsj_max = all_pcsj_max + (5 - all_pcsj_max % 5)
+
+            max_jz = 0  # 最大净值
+            zjhc = 0  # 资金回测
+            # print(all_ykss)
+            all_ccsjss.sort()
+            all_ykss.sort()
+            all_ccsjylks = list(set(all_ccsjylks))
+            all_ccsjylks.sort()
+            all_ccsjss2 = defaultdict(int)
+            all_ykss2 = defaultdict(int)
+            for ccsj in all_ccsjss:
+                all_ccsjss2[ccsj[0]] += ccsj[1]
+            for ykss in all_ykss:
+                all_ykss2[ykss[0]] += ykss[1]
+            all_ccsjyl2 = []  # 持仓时间，盈利
+            all_ccsjks2 = []  # 持仓时间，亏损
+            for ccsjylks in all_ccsjylks:
+                all_ccsjyl2.append(all_ccsjyl.get(ccsjylks, 0))
+                all_ccsjks2.append(all_ccsjks.get(ccsjylks, 0))
+            hct = {
+                'allyk': [],  # 累积盈亏
+                'alljz': [],  # 累积净值
+                'allsxf': [],  # 累积手续费
+                'pie_name': [i[0] for i in pzs],  # 成交偏好（饼图） 产品名称
+                'pie_value': [{'value': i[1], 'name': i[0]} for i in pzs],  # 成交偏好 饼图的值
+                'qy': [],  # 客户权益
+                'bar_name': [],  # 品种盈亏 名称
+                'bar_value': [],  # 品种盈亏 净利润
+                'day_value': [],  # 每日盈亏 净利润
+                'week_name': [],  # 每周盈亏 名称
+                'week_value': [],  # 每周盈亏 净利润
+                'month_name': [],  # 每月盈亏 名称
+                'month_value': [],  # 每月盈亏 净利润
+                'alleae': [],  # 累积出入金
+                'amount': [],  # 账号总金额
+                'eae': [],  # 出入金
+                'all_ccsjy': all_ccsjy,
+                'all_ccsjk': all_ccsjk,
+                'all_pcsj': all_pcsj,
+                'all_pcsj_max': all_pcsj_max,
+                'all_ylje': all_ylje,
+                'all_ylss': all_ylss,
+                'all_rnje': all_rnje,
+                'all_rnss': all_rnss,
+                'all_pcsjn': all_pcsjn,
+                'all_pcsjs': all_pcsjs,
+                'zjhc': [],  # 资金回测
+                'ccsjss_x': list(all_ccsjss2.keys()),
+                'ccsjss_y': list(all_ccsjss2.values()),
+                'ykss_x': list(all_ykss2.keys()),
+                'ykss_y': list(all_ykss2.values()),
+
+                'all_ccsjylks': all_ccsjylks,
+                'all_ccsjyl2': all_ccsjyl2,
+                'all_ccsjks2': all_ccsjks2,
+            }
+            name_jlr = defaultdict(float)  # 品种名称，净利润
+            week_jlr = defaultdict(float)  # 每周，净利润
+            month_jlr = defaultdict(float)  # 每月，净利润
+            data2 = []
+            for de in zx_x:
+                yk, sxf = 0, 0
+                f_date = datetime.datetime.strptime(de, '%Y-%m-%d').isocalendar()[:2]
+                week = str(f_date[0]) + '-' + str(f_date[1])  # 星期
+                month = de[:7]  # 月
+                # data: ['2018-10-11', 'SR901', 270, 0.0, 'SR901(白糖)']
+                # ['2018-09-21', 'CF901', -1200, 4.31, 'CF901(棉花)']
+                # ['2018-09-21', 'J1901', 1550, 98.2, 'J1901(冶金焦炭)']
+                # ['2018-09-19', 'J1901', -6000, 98.28999999999999, 'J1901(冶金焦炭)']
+
+                for d in data_huice:
+                    # d: ('2018-08-31', 'J1901', 1750.0, 14.92, 'J1901(冶金焦炭)')
+                    if d[0][:10] == de:
+                        sxf += d[3] if d[3] else 0
+                        if not d[2]:
+                            continue
+                        yk += d[2]
+                        name_jlr[d[4]] += d[2]
+                        week_jlr[week] += d[2]
+                        month_jlr[month] += d[2]
+                    else:
+                        data2.append(d)
+
+                hct['day_value'].append(round(yk - sxf, 2))
+                yk += (prices[-1] if prices else 0)
+                prices.append(yk)
+                sxf += (hct['allsxf'][-1] if hct['allsxf'] else 0)
+                hct['allsxf'].append(round(sxf, 1))
+                rj = init_money
+                if rj != init_money:
+                    # jzq = (jzq * jz + rj - init_money) / jz  # 净值权重
+                    init_money = rj
+                    hct['eae'].append(init_money - (hct['alleae'][-1] if hct['alleae'] else 0))
+                else:
+                    hct['eae'].append('')
+                amount = init_money + yk - hct['allsxf'][-1]
+                hct['amount'].append(amount)
+                hct['alleae'].append(init_money)
+                # jz = amount / jzq if jzq != 0 else jz
+                jz2 = jzs[de]
+                hct['alljz'].append(round(jz2, 4))
+                hct['qy'].append(_qy[de])
+                max_jz = jz2 if jz2 > max_jz else max_jz
+                hct['zjhc'].append(round((max_jz - jz2) / max_jz * 100, 2))
+                data_huice = data2
+                data2 = []
+            if hct['zjhc']:
+                huizong['max_zjhc'] = max(hct['zjhc'])  # 最大回测
+            try:
+                start_date, end_date = zx_x[0], zx_x[-1]
+                f_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').isocalendar()[:2]
+                week = str(f_date[0]) + '-' + str(f_date[1])  # 开始星期
+                f_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').isocalendar()[:2]
+                week2 = str(f_date[0]) + '-' + str(f_date[1])  # 结束星期
+                # month_jlr = {k: v for k, v in month_jlr.items() if start_date <= k <= end_date}
+                week_jlr = {k: v for k, v in week_jlr.items() if week <= k <= week2 and v != 0}
+                hct['allyk'] = prices
+                hct['bar_name'] = [i for i in name_jlr]
+                hct['bar_value'] = [round(name_jlr[i], 1) for i in name_jlr]
+                # week_jlr = {k: v for k, v in week_jlr.items() if v != 0}
+                hct['week_name'] = [i for i in week_jlr]
+                hct['week_value'] = [round(week_jlr[i], 1) for i in week_jlr]
+                hct['month_name'] = [i for i in month_jlr if start_date <= i <= end_date]
+                hct['month_value'] = [round(month_jlr[i], 1) for i in month_jlr if start_date <= i <= end_date]
+                host = hc_name
+                host = host[0] + '*' * len(host[1])
+                hct['host'] = hc_name  # host
+                # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
+                huizong['max_amount'] = round(max(hct['amount']), 2)  # 最高余额
+                huizong['deposit'] = init_money  # 存款
+                huizong['draw'] = 0  # 取款
+                huizong['ykratio'] = abs(round(hc['avglr'] / (hc['avgss'] if hc['avgss'] != 0 else 1), 2))
+                huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
+
+                resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc,
+                        'huizong': huizong, 'init_money': init_money,  'hc_name': hc_name,
+                        'user_name': user_name, 'clouds': clouds}
+            except Exception as exc:
+                resp = {'hc_name': hc_name, 'user_name': user_name, 'clouds': clouds}
+                print(exc)
+
+            return render(rq, 'interface_huice.html', resp)
         elif _type == 'down' and qx >= 2:
             path_file = os.path.join(_folder, hc_name)
             if os.path.isfile(path_file):
-                resp = StreamingHttpResponse(viewUtil.file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
+                resp = StreamingHttpResponse(
+                    viewUtil.file_iterator(path_file))  # viewUtil.FileWrapper(open(path_file,'rb'))
                 resp['Content-Type'] = 'application/octet-stream'
                 resp['Content-Disposition'] = 'attachment;filename="{}"'.format(hc_name)  # 此处file_name是要下载的文件的文件名称
                 return resp
@@ -2638,12 +2884,12 @@ def interface_huice(rq):
                 os.remove(path_file)
             clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
             return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
-    elif rq.method == 'POST'and qx >= 2:
+    elif rq.method == 'POST' and qx >= 2:
         upload_file = rq.FILES.get('file')  # 获得文件
         if upload_file:
             file_name = upload_file.name
             path_file = os.path.join(_folder, file_name)
-            if not os.path.isfile(path_file) and upload_file.size < 1024*1024*10:  # 限制文件最大10M
+            if not os.path.isfile(path_file) and upload_file.size < 1024 * 1024 * 10:  # 限制文件最大10M
                 with open(path_file, 'wb+') as f:
                     for chunk in upload_file.chunks():
                         f.write(chunk)

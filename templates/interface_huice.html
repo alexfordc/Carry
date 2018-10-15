@@ -28,6 +28,8 @@
     color: #004974;
     text-decoration: none;
 }
+.huatut tr{border:1px solid #999;}
+.huatut td{ border:0px;height:40px; }
 </style>
 {% endblock %}
 {% block center_cen %}
@@ -41,7 +43,8 @@
             <tr><td><a href="" title="查看说明">{{ i }}</a></td>
                 <td><a href="{% url 'interface_huice' %}?type=down&id={{i}}">下载</a>&nbsp;&nbsp;
                 <a href="{% url 'interface_huice' %}?type=del&id={{i}}" onclick="return confirm('确定要删除吗?')">删除</a>&nbsp;&nbsp;
-                <a href="{% url 'interface_huice' %}?type=huice&id={{i}}">回测</a> </td></tr>
+                <a href="{% url 'interface_huice' %}?type=huice&id={{i}}">回测</a> &nbsp;&nbsp;
+                <a href="{% url 'interface_huice' %}?type=huice2&id={{i}}">回测2</a></td></tr>
         {% endfor %}
     </table>
 
@@ -1357,92 +1360,14 @@ $("#tuxiant25").click(function(){
 
 </script>
 
+        {% if huizong %}
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>
 <link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
 
 <div id="leftColumn" class="relative" style="margin: auto;position: relative;top: 30px;left: 300px;right: 0;bottom: 0;width:875px;">
-                   <!--<div class="floatLeft marginB10">-->
-<!--<div class="ds1">-->
-    <!--<div class="ds2">-->
-        <!--<div class="ds3">-->
-            <!--<div class="ds4">-->
-                <!--<div class="ds5">-->
-                    <!--<div class="ds6">-->
-                        <!--<div class="box_cont" style="width:195px; height:348px">-->
-                            <!--<div class="boxTitle">-->
-                                <!--<ul class="titleNav">-->
-                                    <!--&lt;!&ndash;<li class="bold">信息</li>&ndash;&gt;-->
-                                    <!--<li class="on" onclick="switchTab('tabs9','stats',this);">统计</li>-->
-                                    <!--&lt;!&ndash;<li class="off" onclick="switchTab('tabs9','gen',this);">一般</li>&ndash;&gt;-->
-                                <!--</ul>-->
-                            <!--</div>-->
 
-                            <!--<ul class="quickStats" id="stats" style="">-->
-                                <!--<li class="font12 bold"><span class="floatLeft dotted" id="gainTip">获利:</span>-->
-                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft dotted" id="absGainTip">绝对收益:</span>-->
-                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
-
-                                <!--<li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl|floatformat:"2"}}%</span></li>-->
-                                <!--<li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl|floatformat:"2"}}%</span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc|floatformat:"2"}}%</span></li>-->
-
-                                <!--<li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ￥{{hc.ye|floatformat:"2"}}</span></li>-->
-                                <!--<li><span class="floatLeft">净值:</span><span class="floatNone">  ￥{{hc.ye|floatformat:"2"}} </span></li>-->
-                                <!--<li><span class="floatLeft">最高:</span><span class="floatNone">￥{{hc.max_jz|floatformat:"2"}}</span>-->
-                                <!--</li>-->
-
-                                <!--<li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">￥{{huizong.yk|floatformat:"2"}}</span> </span></li>-->
-                                <!--<li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">￥0.00</span></li>-->
-                                <!--<li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> ￥{{init_money}}</span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">￥0.00</span></li>-->
-                                <!--<li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>-->
-                                <!--<li>-->
-                                        <!--<span class="floatLeft">交易者</span><span class="floatNone" id="totalTracking">{{hc_name}}</span>-->
-                                <!--</li>-->
-
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-
-<div class="floatLeft" style="width:660px;">
-
-
-
-<!--<div class="ds1">-->
-    <!--<div class="ds2">-->
-        <!--<div class="ds3">-->
-            <!--<div class="ds4">-->
-                <!--<div class="ds5">-->
-                    <!--<div class="ds6">-->
-                        <!--<div class="box_cont" style="height:348px" id="huicetuall">
-                            <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">增长率</span>&nbsp;&nbsp;
-                                <span id="tuxian2">余额</span>&nbsp;&nbsp;
-                                <span id="tuxian3">利润</span>&nbsp;&nbsp;
-                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;-->
-                                <!--<span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>-->
-                                <!--<span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>-->
-                            <!--</div>
-                                <div id="zhexiantu" style="width: 658;height: 318px;"></div>
-                           </div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-
-</div>
 <div class="floatLeft" style="width:877px">
 
 <div class="ds1" style="width:900px;font-size:14px;">
@@ -1602,5 +1527,5 @@ $("#tuxiant25").click(function(){
 </div>
 </div>
 </div>
-
+{% endif %}
 {% endblock %}

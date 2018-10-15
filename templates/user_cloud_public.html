@@ -31,6 +31,25 @@
 	pointer-events:none;
 }
 .file_table a{ color:blue; }
+
+
+    /*#editor {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }*/
+    #editor {
+        /*margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;*/
+        width: 1000px;
+        height: 500px;
+        font-size:14px;
+    }
 </style>
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.3/css/bootstrap.css">-->
 
@@ -47,6 +66,7 @@
 <script type="text/javascript" src="{% static 'js/jquery/3.3.1/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/webuploader.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/code_edit/ace.js' %}" type="text/javascript"></script>
 <div style="position:relative;left:3px;top:3px;color:green;" >&nbsp;&nbsp;{{ msg|truncatechars:50 }}</div>
 <div align="center">
 
@@ -87,14 +107,17 @@
     {% include 'base/user_public.html' %}
     <br/>
     {% if file_body %}
-    {% load mvote %}
+    <!--{% load mvote %}-->
     <div>
         {% csrf_token %}
-            <input type="button" onclick="javascript:user_cloud_public_ajax();" value="执行Python代码" style="background-color:orange;"><br/>
-        <div id="codes_result" style="border:1px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;"></div>
-            <div id="textarea_codes"
-                 style="border:3px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;" contenteditable="true">{{ file_body|linebreaksbrs }}
+            <input type="button" onclick="javascript:user_cloud_public_ajax();" value="执行Python代码" style="background-color:orange;">
+        <input type="button" onclick="javascript:editor_enlarge()" value="放大">
+        <br/>
+        <div id="codes_result" style="border:1px solid green;width:1000px;word-wrap:break-word;TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify;" contenteditable="false"></div>
+            <div id="textarea_codes">
+                <pre id="editor">{{ file_body }}</pre>
             </div>
+
     </div>
 
     {% endif %}
@@ -102,10 +125,24 @@
     {% endif %}
     </div>
 <script type="text/javascript">
+
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/twilight");
+editor.session.setMode("ace/mode/python");
+
+function editor_enlarge(){
+    $("#editor").css({"width":"90%","height":"90%"});
+    $("#codes_result").css({"width":"90%"});
+}
+
 function user_cloud_public_ajax(){
     var user_name = $("#user_info").text();
     var csrf = $("#csrfmiddlewaretoken input").val();
-    var codes = $("#textarea_codes").html();
+    var $codes = $(".ace_line");
+    var codes = "";
+    $.each($codes, function(){
+        codes += $(this).text()+"\n";
+    });
     codes = codes.replace(new RegExp('<br>','g'),'\n').replace(new RegExp('<div>','g'),'\n').replace(new RegExp('</div>','g'),'\n').replace(new RegExp('&nbsp;','g'),' ');
     var data = {"user_name":user_name,"csrfmiddlewaretoken":csrf,"codes":codes};
     $.ajax({
