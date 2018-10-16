@@ -627,3 +627,63 @@ Traceback (most recent call last):
   File "D:\tools\Tools\Carry\mysite\DataIndex.py", line 258, in <genexpr>
     dc[ind]['ma10'] = sum(da[ind - j]['close'] for j in range(10)) / 10  # 移动平均值 10均线
 IndexError: tuple index out of range
+base.py[2018-10-16 09:33:00][WARNING]：Not Found: /favicon.ico
+base.py[2018-10-16 09:49:48][WARNING]：Not Found: /favicon.ico
+HSD.py[2018-10-16 09:52:39][ERROR]：文件 HSD.py 第1706行报错：division by zero
+exception.py[2018-10-16 10:48:27][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1635, in moni
+    red_key = ''.join(('moni', dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc))
+TypeError: sequence item 1: expected str instance, NoneType found
+exception.py[2018-10-16 10:51:07][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1635, in moni
+    red_key = ''.join(('moni', dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc))
+TypeError: sequence item 3: expected str instance, NoneType found
+exception.py[2018-10-16 10:51:36][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1636, in moni
+    red_key = ''.join(('moni', dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc))
+TypeError: sequence item 3: expected str instance, NoneType found
+HSD.py[2018-10-16 10:58:25][ERROR]：文件：manage.py 第233行报错： Object of type 'method' is not JSON serializable
+HSD.py[2018-10-16 10:58:56][ERROR]：文件：manage.py 第233行报错： Object of type 'method' is not JSON serializable
+HSD.py[2018-10-16 11:05:13][ERROR]：文件：manage.py 第233行报错： Object of type 'method' is not JSON serializable
+HSD.py[2018-10-16 11:10:17][ERROR]：文件：manage.py 第233行报错： Object of type 'method' is not JSON serializable
+HSD.py[2018-10-16 11:10:34][ERROR]：文件：manage.py 第233行报错： Object of type 'method' is not JSON serializable
+exception.py[2018-10-16 11:47:27][ERROR]：Internal Server Error: /moni/
+Traceback (most recent call last):
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 249, in _legacy_get_response
+    response = self._get_response(request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\ProgramFiles\Anaconda3\lib\site-packages\django-1.11.8-py3.6.egg\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\tools\Tools\Carry\mysite\views.py", line 1667, in moni
+    end_date = str(dates - datetime.timedelta(days=1))[:10]  # + datetime.timedelta(days=1)
+TypeError: unsupported operand type(s) for -: 'str' and 'datetime.timedelta'

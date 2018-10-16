@@ -104,27 +104,30 @@ y_loading.loop = function() {
 
 y_loading.init();
 
+var su_url = "{{rq_url}}";
+
+function ajax_get(){
+    $.ajax({
+        type: "GET",
+        url: su_url,
+        //data: data,
+        success: function(res){
+            if(res == 1){
+                window.location.href=su_url;
+            }else if(res == 0){
+                window.location.href="{% url 'index' %}";
+            }
+        }
+    });
+}
+
 function request_load_ajax(){
     //var data={"host":"{{host}}","when":"{{when}}"};
-    var rq_url = "{{rq_url}}";
-    var su_url = "{% url 'cfmmc_huice' %}?{{rq_url}}";
-    if(rq_url.indexOf("/cfmmc/huice/")>=0){
-        su_url = rq_url;
-    }
-    setInterval(function(){
-        $.ajax({
-            type: "GET",
-            url: su_url,
-            //data: data,
-            success: function(res){
-                if(res == 1){
-                    window.location.href=su_url;
-                }else if(res == 0){
-                    window.location.href="{% url 'index' %}";
-                }
-            }
-        });
-    },2000);
+    //var rq_url = "{{rq_url}}";
+
+    var interval_time = 1000;
+    setTimeout("ajax_get()",1000);
+    setInterval("ajax_get()",3000);
 
 }
 request_load_ajax();

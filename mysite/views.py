@@ -1621,42 +1621,54 @@ def zhangting(rq, t):
 def moni(rq):
     """ 模拟测试 """
     user_name, qx = LogIn(rq)
-    dates = rq.GET.get('dates')
-    end_date = rq.GET.get('end_date')
-    fa = rq.GET.get('fa')
-    database = rq.GET.get('database', '1')
-    reverse = rq.GET.get('reverse')
-    zsds = rq.GET.get('zsds')  # 止损
-    ydzs = rq.GET.get('ydzs')  # 移动止损
-    zyds = rq.GET.get('zyds')  # 止盈
-    cqdc = rq.GET.get('cqdc')  # 点差
-    zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
-        100, 100, 200, 6)
-    reverse = True if reverse else False
-    zbjs = HSD.Zbjs()
-    ma = 60
-    if dates and end_date and fa:
-        param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
-        res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
-                                              reverse=reverse, param=param)
-        try:
-            keys = sorted(res.keys(), reverse=True)
-            res_length = len(keys)
-            res = [dict(res[k], **{'time': k}) for k in keys if res[k]['datetimes']][:500]  # 限制最多显示300天交易详细记录
-            fa_doc = zbjs.fa_doc
-            return render(rq, 'moni.html',
-                          {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': zbjs.xzfa,
-                           'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
-                           'first_time': first_time, 'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc,
-                           'user_name': user_name, 'res_length': res_length})
-        except Exception as exc:
-            logging.error("文件：{} 第{}行报错： {}".format('views.py', sys._getframe().f_lineno, exc))
-    dates = datetime.datetime.now()
-    day = dates.weekday() + 3
-    dates = str(dates - datetime.timedelta(days=day))[:10]
-    end_date = str(datetime.datetime.now())[:10]  # + datetime.timedelta(days=1)
-    return render(rq, 'moni.html', {'dates': dates, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                    'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
+    if rq.method == 'GET':
+        dates = rq.GET.get('dates', '')
+        end_date = rq.GET.get('end_date', '')
+        fa = rq.GET.get('fa','')
+        database = rq.GET.get('database', '1')
+        reverse = rq.GET.get('reverse', '')
+        zsds = rq.GET.get('zsds', '')  # 止损
+        ydzs = rq.GET.get('ydzs', '')  # 移动止损
+        zyds = rq.GET.get('zyds', '')  # 止盈
+        cqdc = rq.GET.get('cqdc', '')  # 点差
+        red = HSD.RedisPool()
+        red_key = ''.join(('moni', dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc))
+        if rq.is_ajax():
+            resp = red.get(red_key)
+            if not resp:
+                return HttpResponse(-1)  # 继续请求
+            elif resp == 0:
+                red.delete(red_key)
+                return HttpResponse(0)   # 数据计算有误
+            else:
+                return HttpResponse(1)   # 数据成功写入
+        else:
+            zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
+                100, 100, 200, 6)
+            reverse = True if reverse else False
+            if dates and end_date and fa:
+                resp = red.get(red_key)
+                if resp:
+                    resp['user_name'] = user_name
+                    return render(rq, 'moni.html', resp)
+                else:
+                    viewUtil.moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key)
+                    url_param = rq.META.get('QUERY_STRING')
+                    rq_url = '?'.join([rq.META.get('PATH_INFO'), url_param]) if url_param else rq.META.get('PATH_INFO')
+                    # if not rq_url:
+                    #     rq_url = rq.META.get('PATH_INFO')
+                    return render(rq, 'base/loading.html', {'rq_url': rq_url})
+
+            else:
+                zbjs = HSD.Zbjs()
+                dates = datetime.datetime.now()
+                day = dates.weekday() + 4
+                start_date = str(dates - datetime.timedelta(days=day))[:10]
+                end_date = str(dates - datetime.timedelta(days=1))[:10]
+                return render(rq, 'moni.html', {'dates': start_date, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
+                                                'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
+
+    return redirect('index')
 
 
 def newMoni(rq):
@@ -2598,9 +2610,10 @@ def cfmmc_huice(rq, param=None):
         else:
             hc_name = get_cfmmc_id_host(host + '_name')
             viewUtil.cfmmc_huice(data, host, start_date, end_date, hc_name, cfmmc_huice_key)
-            rq_url = rq.META.get('QUERY_STRING')
-            if not rq_url:
-                rq_url = rq.META.get('PATH_INFO')
+            url_param = rq.META.get('QUERY_STRING')
+            rq_url = '?'.join([rq.META.get('PATH_INFO'), url_param]) if url_param else rq.META.get('PATH_INFO')
+            # if not rq_url:
+            #     rq_url = rq.META.get('PATH_INFO')
             return render(rq, 'base/loading.html', {'host': _host, 'when': when, 'rq_url': rq_url})
 
 

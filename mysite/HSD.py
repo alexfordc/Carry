@@ -223,12 +223,14 @@ class RedisPool:
         写入 Redis 数据库
         :param key: 键
         :param value: 值，可为 python 各种数据类型
-        :param expiry: 过期时间，默认3天
+        :param expiry: 过期时间秒，默认259200秒（3天）
         :return: None
         """
         try:
             self._conn.set(key, json.dumps(value))
             self._conn.expire(key, expiry)
+        except TypeError as exc:
+            logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         except:
             self._conn = self.get_conn()
             self._conn.set(key, json.dumps(value))
@@ -313,7 +315,7 @@ def runSqlData2(db, sql, params=None):
         conn.commit()  # 提交
         data = cur.fetchall()
     except Exception as exc:
-        print(exc)
+        logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         # 认为数据库已经中断连接，重连，再执行
         try:
             conn = sp.get_conn(db, closed=True)  # get_conn(conn.db, isclose=True)
@@ -1596,7 +1598,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                     this_ccsj = (pinzhong[code_index[j[7]]][j[1][:-3]] - pinzhong[code_index[j[7]]][j[0][:-3]]) * j[6]
                 except Exception as exc:
                     this_ccsj = 0
-                    # print(exc)
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
                 ccsj += this_ccsj
                 allcchz = (
                     this_ccsj, 1 if j[2] == '多' else 0, j[3], j[6], 1 if j[0][:10] == j[1][:10] else 0, j[1], j[7])
@@ -2234,7 +2236,6 @@ class Cfmmc:
                 data2[k][3] += i[3]
 
         for i in data2:
-            print(data2[i])
             yield data2[i]
 
     def get_rj(self):
