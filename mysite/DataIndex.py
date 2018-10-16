@@ -43,8 +43,8 @@ class ZB(object):
                "0轴下方MACD绿区，则做空；第二波红绿区或大于60均线则平仓。", "止损100个点。"],
         "18": ["60均线上方三波MACD红区以上回归60均线，则做多；高位死叉与顶背离平仓。",
                "60均线下方三波MACD绿区以上回归60均线，则做空；低位金叉与底背离平仓。", "止损100个点。"],
-        "19": ["60均线下方10均线上穿60均线，则做多；60均线上方盈利平仓。",
-               "60均线上方10均线下穿60均线，则做空；60均线下方盈利平仓。", "止损100个点。"],
+        "19": ["60均线下方10均线上穿120均线，则做多；60均线上方盈利平仓。",
+               "60均线上方10均线下穿120均线，则做空；60均线下方盈利平仓。", "止损100个点。"],
     }
 
     def __init__(self):
@@ -2381,11 +2381,16 @@ class ZB(object):
                 ma10s.pop(0)
                 ma120s.pop(0)
 
-            # 开平仓条件
-            kctj_d = (len_ma10s>7 and sum(i for i in ma120s[2:7])/5-sum(i for i in ma10s[2:7])/5>2 and ma10 - ma120 >2
-                      and ma10-ma10s[-1]>1 and clo < mas and ma10s[-2]<ma10s[-1])
-            kctj_k = (len_ma10s>7 and sum(i for i in ma10s[2:7])/5-sum(i for i in ma120s[2:7])/5>2 and ma120 - ma10 >2
-                      and ma10s[-1]-ma10>1 and clo >mas and ma10s[-2]<ma10s[-1])
+            # 开平仓条件   if ma120s[i]>ma10s[i] else -1000000
+            # kctj_d = (len_ma10s > 7 and sum(i for i in ma120s[2:7]) / 5 - sum(i for i in ma10s[2:7]) / 5 > 2 and ma10 - ma120 > 2
+            #           and ma10 - ma10s[-1] > 1 and clo < mas and ma10s[-2] < ma10s[-1])
+            # kctj_k = (len_ma10s > 7 and sum(i for i in ma10s[2:7]) / 5 - sum(i for i in ma120s[2:7]) / 5 > 2 and ma120 - ma10 > 2
+            #           and ma10s[-1] - ma10 > 1 and clo > mas and ma10s[-2] < ma10s[-1])
+
+            kctj_d = (len_ma10s>7 and sum(i for i in ma120s[:5])/5-sum(i for i in ma10s[:5])/5>1 and ma10 - ma120 >=2
+                      and ma10-ma10s[-1]>1 and ma120<ma120s[-1] and clo < mas and ma10s[-2]<ma10s[-1])
+            kctj_k = (len_ma10s>7 and sum(i for i in ma10s[:5])/5-sum(i for i in ma120s[:5])/5>1 and ma120 - ma10 >=2
+                      and ma10s[-1]-ma10>1 and ma120>ma120s[-1] and clo >mas and ma10s[-2]<ma10s[-1])
             # if is_d == 1 or is_k == -1:
             #     if clo > mas:
             #         pd_pk.append(1)
@@ -2505,12 +2510,13 @@ class ZB(object):
                 break
             is_dk = not (is_k or is_d)
             dt2 = dt3[-1]
-            datetimes, ope, clo, macd, mas, std, reg, mul, cd, high, low, maidian = dt2['datetimes'], dt2['open'], dt2[
-                'close'], dt2[
-                                                                                        'macd'], dt2['ma60'], dt2['std'], \
-                                                                                    dt2['reg'], dt2['mul'], dt2['cd'], \
-                                                                                    dt2['high'], dt2['low'], dt2[
-                                                                                        'maidian']
+            (
+                datetimes, ope, clo, macd, mas, std,
+                reg, mul, cd, high, low, maidian
+            ) = (
+                dt2['datetimes'], dt2['open'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['std'],
+                dt2['reg'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['maidian']
+            )
             if mul > 1.5:
                 res[dates]['dy'] += 1
             elif mul < -1.5:
@@ -2624,8 +2630,7 @@ class ZB(object):
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates = str(df2[0])[:10]
             dt3 = data2.send(df2)
-            datetimes = dt3[-1]['datetimes']
-            date_hour = datetimes.hour
+            date_hour = dt3[-1]['datetimes'].hour
             # date_min = datetimes.minute
             if not (date_hour > 16 or date_hour < 9):  # (date_hour == 16 and date_min > 30) or
                 # continue

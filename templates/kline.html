@@ -189,6 +189,7 @@
                 <div >
                     <form action="{% url 'kline' %}" method="GET">
                         <input style="height:24px;" type="date" name="date" value="{{date}}" id="search_date"/>
+                        <input style="width:50px;height:24px;" type="number" max="5" name="ts" value="{{ts}}"><span style="color:green;">天</span>
                         <select name="database" style="background-color:#DDDDDD;height:25px;">
                             <option value="1" {% if database == '1' %}selected{% endif %}>MySQL数据</option>
                             <option value="2" {% if database == '2' %}selected{% endif %}>MongoDB数据</option>

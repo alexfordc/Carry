@@ -1418,11 +1418,16 @@ def tools(rq):
 def kline(rq):
     user_name, qx = LogIn(rq)
     date = rq.GET.get('date', HSD.get_date())
+    ts = rq.GET.get('ts', '1')
     database = rq.GET.get('database', '1')
+    if not ts.isdigit():
+        ts = 1
+    else:
+        ts = int(ts)
     _key = f'{rq.session.session_key}_kline_date'
-    write_to_cache(_key, (date, database))
+    write_to_cache(_key, (date, database, ts))
 
-    return render(rq, 'kline.html', {'date': date, 'user_name': user_name, 'database': database})
+    return render(rq, 'kline.html', {'date': date, 'user_name': user_name, 'database': database, 'ts': ts})
 
 
 def getList(rq):
@@ -1430,16 +1435,17 @@ def getList(rq):
     data_dict = {'1': ['carry_investment', 'wh_same_month_min'], '2': ['carry_investment', 'wh_min']}
     _key = f'{rq.session.session_key}_kline_date'
     _dates = read_from_cache(_key)
-    dates, database = _dates if _dates else (None, None)
+    dates, database, ts = _dates if _dates else (None, None, '1')
+    ts = 5 if ts > 5 else ts
     res = ()
     if dates and database:
         # conn = HSD.get_conn(data_dict[database][0])
         if len(dates) == 10:
-            dates2 = HSD.dtf(dates) + datetime.timedelta(days=1)
+            dates2 = HSD.dtf(dates) + datetime.timedelta(days=ts)
         else:
             dates2 = HSD.dtf(dates)
             dates = dates2 - datetime.timedelta(minutes=20)
-            dates2 = dates2 + datetime.timedelta(days=1)
+            dates2 = dates2 + datetime.timedelta(days=ts)
             dates2 = str(dates2)[:10]
         if database == '2':
             data = HSD.MongoDBData(db='HKFuture', table='future_1min').get_hsi(dates, dates2)
@@ -1649,6 +1655,7 @@ def moni(rq):
             if dates and end_date and fa:
                 resp = red.get(red_key)
                 if resp:
+                    # red.delete(red_key)
                     resp['user_name'] = user_name
                     return render(rq, 'moni.html', resp)
                 else:
@@ -1657,7 +1664,7 @@ def moni(rq):
                     rq_url = '?'.join([rq.META.get('PATH_INFO'), url_param]) if url_param else rq.META.get('PATH_INFO')
                     # if not rq_url:
                     #     rq_url = rq.META.get('PATH_INFO')
-                    return render(rq, 'base/loading.html', {'rq_url': rq_url})
+                    return render(rq, 'base/loading.html', {'user_name': user_name, 'rq_url': rq_url})
 
             else:
                 zbjs = HSD.Zbjs()
@@ -2614,7 +2621,7 @@ def cfmmc_huice(rq, param=None):
             rq_url = '?'.join([rq.META.get('PATH_INFO'), url_param]) if url_param else rq.META.get('PATH_INFO')
             # if not rq_url:
             #     rq_url = rq.META.get('PATH_INFO')
-            return render(rq, 'base/loading.html', {'host': _host, 'when': when, 'rq_url': rq_url})
+            return render(rq, 'base/loading.html', {'user_name': user_name, 'host': _host, 'when': when, 'rq_url': rq_url})
 
 
 def interface_huice(rq):
