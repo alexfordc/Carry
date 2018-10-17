@@ -126,15 +126,6 @@
     </div>
 <script type="text/javascript">
 
-var editor = ace.edit("editor");
-editor.setTheme("ace/theme/twilight");
-editor.session.setMode("ace/mode/python");
-
-function editor_enlarge(){
-    $("#editor").css({"width":"90%","height":"90%"});
-    $("#codes_result").css({"width":"90%"});
-}
-
 function user_cloud_public_ajax(){
     var user_name = $("#user_info").text();
     var csrf = $("#csrfmiddlewaretoken input").val();
@@ -230,6 +221,16 @@ function doPost(url,param){
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
+}
+
+// 代码编辑
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/twilight");
+editor.session.setMode("ace/mode/python");
+
+function editor_enlarge(){
+    $("#editor").css({"width":"90%","height":"90%"});
+    $("#codes_result").css({"width":"90%"});
 }
 
 </script>
