@@ -1,4 +1,4 @@
-
-import datetime
-
-print(datetime.datetime.now(),'年')
+a=124
+print(a)
+print(2)
+print(3)

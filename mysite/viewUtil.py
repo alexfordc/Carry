@@ -1250,13 +1250,27 @@ def get_interface_datas(hc_name):
 def get_interface_huice(hc_name, min_date=None, max_date=None):
     """ 回测接口"""
     datas = get_interface_datas(hc_name)
-    init_money = datas['summary']['FUTURE']  # 入金
+    summary = datas['summary']
+    trades = datas['trades']
+    init_money = summary['FUTURE']  # 入金
     results2,data_ykall = HSD.huice_order_record(hc_name,datas)
     res = {}
     pinzhong = []  # 所有品种
 
-    huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
-               'avg_day': 0, 'least2': [0, 1000], 'most2': [0, -1000]}
+    huizong = {
+        'yk': 0,
+        'shenglv': 0,
+        'zl': 0,
+        'least': [0, 1000],
+        'most': [0, -1000],
+        'avg': 0,
+        'avg_day': 0,
+        'least2': [0, 1000],
+        'most2': [0, -1000],
+        'expect': round(datas['future_account'].daily_pnl.sum()/len(datas['future_account']),2),        # 期望
+        'commission': round(trades.commission.sum()),    # 佣金
+        'sharp': summary['sharpe'],         # 夏普比率
+    }
     for i in results2:
         if not i[5]:
             continue

@@ -1655,7 +1655,8 @@ def moni(rq):
             if dates and end_date and fa:
                 resp = red.get(red_key)
                 if resp:
-                    # red.delete(red_key)
+                    if HSD.computer_name == 'doc':
+                        red.delete(red_key)
                     resp['user_name'] = user_name
                     return render(rq, 'moni.html', resp)
                 else:
@@ -2639,7 +2640,7 @@ def interface_huice(rq):
             hc, huizong, init_money = data_huice.send(None)
             resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hc_name': hc_name}
             resp['user_name'] = user_name
-            return render(rq, 'hc.html', resp)
+            return render(rq, 'interface_hc.html', resp)
         elif _type == 'huice2':  # 回测、画图
             clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
 

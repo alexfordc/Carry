@@ -73,7 +73,7 @@ class ZB(object):
     def is_date(self, datetimes):
         ''' 是否已经或即将进入晚盘 '''
         h = datetimes.hour
-        return (h == 16 and datetimes.minute >= 28) or h > 16 or h < 9
+        return (h == 16 and datetimes.minute >= 13) or h > 16 or h < 9
 
     def time_pd(self, dt1, dt2, fd=1):
         ''' 时间长度 '''
@@ -2338,7 +2338,7 @@ class ZB(object):
         sb = []
         ma10s, ma120s = [], []  # 10均线 与 120均线
         ydzs_d, ydzs_k = 0, 0  # 移动止损
-        regs = 0
+        kd,kk = [0], [0]
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
             _while, dt3, dates, qzpc = yield res, first_time
@@ -2350,10 +2350,10 @@ class ZB(object):
             dt2 = dt3[-1]
             (
                 datetimes, clo, macd, mas, reg,
-                mul, cd, high, low, ma10, ma120
+                mul, cd, high, low, ma10, ma120,op
             ) = (
                 dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['reg'],
-                dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['ma10'], dt2['ma120']
+                dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['ma10'], dt2['ma120'], dt2['open']
             )
             datetimes_hour = datetimes.hour
             if mul > 1.5:
@@ -2361,20 +2361,6 @@ class ZB(object):
             elif mul < -1.5:
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
-
-            # _append = True
-            # if ((sb and sb[-1][0] != reg) or not sb):
-            #     sb.append([reg, macd, clo])
-            # elif sb[-1][0] == reg and macd < 0:
-            #     sb[-1][1] = macd if sb[-1][1] > macd else sb[-1][1]
-            #     sb[-1][2] = clo if sb[-1][2] > clo else sb[-1][2]
-            # elif sb[-1][0] == reg and macd > 0:
-            #     sb[-1][1] = macd if sb[-1][1] < macd else sb[-1][1]
-            #     sb[-1][2] = clo if sb[-1][2] < clo else sb[-1][2]
-            # else:
-            #     _append = False
-            # if len(sb) > 18:
-            #     sb.pop(0)
 
             len_ma10s = len(ma10s)
             if len_ma10s>8:
@@ -2388,17 +2374,22 @@ class ZB(object):
             #           and ma10s[-1] - ma10 > 1 and clo > mas and ma10s[-2] < ma10s[-1])
 
             kctj_d = (len_ma10s>7 and sum(i for i in ma120s[:5])/5-sum(i for i in ma10s[:5])/5>1 and ma10 - ma120 >=2
-                      and ma10-ma10s[-1]>1 and ma120<ma120s[-1] and clo < mas and ma10s[-2]<ma10s[-1])
+                      and ma10-ma10s[-1]>1 and ma10s[-2]<ma10s[-1] and clo < mas and clo-op>4) # and clo < mas   abs(sum(ma120s[:8])/8-ma120)>10
             kctj_k = (len_ma10s>7 and sum(i for i in ma10s[:5])/5-sum(i for i in ma120s[:5])/5>1 and ma120 - ma10 >=2
-                      and ma10s[-1]-ma10>1 and ma120>ma120s[-1] and clo >mas and ma10s[-2]<ma10s[-1])
+                      and ma10s[-1]-ma10>1 and ma10s[-2]<ma10s[-1] and clo >mas)  # and clo >mas
             # if is_d == 1 or is_k == -1:
             #     if clo > mas:
             #         pd_pk.append(1)
             #     elif clo < mas:
             #         pd_pk.append(-1)
 
-            pctj_d = clo > mas and is_d and clo-startMony_d>7 #len(pd_pk) >1 and pd_pk[-1]!=pd_pk[-2]
-            pctj_k = clo < mas and is_k and startMony_k-clo>7
+            # if is_d ==1:
+            #     kd.append(clo)
+            # elif is_k == -1:
+            #     kk.append(clo)
+            # len_kd,len_kk = len(kd[-10:]),len(kk[-10:])
+            pctj_d = clo - mas>10 and clo-startMony_d>7 #len(pd_pk) >1 and pd_pk[-1]!=pd_pk[-2]
+            pctj_k = mas - clo>10  and startMony_k-clo>7
 
             ma10s.append(ma10)
             ma120s.append(ma120)
@@ -2414,7 +2405,7 @@ class ZB(object):
                 is_d = 1
                 first_time = [str_time1, '多', clo]
                 zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
-                pd_pk = []  # 平多，平空
+                kd = []
             elif kctj_k and is_dk and 10 <= datetimes_hour < 16:
                 jg_k = clo
                 startMony_k = clo
@@ -2422,7 +2413,7 @@ class ZB(object):
                 is_k = -1
                 first_time = [str_time2, '空', clo]
                 zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
-                pd_pk = []  # 平多，平空
+                kk = []
 
             if is_d == 1:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d

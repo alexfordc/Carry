@@ -898,14 +898,24 @@ def huice_order_record(user,datas):
     resAll = []
     data_ykall = {}
     # huizong = {}
+    # CS = {
+    #     'AGL8': 15, 'AL8': 10, 'ALL8': 5,'APL8': 10,'AUL8': 1000,'BBL8': 10, 'BL8': 10, 'BUL8': 10, 'CFL8': 5,
+    #     'CL8': 10, 'CSL8': 10, 'CUL8': 5, 'CYL8': 5, 'FBL8': 10, 'FGL8': 20, 'FUL8': 10, 'HCL8': 10, 'ICL8': 200,
+    #     'IFL8': 300, 'IHL8': 300, 'IL8': 100, 'JDL8': 10, 'JL8': 100, 'JML8': 60, 'JRL8': 100, 'LL8': 5, 'LRL8': 100,
+    #     'MAL8': 10, 'ML8': 10, 'NIL8': 1, 'OIL8': 10, 'PBL8': 5, 'PL8': 10, 'PML8': 100, 'PPL8': 5, 'PTAL8': 5,
+    #     'RBL8': 10, 'RIL8': 100, 'RML8': 10, 'RSL8': 100, 'RUL8': 10, 'SCL8': 1000, 'SFL8': 5, 'SML8': 5, 'SNL8': 1,
+    #     'SRL8': 10, 'TAL8': 5, 'TFL8': 10000, 'TL8': 10000, 'TSL8': 10000, 'VL8': 5, 'WHL8': 100, 'WRL8': 10, 'YL8': 10,
+    #     'ZCL8': 100, 'ZNL8': 5}
+    positions = datas['future_positions'][['order_book_id','contract_multiplier']]
 
+    CS = {i[0]: i[1] for i in positions.values}
     datas = datas['trades']
 
     datas = datas[
-        ['trading_datetime', 'transaction_cost', 'last_price', 'last_quantity', 'position_effect', 'side', 'symbol']]
+        ['trading_datetime', 'transaction_cost', 'last_price', 'last_quantity', 'position_effect', 'side', 'order_book_id', 'commission']]
 
-    for prod in set(datas.symbol):
-        data = [tuple(i) for i in datas[datas['symbol']==prod].values]
+    for prod in set(datas.order_book_id):
+        data = [tuple(i) for i in datas[datas['order_book_id']==prod].values]
         kc = []
         # data2 = []
         res = []
@@ -916,6 +926,7 @@ def huice_order_record(user,datas):
             dt.append(sum(data[j][3] if data[j][6] == 'BUY' else -data[j][3] for j in range(0, i + 1)))
             try:
                 hands = int(dt[3])
+                # print(dt)
                 for j in range(hands):
                     kc.append(dt)
                     # dt ['2018-08-30 09:01:00', 11.2725, 12525.0, 2.0, 'CLOSE_TODAY', 'BUY', 'RUL8', -1810.0]
@@ -924,10 +935,10 @@ def huice_order_record(user,datas):
                         start = kc.pop()
                         yk = 0
                         if dt[5] == 'BUY':  # 卖
-                            yk = (start[2] - stop[2]) #- (start[1] + stop[1]) / hands
+                            yk = (start[2] - stop[2])*CS[start[6]] - (start[1] + stop[1]) / hands
                             # huizong[upk][5] += 1
                         elif dt[5] == 'SELL':  # 买
-                            yk = (stop[2] - start[2]) #- (start[1] + stop[1]) / hands
+                            yk = (stop[2] - start[2])*CS[start[6]] - (start[1] + stop[1]) / hands
                             # huizong[upk][4] += 1
                         _date = stop[0]
                         date_prod = _date + prod
@@ -1699,11 +1710,11 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
             this_year[5] += jys[5]
             this_year[6] += jys[6]
         this_week[0] = round(this_week[0], 2)
-        this_week[3] = round(this_week[6] / this_week[4] * 100, 2)
+        this_week[3] = round(this_week[6] / this_week[4] * 100, 2) if this_week[4]!=0 else 0
         this_month[0] = round(this_month[0], 2)
-        this_month[3] = round(this_month[6] / this_month[4] * 100, 2)
+        this_month[3] = round(this_month[6] / this_month[4] * 100, 2) if this_month[4] != 0 else 0
         this_year[0] = round(this_year[0], 2)
-        this_year[3] = round(this_year[6] / this_year[4] * 100, 2)
+        this_year[3] = round(this_year[6] / this_year[4] * 100, 2) if this_year[4] != 0 else 0
     except Exception as exc:
         logging.error("文件 HSD.py 第{}行报错：{}".format(sys._getframe().f_lineno, exc))
     hc['this_week'] = this_week
