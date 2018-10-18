@@ -734,15 +734,15 @@ def user_cloud_public(rq):
 def user_cloud_public_download(rq):
     """ 公共云 下载 """
     user_name, qx = LogIn(rq)
-    red = HSD.RedisPool()
-    red_key = "user_cloud_public_download_is_download"
-    is_downs = red.get(red_key)
-    _d = user_name + str(datetime.datetime.now())[:18]
 
     if user_name and qx >= 2 and rq.method == 'GET':
         path_root = HSD.get_external_folder('cloud')  # 保存文件的目录
         name = rq.GET.get('name')
         file_name = rq.GET.get('filename')
+        red = HSD.RedisPool()
+        red_key = f"is_download{rq.session.session_key}{file_name}"
+        is_downs = red.get(red_key)
+        _d = user_name + str(datetime.datetime.now())[:18]
         path_file = os.path.join(path_root, name + '_+_' + file_name)
 
         if os.path.isfile(path_file):
@@ -2219,8 +2219,8 @@ def cfmmc_login(rq):
                 end_date = HSD.get_date()
                 cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
-            else:  # 若没下载过数据，则下载300天之内的
-                start_date = HSD.get_date(-300)
+            else:  # 若没下载过数据，则下载360天之内的
+                start_date = HSD.get_date(-360)
                 end_date = HSD.get_date()
                 cfmmc_login_d.down_day_data_sql(userID, start_date, end_date, password, createTime)
                 response['logins'] = f'登录成功！正在更新{start_date}之后的数据！'
@@ -2702,6 +2702,7 @@ def interface_huice(rq):
             ]
             if 'allcchz' not in hc:
                 hc['allcchz'] = []
+
             for cc0, cc1, cc2, cc3, cc4, cc5, cc6 in hc['allcchz']:
                 # cc: 持仓时间，多空(1,0），盈亏，手数，日内隔夜(1,0），平仓时间，合约
                 # cc: (173, 0, 8700, 1, 1, '2018-09-03 14:09:05', 'J1901')

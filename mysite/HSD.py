@@ -29,8 +29,15 @@ from mysite.DataIndex import ZB
 config = configparser.ConfigParser()
 config.read('log\\conf.conf', encoding='utf-8')
 
+def get_date(d=None):
+    ''' 返回当前日期，格式为：2018-04-04
+        若参数为整数，则把当前日期按参数向前后推移 '''
+    if isinstance(d, int):
+        return str(datetime.datetime.now() + datetime.timedelta(days=d))[:10]
+    return str(datetime.datetime.now())[:10]
+
 logging.basicConfig(
-    filename='log\\logging.log',
+    filename=f'log\\log\\logging-{get_date()}.log',
     filemode='a',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S',
@@ -134,14 +141,6 @@ SQL = {
 }
 
 computer_name = socket.gethostname()  # 计算机名称
-
-
-def get_date(d=None):
-    ''' 返回当前日期，格式为：2018-04-04
-        若参数为整数，则把当前日期按参数向前后推移 '''
-    if isinstance(d, int):
-        return str(datetime.datetime.now() + datetime.timedelta(days=d))[:10]
-    return str(datetime.datetime.now())[:10]
 
 
 def get_config(root, son):
@@ -891,12 +890,14 @@ def sp_order_record(start_date=None, end_date=None):
     return resAll, huizong
 
 
+
 def huice_order_record(user,datas):
     """ 回测接口"""
     # global IDS
     # IDS = set()
-    resAll = []
-    data_ykall = {}
+    resAll = []  # 买卖结果
+    data_ykall = {}  # 某个合约每天盈亏
+    code_last = {}   # 某个合约最后的一条数据
     # huizong = {}
     # CS = {
     #     'AGL8': 15, 'AL8': 10, 'ALL8': 5,'APL8': 10,'AUL8': 1000,'BBL8': 10, 'BL8': 10, 'BUL8': 10, 'CFL8': 5,
@@ -907,12 +908,19 @@ def huice_order_record(user,datas):
     #     'SRL8': 10, 'TAL8': 5, 'TFL8': 10000, 'TL8': 10000, 'TSL8': 10000, 'VL8': 5, 'WHL8': 100, 'WRL8': 10, 'YL8': 10,
     #     'ZCL8': 100, 'ZNL8': 5}
     positions = datas['future_positions'][['order_book_id','contract_multiplier']]
-
+    end_date = datas['summary']['end_date']
     CS = {i[0]: i[1] for i in positions.values}
     datas = datas['trades']
 
     datas = datas[
-        ['trading_datetime', 'transaction_cost', 'last_price', 'last_quantity', 'position_effect', 'side', 'order_book_id', 'commission']]
+        ['trading_datetime', 'transaction_cost', 'last_price',
+         'last_quantity', 'position_effect', 'side', 'order_book_id']]
+
+    if datas['order_book_id'][:1][0][:3]=='HSI':
+        mongo = MongoDBData(db='HKFuture', table='future_1min')
+    else:
+        mongo = MongoDBData()
+    _coll = mongo._coll
 
     for prod in set(datas.order_book_id):
         data = [tuple(i) for i in datas[datas['order_book_id']==prod].values]
@@ -922,8 +930,10 @@ def huice_order_record(user,datas):
         # upk = user + prod
 
         for i in range(len(data)):
-            dt = list(data[i][:7])
-            dt.append(sum(data[j][3] if data[j][6] == 'BUY' else -data[j][3] for j in range(0, i + 1)))
+            # ('2018-08-30 13:49:00', 20.0, 11633.0, 1.0, 'OPEN', 'SELL', 'APL8', 20.0)
+            # ('2018-08-30 14:38:00', 120.0, 11703.0, 6.0, 'CLOSE_TODAY', 'BUY', 'APL8', 120.0)
+            dt = list(data[i])
+            # dt.append(sum(data[j][3] if data[j][5] == 'BUY' else -data[j][3] for j in range(0, i + 1)))
             try:
                 hands = int(dt[3])
                 # print(dt)
@@ -954,7 +964,20 @@ def huice_order_record(user,datas):
             except Exception as exc:
                 logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
 
-        kc = [[user, k[6], k[0], k[2], None, None, None, '多' if k[5] == 'BUY' else '空', 1, '未平仓'] for k in kc]
+        # kc = [[user, k[6], k[0], k[2], None, None, None, '多' if k[5] == 'BUY' else '空', 1, '未平仓'] for k in kc]
+        # 没有平仓的，模拟系统平仓
+        for k,v in enumerate(kc):
+            if v[0][:10] == end_date:  # 如果是最后一天没有平仓的，算作未平仓
+                kc[k] = [user, v[6], v[0], v[2], None, None, None, '多' if v[5] == 'BUY' else '空', 1, '未平仓']
+            else:
+                if prod not in code_last:
+                    # code_l = _coll.find({'code': prod}).sort('datetime', -1).limit(0)[0]
+                    code_l = _coll.find_one({'code': prod,'datetime': {'$lt':datetime.datetime(2888, 8, 8)}},
+                                            sort=[('datetime', -1)])
+                    code_last[prod] = (str(code_l['datetime']), code_l['close'])
+                yk = (code_last[prod][1]-v[2] if v[5] == 'BUY' else v[2]-code_last[prod][1])*CS[v[6]]-v[1]*2/v[3]
+                kc[k] = [user, v[6], v[0], v[2], code_last[prod][0], code_last[prod][1], yk,
+                         '多' if v[5] == 'BUY' else '空', 1, '已平仓']
         res.extend(kc)
         res.sort(key=lambda x: x[2])
         resAll.extend(res)
@@ -963,8 +986,8 @@ def huice_order_record(user,datas):
 
 
 def calculate_earn(dates, end_date):
-    '''计算所赚。参数：‘2018-01-01’
-    返回值：[[开仓时间，单号，ID，平仓时间，价格，开仓0平仓1，做多0做空1，赚得金额，正向跟单，反向跟单]...]'''
+    """ 计算所赚。参数：‘2018-01-01’
+    返回值：[[开仓时间，单号，ID，平仓时间，价格，开仓0平仓1，做多0做空1，赚得金额，正向跟单，反向跟单]...] """
     global IDS
     sql = SQL['calculate_earn']
     if dates:
@@ -1594,7 +1617,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
                 hc['avgss'] += 1
 
             # 计算持仓时间
-            if pinzhong is None:  # 按实际物理时间计算
+            if not pinzhong:  # 按实际物理时间计算
                 start_d = j[0].replace(':', '-').replace(' ', '-')
                 start_d = start_d.split('-') + [0, 0, 0]
                 start_d = [int(sd) for sd in start_d]
@@ -1624,7 +1647,7 @@ def huices(res, huizong, init_money, dates, end_date, pinzhong=None):
     try:
         hc['cgzd'][2] = round(hc['cgzd'][0] / hc['cgzd'][1] * 100, 2) if hc['cgzd'][1] != 0 else 0
         hc['cgzk'][2] = round(hc['cgzk'][0] / hc['cgzk'][1] * 100, 2) if hc['cgzk'][1] != 0 else 0
-        if pinzhong is None:
+        if not pinzhong:
             ccsj = ccsj / 60 / huizong['zl'] if huizong['zl'] != 0 else 0
             if ccsj > 1440:
                 _ccsj = round(ccsj / 60 / 24, 2)  # 平均持仓时间

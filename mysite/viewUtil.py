@@ -1192,6 +1192,7 @@ def get_cloud_file(path_root):
             file_size = str(file_size) + ' B'
         # 文件名称，文件大小，上传者，上传时间
         clouds.append([i[ind + 3:], file_size, i[:ind], times])
+    clouds.sort(key=lambda x: x[3], reverse=True)
     return clouds
 
 
@@ -1238,6 +1239,7 @@ def file_iterator(files, chunk_size=512, red=None, red_key=None):
         else:
             f.close()
             break
+    red.set(red_key, 'ok', expiry=100)
 
 
 def get_interface_datas(hc_name):
@@ -1270,12 +1272,15 @@ def get_interface_huice(hc_name, min_date=None, max_date=None):
         'expect': round(datas['future_account'].daily_pnl.sum()/len(datas['future_account']),2),        # 期望
         'commission': round(trades.commission.sum()),    # 佣金
         'sharp': summary['sharpe'],         # 夏普比率
+        'sortino': summary['sortino'],           # 索提诺比率
+        'information_ratio': summary['information_ratio'],  # 信息比率
+        'downside_risk': summary['downside_risk'],     # 下行风险
     }
     for i in results2:
         if not i[5]:
             continue
-        if i[1] not in pinzhong:
-            pinzhong.append(i[1])
+        # if i[1] not in pinzhong:
+        #     pinzhong.append(i[1])
         dt = i[2][:10]
         if dt not in res:
             res[dt] = {'duo': 0, 'kong': 0, 'mony': 0, 'shenglv': 0, 'ylds': 0, 'datetimes': []}
@@ -1294,30 +1299,31 @@ def get_interface_huice(hc_name, min_date=None, max_date=None):
         huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
         huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
 
-    if min_date and max_date:
-        _re = re.compile(r'[A-z]+')
-        _pz = set(re.search(_re, i)[0] for i in pinzhong)
-        _pz = [i + 'L8' for i in _pz]
-        _redis = HSD.RedisPool()
-        pinzhong = _redis.get('cfmmc_hc_data_pinzhong')
-        if not pinzhong:
-            pinzhong = {}
-        mongo = HSD.MongoDBData()
-        is_cache_set = False
-        for p in _pz:
-            if p not in pinzhong or pinzhong[p]['min_date'] > min_date or pinzhong[p]['max_date'] < max_date:
-                pzs = mongo.get_data(p, min_date, max_date)
-                pzs = {str(i)[:-3]: j for j, (i, *_) in enumerate(pzs)}
-                pzs['min_date'] = min_date
-                pzs['max_date'] = max_date
-                pinzhong[p] = pzs
-                is_cache_set = True
-        if is_cache_set:
-            _redis.set('cfmmc_hc_data_pinzhong', pinzhong)
+    # if min_date and max_date:
+    #     _re = re.compile(r'[A-z]+')
+    #     _pz = set(re.search(_re, i)[0] for i in pinzhong)
+    #     _pz = [i + 'L8' for i in _pz]
+    #     _redis = HSD.RedisPool()
+    #     pinzhong = _redis.get('cfmmc_hc_data_pinzhong')
+    #     if not pinzhong:
+    #         pinzhong = {}
+    #     mongo = HSD.MongoDBData()
+    #     is_cache_set = False
+    #     for p in _pz:
+    #         if p not in pinzhong or pinzhong[p]['min_date'] > min_date or pinzhong[p]['max_date'] < max_date:
+    #             pzs = mongo.get_data(p, min_date, max_date)
+    #             pzs = {str(i)[:-3]: j for j, (i, *_) in enumerate(pzs)}
+    #             pzs['min_date'] = min_date
+    #             pzs['max_date'] = max_date
+    #             pinzhong[p] = pzs
+    #             is_cache_set = True
+    #     if is_cache_set:
+    #         _redis.set('cfmmc_hc_data_pinzhong', pinzhong)
 
     res, huizong = tongji_huice(res, huizong)
 
     hc, huizong = HSD.huices(res, huizong, init_money, None, str(datetime.datetime.now())[:10], pinzhong)
+    hc['portfolio_jz'] = list(datas['portfolio']['unit_net_value'])
 
     yield hc, huizong, init_money
     for i in data_ykall:

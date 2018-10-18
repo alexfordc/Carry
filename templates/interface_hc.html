@@ -315,9 +315,9 @@
 
 
                     <tr>
-                        <td><span class="dotted" id="zTip">Z评分 (概率):</span></td>
+                        <td><span class="dotted" id="zTip">下行风险:</span></td>
                         <td class="alignR">
-                            -0.16 (12.72%)
+                            {{ huizong.downside_risk }}
                         </td>
                     </tr>
 
@@ -326,12 +326,12 @@
                         <td class="alignR">{{ huizong.expect }}</td>
                     </tr>
                                                             <tr>
-                                                                <td><span class="dotted" id="ahprTip">AHPR:</span></td>
-                                                <td class="alignR">0.14%</td>
+                                                                <td><span class="dotted" id="ahprTip">信息比率:</span></td>
+                                                <td class="alignR">{{ huizong.information_ratio }}</td>
                                             </tr>
                      <tr class="bg1">
-                                                                <td><span class="dotted" id="ghprTip">GHPR:</span></td>
-                                                <td class="alignR">-0.15%</td>
+                                                                <td><span class="dotted" id="ghprTip">索提诺比率:</span></td>
+                                                <td class="alignR">{{ huizong.sortino }}</td>
                                             </tr>
 
                                         </tbody></table>
@@ -370,14 +370,14 @@ function tuxiancolor(id){
         tu_name=["增长率","手数"];
         huatu(tu_name,{{hc.zx_x|safe}},{{hc.zzl|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian2'){
-        tu_name=["净值","手数"];
+        tu_name=["余额","手数"];
         huatu(tu_name,{{hc.zx_x|safe}},{{hc.dayye|safe}},{{hc.vol|safe}});
     }else if(id=='#tuxian3'){
         tu_name=["总利润","日利润"];
         huatu(tu_name,{{hc.zx_x|safe}},{{hc.zx_y|safe}},{{hc.daylr|safe}});
     }else if(id=='#tuxian4'){
-        tu_name=["","资金回测（%）"];
-        huatu(tu_name,{{hc.zx_x|safe}},null,{{hc.zjhcs|safe}});
+        tu_name=["净值","资金回测（%）"];
+        huatu(tu_name,{{hc.zx_x|safe}},{{hc.portfolio_jz|safe}},{{hc.zjhcs|safe}});
     }
     <!--else if(id=='#tuxian5'){-->
         <!--tu_name=["收盘价（{{hc.qcbs}}）","当天每单盈亏（{{hc.samedatetime}}）"];-->
