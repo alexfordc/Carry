@@ -1630,7 +1630,7 @@ def moni(rq):
     if rq.method == 'GET':
         dates = rq.GET.get('dates', '')
         end_date = rq.GET.get('end_date', '')
-        fa = rq.GET.get('fa','')
+        fa = rq.GET.get('fa', '')
         database = rq.GET.get('database', '1')
         reverse = rq.GET.get('reverse', '')
         zsds = rq.GET.get('zsds', '')  # 止损
@@ -1645,9 +1645,9 @@ def moni(rq):
                 return HttpResponse(-1)  # 继续请求
             elif resp == 0:
                 red.delete(red_key)
-                return HttpResponse(0)   # 数据计算有误
+                return HttpResponse(0)  # 数据计算有误
             else:
-                return HttpResponse(1)   # 数据成功写入
+                return HttpResponse(1)  # 数据成功写入
         else:
             zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
                 100, 100, 200, 6)
@@ -1673,8 +1673,9 @@ def moni(rq):
                 day = dates.weekday() + 4
                 start_date = str(dates - datetime.timedelta(days=day))[:10]
                 end_date = str(dates - datetime.timedelta(days=1))[:10]
-                return render(rq, 'moni.html', {'dates': start_date, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
-                                                'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
+                return render(rq, 'moni.html',
+                              {'dates': start_date, 'end_date': end_date, 'fas': zbjs.xzfa, 'database': database,
+                               'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc, 'user_name': user_name})
 
     return redirect('index')
 
@@ -2167,8 +2168,7 @@ def gxjy(rq):
     return response
 
 
-cfmmc_login_d = None  # 期货监控系统类的实例化
-is_cfmmc_login = False  # 是否登录期货监控系统
+cfmmc_login_ds = viewUtil.Dict()  # [是否登录期货监控系统, 期货监控系统类的实例化]
 
 
 def cfmmc_login(rq):
@@ -2176,8 +2176,14 @@ def cfmmc_login(rq):
     user_name, qx, uid = LogIn(rq, uid=True)
     # if not user_name:
     #     return index(rq, False)
-    global cfmmc_login_d, token, is_cfmmc_login
-    cfmmc_login_d = viewUtil.Cfmmc() if cfmmc_login_d is None else cfmmc_login_d
+    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
+    # cfmmc_login_d = red.get(cd_, _object=True)
+    global cfmmc_login_ds
+    cfmmc_login_d = cfmmc_login_ds[cd_]
+    if not cfmmc_login_d:
+        cfmmc_login_d = [False, viewUtil.Cfmmc()]
+        cfmmc_login_ds[cd_] = cfmmc_login_d
+    cfmmc_login_d = cfmmc_login_d[1]
     token = cfmmc_login_d.getToken(cfmmc_login_d._login_url)
     success = False
     code_name = {}  # 合约代码对应中文名
@@ -2189,7 +2195,7 @@ def cfmmc_login(rq):
     elif rq.method == 'POST':
         userID = rq.POST['userID'].strip()
         password = rq.POST['password'].strip()
-        vericode = rq.POST['vericode']
+        vericode = rq.POST['vericode'].strip()
         with viewUtil.errors('views', 'cfmmc_login'):
             tda = models.TradingAccount.objects.get(host=userID)
             ct = tda.creationTime
@@ -2198,7 +2204,7 @@ def cfmmc_login(rq):
 
         success = cfmmc_login_d.login(userID, password, token, vericode)
         if success is True:
-            is_cfmmc_login = True
+            cfmmc_login_ds[cd_][0] = True  # 成功登陆
             createTime = str(int(time.time() * 100))
             if not models.TradingAccount.objects.filter(host=userID).exists():
                 password = pypass.cfmmc_encode(password, createTime)
@@ -2277,16 +2283,21 @@ def cfmmc_data(rq):
     start_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
     host = None
+
+    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
+    cfmmc_login = cfmmc_login_ds[cd_]
+
     try:
-        if is_cfmmc_login and start_date and end_date:
+        if cfmmc_login and cfmmc_login[0] and start_date and end_date:
             host = rq.session['user_cfmmc']['userID']
+            cfmmc_login_d = cfmmc_login[1]
             cfmmc_login_d.down_day_data_sql(host, start_date, end_date)
             status = True
         else:
             status = False
     except:
         status = False
-    logins = '下载失败！可能由于数据已经被下载！' if is_cfmmc_login else '没有登录！'
+    logins = '下载失败！可能由于数据已经下载！' if (cfmmc_login and cfmmc_login[0]) else '没有登录！'
     if status:
         logins = '数据正在下载！如果时间跨度过长，需等待几分钟！'
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
@@ -2298,19 +2309,23 @@ def cfmmc_data(rq):
 
 def cfmmc_logout(rq):
     """ 期货监控系统 退出 """
-    global is_cfmmc_login
     user_name, qx = getLogin(rq)
     # if not user_name:
     #     return index(rq, False)
     logins = '尚未登录--期货监控中心！'  # 账户记录退出！
     if 'user_cfmmc' in rq.session:
         del rq.session['user_cfmmc']
-    if is_cfmmc_login:
+
+    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
+    cfmmc_login = cfmmc_login_ds[cd_]
+
+    if cfmmc_login and cfmmc_login[0]:
         with viewUtil.errors('views', 'cfmmc_logout'):
             logins = '退出失败！'
-            if cfmmc_login_d.logout():
+            cfmmc_login_d = cfmmc_login[1]
+            if cfmmc_login_d and cfmmc_login_d.logout():
                 logins = '退出成功！'
-                is_cfmmc_login = False
+                cfmmc_login_ds.delete(cd_)
 
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
@@ -2622,7 +2637,8 @@ def cfmmc_huice(rq, param=None):
             rq_url = '?'.join([rq.META.get('PATH_INFO'), url_param]) if url_param else rq.META.get('PATH_INFO')
             # if not rq_url:
             #     rq_url = rq.META.get('PATH_INFO')
-            return render(rq, 'base/loading.html', {'user_name': user_name, 'host': _host, 'when': when, 'rq_url': rq_url})
+            return render(rq, 'base/loading.html',
+                          {'user_name': user_name, 'host': _host, 'when': when, 'rq_url': rq_url})
 
 
 def interface_huice(rq):
@@ -2652,11 +2668,10 @@ def interface_huice(rq):
             #  ('J1809(冶金焦炭)', 501400), ('M1901(豆粕)', 421210), ('NI1811(镍)', 208200), ('CF901(棉花)', 160050), ('MA901(甲醇)', 128540)]
             pzs = []
             # {'2018-08-07': 268215.0, '2018-08-08': 268215.0, '2018-08-09': 268215.0, '2018-08-10': 264461.0, ...}
-            _qy = {str(i)[:10]:j for i,j in portfolio.total_value.items()}
-
+            _qy = {str(i)[:10]: j for i, j in portfolio.total_value.items()}
 
             # {'2018-08-08': 1.0, '2018-08-09': 1.0, '2018-08-10': 0.9860018268926048, ...}
-            jzs = {str(i)[:10]:j for i,j in portfolio.unit_net_value.items()}
+            jzs = {str(i)[:10]: j for i, j in portfolio.unit_net_value.items()}
             jz = 1  # 初始净值
             jzq = 0  # 初始净值权重
             allje = 0  # init_money  # 总金额
@@ -2885,7 +2900,7 @@ def interface_huice(rq):
                 huizong['huibaolv'] = hct['alljz'][-1]  # 回报率
 
                 resp = {'zx_x': zx_x, 'hct': hct, 'start_date': start_date, 'end_date': end_date, 'hc': hc,
-                        'huizong': huizong, 'init_money': init_money,  'hc_name': hc_name,
+                        'huizong': huizong, 'init_money': init_money, 'hc_name': hc_name,
                         'user_name': user_name, 'clouds': clouds}
             except Exception as exc:
                 resp = {'hc_name': hc_name, 'user_name': user_name, 'clouds': clouds}

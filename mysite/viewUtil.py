@@ -60,7 +60,6 @@ def record_log(files, info, types):
             f.write(info)
 
 
-
 @contextmanager
 def errors(*fun_name):
     """ 处理异常 """
@@ -68,6 +67,37 @@ def errors(*fun_name):
         yield
     except Exception as exc:
         record_log('log\\error_log\\err.txt', f'{fun_name}{exc}\n', 'a')
+
+
+class Dict(dict):
+    """ 有超时处理的字典 """
+
+    def __init__(self, expiry=7200):
+        """ expiry: 保存时间，默认7200秒(2小时) """
+        self.data = {}
+        self.expiry = expiry
+
+    def get(self, key):
+        if key not in self.data:
+            return None
+        if time.time() - self.data[key][1] < self.data[key][2]:
+            return self.data[key][0]
+
+    def __getitem__(self, key):
+        if key not in self.data:
+            return None
+        if time.time() - self.data[key][1] < self.data[key][2]:
+            return self.data[key][0]
+
+    def __setitem__(self, key, value):
+        self.data[key] = (value, time.time(), self.expiry)
+
+    def setdefault(self, key, value):
+        self.data[key] = (value, time.time(), self.expiry)
+
+    def delete(self, key):
+        if key in self.data:
+            del self.data[key]
 
 
 @caches
@@ -210,18 +240,24 @@ def get_cfmmc_trade(host=None, start_date=None, end_date=None):
     return data
 
 
+def get_sqlalchemy_conn():
+    """ 返回sqlalchemy MySQL数据库连接 """
+    us = HSD.get_config("U", "us")
+    ps = HSD.get_config("U", "ps")
+    hs = HSD.get_config("U", "hs")
+    _conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
+    return _conn
+
+
 class Cfmmc:
     """ 期货监控系统，登录，下载数据，保存数据 """
     __slots__ = ('session', '_login_url', '_vercode_url', '_conn', '_not_trade_list', '_userID', '_password')
 
     def __init__(self):
+        requests.packages.urllib3.disable_warnings()  # 禁用警告：正在进行未经验证的HTTPS请求。 强烈建议添加证书验证。
         self.session = requests.session()
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
         self._vercode_url = 'https://investorservice.cfmmc.com/veriCode.do?t='
-        us = HSD.get_config("U", "us")
-        ps = HSD.get_config("U", "ps")
-        hs = HSD.get_config("U", "hs")
-        self._conn = create_engine(f'mysql+pymysql://{us}:{ps}@{hs}:3306/carry_investment?charset=utf8')
 
     def getToken(self, url):
         """获取token"""
@@ -237,7 +273,9 @@ class Cfmmc:
         t = int(datetime.datetime.now().timestamp() * 1000)
         vercode_url = f'{self._vercode_url}{t}'
         response = self.session.get(vercode_url)
+        # from PIL import Image
         # image = Image.open(BytesIO(response.content))
+        # image.show()
         return response.content
 
     def _get_not_trade_date(self):
@@ -261,6 +299,16 @@ class Cfmmc:
             "password": password,
             "vericode": vercode,
         }
+        # headers = {
+        #      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        #      'Accept-Encoding': 'gzip, deflate, br',
+        #      'Accept-Language': 'zh-CN,zh;q=0.9',
+        #      'Cache-Control': 'max-age=0',
+        #      'Connection': 'keep-alive',
+        #      'Host': 'investorservice.cfmmc.com',
+        #      'Upgrade-Insecure-Requests': '1',
+        #      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'
+        # }
         ret = self.session.post(self._login_url, data=data, verify=False, timeout=5)
         if ret.ok:
             # print('成功登录')
@@ -369,49 +417,50 @@ class Cfmmc:
                     df['交易日期'] = _tradedate
 
                 excs = ''
+                _conn = get_sqlalchemy_conn()  # 获取数据库连接
                 if byType == 'date':
                     try:
-                        account_info.to_sql('cfmmc_daily_settlement', self._conn, schema='carry_investment',
+                        account_info.to_sql('cfmmc_daily_settlement', _conn, schema='carry_investment',
                                             if_exists='append',
                                             index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        trade_records.to_sql('cfmmc_trade_records', self._conn, schema='carry_investment',
+                        trade_records.to_sql('cfmmc_trade_records', _conn, schema='carry_investment',
                                              if_exists='append',
                                              index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        closed_position.to_sql('cfmmc_closed_position', self._conn, schema='carry_investment',
+                        closed_position.to_sql('cfmmc_closed_position', _conn, schema='carry_investment',
                                                if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        holding_position.to_sql('cfmmc_holding_position', self._conn, schema='carry_investment',
+                        holding_position.to_sql('cfmmc_holding_position', _conn, schema='carry_investment',
                                                 if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
                 elif byType == 'trade':
                     try:
-                        account_info.to_sql('cfmmc_daily_settlement_trade', self._conn, schema='carry_investment',
+                        account_info.to_sql('cfmmc_daily_settlement_trade', _conn, schema='carry_investment',
                                             if_exists='append',
                                             index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        trade_records.to_sql('cfmmc_trade_records_trade', self._conn, schema='carry_investment',
+                        trade_records.to_sql('cfmmc_trade_records_trade', _conn, schema='carry_investment',
                                              if_exists='append',
                                              index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        closed_position.to_sql('cfmmc_closed_position_trade', self._conn, schema='carry_investment',
+                        closed_position.to_sql('cfmmc_closed_position_trade', _conn, schema='carry_investment',
                                                if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
                     try:
-                        holding_position.to_sql('cfmmc_holding_position_trade', self._conn, schema='carry_investment',
+                        holding_position.to_sql('cfmmc_holding_position_trade', _conn, schema='carry_investment',
                                                 if_exists='append', index=False)
                     except Exception as exc:
                         excs += str(exc)
@@ -474,6 +523,12 @@ class Cfmmc:
 
         s = ('True' if is_success else ('False' if is_run else 'not_run'))
         cache.set('cfmmc_status' + host, s)
+
+
+def get_Cfmmc(red, cd_):
+    cf = Cfmmc()
+    red.set(cd_, cf, _object=True)
+    return cf
 
 
 class Automatic:
@@ -1249,13 +1304,14 @@ def get_interface_datas(hc_name):
         datas = pickle.loads(f.read())
     return datas
 
+
 def get_interface_huice(hc_name, min_date=None, max_date=None):
     """ 回测接口"""
     datas = get_interface_datas(hc_name)
     summary = datas['summary']
     trades = datas['trades']
     init_money = summary['FUTURE']  # 入金
-    results2,data_ykall = HSD.huice_order_record(hc_name,datas)
+    results2, data_ykall = HSD.huice_order_record(hc_name, datas)
     res = {}
     pinzhong = []  # 所有品种
 
@@ -1269,12 +1325,12 @@ def get_interface_huice(hc_name, min_date=None, max_date=None):
         'avg_day': 0,
         'least2': [0, 1000],
         'most2': [0, -1000],
-        'expect': round(datas['future_account'].daily_pnl.sum()/len(datas['future_account']),2),        # 期望
-        'commission': round(trades.commission.sum()),    # 佣金
-        'sharp': summary['sharpe'],         # 夏普比率
-        'sortino': summary['sortino'],           # 索提诺比率
+        'expect': round(datas['future_account'].daily_pnl.sum() / len(datas['future_account']), 2),  # 期望
+        'commission': round(trades.commission.sum()),  # 佣金
+        'sharp': summary['sharpe'],  # 夏普比率
+        'sortino': summary['sortino'],  # 索提诺比率
         'information_ratio': summary['information_ratio'],  # 信息比率
-        'downside_risk': summary['downside_risk'],     # 下行风险
+        'downside_risk': summary['downside_risk'],  # 下行风险
     }
     for i in results2:
         if not i[5]:

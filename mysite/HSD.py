@@ -198,10 +198,11 @@ class RedisPool:
         conn = redis.Redis(connection_pool=pool)
         return conn
 
-    def get(self, key):
+    def get(self, key, _object=False):
         """
         获取键对应的值
         :param key: 键
+        :param _object: 是否是Python对象
         :return: 值
         """
         try:
@@ -215,19 +216,27 @@ class RedisPool:
             except Exception as exc:
                 value = None
                 logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
+        if _object:
+            return value and pickle.loads(value)
         return value and json.loads(value)
 
-    def set(self, key, value, expiry=259200):
+    def set(self, key, value, expiry=259200, _object=False):
         """
         写入 Redis 数据库
         :param key: 键
         :param value: 值，可为 python 各种数据类型
         :param expiry: 过期时间秒，默认259200秒（3天）
+        :param _object: 是否是Python对象
         :return: None
         """
-        try:
+        if _object:
+            self._conn.set(key, pickle.dumps(value))
+            self._conn.expire(key, expiry)
+        else:
             self._conn.set(key, json.dumps(value))
             self._conn.expire(key, expiry)
+        try:
+            pass
         except TypeError as exc:
             logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         except:
