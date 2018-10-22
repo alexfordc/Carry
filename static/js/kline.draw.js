@@ -9172,7 +9172,7 @@ function on_size() {
     //var u = window.innerWidth;
     //var t = window.innerHeight;
     var u = window.innerWidth - 500;
-    var t = window.innerHeight - 75;
+    var t = window.innerHeight - 95;
     var o = $("#chart_container");
     o.css({
         width: u + "px",
