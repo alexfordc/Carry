@@ -2644,23 +2644,28 @@ def cfmmc_huice(rq, param=None):
 def interface_huice(rq):
     """ 回测接口"""
     user_name, qx = LogIn(rq)
-    _folder = HSD.get_external_folder('huice')  # 保存文件的目录
+    # _folder = HSD.get_external_folder('huice')  # 保存文件的目录
+    if HSD.computer_name == 'doc':
+        _folder = r'D:\Kairui_data_file\策略文件'
+    else:
+        _folder = r'E:\work_File\公共文件夹\策略文件'
     if rq.method == 'GET':
         _type = rq.GET.get('type')
         hc_name = rq.GET.get('id')
         if not hc_name:
-            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+
+            clouds = viewUtil.get_interface_file(_folder) #[i for i in os.listdir(_folder) if i.endswith('.pkl')]
             return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
         if _type == 'huice':
-            data_huice = viewUtil.get_interface_huice(hc_name)
+            data_huice = viewUtil.get_interface_huice(os.path.join(_folder,hc_name))
             hc, huizong, init_money = data_huice.send(None)
             resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hc_name': hc_name}
             resp['user_name'] = user_name
             return render(rq, 'interface_hc.html', resp)
         elif _type == 'huice2':  # 回测、画图
-            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
+            clouds = viewUtil.get_interface_file(_folder)
 
-            datas = viewUtil.get_interface_datas(hc_name)
+            datas = viewUtil.get_interface_datas(os.path.join(_folder,hc_name))
             summary, trades, portfolio, future_account, future_positions = datas['summary'], datas['trades'], datas[
                 'portfolio'], datas['future_account'], datas['future_positions']
             start_date, end_date = summary['start_date'], summary['end_date']
@@ -2678,7 +2683,7 @@ def interface_huice(rq):
             eae = []  # 出入金
             zx_x, prices = [str(i)[:10] for i in future_account.index], []
 
-            data_huice = viewUtil.get_interface_huice(hc_name, start_date, end_date)
+            data_huice = viewUtil.get_interface_huice(os.path.join(_folder,hc_name), start_date, end_date)
             hc, huizong, init_money = data_huice.send(None)
             base_money = init_money  # 初始总资金
 
@@ -2915,12 +2920,15 @@ def interface_huice(rq):
                 resp['Content-Type'] = 'application/octet-stream'
                 resp['Content-Disposition'] = 'attachment;filename="{}"'.format(hc_name)  # 此处file_name是要下载的文件的文件名称
                 return resp
-        elif _type == 'del' and qx >= 2:
+        elif _type in {'code', 'explain'}:
             path_file = os.path.join(_folder, hc_name)
-            if qx >= 2 and os.path.isfile(path_file):
-                os.remove(path_file)
-            clouds = [i for i in os.listdir(_folder) if i.endswith('.pkl')]
-            return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
+            pys = b''
+            if os.path.isfile(path_file):
+                with open(path_file,'rb') as f:
+                    pys = f.read()
+            pys = pys.decode()
+            clouds = viewUtil.get_interface_file(_folder)
+            return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds, 'pys': pys})
     elif rq.method == 'POST' and qx >= 2:
         upload_file = rq.FILES.get('file')  # 获得文件
         if upload_file:

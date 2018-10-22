@@ -1299,8 +1299,8 @@ def file_iterator(files, chunk_size=512, red=None, red_key=None):
 
 def get_interface_datas(hc_name):
     """ 从文件夹获取序列化的数据 """
-    _folder = HSD.get_external_folder('huice')
-    with open(os.path.join(_folder, hc_name), 'rb') as f:
+    # _folder = HSD.get_external_folder('huice')
+    with open(hc_name, 'rb') as f:
         datas = pickle.loads(f.read())
     return datas
 
@@ -1415,3 +1415,24 @@ def moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key
     except Exception as exc:
         error_log('viewUtil.py', sys._getframe().f_lineno, exc)
         red.set(red_key, 0, 300)
+
+
+def get_interface_file(_folder):
+    """ 获取回测文件 """
+    res = []
+    for i in os.listdir(_folder):
+        if i in {'CTP', 'HK'}:
+            fol = os.path.join(_folder, i)
+            for j in os.listdir(fol):
+                fol2 = os.path.join(fol, j)
+                if os.path.isdir(fol2):
+                    tmp = [j, '', '', '', i]
+                    for k in os.listdir(fol2):
+                        if k.endswith('.pkl'):
+                            tmp[1] = os.path.join(i, j, k)
+                        elif k.endswith('.py'):
+                            tmp[2] = os.path.join(i, j, k)
+                        elif k.endswith('.md'):
+                            tmp[3] = os.path.join(i, j, k)
+                    res.append(tmp)
+    return res
