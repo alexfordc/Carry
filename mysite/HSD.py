@@ -143,6 +143,20 @@ SQL = {
 computer_name = socket.gethostname()  # 计算机名称
 
 
+def caches(func):
+    """ 缓存装饰器 """
+    data = {}
+
+    def wrapper(*args, **kwargs):
+        key = f'{func.__name__}{args}{kwargs}'
+        if key not in data:
+            data[key] = func(*args, **kwargs)
+        return data[key]
+
+    return wrapper
+
+
+@caches
 def get_config(root, son):
     ''' 获取配置文件的值 '''
     if root in config and son in config[root]:
@@ -413,6 +427,9 @@ class MongoDBData:
 
     def get_coll(self):
         client = pymongo.MongoClient('mongodb://192.168.2.226:27017')
+        us = get_config('MONGODB', 'us')
+        ps = get_config('MONGODB', 'ps')
+        client.admin.authenticate(us, ps)
         self.db = client[self.db_name] if self.db_name else client['Future']
         coll = self.db[self.table] if self.table else self.db['future_1min']
         return coll

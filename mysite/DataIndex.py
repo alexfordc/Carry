@@ -64,7 +64,7 @@ class ZB(object):
     def zdata(self, ds):
         if isinstance(ds, pd.DataFrame):
             self._data = [(d[0], d[1], d[2], d[3], d[4]) for d in ds.values]
-        elif isinstance(ds, list) or isinstance(ds, tuple):
+        elif isinstance(ds, (tuple, list)):
             self._data = ds
         else:
             raise ValueError("zdata set ds,ds is not list or tuple or DataFrame! ")
@@ -926,7 +926,11 @@ class ZB(object):
                 res[dates]['duo'] += 1
                 price = zsjg if low - startMony_d - cqdc < zsjg else clo - startMony_d - cqdc
                 res[dates]['mony'] += price
-                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price])
+                if low - startMony_d - cqdc < zsjg:
+                    zszy = -1  # 止损
+                else:
+                    zszy = 0  # 正常平仓
+                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
                 is_d = 0
                 first_time = []
 
@@ -936,7 +940,11 @@ class ZB(object):
                 res[dates]['kong'] += 1
                 price = zsjg if startMony_k - high - cqdc < zsjg else startMony_k - clo - cqdc
                 res[dates]['mony'] += price
-                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price])
+                if startMony_k - high - cqdc < zsjg:
+                    zszy = -1  # 止损
+                else:
+                    zszy = 0  # 正常平仓
+                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
                 is_k = 0
                 first_time = []
 
