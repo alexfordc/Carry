@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/HSD.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/HSD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" beforeDir="false" afterPath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +22,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="122" column="37" lean-forward="true" selection-start-line="122" selection-start-column="37" selection-end-line="122" selection-end-column="37" />
+            <state relative-caret-position="788">
+              <caret line="2323" column="67" selection-start-line="2323" selection-start-column="67" selection-end-line="2323" selection-end-column="67" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#4350#7236#0" />
@@ -31,15 +31,6 @@
                 <element signature="e#8438#8754#0" />
                 <element signature="e#65328#67857#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kline.draw.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/kline.draw.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="9177" column="24" selection-start-line="9177" selection-start-column="24" selection-end-line="9177" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -117,9 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>委</find>
-      <find>期待</find>
-      <find>佣金</find>
       <find>夏普</find>
       <find>$</find>
       <find>1000</find>
@@ -147,6 +135,9 @@
       <find>height</find>
       <find>chart_container</find>
       <find>mongodb</find>
+      <find>HTTP_X_REAL_IP</find>
+      <find>REMOTE_ADDR</find>
+      <find>rq.session</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -165,6 +156,7 @@
       <replace>dt2['ma60']</replace>
       <replace>￥</replace>
       <replace>self_conn()</replace>
+      <replace>HTTP_X_REAL_IP</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -251,11 +243,6 @@
           <expand>
             <path>
               <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Carry" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Carry" type="462c0819:PsiDirectoryNode" />
               <item name="Carry" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -361,13 +348,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00048" summary="国内期货可视化">
-      <created>1536324809829</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1536324809830</updated>
     </task>
     <task id="LOCAL-00049" summary="国内期货可视化">
       <created>1536577077062</created>
@@ -705,11 +685,19 @@
       <option name="project" value="LOCAL" />
       <updated>1540201509122</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="回测数据">
+      <created>1540277645458</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1540277645459</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13277134" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -738,7 +726,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2018-6-15" />
     <MESSAGE value="回测图" />
     <MESSAGE value="交易图" />
     <MESSAGE value="Views" />
@@ -763,7 +750,8 @@
     <MESSAGE value="功能完善" />
     <MESSAGE value="公共云" />
     <MESSAGE value="数据完善" />
-    <option name="LAST_COMMIT_MESSAGE" value="数据完善" />
+    <MESSAGE value="回测数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="回测数据" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -780,40 +768,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1475">
-          <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
-          <folding>
-            <element signature="e#148#3080#0" />
-            <element signature="e#4735#19629#0" />
-            <element signature="e#19693#22252#0" />
-            <element signature="e#22335#28071#0" />
-            <element signature="e#28154#32634#0" />
-            <element signature="e#32717#37395#0" />
-            <element signature="e#44954#49550#0" />
-            <element signature="e#49633#53694#0" />
-            <element signature="e#53777#56960#0" />
-            <element signature="e#57042#62217#0" />
-            <element signature="e#62301#66112#0" />
-            <element signature="e#66196#70009#0" />
-            <element signature="e#70093#73638#0" />
-            <element signature="e#73722#77868#0" />
-            <element signature="e#77952#82757#0" />
-            <element signature="e#82841#88656#0" />
-            <element signature="e#88739#94225#0" />
-            <element signature="e#94308#99658#0" />
-            <element signature="e#99741#104822#0" />
-            <element signature="e#104906#111994#0" />
-            <element signature="e#112078#117935#0" />
-            <element signature="e#118033#123978#0" />
-            <element signature="e#124047#125472#0" />
-            <element signature="e#125539#127259#0" />
-            <element signature="e#127318#128479#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../September_2018/2018-9-30/line_py.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
@@ -849,13 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="575">
           <caret line="23" column="44" lean-forward="true" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3400">
-          <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
         </state>
       </provider>
     </entry>
@@ -1186,10 +1133,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="152" column="38" lean-forward="true" selection-start-line="152" selection-start-column="38" selection-end-line="152" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="122" column="37" lean-forward="true" selection-start-line="122" selection-start-column="37" selection-end-line="122" selection-end-column="37" />
+        <state relative-caret-position="788">
+          <caret line="2323" column="67" selection-start-line="2323" selection-start-column="67" selection-end-line="2323" selection-end-column="67" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#4350#7236#0" />

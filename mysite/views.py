@@ -2204,11 +2204,13 @@ def cfmmc_login(rq):
 
         success = cfmmc_login_d.login(userID, password, token, vericode)
         if success is True:
-            cfmmc_login_ds[cd_][0] = True  # 成功登陆
             createTime = str(int(time.time() * 100))
             if not models.TradingAccount.objects.filter(host=userID).exists():
                 password = pypass.cfmmc_encode(password, createTime)
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password, 'createTime': createTime}
+                cd2_ = f"cfmmc_login_d_{userID}"
+                cfmmc_login_ds[cd2_] = [True, cfmmc_login_d]  # 成功登陆
+                cfmmc_login_ds.pop(cd_)
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name, 'success': 'success'}
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
@@ -2283,14 +2285,14 @@ def cfmmc_data(rq):
     start_date = rq.GET.get('start_date')
     end_date = rq.GET.get('end_date')
     host = None
-
-    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
-    cfmmc_login = cfmmc_login_ds[cd_]
+    cfmmc_login = None
 
     try:
-        if cfmmc_login and cfmmc_login[0] and start_date and end_date:
-            host = rq.session['user_cfmmc']['userID']
-            cfmmc_login_d = cfmmc_login[1]
+        if 'user_cfmmc' in rq.session and start_date and end_date:
+            host = rq.session['user_cfmmc'].get('userID')
+            cd_ = f"cfmmc_login_d_{host}"
+            cfmmc_login = cfmmc_login_ds.get(cd_)
+            cfmmc_login_d = cfmmc_login[1] if cfmmc_login else None
             cfmmc_login_d.down_day_data_sql(host, start_date, end_date)
             status = True
         else:
@@ -2314,18 +2316,17 @@ def cfmmc_logout(rq):
     #     return index(rq, False)
     logins = '尚未登录--期货监控中心！'  # 账户记录退出！
     if 'user_cfmmc' in rq.session:
-        del rq.session['user_cfmmc']
-
-    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
-    cfmmc_login = cfmmc_login_ds[cd_]
-
-    if cfmmc_login and cfmmc_login[0]:
         with viewUtil.errors('views', 'cfmmc_logout'):
             logins = '退出失败！'
-            cfmmc_login_d = cfmmc_login[1]
+            host = rq.session['user_cfmmc'].get('userID')
+            cd_ = f"cfmmc_login_d_{host}"
+            cfmmc_login = cfmmc_login_ds.get(cd_)
+            cfmmc_login_d = cfmmc_login[1] if cfmmc_login else None
             if cfmmc_login_d and cfmmc_login_d.logout():
                 logins = '退出成功！'
                 cfmmc_login_ds.delete(cd_)
+        del rq.session['user_cfmmc']
+
 
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
