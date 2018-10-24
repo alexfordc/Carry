@@ -2952,6 +2952,12 @@ def systems(rq):
     return render(rq, 'systems.html', {'user_name': user_name})
 
 
+def market_news(rq):
+    """ 市场快讯 """
+    user_name, qx = LogIn(rq)
+    return render(rq, 'market_news.html', {'user_name': user_name})
+
+
 def get_system(rq):
     if rq.is_ajax():
         nc = psutil.virtual_memory().percent  # 内存使用率%

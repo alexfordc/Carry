@@ -73,6 +73,7 @@ urlpatterns = [
     url(r'^ts/$', views.tools, name='tools'),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^zhutu2/$', views.zhutu2, name='zhutu2'),
+    url(r'^marketNews/$', views.market_news, name='market_news'),
 
     url(r'^kline/$', views.kline, name='kline'),
     url(r'^getkline$', views.getkline),

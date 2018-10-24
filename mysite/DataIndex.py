@@ -882,6 +882,8 @@ class ZB(object):
         is_d, is_k = 0, 0
         res = {}
         first_time = []
+        LS1,LS2 = [],[]
+        ls_count1,ls_count2 = 0,0
         while 1:
             _while, dt3, dates, qzpc = yield res, first_time
             if dates not in res:
@@ -889,8 +891,13 @@ class ZB(object):
             if not _while:
                 break
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low = dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], dt2['cd'], \
-                                                      dt2['high'], dt2['low']
+            (
+                datetimes, clo, mas, mul, cd, high, low,
+                op,ma10,ma120
+            ) = (
+                dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'],
+                dt2['open'],dt2['ma10'],dt2['ma120']
+            )
 
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -912,14 +919,20 @@ class ZB(object):
                 startMony_d = clo
                 str_time1 = str(datetimes)
                 is_d = 1
-                first_time = [str(datetimes), '多', clo]
+                first_time = [str_time1, '多', clo]
+                LS1 = [str_time1,op,high,low,clo,ma10,mas,ma120,mul,1]
 
             elif kctj_k and self.dt_kc(datetimes):  # is_k!=-1 and judge_k
                 jg_k = clo
                 startMony_k = clo
                 str_time2 = str(datetimes)
                 is_k = -1
-                first_time = [str(datetimes), '空', clo]
+                first_time = [str_time2, '空', clo]
+                LS2 = [str_time2, op, high, low, clo, ma10, mas, ma120, mul,-1]
+            elif ls_count1>ls_count2:
+                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
+                    fa5f.write(','.join([str(_isw) for _isw in [str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,0]])+'\n')
+                ls_count2 += 1
 
             if (is_d == 1 and (pctj_d or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg) or qzpc) and str(
                     datetimes) != str_time1:
@@ -934,6 +947,12 @@ class ZB(object):
                 is_d = 0
                 first_time = []
 
+                # LS1.extend([str(datetimes),op,high,low,clo,ma10,mas,ma120,mul,1,price])
+                # if len(LS1)==20:
+                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
+                    fa5f.write(','.join([str(_isw) for _isw in LS1])+'\n')
+                ls_count1 += 1
+
             elif (is_k == -1 and (
                     pctj_k or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg) or qzpc) and str(
                 datetimes) != str_time2:
@@ -947,6 +966,12 @@ class ZB(object):
                 res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
                 is_k = 0
                 first_time = []
+
+                # LS2.extend([str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,-1,price])
+                # if len(LS2) == 20:
+                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv', 'a') as fa5f:
+                    fa5f.write(','.join([str(_isw) for _isw in LS2]) + '\n')
+                ls_count1 += 1
 
     def fa6(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
         zsjg2 = zsjg
