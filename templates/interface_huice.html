@@ -42,8 +42,13 @@
                 <td>
                     <!--<a href="{% url 'interface_huice' %}?type=del&id={{i}}" onclick="return confirm('确定要删除吗?')">删除</a>&nbsp;&nbsp;-->
                     <!--<a href="{% url 'interface_huice' %}?type=down&id={{i}}">下载</a>&nbsp;&nbsp;-->
-                <a href="{% url 'interface_huice' %}?type=huice&id={{i.1}}" target="_blank">回测</a> &nbsp;&nbsp;
-                <a href="{% url 'interface_huice' %}?type=huice2&id={{i.1}}">回测2</a></td></tr>
+                <a href="{% url 'interface_huice' %}?type=huice3&id={{i.1}}" target="_blank">明细</a> &nbsp;&nbsp;
+                <a href="{% url 'interface_huice' %}?type=huice&id={{i.1}}" target="_blank">统计</a> &nbsp;&nbsp;
+                <a href="{% url 'interface_huice' %}?type=huice2&id={{i.1}}">统计2</a>
+                <!--<form action="http://192.168.2.237:8666" method="POST" enctype="multipart/form-data">-->
+                    <!--<input type="file" name="file" value="{{file}}">-->
+                <!--</form>-->
+                </td></tr>
         {% endfor %}
     </table>
 </div>
@@ -69,7 +74,28 @@ $(".file").on("change","input[type='file']",function(){
         $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
         return false
     }
-})
+});
+
+function Post(URL, PARAMTERS) {
+        // 发送POST请求
+        //创建form表单
+        var temp_form = document.createElement("form");
+        temp_form.action = URL;
+        //如不需要打开新窗口，form的target属性要设置为'_self'
+        temp_form.target = "_blank";
+        temp_form.method = "post";
+        temp_form.style.display = "none";
+        //添加参数
+        for (var item in PARAMTERS) {
+            var opt = document.createElement("textarea");
+            opt.name = item;
+            opt.value = PARAMTERS[item];
+            temp_form.appendChild(opt);
+        }
+        document.body.appendChild(temp_form);
+        //提交数据
+        temp_form.submit();
+    }
 </script>
 
 

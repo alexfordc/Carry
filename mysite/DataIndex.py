@@ -882,8 +882,8 @@ class ZB(object):
         is_d, is_k = 0, 0
         res = {}
         first_time = []
-        LS1,LS2 = [],[]
-        ls_count1,ls_count2 = 0,0
+        # LS1,LS2 = [],[]
+        # ls_count1,ls_count2 = 0,0
         while 1:
             _while, dt3, dates, qzpc = yield res, first_time
             if dates not in res:
@@ -929,10 +929,10 @@ class ZB(object):
                 is_k = -1
                 first_time = [str_time2, '空', clo]
                 LS2 = [str_time2, op, high, low, clo, ma10, mas, ma120, mul,-1]
-            elif ls_count1>ls_count2:
-                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
-                    fa5f.write(','.join([str(_isw) for _isw in [str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,0]])+'\n')
-                ls_count2 += 1
+            # elif ls_count1>ls_count2:
+            #     with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
+            #         fa5f.write(','.join([str(_isw) for _isw in [str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,0]])+'\n')
+            #     ls_count2 += 1
 
             if (is_d == 1 and (pctj_d or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg) or qzpc) and str(
                     datetimes) != str_time1:
@@ -949,9 +949,9 @@ class ZB(object):
 
                 # LS1.extend([str(datetimes),op,high,low,clo,ma10,mas,ma120,mul,1,price])
                 # if len(LS1)==20:
-                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
-                    fa5f.write(','.join([str(_isw) for _isw in LS1])+'\n')
-                ls_count1 += 1
+                # with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
+                #     fa5f.write(','.join([str(_isw) for _isw in LS1])+'\n')
+                # ls_count1 += 1
 
             elif (is_k == -1 and (
                     pctj_k or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg) or qzpc) and str(
@@ -969,9 +969,9 @@ class ZB(object):
 
                 # LS2.extend([str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,-1,price])
                 # if len(LS2) == 20:
-                with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv', 'a') as fa5f:
-                    fa5f.write(','.join([str(_isw) for _isw in LS2]) + '\n')
-                ls_count1 += 1
+                # with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv', 'a') as fa5f:
+                #     fa5f.write(','.join([str(_isw) for _isw in LS2]) + '\n')
+                # ls_count1 += 1
 
     def fa6(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
         zsjg2 = zsjg
@@ -2657,6 +2657,150 @@ class ZB(object):
                     # elif jg_k - clo > 60:
                     #     res[dates]['mony'] += (jg_k - clo)
                     #     jg_k = clo
+
+    # def fa21(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
+    #     from mysite.tffa5 import TensorFa
+    #     zsjg2 = zsjg
+    #     _zsjg_d, _zsjg_k = 0, 0
+    #     ten = TensorFa()
+    #     # ten.test()
+    #     import pickle
+    #     with open(r'D:\tools\Tools\October_2018\2018-10-24\years.txt','rb') as f:
+    #         years = pickle.loads(f.read())
+    #     lines = []
+    #     up_c, down_c = 0, 0
+    #     startMony_d, startMony_k = 0, 0
+    #     str_time1, str_time2 = '', ''
+    #     is_d, is_k = 0, 0
+    #     tj_d,tj_k = 0,0
+    #     ydzs_d, ydzs_k = 0, 0  # 移动止损
+    #     res = {}
+    #     first_time = []
+    #     while 1:
+    #         _while, dt3, dates, qzpc = yield res, first_time
+    #         if dates not in res:
+    #             res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0, }
+    #         if not _while:
+    #             break
+    #         is_dk = not (is_k == -1 or is_d == 1)
+    #         dt2 = dt3[-1]
+    #         (
+    #             datetimes, clo, mas, mul, cd, high, low,
+    #             op,ma10,ma120
+    #         ) = (
+    #             dt2['datetimes'], dt2['close'], dt2['ma60'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'],
+    #             dt2['open'],dt2['ma10'],dt2['ma120']
+    #         )
+    #
+    #         if mul > 1.5:
+    #             res[dates]['dy'] += 1
+    #         elif mul < -1.5:
+    #             res[dates]['xy'] += 1
+    #         res[dates]['ch'] += 1 if cd != 0 else 0
+    #
+    #         # 反向做单
+    #         _avg = (op+high+low+clo)/4
+    #         _tens = 0
+    #         if ma10>10 and mas>10 and ma120>10:
+    #             #line = [_avg/ma10,_avg/mas,_avg/ma120,mul]
+    #             # with open(r'D:\tools\Tools\October_2018\2018-10-24\testss.csv', 'a') as fa5f:
+    #             #     fa5f.write(','.join([str(_isw) for _isw in line])+'\n')
+    #             # _tens = ten.predict_line(line)
+    #             lines.append(0)
+    #             _tens = years[len(lines)-1]
+    #         kctj_d = _tens == 1
+    #         kctj_k = _tens == 2
+    #         pctj_d = mul > 1.5
+    #         pctj_k = mul < -1.5
+    #         if reverse:
+    #             kctj_d, kctj_k = kctj_k, kctj_d
+    #             pctj_d, pctj_k = pctj_k, pctj_d
+    #
+    #         if kctj_d and is_dk and self.dt_kc(datetimes) and datetimes.hour>9:  # is_d!=1 and judge_d
+    #             tj_d += 1
+    #             if tj_d > 3:
+    #                 jg_d = clo
+    #                 startMony_d = clo
+    #                 str_time1 = str(datetimes)
+    #                 is_d = 1
+    #                 first_time = [str_time1, '多', clo]
+    #
+    #         elif kctj_k and is_dk and self.dt_kc(datetimes) and datetimes.hour>9:  # is_k!=-1 and judge_k
+    #             tj_k += 1
+    #             if tj_k > 3:
+    #                 jg_k = clo
+    #                 startMony_k = clo
+    #                 str_time2 = str(datetimes)
+    #                 is_k = -1
+    #                 first_time = [str_time2, '空', clo]
+    #
+    #         if is_d == 1:
+    #             ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
+    #             high_zs = ydzs_d - startMony_d
+    #             if high_zs >= ydzs:
+    #                 _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
+    #             elif _zsjg_d == 0:
+    #                 _zsjg_d = startMony_d + zsjg  # 止损所在价格点
+    #             if ((pctj_d or self.is_date(
+    #                     datetimes) or low <= _zsjg_d or high - startMony_d >= zyds) or qzpc) and str(
+    #                 datetimes) != str_time1:
+    #                 res[dates]['duo'] += 1
+    #                 if low > _zsjg_d and high - startMony_d < zyds:
+    #                     price = round(clo - startMony_d)
+    #                     zszy = 0  # 正常平仓
+    #                 elif low <= _zsjg_d:
+    #                     price = round(_zsjg_d - startMony_d, 2)
+    #                     zszy = -1  # 止损
+    #                 elif high - startMony_d >= zyds:
+    #                     price = zyds
+    #                     zszy = 1  # 止盈
+    #                 # price = round(_zsjg_d - startMony_d if low<=_zsjg_d else (zyds if high-startMony_d>=zyds else clo-startMony_d))
+    #
+    #                 price -= cqdc
+    #                 res[dates]['mony'] += price
+    #                 res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+    #                 is_d = 0
+    #                 first_time = []
+    #                 tj_d = 0
+    #                 _zsjg_d = 0
+    #                 ydzs_d = 0
+    #                 # elif clo - jg_d > 60:
+    #                 #     res[dates]['mony'] += (clo - jg_d)
+    #                 #     jg_d = clo
+    #         elif is_k == -1:
+    #             ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
+    #             low_zs = startMony_k - ydzs_k
+    #             if low_zs >= ydzs:
+    #                 _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
+    #             elif _zsjg_k == 0:
+    #                 _zsjg_k = startMony_k - zsjg  # 止损所在价格点
+    #             if ((pctj_k or self.is_date(
+    #                     datetimes) or high >= _zsjg_k or startMony_k - low >= zyds) or qzpc) and str(
+    #                 datetimes) != str_time2:
+    #                 res[dates]['kong'] += 1
+    #                 if high < _zsjg_k and startMony_k - low < zyds:
+    #                     price = round(startMony_k - clo)
+    #                     zszy = 0  # 正常平仓
+    #                 elif high >= _zsjg_k:
+    #                     price = round(startMony_k - _zsjg_k, 2)
+    #                     zszy = -1  # 止损
+    #                 elif startMony_k - low >= zyds:
+    #                     price = zyds
+    #                     zszy = 1  # 止盈
+    #                 # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
+    #                 price -= cqdc
+    #                 res[dates]['mony'] += price
+    #                 res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+    #                 is_k = 0
+    #                 first_time = []
+    #                 tj_k = 0
+    #                 _zsjg_k = 0
+    #                 ydzs_k = 0
+    #                 # elif jg_k - clo > 60:
+    #                 #     res[dates]['mony'] += (jg_k - clo)
+    #                 #     jg_k = clo
+
+
 
     def fa_new(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False, param=None):
         zsjg2 = zsjg

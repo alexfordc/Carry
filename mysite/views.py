@@ -2913,6 +2913,17 @@ def interface_huice(rq):
                 print(exc)
 
             return render(rq, 'interface_huice.html', resp)
+        elif _type == 'huice3':
+            # import requests
+            # d = requests.post('http://192.168.2.237:8666', files={'file': open(os.path.join(_folder,hc_name), 'rb')})
+            # d = d.text
+            # d=d.replace("$.get('/bars/'","$.get('http://192.168.2.237:8666/bars/'")
+            # return HttpResponse(d)
+            # print('huice3......................')
+            # from django.http import FileResponse
+            # hc_name = r'CTP\dual_thrust\result.pkl'
+            return redirect('http://192.168.2.237:8666/backtest/'+hc_name.split('\\')[-1])
+
         elif _type == 'down' and qx >= 2:
             path_file = os.path.join(_folder, hc_name)
             if os.path.isfile(path_file):
