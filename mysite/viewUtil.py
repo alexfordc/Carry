@@ -271,7 +271,7 @@ class Cfmmc:
         ret = self.session.get(self._login_url)
         ret_text = pq(ret.text)
         red = HSD.RedisPool()
-        red.set(self.key, {k:v for k,v in self.session.cookies.items()})
+        red.set(self.key, {k:v for k,v in self.session.cookies.items()}, 600)
         for x in ret_text('input'):
             if x.name == token_name:
                 return x.value

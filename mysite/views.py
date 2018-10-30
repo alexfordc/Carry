@@ -288,7 +288,7 @@ def login(rq):
         username = rq.POST.get('user_name')
         password = rq.POST.get('user_password')
         message = "登录失败！请确认用户名与密码是否输入正确！"
-        iphone = ''
+        iphone, qq = '', ''
         with viewUtil.errors('views', 'login'):
             user = models.Users.objects.get(name=username)
             timestamp = user.creationTime
@@ -2174,9 +2174,10 @@ cfmmc_login_ds = viewUtil.Dict()  # [是否登录期货监控系统, 期货监�
 def cfmmc_login(rq):
     """ 期货监控系统 登录"""
     user_name, qx, uid = LogIn(rq, uid=True)
+    # print(rq.META)
     # if not user_name:
     #     return index(rq, False)
-    cd_ = f"cfmmc_login_d_{rq.META.get('REMOTE_ADDR')}"
+    cd_ = f"cfmmc_login_d_{rq.META.get('CSRF_COOKIE')}"
     # cfmmc_login_d = red.get(cd_, _object=True)
     global cfmmc_login_ds
     cfmmc_login_d = cfmmc_login_ds[cd_]
