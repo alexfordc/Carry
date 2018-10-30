@@ -2936,12 +2936,19 @@ def interface_huice(rq):
         elif _type in {'code', 'explain'}:
             path_file = os.path.join(_folder, hc_name)
             pys = b''
-            if os.path.isfile(path_file):
-                with open(path_file,'rb') as f:
-                    pys = f.read()
+            logins = ''
+            if user_name and qx >= 2:
+                if os.path.isfile(path_file):
+                    with open(path_file,'rb') as f:
+                        pys = f.read()
+                else:
+                    logins = '文件不存在！'
+            else:
+                logins = '权限不够！'
             pys = pys.decode()
             clouds = viewUtil.get_interface_file(_folder)
-            return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds, 'pys': pys})
+            return render(rq, 'interface_huice.html',
+                          {'user_name': user_name, 'clouds': clouds, 'pys': pys, 'logins': logins})
     elif rq.method == 'POST' and qx >= 2:
         upload_file = rq.FILES.get('file')  # 获得文件
         if upload_file:
