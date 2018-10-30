@@ -9,10 +9,171 @@
 {% endblock %}
 {% block center_cen %}
 {% load staticfiles %}
+<script src="{% static 'js/pdf/jspdf.debug.js' %}"></script>
+<script src="{% static 'js/pdf/html2canvas.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 
     {% if zx_x %}
     <div align="center">
+        <div id="export_content" class="tuxiantp" style="display:none;">
+            <div id="tuxiantp1" style="width:auto;height:600px;font-size:18px;"><h2><a href="javascript:location.reload()">交易概况</a> </h2>
+            <div class="boxTitle relative" id="advancedTitle">
+
+
+  <ul class="titleNav">
+        <li class="bold">账户：{{hc_name}}</li>
+
+    </ul>
+</div>
+        <table class="maxWidth" id="trades" style="" cellspacing="0">
+    <tbody><tr>
+    <td valign="top">
+        <table class="advanced border0L" cellspacing="0">
+            <tbody><tr class="bg1">
+                <td>交易(笔):</td>
+                <td class="alignR">{{huizong.zl}}</td>
+            </tr>
+            <tr>
+                <td>盈利的:</td>
+                <td class="pointer" align="right">
+                            <span id="wonTip" class="在42笔交易中，正确21笔，获胜率为50<br/>在42笔交易中发生亏损21笔，亏损比例为50"><div class="blockHolder">
+                                <div class="greenBlock floatLeft" style="width:{{huizong.shenglv}}px;"></div>
+                                <div class="redBlock floatLeft" style="width:{{ huizong.kuilv }}px;"></div>
+                            </div></span>
+                </td>
+            </tr>
+
+            <tr class="bg1">
+                <td>总盈亏:</td>
+                <td class="alignR">{{huizong.yk|floatformat:"2"}}</td>
+            </tr>
+
+            <tr>
+                <td>总/平均获利:</td>
+                <td class="alignR">{{ hc.alllr|floatformat:2 }} / ￥{{ hc.avglr|floatformat:2 }}</td>
+            </tr>
+            <tr class="bg1">
+                <td>总/平均损失:</td>
+                <td class="alignR">{{ hc.allss|floatformat:2 }} / -￥{{ hc.avgss|floatformat:2 }}</td>
+            </tr>
+            <tr>
+
+                <td>盈亏比:</td>
+                <td class="alignR">{{ huizong.ykratio }}<!--{% widthratio hc.avglr hc.avgss -1.0 %}--></td>
+            </tr>
+            <tr class="bg1">
+                <td>总胜率:</td>
+                <td class="alignR">{{huizong.shenglv}} %</td>
+            </tr>
+
+
+                                        </tbody></table>
+            </td>
+            <td valign="top">
+                <table class="advanced border0R border0L" cellspacing="0">
+                    <tbody><tr>
+                        <td>成功的做多交易:</td>
+                        <td align="right">
+                            <span class="gray">({{hc.cgzd.0}}/{{hc.cgzd.1}}) </span> {{hc.cgzd.2}}%
+                            </td>
+                    </tr>
+                    <tr class="bg1">
+                        <td>成功的做空交易:</td>
+                        <td align="right">
+                            <span class="gray">({{hc.cgzk.0}}/{{hc.cgzk.1}}) </span> {{hc.cgzk.2}}%
+                            </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>最佳交易(￥):</td>
+                        <td class="alignR">                             <span class="gray">({{huizong.most.0}})</span> {{huizong.most.1|floatformat}}
+                        </td>
+                    </tr>
+                    <tr class="bg1">
+                        <td> 最差交易(￥):</td>
+                        <td class="alignR">                            <span class="gray">({{huizong.least.0}})</span> {{huizong.least.1|floatformat}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>最好的交易（按照点数计算）</td>
+                        <td class="alignR">                            <span class="gray">({{huizong.most2.0}})</span> {{huizong.most2.1|floatformat}}
+                        </td>
+                    </tr>
+                    <tr class="bg1">
+                        <td>最坏的交易（点数）</td>
+                        <td class="alignR">                            <span class="gray">({{huizong.least2.0}})</span> {{huizong.least2.1|floatformat}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>平均持仓时间:</td>
+                        <td class="alignR">{{hc.ccsj}}</td>
+                    </tr>
+
+                                        </tbody></table>
+            </td>
+            <td>
+                <table class="advanced border0R" cellspacing="0">
+                    <tbody><tr class="bg1">
+                        <td><span class="dotted" id="pfTip">利润因子:</span></td>
+                        <td class="alignR">{{hc.lryz}}</td>
+                    </tr>
+                    <tr>
+                        <td><span class="dotted" id="sdTip">标准差:</span></td>
+                        <td class="alignR">￥{{hc.std}}</td>
+                    </tr><tr class="bg1">
+                                                                <td><span class="dotted" id="sharpTip">夏普比率:</span></td>
+                                                 <td class="alignR">
+                                                     0.02
+                                                 </td>
+                                            </tr>
+
+
+                    <tr>
+                        <td><span class="dotted" id="zTip">历史最高额:</span></td>
+                        <td class="alignR">
+                            ￥{{huizong.max_amount}}
+                        </td>
+                    </tr>
+
+                    <tr class="bg1">
+                        <td><span class="dotted" id="expTip">存/取款:</span></td>
+                        <td class="alignR">￥{{huizong.deposit}} / {{huizong.draw}}</td>
+                    </tr>
+                                                            <tr>
+                                                                <td><span class="dotted" id="ahprTip">最大回测:</span></td>
+                                                <td class="alignR">{{ huizong.max_zjhc }}%</td>
+                                            </tr>
+                     <tr class="bg1">
+                                                                <td><span class="dotted" id="ghprTip">回报率:</span></td>
+                                                <td class="alignR">{{ huizong.huibaolv|floatformat:2 }}</td>
+                                            </tr>
+
+                                        </tbody></table>
+            </td>
+        </tr>
+
+    </tbody></table>
+
+            </div><br/>
+            <div id="tuxiantp2" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp3" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp4" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp5" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp6" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp7" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp8" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp9" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp10" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp11" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp12" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp13" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp14" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp15" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp16" style="width:auto;height:600px;"></div><br/>
+            <div id="tuxiantp17" style="width:auto;height:600px;"></div>
+        </div>
         <div style="position:relative;top:10px;" class="huatut">
             <table style="width:100%;text-align:center;">
                 <tr style="cursor:pointer;">
@@ -40,7 +201,7 @@
                     <td id="tuxiant21"></td>
                     <td id="tuxiant22"></td>
                     <td id="tuxiant23"></td>
-                    <td id="tuxiant24"></td>
+                    <td id="tuxiant24">导出为PDF</td>
                     <td id="tuxiant25">播放</td>
                 </tr>
             </table>
@@ -67,12 +228,14 @@ function getColor(){
    }
    return color;
 }
-
+var show_id = 'zhexiantut';
 function huatut(type,zx_x,zx_y,zx_y2,zx_y3){
-var myChart = echarts.init(document.getElementById('zhexiantut'));
+var myChart = echarts.init(document.getElementById(show_id));
 
 if(type=='line'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 optiont = {
 backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
@@ -83,6 +246,7 @@ backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
         }]),
 title:{
     text:"账户：{{hct.host}}",
+    subtext: tu_name,
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -143,7 +307,9 @@ toolbox: {
     }]
 };
 }else if(type=='pie'){
-    myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
     optiont = {
     backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
@@ -154,6 +320,7 @@ toolbox: {
         }]),
     title:{
     text:"账户：{{hct.host}}",
+    subtext: tu_name,
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -202,7 +369,9 @@ toolbox: {
     ]
 };
 }else if(type=='pie2'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 optiont = {
     backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
@@ -213,6 +382,7 @@ optiont = {
         }]),
     title:{
         text:"账户：{{hct.host}}",
+        subtext: tu_name,
         textStyle:{
             color:'#00A600',
         fontSize:18
@@ -294,7 +464,9 @@ optiont = {
    ]
 };
 }else if(type=='bar'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 var colorList = [
                   '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
                    '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
@@ -322,6 +494,7 @@ optiont ={
         }]),
     title:{
     text:"账户：{{hct.host}}",
+    subtext: tu_name,
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -393,7 +566,9 @@ optiont ={
     }
 };
 }else if(type=='bar2'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 var colorList = [
                   '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
                    '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
@@ -421,6 +596,7 @@ optiont ={
         }]),
     title:{
         text:"账户：{{hct.host}}",
+        subtext: tu_name,
         textStyle:{
             color:'#00A600',
             fontSize:18
@@ -492,12 +668,15 @@ optiont ={
     }
 };
 }else if(type=='bar3'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 
 optiont = {
     backgroundColor: '#eee',
     title:{
         text:"账户：{{hct.host}}",
+        subtext: tu_name,
         textStyle:{
             color:'#00A600',
             fontSize:18
@@ -540,6 +719,7 @@ optiont = {
         type: 'continuous',
         dimension: 1,
         text: ['盈利', '亏损'],
+        subtext: tu_name,
         inverse: false,
         itemHeight: 200,
         calculable: true,
@@ -600,7 +780,9 @@ optiont = {
 };
 
 }else if(type=='linebar'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 optiont = {
 backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
             offset: 0,
@@ -611,6 +793,7 @@ backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
         }]),
 title:{
     text:"账户：{{hct.host}}",
+    subtext: tu_name,
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -675,7 +858,9 @@ toolbox: {
     }]
 };
 }else if(type=='line2'){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 var linebars = new Array();
 var linebar2 = [];
 zx_y2.forEach(function(i,k){
@@ -697,6 +882,7 @@ backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 8, [{
         }]),
 title:{
     text:"账户：{{hct.host}}",
+    subtext: tu_name,
     textStyle:{
         color:'#00A600',
         fontSize:18
@@ -802,7 +988,9 @@ toolbox: {
     }]
 };
 }else if(type=='scatter'){
-myChart.clear()
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 optiont = {
         backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
             offset: 0,
@@ -813,6 +1001,7 @@ optiont = {
         }]),
     title : {
         text: "账户：{{hct.host}}",
+        subtext: tu_name,
         textStyle:{
             color:'#00A600',
             fontSize:18
@@ -971,7 +1160,9 @@ optiont = {
     ]
 };
 }else if(type=="scatter_date"){
-myChart.clear();
+    if(show_id=='zhexiantut'){
+        myChart.clear();
+    }
 var all_pcsjs = [];
 zx_x.forEach(function(v,k){
     all_pcsjs.push(
@@ -1157,6 +1348,8 @@ optiont = {
 
 myChart.setOption(optiont);
 window.onresize = myChart.resize;
+
+
 }
 
 function tuxiancolort(id){
@@ -1291,188 +1484,77 @@ $("#tuxiant25").click(function(){
 
 });
 
+
+/*
+var downPdf = document.getElementById("tuxiant24");
+downPdf.onclick = function () {
+    var export_content = document.getElementById("export_content");
+    $(".tuxiantp").css("display","block");
+    for(var i=1;i<18;i++){
+        show_id = 'tuxiantp'+i;
+        tuxiancolort("tuxiant"+i);
+    }
+    $("#leftColumn").css("display","block");
+    $(".huatut").css("display","none");
+    html2canvas(
+            export_content,
+            {
+                dpi: 172,//导出pdf清晰度
+                onrendered: function (canvas) {
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+
+                    //一页pdf显示html页面生成的canvas高度;
+                    var pageHeight = contentWidth / 592.28 * 841.89;
+                    //未生成pdf的html页面高度
+                    var leftHeight = contentHeight;
+                    //pdf页面偏移
+                    var position = 0;
+                    //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                    var imgWidth = 595.28;
+                    var imgHeight = 592.28 / contentWidth * contentHeight;
+
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    var pdf = new jsPDF('', 'pt', 'a4');
+
+                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                    //当内容未超过pdf一页显示的范围，无需分页
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                    } else {
+                        while (leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            //避免添加空白页
+                            if (leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+                    pdf.save('content.pdf');
+                },
+                //背景设为白色（默认为黑色）
+                background: "#fff"
+            });
+    $(".tuxiantp").css("display","none");
+    $(".huatut").css("display","block");
+}*/
 </script>
 
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'css/fx-mins.css' %}" title="default"/>
 <link rel="stylesheet" href="{% static 'css/jquery-ui-1.8.21.custom.css' %}">
 <link href="{% static 'css/cookieconsent.min.css' %}" rel="stylesheet" type="text/css" />
-
 <div id="leftColumn" class="relative" style="margin: auto;position: absolute;top: 200px;left: 0;right: 0;bottom: 0;width:875px;">
-                   <!--<div class="floatLeft marginB10">-->
-<!--<div class="ds1">-->
-    <!--<div class="ds2">-->
-        <!--<div class="ds3">-->
-            <!--<div class="ds4">-->
-                <!--<div class="ds5">-->
-                    <!--<div class="ds6">-->
-                        <!--<div class="box_cont" style="width:195px; height:348px">-->
-                            <!--<div class="boxTitle">-->
-                                <!--<ul class="titleNav">-->
-                                    <!--&lt;!&ndash;<li class="bold">信息</li>&ndash;&gt;-->
-                                    <!--<li class="on" onclick="switchTab('tabs9','stats',this);">统计</li>-->
-                                    <!--&lt;!&ndash;<li class="off" onclick="switchTab('tabs9','gen',this);">一般</li>&ndash;&gt;-->
-                                <!--</ul>-->
-                            <!--</div>-->
 
-                            <!--<ul class="quickStats" id="stats" style="">-->
-                                <!--<li class="font12 bold"><span class="floatLeft dotted" id="gainTip">获利:</span>-->
-                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft dotted" id="absGainTip">绝对收益:</span>-->
-                                    <!--<span class="floatNone"><span class="red">{{hc.hlbfb|floatformat:"2"}}%</span></span></li>-->
-
-                                <!--<li class="paddT5"><span class="floatLeft dotted" id="dailyTip">天: </span><span class="floatNone">{{hc.dhl|floatformat:"2"}}%</span></li>-->
-                                <!--<li><span class="floatLeft dotted" id="monthlyTip">每月: </span><span class="floatNone">{{hc.mhl|floatformat:"2"}}%</span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft">资金回撤: </span><span class="floatNone">{{hc.zjhc|floatformat:"2"}}%</span></li>-->
-
-                                <!--<li class="paddT5"><span class="floatLeft">余额:</span><span class="floatNone"> ￥{{hc.ye|floatformat:"2"}}</span></li>-->
-                                <!--<li><span class="floatLeft">净值:</span><span class="floatNone">  ￥{{hc.ye|floatformat:"2"}} </span></li>-->
-                                <!--<li><span class="floatLeft">最高:</span><span class="floatNone">￥{{hc.max_jz|floatformat:"2"}}</span>-->
-                                <!--</li>-->
-
-                                <!--<li><span class="floatLeft">利润:</span><span class="floatNone"> <span class="red">￥{{huizong.yk|floatformat:"2"}}</span> </span></li>-->
-                                <!--<li class="borderB paddB5"><span class="floatLeft">利息:</span><span class="floatNone">￥0.00</span></li>-->
-                                <!--<li class="paddT5"><span class="floatLeft">入金:</span><span class="floatNone"> ￥{{init_money}}</span></li>-->
-                                <!--<li class="paddB5 borderB"><span class="floatLeft">取款:</span><span class="floatNone">￥0.00</span></li>-->
-                                <!--<li class="paddB5 paddT5"><span class="floatLeft">交易天数:</span><span class="floatNone" id="lastUpdatedTime" time="1525253295000">{{hc.jyts}}</span></li>-->
-                                <!--<li>-->
-                                        <!--<span class="floatLeft">交易者</span><span class="floatNone" id="totalTracking">{{hc_name}}</span>-->
-                                <!--</li>-->
-
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
 
 <div class="floatLeft" style="width:660px;">
 
 
-
-<!--<div class="ds1">-->
-    <!--<div class="ds2">-->
-        <!--<div class="ds3">-->
-            <!--<div class="ds4">-->
-                <!--<div class="ds5">-->
-                    <!--<div class="ds6">-->
-                        <!--<div class="box_cont" style="height:348px" id="huicetuall">
-                            <div style="font-size:14px;cursor:pointer;"><span id="tuxian1">增长率</span>&nbsp;&nbsp;
-                                <span id="tuxian2">余额</span>&nbsp;&nbsp;
-                                <span id="tuxian3">利润</span>&nbsp;&nbsp;
-                                <span id="tuxian4">资金回测</span>&nbsp;&nbsp;-->
-                                <!--<span id="fangda" style="float:right;margin-left:10px;margin-right:10px;"><img src="{% static 'images/b1.ico' %}" width="15" height="15" title="放大"></span>-->
-                                <!--<span id="suoxiao" style="float:right;"><img src="{% static 'images/b2.ico' %}" width="15" height="15" title="缩小"></span>-->
-                            <!--</div>
-                                <div id="zhexiantu" style="width: 658;height: 318px;"></div>
-                           </div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-
 </div>
 <div class="floatLeft" style="width:877px">
-<!--
-<div class="ds1 marginB10" id="tradingContDiv">
-    <div class="ds2">
-        <div class="ds3">
-            <div class="ds4">
-                <div class="ds5">
-                    <div class="ds6">
-                        <div class="box_cont">
-                            <div class="boxTitle relative" id="advancedTitle2">
 
-                                                            <ul class="titleNav">
-                                    <li class="bold">交易&nbsp;&nbsp;{{hct.host}}</li>
-
-                                                            </ul>
-                            </div>
-
-
-
-
-                            <div style="position:relative;z-index:103">
-                                <div id="dailyGoalsEdit" style="display:none;margin-left:170px;width:500px" class="marginT30 absolute border7 whiteBG windowh ui-draggable" onmousedown="this.style.cursor='move'" onmouseup="this.style.cursor=''">
-
-<br>
-
-
-
-                            </div>
-
-
-
-                            <div id="tradeBrowser" class="relative" style="">
-
-<div id="periods" style="">
-                                <table class="table maxWidth marginT5 center">
-                                    <tbody><tr class="font10 lh20">
-                                        <th>时间区间</th>
-                                        <th class="boldNone">获利 (Difference)</th>
-                                        <th class="boldNone">利润 (Difference)</th>
-                                        <th class="boldNone">点 (Difference)</th>
-                                        <th class="boldNone">Win % (Difference)</th>
-                                        <th class="boldNone">交易 (Difference)</th>
-                                        <th class="boldNone">    手 (Difference)</th>
-                                    </tr>
-                                    <tr class="bg1">
-
-                                        <td class="paddL10" align="left">一天</td>
-                                            <td><span class="green">{{hc.this_day.0|floatformat:"2"}}%</span> </td>
-                                            <td>￥{{hc.this_day.1|floatformat:"2"}} </td>
-                                            <td>{{hc.this_day.2|floatformat:"2"}} </td>
-                                            <td>{{hc.this_day.3|floatformat:"2"}}% </td>
-                                            <td>{{hc.this_day.4}} </td>
-                                            <td>{{hc.this_day.5}} </td>
-                                                                            </tr>
-                                    <tr>
-                                        <td class="paddL10" align="left">一星期</td>
-                                            <td><span class="green">{{hc.this_week.0|floatformat:"2"}}%</span> </td>
-                                            <td>￥{{hc.this_week.1|floatformat:"2"}} </td>
-                                            <td>{{hc.this_week.2|floatformat:"2"}} </td>
-                                            <td>{{hc.this_week.3|floatformat:"2"}}% </td>
-                                            <td>{{hc.this_week.4}} </td>
-                                            <td>{{hc.this_week.5}} </td>
-
-                                    </tr>
-                                    <tr class="bg1">
-                                        <td class="paddL10" align="left">一个月</td>
-                                            <td><span class="green">{{hc.this_month.0|floatformat:"2"}}%</span> </td>
-                                            <td>￥{{hc.this_month.1|floatformat:"2"}}</td>
-                                            <td>{{hc.this_month.2|floatformat:"2"}}</td>
-                                            <td>{{hc.this_month.3|floatformat:"2"}}% </td>
-                                            <td>{{hc.this_month.4}}</td>
-                                            <td>{{hc.this_month.5}}</td>
-                                                                            </tr>
-                                    <tr>
-                                        <td class="paddL10" align="left">一年</td>
-                                            <td><span class="red">{{hc.this_year.0|floatformat:"2"}}%</span> <span class="gray">( - )</span></td>
-                                            <td><span class="red">{{hc.this_year.1|floatformat:"2"}}</span> <span class="gray">( - )</span></td>
-                                            <td><span class="red">{{hc.this_year.2|floatformat:"2"}}</span> <span class="gray">( - )</span>
-                                            </td>
-                                            <td>{{hc.this_year.3|floatformat:"2"}}% <span class="gray">( - )</span></td>
-                                            <td>{{hc.this_year.4}} <span class="gray">( - )</span></td>
-                                            <td>{{hc.this_year.5}} <span class="gray">( - )</span></td>
-                                                                            </tr>
-
-                                </tbody></table>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 <div class="ds1" style="width:900px;font-size:14px;">
 <div class="ds2">
 <div class="ds3">
@@ -1630,7 +1712,6 @@ $("#tuxiant25").click(function(){
 </div>
 </div>
 </div>
-
 
 {% if not hcd %}
 <script type="text/javascript">
@@ -1918,6 +1999,7 @@ for(var i=0;i<category.length;i++){
 option = {
     title: {
             text: "{{hcd.samedatetime}}",
+            subtext: tu_name,
             textStyle:{ color:'#0a0' }
         },
     backgroundColor: '#0f375f',
@@ -2114,6 +2196,61 @@ myChart.setOption(option);
 }
 
 </script>
-    </div>
+
 {% endif %}
+<script>
+$("#tuxiant24").click(function(){
+    var export_content = $("#export_content");
+    export_content.css("display","block");
+    $("#export_content2").css("display","block");
+    for(var i=1;i<18;i++){
+        show_id = 'tuxiantp'+i;
+        tuxiancolort("tuxiant"+i);
+    }
+    //$("#leftColumn").css("display","block");
+    $(".huatut").css("display","none");
+
+    html2canvas(
+            export_content,
+            {
+                dpi: 172,//导出pdf清晰度
+                onrendered: function (canvas) {
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+
+                    //一页pdf显示html页面生成的canvas高度;
+                    var pageHeight = contentWidth / 592.28 * 841.89;
+                    //未生成pdf的html页面高度
+                    var leftHeight = contentHeight;
+                    //pdf页面偏移
+                    var position = 0;
+                    //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                    var imgWidth = 595.28;
+                    var imgHeight = 592.28 / contentWidth * contentHeight;
+
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    var pdf = new jsPDF('', 'pt', 'a4');
+
+                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                    //当内容未超过pdf一页显示的范围，无需分页
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                    } else {
+                        while (leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            //避免添加空白页
+                            if (leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+                    pdf.save('content.pdf');
+                },
+                //背景设为白色（默认为黑色）
+                background: "#fff"
+            });
+});
+</script>
 {% endblock %}

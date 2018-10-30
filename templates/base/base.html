@@ -251,12 +251,7 @@ var $container = $('#works-container');
         <!--<input type="submit" id="liaotian_submit" value="Send"/>-->
     <!--</div>-->
 <!--</div>-->
-<audio id="chatAudio"><source id="source_play" ></audio>
-    <!--新闻-->
-    <div id="xinwen" class="xinwen" style="border:5px solid red;width:300px;position:fixed;right:1px;top:1px;display:none;">
-        <ol id="xinwen_ol" ></ol>
-    </div>
-</div>
+
     <div align="center" id="user_login_div" style="display:none;Z-index:100; left:50%; bottom:50%;width:390px; height:200px; position: fixed;top: 0px;left: 0px;right: 0px;bottom: 0px;margin: auto;
 border:1px solid #888; background-color:green; text-align:center"><p id="login_message">用户登录</p>
         <p id="csrfmiddlewaretoken">{% csrf_token %}</p>
@@ -626,7 +621,7 @@ $("#uploadImg").hover(
 });
 $("#pingmujietu").hover(
     function(){
-            $("#pingmujietu").val("截取整个网页");
+            $("#pingmujietu").val("截图");
         } ,
     function(){
             $("#pingmujietu").val("☯");

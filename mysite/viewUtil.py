@@ -69,6 +69,7 @@ def errors(*fun_name):
         record_log('log\\error_log\\err.txt', f'{fun_name}{exc}\n', 'a')
 
 
+@caches
 class Dict(dict):
     """ 有超时处理的字典 """
 
@@ -251,11 +252,16 @@ def get_sqlalchemy_conn():
 
 class Cfmmc:
     """ 期货监控系统，登录，下载数据，保存数据 """
-    __slots__ = ('session', '_login_url', '_vercode_url', '_conn', '_not_trade_list', '_userID', '_password')
+    __slots__ = ('session', '_login_url', '_vercode_url', '_conn', '_not_trade_list', '_userID', '_password', 'key')
 
-    def __init__(self):
+    def __init__(self,key):
         requests.packages.urllib3.disable_warnings()  # 禁用警告：正在进行未经验证的HTTPS请求。 强烈建议添加证书验证。
         self.session = requests.session()
+        self.key = key
+        red = HSD.RedisPool()
+        ses = red.get(key)
+        if ses:
+            [self.session.cookies.set(k, v) for k, v in ses.items()]
         self._login_url = 'https://investorservice.cfmmc.com/login.do'
         self._vercode_url = 'https://investorservice.cfmmc.com/veriCode.do?t='
 
@@ -264,6 +270,8 @@ class Cfmmc:
         token_name = "org.apache.struts.taglib.html.TOKEN"
         ret = self.session.get(self._login_url)
         ret_text = pq(ret.text)
+        red = HSD.RedisPool()
+        red.set(self.key, {k:v for k,v in self.session.cookies.items()})
         for x in ret_text('input'):
             if x.name == token_name:
                 return x.value
