@@ -1218,6 +1218,7 @@ def cfmmc_huice(data, host, start_date, end_date, hc_name, red_key):
         hct['host'] = hc_name  # host
         # hc['zzl'] = [round((hct['alljz'][i]-hct['alljz'][i-1])/hct['alljz'][i-1]*100,3) if i!=0 else hct['alljz'][i] for i in range(len(hc['zzl']))]
         huizong['max_amount'] = round(max(hct['amount']), 2)  # 最高余额
+        huizong['min_amount'] = round(min(hct['amount']), 2)  # 最低余额
         huizong['deposit'] = sum(i[1] for i in ee if i[1] > 0)  # 存款
         huizong['draw'] = sum(i[1] for i in ee if i[1] < 0)  # 取款
         huizong['ykratio'] = abs(round(hc['avglr'] / (hc['avgss'] if hc['avgss'] != 0 else 1), 2))
@@ -1405,7 +1406,7 @@ def moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key
     ma = 60
     param = {'zsds': zsds, 'ydzs': ydzs, 'zyds': zyds, 'cqdc': cqdc}
     res, huizong, first_time = zbjs.main2(_ma=ma, _dates=dates, end_date=end_date, _fa=fa, database=database,
-                                          reverse=reverse, param=param)
+                                          reverse=reverse, param=param, red_key=red_key)
     try:
         keys = sorted(res.keys(), reverse=True)
         res_length = len(keys)

@@ -1642,12 +1642,14 @@ def moni(rq):
         if rq.is_ajax():
             resp = red.get(red_key)
             if not resp:
-                return HttpResponse(-1)  # 继续请求
+                data_line = red.get(red_key+'_line')
+                d = data_line if data_line else ['','','','']
+                return JsonResponse({'s': -1,'t':d[0],'m':d[1],'d':d[2],'k':d[3]})  # (-1)  # 继续请求
             elif resp == 0:
                 red.delete(red_key)
-                return HttpResponse(0)  # 数据计算有误
+                return JsonResponse({'s': 0})  # 数据计算有误
             else:
-                return HttpResponse(1)  # 数据成功写入
+                return JsonResponse({'s': 1})  # 数据成功写入
         else:
             zsds, ydzs, zyds, cqdc = HSD.format_int(zsds, ydzs, zyds, cqdc) if zsds and ydzs and zyds and cqdc else (
                 100, 100, 200, 6)
@@ -2604,13 +2606,13 @@ def cfmmc_huice(rq, param=None):
         red = HSD.RedisPool()
         resp = red.get(cfmmc_huice_key)
 
-        if resp == 0:
+        if resp == 0:  # 错误
             red.delete(cfmmc_huice_key)
-            return HttpResponse(0)
-        elif not resp:
-            return HttpResponse(-1)
-        else:
-            return HttpResponse(1)
+            return JsonResponse({'s': 0})
+        elif not resp: # 统计中
+            return JsonResponse({'s': -1})
+        else:  # 统计完毕
+            return JsonResponse({'s': 1})
     elif rq.method == 'GET':
         user_name, qx = LogIn(rq)
 

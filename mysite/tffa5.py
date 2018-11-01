@@ -3,9 +3,13 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
+from mysite.viewUtil import caches
+
 # 设置日志级别为ERROR
 tf.logging.set_verbosity(tf.logging.ERROR)
 
+
+@caches
 class TensorFa:
     def __init__(self, files=r'D:\tools\Tools\October_2018\2018-10-24\fa5ks.csv'):
         # 数据集切片
@@ -49,7 +53,7 @@ class TensorFa:
         # 进行模型训练，进行20000 个回合的训练，每次100调数据
         self.classifier.train(
             input_fn=lambda:train_func(self.train_x,self.train_y),
-            steps=3000)
+            steps=8000)
 
 
     # 模型预测

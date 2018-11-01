@@ -1313,7 +1313,7 @@ class Zbjs(ZB):
             )
         return runSqlData(db, sql)
 
-    def main2(self, _ma, _dates, end_date, _fa, database, reverse=False, param=None):
+    def main2(self, _ma, _dates, end_date, _fa, database, reverse=False, param=None, red_key=None):
         end_date = dtf(end_date) + datetime.timedelta(days=1)
         _res, first_time = {}, []
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000, 0, 0], 'most': [0, -1000, 0, 0], 'avg': 0,
@@ -1326,7 +1326,7 @@ class Zbjs(ZB):
         # da = self.get_data(conn, _dates, end_date, database,code[0])
         da = self.get_data('carry_investment', _dates, end_date, database)
         self.zdata = da
-        res, first_time = self.trd(_fa, reverse=reverse, param=param)
+        res, first_time = self.trd(_fa, reverse=reverse, param=param, red_key=red_key)
 
         # hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动
         res_key = list(res.keys())

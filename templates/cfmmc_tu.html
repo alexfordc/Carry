@@ -96,7 +96,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>最好的交易（按照点数计算）</td>
+                        <td>最好的交易（点数）</td>
                         <td class="alignR">                            <span class="gray">({{huizong.most2.0}})</span> {{huizong.most2.1|floatformat}}
                         </td>
                     </tr>
@@ -123,15 +123,15 @@
                         <td><span class="dotted" id="sdTip">标准差:</span></td>
                         <td class="alignR">￥{{hc.std}}</td>
                     </tr><tr class="bg1">
-                                                                <td><span class="dotted" id="sharpTip">夏普比率:</span></td>
+                                                                <td><span class="dotted" id="sharpTip">最低余额:</span></td>
                                                  <td class="alignR">
-                                                     0.02
+                                                     ￥{{huizong.min_amount}}
                                                  </td>
                                             </tr>
 
 
                     <tr>
-                        <td><span class="dotted" id="zTip">历史最高额:</span></td>
+                        <td><span class="dotted" id="zTip">最高余额:</span></td>
                         <td class="alignR">
                             ￥{{huizong.max_amount}}
                         </td>
@@ -1555,7 +1555,7 @@ downPdf.onclick = function () {
 </div>
 <div class="floatLeft" style="width:877px">
 
-<div class="ds1" style="width:900px;font-size:14px;">
+<div class="ds1" style="width:960px;font-size:14px;">
 <div class="ds2">
 <div class="ds3">
 <div class="ds4">
@@ -1641,7 +1641,7 @@ downPdf.onclick = function () {
                         </td>
                     </tr>
                     <tr>
-                        <td>最好的交易（按照点数计算）</td>
+                        <td>最好的交易（点数）</td>
                         <td class="alignR">                            <span class="gray">({{huizong.most2.0}})</span> {{huizong.most2.1|floatformat}}
                         </td>
                     </tr>
@@ -1668,15 +1668,15 @@ downPdf.onclick = function () {
                         <td><span class="dotted" id="sdTip">标准差:</span></td>
                         <td class="alignR">￥{{hc.std}}</td>
                     </tr><tr class="bg1">
-                                                                <td><span class="dotted" id="sharpTip">夏普比率:</span></td>
+                                                                <td><span class="dotted" id="sharpTip">最低余额:</span></td>
                                                  <td class="alignR">
-                                                     0.02
+                                                     ￥ {{huizong.min_amount}}
                                                  </td>
                                             </tr>
 
 
                     <tr>
-                        <td><span class="dotted" id="zTip">历史最高额:</span></td>
+                        <td><span class="dotted" id="zTip">最高余额:</span></td>
                         <td class="alignR">
                             ￥{{huizong.max_amount}}
                         </td>
