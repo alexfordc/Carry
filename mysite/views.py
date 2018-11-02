@@ -1644,7 +1644,7 @@ def moni(rq):
             if not resp:
                 data_line = red.get(red_key+'_line')
                 d = data_line if data_line else ['','','','']
-                return JsonResponse({'s': -1,'t':d[0],'m':d[1],'d':d[2],'k':d[3]})  # (-1)  # 继续请求
+                return JsonResponse({'s': -1, 't': d[0], 'm': d[1], 'd': d[2], 'k': d[3]})  # (-1)  # 继续请求
             elif resp == 0:
                 red.delete(red_key)
                 return JsonResponse({'s': 0})  # 数据计算有误
@@ -2610,7 +2610,7 @@ def cfmmc_huice(rq, param=None):
             red.delete(cfmmc_huice_key)
             return JsonResponse({'s': 0})
         elif not resp: # 统计中
-            return JsonResponse({'s': -1})
+            return JsonResponse({'s': -1, 't': ''})
         else:  # 统计完毕
             return JsonResponse({'s': 1})
     elif rq.method == 'GET':

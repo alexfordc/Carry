@@ -11,16 +11,18 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 
 @caches
 class TensorFa:
-    def __init__(self, files=r'D:\tools\Tools\October_2018\2018-10-24\fa5ks.csv'):
+    def __init__(self, files='log\\fa5ks.csv'):
         # 数据集切片
-        data2=pd.read_csv(files)
-        data = pd.DataFrame()
-        avg = (data2['2']+data2['3']+data2['4']+data2['5'])/4
-        data['1'] = avg/data2['6']
-        data['2'] = avg/data2['7']
-        data['3'] = avg/data2['8']
-        data['4'] = data2['9']
-        data['5'] = data2['10'].apply(lambda x: x if x>=0 else 2)
+        # data2=pd.read_csv(files)
+        # data = pd.DataFrame()
+        # avg = (data2['2']+data2['3']+data2['4']+data2['5'])/4
+        # data['1'] = avg/data2['6']
+        # data['2'] = avg/data2['7']
+        # data['3'] = avg/data2['8']
+        # data['4'] = data2['9']
+        # data['5'] = data2['10'].apply(lambda x: x if x>=0 else 2)
+        data = pd.read_csv(files)
+        data.columns=['1','2','3','4','5']
 
         # 打乱数据集的顺序
         data = data.sample(frac=1).reset_index(drop=True)
@@ -53,7 +55,7 @@ class TensorFa:
         # 进行模型训练，进行20000 个回合的训练，每次100调数据
         self.classifier.train(
             input_fn=lambda:train_func(self.train_x,self.train_y),
-            steps=8000)
+            steps=10000)
 
 
     # 模型预测

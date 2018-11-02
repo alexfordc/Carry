@@ -884,6 +884,7 @@ class ZB(object):
         first_time = []
         # LS1,LS2 = [],[]
         # ls_count1,ls_count2 = 0,0
+        # file_path = r'D:\tools\Tools\November_2018\2018-11-2\fa5k.csv'
         while 1:
             _while, dt3, dates, qzpc = yield res, first_time
             if dates not in res:
@@ -914,13 +915,14 @@ class ZB(object):
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
 
+            _avg = (op + high + low + clo) / 4
             if kctj_d and self.dt_kc(datetimes):  # is_d!=1 and judge_d
                 jg_d = clo
                 startMony_d = clo
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str_time1, '多', clo]
-                LS1 = [str_time1,op,high,low,clo,ma10,mas,ma120,mul,1]
+                LS1 = [str(_avg / ma10), str(_avg / mas), str(_avg / ma120), str(mul), '1'] if ma120 else []
 
             elif kctj_k and self.dt_kc(datetimes):  # is_k!=-1 and judge_k
                 jg_k = clo
@@ -928,11 +930,12 @@ class ZB(object):
                 str_time2 = str(datetimes)
                 is_k = -1
                 first_time = [str_time2, '空', clo]
-                LS2 = [str_time2, op, high, low, clo, ma10, mas, ma120, mul,-1]
-            # elif ls_count1>ls_count2:
-            #     with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
-            #         fa5f.write(','.join([str(_isw) for _isw in [str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,0]])+'\n')
-            #     ls_count2 += 1
+                LS2 = [str(_avg / ma10), str(_avg / mas), str(_avg / ma120), str(mul), '2'] if ma120 else []
+            # elif ls_count1*2>ls_count2:
+            #     if ma10 and mas and ma120:
+            #         with open(file_path,'a') as fa5f:
+            #             fa5f.write(','.join([str(_avg / ma10), str(_avg / mas), str(_avg / ma120), str(mul), '0'])+'\n')
+            #         ls_count2 += 1
 
             if (is_d == 1 and (pctj_d or self.is_date(datetimes) or low - startMony_d - cqdc < zsjg) or qzpc) and str(
                     datetimes) != str_time1:
@@ -949,9 +952,12 @@ class ZB(object):
 
                 # LS1.extend([str(datetimes),op,high,low,clo,ma10,mas,ma120,mul,1,price])
                 # if len(LS1)==20:
-                # with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv','a') as fa5f:
-                #     fa5f.write(','.join([str(_isw) for _isw in LS1])+'\n')
-                # ls_count1 += 1
+                # if LS1:
+                #     if price<0:
+                #         LS1[-1] = '0'
+                #     with open(file_path,'a') as fa5f:
+                #         fa5f.write(','.join(LS1)+'\n')
+                #     ls_count1 += 1
 
             elif (is_k == -1 and (
                     pctj_k or self.is_date(datetimes) or startMony_k - high - cqdc < zsjg) or qzpc) and str(
@@ -969,9 +975,12 @@ class ZB(object):
 
                 # LS2.extend([str(datetimes), op, high, low, clo, ma10, mas, ma120, mul,-1,price])
                 # if len(LS2) == 20:
-                # with open(r'D:\tools\Tools\October_2018\2018-10-24\fa5k.csv', 'a') as fa5f:
-                #     fa5f.write(','.join([str(_isw) for _isw in LS2]) + '\n')
-                # ls_count1 += 1
+                # if LS2:
+                #     if price<0:
+                #         LS2[-1] = '0'
+                #     with open(file_path, 'a') as fa5f:
+                #         fa5f.write(','.join(LS2) + '\n')
+                #     ls_count1 += 1
 
     def fa6(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
         zsjg2 = zsjg
@@ -2710,8 +2719,8 @@ class ZB(object):
                 _tens = ten.predict_line(line)
                 # lines.append(0)
                 # _tens = years[len(lines)-1]
-            kctj_d = _tens == 1   #and (mul>1.5 or mul<-1)  # 1
-            kctj_k = _tens == 2   #and (mul<-1.5 or mul>1)  # 2
+            kctj_d = _tens == 1 and clo<mas   #and (mul>1.5 or mul<-1)  # 1
+            kctj_k = _tens == 2 and clo>mas   #and (mul<-1.5 or mul>1)  # 2
             pctj_d = mul > 1.5
             pctj_k = mul < -1.5
             if reverse:
@@ -2720,23 +2729,23 @@ class ZB(object):
 
             if kctj_d and is_dk and self.dt_kc(datetimes) and datetimes.hour>9:  # is_d!=1 and judge_d
                 tj_d += 1
-                if tj_d > 3:
-                    jg_d = clo
-                    startMony_d = clo
-                    str_time1 = str(datetimes)
-                    is_d = 1
-                    first_time = [str_time1, '多', clo]
-                    _tens = 0
+                # if tj_d > 3:
+                jg_d = clo
+                startMony_d = clo
+                str_time1 = str(datetimes)
+                is_d = 1
+                first_time = [str_time1, '多', clo]
+                _tens = 0
 
             elif kctj_k and is_dk and self.dt_kc(datetimes) and datetimes.hour>9:  # is_k!=-1 and judge_k
                 tj_k += 1
-                if tj_k > 3:
-                    jg_k = clo
-                    startMony_k = clo
-                    str_time2 = str(datetimes)
-                    is_k = -1
-                    first_time = [str_time2, '空', clo]
-                    _tens = 0
+                # if tj_k > 3:
+                jg_k = clo
+                startMony_k = clo
+                str_time2 = str(datetimes)
+                is_k = -1
+                first_time = [str_time2, '空', clo]
+                _tens = 0
 
             if is_d == 1:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
@@ -2957,6 +2966,7 @@ class ZB(object):
             except:
                 pass
         red_data = ['',0,0,0]
+        res_value = [0,0,0]
         for df2 in da:
             # df2格式：(Timestamp('2018-03-16 09:22:00') 31304.0 31319.0 31295.0 31316.0 275)
             dates = str(df2[0])[:10]
@@ -2969,14 +2979,17 @@ class ZB(object):
                 res, first_time = fa.send((True, dt3, dates, qzpc))
                 if red and mony != res[dates]['mony']:
                     # print([dates,res[dates]['mony'],res[dates]['duo'],res[dates]['kong']])
-                    # if red_data[0] == '':
-                    #     red_data[0] = dates
-                    # if red_data[0] != dates:
-                    red_data[0] = dates
-                    red_data[1] = res[dates]['mony']
-                    red_data[2] = res[dates]['duo']
-                    red_data[3] = res[dates]['kong']
-                    red.set(red_key+'_line',red_data,expiry=10800)
+                    if red_data[0] == '':
+                        red_data[0] = dates
+                    if red_data[0] != dates:
+                        red_data[0] = dates
+                        red_data[1] += res_value[0]
+                        red_data[2] += res_value[1]
+                        red_data[3] += res_value[2]
+                        red.set(red_key+'_line',red_data,expiry=180)
+                    res_value[0] = res[dates]['mony']
+                    res_value[1] = res[dates]['duo']
+                    res_value[2] = res[dates]['kong']
                     mony = res[dates]['mony']
 
         # sss=[]

@@ -243,14 +243,13 @@ class RedisPool:
         :param _object: 是否是Python对象
         :return: None
         """
-        if _object:
-            self._conn.set(key, pickle.dumps(value))
-            self._conn.expire(key, expiry)
-        else:
-            self._conn.set(key, json.dumps(value))
-            self._conn.expire(key, expiry)
         try:
-            pass
+            if _object:
+                self._conn.set(key, pickle.dumps(value), ex=expiry)
+                # self._conn.expire(key, expiry)
+            else:
+                self._conn.set(key, json.dumps(value), ex=expiry)
+                # self._conn.expire(key, expiry)
         except TypeError as exc:
             logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
         except:

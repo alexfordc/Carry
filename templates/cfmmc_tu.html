@@ -16,7 +16,7 @@
     {% if zx_x %}
     <div align="center">
         <div id="export_content" class="tuxiantp" style="display:none;">
-            <div id="tuxiantp1" style="width:auto;height:600px;font-size:18px;"><h2><a href="javascript:location.reload()">交易概况</a> </h2>
+            <div id="tuxiantp1" style="width:1200px;height:600px;font-size:18px;"><h2><a href="javascript:location.reload()">交易概况</a> </h2>
             <div class="boxTitle relative" id="advancedTitle">
 
 
@@ -157,22 +157,26 @@
     </tbody></table>
 
             </div><br/>
-            <div id="tuxiantp2" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp3" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp4" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp5" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp6" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp7" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp8" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp9" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp10" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp11" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp12" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp13" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp14" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp15" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp16" style="width:auto;height:600px;"></div><br/>
-            <div id="tuxiantp17" style="width:auto;height:600px;"></div>
+            <div id="tuxiantp2" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp3" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp4" style="width:1200px;height:600px;"></div><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="tuxiantp5" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp6" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp7" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp8" style="width:1200px;height:600px;"></div><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="tuxiantp9" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp10" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp11" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp12" style="width:1200px;height:600px;"></div><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="tuxiantp13" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp14" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp15" style="width:1200px;height:600px;"></div><br/>
+            <div id="tuxiantp16" style="width:1200px;height:600px;"></div><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="tuxiantp17" style="width:1200px;height:600px;"></div>
         </div>
         <div style="position:relative;top:10px;" class="huatut">
             <table style="width:100%;text-align:center;">
@@ -228,8 +232,8 @@ function getColor(){
    }
    return color;
 }
-var show_id = 'zhexiantut';
-function huatut(type,zx_x,zx_y,zx_y2,zx_y3){
+//var show_id = 'zhexiantut';
+function huatut(show_id,type,zx_x,zx_y,zx_y2,zx_y3){
 var myChart = echarts.init(document.getElementById(show_id));
 
 if(type=='line'){
@@ -1349,12 +1353,17 @@ optiont = {
 myChart.setOption(optiont);
 window.onresize = myChart.resize;
 
-
+//alert(myChart.getDataURL());
 }
 
 function tuxiancolort(id){
     var id2 = "";
     var is_display = true;
+    var show_id = "zhexiantut";
+    if(id.indexOf("tuxiantp")>=0){
+        show_id = id;
+        id=id.slice(0,7)+id.slice(8,id.length);
+    }
     for(var i=1;i<=25;i++){
         id2 = "tuxiant"+i;
         if(id=="tuxiant1" && is_display){
@@ -1385,52 +1394,52 @@ function tuxiancolort(id){
         $("#leftColumn").css("display","block");
     }else if(id=='tuxiant2'){
         tu_name=["累积净值","",""];
-        huatut("line",{{zx_x|safe}},{{hct.alljz|safe}},"","");
+        huatut(show_id,"line",{{zx_x|safe}},{{hct.alljz|safe}},"","");
     }else if(id=='tuxiant3'){
         tu_name=["累积利润","每日盈亏","累积手续费"];
-        huatut("line2",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.day_value|safe}},{{hct.allsxf|safe}});
+        huatut(show_id,"line2",{{zx_x|safe}},{{hct.allyk|safe}},{{hct.day_value|safe}},{{hct.allsxf|safe}});
     }else if(id=='tuxiant4'){
         tu_name=["每日权益","每日盈亏",""];
-        huatut("line2",{{zx_x|safe}},{{hct.qy|safe}},{{hct.day_value|safe}},"");
+        huatut(show_id,"line2",{{zx_x|safe}},{{hct.qy|safe}},{{hct.day_value|safe}},"");
     }else if(id=='tuxiant5'){
         tu_name=["成交偏好","",""];
-        huatut("pie",{{hct.pie_name|safe}},{{hct.pie_value|safe}},"","");
+        huatut(show_id,"pie",{{hct.pie_name|safe}},{{hct.pie_value|safe}},"","");
     }else if(id=='tuxiant6'){
         tu_name=["品种盈亏","",""];
-        huatut("bar",{{hct.bar_name|safe}},{{hct.bar_value|safe}},"","");
+        huatut(show_id,"bar",{{hct.bar_name|safe}},{{hct.bar_value|safe}},"","");
     }else if(id=='tuxiant7'){
         tu_name=["每周盈亏","",""];
-        huatut("bar",{{hct.week_name|safe}},{{hct.week_value|safe}},"","");
+        huatut(show_id,"bar",{{hct.week_name|safe}},{{hct.week_value|safe}},"","");
     }else if(id=='tuxiant8'){
         tu_name=["每月盈亏","",""];
-        huatut("bar",{{hct.month_name|safe}},{{hct.month_value|safe}},"","");
+        huatut(show_id,"bar",{{hct.month_name|safe}},{{hct.month_value|safe}},"","");
     }else if(id=='tuxiant9'){
         tu_name=["账号余额","累积入金",""];
-        huatut("line",{{zx_x|safe}},{{hct.amount|safe}},{{hct.alleae|safe}},"");
+        huatut(show_id,"line",{{zx_x|safe}},{{hct.amount|safe}},{{hct.alleae|safe}},"");
     }else if(id=='tuxiant10'){
         tu_name=["累积入金","入金",""];
-        huatut("linebar",{{zx_x|safe}},{{hct.alleae|safe}},{{hct.eae|safe}},"");
+        huatut(show_id,"linebar",{{zx_x|safe}},{{hct.alleae|safe}},{{hct.eae|safe}},"");
     }else if(id=='tuxiant11'){
         tu_name=["","",""];
-        huatut("scatter","",{{hct.all_ccsjy|safe}},{{hct.all_ccsjk|safe}},"");
+        huatut(show_id,"scatter","",{{hct.all_ccsjy|safe}},{{hct.all_ccsjk|safe}},"");
     }else if(id=='tuxiant12'){
         tu_name=["","",""];
-        huatut("scatter_date",{{ hct.all_pcsjn|safe }},{{hct.all_pcsjs|safe}},"","");
+        huatut(show_id,"scatter_date",{{ hct.all_pcsjn|safe }},{{hct.all_pcsjs|safe}},"","");
     }else if(id=='tuxiant13'){
         tu_name=["多空盈亏","多空胜率",""];
-        huatut("pie2","",{{hct.all_ylje|safe}},{{hct.all_ylss|safe}},"");
+        huatut(show_id,"pie2","",{{hct.all_ylje|safe}},{{hct.all_ylss|safe}},"");
     }else if(id=='tuxiant14'){
         tu_name=["日内隔夜","日内隔夜",""];
-        huatut("pie2","",{{hct.all_rnje|safe}},{{hct.all_rnss|safe}},"");
+        huatut(show_id,"pie2","",{{hct.all_rnje|safe}},{{hct.all_rnss|safe}},"");
     }else if(id=='tuxiant15'){
         tu_name=["","资金回测",""];
-        huatut("line2",{{zx_x|safe}},"",{{hct.zjhc|safe}},"");
+        huatut(show_id,"line2",{{zx_x|safe}},"",{{hct.zjhc|safe}},"");
     }else if(id=='tuxiant16'){
         tu_name=["持仓时间（小时）","盈亏",""];
-        huatut("bar3",{{hct.all_ccsjylks|safe}},{{hct.all_ccsjyl2|safe}},{{hct.all_ccsjks2|safe}},"");
+        huatut(show_id,"bar3",{{hct.all_ccsjylks|safe}},{{hct.all_ccsjyl2|safe}},{{hct.all_ccsjks2|safe}},"");
     }else if(id=='tuxiant17'){
         tu_name=["盈亏","手数",""];
-        huatut("bar2",{{hct.ykss_x|safe}},{{hct.ykss_y|safe}},"","");
+        huatut(show_id,"bar2",{{hct.ykss_x|safe}},{{hct.ykss_y|safe}},"","");
     }
 }
 
@@ -2199,14 +2208,15 @@ myChart.setOption(option);
 
 {% endif %}
 <script>
+for(var i=1;i<18;i++){
+        tuxiancolort("tuxiantp"+i);
+    }
+    tuxiancolort(tuxiant_id);
 $("#tuxiant24").click(function(){
     var export_content = $("#export_content");
     export_content.css("display","block");
     $("#export_content2").css("display","block");
-    for(var i=1;i<18;i++){
-        show_id = 'tuxiantp'+i;
-        tuxiancolort("tuxiant"+i);
-    }
+
     //$("#leftColumn").css("display","block");
     $(".huatut").css("display","none");
 
@@ -2246,7 +2256,7 @@ $("#tuxiant24").click(function(){
                             }
                         }
                     }
-                    pdf.save('content.pdf');
+                    pdf.save('交易检测.pdf');
                 },
                 //背景设为白色（默认为黑色）
                 background: "#fff"
