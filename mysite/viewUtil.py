@@ -255,7 +255,7 @@ class Cfmmc:
     __slots__ = ('session', '_login_url', '_vercode_url', '_conn', '_not_trade_list', '_userID', '_password', 'key')
 
     def __init__(self,key):
-        requests.packages.urllib3.disable_warnings()  # 禁用警告：正在进行未经验证的HTTPS请求。 强烈建议添加证书验证。
+        # requests.packages.urllib3.disable_warnings()  # 禁用警告：正在进行未经验证的HTTPS请求。 强烈建议添加证书验证。
         self.session = requests.session()
         self.key = key
         red = HSD.RedisPool()
@@ -582,7 +582,7 @@ class Automatic:
             if t.tm_hour == 18 and last_date != t.tm_yday:
                 last_date = t.tm_yday
                 ca = Captcha(model_path + '\\' + 'captcha_model95')
-                cfmmc_login_d = Cfmmc()
+                cfmmc_login_d = Cfmmc('_Automatic_')
                 data = HSD.runSqlData('carry_investment', sql)
                 is_rest = thisday_transaction(str(d)[:10])  # 今天是否休市
                 for da in data:
@@ -624,6 +624,9 @@ class Automatic:
                                     end_date = HSD.get_date()
                                     cfmmc_login_d.down_day_data_sql(da[0], start_date, end_date, password, da[2])
                                 break
+                            if i > 17:
+                                with open(model_path + '\\' + 'cfmmc_dsqd_log.txt', 'a') as f:
+                                    f.write(f"{da[0]} 第{i}次登录失败！{d}\n")
 
                         time.sleep(0.2)
                     time.sleep(5)
