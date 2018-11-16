@@ -1448,3 +1448,50 @@ def get_interface_file(_folder):
                             tmp[3] = os.path.join(i, j, k)
                     res.append(tmp)
     return res
+
+
+
+def wave(st='2018-11-08', ed='2018-11-10'):
+    """ 行情波动， 暂未启用"""
+    sql = f"SELECT DATETIME,OPEN,high,low,CLOSE FROM wh_same_month_min WHERE prodcode='HSI' AND DATETIME>='{st}' AND DATETIME<='{ed}' ORDER BY DATETIME"
+    data = HSD.runSqlData('carry_investment',sql)
+    cou = []
+    hp = []
+    m1, m3, m5, m10, m20, m30, m60, m100, m140, m180 = [], [], [], [], [], [], [], [], [], []
+    _m1, _m3, _m5, _m10, _m20, _m30, _m60, _m100, _m140, _m180 = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    dd = [i for i, _ in enumerate(data)]
+    dc = [i[4] for i in data]
+
+    is_bs = lambda x, x1, x2: [xx for xx in x if xx > x1] if x2 == '>' else [xx for xx in x if xx < x1]
+
+    for i, (d, o, h, l, c) in enumerate(data):
+        if i >= 60:
+            _m60 = round(sum(j for j in dc[i - 59:i + 1]) / 60)
+        else:
+            _m60 = round(c)
+        m60.append(_m60)
+        if c > _m60 and i > 30:
+            if cou and cou[-1][1] != 0:  # and not is_bs(dc[i-10:i+1],_m60,'<'):
+                cou.append((i, 0))
+            elif not cou:
+                cou.append((i, 0))
+        elif c < _m60 and i > 30:
+            if cou and cou[-1][1] != 1:  # and not is_bs(dc[i-10:i+1],_m60,'>'):
+                cou.append((i, 1))
+            elif not cou:
+                cou.append((i, 1))
+    zts = [('开始时间', '结束时间', '60均线上/下方(1/0)', 'K线数量', '涨/跌趋势(1/0)', '此波幅度')]
+    jc = 0
+    st = 0
+    for j, i in enumerate(cou):
+        zt = ''
+        if j > 0:
+            st = cou[j - 1][0]
+            ed = i[0]
+            _max = max(dc[st:ed + 1])
+            _min = min(dc[st:ed + 1])
+            jc = _max - _min
+            zt = '+' if dc[st:ed + 1].index(_max) > int((ed - st) / 2) else '-'
+        if jc > 50:
+            zts.append((str(data[st][0]), str(data[i[0]][0]), i[1], ed - st, zt, jc))
+    return zts

@@ -53,8 +53,8 @@ class ZB(object):
         # self.da = [(d[0], d[1], d[2], d[3], d[4]) for d in df.values]
         self.xzfa = {'1': self.fa1, '2': self.fa2, '3': self.fa3, '4': self.fa4, '5': self.fa5, '6': self.fa6,
                      '7': self.fa7, '9': self.fa9, '10': self.fa10, '11': self.fa11, '12': self.fa12, '13': self.fa13,
-                     '14': self.fa14, '15': self.fa15, '16': self.fa16, '17': self.fa17,
-                     '18': self.fa18, '19': self.fa19, '20': self.fa20, '21': self.fa21}  # 执行方案 '8':self.fa8, '5':self.fa5,
+                     '14': self.fa14, '15': self.fa15, '16': self.fa16, '17': self.fa17, '18': self.fa18,
+                     '19': self.fa19, '20': self.fa20, '21': self.fa21, '22': self.fa22, '23': self.fa23}  # 执行方案 '8':self.fa8, '5':self.fa5,
 
     @property
     def zdata(self):
@@ -120,7 +120,7 @@ class ZB(object):
                 {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma60': 0, 'var': 0, 'std': 0, 'reg': 0,
                  'mul': 0, 'datetimes': da[i][0], 'open': da[i][1], 'high': da[i][2], 'low': da[i][3],
                  'close': da[i][4], 'cd': 0, 'maidian': 0, 'open5': da[i][1], 'high5': da[i][2], 'low5': da[i][3],
-                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma10': 0, 'ma120': 0})
+                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma5': 0, 'ma10': 0, 'ma30': 0, 'ma120': 0})
             if i == 1:
                 ac = da[i - 1][4]
                 this_c = da[i][4]
@@ -175,7 +175,9 @@ class ZB(object):
 
             if i >= ma - 1:
                 dc[i]['ma60'] = sum(da[i - j][4] for j in range(ma)) / ma  # 移动平均值 60均线
+                dc[i]['ma5'] = sum(da[i - j][4] for j in range(5)) / 5  # 移动平均值 5均线
                 dc[i]['ma10'] = sum(da[i - j][4] for j in range(10)) / 10  # 移动平均值 10均线
+                dc[i]['ma30'] = sum(da[i - j][4] for j in range(30)) / 30  # 移动平均值 30均线
                 std_pj = sum(da[i - j][4] - da[i - j][1] for j in range(ma)) / ma
                 dc[i]['var'] = sum((da[i - j][4] - da[i - j][1] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
                 dc[i]['std'] = float(dc[i]['var'] ** 0.5)  # 标准差
@@ -248,7 +250,8 @@ class ZB(object):
                 dc.append({'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma60': 0, 'var': 0, 'std': 0,
                            'reg': 0, 'mul': 0, 'datetimes': data[0], 'open': data[1], 'high': data[2], 'low': data[3],
                            'close': data[4], 'cd': 0, 'maidian': 0, 'open5': data[1], 'high5': data[2], 'low5': data[3],
-                           'close5': data[4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma10': 0, 'ma120': 0})
+                           'close5': data[4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma5': 0, 'ma10': 0, 'ma30': 0,
+                           'ma120': 0})
                 try:
                     dc[ind]['ema_short'] = dc[ind - 1]['ema_short'] * (short - 2) / short + dc[ind][
                         'close'] * 2 / short  # 当日EMA(12)
@@ -259,7 +262,10 @@ class ZB(object):
                     dc[ind]['macd'] = 2 * (dc[ind]['diff'] - dc[ind]['dea'])
 
                     dc[ind]['ma60'] = sum(dc[ind - j]['close'] for j in range(ma)) / ma  # 移动平均值 60均线
+
+                    dc[ind]['ma5'] = sum(dc[ind - j]['close'] for j in range(5)) / 5  # 移动平均值 5均线
                     dc[ind]['ma10'] = sum(dc[ind - j]['close'] for j in range(10)) / 10  # 移动平均值 10均线
+                    dc[ind]['ma30'] = sum(dc[ind - j]['close'] for j in range(30)) / 30  # 移动平均值 30均线
                     dc[ind]['ma120'] = (sum(dc[ind - j]['close'] for j in range(120)) / 120) if ind >= 119 else 0  # 移动平均值 120均线
                     std_pj = sum(dc[ind - j]['close'] - dc[ind - j]['open'] for j in range(ma)) / ma
                     dc[ind]['var'] = sum(
@@ -438,6 +444,7 @@ class ZB(object):
         tj_k = 0
         last_diff = 10000
         ydzs_d, ydzs_k = 0, 0  # 移动止损
+        # last_date = ''
         while 1:
             # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
             _while, dt3, dates, qzpc = yield res, first_time
@@ -462,12 +469,13 @@ class ZB(object):
             res[dates]['ch'] += 1 if cd != 0 else 0
 
             last_diff = diff if last_diff == 10000 else last_diff
+            str_date = str(datetimes)[:10]
 
-            # 反向做单
-            kctj_d = clo < mas and mul < -1.5
-            kctj_k = clo > mas and mul > 1.5
-            pctj_d = (macd > 0 and clo > mas)  # and last_diff - diff>5)
-            pctj_k = (macd < 0 and clo < mas and diff - last_diff > 3)
+            # 开平仓条件
+            kctj_d = clo < mas and mul < -1.5 #and last_date != str_date
+            kctj_k = clo > mas and mul > 1.5 #and last_date != str_date
+            pctj_d = (macd > 0 and clo > mas and mul > 1.2) #and clo - startMony_d > 7  # and last_diff - diff>5)
+            pctj_k = (macd < 0 and clo < mas and mul < -1.2) #and startMony_k - clo > 7  # and diff - last_diff > 3)
 
             last_diff = diff
 
@@ -475,7 +483,7 @@ class ZB(object):
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
 
-            if kctj_d and is_dk and 9 <= datetimes_hour < 16:
+            if kctj_d and is_dk and 9 < datetimes_hour < 16:
                 tj_d += 1
                 if tj_d > 3:
                     jg_d = clo
@@ -484,7 +492,7 @@ class ZB(object):
                     is_d = 1
                     first_time = [str_time1, '多', clo]
                     zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
-            elif kctj_k and is_dk and 9 <= datetimes_hour < 16:
+            elif kctj_k and is_dk and 9 < datetimes_hour < 16:
                 tj_k += 1
                 if tj_k > 3:
                     jg_k = clo
@@ -527,6 +535,8 @@ class ZB(object):
                     # elif clo - jg_d > 60:
                     #     res[dates]['mony'] += (clo - jg_d)
                     #     jg_d = clo
+                    # if price<0:
+                    #     last_date = str_date
             elif is_k == -1:
                 ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
                 low_zs = startMony_k - ydzs_k
@@ -559,6 +569,8 @@ class ZB(object):
                     # elif jg_k - clo > 60:
                     #     res[dates]['mony'] += (jg_k - clo)
                     #     jg_k = clo
+                    # if price<0:
+                    #     last_date = str_date
 
     def fa2(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
         zsjg2 = zsjg
@@ -2169,8 +2181,8 @@ class ZB(object):
             # vv = sum(v[1] for v in sb[-3:-10:-2]) / len(sb[-3:-10:-2]) if len(sb[-3:-10:-2]) > 0 else 1
             kctj_d = macd > 0
             kctj_k = macd < 0
-            pctj_d = reg - regs >= 5 or clo < mas
-            pctj_k = reg - regs >= 5 or clo > mas
+            pctj_d = (reg - regs >= 5 or clo < mas) #and clo - startMony_d > 7
+            pctj_k = (reg - regs >= 5 or clo > mas) #and startMony_k - clo > 7
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
@@ -2819,6 +2831,276 @@ class ZB(object):
                     allyk += price
                     # print(f"时间：{datetimes}, 总盈亏：{allyk}, 本次盈亏：{price}, 多空数量：{sss}")
 
+    def fa22(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
+        zsjg2 = zsjg
+        _zsjg_d, _zsjg_k = 0, 0
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        last_date = ''  # 限制开单
+        ydzs_d, ydzs_k = 0, 0  # 移动止损
+        while 1:
+            # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0, }
+            if not _while:
+                break
+            is_dk = not (is_k == -1 or is_d == 1)
+            dt2 = dt3[-1]
+            (
+                datetimes, clo, macd, mas, reg, std,
+                mul, cd, high, low, ma10, ma120,op
+            ) = (
+                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['reg'], dt2['std'],
+                dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['ma10'], dt2['ma120'], dt2['open']
+            )
+            datetimes_hour = datetimes.hour
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            str_date = str(datetimes)[:10]
+
+            # 开平仓条件
+
+            kctj_d = ma120 < mas < ma10 and last_date != str_date   # last_clo < ma120 and (op > ma120 or clo > ma120) and mul>1.5
+            kctj_k = ma120 > mas > ma10 and last_date != str_date  # last_clo > ma120 and (op < ma120 or clo < ma120) and mul<-1.5
+
+            pctj_d = mul > 1.5
+            pctj_k = mul < -1.5
+
+            last_clo = clo
+
+            if reverse:
+                kctj_d, kctj_k = kctj_k, kctj_d
+                pctj_d, pctj_k = pctj_k, pctj_d
+
+            if kctj_d and is_dk and 10 <= datetimes_hour < 16:
+                jg_d = clo
+                startMony_d = clo
+                str_time1 = str(datetimes)
+                is_d = 1
+                first_time = [str_time1, '多', clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
+            elif kctj_k and is_dk and 10 <= datetimes_hour < 16:
+                jg_k = clo
+                startMony_k = clo
+                str_time2 = str(datetimes)
+                is_k = -1
+                first_time = [str_time2, '空', clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
+
+            if is_d == 1:
+                ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
+                high_zs = ydzs_d - startMony_d
+                if high_zs >= ydzs:
+                    _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_d == 0:
+                    _zsjg_d = startMony_d + zsjg  # 止损所在价格点
+                if ((pctj_d or self.is_date(
+                        datetimes) or low <= _zsjg_d or high - startMony_d >= zyds) or qzpc) and str(
+                    datetimes) != str_time1:
+                    res[dates]['duo'] += 1
+                    if low > _zsjg_d and high - startMony_d < zyds:
+                        price = round(clo - startMony_d)
+                        zszy = 0  # 正常平仓
+                    elif low <= _zsjg_d:
+                        price = round(_zsjg_d - startMony_d, 2)
+                        zszy = -1  # 止损
+                    elif high - startMony_d >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(_zsjg_d - startMony_d if low<=_zsjg_d else (zyds if high-startMony_d>=zyds else clo-startMony_d))
+
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    is_d = 0
+                    first_time = []
+                    tj_d = 0
+                    _zsjg_d = 0
+                    ydzs_d = 0
+                    if zszy:
+                        last_date = str_date
+            elif is_k == -1:
+                ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
+                low_zs = startMony_k - ydzs_k
+                if low_zs >= ydzs:
+                    _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_k == 0:
+                    _zsjg_k = startMony_k - zsjg  # 止损所在价格点
+                if ((pctj_k or self.is_date(
+                        datetimes) or high >= _zsjg_k or startMony_k - low >= zyds) or qzpc) and str(
+                    datetimes) != str_time2:
+                    res[dates]['kong'] += 1
+                    if high < _zsjg_k and startMony_k - low < zyds:
+                        price = round(startMony_k - clo)
+                        zszy = 0  # 正常平仓
+                    elif high >= _zsjg_k:
+                        price = round(startMony_k - _zsjg_k, 2)
+                        zszy = -1  # 止损
+                    elif startMony_k - low >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    is_k = 0
+                    first_time = []
+                    tj_k = 0
+                    _zsjg_k = 0
+                    ydzs_k = 0
+                    if zszy:
+                        last_date = str_date
+
+    def fa23(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False):
+        zsjg2 = zsjg
+        _zsjg_d, _zsjg_k = 0, 0
+        jg_d, jg_k = 0, 0
+        startMony_d, startMony_k = 0, 0
+        str_time1, str_time2 = '', ''
+        is_d, is_k = 0, 0
+        res = {}
+        first_time = []
+        last_date = ''
+        ydzs_d, ydzs_k = 0, 0  # 移动止损
+        while 1:
+            # while循环判断，数据重用，一行原始数据，日期，是否强制平仓
+            _while, dt3, dates, qzpc = yield res, first_time
+            if dates not in res:
+                res[dates] = {'duo': 0, 'kong': 0, 'mony': 0, 'datetimes': [], 'dy': 0, 'xy': 0, 'ch': 0, }
+            if not _while:
+                break
+            is_dk = not (is_k == -1 or is_d == 1)
+            dt2 = dt3[-1]
+            (
+                datetimes, clo, macd, mas, reg, std,
+                mul, cd, high, low, ma10, ma120,
+                op, ma5, ma30
+            ) = (
+                dt2['datetimes'], dt2['close'], dt2['macd'], dt2['ma60'], dt2['reg'], dt2['std'],
+                dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['ma10'], dt2['ma120'],
+                dt2['open'], dt2['ma5'], dt2['ma30']
+            )
+            datetimes_hour = datetimes.hour
+            if mul > 1.5:
+                res[dates]['dy'] += 1
+            elif mul < -1.5:
+                res[dates]['xy'] += 1
+            res[dates]['ch'] += 1 if cd != 0 else 0
+
+            str_date = str(datetimes)[:10]
+
+            # 开平仓条件
+            maqj = 0
+            # if low < ma5 < high:
+            #     maqj += 1
+            if low < ma10 < high:
+                maqj += 1
+            if low < ma30 < high:
+                maqj += 1
+            if low < mas < high:
+                maqj += 1
+            if low < ma120 < high:
+                maqj += 1
+
+            kctj_d = maqj >= 3 and op < clo #and low > mas  # and last_date != str_date   # last_clo < ma120 and (op > ma120 or clo > ma120) and mul>1.5
+            kctj_k = maqj >= 3 and op > clo #and mas > high  # and last_date != str_date  # last_clo > ma120 and (op < ma120 or clo < ma120) and mul<-1.5
+
+            pctj_d = clo < mas
+            pctj_k = clo > mas
+
+            last_clo = clo
+
+            if reverse:
+                kctj_d, kctj_k = kctj_k, kctj_d
+                pctj_d, pctj_k = pctj_k, pctj_d
+
+            if kctj_d and is_dk and 10 <= datetimes_hour < 16:
+                jg_d = clo
+                startMony_d = clo
+                str_time1 = str(datetimes)
+                is_d = 1
+                first_time = [str_time1, '多', clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
+            elif kctj_k and is_dk and 10 <= datetimes_hour < 16:
+                jg_k = clo
+                startMony_k = clo
+                str_time2 = str(datetimes)
+                is_k = -1
+                first_time = [str_time2, '空', clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
+
+            if is_d == 1:
+                ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
+                high_zs = ydzs_d - startMony_d
+                if high_zs >= ydzs:
+                    _zsjg_d = startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_d == 0:
+                    _zsjg_d = startMony_d + zsjg  # 止损所在价格点
+                if ((pctj_d or self.is_date(
+                        datetimes) or low <= _zsjg_d or high - startMony_d >= zyds) or qzpc) and str(
+                    datetimes) != str_time1:
+                    res[dates]['duo'] += 1
+                    if low > _zsjg_d and high - startMony_d < zyds:
+                        price = round(clo - startMony_d)
+                        zszy = 0  # 正常平仓
+                    elif low <= _zsjg_d:
+                        price = round(_zsjg_d - startMony_d, 2)
+                        zszy = -1  # 止损
+                    elif high - startMony_d >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(_zsjg_d - startMony_d if low<=_zsjg_d else (zyds if high-startMony_d>=zyds else clo-startMony_d))
+
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    is_d = 0
+                    first_time = []
+                    tj_d = 0
+                    _zsjg_d = 0
+                    ydzs_d = 0
+                    if price < 0:
+                        last_date = str_date
+            elif is_k == -1:
+                ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
+                low_zs = startMony_k - ydzs_k
+                if low_zs >= ydzs:
+                    _zsjg_k = startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
+                elif _zsjg_k == 0:
+                    _zsjg_k = startMony_k - zsjg  # 止损所在价格点
+                if ((pctj_k or self.is_date(
+                        datetimes) or high >= _zsjg_k or startMony_k - low >= zyds) or qzpc) and str(
+                    datetimes) != str_time2:
+                    res[dates]['kong'] += 1
+                    if high < _zsjg_k and startMony_k - low < zyds:
+                        price = round(startMony_k - clo)
+                        zszy = 0  # 正常平仓
+                    elif high >= _zsjg_k:
+                        price = round(startMony_k - _zsjg_k, 2)
+                        zszy = -1  # 止损
+                    elif startMony_k - low >= zyds:
+                        price = zyds
+                        zszy = 1  # 止盈
+                    # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
+                    price -= cqdc
+                    res[dates]['mony'] += price
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    is_k = 0
+                    first_time = []
+                    tj_k = 0
+                    _zsjg_k = 0
+                    ydzs_k = 0
+                    if price < 0:
+                        last_date = str_date
 
 
     def fa_new(self, zsjg=-100, ydzs=100, zyds=200, cqdc=6, reverse=False, param=None):
@@ -2855,34 +3137,42 @@ class ZB(object):
             res[dates]['ch'] += 1 if cd != 0 else 0
 
             # 开平仓条件
-            kctj_d = choices(macd < 0, param['duo_macd'], macd > 0)
-            kctj_d = kctj_d and choices(clo < mas, param['duo_avg'], clo > mas)
-            kctj_d = kctj_d and choices(mul < -1.5, param['duo_yidong'], mul > 1.5)
-            kctj_d = kctj_d and choices(cd < 0, param['duo_chonghes'], cd > 0)
-            kctj_d = kctj_d and choices(maidian < 0, param['duo_chonghed'], maidian > 0)
+            kctj_d = (
+                choices(macd < 0, param['duo_macd'], macd > 0) and
+                choices(clo < mas, param['duo_avg'], clo > mas) and
+                choices(mul < -1.5, param['duo_yidong'], mul > 1.5) and
+                choices(cd < 0, param['duo_chonghes'], cd > 0) and
+                choices(maidian < 0, param['duo_chonghed'], maidian > 0)
+            )
             kctj_d = kctj_d if param['duo'] else False
 
             # kctj_k = clo>mas and mul>1.5
-            kctj_k = choices(macd < 0, param['kong_macd'], macd > 0)
-            kctj_k = kctj_k and choices(clo < mas, param['kong_avg'], clo > mas)
-            kctj_k = kctj_k and choices(mul < -1.5, param['kong_yidong'], mul > 1.5)
-            kctj_k = kctj_k and choices(cd < 0, param['kong_chonghes'], cd > 0)
-            kctj_k = kctj_k and choices(maidian < 0, param['kong_chonghed'], maidian > 0)
+            kctj_k = (
+                choices(macd < 0, param['kong_macd'], macd > 0) and
+                choices(clo < mas, param['kong_avg'], clo > mas) and
+                choices(mul < -1.5, param['kong_yidong'], mul > 1.5) and
+                choices(cd < 0, param['kong_chonghes'], cd > 0) and
+                choices(maidian < 0, param['kong_chonghed'], maidian > 0)
+            )
             kctj_k = kctj_k if param['kong'] else False
 
             # pctj_d = (macd>0 and clo>mas)
-            pctj_d = choices(macd < 0, param['pdd_macd'], macd > 0)
-            pctj_d = pctj_d and choices(clo < mas, param['pdd_avg'], clo > mas)
-            pctj_d = pctj_d and choices(mul < -1.5, param['pdd_yidong'], mul > 1.5)
-            pctj_d = pctj_d and choices(cd < 0, param['pdd_chonghes'], cd > 0)
-            pctj_d = pctj_d and choices(maidian < 0, param['pdd_chonghed'], maidian > 0)
+            pctj_d = (
+                choices(macd < 0, param['pdd_macd'], macd > 0) and
+                choices(clo < mas, param['pdd_avg'], clo > mas) and
+                choices(mul < -1.5, param['pdd_yidong'], mul > 1.5) and
+                choices(cd < 0, param['pdd_chonghes'], cd > 0) and
+                choices(maidian < 0, param['pdd_chonghed'], maidian > 0)
+            )
 
             # pctj_k = (macd<0 and clo<mas)
-            pctj_k = choices(macd < 0, param['pkd_macd'], macd > 0)
-            pctj_k = pctj_k and choices(clo < mas, param['pkd_avg'], clo > mas)
-            pctj_k = pctj_k and choices(mul < -1.5, param['pkd_yidong'], mul > 1.5)
-            pctj_k = pctj_k and choices(cd < 0, param['pkd_chonghes'], cd > 0)
-            pctj_k = pctj_k and choices(maidian < 0, param['pkd_chonghed'], maidian > 0)
+            pctj_k = (
+                choices(macd < 0, param['pkd_macd'], macd > 0) and
+                choices(clo < mas, param['pkd_avg'], clo > mas) and
+                choices(mul < -1.5, param['pkd_yidong'], mul > 1.5) and
+                choices(cd < 0, param['pkd_chonghes'], cd > 0) and
+                choices(maidian < 0, param['pkd_chonghed'], maidian > 0)
+            )
 
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
