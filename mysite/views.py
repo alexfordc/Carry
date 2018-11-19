@@ -1188,14 +1188,19 @@ def tongji(rq):
             huizong['most'] = [dt, i[6]] if i[6] > huizong['most'][1] else huizong['most']
             huizong['most2'] = [dt, _ykds] if _ykds > huizong['most2'][1] else huizong['most2']
         init_money = 10000  # 入金
-        hcd = None
+
         if rq_date == end_date:
             hcd = HSD.huice_day(res, init_money, real=True)
+            max_yl = max(hcd['day_yk'])
+            max_ks = min(hcd['day_yk'])
+        else:
+            hcd, yk_max, max_ks = None, None, None
 
         res, huizong = viewUtil.tongji_huice(res, huizong)
 
         hc, huizong = HSD.huices(res, huizong, init_money, rq_date, end_date)
         hc_name = rq_id
+        huizong['max_yl'], huizong['max_ks'] = max_yl, max_ks
         return render(rq, 'hc.html',
                       {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hcd': hcd, 'user_name': user_name,
                        'hc_name': hc_name})
@@ -2980,8 +2985,13 @@ def hqzj(rq):
             # db = 'sql' if db=='1' else 'mongodb'
             if ttype == 'macd':
                 zts = viewUtil.interval_macd(sd, ed, database=db)
+                ec_name = '以MACD为界'
             elif ttype == 'ma60':
                 zts = viewUtil.interval_ma60(sd, ed, database=db)
+                ec_name = '以60均线为界'
+            elif ttype == 'change':
+                zts = viewUtil.interval_change(sd, ed, database=db)
+                ec_name = '以异动为界'
             else:
                 zts = []
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
@@ -2989,7 +2999,7 @@ def hqzj(rq):
             parhead = str(list(zts[0]))  # 字段名称
             zts = str({i[0]: list(i) for i in zts[1:]})
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype}
+                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzj.html', resp)
         else:
             # 起止日期设置
@@ -2999,12 +3009,13 @@ def hqzj(rq):
             db = 'sql'
             ttype = 'ma60'
             zts = viewUtil.interval_ma60(sd, ed, database=db)
+            ec_name = '以60均线为界'
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
             data = HSD.get_macd(data)  # 计算Macd
             parhead = list(zts[0])  # 字段名称
             zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype}
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzj.html', resp)
 
 def systems(rq):

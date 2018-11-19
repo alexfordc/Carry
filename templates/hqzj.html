@@ -15,6 +15,7 @@
     分波类型：<select name="ttype">
                 <option value="ma60" {% if ttype == 'ma60' %}selected{% endif %}>ma60</option>
                 <option value="macd" {% if ttype == 'macd' %}selected{% endif %}>macd</option>
+                <option value="change" {% if ttype == 'change' %}selected{% endif %}>异动</option>
             </select>
     <input type="submit" >
 </form>
@@ -87,7 +88,7 @@ function calculateMA(dayCount) {
 }
 var option = {
   title: {
-      text: {% if ttype == 'ma60' %}'K线周期图表(以60均线为界)'{% else %}'K线周期图表(以MACD为界)'{% endif %},
+      text: 'K线周期图表（{{ ec_name }}）',
       left: 0
   },
   tooltip: {

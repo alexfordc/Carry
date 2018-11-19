@@ -307,17 +307,17 @@
                         <td><span class="dotted" id="sdTip">标准差:</span></td>
                         <td class="alignR">${{hc.std}}</td>
                     </tr><tr class="bg1">
-                                                                <td><span class="dotted" id="sharpTip">夏普比率:</span></td>
+                                                                <td><span class="dotted" id="sharpTip">最大盈利（点）:</span></td>
                                                  <td class="alignR">
-                                                     0.02
+                                                     {{ huizong.max_yl }}
                                                  </td>
                                             </tr>
 
 
                     <tr>
-                        <td><span class="dotted" id="zTip">Z评分 (概率):</span></td>
+                        <td><span class="dotted" id="zTip">最大亏损（点）:</span></td>
                         <td class="alignR">
-                            -0.16 (12.72%)
+                            {{ huizong.max_ks }}
                         </td>
                     </tr>
 

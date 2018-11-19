@@ -3302,6 +3302,8 @@ class ZB(object):
             da = da[_ma:]
             zsds, ydzs, zyds, cqdc = param['zsds'], param['ydzs'], param['zyds'], param['cqdc']
             for k, v in self.xzfa.items():
+                if k == '21':
+                    continue
                 fas[k] = v(-zsds, ydzs, zyds, cqdc, reverse=reverse)
                 fas[k].send(None)
                 res[k] = {}
