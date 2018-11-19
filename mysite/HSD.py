@@ -2588,3 +2588,30 @@ def cfmmc_huice(host):
     #     ('2017-04-11 14:37:30', ' 卖', 1, '开', 21.14, None, 'J1709', '2017-04-11')
 
     return hc, huizong
+
+
+def get_macd(data):
+    short, long, phyd = 12, 26, 9
+    cou = []
+    hp = []
+    dc = []
+    data2 = []
+    for i, (d, o, c, l, h, v) in enumerate(data):
+        dc.append({'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0})
+        if i == 1:
+            ac = data[i - 1][4]
+            dc[i]['ema_short'] = ac + (c - ac) * 2 / short
+            dc[i]['ema_long'] = ac + (c - ac) * 2 / long
+            # dc[i]['ema_short'] = sum([(short-j)*da[i-j][4] for j in range(short)])/(3*short)
+            # dc[i]['ema_long'] = sum([(long-j)*da[i-j][4] for j in range(long)])/(3*long)
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+        elif i > 1:
+            dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + c * 2 / short
+            dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + c * 2 / long
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+        data2.append([d, o, c, l, h, v, 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2), round(dc[i]['dea'], 2)])
+    return data2

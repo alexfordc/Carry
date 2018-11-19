@@ -2966,6 +2966,47 @@ def interface_huice(rq):
     return redirect('index')
 
 
+def hqzj(rq):
+    """ 行情总结 """
+    user_name, qx = LogIn(rq)
+    if rq.method == 'GET':
+        sd = rq.GET.get('sd')
+        ed = rq.GET.get('ed')
+        db = rq.GET.get('db')
+        ttype = rq.GET.get('ttype')
+        if sd and ed and db and ttype:
+            sd = sd[:10]
+            ed = ed[:10]
+            # db = 'sql' if db=='1' else 'mongodb'
+            if ttype == 'macd':
+                zts = viewUtil.interval_macd(sd, ed, database=db)
+            elif ttype == 'ma60':
+                zts = viewUtil.interval_ma60(sd, ed, database=db)
+            else:
+                zts = []
+            data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
+            data = str(HSD.get_macd(data))  # 计算Macd
+            parhead = str(list(zts[0]))  # 字段名称
+            zts = str({i[0]: list(i) for i in zts[1:]})
+            resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
+                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype}
+            return render(rq, 'hqzj.html', resp)
+        else:
+            # 起止日期设置
+            ed = datetime.datetime.now() + datetime.timedelta(days=1)
+            sd = str(ed - datetime.timedelta(days=10))[:10]
+            ed = str(ed)[:10]
+            db = 'sql'
+            ttype = 'ma60'
+            zts = viewUtil.interval_ma60(sd, ed, database=db)
+            data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
+            data = HSD.get_macd(data)  # 计算Macd
+            parhead = list(zts[0])  # 字段名称
+            zts = {i[0]: list(i) for i in zts[1:]}
+            resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype}
+            return render(rq, 'hqzj.html', resp)
+
 def systems(rq):
     user_name, qx = LogIn(rq)
     if not user_name:
