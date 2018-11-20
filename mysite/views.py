@@ -3018,6 +3018,8 @@ def hqzj(rq):
                     'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzj.html', resp)
 
+    return redirect('index')
+
 def systems(rq):
     user_name, qx = LogIn(rq)
     if not user_name:

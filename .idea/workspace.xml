@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/hc.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hc.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/hqzj.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hqzj.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,63 +15,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="1813" column="36" selection-start-line="1813" selection-start-column="36" selection-end-line="1813" selection-end-column="36" />
+            <state relative-caret-position="239">
+              <caret line="3027" selection-start-line="3027" selection-end-line="3027" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#4350#7236#0" />
                 <element signature="e#7264#8381#0" />
                 <element signature="e#8438#8754#0" />
-                <element signature="e#65336#68053#0" />
-                <element signature="e#68077#73504#0" />
-                <element signature="e#111206#126812#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Carry/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="198" column="25" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hqzj.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="90" column="34" selection-start-line="90" selection-start-column="34" selection-end-line="90" selection-end-column="34" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="1394" column="35" selection-start-line="1394" selection-start-column="35" selection-end-line="1394" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-                <element signature="e#101702#106596#0" />
+                <element signature="e#111395#127001#0" />
               </folding>
             </state>
           </provider>
@@ -84,8 +34,8 @@
       <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="3305" column="28" selection-start-line="3305" selection-start-column="28" selection-end-line="3305" selection-end-column="28" />
+            <state relative-caret-position="353">
+              <caret line="3298" column="25" selection-start-line="3298" selection-start-column="25" selection-end-line="3298" selection-end-column="25" />
               <folding>
                 <element signature="e#148#3080#0" />
               </folding>
@@ -93,30 +43,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hc.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/hc.html">
+      <file leaf-file-name="hqzj.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="9" column="94" selection-start-line="9" selection-start-column="94" selection-end-line="9" selection-end-column="94" />
+            <state relative-caret-position="200">
+              <caret line="77" column="27" lean-forward="true" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
               <folding>
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="1437" column="37" lean-forward="true" selection-start-line="1437" selection-start-column="37" selection-end-line="1437" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#54282#55656#0" />
-                <element signature="e#56480#61094#0" />
-                <element signature="e#61158#65974#0" />
-                <element signature="e#66546#71320#0" />
               </folding>
             </state>
           </provider>
@@ -162,8 +95,8 @@
       <find>夏普</find>
       <find>最大盈/亏</find>
       <find>def tongji</find>
-      <find>60</find>
       <find>def moni</find>
+      <find>60</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -241,11 +174,11 @@
         <option value="$PROJECT_DIR$/mysite/HSD.py" />
         <option value="$PROJECT_DIR$/Carry/urls.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
-        <option value="$PROJECT_DIR$/mysite/views.py" />
         <option value="$PROJECT_DIR$/templates/hc.html" />
-        <option value="$PROJECT_DIR$/templates/hqzj.html" />
         <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
+        <option value="$PROJECT_DIR$/templates/hqzj.html" />
+        <option value="$PROJECT_DIR$/mysite/views.py" />
       </list>
     </option>
   </component>
@@ -308,7 +241,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/tools/Tools/Carry/Carry/urls.py" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../November_2018/2018-11-16/KRnbs" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -411,13 +344,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00060" summary="国内期货可视化">
-      <created>1537072046224</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1537072046225</updated>
     </task>
     <task id="LOCAL-00061" summary="国内期货可视化">
       <created>1537080838198</created>
@@ -755,11 +681,19 @@
       <option name="project" value="LOCAL" />
       <updated>1542601351927</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="分波数据分析">
+      <created>1542620823102</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1542620823102</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.1654373" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -783,6 +717,29 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.18865867" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.1654373" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
+      <window_info anchor="bottom" id="Changes" order="9" weight="0.32900432" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.19704953" side_tool="true" weight="0.12758997" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" sideWeight="0.50054526" side_tool="true" weight="0.12961012" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -830,13 +787,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/zhexian.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../October_2018/2018-10-17/s视频操作.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
@@ -1073,9 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9700">
           <caret line="388" column="31" selection-start-line="388" selection-start-column="31" selection-end-line="388" selection-end-column="31" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1114,62 +1061,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="90" column="34" selection-start-line="90" selection-start-column="34" selection-end-line="90" selection-end-column="34" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/hc.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="9" column="94" selection-start-line="9" selection-start-column="94" selection-end-line="9" selection-end-column="94" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="1813" column="36" selection-start-line="1813" selection-start-column="36" selection-end-line="1813" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#4350#7236#0" />
-            <element signature="e#7264#8381#0" />
-            <element signature="e#8438#8754#0" />
-            <element signature="e#65336#68053#0" />
-            <element signature="e#68077#73504#0" />
-            <element signature="e#111206#126812#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="1394" column="35" selection-start-line="1394" selection-start-column="35" selection-end-line="1394" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#101702#106596#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="3305" column="28" selection-start-line="3305" selection-start-column="28" selection-end-line="3305" selection-end-column="28" />
-          <folding>
-            <element signature="e#148#3080#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1177,12 +1072,53 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="1437" column="37" lean-forward="true" selection-start-line="1437" selection-start-column="37" selection-end-line="1437" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="1394" column="35" selection-start-line="1394" selection-start-column="35" selection-end-line="1394" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/ProgramFiles/Anaconda3/Lib/site-packages/Django-1.11.8-py3.6.egg/django/shortcuts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="3298" column="25" selection-start-line="3298" selection-start-column="25" selection-end-line="3298" selection-end-column="25" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#54282#55656#0" />
-            <element signature="e#56480#61094#0" />
-            <element signature="e#61158#65974#0" />
-            <element signature="e#66546#71320#0" />
+            <element signature="e#148#3080#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="77" column="27" lean-forward="true" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="3027" selection-start-line="3027" selection-end-line="3027" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#4350#7236#0" />
+            <element signature="e#7264#8381#0" />
+            <element signature="e#8438#8754#0" />
+            <element signature="e#111395#127001#0" />
           </folding>
         </state>
       </provider>
