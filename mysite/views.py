@@ -36,6 +36,7 @@ from mysite.HSD import get_ip_name, logging
 from mysite import models
 from mysite import viewUtil
 from mysite import pypass
+from mysite import Wave
 # from mysite import tasks
 # from mysite.tasks import tasks_record_log,down_day_data_sql
 from mysite.sub_client import sub_ticker, getTickData
@@ -272,7 +273,7 @@ def index(rq, logins='', user_name=None, qx=''):
     if user_name is None:
         user_name, qx = LogIn(rq)
     if user_name == 0:
-        logins = f"您上次登录地点是：【{qx}】"
+        logins = "欢迎登陆！"  # f"您上次登录地点是：【{qx}】"
         user_name = rq.session['users'].get('name')
         # del rq.session['users']
     else:
@@ -1407,7 +1408,7 @@ def tongji(rq):
         herys = herys = HSD.tongji()
     ids = HSD.IDS
     if user_name == 0:
-        logins = f"您上次登录地点是：【{qx}】"
+        logins = "欢迎登陆！"  # f"您上次登录地点是：【{qx}】"
         # del rq.session['users']
     elif not user_name:
         logins = "请先登录再访问您需要的页面！"
@@ -2984,14 +2985,17 @@ def hqzj(rq):
             ed = ed[:10]
             # db = 'sql' if db=='1' else 'mongodb'
             if ttype == 'macd':
-                zts = viewUtil.interval_macd(sd, ed, database=db)
+                zts = Wave.interval_macd(sd, ed, database=db)
                 ec_name = '以MACD为界'
             elif ttype == 'ma60':
-                zts = viewUtil.interval_ma60(sd, ed, database=db)
+                zts = Wave.interval_ma60(sd, ed, database=db)
                 ec_name = '以60均线为界'
             elif ttype == 'change':
-                zts = viewUtil.interval_change(sd, ed, database=db)
+                zts = Wave.interval_change(sd, ed, database=db)
                 ec_name = '以异动为界'
+            elif ttype == 'yinyang':
+                zts = Wave.interval_yi(sd, ed, database=db)
+                ec_name = '以阴阳线为界'
             else:
                 zts = []
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
@@ -3004,11 +3008,11 @@ def hqzj(rq):
         else:
             # 起止日期设置
             ed = datetime.datetime.now() + datetime.timedelta(days=1)
-            sd = str(ed - datetime.timedelta(days=10))[:10]
+            sd = str(ed - datetime.timedelta(days=8))[:10]
             ed = str(ed)[:10]
             db = 'sql'
             ttype = 'ma60'
-            zts = viewUtil.interval_ma60(sd, ed, database=db)
+            zts = Wave.interval_ma60(sd, ed, database=db)
             ec_name = '以60均线为界'
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
             data = HSD.get_macd(data)  # 计算Macd

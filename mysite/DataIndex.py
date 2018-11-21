@@ -3011,8 +3011,8 @@ class ZB(object):
             if low < ma120 < high:
                 maqj += 1
 
-            kctj_d = maqj >= 3 and op < clo #and low > mas  # and last_date != str_date   # last_clo < ma120 and (op > ma120 or clo > ma120) and mul>1.5
-            kctj_k = maqj >= 3 and op > clo #and mas > high  # and last_date != str_date  # last_clo > ma120 and (op < ma120 or clo < ma120) and mul<-1.5
+            kctj_d = maqj >= 3 and op < clo  #and low > mas  # and last_date != str_date   # last_clo < ma120 and (op > ma120 or clo > ma120) and mul>1.5
+            kctj_k = maqj >= 3 and op > clo  #and mas > high  # and last_date != str_date  # last_clo > ma120 and (op < ma120 or clo < ma120) and mul<-1.5
 
             pctj_d = clo < mas
             pctj_k = clo > mas

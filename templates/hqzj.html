@@ -13,9 +13,10 @@
                 <option value="mongodb" {% if db == 'mongodb' %}selected{% endif %}>mongodb</option>
             </select>
     分波类型：<select name="ttype">
-                <option value="ma60" {% if ttype == 'ma60' %}selected{% endif %}>ma60</option>
+                <option value="ma60" {% if ttype == 'ma60' %}selected{% endif %}>60均线</option>
                 <option value="macd" {% if ttype == 'macd' %}selected{% endif %}>macd</option>
                 <option value="change" {% if ttype == 'change' %}selected{% endif %}>异动</option>
+                <option value="yinyang" {% if ttype == 'yinyang' %}selected{% endif %}>连续阴阳线</option>
             </select>
     <input type="submit" >
 </form>

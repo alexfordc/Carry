@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/mysite/Wave.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/DataIndex.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/DataIndex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/viewUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/viewUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/hqzj.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hqzj.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,16 +19,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="3027" selection-start-line="3027" selection-end-line="3027" />
+            <state relative-caret-position="449">
+              <caret line="3012" column="22" lean-forward="true" selection-start-line="3012" selection-start-column="22" selection-end-line="3012" selection-end-column="22" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#4350#7236#0" />
                 <element signature="e#7264#8381#0" />
                 <element signature="e#8438#8754#0" />
+                <element signature="e#9312#10555#0" />
                 <element signature="e#111395#127001#0" />
               </folding>
             </state>
@@ -34,20 +39,82 @@
       <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="3298" column="25" selection-start-line="3298" selection-start-column="25" selection-end-line="3298" selection-end-column="25" />
+            <state relative-caret-position="237">
+              <caret line="2832" selection-start-line="2832" selection-end-line="2832" />
               <folding>
                 <element signature="e#148#3080#0" />
+                <element signature="e#4786#20122#0" />
+                <element signature="e#20186#22745#0" />
+                <element signature="e#22828#28934#0" />
+                <element signature="e#29017#33497#0" />
+                <element signature="e#33580#38258#0" />
+                <element signature="e#38341#43028#0" />
+                <element signature="e#43111#47593#0" />
+                <element signature="e#47676#52272#0" />
+                <element signature="e#52355#56416#0" />
+                <element signature="e#56499#59682#0" />
+                <element signature="e#59764#64939#0" />
+                <element signature="e#65023#68834#0" />
+                <element signature="e#68918#72731#0" />
+                <element signature="e#72815#76360#0" />
+                <element signature="e#76444#80590#0" />
+                <element signature="e#80674#85479#0" />
+                <element signature="e#85563#91378#0" />
+                <element signature="e#91461#96947#0" />
+                <element signature="e#97030#102438#0" />
+                <element signature="e#102521#107602#0" />
+                <element signature="e#107686#114774#0" />
+                <element signature="e#114858#120715#0" />
+                <element signature="e#120799#127388#0" />
+                <element signature="e#127472#133037#0" />
+                <element signature="e#139224#145105#0" />
+                <element signature="e#145188#147617#0" />
+                <element signature="e#147684#149463#0" />
+                <element signature="e#149522#150683#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hqzj.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="48" column="10" selection-start-line="48" selection-start-column="10" selection-end-line="48" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="717">
+              <caret line="1452" selection-start-line="1452" selection-end-line="1452" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Wave.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysite/Wave.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="752">
+              <caret line="401" column="91" selection-start-line="401" selection-start-column="91" selection-end-line="401" selection-end-column="91" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#76#455#0" />
+                <element signature="e#63#5035#0" />
+                <element signature="e#5099#10264#0" />
+                <element signature="e#10330#15352#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hqzj.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="77" column="27" lean-forward="true" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
+            <state relative-caret-position="100">
+              <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -60,16 +127,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.key</find>
-      <find>tarfile</find>
-      <find>time</find>
       <find>self.cwd_count</find>
       <find>int</find>
       <find>cfmmc_bs</find>
@@ -94,9 +158,12 @@
       <find>mas</find>
       <find>夏普</find>
       <find>最大盈/亏</find>
-      <find>def tongji</find>
       <find>def moni</find>
       <find>60</find>
+      <find>def tongji</find>
+      <find>get_data</find>
+      <find>sql =</find>
+      <find>f&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>nbsp</replace>
@@ -128,7 +195,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/base/cfmmc_form.html" />
         <option value="$PROJECT_DIR$/templates/cfmmc_data.html" />
         <option value="$PROJECT_DIR$/templates/user_update_data.html" />
         <option value="$PROJECT_DIR$/../September_2018/2018-9-19/py模式.py" />
@@ -177,8 +243,9 @@
         <option value="$PROJECT_DIR$/templates/hc.html" />
         <option value="$PROJECT_DIR$/mysite/DataIndex.py" />
         <option value="$PROJECT_DIR$/mysite/viewUtil.py" />
-        <option value="$PROJECT_DIR$/templates/hqzj.html" />
         <option value="$PROJECT_DIR$/mysite/views.py" />
+        <option value="$PROJECT_DIR$/mysite/Wave.py" />
+        <option value="$PROJECT_DIR$/templates/hqzj.html" />
       </list>
     </option>
   </component>
@@ -188,7 +255,7 @@
     </ignored-facets>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
+    <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -344,13 +411,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00061" summary="国内期货可视化">
-      <created>1537080838198</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1537080838199</updated>
     </task>
     <task id="LOCAL-00062" summary="国内期货可视化">
       <created>1537086990917</created>
@@ -688,23 +748,29 @@
       <option name="project" value="LOCAL" />
       <updated>1542620823102</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="分波数据分析">
+      <created>1542707368642</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1542707368643</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.1654373" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.19704953" side_tool="true" weight="0.12758997" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.18865867" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
       <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.18865867" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info id="Favorites" order="2" sideWeight="0.50054526" side_tool="true" weight="0.12961012" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -718,27 +784,27 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.18865867" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.1654373" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
       <window_info anchor="bottom" id="Changes" order="9" weight="0.32900432" />
-      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.19704953" side_tool="true" weight="0.12758997" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="Favorites" order="2" sideWeight="0.50054526" side_tool="true" weight="0.12961012" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
-      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info id="Favorites" order="2" sideWeight="0.50054526" side_tool="true" weight="0.12961012" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -783,17 +849,10 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="136" />
+      <option name="time" value="137" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../October_2018/2018-10-17/s视频操作.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/pypass.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -1068,20 +1127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="1437" column="37" lean-forward="true" selection-start-line="1437" selection-start-column="37" selection-end-line="1437" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="1394" column="35" selection-start-line="1394" selection-start-column="35" selection-end-line="1394" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/ProgramFiles/Anaconda3/Lib/site-packages/Django-1.11.8-py3.6.egg/django/shortcuts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
@@ -1089,36 +1134,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="717">
+          <caret line="1452" selection-start-line="1452" selection-end-line="1452" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="3298" column="25" selection-start-line="3298" selection-start-column="25" selection-end-line="3298" selection-end-column="25" />
+        <state relative-caret-position="237">
+          <caret line="2832" selection-start-line="2832" selection-end-line="2832" />
           <folding>
             <element signature="e#148#3080#0" />
+            <element signature="e#4786#20122#0" />
+            <element signature="e#20186#22745#0" />
+            <element signature="e#22828#28934#0" />
+            <element signature="e#29017#33497#0" />
+            <element signature="e#33580#38258#0" />
+            <element signature="e#38341#43028#0" />
+            <element signature="e#43111#47593#0" />
+            <element signature="e#47676#52272#0" />
+            <element signature="e#52355#56416#0" />
+            <element signature="e#56499#59682#0" />
+            <element signature="e#59764#64939#0" />
+            <element signature="e#65023#68834#0" />
+            <element signature="e#68918#72731#0" />
+            <element signature="e#72815#76360#0" />
+            <element signature="e#76444#80590#0" />
+            <element signature="e#80674#85479#0" />
+            <element signature="e#85563#91378#0" />
+            <element signature="e#91461#96947#0" />
+            <element signature="e#97030#102438#0" />
+            <element signature="e#102521#107602#0" />
+            <element signature="e#107686#114774#0" />
+            <element signature="e#114858#120715#0" />
+            <element signature="e#120799#127388#0" />
+            <element signature="e#127472#133037#0" />
+            <element signature="e#139224#145105#0" />
+            <element signature="e#145188#147617#0" />
+            <element signature="e#147684#149463#0" />
+            <element signature="e#149522#150683#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="48" column="10" selection-start-line="48" selection-start-column="10" selection-end-line="48" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="3012" column="22" lean-forward="true" selection-start-line="3012" selection-start-column="22" selection-end-line="3012" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#4350#7236#0" />
+            <element signature="e#7264#8381#0" />
+            <element signature="e#8438#8754#0" />
+            <element signature="e#9312#10555#0" />
+            <element signature="e#111395#127001#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/Wave.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="752">
+          <caret line="401" column="91" selection-start-line="401" selection-start-column="91" selection-end-line="401" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#76#455#0" />
+            <element signature="e#63#5035#0" />
+            <element signature="e#5099#10264#0" />
+            <element signature="e#10330#15352#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/hqzj.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="77" column="27" lean-forward="true" selection-start-line="77" selection-start-column="27" selection-end-line="77" selection-end-column="27" />
+        <state relative-caret-position="100">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
           <folding>
             <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="3027" selection-start-line="3027" selection-end-line="3027" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#4350#7236#0" />
-            <element signature="e#7264#8381#0" />
-            <element signature="e#8438#8754#0" />
-            <element signature="e#111395#127001#0" />
           </folding>
         </state>
       </provider>
