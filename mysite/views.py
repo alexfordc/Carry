@@ -2983,7 +2983,6 @@ def hqzj(rq):
         if sd and ed and db and ttype:
             sd = sd[:10]
             ed = ed[:10]
-            # db = 'sql' if db=='1' else 'mongodb'
             if ttype == 'macd':
                 zts = Wave.interval_macd(sd, ed, database=db)
                 ec_name = '以MACD为界'
@@ -2994,10 +2993,11 @@ def hqzj(rq):
                 zts = Wave.interval_change(sd, ed, database=db)
                 ec_name = '以异动为界'
             elif ttype == 'yinyang':
-                zts = Wave.interval_yi(sd, ed, database=db)
+                zts = Wave.interval_yinyang(sd, ed, database=db)
                 ec_name = '以阴阳线为界'
             else:
                 zts = []
+                ec_name = ''
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
             data = str(HSD.get_macd(data))  # 计算Macd
             parhead = str(list(zts[0]))  # 字段名称
@@ -3038,6 +3038,7 @@ def market_news(rq):
 
 
 def get_system(rq):
+    """ 内存 CPU 使用率 """
     if rq.is_ajax():
         nc = psutil.virtual_memory().percent  # 内存使用率%
         cpu = psutil.cpu_percent(0)  # cup 使用率%
