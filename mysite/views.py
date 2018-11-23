@@ -2980,6 +2980,8 @@ def hqzj(rq):
         ed = rq.GET.get('ed')
         db = rq.GET.get('db')
         ttype = rq.GET.get('ttype')
+        moni = rq.GET.get('moni')
+        respUrl = 'hqzj.html' if moni != '1' else 'shishimoni.html'
         if sd and ed and db and ttype:
             sd = sd[:10]
             ed = ed[:10]
@@ -3004,7 +3006,7 @@ def hqzj(rq):
             zts = str({i[0]: list(i) for i in zts[1:]})
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
                     'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
-            return render(rq, 'hqzj.html', resp)
+            return render(rq, respUrl, resp)
         else:
             # 起止日期设置
             ed = datetime.datetime.now() + datetime.timedelta(days=1)
@@ -3020,9 +3022,11 @@ def hqzj(rq):
             zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
                     'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
-            return render(rq, 'hqzj.html', resp)
+            return render(rq, respUrl, resp)
 
     return redirect('index')
+
+
 
 def systems(rq):
     user_name, qx = LogIn(rq)
