@@ -30,7 +30,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="stopAll" style="background:blue;color:white;cursor:pointer;" value="一键平仓">
 </div>
 <hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/><br/>
-<div id="main" style="width: auto;height: 680px;" align="center"></div>
+<div id="main" style="width: auto;height: 760px;" align="center"></div>
 <script>
         var myChart = echarts.init(document.getElementById('main'));
  //数据模型 time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
@@ -104,6 +104,40 @@ function calculateMA(dayCount) {
   }
   return result;
 }
+
+var item=0,lenData=dataAll.length;
+
+// 均线
+var ma5 = [], ma10 = [], ma30 = [], ma60 = [], ma120 = [];
+
+// 盈亏，平多单，平空单，盈利单
+var ykAll = 0,flatBuyAll = 0,flatSellAll = 0,profits = 0;
+//  开多，开空
+var start_more = new Array(),start_empty = new Array();
+
+// 定时执行
+var setsData = null;
+// open_sell,open_buy,flat_sell,flat_buy
+
+for(;item<30;item++){
+    datas.push(dataAll[item]);
+    times.push(dataAll[item].splice(0, 1)[0]);
+    vols.push(dataAll[item][4]);
+    macds.push(dataAll[item][6]);
+    difs.push(dataAll[item][7]);
+    deas.push(dataAll[item][8]);
+    open_sell.push('');
+    open_buy.push('');
+    flat_sell.push('');
+    flat_buy.push('');
+
+    ma5.push('-');
+    ma10.push('-');
+    ma30.push('-');
+    ma60.push('-');
+    ma120.push('-');
+}
+
 var option = {
   title: {
       text: 'K线周期图表（{{ ec_name }}）',
@@ -167,17 +201,17 @@ var option = {
   grid: [           {
       left: '3%',
       right: '1%',
-      height: '60%'
+      height: '56%'
   },{
       left: '3%',
       right: '1%',
-      top: '71%',
+      top: '68%',
       height: '10%'
   },{
       left: '3%',
       right: '1%',
-      top: '82%',
-      height: '14%'
+      top: '78%',
+      height: '20%'
   }],
   xAxis: [{
       type: 'category',
@@ -255,7 +289,7 @@ var option = {
       }, {
           name: 'MA5',
           type: 'line',
-          data: calculateMA(5),
+          data: ma5,
           smooth: true,
           lineStyle: {
               normal: {
@@ -266,7 +300,7 @@ var option = {
             {
                 name:'MA10',
                 type:'line',
-                data:calculateMA(10),
+                data: ma10,
                 smooth:true,
                 lineStyle:{ //标线的样式
                     normal:{opacity:0.5}
@@ -275,7 +309,7 @@ var option = {
             {
                 name:'MA30',
                 type:'line',
-                data:calculateMA(30),
+                data:ma30,
                 smooth:true,
                 lineStyle:{
                     normal:{opacity:0.5}
@@ -284,7 +318,7 @@ var option = {
             {
                 name:'MA60',
                 type:'line',
-                data:calculateMA(60),
+                data: ma60,
                 smooth:true,
                 lineStyle:{
                     normal:{opacity:0.5}
@@ -292,7 +326,7 @@ var option = {
             },{
                 name:'MA120',
                 type:'line',
-                data:calculateMA(120),
+                data: ma120,
                 smooth:true,
                 lineStyle:{
                     normal:{opacity:0.5}
@@ -416,29 +450,7 @@ var option = {
 };
 // {datas: datas,times: times,vols: vols,macds: macds,difs: difs,deas: deas}
 
-var item=0,lenData=dataAll.length;
 
-// 盈亏，平多单，平空单，盈利单
-var ykAll = 0,flatBuyAll = 0,flatSellAll = 0,profits = 0;
-//  开多，开空
-var start_more = new Array(),start_empty = new Array();
-
-// 定时执行
-var setsData = null;
-// open_sell,open_buy,flat_sell,flat_buy
-
-for(;item<30;item++){
-    datas.push(dataAll[item]);
-    times.push(dataAll[item].splice(0, 1)[0]);
-    vols.push(dataAll[item][4]);
-    macds.push(dataAll[item][6]);
-    difs.push(dataAll[item][7]);
-    deas.push(dataAll[item][8]);
-    open_sell.push('');
-    open_buy.push('');
-    flat_sell.push('');
-    flat_buy.push('');
-}
 myChart.setOption(option);
 
 function ssNoniYkShow(closePrice){
@@ -475,7 +487,62 @@ function cycleData(){
         open_buy.push('');
         flat_sell.push('');
         flat_buy.push('');
+
+        if(item>=119){
+            var sumMa = 0;
+            for(var j=item;j>item-60;j--){
+                sumMa += dataAll[j][1];
+                if(j==item-4){
+                    ma5.push((sumMa/5).toFixed(2));
+                }else if(j==item-9){
+                    ma10.push((sumMa/10).toFixed(2));
+                }else if(j==item-29){
+                    ma30.push((sumMa/30).toFixed(2));
+                }else if(j==item-59){
+                    ma60.push((sumMa/60).toFixed(2));
+                }else if(j==item-119){
+                    ma120.push((sumMa/120).toFixed(2));
+                }
+            }
+        }else if(item>=59){
+            var sumMa = 0;
+            for(var j=item;j>item-60;j--){
+                sumMa += dataAll[j][1];
+                if(j==item-4){
+                    ma5.push((sumMa/5).toFixed(2));
+                }else if(j==item-9){
+                    ma10.push((sumMa/10).toFixed(2));
+                }else if(j==item-29){
+                    ma30.push((sumMa/30).toFixed(2));
+                }else if(j==item-59){
+                    ma60.push((sumMa/60).toFixed(2));
+                    ma120.push('-');
+                }
+            }
+        }else if(item>=29){
+            var sumMa = 0;
+            for(var j=item;j>item-30;j--){
+                sumMa += dataAll[j][1];
+                if(j==item-4){
+                    ma5.push((sumMa/5).toFixed(2));
+                }else if(j==item-9){
+                    ma10.push((sumMa/10).toFixed(2));
+                }else if(j==item-29){
+                    ma30.push((sumMa/30).toFixed(2));
+                    ma60.push('-');
+                    ma120.push('-');
+                }
+            }
+        }else{
+            ma5.push('-');
+            ma10.push('-');
+            ma30.push('-');
+            ma60.push('-');
+            ma120.push('-');
+        }
+
         myChart.setOption(option);
+
         item += 1;
 
         var htmls = "";

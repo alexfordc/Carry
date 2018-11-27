@@ -1327,6 +1327,7 @@ class Zbjs(ZB):
         # for code in prodcode:
         # da = self.get_data('carry_investment', _dates, end_date, database)
         self.zdata = self.get_data('carry_investment', _dates, end_date, database)
+        self.database = 'sql' if database == '1' else 'mongodb'
         res, first_time = self.trd(_fa, reverse=reverse, param=param, red_key=red_key)
 
         # hk = self.get_hkHSI_date(db='carry_investment', database=database)  # 当日波动

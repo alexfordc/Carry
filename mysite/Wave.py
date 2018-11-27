@@ -14,7 +14,7 @@ def get_data(st, ed, database):
     return data
 
 
-def interval_ma60(st=None, ed=None, database='mongodb'):
+def interval_ma60(st=None, ed=None, database='mongodb', hengpan=0):
     """
     以60均线分波
     :param st: 开始日期
@@ -43,6 +43,8 @@ def interval_ma60(st=None, ed=None, database='mongodb'):
         _L = min(dc2[st:ed + 1])
         _C = dc2[ed]
         jc = _H - _L
+        if hengpan and jc < hengpan:
+            return None
         zt = '+' if dc2[st:ed + 1].index(_H) > int((ed - st) / 2) else '-'
         # if 1: #jc > 50:
         _dc = dc[st:ed + 1]
@@ -98,36 +100,42 @@ def interval_ma60(st=None, ed=None, database='mongodb'):
             if c >= _m60:
                 if cou and cou[-1][1] != 0:  # and not is_bs(dc[i-10:i+1],_m60,'<'):
                     cou.append((i, 0))
-                    zts.append(get_cou())
+                    _getCou = get_cou()
                     yddy, ydxy = 0, 0
                     _vol = 0
+                    if _getCou:
+                        zts.append(_getCou)
                 elif not cou:
                     cou.append((i, 0))
-                elif data[i][0].day != data[i - 1][0].day or (
-                        data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+                elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                     cou.append((i, 0))
-                    zts.append(get_cou())
+                    _getCou = get_cou()
                     yddy, ydxy = 0, 0
                     _vol = 0
+                    if _getCou:
+                        zts.append(_getCou)
             else:
                 if cou and cou[-1][1] != 1:  # and not is_bs(dc[i-10:i+1],_m60,'>'):
                     cou.append((i, 1))
-                    zts.append(get_cou())
+                    _getCou = get_cou()
                     yddy, ydxy = 0, 0
                     _vol = 0
+                    if _getCou:
+                        zts.append(_getCou)
                 elif not cou:
                     cou.append((i, 1))
-                elif data[i][0].day != data[i - 1][0].day or (
-                        data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+                elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                     cou.append((i, 1))
-                    zts.append(get_cou())
+                    _getCou = get_cou()
                     yddy, ydxy = 0, 0
                     _vol = 0
+                    if _getCou:
+                        zts.append(_getCou)
 
     return zts
 
 
-def interval_macd(st=None, ed=None, database='mongodb'):
+def interval_macd(st=None, ed=None, database='mongodb', hengpan=0):
     """
         以 MACD 分波
         :param st: 开始日期
@@ -213,8 +221,7 @@ def interval_macd(st=None, ed=None, database='mongodb'):
             ydxy += 1
         _vol += v
         _macd = 1 if dc[i]['macd'] > 0 else 0
-        judge = data[i][0].day != data[i - 1][0].day or (
-                data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_
+        judge = i == lend_  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
         if macd != _macd or judge:
             macd = _macd
             if macd > 0:
@@ -246,7 +253,7 @@ def interval_macd(st=None, ed=None, database='mongodb'):
     return zts
 
 
-def interval_change(st=None, ed=None, database='mongodb'):
+def interval_change(st=None, ed=None, database='mongodb', hengpan=0):
     """
         以异动分波
         :param st: 开始日期
@@ -335,8 +342,7 @@ def interval_change(st=None, ed=None, database='mongodb'):
                     _vol = 0
                 elif not cou:
                     cou.append((i, 0))
-                elif data[i][0].day != data[i - 1][0].day or (
-                        data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+                elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                     cou.append((i, 0))
                     zts.append(get_cou())
                     yddy, ydxy = 0, 0
@@ -349,8 +355,7 @@ def interval_change(st=None, ed=None, database='mongodb'):
                     _vol = 0
                 elif not cou:
                     cou.append((i, 1))
-                elif data[i][0].day != data[i - 1][0].day or (
-                        data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+                elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                     cou.append((i, 1))
                     zts.append(get_cou())
                     yddy, ydxy = 0, 0
@@ -359,7 +364,7 @@ def interval_change(st=None, ed=None, database='mongodb'):
     return zts
 
 
-def interval_yinyang(st=None, ed=None, database='mongodb'):
+def interval_yinyang(st=None, ed=None, database='mongodb', hengpan=0):
     """
         以阴阳线分波
         :param st: 开始日期
@@ -455,8 +460,7 @@ def interval_yinyang(st=None, ed=None, database='mongodb'):
                 _vol = 0
             elif not cou:
                 cou.append((i, 0))
-            elif data[i][0].day != data[i - 1][0].day or (
-                    data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+            elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                 cou.append((i, 0))
                 zts.append(get_cou())
                 yddy, ydxy = 0, 0
@@ -469,10 +473,54 @@ def interval_yinyang(st=None, ed=None, database='mongodb'):
                 _vol = 0
             elif not cou:
                 cou.append((i, 1))
-            elif data[i][0].day != data[i - 1][0].day or (
-                    data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or i == lend_:
+            elif i == lend_:  # data[i][0].day != data[i - 1][0].day or (data[i][0].day == data[i - 1][0].day and str(data[i][0])[11:16] == '09:15') or
                 cou.append((i, 1))
                 zts.append(get_cou())
                 yddy, ydxy = 0, 0
                 _vol = 0
     return zts
+
+
+def to_change(data):
+    data.pop(0)
+    res = []
+    dc = []
+    dc2 = [i[5] for i in data]
+    short, long, phyd = 12, 26, 9
+    for i,(d,_et,o,h,l,c,*_) in enumerate(data):
+        dc.append({'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0,
+                   # 'var': 0,  # 方差
+                   # 'std': 0,  # 标准差
+                   # 'mul': 0,  # 异动
+                   })
+        if i == 1:
+            ac = data[i - 1][5]
+            dc[i]['ema_short'] = ac + (c - ac) * 2 / short
+            dc[i]['ema_long'] = ac + (c - ac) * 2 / long
+            # dc[i]['ema_short'] = sum([(short-j)*da[i-j][4] for j in range(short)])/(3*short)
+            # dc[i]['ema_long'] = sum([(long-j)*da[i-j][4] for j in range(long)])/(3*long)
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+            # co = 1 if dc[i]['macd'] >= 0 else 0
+        elif i > 1:
+            dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + c * 2 / short
+            dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + c * 2 / long
+            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+            dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
+            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+
+        if i >= 60:
+            ma = 60
+            std_pj = sum(dc2[i - j] - data[i - j][2] for j in range(ma)) / ma
+            # dc[i]['var'] = sum((dc2[i - j] - data[i - j][2] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
+            # dc[i]['std'] = dc[i]['var'] ** 0.5  # 标准差
+            var = sum((dc2[i - j] - data[i - j][2] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
+            std = var ** 0.5  # 标准差
+            price = c - o
+            # dc[i]['mul'] = _yd = round(price / dc[i]['std'], 2)
+            _yd = round(price / std, 2)
+        else:
+            _yd = 0
+        res.append((_et, _yd, o < c))
+    return res

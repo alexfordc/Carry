@@ -2980,22 +2980,27 @@ def hqzj(rq):
         ed = rq.GET.get('ed')
         db = rq.GET.get('db')
         ttype = rq.GET.get('ttype')
+        hengpan = rq.GET.get('hengpan')
+        if hengpan and hengpan.isdigit():
+            hengpan = int(hengpan)
+        else:
+            hengpan = 0
         moni = rq.GET.get('moni')
         respUrl = 'hqzj.html' if moni != '1' else 'shishimoni.html'
         if sd and ed and db and ttype:
             sd = sd[:10]
             ed = ed[:10]
             if ttype == 'macd':
-                zts = Wave.interval_macd(sd, ed, database=db)
+                zts = Wave.interval_macd(sd, ed, database=db, hengpan=hengpan)
                 ec_name = '以MACD为界'
             elif ttype == 'ma60':
-                zts = Wave.interval_ma60(sd, ed, database=db)
+                zts = Wave.interval_ma60(sd, ed, database=db, hengpan=hengpan)
                 ec_name = '以60均线为界'
             elif ttype == 'change':
-                zts = Wave.interval_change(sd, ed, database=db)
+                zts = Wave.interval_change(sd, ed, database=db, hengpan=hengpan)
                 ec_name = '以异动为界'
             elif ttype == 'yinyang':
-                zts = Wave.interval_yinyang(sd, ed, database=db)
+                zts = Wave.interval_yinyang(sd, ed, database=db, hengpan=hengpan)
                 ec_name = '以阴阳线为界'
             else:
                 zts = []
@@ -3005,7 +3010,7 @@ def hqzj(rq):
             parhead = str(list(zts[0]))  # 字段名称
             zts = str({i[0]: list(i) for i in zts[1:]})
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
+                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name,'hengpan':hengpan}
             return render(rq, respUrl, resp)
         else:
             # 起止日期设置
@@ -3014,6 +3019,7 @@ def hqzj(rq):
             ed = str(ed)[:10]
             db = 'sql'
             ttype = 'ma60'
+            hengpan = 0
             zts = Wave.interval_ma60(sd, ed, database=db)
             ec_name = '以60均线为界'
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
@@ -3021,7 +3027,7 @@ def hqzj(rq):
             parhead = list(zts[0])  # 字段名称
             zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name,'hengpan':hengpan}
             return render(rq, respUrl, resp)
 
     return redirect('index')
