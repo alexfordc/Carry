@@ -47,6 +47,8 @@ class ZB(object):
                "60均线上方10均线下穿120均线，则做空；60均线下方盈利平仓。", "止损100个点。"],
         "20": ["收盘价大于布林线上轨，则做多；收盘价小于布林线下轨平仓。",
                "收盘价小于布林线下轨，则做空；收盘价大于布林线上轨平仓。", "止损100个点。"],
+        "24": ["以60均线分波，异动大于3倍，则做多，累积加仓，最大8手；出现反向的波幅大于60平仓，或者出现做空信号平仓。",
+               "以60均线分波，异动小于-3倍，则做空，累积加仓，最大8手；出现反向的波幅大于60平仓，或者出现做多信号平仓。", "止损200个点。"],
     }
 
     def __init__(self):
@@ -3152,11 +3154,12 @@ class ZB(object):
 
 
             # 开平仓条件
-            kctj_d = zts[0][1] > 2 and zts[0][2] and last_pop==1 and len(startMony_d)<3
-            kctj_k = zts[0][1] < -2 and not zts[0][2] and last_pop==1 and len(startMony_k)<3
+            _zt = zts[0]
+            kctj_d = _zt[1] > 3 and _zt[2]<0 and last_pop==1 and len(startMony_d)<8
+            kctj_k = _zt[1] < -3 and _zt[2]>0 and last_pop==1 and len(startMony_k)<8
             last_pop = 0
-            pctj_d = kctj_k
-            pctj_k = kctj_d
+            pctj_d = _zt[2]>60
+            pctj_k = _zt[2]<-60
 
 
             if reverse:
@@ -3170,6 +3173,7 @@ class ZB(object):
                 is_d = 1
                 first_time = [str_time1, '多', clo]
                 zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
+                _zsjg_d = 0
 
                 if startMony_k:
                     for i in startMony_k:
@@ -3191,6 +3195,7 @@ class ZB(object):
                 is_k = -1
                 first_time = [str_time2, '空', clo]
                 zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
+                _zsjg_k = 0
 
                 if startMony_d:
                     for i in startMony_d:
@@ -3208,7 +3213,7 @@ class ZB(object):
 
             if is_d == 1 and startMony_d:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
-                _startMony_d = startMony_d[-1][1]
+                _startMony_d = max(startMony_d,key=lambda xm:xm[1])[1]
                 high_zs = ydzs_d - _startMony_d
                 if high_zs >= ydzs:
                     _zsjg_d = _startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
@@ -3249,7 +3254,7 @@ class ZB(object):
                         startMony_d = []
             elif is_k == -1 and startMony_k:
                 ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
-                _startMony_k = startMony_k[-1][1]
+                _startMony_k = min(startMony_k,key=lambda xm:xm[1])[1]
                 low_zs = _startMony_k - ydzs_k
                 if low_zs >= ydzs:
                     _zsjg_k = _startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%

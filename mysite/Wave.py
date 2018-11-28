@@ -522,5 +522,5 @@ def to_change(data):
             _yd = round(price / std, 2)
         else:
             _yd = 0
-        res.append((_et, _yd, o < c))
+        res.append((_et, _yd, o - c))
     return res
