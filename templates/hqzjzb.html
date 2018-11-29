@@ -1,0 +1,444 @@
+{% extends 'base/base.html' %}
+{% block title %}历史K线指标{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+<div align="center">
+    <form method="get" action="{% url 'hqzjzb' %}">
+    开始日期：<input type="date" name="sd" value="{{ sd }}">
+    终止日期：<input type="date" name="ed" value="{{ ed }}">
+    数据库：<select name="db">
+                <option value="sql" {% if db == 'sql' %}selected{% endif %}>sql</option>
+                <option value="mongodb" {% if db == 'mongodb' %}selected{% endif %}>mongodb</option>
+            </select>
+    指标类型：<select name="ttype">
+                <option value="extreme" {% if ttype == 'extreme' %}selected{% endif %}>macd背离</option>
+                <option value="green" {% if ttype == 'green' %}selected{% endif %}>绿异动</option>
+                <option value="red" {% if ttype == 'red' %}selected{% endif %}>红异动</option>
+                <option value="std" {% if ttype == 'std' %}selected{% endif %}>上下引线</option>
+            </select>
+    <input type="submit" >
+</form>
+</div>
+<hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/><br/>
+<div id="main" style="width: auto;height: 680px;" align="center"></div>
+<div>
+<div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: 14px;left:268px;cursor:pointer;" class="dvLeft">退</div>
+<div id="dv2" style="border: 2px solid green;width:1022px;height: 20px;position:relative;top: -10px;left:300px;cursor:pointer;">
+	<div id="dv" style="width:20px;height:20px;background-color:blue;border-radius:50%;position:relative;top: 0;"></div>
+</div>
+    <div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: -34px;left:1324px;cursor:pointer;" class="dvRight">进</div>
+<div id="show"></div>
+</div>
+<div style="height: 20px;position:relative;top: 10px;cursor:pointer;"></div>
+<script>
+        var myChart = echarts.init(document.getElementById('main'));
+ //数据模型 time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+//['2015-10-19',18.56,18.25,18.19,18.56,55.00,0,-0.00,0.08,0.09]
+var cursors = 0,myInterval=400;
+var dataAll = {{ data|safe }},zbName= '{{ ec_name }}'; // zts= {{ zts|safe }}, paramnames= {{ parhead|safe }};
+var cursors_len = dataAll.length;
+var datas = [],times = [],vols = [],macds = [],difs = [],deas = [];
+splitData(dataAll.slice(0,myInterval));
+//数组处理
+function splitData(rawData) {
+  datas = [],times = [],vols = [],macds = [],difs = [],deas = [];
+  for (var i = 0; i < rawData.length; i++) {
+    datas.push([rawData[i][1],rawData[i][2],rawData[i][3],rawData[i][4],rawData[i][5],rawData[i][7],rawData[i][8],rawData[i][9]]);
+    times.push(rawData[i][0]); //.splice(0, 1)[0]);
+    vols.push(rawData[i][5]);
+    macds.push(rawData[i][7]);
+    difs.push(rawData[i][8]);
+      deas.push(rawData[i][9]);}
+  //return {datas: datas,times: times,vols: vols,macds: macds,difs: difs,deas: deas};
+}
+//分段计算
+function fenduans(){
+  var markLineData = [],idx = 0,tag = 0,vols = 0;
+  for (var i = 0; i < times.length; i++) {
+      //初始化数据
+      if(datas[i][5] != 0 && tag == 0){
+          idx = i; vols = datas[i][4]; tag = 1;
+      }
+      if(tag == 1){ vols += datas[i][4]; }
+      if(datas[i][5] != 0 && tag == 1){
+          markLineData.push([{
+              xAxis: idx,
+              yAxis: datas[idx][1]>datas[idx][0]?(datas[idx][3]).toFixed(2):(datas[idx][2]).toFixed(2),
+              value: vols
+          }, {
+              xAxis: i,
+              yAxis: datas[i][1]>datas[i][0]?(datas[i][3]).toFixed(2):(datas[i][2]).toFixed(2)
+          }]);
+          idx = i; vols = datas[i][4]; tag = 2;
+      }
+      //更替数据
+      if(tag == 2){ vols += datas[i][4]; }
+      if(datas[i][5] != 0 && tag == 2){
+          markLineData.push([{
+              xAxis: idx,
+              yAxis: datas[idx][1]>datas[idx][0]?(datas[idx][3]).toFixed(2):(datas[idx][2]).toFixed(2),
+              value: (vols/(i-idx+1)).toFixed(2)+' M'
+          }, {
+              xAxis: i,
+              yAxis: datas[i][1]>datas[i][0]?(datas[i][3]).toFixed(2):(datas[i][2]).toFixed(2)
+          }]);
+          idx = i; vols = datas[i][4];
+      }
+  }
+  return markLineData;
+}
+//MA计算公式
+function calculateMA(dayCount) {
+  var result = [];
+  for (var i = 0, len = times.length; i < len; i++) {
+      if (i < dayCount) {
+          result.push('-');
+          continue;
+      }
+      var sum = 0;
+      for (var j = 0; j < dayCount; j++) {
+          sum += datas[i - j][1];
+      }
+      result.push((sum / dayCount).toFixed(2));
+  }
+  return result;
+}
+function MySetoption(){
+    myChart.setOption({
+      title: {
+          text: 'K线周期图表 '+zbName,
+          left: 0
+      },
+      tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+              type: 'cross',//'line', //'shadow'
+              textStyle:{
+    　　          align:'left'
+    　　　　    }
+          },
+            formatter: function(params, ticket, callback) {
+                var _dt = params[0].name;
+                var htmls = "";
+                var htmls2 = '时间：'+_dt+"<br>";
+                for (var i = 0, l = params.length; i < l; i++) {
+                    var p=params[i].value;
+                    if(p){
+                        if(typeof(p)=='object'){
+                            var nm=['','开盘价','收盘价','最低价','最高价',zbName,'MACD','DIFF','DEA'];
+                            for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+                                if(j==0){
+                                    continue;
+                                }
+                                htmls2 += nm[j] + ': ' + p[j] +'<br>';
+                            }
+                        }
+                    }
+                }
+                /*for(var i=0;i<paramnames.length;i++){
+                    var K=paramnames[i],V=zts[_dt][i];*/
+                    /*if(V==0 and K.indexOf('数量')<0){
+                        htmls += "<span style='color:green;'>"+ K + ": " + V +"</span>  ";
+                    }else if(V==1 and K.indexOf('数量')<0){
+                        htmls += "<span style='color:red;'>"+ K + ": " + V +"</span>  ";
+                    }else{
+                        htmls += K + ': ' + V +'  ';
+                    }*/
+                    /*htmls += K + ': ' + V +'  ';
+                    if(i%8==0 && i>0){ htmls += "</br>"; }
+                }
+                $("#show_hq_message").html(htmls);*/
+                return htmls2;
+            }
+      },
+      legend:{ //图例控件,点击图例控制哪些系列不显示
+            data:['日K','MA5','MA10','MA30','MA60','MA120'],
+            selected:{
+                // 默认不显示
+                'MA30': false,
+                'MA120': false,
+            }
+        },
+      axisPointer: {
+                    link: [{
+                        xAxisIndex: [0,1,2] //生成十字轴，控制3个x轴
+                }]
+      },
+      grid: [           {
+          left: '3%',
+          right: '1%',
+          height: '60%'
+      },{
+          left: '3%',
+          right: '1%',
+          top: '71%',
+          height: '10%'
+      },{
+          left: '3%',
+          right: '1%',
+          top: '82%',
+          height: '14%'
+      }],
+      xAxis: [{
+          type: 'category',
+          data: times,
+          scale: true,
+          boundaryGap: false,
+          axisLine: { onZero: false },
+          splitLine: { show: false },
+          splitNumber: 20,
+          min: 'dataMin',
+          max: 'dataMax'
+      },{
+          type: 'category',
+          gridIndex: 1,
+          data: times,
+          axisLabel: {show: false}
+      },{
+          type: 'category',
+          gridIndex: 2,
+          data: times,
+          axisLabel: {show: false}
+      }],
+      yAxis: [{
+          scale: true,
+          splitArea: {
+              show: false
+          }
+      },{
+          gridIndex: 1,
+          splitNumber: 3,
+          axisLine: {onZero: false},
+          axisTick: {show: false},
+          splitLine: {show: false},
+          axisLabel: {show: true}
+      },{
+          gridIndex: 2,
+          splitNumber: 4,
+          axisLine: {onZero: false},
+          axisTick: {show: false},
+          splitLine: {show: false},
+          axisLabel: {show: true}
+      }],
+      dataZoom: [{
+              type: 'inside',
+              xAxisIndex: [0, 0],
+              start: 0,
+              end: 100
+        },{
+              show: false,
+              xAxisIndex: [0, 1],
+              type: 'slider',
+              top: '97%',
+              start: 0,
+              end: 100
+        },{
+          show: false,
+          xAxisIndex: [0, 2],
+          type: 'slider',
+          start: 0,
+          end: 100
+      }],
+      series: [{
+              name: 'K线周期图表',
+              type: 'candlestick',
+              data: datas,
+              itemStyle: {
+                  normal: {
+                      color: '#ef232a',
+                      color0: '#14b143',
+                      borderColor: '#ef232a',
+                      borderColor0: '#14b143'
+                  }
+              },
+          }, {
+              name: 'MA5',
+              type: 'line',
+              data: calculateMA(5),
+              smooth: true,
+              lineStyle: {
+                  normal: {
+                      opacity: 0.5
+                  }
+              }
+          },
+                {
+                    name:'MA10',
+                    type:'line',
+                    data:calculateMA(10),
+                    smooth:true,
+                    lineStyle:{ //标线的样式
+                        normal:{opacity:0.5}
+                    }
+                },
+                {
+                    name:'MA30',
+                    type:'line',
+                    data:calculateMA(30),
+                    smooth:true,
+                    lineStyle:{
+                        normal:{opacity:0.5}
+                    }
+                },
+                {
+                    name:'MA60',
+                    type:'line',
+                    data:calculateMA(60),
+                    smooth:true,
+                    lineStyle:{
+                        normal:{opacity:0.5}
+                    }
+                },{
+                    name:'MA120',
+                    type:'line',
+                    data:calculateMA(120),
+                    smooth:true,
+                    lineStyle:{
+                        normal:{opacity:0.5}
+                    }
+                },{
+              name: zbName,
+              type: 'bar',
+              xAxisIndex: 1,
+              yAxisIndex: 1,
+              data: vols,
+              itemStyle: {
+                  normal: {
+                      color: function(params) {
+                          var colorList;
+                          if (datas[params.dataIndex][1]>datas[params.dataIndex][0]) {
+                              colorList = '#ef232a';
+                          } else {
+                              colorList = '#14b143';
+                          }
+                          return colorList;
+                      },
+                  }
+              }
+          },{
+              name: 'MACD',
+              type: 'bar',
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              data: macds,
+              itemStyle: {
+                  normal: {
+                      color: function(params) {
+                          var colorList;
+                          if (params.data >= 0) {
+                              colorList = '#ef232a';
+                          } else {
+                              colorList = '#14b143';
+                          }
+                          return colorList;
+                      },
+                  }
+              }
+          },{
+              name: 'DIF',
+              type: 'line',
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              data: difs
+          },{
+              name: 'DEA',
+              type: 'line',
+              xAxisIndex: 2,
+              yAxisIndex: 2,
+              data: deas
+          }
+      ]
+    });
+}
+MySetoption();
+//获取元素
+var dv = document.getElementById('dv');
+var x = 0;
+var y = 0;
+var l = 0;
+var t = 0;
+var isDown = false;
+//鼠标按下事件
+dv.onmousedown = function(e) {
+    //获取x坐标和y坐标
+    x = 100+e.clientX;
+    y = 300; //e.clientY;
+
+    //获取左部和顶部的偏移量
+    l = dv.offsetLeft;
+    t = dv.offsetTop;
+    //开关打开
+    isDown = true;
+    //设置样式
+    dv.style.cursor = 'move';
+}
+//鼠标移动
+window.onmousemove = function(e) {
+    if (isDown == false) {
+        return;
+    }
+    //获取x和y
+    var nx = 100+e.clientX;
+    var ny = 300; //e.clientY;
+    //计算移动后的左偏移量和顶部的偏移量
+    var nl = nx - (x - l);
+    if(nl>1000){
+    	nl = 1000;
+    }else if(nl<0){
+    	nl = 0;
+    }
+    var nt = ny - (y - t);
+
+    dv.style.left = nl + 'px';
+    dv.style.top = nt + 'px';
+    //alert(cursors_len*nl);
+    cursors=parseInt(cursors_len/1000*nl);
+    if(cursors>cursors_len-myInterval){
+        cursors=cursors_len-myInterval;
+    }
+    document.getElementById('show').innerHTML=dataAll[cursors][0]+" -- "+dataAll[cursors+myInterval][0];  // nl;
+}
+//鼠标抬起事件
+/*dv.onmouseup = function() {
+    isDown = false;
+    dv.style.cursor = 'default';
+}*/
+document.body.onmouseup = function() {  //getElementById('dv2')
+    //开关关闭
+    if(isDown){
+        isDown = false;
+        dv.style.cursor = 'default';
+        if(cursors<0){
+            cursors=0;
+        }else if(cursors>cursors_len-myInterval){
+            cursors=cursors_len-myInterval;
+        }
+        splitData(dataAll.slice(cursors,cursors+myInterval));
+        MySetoption();
+    }
+}
+$(".dvLeft").click(function(){
+    cursors -= cursors_len/1000;
+    if(cursors<0){
+        cursors=0;
+    }else if(cursors>cursors_len-myInterval){
+        cursors=cursors_len-myInterval;
+    }
+    splitData(dataAll.slice(cursors,cursors+myInterval));
+    MySetoption();
+});
+$(".dvRight").click(function(){
+    cursors += cursors_len/1000;
+    if(cursors<0){
+        cursors=0;
+    }else if(cursors>cursors_len-myInterval){
+        cursors=cursors_len-myInterval;
+    }
+    splitData(dataAll.slice(cursors,cursors+myInterval));
+    MySetoption();
+});
+    </script>
+
+{% endblock %}

@@ -3006,9 +3006,9 @@ def hqzj(rq):
                 zts = []
                 ec_name = ''
             data = [[i[0], i[2], i[5], i[4], i[3], i[6]] for i in zts[1:]]
-            data = str(HSD.get_macd(data))  # 计算Macd
-            parhead = str(list(zts[0]))  # 字段名称
-            zts = str({i[0]: list(i) for i in zts[1:]})
+            data = HSD.get_macd(data)  # 计算Macd
+            parhead = list(zts[0])  # 字段名称
+            zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
                     'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name,'hengpan':hengpan}
             return render(rq, respUrl, resp)
@@ -3032,6 +3032,44 @@ def hqzj(rq):
 
     return redirect('index')
 
+
+def hqzjzb(rq):
+    """ 行情总结指标 """
+    user_name, qx = LogIn(rq)
+    if rq.method == 'GET':
+        sd = rq.GET.get('sd')
+        ed = rq.GET.get('ed')
+        db = rq.GET.get('db')
+        ttype = rq.GET.get('ttype')
+
+        if sd and ed and db and ttype:
+            sd = sd[:10]
+            ed = ed[:10]
+            data = Wave.get_data(sd,ed,database=db)
+            ddict = viewUtil.get_hqzjzb(ttype)
+
+            ec_name = {'extreme':'macd背离','green':'绿异动','red':'红异动','std':'上下引线'}.get(ttype,'')
+            data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
+            resp = {'user_name': user_name, 'data': data,
+                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
+            return render(rq, 'hqzjzb.html', resp)
+        else:
+            # 起止日期设置
+            ed = datetime.datetime.now() + datetime.timedelta(days=1)
+            sd = str(ed - datetime.timedelta(days=2))[:10]
+            ed = str(ed)[:10]
+            db = 'sql'
+            ttype = 'extreme'
+            data = Wave.get_data(sd, ed, database=db)
+            ddict = viewUtil.get_hqzjzb(ttype)
+
+            ec_name = 'macd底背离'
+            data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
+            resp = {'user_name': user_name, 'data': data,
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
+            return render(rq, 'hqzjzb.html', resp)
+
+    return redirect('index')
 
 
 def systems(rq):

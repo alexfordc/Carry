@@ -260,11 +260,11 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                 <td>点差：<input type="number"  style="width:100px;" min="0" name="cqdc" value="{{ cqdc }}" id="cqdc"></td>
                 <td>数据库：<select name="database" id="select_db">
             {% if database == '1' %}
-            <option value="1" >数据库1</option>
-            <option value="2">数据库2</option>
+            <option value="1" >sql</option>
+            <option value="2">mongodb</option>
             {% else %}
-            <option value="2">数据库2</option>
-            <option value="1" >数据库1</option>
+            <option value="2">mongodb</option>
+            <option value="1" >sql</option>
             {% endif %}
             </select></td></tr>
             <tr><td>开始时间：<input type="date" name="dates" id="datetimes" value="{{ dates }}"/></td>

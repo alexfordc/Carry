@@ -559,18 +559,8 @@ function cycleData(){
         clearInterval(setsData);
     }
 }
-setsData = setInterval("cycleData()",1000);
-$("#stop_or_start").click(function(){
-    if($(this).val()=="暂停"){
-        clearInterval(setsData);
-        $(this).val("开始");
-    }else{
-        setsData = setInterval("cycleData()",1000);
-        $(this).val("暂停");
-    }
-});
-
-$("#adjust_speed").click(function(){
+function shishimoniTiaoSu(){
+    // 调速 调整速度
     var n = $("#speed_number").val()/1;
     if(n>=10){
         n = 10;
@@ -581,6 +571,20 @@ $("#adjust_speed").click(function(){
     clearInterval(setsData);
     setsData = setInterval("cycleData()",ym*200);
     $("#speed_number").val(n);
+}
+setsData = setInterval("cycleData()",1000);
+$("#stop_or_start").click(function(){
+    if($(this).val()=="暂停"){
+        clearInterval(setsData);
+        $(this).val("开始");
+    }else{
+        shishimoniTiaoSu();
+        $(this).val("暂停");
+    }
+});
+
+$("#adjust_speed").click(function(){
+    shishimoniTiaoSu();
 });
 
 // 开仓

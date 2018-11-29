@@ -145,13 +145,13 @@ class ZB(object):
 
                 # overlap 上一个K线的收盘价，上一个K线的diff
                 # deviation 底背离:=REF(C,A1+1)>C AND DIFF>REF(DIFF,A1+1) AND CROSS(DIFF,DEA)
-                if dc[i]['diff'] > dc[i]['dea'] and dc[i - 2]['diff'] < dc[i - 2]['dea']:
+                if dc[i]['diff'] > dc[i]['dea'] and dc[i - 2]['diff'] < dc[i - 2]['dea']:  # 底背离
                     dc[i]['overlap'] = 1
                     _o_ = _O(dc[i - 1]['close'], dc[i - 1]['diff'])
                     if overlap1 and (overlap1.lastClose > dc[i]['close'] and dc[i]['diff'] > overlap1.lastDiff):
                         dc[i]['deviation'] = 1
                     overlap1 = _o_
-                elif dc[i]['diff'] < dc[i]['dea'] and dc[i - 2]['diff'] > dc[i - 2]['dea']:
+                elif dc[i]['diff'] < dc[i]['dea'] and dc[i - 2]['diff'] > dc[i - 2]['dea']:  # 顶背离
                     dc[i]['overlap'] = -1
                     _o_ = _O(dc[i - 1]['close'], dc[i - 1]['diff'])
                     if overlap0 and (overlap0.lastClose < dc[i]['close'] and dc[i]['diff'] < overlap0.lastDiff):
@@ -1907,8 +1907,8 @@ class ZB(object):
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
-            kctj_d = deviation == -1  # 底背离
-            kctj_k = deviation == 1  # 顶背离
+            kctj_d = deviation == 1  # 底背离
+            kctj_k = deviation == -1  # 顶背离
             pctj_d = clo > mas and mul > 1.5
             pctj_k = clo < mas and mul < -1.5
 
@@ -1924,21 +1924,21 @@ class ZB(object):
                 pctj_d, pctj_k = pctj_k, pctj_d
 
             if kctj_d and is_dk and 9 <= datetimes.hour < 16:
-                if tj_d >= 5:
-                    jg_d = clo
-                    startMony_d = clo
-                    str_time1 = str(datetimes)
-                    is_d = 1
-                    first_time = [str_time1, '多', clo]
-                    zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
+                # if tj_d >= 5:
+                jg_d = clo
+                startMony_d = clo
+                str_time1 = str(datetimes)
+                is_d = 1
+                first_time = [str_time1, '多', clo]
+                zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
             elif kctj_k and is_dk and 9 <= datetimes.hour < 16:
-                if tj_k >= 5:
-                    jg_k = clo
-                    startMony_k = clo
-                    str_time2 = str(datetimes)
-                    is_k = -1
-                    first_time = [str_time2, '空', clo]
-                    zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
+                # if tj_k >= 5:
+                jg_k = clo
+                startMony_k = clo
+                str_time2 = str(datetimes)
+                is_k = -1
+                first_time = [str_time2, '空', clo]
+                zsjg = clo - high - 1 if zsjg2 >= -10 else zsjg
 
             if is_d == 1:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d

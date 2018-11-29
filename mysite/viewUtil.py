@@ -1450,3 +1450,12 @@ def get_interface_file(_folder):
     return res
 
 
+def get_hqzjzb(ttype):
+    """  获取某个特性的指标 """
+    pnm = f'mysite\\myfile\\{ttype}.pkl'
+    if os.path.isfile(pnm):
+        d = pd.read_pickle(pnm)
+        d = {str(i): j for i, j in d.values}
+        return d
+    return {}
+
