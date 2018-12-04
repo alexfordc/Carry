@@ -327,6 +327,7 @@ function userLogin(type){
                         $("#user_info").text(res.users);
                         alert(mes);
                         show_login(0);
+                        location.reload();
                     }else{
                         var result = res.result;
                         if(result.indexOf('未启用')>=0){

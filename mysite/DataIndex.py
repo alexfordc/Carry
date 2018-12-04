@@ -3155,8 +3155,10 @@ class ZB(object):
 
             # 开平仓条件
             _zt = zts[0]
-            kctj_d = _zt[1] > 3 and _zt[2]<0 and last_pop==1 and len(startMony_d)<8
-            kctj_k = _zt[1] < -3 and _zt[2]>0 and last_pop==1 and len(startMony_k)<8
+            len_startMony_d = len(startMony_d)
+            len_startMony_k = len(startMony_k)
+            kctj_d = _zt[1] > 3 and _zt[2]<0 and last_pop==1 and len_startMony_d<8 and (16 > datetimes_hour > 9)
+            kctj_k = _zt[1] < -3 and _zt[2]>0 and last_pop==1 and len_startMony_k<8 and (16 > datetimes_hour > 9)
             last_pop = 0
             pctj_d = _zt[2]>60
             pctj_k = _zt[2]<-60
@@ -3168,7 +3170,15 @@ class ZB(object):
 
             if kctj_d:
                 jg_d = clo
-                startMony_d.append((str(datetimes),clo))
+                if len_startMony_d==1:
+                    startMony_d.append((str(datetimes),clo))
+                    startMony_d.append((str(datetimes), clo))
+                elif len_startMony_d==3:
+                    startMony_d.append((str(datetimes),clo))
+                    startMony_d.append((str(datetimes), clo))
+                    startMony_d.append((str(datetimes), clo))
+                else:
+                    startMony_d.append((str(datetimes), clo))
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str_time1, '多', clo]
@@ -3190,7 +3200,15 @@ class ZB(object):
                     startMony_k = []
             elif kctj_k:
                 jg_k = clo
-                startMony_k.append((str(datetimes),clo))
+                if len_startMony_k==1:
+                    startMony_k.append((str(datetimes), clo))
+                    startMony_k.append((str(datetimes), clo))
+                elif len_startMony_k==3:
+                    startMony_k.append((str(datetimes), clo))
+                    startMony_k.append((str(datetimes), clo))
+                    startMony_k.append((str(datetimes), clo))
+                else:
+                    startMony_k.append((str(datetimes), clo))
                 str_time2 = str(datetimes)
                 is_k = -1
                 first_time = [str_time2, '空', clo]
@@ -3456,7 +3474,7 @@ class ZB(object):
             dt3 = data2.send(df2)
             date_hour = dt3[-1]['datetimes'].hour
             # date_min = datetimes.minute
-            if not (date_hour > 16 or date_hour < 9):  # (date_hour == 16 and date_min > 30) or
+            if not (date_hour > 16 or date_hour < 9) or _fa == '24':  # (date_hour == 16 and date_min > 30) or
                 # continue
                 qzpc = True if (df2 == da_1 and str(df2[0])[:15] != is_date) else False
                 res, first_time = fa.send((True, dt3, dates, qzpc))

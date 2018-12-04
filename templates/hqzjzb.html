@@ -13,6 +13,7 @@
                 <option value="mongodb" {% if db == 'mongodb' %}selected{% endif %}>mongodb</option>
             </select>
     指标类型：<select name="ttype">
+                <option value="1min" {% if ttype == '1min' %}selected{% endif %}>1分钟行情</option>
                 <option value="extreme" {% if ttype == 'extreme' %}selected{% endif %}>macd背离</option>
                 <option value="green" {% if ttype == 'green' %}selected{% endif %}>绿异动</option>
                 <option value="red" {% if ttype == 'red' %}selected{% endif %}>红异动</option>
@@ -23,12 +24,14 @@
 </div>
 <hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/><br/>
 <div id="main" style="width: auto;height: 680px;" align="center"></div>
+&nbsp;&nbsp;<input type="number" min="50" max="2000" value="380" style="width:60px;" id="Kline_numbers">
+<span class="Kline_numbers" style="cursor:pointer;">修改K线数量</span>
 <div>
-<div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: 14px;left:268px;cursor:pointer;" class="dvLeft">退</div>
-<div id="dv2" style="border: 2px solid green;width:1022px;height: 20px;position:relative;top: -10px;left:300px;cursor:pointer;">
-	<div id="dv" style="width:20px;height:20px;background-color:blue;border-radius:50%;position:relative;top: 0;"></div>
+<div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: 14px;left:268px;cursor:pointer;" class="dvLeft">《</div>
+<div id="dv2" style="border: 2px solid green;width:1052px;height: 20px;position:relative;top: -10px;left:300px;cursor:pointer;">
+	<div id="dv" style="width:50px;height:20px;Z-index:666;background-color:blue;border-radius:50%;position:relative;top: 0;"></div>
 </div>
-    <div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: -34px;left:1324px;cursor:pointer;" class="dvRight">进</div>
+    <div style="border: 2px solid red;width:30px;height: 20px;position:relative;top: -34px;left:1354px;cursor:pointer;" class="dvRight">&nbsp;&nbsp;》</div>
 <div id="show"></div>
 </div>
 <div style="height: 20px;position:relative;top: 10px;cursor:pointer;"></div>
@@ -36,8 +39,9 @@
         var myChart = echarts.init(document.getElementById('main'));
  //数据模型 time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
 //['2015-10-19',18.56,18.25,18.19,18.56,55.00,0,-0.00,0.08,0.09]
-var cursors = 0,myInterval=400;
+var cursors = 0,myInterval=380;
 var dataAll = {{ data|safe }},zbName= '{{ ec_name }}'; // zts= {{ zts|safe }}, paramnames= {{ parhead|safe }};
+var zbName2 = zbName!='1分钟行情'?zbName:'异动';
 var cursors_len = dataAll.length;
 var datas = [],times = [],vols = [],macds = [],difs = [],deas = [];
 splitData(dataAll.slice(0,myInterval));
@@ -127,7 +131,7 @@ function MySetoption(){
                     var p=params[i].value;
                     if(p){
                         if(typeof(p)=='object'){
-                            var nm=['','开盘价','收盘价','最低价','最高价',zbName,'MACD','DIFF','DEA'];
+                            var nm=['','开盘价','收盘价','最低价','最高价',zbName2,'MACD','DIFF','DEA'];
                             for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
                                 if(j==0){
                                     continue;
@@ -299,7 +303,7 @@ function MySetoption(){
                         normal:{opacity:0.5}
                     }
                 },{
-              name: zbName,
+              name: zbName2,
               type: 'bar',
               xAxisIndex: 1,
               yAxisIndex: 1,
@@ -351,6 +355,7 @@ function MySetoption(){
           }
       ]
     });
+    $(".Kline_numbers").css('color','black');
 }
 MySetoption();
 //获取元素
@@ -360,6 +365,7 @@ var y = 0;
 var l = 0;
 var t = 0;
 var isDown = false;
+var isClick = false;
 //鼠标按下事件
 dv.onmousedown = function(e) {
     //获取x坐标和y坐标
@@ -379,6 +385,7 @@ window.onmousemove = function(e) {
     if (isDown == false) {
         return;
     }
+    isClick = true;
     //获取x和y
     var nx = 100+e.clientX;
     var ny = 300; //e.clientY;
@@ -405,6 +412,39 @@ window.onmousemove = function(e) {
     isDown = false;
     dv.style.cursor = 'default';
 }*/
+$('#dv2').click(function(e) {
+    $('#dv').click(function(){
+        isClick = true;
+    });
+    if(!isClick){
+    var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+    var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+    cursors = cursors_len/1000*(xx-300);
+
+    x = 0,y = 0,l = 0,t = 0;
+
+
+    //计算移动后的左偏移量和顶部的偏移量
+    var nl = xx-300 - (x - l);
+    if(nl>1000){
+    	nl = 1000;
+    }else if(nl<0){
+    	nl = 0;
+    }
+
+    dv.style.left = nl + 'px';
+    cursors=parseInt(cursors_len/1000*nl);
+    if(cursors<0){
+        cursors=0;
+    }else if(cursors>cursors_len-myInterval){
+        cursors=cursors_len-myInterval;
+    }
+    document.getElementById('show').innerHTML=dataAll[cursors][0]+" -- "+dataAll[cursors+myInterval][0];
+    splitData(dataAll.slice(cursors,cursors+myInterval));
+    MySetoption();
+    }
+
+});
 document.body.onmouseup = function() {  //getElementById('dv2')
     //开关关闭
     if(isDown){
@@ -418,12 +458,19 @@ document.body.onmouseup = function() {  //getElementById('dv2')
         splitData(dataAll.slice(cursors,cursors+myInterval));
         MySetoption();
     }
+    isClick = false;
 }
 $(".dvLeft").click(function(){
     cursors -= cursors_len/1000;
+    var nl = dv.style.left;
+    if(!nl){ nl = 0; }
+
     if(cursors<0){
         cursors=0;
-    }else if(cursors>cursors_len-myInterval){
+    }else{
+        dv.style.left = parseInt(nl)-1+'px';
+    }
+    if(cursors>cursors_len-myInterval){
         cursors=cursors_len-myInterval;
     }
     splitData(dataAll.slice(cursors,cursors+myInterval));
@@ -431,13 +478,35 @@ $(".dvLeft").click(function(){
 });
 $(".dvRight").click(function(){
     cursors += cursors_len/1000;
+    var nl = dv.style.left;
+    if(!nl){ nl = 0; }
+
     if(cursors<0){
         cursors=0;
-    }else if(cursors>cursors_len-myInterval){
+    }
+    if(cursors>cursors_len-myInterval){
         cursors=cursors_len-myInterval;
+    }else{
+        dv.style.left = parseInt(nl)+1+'px';
     }
     splitData(dataAll.slice(cursors,cursors+myInterval));
     MySetoption();
+});
+
+$(".Kline_numbers").click(function(){
+    var sl = $("#Kline_numbers").val()/1;
+    if(sl<50){
+        sl = 50;
+        $("#Kline_numbers").val(sl);
+        $(this).css('color','red');
+    }else if(sl>2000){
+        sl = 2000;
+        $("#Kline_numbers").val(sl);
+        $(this).css('color','red');
+    }else{
+        $(this).css('color','green');
+    }
+    myInterval = sl;
 });
     </script>
 

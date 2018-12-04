@@ -410,7 +410,7 @@ class Cfmmc:
                 holding_position.drop([holding_position.index[-1]], inplace=True)
 
                 # 客户交易结算日报
-                account_info = pd.read_excel(BytesIO(ret.content), sheetname='客户交易结算日报', header=4)
+                account_info = pd.read_excel(BytesIO(ret_content), sheetname='客户交易结算日报', header=4)
                 # _i = account_info[account_info.iloc[:, 0] == '期货期权账户资金状况'].index[0]
                 _i = account_info.index[account_info.iloc[:, 0] == '期货期权账户资金状况'][0]
                 account_info_1 = account_info.iloc[_i + 1:_i + 7, [0, 2]]
@@ -425,6 +425,18 @@ class Cfmmc:
                     df['交易日期'] = _tradedate
 
                 excs = ''
+
+                try:
+                    if ret_content:
+                        xls_fold = f'mysite\\myfile\\cfmmc_xls\\{self._userID}'
+                        if not os.path.isdir(xls_fold):
+                            os.mkdir(xls_fold)
+                        with open(f'{xls_fold}{os.sep}{tradeDate}_{byType}.xls', 'wb') as f:
+                            f.write(ret_content)
+                except Exception as exc:
+                    excs += str(exc)
+
+
                 _conn = get_sqlalchemy_conn()  # 获取数据库连接
                 if byType == 'date':
                     try:
@@ -493,7 +505,7 @@ class Cfmmc:
         cache.set('cfmmc_status' + host, 'start')
         start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
-        days = (end_date - start_date).days + 1
+        days = (end_date - start_date).days
         name = None
         is_success = False
         is_run = False
@@ -579,7 +591,7 @@ class Automatic:
                 n = (60 - t.tm_min) * 60
             else:
                 n = 60 * 60 * 6
-            if t.tm_hour == 18 and last_date != t.tm_yday:
+            if t.tm_hour == 10 and last_date != t.tm_yday:
                 last_date = t.tm_yday
                 ca = Captcha(model_path + '\\' + 'captcha_model95')
                 cfmmc_login_d = Cfmmc('_Automatic_')

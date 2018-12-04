@@ -1195,7 +1195,7 @@ def tongji(rq):
             max_yl = max(hcd['day_yk'])
             max_ks = min(hcd['day_yk'])
         else:
-            hcd, yk_max, max_ks = None, None, None
+            hcd, max_yl, max_ks = None, None, None
 
         res, huizong = viewUtil.tongji_huice(res, huizong)
 
@@ -1622,7 +1622,7 @@ def zhangting(rq, t):
             for i in range(len(zt_tomorrow)):
                 zt_tomorrow[i].append(zt_tomorrow[i][0])
                 zt_tomorrow[i][0] = zt_tomorrow[i][0][2:]
-                zt_tomorrow[i][2] = range(zt_tomorrow[i][2])  # ['★' for j in range(zt_tomorrow[i][2])]
+                zt_tomorrow[i][2] = range(int(zt_tomorrow[i][2]))  # ['★' for j in range(zt_tomorrow[i][2])]
         return render(rq, 'zhangting.html',
                       {'jyzt': True, 'zt_tomorrow': zt_tomorrow, 'dates': rq_date, 'up': date_up, 'down': date_down,
                        'user_name': user_name})
@@ -3041,30 +3041,36 @@ def hqzjzb(rq):
         ed = rq.GET.get('ed')
         db = rq.GET.get('db')
         ttype = rq.GET.get('ttype')
-
         if sd and ed and db and ttype:
             sd = sd[:10]
             ed = ed[:10]
             data = Wave.get_data(sd,ed,database=db)
-            ddict = viewUtil.get_hqzjzb(ttype)
 
-            ec_name = {'extreme':'macd背离','green':'绿异动','red':'红异动','std':'上下引线'}.get(ttype,'')
-            data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
+            ec_name = {
+                'extreme':'macd背离','green':'绿异动','red':'红异动',
+                'std':'上下引线','1min':'1分钟行情'
+            }.get(ttype, '')
+
+            if ttype == '1min':
+                data = HSD.get_macd(data, yd=True)
+            else:
+                ddict = viewUtil.get_hqzjzb(ttype)
+                data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
             resp = {'user_name': user_name, 'data': data,
                     'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzjzb.html', resp)
         else:
             # 起止日期设置
             ed = datetime.datetime.now() + datetime.timedelta(days=1)
-            sd = str(ed - datetime.timedelta(days=2))[:10]
+            sd = str(ed - datetime.timedelta(days=6))[:10]
             ed = str(ed)[:10]
             db = 'sql'
-            ttype = 'extreme'
+            ttype = '1min'
             data = Wave.get_data(sd, ed, database=db)
-            ddict = viewUtil.get_hqzjzb(ttype)
+            # ddict = viewUtil.get_hqzjzb(ttype)
 
-            ec_name = 'macd底背离'
-            data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
+            ec_name = '1分钟行情'
+            data = HSD.get_macd(data,yd=True)  # 计算Macd
             resp = {'user_name': user_name, 'data': data,
                     'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzjzb.html', resp)

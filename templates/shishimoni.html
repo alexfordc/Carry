@@ -542,7 +542,334 @@ function cycleData(){
             ma120.push('-');
         }
 
-        myChart.setOption(option);
+        /*var len_times=times.length,sizes=100;
+        if(len_times>200){
+            times=times.slice(len_times-sizes,len_times);
+            vols=vols.slice(len_times-sizes,len_times);
+            macds=macds.slice(len_times-sizes,len_times);
+            difs=difs.slice(len_times-sizes,len_times);
+            deas=deas.slice(len_times-sizes,len_times);
+            open_sell=open_sell.slice(len_times-sizes,len_times);
+            open_buy=open_buy.slice(len_times-sizes,len_times);
+            flat_sell=flat_sell.slice(len_times-sizes,len_times);
+            flat_buy=flat_buy.slice(len_times-sizes,len_times);
+            ma5=ma5.slice(len_times-sizes,len_times);
+            ma10=ma10.slice(len_times-sizes,len_times);
+            ma30=ma30.slice(len_times-sizes,len_times);
+            ma60=ma60.slice(len_times-sizes,len_times);
+            ma120=ma120.slice(len_times-sizes,len_times);
+        }*/
+
+        myChart.setOption({
+  title: {
+      text: 'K线周期图表（{{ ec_name }}）',
+      left: 0
+  },
+  tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+          type: 'cross',//'line', //'shadow'
+          textStyle:{
+　　          align:'left'
+　　　　    }
+      },
+        formatter: function(params, ticket, callback) {
+            var _dt = params[0].name;
+            var htmls = "";
+            var htmls2 = '时间：'+_dt+"<br>";
+            for (var i = 0, l = params.length; i < l; i++) {
+                var p=params[i].value;
+                if(p){
+                    if(typeof(p)=='object'){
+                        var nm=['','开盘价','收盘价','最低价','最高价','成交量','','MACD','DIFF','DEA'];
+                        for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+                            if(j==0||j==6){
+                                continue;
+                            }
+                            htmls2 += nm[j] + ': ' + p[j] +'<br>';
+                        }
+                    }
+                }
+            }
+            for(var i=0;i<paramnames.length;i++){
+                var K=paramnames[i],V=zts[_dt][i];
+                /*if(V==0 and K.indexOf('数量')<0){
+                    htmls += "<span style='color:green;'>"+ K + ": " + V +"</span>  ";
+                }else if(V==1 and K.indexOf('数量')<0){
+                    htmls += "<span style='color:red;'>"+ K + ": " + V +"</span>  ";
+                }else{
+                    htmls += K + ': ' + V +'  ';
+                }*/
+                htmls += K + ': ' + V +'  ';
+                if(i%8==0 && i>0){ htmls += "</br>"; }
+            }
+            $("#show_hq_message").html(htmls);
+            return htmls2;
+        }
+  },
+  legend:{ //图例控件,点击图例控制哪些系列不显示
+        data:['日K','MA5','MA10','MA30','MA60','MA120'],
+        selected:{
+            // 默认不显示
+            'MA30': false,
+            'MA120': false,
+        }
+    },
+  axisPointer: {
+                link: [{
+                    xAxisIndex: [0] //生成十字轴，控制3个x轴
+            }]
+  },
+  grid: [           {
+      left: '3%',
+      right: '1%',
+      height: '56%'
+  },{
+      left: '3%',
+      right: '1%',
+      top: '68%',
+      height: '10%'
+  },{
+      left: '3%',
+      right: '1%',
+      top: '78%',
+      height: '20%'
+  }],
+  xAxis: [{
+      type: 'category',
+      data: times,
+      scale: true,
+      boundaryGap: false,
+      axisLine: { onZero: false },
+      splitLine: { show: false },
+      splitNumber: 20,
+      min: 'dataMin',
+      max: 'dataMax'
+  },{
+      type: 'category',
+      gridIndex: 1,
+      data: times,
+      axisLabel: {show: false}
+  },{
+      type: 'category',
+      gridIndex: 2,
+      data: times,
+      axisLabel: {show: false}
+  }],
+  yAxis: [{
+      scale: true,
+      splitArea: {
+          show: false
+      }
+  },{
+      gridIndex: 1,
+      splitNumber: 3,
+      axisLine: {onZero: false},
+      axisTick: {show: false},
+      splitLine: {show: false},
+      axisLabel: {show: true}
+  },{
+      gridIndex: 2,
+      splitNumber: 4,
+      axisLine: {onZero: false},
+      axisTick: {show: false},
+      splitLine: {show: false},
+      axisLabel: {show: true}
+  }],
+  dataZoom: [{
+          type: 'inside',
+          xAxisIndex: [0, 0],
+          start: 20,
+          end: 100
+    },{
+          show: true,
+          xAxisIndex: [0, 1],
+          type: 'slider',
+          top: '97%',
+          start: 20,
+          end: 100
+    },{
+      show: false,
+      xAxisIndex: [0, 2],
+      type: 'slider',
+      start: 20,
+      end: 100
+  }],
+  series: [{
+          name: 'K线周期图表',
+          type: 'candlestick',
+          data: datas,
+          itemStyle: {
+              normal: {
+                  color: '#ef232a',
+                  color0: '#14b143',
+                  borderColor: '#ef232a',
+                  borderColor0: '#14b143',
+                  width: 1
+              }
+          },
+      }, {
+          name: 'MA5',
+          type: 'line',
+          data: ma5,
+          smooth: true,
+          lineStyle: {
+              normal: {
+                  opacity: 0.5
+              }
+          }
+      },
+            {
+                name:'MA10',
+                type:'line',
+                data: ma10,
+                smooth:true,
+                lineStyle:{ //标线的样式
+                    normal:{opacity:0.5}
+                }
+            },
+            {
+                name:'MA30',
+                type:'line',
+                data:ma30,
+                smooth:true,
+                lineStyle:{
+                    normal:{opacity:0.5}
+                }
+            },
+            {
+                name:'MA60',
+                type:'line',
+                data: ma60,
+                smooth:true,
+                lineStyle:{
+                    normal:{opacity:0.5}
+                }
+            },{
+                name:'MA120',
+                type:'line',
+                data: ma120,
+                smooth:true,
+                lineStyle:{
+                    normal:{opacity:0.5}
+                }
+            },{
+            name:'开空',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:180,
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'blue';
+                 }
+                }
+            },// '#FCCE10','#E87C25','#27727B','#9BCA63'
+            data: open_sell
+        },{
+            name:'开多',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:0,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'purple';
+                 }
+                }
+            },
+            data: open_buy
+        },{
+            name:'平空',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'blue';
+                 }
+                }
+            },
+            data: flat_sell
+        },{
+            name:'平多',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'purple';
+                 }
+                }
+            },
+
+            data: flat_buy
+        },{
+          name: 'Volumn',
+          type: 'bar',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: vols,
+          itemStyle: {
+              normal: {
+                  color: function(params) {
+                      var colorList;
+                      if (datas[params.dataIndex][1]>datas[params.dataIndex][0]) {
+                          colorList = '#ef232a';
+                      } else {
+                          colorList = '#14b143';
+                      }
+                      return colorList;
+                  },
+              }
+          }
+      },{
+          name: 'MACD',
+          type: 'bar',
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: macds,
+          itemStyle: {
+              normal: {
+                  color: function(params) {
+                      var colorList;
+                      if (params.data >= 0) {
+                          colorList = '#ef232a';
+                      } else {
+                          colorList = '#14b143';
+                      }
+                      return colorList;
+                  },
+              }
+          }
+      },{
+          name: 'DIF',
+          type: 'line',
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: difs
+      },{
+          name: 'DEA',
+          type: 'line',
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: deas
+      }
+  ]
+});
 
         item += 1;
 
