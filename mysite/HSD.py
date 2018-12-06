@@ -2358,47 +2358,47 @@ class Cfmmc:
         res = {}  # {i[0]: (i[3], (i[1] if i[2] == '买' else -i[1]), i[4]) for i in d}
         if d:
             return d
-        if time_type == '5M':
-            for i in d:
-                t5 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
-                t5 = t5 + datetime.timedelta(minutes=5 - t5.minute % 5)
-                t5 = str(t5)
-                if t5 not in res:
-                    res[t5] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[t5].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        elif time_type == '30M':
-            for i in d:
-                t30 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
-                t30 = t30 + datetime.timedelta(minutes=30 - t30.minute % 30)
-                t30 = str(t30)
-                if t30 not in res:
-                    res[t30] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[t30].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        elif time_type == '1H':
-            for i in d:
-                h1 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
-                h1 = h1 + datetime.timedelta(minutes=60 - h1.minute % 60)
-                h1 = str(h1)
-                if h1 not in res:
-                    res[h1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[h1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        elif time_type == '1D':
-            for i in d:
-                d1 = i[0][:10] + ' 00:00:00'
-                if d1 not in res:
-                    res[d1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[d1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        else:
-            for i in d:
-                if i[0] not in res:
-                    res[i[0]] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
-                else:
-                    res[i[0]].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
-        return res
+        # if time_type == '5M':
+        #     for i in d:
+        #         t5 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
+        #         t5 = t5 + datetime.timedelta(minutes=5 - t5.minute % 5)
+        #         t5 = str(t5)
+        #         if t5 not in res:
+        #             res[t5] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+        #         else:
+        #             res[t5].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        # elif time_type == '30M':
+        #     for i in d:
+        #         t30 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
+        #         t30 = t30 + datetime.timedelta(minutes=30 - t30.minute % 30)
+        #         t30 = str(t30)
+        #         if t30 not in res:
+        #             res[t30] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+        #         else:
+        #             res[t30].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        # elif time_type == '1H':
+        #     for i in d:
+        #         h1 = datetime.datetime.strptime(i[0], '%Y-%m-%d %H:%M:%S')
+        #         h1 = h1 + datetime.timedelta(minutes=60 - h1.minute % 60)
+        #         h1 = str(h1)
+        #         if h1 not in res:
+        #             res[h1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+        #         else:
+        #             res[h1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        # elif time_type == '1D':
+        #     for i in d:
+        #         d1 = i[0][:10] + ' 00:00:00'
+        #         if d1 not in res:
+        #             res[d1] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+        #         else:
+        #             res[d1].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        # else:
+        #     for i in d:
+        #         if i[0] not in res:
+        #             res[i[0]] = [(i[3], (i[1] if i[2] == '买' else -i[1]), i[4])]
+        #         else:
+        #             res[i[0]].append((i[3], (i[1] if i[2] == '买' else -i[1]), i[4]))
+        # return res
 
     def get_jz(self):
         """ 获取净值：

@@ -23,7 +23,7 @@
         <tr bgcolor="{% cycle '#cccc33' '#00cc00' %}">
             <td>{{ i.0 }}</td>
         <td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=4&datetimes={{ i.0 }}&user={{ i.1 }}&end_date={{ end_date }}">{{ i.1 }}</a></td>
-        <td>{{ i.2 }}</td>
+        <td><a style="color:#0000ff;" href="{% url 'tongji_bs' %}?host={{ i.1 }}&code={{ i.2 }}&start_date={{ i.0 }}" target="_blank" title="买卖点">{{ i.2 }}</a></td>
         <td>{{ i.3|floatformat:1 }}</td>
         <td>{{ i.4|floatformat:0 }}</td>
         <td>{{ i.5|floatformat:0 }}</td><td>{{ i.6|floatformat:0 }}</td><td>{{ i.7|floatformat:0 }}</td>

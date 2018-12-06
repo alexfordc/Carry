@@ -76,6 +76,8 @@ urlpatterns = [
     url(r'^marketNews/$', views.market_news, name='market_news'),
     url(r'^hqzj/$', views.hqzj, name='hqzj'),
     url(r'^hqzjzb/$', views.hqzjzb, name='hqzjzb'),
+    url(r'^tongji/bs/$', views.tongji_bs, name='tongji_bs'),
+    # url(r'^tongji/bs/(?P<param>\w+)/$', views.tongji_bs, name='tongji_bs'),
 
     url(r'^kline/$', views.kline, name='kline'),
     url(r'^getkline$', views.getkline),
@@ -121,4 +123,4 @@ urlpatterns = [
 
 handler404 = views.page_not_found  # 404 错误 page not found视图
 handler500 = views.page_not_found  # 500 错误 server error视图
-handler400 = views.page_not_found  # 500 错误 bad request视图
+handler400 = views.page_not_found  # 400 错误 bad request视图

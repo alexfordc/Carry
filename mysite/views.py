@@ -1415,6 +1415,155 @@ def tongji(rq):
     return render(rq, 'tongji.html', locals())
 
 
+def tongji_bs(rq):
+    """ 买卖点 """
+    user_name, qx, uid = LogIn(rq, uid=True)
+    if rq.method == 'GET':
+        if not user_name:
+            return index(rq, False)
+        # when=y&host=1001&code=J1901&ttype=1D
+
+        code = rq.GET.get('code')
+        ttype = rq.GET.get('ttype')
+        host = rq.GET.get('host')
+        start_date = rq.GET.get('start_date')
+
+        if not code or not host:
+            return redirect('/')
+        # cache_keys = 'cfmmc_future_bs_' + start_date + code + end_date
+        # cfmmc = HSD.Cfmmc(host, start_date, end_date)
+        # start_date = HSD.dtf(start_date)
+        # end_date = HSD.dtf(end_date)
+
+        # data = read_from_cache(cache_keys)
+        # _results = viewUtil.runThread((cfmmc.get_bs, code, ttype), (cfmmc.get_yesterday_hold, code))
+        # bs = _results['get_bs']
+        # hold = _results['get_yesterday_hold']
+        # bs = cfmmc.get_bs(code,ttype)
+        # hold = cfmmc.get_yesterday_hold(code)
+        end_date = HSD.get_date()
+        results2, _ = HSD.sp_order_record(start_date, end_date)
+        if host:
+            results2 = [i for i in results2 if i[0] == host and i[1] == code]
+        bs = []
+        for i in results2:
+            bs.append((str(datetime.datetime.strptime(i[2],'%Y-%m-%d %H:%M:%S')+datetime.timedelta(minutes=1))[:17] + '00', i[8], ' 卖' if i[7] == '空' else '买', i[3], '开'))
+            if i[4]:
+                bs.append((str(datetime.datetime.strptime(i[4],'%Y-%m-%d %H:%M:%S')+datetime.timedelta(minutes=1))[:17] + '00', i[8], '买' if i[7] == '空' else ' 卖', i[5], ' 平'))
+        bs.sort()
+        if bs:
+            start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
+            end_date = HSD.dtf(bs[-1][0][:10]) + datetime.timedelta(days=3)
+        else:
+            start_date = HSD.dtf(start_date)
+            end_date = HSD.dtf(end_date)
+        _days = (end_date - start_date).days
+        sql = (f'SELECT ADDDATE(datetime,INTERVAL 1 MINUTE),OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"'
+               f' and datetime>="{start_date}" and datetime<="{end_date}"')
+        data = HSD.runSqlData('carry_investment', sql)
+        data_len = (_days - _days // 7 * 2) * 500  # 分钟数据估计的总长度
+        dsise = 1200  # K线根数的限制
+        if not ttype and data_len > dsise:
+            if data_len > dsise * 60:
+                ttype = '1D'
+            elif data_len > dsise * 30:
+                ttype = '1H'
+            elif data_len > dsise * 5:
+                ttype = '30M'
+            else:
+                ttype = '5M'
+
+        # rq_url = rq.META.get('QUERY_STRING')
+        # rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (
+        #     rq_url + '_'.join(param[:2]) if '=' not in rq_url else rq_url)
+        # _name = get_cfmmc_id_host(host + '_name')
+        # _name = _name[0] + '*' * len(_name[1:])
+        # code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
+
+        code_name = host + ' ' + code
+
+        # bs：{'2018-08-15 21:55:00': (7008.0, -2, '开'), '2018-08-17 22:08:00': (7238.0, -4, '开'),...}
+
+        data2 = []
+        if ttype == '5M':
+            code_name += '（5分钟）'
+            data2bs = viewUtil.future_data_cycle(data, bs, 5)
+        elif ttype == '30M':
+            code_name += '（30分钟）'
+            data2bs = viewUtil.future_data_cycle(data, bs, 30)
+        elif ttype == '1H':
+            code_name += '（1小时）'
+            data2bs = viewUtil.future_data_cycle(data, bs, 60)
+        elif ttype == '1D':
+            code_name += '（1日）'
+            data2bs = viewUtil.future_data_cycle(data, bs, ttype)
+        else:
+            code_name += '（1分钟）'
+            data2bs = viewUtil.future_data_cycle(data, bs, 1)
+
+        open_buy = []  # 开多仓
+        flat_buy = []  # 平多仓
+        open_sell = []  # 开空仓
+        flat_sell = []  # 平空仓
+        holds = {}  # 持多仓, 持空仓
+        VOL = 1000  # 手数的最大值
+        rounds = lambda x: (round(x, round(math.log(VOL, 10))) if x else x)
+        ttypes = defaultdict(lambda: 1)
+        ttypes['5M'] = 5
+        ttypes['30M'] = 30
+        ttypes['60M'] = 60
+        ttypes['1D'] = 1
+        _days = set()
+        # print(bs)
+        data3 = viewUtil.future_macd()
+        data3.send(None)
+        for i, bs in data2bs:  # data2:
+            if not i:
+                continue
+            # data3.append(i)
+            data2.append(data3.send(i))
+            _ob, _fb, _os, _fs = '', '', '', ''
+            dt = i[0][:10]
+            if dt not in _days:
+                _days.add(dt)
+                _ccb, _ccs = 0, 0  # 持仓多，持仓空
+                # yesterday_hold = hold[dt] if dt in hold else (
+                #     0, 0)  # ((holds[data2[j-1][0]][0],holds[data2[j-1][0]][1]) if holds else (0, 0))
+            # print(i[0])
+            if i[0] in bs:
+                for b in bs[i[0]]:
+                    if '开' in b[4]:
+                        if '买' in b[2]:
+                            _ob = (int(b[3]) + b[1] / VOL) if not _ob else _ob + b[1] / VOL
+                            _ccb += b[1]
+                        else:
+                            _os = (int(b[3]) + b[1] / VOL) if not _os else _os + b[1] / VOL
+                            _ccs += b[1]
+                    else:
+                        if '买' in b[2]:
+                            _fs = (int(b[3]) + b[1] / VOL) if not _fs else _fs + b[1] / VOL
+                            _ccs -= b[1]
+                        else:
+                            _fb = (int(b[3]) + b[1] / VOL) if not _fb else _fb + b[1] / VOL
+                            _ccb -= b[1]
+
+            open_buy.append(rounds(_ob))
+            flat_buy.append(rounds(_fb))
+            open_sell.append(rounds(_os))
+            flat_sell.append(rounds(_fs))
+            holds[i[0]] = [
+                _ccb,  #+ yesterday_hold[0],
+                _ccs   #+ yesterday_hold[1]
+            ]
+        resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
+                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'start_date': str(start_date)[:10],
+                'code': code, 'host': host, 'code_name': code_name}
+        # write_to_cache()
+        return render(rq, 'tongjisp_bs.html', resp)
+
+    return redirect('/')
+
+
 def tools(rq):
     user_name, qx = LogIn(rq)
     cljs = models.Clj.objects.all()

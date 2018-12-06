@@ -1,0 +1,524 @@
+{% extends 'base/base.html' %}
+{% block title %}买卖点{% endblock %}
+{% block script %}
+{% endblock %}
+{% block center_cen %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+
+<div id="messagecontainer">
+
+</div>
+<div align="center">
+    <a href="javascript:kline_request('1M')">1分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('5M')">5分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('30M')">30分钟</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('1H')">1小时</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('1D')">1日</a>&nbsp;&nbsp;
+<hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
+    <div id="show_hq_message2" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
+</div>
+<div style="height:900px;">
+<div id="main" style="width: auto;height: 750px;" align="center"></div><br/><br/>
+    <p style="font-size:10px;">
+        &nbsp;&nbsp;<strong>说明：</strong>三角形<span style="font-size:20px;">△</span> 为开仓，圆形<span style="font-size:20px;">○</span>为平仓。
+        <span style="color:blue;">蓝色为空单</span> ，<span style="color:purple;">紫色为多单</span>。箭头朝上开多单，<br/>
+    &nbsp;&nbsp;箭头朝下开空单。开/平 仓价后面的小数位为成交量，例如：2400.002，成交量为002，就是2手。<br/>
+        &nbsp;&nbsp;<strong>注：</strong>如果K线没有显示全，是由于数据量过大，把时间跨度调小或者把周期调大等减少数据量的方法可以解决。
+</p>
+</div>
+
+    <script type="text/javascript">
+    function kline_request(type){
+        location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date="+"{{start_date}}";
+    }
+var holds = {{holds|safe}};
+var myChart=echarts.init(document.getElementById('main'));
+var is_show_box = true;
+		//数据：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+		var data=splitData({{ data|safe }});
+		//数组处理
+function splitData(rawData) {
+  var datas = [];
+  var times = [];
+  var vols = [];
+  var macds = []; var difs = []; var deas = [];
+  for (var i = 0; i < rawData.length; i++) {
+	  datas.push(rawData[i]);
+	  times.push(rawData[i].splice(0, 1)[0]);
+	  vols.push(rawData[i][4]);
+	  macds.push(rawData[i][6]);
+	  difs.push(rawData[i][7]);
+	  deas.push(rawData[i][8]);
+  }
+  return {
+      datas: datas,
+      times: times,
+      vols: vols,
+      macds: macds,
+      difs: difs,
+      deas: deas
+  };
+}
+
+//分段计算
+function fenduans(){
+  var markLineData = [];
+  var idx = 0; var tag = 0; var vols = 0;
+  for (var i = 0; i < data.times.length; i++) {
+	  //初始化数据
+      if(data.datas[i][5] != 0 && tag == 0){
+          idx = i; vols = data.datas[i][4]; tag = 1;
+      }
+      if(tag == 1){ vols += data.datas[i][4]; }
+      if(data.datas[i][5] != 0 && tag == 1){
+          markLineData.push([{
+              xAxis: idx,
+              yAxis: data.datas[idx][1]>data.datas[idx][0]?(data.datas[idx][3]).toFixed(2):(data.datas[idx][2]).toFixed(2),
+              value: vols
+          }, {
+              xAxis: i,
+              yAxis: data.datas[i][1]>data.datas[i][0]?(data.datas[i][3]).toFixed(2):(data.datas[i][2]).toFixed(2)
+          }]);
+          idx = i; vols = data.datas[i][4]; tag = 2;
+      }
+
+      //更替数据
+      if(tag == 2){ vols += data.datas[i][4]; }
+      if(data.datas[i][5] != 0 && tag == 2){
+          markLineData.push([{
+              xAxis: idx,
+              yAxis: data.datas[idx][1]>data.datas[idx][0]?(data.datas[idx][3]).toFixed(2):(data.datas[idx][2]).toFixed(2),
+              value: (vols/(i-idx+1)).toFixed(2)+' M'
+          }, {
+              xAxis: i,
+              yAxis: data.datas[i][1]>data.datas[i][0]?(data.datas[i][3]).toFixed(2):(data.datas[i][2]).toFixed(2)
+          }]);
+          idx = i; vols = data.datas[i][4];
+      }
+  }
+  return markLineData;
+}
+
+//MA计算公式
+function calculateMA(dayCount) {
+  var result = [];
+  for (var i = 0, len = data.times.length; i < len; i++) {
+      if (i < dayCount) {
+          result.push('-');
+          continue;
+      }
+      var sum = 0;
+      for (var j = 0; j < dayCount; j++) {
+          sum += data.datas[i - j][1];
+      }
+      result.push((sum / dayCount).toFixed(2));
+  }
+  return result;
+}
+
+var option = {
+  title: {
+      text:'{{ code_name }}',
+	  left:10
+  },
+  /*tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+          type: 'line'
+      }
+  },*/
+  tooltip: {
+        trigger: 'axis',
+      axisPointer: {
+          type: 'cross',//'line', //'shadow'
+          textStyle:{
+　　          align:'left'
+　　　　    }
+      },
+        formatter: function(params, ticket, callback) {
+            /*var showContent = params.seriesName + "：" + params.value;
+            if (params.seriesIndex > 1) {
+                return showContent + "%";
+            }
+            return showContent;*/
+            var htmls = '时间: '+params[0].name+" ";
+            var htmls_jy = '';
+            var htmls2 = '时间：'+params[0].name+"<br>";
+            for (var i = 0, l = params.length; i < l; i++) {
+                //res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'吨';
+                if(params[i].value){
+                    var p=params[i].value;
+                    if(typeof(p)=='object'){
+                        var nm=['','开盘价','收盘价','最低价','最高价','成交量','','MACD','DIFF','DEA'];
+                        for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
+                            if(j==0||j==6){
+                                continue;
+                            }
+                            htmls += nm[j] + ': ' + p[j] +' ';
+                            htmls2 += nm[j] + ': ' + p[j] +'<br>';
+                        }
+                        var _cc = holds[params[i].name];
+                            htmls_jy += _cc[0]==0?'':'<span style="color:red;">持多</span>: '+_cc[0]+' ';
+                            htmls_jy += _cc[1]==0?'':'<span style="color:green;">持空</span>: '+_cc[1]+' ';
+                    }else if('MACD,DIFF,DEA,VOL'.indexOf(params[i].seriesName)<0){
+                        if(params[i].seriesName.indexOf('MA')<0){
+                            htmls_jy += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + ' ';
+                            htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
+                        }else{
+                            htmls += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + ' ';
+                            htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
+                        }
+                    }else if(i<3){
+                        htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
+                    }
+                }
+            }
+            $("#show_hq_message").html(htmls);
+            $("#show_hq_message2").html(htmls_jy);
+            if(is_show_box){
+                return htmls2;
+            }
+        }
+    },
+    /*tooltip : {         // Option config. Can be overwrited by series or data
+        trigger: 'axis',
+        //show: true,   //default true
+        showDelay: 0,
+        hideDelay: 50,
+        transitionDuration:0,
+        backgroundColor : 'rgba(255,0,255,0.7)',
+        borderColor : '#f50',
+        borderRadius : 8,
+        borderWidth: 2,
+        padding: 10,    // [5, 10, 15, 20]
+        position : function(p) {
+            // 位置回调
+            // console.log && console.log(p);
+            return [p[0] + 10, p[1] - 10];
+        },
+        textStyle : {
+            color: 'yellow',
+            decoration: 'none',
+            fontFamily: 'Verdana, sans-serif',
+            fontSize: 15,
+            fontStyle: 'italic',
+            fontWeight: 'bold'
+        },
+        formatter: function (params,ticket,callback) {
+            console.log(params)
+            var res = 'Function formatter : <br/>' + params[0].name;
+            for (var i = 0, l = params.length; i < l; i++) {
+                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'吨';
+            }
+            setTimeout(function (){
+                // 模拟异步回调
+                callback(ticket, res);
+            }, 100)
+            return 'loading';
+        }
+        //formatter: "Template formatter: <br/>{b}<br/>{a}:{c}<br/>{a1}:{c1}"
+    },*/
+  legend:{ //图例控件,点击图例控制哪些系列不显示
+		data:['日K','MA5','MA10','MA20','MA30','MA60'],
+		selected:{
+		    // 默认不显示
+            'MA5': false,
+            'MA20': false
+		}
+	},
+  axisPointer: {
+                link: [{
+                    xAxisIndex: [0] // [0, 1, 2] 生成十字轴，控制3个x轴
+            }]
+  },
+  grid: [           {
+      left: '3%',
+      right: '1%',
+      height: '56%'
+  },{
+      left: '3%',
+      right: '1%',
+      top: '68%',
+      height: '10%'
+  },{
+      left: '3%',
+      right: '1%',
+      top: '78%',
+      height: '19%'
+  }],
+  xAxis: [{
+      type: 'category',
+      data: data.times,
+      scale: true,
+      boundaryGap: true,//false,
+      axisLine: { onZero: false },
+      splitLine: { show: false },
+      splitNumber: 20,
+      min: 'dataMin',
+      max: 'dataMax'
+  },{
+      type: 'category',
+      gridIndex: 1,
+      data: data.times,
+      axisLabel: {show: false}
+  },{
+      type: 'category',
+      gridIndex: 2,
+      data: data.times,
+      axisLabel: {show: false}
+  }],
+  yAxis: [{
+      scale: true,
+      splitArea: {
+          show: false
+      }
+  },{
+      gridIndex: 1,
+      splitNumber: 3,
+      axisLine: {onZero: false},
+      axisTick: {show: false},
+      splitLine: {show: false},
+      axisLabel: {show: true}
+  },{
+	  gridIndex: 2,
+      splitNumber: 4,
+      axisLine: {onZero: false},
+      axisTick: {show: false},
+      splitLine: {show: false},
+      axisLabel: {show: true}
+  }],
+  dataZoom: [{
+    	  type: 'inside',
+          xAxisIndex: [0, 0],
+          start: 20,
+          end: 100
+  	},{
+          show: true,
+          xAxisIndex: [0, 1],
+          type: 'slider',
+          top: '97%',
+          start: 20,
+          end: 100
+  	},{
+      show: false,
+      xAxisIndex: [0, 2],
+      type: 'slider',
+      start: 20,
+      end: 100
+  }],
+  series: [{
+          name: '行情K线',
+          type: 'candlestick',
+          barMaxWidth: 30,
+          barCategoryGap:'20%',
+          data: data.datas,
+          itemStyle: {
+              normal: {
+				  color: '#ef232a',
+			      color0: '#14b143',
+			      borderColor: '#ef232a',
+			      borderColor0: '#14b143'
+              }
+          },
+          /*markArea: {
+              silent: true,
+              itemStyle: {
+                  normal: {
+                      color: 'Honeydew'
+                  }
+              },
+              data: fenduans()
+          },
+          markPoint: {
+              data: [
+                  {type: 'max', name: '最大值'},
+                  {type: 'min', name: '最小值'}
+              ]
+          },
+          markLine: {
+              label: {
+                  normal: {
+                      position: 'middle',
+                      textStyle:{color:'Blue',fontSize: 15}
+                  }
+              },
+              data: fenduans(),
+              symbol: ['circle', 'none']
+
+          }*/
+      },    {
+              name: 'MA5',
+              type: 'line',
+              data: calculateMA(5),
+              smooth: true,
+              lineStyle: {
+                  normal: {opacity: 0.5}
+              }
+              },
+			  {
+				name:'MA10',
+				type:'line',
+				data:calculateMA(10),
+				smooth:true,
+				lineStyle:{ //标线的样式
+					normal:{opacity:0.5}
+				}
+			},
+			{
+				name:'MA20',
+				type:'line',
+				data:calculateMA(20),
+				smooth:true,
+				lineStyle:{
+					normal:{opacity:0.5}
+				}
+			},
+			{
+				name:'MA30',
+				type:'line',
+				data:calculateMA(30),
+				smooth:true,
+				lineStyle:{
+					normal:{opacity:0.5}
+				}
+			},
+			{
+				name:'MA60',
+				type:'line',
+				data:calculateMA(60),
+				smooth:false,
+				lineStyle:{
+					normal:{opacity:0.5}
+				}
+			},{
+            name:'开空',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:180,
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'blue';
+                 }
+                }
+            },// '#FCCE10','#E87C25','#27727B','#9BCA63'
+
+            data: {{ open_sell|safe }}
+        },{
+            name:'开多',
+            type:'scatter',
+            symbol: 'arrow',//'star3',
+            symbolSize: 12,
+            smooth:true,
+            symbolRotate:0,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'purple';
+                 }
+                }
+            },
+            data: {{ open_buy|safe }}
+        },{
+            name:'平空',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'blue';
+                 }
+                }
+            },
+
+            data: {{ flat_sell|safe }}
+        },{
+            name:'平多',
+            type:'scatter',
+            symbol: 'circle',//'star3',
+            symbolSize: 10,
+            smooth:true,
+            //symbolRotate:180,
+
+            itemStyle:{
+                //symbolRotate:-90,
+                normal: { color:function(p){
+                    return 'purple';
+                 }
+                }
+            },
+
+            data: {{ flat_buy|safe }}
+        },{
+          name: 'VOL',
+          type: 'bar',
+          barMaxWidth: 30,
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: data.vols,
+          itemStyle: {
+	    	  normal: {
+		          color: function(params) {
+		              var colorList;
+		              if (data.datas[params.dataIndex][1]>data.datas[params.dataIndex][0]) {
+		                  colorList = '#ef232a';
+		              } else {
+		                  colorList = '#14b143';
+		              }
+		              return colorList;
+		          },
+		      }
+	      }
+      },{
+          name: 'MACD',
+          type: 'bar',
+          barMaxWidth: 30,
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: data.macds,
+          itemStyle: {
+	    	  normal: {
+		          color: function(params) {
+		              var colorList;
+		              if (params.data >= 0) {
+		                  colorList = '#ef232a';
+		              } else {
+		                  colorList = '#14b143';
+		              }
+		              return colorList;
+		          },
+		      }
+	      }
+      },{
+          name: 'DIFF',
+          type: 'line',
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: data.difs
+      },{
+          name: 'DEA',
+          type: 'line',
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+          data: data.deas
+      }
+  ]
+};
+
+myChart.setOption(option);
+window.onresize = myChart.resize;
+
+$("#main").dblclick(function(){
+    is_show_box = is_show_box?false:true;
+});
+</script>
+
+{% endblock %}
