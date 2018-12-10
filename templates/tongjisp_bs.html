@@ -9,12 +9,14 @@
 <div id="messagecontainer">
 
 </div>
-<div align="center">
+<div align="center" class="bs_top_div" >
     <a href="javascript:kline_request('1M')">1分钟</a>&nbsp;&nbsp;
     <a href="javascript:kline_request('5M')">5分钟</a>&nbsp;&nbsp;
     <a href="javascript:kline_request('30M')">30分钟</a>&nbsp;&nbsp;
     <a href="javascript:kline_request('1H')">1小时</a>&nbsp;&nbsp;
-    <a href="javascript:kline_request('1D')">1日</a>&nbsp;&nbsp;
+    <a href="javascript:kline_request('1D')">1日</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="date" value="{{ start_date }}" id="start_date"><a href="javascript:change_date()">确认日期</a>&nbsp;&nbsp;
+    <span id="the_colors" style="cursor:pointer;">白色</span>
 <hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
     <div id="show_hq_message2" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
 </div>
@@ -27,16 +29,54 @@
         &nbsp;&nbsp;<strong>注：</strong>如果K线没有显示全，是由于数据量过大，把时间跨度调小或者把周期调大等减少数据量的方法可以解决。
 </p>
 </div>
-
-    <script type="text/javascript">
+<script type="text/javascript">
+$(".bs_top_div").css({'background':'#0A0A0A','color':'#ccc'});
+var the_color = '#0A0A0A';
+$("#the_colors").click(function(){
+    if($(this).html()=='白色'){
+        $(this).html('黑色');
+        the_color = '#FDFDFD';
+        $(".bs_top_div").css({'background':'#FDFDFD','color':'black'});
+        option = get_option();
+	    myChart.clear();
+        myChart.setOption(option);
+        window.onresize = myChart.resize;
+    }else{
+        $(this).html('白色');
+        the_color = '#0A0A0A';
+        $(".bs_top_div").css({'background':'#0A0A0A','color':'#ccc'});
+        option = get_option();
+	    myChart.clear();
+        myChart.setOption(option);
+        window.onresize = myChart.resize;
+    }
+});
     function kline_request(type){
         location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date="+"{{start_date}}";
     }
+
+var datas2 = [],times2 = [], vols2 = [], macds2 = [], difs2 = [], deas2 = [];
+
+var open_sell2={{ open_sell|safe }},open_buy2={{ open_buy|safe }},flat_sell2={{ flat_sell|safe }},flat_buy2={{ flat_buy|safe }};
+
 var holds = {{holds|safe}};
 var myChart=echarts.init(document.getElementById('main'));
 var is_show_box = true;
 		//数据：time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
-		var data=splitData({{ data|safe }});
+		var dataAll={{ data|safe }};
+		//var data=day_data(dataAll,dataAll[0][0].slice(0,10));
+		//alert(dataAll[0][0].slice(0,10))
+		//data=splitData(data);
+		for (var i = 0; i < dataAll.length; i++) {
+		    datas2.push(dataAll[i]);
+		    times2.push(dataAll[i].splice(0, 1)[0]);
+		    vols2.push(dataAll[i][4]);
+          macds2.push(dataAll[i][6]);
+          difs2.push(dataAll[i][7]);
+          deas2.push(dataAll[i][8]);
+		}
+		var datas = datas2.slice(0,840),times = times2.slice(0,840), vols = vols2.slice(0,840), macds = macds2.slice(0,840), difs = difs2.slice(0,840), deas = deas2.slice(0,840);
+		var open_sell=open_sell2.slice(0,840),open_buy=open_buy2.slice(0,840),flat_sell=flat_sell2.slice(0,840),flat_buy=flat_buy2.slice(0,840);
 		//数组处理
 function splitData(rawData) {
   var datas = [];
@@ -65,36 +105,36 @@ function splitData(rawData) {
 function fenduans(){
   var markLineData = [];
   var idx = 0; var tag = 0; var vols = 0;
-  for (var i = 0; i < data.times.length; i++) {
+  for (var i = 0; i < times.length; i++) {
 	  //初始化数据
-      if(data.datas[i][5] != 0 && tag == 0){
-          idx = i; vols = data.datas[i][4]; tag = 1;
+      if(datas[i][5] != 0 && tag == 0){
+          idx = i; vols = datas[i][4]; tag = 1;
       }
-      if(tag == 1){ vols += data.datas[i][4]; }
-      if(data.datas[i][5] != 0 && tag == 1){
+      if(tag == 1){ vols += datas[i][4]; }
+      if(datas[i][5] != 0 && tag == 1){
           markLineData.push([{
               xAxis: idx,
-              yAxis: data.datas[idx][1]>data.datas[idx][0]?(data.datas[idx][3]).toFixed(2):(data.datas[idx][2]).toFixed(2),
+              yAxis: datas[idx][1]>datas[idx][0]?(datas[idx][3]).toFixed(2):(datas[idx][2]).toFixed(2),
               value: vols
           }, {
               xAxis: i,
-              yAxis: data.datas[i][1]>data.datas[i][0]?(data.datas[i][3]).toFixed(2):(data.datas[i][2]).toFixed(2)
+              yAxis: datas[i][1]>datas[i][0]?(datas[i][3]).toFixed(2):(datas[i][2]).toFixed(2)
           }]);
-          idx = i; vols = data.datas[i][4]; tag = 2;
+          idx = i; vols = datas[i][4]; tag = 2;
       }
 
       //更替数据
-      if(tag == 2){ vols += data.datas[i][4]; }
-      if(data.datas[i][5] != 0 && tag == 2){
+      if(tag == 2){ vols += datas[i][4]; }
+      if(datas[i][5] != 0 && tag == 2){
           markLineData.push([{
               xAxis: idx,
-              yAxis: data.datas[idx][1]>data.datas[idx][0]?(data.datas[idx][3]).toFixed(2):(data.datas[idx][2]).toFixed(2),
+              yAxis: datas[idx][1]>datas[idx][0]?(datas[idx][3]).toFixed(2):(datas[idx][2]).toFixed(2),
               value: (vols/(i-idx+1)).toFixed(2)+' M'
           }, {
               xAxis: i,
-              yAxis: data.datas[i][1]>data.datas[i][0]?(data.datas[i][3]).toFixed(2):(data.datas[i][2]).toFixed(2)
+              yAxis: datas[i][1]>datas[i][0]?(datas[i][3]).toFixed(2):(datas[i][2]).toFixed(2)
           }]);
-          idx = i; vols = data.datas[i][4];
+          idx = i; vols = datas[i][4];
       }
   }
   return markLineData;
@@ -103,21 +143,23 @@ function fenduans(){
 //MA计算公式
 function calculateMA(dayCount) {
   var result = [];
-  for (var i = 0, len = data.times.length; i < len; i++) {
+  for (var i = 0, len = times.length; i < len; i++) {
       if (i < dayCount) {
           result.push('-');
           continue;
       }
       var sum = 0;
       for (var j = 0; j < dayCount; j++) {
-          sum += data.datas[i - j][1];
+          sum += datas[i - j][1];
       }
       result.push((sum / dayCount).toFixed(2));
   }
   return result;
 }
 
-var option = {
+function get_option(){
+    return {
+  backgroundColor: the_color,
   title: {
       text:'{{ code_name }}',
 	  left:10
@@ -150,7 +192,7 @@ var option = {
                 if(params[i].value){
                     var p=params[i].value;
                     if(typeof(p)=='object'){
-                        var nm=['','开盘价','收盘价','最低价','最高价','成交量','','MACD','DIFF','DEA'];
+                        var nm=['','开盘价','收盘价','最低价','最高价','异动','','MACD','DIFF','DEA'];
                         for(var j = 0; j < nm.length; j++){ // time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
                             if(j==0||j==6){
                                 continue;
@@ -161,7 +203,7 @@ var option = {
                         var _cc = holds[params[i].name];
                             htmls_jy += _cc[0]==0?'':'<span style="color:red;">持多</span>: '+_cc[0]+' ';
                             htmls_jy += _cc[1]==0?'':'<span style="color:green;">持空</span>: '+_cc[1]+' ';
-                    }else if('MACD,DIFF,DEA,VOL'.indexOf(params[i].seriesName)<0){
+                    }else if('MACD,DIFF,DEA,异动'.indexOf(params[i].seriesName)<0){
                         if(params[i].seriesName.indexOf('MA')<0){
                             htmls_jy += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + ' ';
                             htmls2 += '<span style="color:'+params[i].color+';">'+params[i].seriesName + '</span>: ' + params[i].value + '<br>';
@@ -209,7 +251,7 @@ var option = {
             console.log(params)
             var res = 'Function formatter : <br/>' + params[0].name;
             for (var i = 0, l = params.length; i < l; i++) {
-                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'吨';
+                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value+'点';
             }
             setTimeout(function (){
                 // 模拟异步回调
@@ -229,7 +271,7 @@ var option = {
 	},
   axisPointer: {
                 link: [{
-                    xAxisIndex: [0] // [0, 1, 2] 生成十字轴，控制3个x轴
+                    xAxisIndex: [0, 1, 2] // [0, 1, 2] 生成十字轴，控制3个x轴
             }]
   },
   grid: [           {
@@ -249,27 +291,29 @@ var option = {
   }],
   xAxis: [{
       type: 'category',
-      data: data.times,
+      data: times,
       scale: true,
       boundaryGap: true,//false,
       axisLine: { onZero: false },
       splitLine: { show: false },
-      splitNumber: 20,
+      splitNumber: 200,
       min: 'dataMin',
       max: 'dataMax'
   },{
       type: 'category',
       gridIndex: 1,
-      data: data.times,
+      data: times,
       axisLabel: {show: false}
   },{
       type: 'category',
       gridIndex: 2,
-      data: data.times,
+      data: times,
       axisLabel: {show: false}
   }],
+  color:['white','#A6A600','purple','green','red'],
   yAxis: [{
       scale: true,
+      splitLine: { show: true,lineStyle: { type:'dotted',color:'#333333' } }, //solid, dotted, dashed
       splitArea: {
           show: false
       }
@@ -291,28 +335,28 @@ var option = {
   dataZoom: [{
     	  type: 'inside',
           xAxisIndex: [0, 0],
-          start: 20,
-          end: 100
+          start: 0,
+          end: 50
   	},{
           show: true,
           xAxisIndex: [0, 1],
           type: 'slider',
           top: '97%',
-          start: 20,
-          end: 100
+          start: 0,
+          end: 50
   	},{
       show: false,
       xAxisIndex: [0, 2],
       type: 'slider',
-      start: 20,
-      end: 100
+      start: 0,
+      end: 50
   }],
   series: [{
           name: '行情K线',
           type: 'candlestick',
           barMaxWidth: 30,
           barCategoryGap:'20%',
-          data: data.datas,
+          data: datas,
           itemStyle: {
               normal: {
 				  color: '#ef232a',
@@ -390,7 +434,7 @@ var option = {
 				smooth:false,
 				lineStyle:{
 					normal:{opacity:0.5}
-				}
+				},
 			},{
             name:'开空',
             type:'scatter',
@@ -406,7 +450,7 @@ var option = {
                 }
             },// '#FCCE10','#E87C25','#27727B','#9BCA63'
 
-            data: {{ open_sell|safe }}
+            data: open_sell
         },{
             name:'开多',
             type:'scatter',
@@ -422,7 +466,7 @@ var option = {
                  }
                 }
             },
-            data: {{ open_buy|safe }}
+            data: open_buy
         },{
             name:'平空',
             type:'scatter',
@@ -439,7 +483,7 @@ var option = {
                 }
             },
 
-            data: {{ flat_sell|safe }}
+            data: flat_sell
         },{
             name:'平多',
             type:'scatter',
@@ -456,19 +500,19 @@ var option = {
                 }
             },
 
-            data: {{ flat_buy|safe }}
+            data: flat_buy
         },{
-          name: 'VOL',
+          name: '异动',
           type: 'bar',
           barMaxWidth: 30,
           xAxisIndex: 1,
           yAxisIndex: 1,
-          data: data.vols,
+          data: vols,
           itemStyle: {
 	    	  normal: {
 		          color: function(params) {
 		              var colorList;
-		              if (data.datas[params.dataIndex][1]>data.datas[params.dataIndex][0]) {
+		              if (datas[params.dataIndex][1]>datas[params.dataIndex][0]) {
 		                  colorList = '#ef232a';
 		              } else {
 		                  colorList = '#14b143';
@@ -483,7 +527,7 @@ var option = {
           barMaxWidth: 30,
           xAxisIndex: 2,
           yAxisIndex: 2,
-          data: data.macds,
+          data: macds,
           itemStyle: {
 	    	  normal: {
 		          color: function(params) {
@@ -502,16 +546,18 @@ var option = {
           type: 'line',
           xAxisIndex: 2,
           yAxisIndex: 2,
-          data: data.difs
+          data: difs
       },{
           name: 'DEA',
           type: 'line',
           xAxisIndex: 2,
           yAxisIndex: 2,
-          data: data.deas
+          data: deas
       }
   ]
-};
+  };
+}
+var option = get_option();
 
 myChart.setOption(option);
 window.onresize = myChart.resize;
@@ -519,6 +565,26 @@ window.onresize = myChart.resize;
 $("#main").dblclick(function(){
     is_show_box = is_show_box?false:true;
 });
+
+function change_date(){
+    var dt = $("#start_date").val();
+    var ind = -1,s=840;
+    for(var i=0;i<times2.length;i++){
+		    if(times2[i].indexOf(dt)>=0){
+		        ind=i;break;
+		    }
+		}
+	if(ind!=-1){
+	    datas = datas2.slice(ind,ind+s),times = times2.slice(ind,ind+s), vols = vols2.slice(ind,ind+s), macds = macds2.slice(ind,ind+s), difs = difs2.slice(ind,ind+s), deas = deas2.slice(ind,ind+s);
+	    open_sell=open_sell2.slice(ind,ind+s),open_buy=open_buy2.slice(ind,ind+s),flat_sell=flat_sell2.slice(ind,ind+s),flat_buy=flat_buy2.slice(ind,ind+s);
+	    option = get_option();
+	    myChart.clear();
+        myChart.setOption(option);
+        window.onresize = myChart.resize;
+	}else{
+	    alert('没有这一天的数据！');
+	}
+}
 </script>
 
 {% endblock %}

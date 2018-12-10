@@ -1461,17 +1461,21 @@ def tongji_bs(rq):
         sql = (f'SELECT ADDDATE(datetime,INTERVAL 1 MINUTE),OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"'
                f' and datetime>="{start_date}" and datetime<="{end_date}"')
         data = HSD.runSqlData('carry_investment', sql)
-        data_len = (_days - _days // 7 * 2) * 500  # 分钟数据估计的总长度
-        dsise = 1200  # K线根数的限制
-        if not ttype and data_len > dsise:
-            if data_len > dsise * 60:
-                ttype = '1D'
-            elif data_len > dsise * 30:
-                ttype = '1H'
-            elif data_len > dsise * 5:
-                ttype = '30M'
-            else:
-                ttype = '5M'
+
+        if not ttype:
+            ttype = '1M'
+
+        # data_len = (_days - _days // 7 * 2) * 500  # 分钟数据估计的总长度
+        # dsise = 1200  # K线根数的限制
+        # if not ttype and data_len > dsise:
+        #     if data_len > dsise * 60:
+        #         ttype = '1D'
+        #     elif data_len > dsise * 30:
+        #         ttype = '1H'
+        #     elif data_len > dsise * 5:
+        #         ttype = '30M'
+        #     else:
+        #         ttype = '5M'
 
         # rq_url = rq.META.get('QUERY_STRING')
         # rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (
@@ -1515,7 +1519,7 @@ def tongji_bs(rq):
         ttypes['1D'] = 1
         _days = set()
         # print(bs)
-        data3 = viewUtil.future_macd()
+        data3 = viewUtil.future_macd(yd=True)
         data3.send(None)
         for i, bs in data2bs:  # data2:
             if not i:
@@ -1556,7 +1560,7 @@ def tongji_bs(rq):
                 _ccs   #+ yesterday_hold[1]
             ]
         resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
-                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'start_date': str(start_date)[:10],
+                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'start_date': data2[0][0][:10],
                 'code': code, 'host': host, 'code_name': code_name}
         # write_to_cache()
         return render(rq, 'tongjisp_bs.html', resp)

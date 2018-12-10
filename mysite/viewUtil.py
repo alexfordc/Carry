@@ -899,44 +899,82 @@ def future_data_cycle(data, bs, cycle):
                 "没有数据"
 
 
-def future_macd(short=12, long=26, phyd=9):
+def future_macd(short=12, long=26, phyd=9, yd=False):
     """ macd指标计算 """
     # da格式：((datetime.datetime(2018, 3, 19, 9, 22),31329.0,31343.0,31328.0,31331.0,249)...)
     dc = []
     da2 = []
     da = []
     i = 0
-    while 1:
-        _da = yield da2
-        da.append(_da)
-        _t = _da[0]  # 时间
-        _o = _da[1]  # 开盘价
-        _c = _da[2]  # 收盘价
-        _l = _da[3]  # 最低价
-        _h = _da[4]  # 最高价
+    if yd:
+        while 1:
+            _da = yield da2
+            da.append(_da)
+            _t = _da[0]  # 时间
+            _o = _da[1]  # 开盘价
+            _c = _da[2]  # 收盘价
+            _l = _da[3]  # 最低价
+            _h = _da[4]  # 最高价
 
-        dc.append(
-            {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'datetimes': _t,
-             'open': _o, 'high': _h, 'low': _l, 'close': _c})
-        if i == 1:
-            ac = da[i - 1][4]
-            this_c = da[i][4]
-            dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
-            dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
-            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
-            dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
-            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
-        elif i > 1:
-            n_c = da[i][4]
-            dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + n_c * 2 / short
-            dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + n_c * 2 / long
-            dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
-            dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
-            dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+            dc.append(
+                {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'datetimes': _t,
+                 'open': _o, 'high': _h, 'low': _l, 'close': _c})
+            if i == 1:
+                ac = da[i - 1][2]
+                this_c = da[i][2]
+                dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
+                dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+            elif i > 1:
+                dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + _c * 2 / short
+                dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + _c * 2 / long
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
 
-        da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2),
-               round(dc[i]['dea'], 2)]
-        i += 1
+            if i >= 60:
+                ma = 60
+                std_pj = sum(da[i - j][4] - da[i - j][1] for j in range(ma)) / ma
+                var = sum((da[i - j][4] - da[i - j][1] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
+                std = float(var ** 0.5)  # 标准差
+                _yd = round((_c - _o) / std, 2)  # 异动
+            else:
+                _yd = 0
+            da2 = [_t, _o, _c, _l, _h, _yd, 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2),
+                   round(dc[i]['dea'], 2)]
+            i += 1
+    else:
+        while 1:
+            _da = yield da2
+            da.append(_da)
+            _t = _da[0]  # 时间
+            _o = _da[1]  # 开盘价
+            _c = _da[2]  # 收盘价
+            _l = _da[3]  # 最低价
+            _h = _da[4]  # 最高价
+
+            dc.append(
+                {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'datetimes': _t,
+                 'open': _o, 'high': _h, 'low': _l, 'close': _c})
+            if i == 1:
+                ac = da[i - 1][2]
+                dc[i]['ema_short'] = ac + (_c - ac) * 2 / short
+                dc[i]['ema_long'] = ac + (_c - ac) * 2 / long
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+            elif i > 1:
+                dc[i]['ema_short'] = dc[i - 1]['ema_short'] * (short - 2) / short + _c * 2 / short
+                dc[i]['ema_long'] = dc[i - 1]['ema_long'] * (long - 2) / long + _c * 2 / long
+                dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
+                dc[i]['dea'] = dc[i - 1]['dea'] * (phyd - 2) / phyd + dc[i]['diff'] * 2 / phyd
+                dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
+
+            da2 = [_t, _o, _c, _l, _h, da[i][5], 0, round(dc[i]['macd'], 2), round(dc[i]['diff'], 2),
+                   round(dc[i]['dea'], 2)]
+            i += 1
 
 
 def this_day_week_month_year(when):
