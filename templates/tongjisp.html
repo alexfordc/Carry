@@ -7,7 +7,7 @@
     <div align="center" id="tongji">
     {% load mvote %}
 
-        {% if results2 %}
+        {% if result9 %}
         <table border="1" class="dataframe" id="huizong_mingxi">
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">汇 总</th></tr>
         <tr>
@@ -36,6 +36,29 @@
             <!--<td><a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ i.0 }}&id={{ i.1 }}&end_date={{ end_date }}">{{ i.8 }}</a></td>-->
         </tr>
         {% endfor %}
+            {% for j,i in huizong2.items %}
+            {% if end_date != i.0 %}
+            <tr><th colspan="10" style="font-size: 18px;">日汇总（{{ j }}）</th></tr>
+            <tr><th>日期</th><th>盈亏</th><th>多单</th><th>空单</th><th>盈利单数</th><th>准确率</th><th>合约</th><th>正向加仓</th><th>反向加仓</th><th>最大持仓</th></tr>
+            {% for k,v in i.15.items %}
+             <tr class="rhztr" bgcolor="{% cycle '#cccc33' '#00cc00' %}"> <!-- bgcolor="{% cycle '#f6f6f6' '#ffffff' %}" -->
+            <td>{{ v.0 }}</td>
+        <td>{{ v.2|floatformat:1 }}</td>
+        <td>{{ v.3|floatformat:0 }}</td>
+        <td>{{ v.4|floatformat:0 }}</td>
+        <!--<td>{{ v.5 }}</td>-->
+                 <td>{{ v.6|floatformat:0 }}</td><td>{{ v.7|floatformat:0 }}</td>
+            <td>
+                <a value="{% url 'tongji' %}?type=5&datetimes={{ v.0 }}&id={{ v.1 }}&end_date={{ v.0 }}" target="_blank" style="color:black;">
+                    {{ v.14 }}
+                </a>
+            </td>
+            <td>{{ v.9 }} ({{ v.11|floatformat:0 }})</td><td>{{ v.10 }} ({{ v.12|floatformat:0 }})</td><td>{{ v.13 }}</td>
+             <!-- <a style="color:#0000ff;text-decoration:none;" href="{% url 'tongji' %}?type=1&datetimes={{ v.0 }}&id={{ i.1 }}&end_date={{ end_date }}"></a> -->
+        </tr>
+            {% endfor %}
+            {% endif %}
+        {% endfor %}
         <tr><th colspan="10" style="font-size: 20px;background-color:#FFFFFF;">明 细</th></tr>
     <tr>
       <th>账户</th>
@@ -49,7 +72,7 @@
         <th>手数</th>
         <th>交易状态</th>
     </tr>
-            {% for i in results2 %}
+            {% for i in result9 %}
     <tr bgcolor="{% cycle '#cccc33' '00cc00' %}">
       <td>{{ i.0 }}</td>
       <td>{{ i.1 }}</td>
@@ -90,6 +113,27 @@ $('table').css({'width': '1000px', 'cellpadding': 'auto', 'text-align': 'center'
 //$("tr:odd").css({"background-color": "#cccc33"});
 //$('tr:even').css({'background-color': '#00cc00'});
 $('tr').css({'height': '30'});
+
+$(".zhztr").click(function(){
+    window.open($(this).find('a').attr('value'));
+});
+$(".zhztr").hover(function(){
+    $(this).css({'backgroundColor':'#f0f0f0','cursor':'pointer'});
+},function(){
+    $(this).css('backgroundColor','#fff');
+});
+var the_color=null;
+$(".rhztr").click(function(){
+    window.open($(this).find('a').attr('value'));
+});
+$(".rhztr").hover(function(){
+    the_color = $(this).css('backgroundColor');
+    $(this).css({'backgroundColor':'#f0f0f0','cursor':'pointer'});
+},function(){
+    $(this).css('backgroundColor',the_color);
+    //$(this).css('backgroundColor','#fff');
+});
+
 
 //提交
 function formSubmit(id,name,en,pass,types){

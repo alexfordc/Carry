@@ -123,7 +123,8 @@ class ZB(object):
                 {'ema_short': 0, 'ema_long': 0, 'diff': 0, 'dea': 0, 'macd': 0, 'ma60': 0, 'var': 0, 'std': 0, 'reg': 0,
                  'mul': 0, 'datetimes': da[i][0], 'open': da[i][1], 'high': da[i][2], 'low': da[i][3],
                  'close': da[i][4], 'cd': 0, 'maidian': 0, 'open5': da[i][1], 'high5': da[i][2], 'low5': da[i][3],
-                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma5': 0, 'ma10': 0, 'ma30': 0, 'ma120': 0})
+                 'close5': da[i][4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma5': 0, 'ma10': 0, 'ma30': 0, 'ma120': 0,
+                 'ma72': 0, 'ma200': 0})
             if i == 1:
                 ac = da[i - 1][4]
                 this_c = da[i][4]
@@ -254,7 +255,7 @@ class ZB(object):
                            'reg': 0, 'mul': 0, 'datetimes': data[0], 'open': data[1], 'high': data[2], 'low': data[3],
                            'close': data[4], 'cd': 0, 'maidian': 0, 'open5': data[1], 'high5': data[2], 'low5': data[3],
                            'close5': data[4], 'k': 50, 'overlap': 0, 'deviation': 0, 'ma5': 0, 'ma10': 0, 'ma30': 0,
-                           'ma120': 0})
+                           'ma120': 0, 'ma72': 0, 'ma200': 0})
                 try:
                     dc[ind]['ema_short'] = dc[ind - 1]['ema_short'] * (short - 2) / short + dc[ind][
                         'close'] * 2 / short  # 当日EMA(12)
@@ -269,7 +270,9 @@ class ZB(object):
                     dc[ind]['ma5'] = sum(dc[ind - j]['close'] for j in range(5)) / 5  # 移动平均值 5均线
                     dc[ind]['ma10'] = sum(dc[ind - j]['close'] for j in range(10)) / 10  # 移动平均值 10均线
                     dc[ind]['ma30'] = sum(dc[ind - j]['close'] for j in range(30)) / 30  # 移动平均值 30均线
+                    dc[ind]['ma72'] = sum(dc[ind - j]['close'] for j in range(72)) / 72 if ind >= 71 else 0  # 移动平均值 72均线
                     dc[ind]['ma120'] = (sum(dc[ind - j]['close'] for j in range(120)) / 120) if ind >= 119 else 0  # 移动平均值 120均线
+                    dc[ind]['ma200'] = (sum(dc[ind - j]['close'] for j in range(200)) / 200) if ind >= 199 else 0  # 移动平均值 200均线
                     std_pj = sum(dc[ind - j]['close'] - dc[ind - j]['open'] for j in range(ma)) / ma
                     dc[ind]['var'] = sum(
                         (dc[ind - j]['close'] - dc[ind - j]['open'] - std_pj) ** 2 for j in range(ma)) / ma  # 方差
@@ -1778,8 +1781,8 @@ class ZB(object):
             is_dk = not (is_k or is_d)
 
             dt2 = dt3[-1]
-            datetimes, clo, mas, mul, cd, high, low, dea = dt2['datetimes'], dt2[
-                'close'], dt2['ma60'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['dea']
+            datetimes, clo, ma72, mul, cd, high, low, dea, ma200 = dt2['datetimes'], dt2[
+                'close'], dt2['ma72'], dt2['mul'], dt2['cd'], dt2['high'], dt2['low'], dt2['dea'],dt2['ma200']
 
             if mul > 1.5:
                 res[dates]['dy'] += 1
@@ -1787,12 +1790,12 @@ class ZB(object):
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
-            sb = 1 if clo > mas and dea > 0 else (-1 if clo < mas and dea < 0 else 0)
+            sb = 1 if clo > ma72 and clo > ma200 and dea > 0 else (-1 if clo < ma72 and clo < ma200 and dea < 0 else 0)
 
-            kctj_d = (sb == 1 and sb != breach[-1]) if breach else False
-            kctj_k = (sb == -1 and sb != breach[-1]) if breach else False
-            pctj_d = kctj_k  # count > 1 #
-            pctj_k = kctj_d
+            kctj_d = sb==1#(sb == 1 and sb != breach[-1]) if breach else False
+            kctj_k = sb==-1#(sb == -1 and sb != breach[-1]) if breach else False
+            pctj_d = clo < ma72 and dea<0 # kctj_k  # count > 1 #
+            pctj_k = clo > ma72 and dea>0 #kctj_d
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d

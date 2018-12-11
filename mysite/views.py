@@ -1207,13 +1207,115 @@ def tongji(rq):
                        'hc_name': hc_name})
 
     if rq_type == '4' and rq_date and end_date and user_name:
-        results2, huizong = HSD.sp_order_record(rq_date, end_date)
-        if user:
-            results2 = [i for i in results2 if i[0] == user]
+        result9, huizong2 = HSD.sp_order_record(rq_date, end_date)
+
+        huizong = {}
+        results2 = []
+        if result9:
+            result9 = sorted(result9, key=lambda x: x[2])
+            last = {}
+            jc = {}
+            len_result9 = len(result9)
+            for i in result9:
+                c = i[0]
+                if (rq_id != '0' and str(c) != rq_id) or i[4] is None:
+                    continue
+                name = ''  # id_name[c] if c in id_name else c # 名称
+                dt = i[2][:10]
+                if c not in huizong:
+                    huizong[c] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, i[1], {}]
+                    last[c] = []
+                    jc[c] = []
+                if dt not in huizong[c][-1]:
+                    huizong[c][-1][dt] = [dt, c, 0, 0, 0, 0, 0, 0, c, 0, 0, 0, 0, 1, i[1]]
+                #  ['01-0202975-00', 'HSIZ8', '2018-12-03 09:49:29', 27078.0, '2018-12-03 13:18:40', 27118.0, -40.0, '空', 1, '已平仓']
+                h1 = i[6]  # 盈亏
+                if i[7] == '空':
+                    h2, h3 = 0, i[8]  # 多单、空单数量
+                else:
+                    h2, h3 = i[8], 0  # 多单、空单数量
+                # i (8965391, '2018-08-17 09:58:21', 27215.18, '2018-08-17 10:15:59', 27264.75, -49.57, 1, 1.0, 2, 27264.75, 27114.75, 53680779, 'HSENG$.AUG8')
+                h4 = i[8]  # 下单总数
+                h5 = i[8] if i[6] > 0 else 0  # 赢利单数
+                # h6 = h5 / (h4+huizong[c][5]) * 100  # 胜率
+                h7 = name  # 姓名
+                huizong[c][2] += h1
+                huizong[c][3] += h2
+                huizong[c][4] += h3
+                huizong[c][5] += h4
+                huizong[c][6] += h5
+                # huizong[c][7] = h6
+                huizong[c][8] = h7
+                huizong[c][-1][dt][2] += h1
+                huizong[c][-1][dt][3] += h2
+                huizong[c][-1][dt][4] += h3
+                huizong[c][-1][dt][5] += h4
+                huizong[c][-1][dt][6] += h5
+                # huizong[c][-1][dt][7] = h6
+                huizong[c][-1][dt][8] = h7
+                # 正向加仓，反向加仓
+                last[c] = [las for las in last[c] if i[2] < las[4]]
+                if last[c] and i[2] <= last[c][-1][4] and (last[c][-1][7] == '空' and i[7] == '空'):
+                    jcyk = sum(la[3] for la in last[c]) / len(last[c]) - i[3]
+                    if jcyk > 0:
+                        huizong[c][9] += 1
+                        huizong[c][-1][dt][9] += 1
+                        jc[c].append([i[2], jcyk])
+                    else:
+                        huizong[c][10] += 1
+                        huizong[c][-1][dt][10] += 1
+                        jc[c].append([i[2], jcyk])
+                elif last[c] and i[2] <= last[c][-1][4] and (last[c][-1][7] != '空' and i[7] != '空'):
+                    jcyk = i[3] - sum(la[3] for la in last[c]) / len(last[c])
+                    if jcyk > 0:
+                        huizong[c][9] += 1
+                        huizong[c][-1][dt][9] += 1
+                        jc[c].append([i[2], jcyk])
+                    else:
+                        huizong[c][10] += 1
+                        huizong[c][-1][dt][10] += 1
+                        jc[c].append([i[2], jcyk])
+                results2.append(i[:9] + [name,])  # 交易明细
+                last[c].append(i)
+                # 最大持仓
+                # lzd = len(last[c])
+                lzd = int(sum(i[8] for i in last[c]))
+                huizong[c][13] = lzd if lzd > huizong[c][13] else huizong[c][13]
+                huizong[c][-1][dt][13] = lzd if lzd > huizong[c][-1][dt][13] else huizong[c][-1][dt][13]
+
+            for c in jc:
+                jcss = []
+                for dt in huizong[c][-1]:
+                    jcs = [i[1] for i in jc[c] if i[0][:10] == dt]
+                    jc_z = [s for s in jcs if s > 0]
+                    jc_k = [s for s in jcs if s <= 0]
+                    huizong[c][-1][dt][7] = huizong[c][-1][dt][6] / huizong[c][-1][dt][5] * 100  # 胜率
+                    huizong[c][-1][dt][11] = sum(jc_z) / len(jc_z) if jc_z else 0  # 一天，平均每单赚多少钱加仓
+                    huizong[c][-1][dt][12] = sum(jc_k) / len(jc_k) if jc_k else 0  # 一天，平均每单亏多少钱加仓
+                    jcss += jcs
+
+                jc_z = [s for s in jcss if s > 0]
+                jc_k = [s for s in jcss if s <= 0]
+                huizong[c][7] = huizong[c][6] / huizong[c][5] * 100  # 胜率
+                huizong[c][11] = sum(jc_z) / len(jc_z) if jc_z else 0  # 总共，平均每单赚多少钱加仓
+                huizong[c][12] = sum(jc_k) / len(jc_k) if jc_k else 0  # 总共，平均每单亏多少钱加仓
+        if rq_id != '0':
+            results2 = [result for result in results2 if rq_id == str(result[0])]
+
         ids = HSD.IDS
+        results2 = tuple(reversed(results2))
+        huizong,huizong2 = huizong2,huizong
+        # results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
+        is_shipan = True  # 是否实盘
+        if user:
+            result9 = [i for i in result9 if i[0] == user]
+
+        ids = HSD.IDS
+        if results2:
+            return render(rq, 'tongjisp.html', locals())
+
         # results2: [['01-0520186-00', 'MHIN8', '2018-07-16 09:41:13', 28548.0, '2018-07-16 09:41:57', 28518.0, -30.0, '多', 1, '已平仓']...]
         # hc = HSD.huice_day(res)
-        return render(rq, 'tongjisp.html', locals())
 
     if rq_type == '3' and user_name:
         results2 = HSD.order_detail()
@@ -1370,6 +1472,7 @@ def tongji(rq):
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
         # results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
+        is_shipan = False  # 是否实盘
         if results2:
             return render(rq, 'tongji.html', locals())
     if rq_type in ('3', '4', '5'):
@@ -1447,9 +1550,9 @@ def tongji_bs(rq):
             results2 = [i for i in results2 if i[0] == host and i[1] == code]
         bs = []
         for i in results2:
-            bs.append((str(datetime.datetime.strptime(i[2],'%Y-%m-%d %H:%M:%S')+datetime.timedelta(minutes=1))[:17] + '00', i[8], ' 卖' if i[7] == '空' else '买', i[3], '开'))
+            bs.append((i[2][:17] + '00', i[8], ' 卖' if i[7] == '空' else '买', i[3], '开'))
             if i[4]:
-                bs.append((str(datetime.datetime.strptime(i[4],'%Y-%m-%d %H:%M:%S')+datetime.timedelta(minutes=1))[:17] + '00', i[8], '买' if i[7] == '空' else ' 卖', i[5], ' 平'))
+                bs.append((i[4][:17] + '00', i[8], '买' if i[7] == '空' else ' 卖', i[5], ' 平'))
         bs.sort()
         if bs:
             start_date = HSD.dtf(bs[0][0][:10]) - datetime.timedelta(days=1)
@@ -1458,7 +1561,7 @@ def tongji_bs(rq):
             start_date = HSD.dtf(start_date)
             end_date = HSD.dtf(end_date)
         _days = (end_date - start_date).days
-        sql = (f'SELECT ADDDATE(datetime,INTERVAL 1 MINUTE),OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"'
+        sql = (f'SELECT datetime,OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"' # ADDDATE(datetime,INTERVAL 1 MINUTE)
                f' and datetime>="{start_date}" and datetime<="{end_date}"')
         data = HSD.runSqlData('carry_investment', sql)
 
