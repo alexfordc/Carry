@@ -15,7 +15,8 @@
     <a href="javascript:kline_request('30M')">30分钟</a>&nbsp;&nbsp;
     <a href="javascript:kline_request('1H')">1小时</a>&nbsp;&nbsp;
     <a href="javascript:kline_request('1D')">1日</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="date" value="{{ start_date }}" id="start_date"><a href="javascript:change_date()">确认日期</a>&nbsp;&nbsp;
+    <span style="cursor:pointer;" onclick="javascript:date_to_change('left')"> ◀ </span><input type="date" value="{{ start_date }}" id="start_date">
+    <span style="cursor:pointer;" onclick="javascript:date_to_change('right')"> ▶ </span> <a href="javascript:change_date()"> 选择日期</a>&nbsp;&nbsp;
     <span id="the_colors" style="cursor:pointer;">白色</span>
 <hr/><div id="show_hq_message" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
     <div id="show_hq_message2" style="position:absolute;left:10px;font-weight:bold;"></div><br/><br/>
@@ -162,7 +163,9 @@ function get_option(){
   backgroundColor: the_color,
   title: {
       text:'{{ code_name }}',
-	  left:10
+      textStyle:{ color:'#F29CB1' },
+      left:10
+
   },
   /*tooltip: {
       trigger: 'axis',
@@ -445,7 +448,7 @@ function get_option(){
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return 'blue';
+                    return '#1E90FF'; //'blue';
                  }
                 }
             },// '#FCCE10','#E87C25','#27727B','#9BCA63'
@@ -462,7 +465,7 @@ function get_option(){
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return 'purple';
+                    return '#9932CC'; //'purple';
                  }
                 }
             },
@@ -581,8 +584,38 @@ function change_date(){
 	    myChart.clear();
         myChart.setOption(option);
         window.onresize = myChart.resize;
+        $("#logins_infos").html('');
 	}else{
-	    alert('没有这一天的数据！');
+	    $("#logins_infos").html('没有'+dt+'这一天的数据！');
+	}
+}
+
+function date_to_change(type){
+    var dt = $("#start_date").val();
+    var v = new Date(dt);
+    if(type=='left'){
+        v.setDate(v.getDate()-1);
+    }else{
+        v.setDate(v.getDate()+1);
+    }
+    dt = v.toJSON().slice(0,10);
+    var ind = -1,s=840;
+    for(var i=0;i<times2.length;i++){
+		    if(times2[i].indexOf(dt)>=0){
+		        ind=i;break;
+		    }
+		}
+	if(ind!=-1){
+	    $("#start_date").val(dt);
+	    datas = datas2.slice(ind,ind+s),times = times2.slice(ind,ind+s), vols = vols2.slice(ind,ind+s), macds = macds2.slice(ind,ind+s), difs = difs2.slice(ind,ind+s), deas = deas2.slice(ind,ind+s);
+	    open_sell=open_sell2.slice(ind,ind+s),open_buy=open_buy2.slice(ind,ind+s),flat_sell=flat_sell2.slice(ind,ind+s),flat_buy=flat_buy2.slice(ind,ind+s);
+	    option = get_option();
+	    myChart.clear();
+        myChart.setOption(option);
+        window.onresize = myChart.resize;
+        $("#logins_infos").html('');
+	}else{
+	    $("#logins_infos").html('没有'+dt+'这一天的数据！');
 	}
 }
 </script>
