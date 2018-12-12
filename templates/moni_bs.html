@@ -10,11 +10,6 @@
 
 </div>
 <div align="center" class="bs_top_div" >
-    <a href="javascript:kline_request('1M')">1分钟</a>&nbsp;&nbsp;
-    <a href="javascript:kline_request('5M')">5分钟</a>&nbsp;&nbsp;
-    <a href="javascript:kline_request('30M')">30分钟</a>&nbsp;&nbsp;
-    <a href="javascript:kline_request('1H')">1小时</a>&nbsp;&nbsp;
-    <a href="javascript:kline_request('1D')">1日</a>&nbsp;&nbsp;&nbsp;&nbsp;
     <span style="cursor:pointer;" onclick="javascript:date_to_change('left')"> ◀ </span><input type="date" value="{{ start_date }}" id="start_date">
     <span style="cursor:pointer;" onclick="javascript:date_to_change('right')"> ▶ </span> <a href="javascript:change_date()"> 选择日期</a>&nbsp;&nbsp;
     <span id="the_colors" style="cursor:pointer;">白色背景</span>
@@ -52,9 +47,7 @@ $("#the_colors").click(function(){
         window.onresize = myChart.resize;
     }
 });
-    function kline_request(type){
-        location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date="+"{{start_date}}";
-    }
+
 
 var datas2 = [],times2 = [], vols2 = [], macds2 = [], difs2 = [], deas2 = [];
 
@@ -162,7 +155,7 @@ function get_option(){
     return {
   backgroundColor: the_color,
   title: {
-      text:'{{ code_name }}',
+      text: '方案{{ host }} {{ code_name }}',
       textStyle:{ color:'#F29CB1' },
       left:10
 

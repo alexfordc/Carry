@@ -48,7 +48,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
 <a href="javascript:closeLogin('beizhu');"><h2 style="background-color:green;">确 定</h2></a></div>
 </div>
     <div align="center">
-    <form action="" method="GET">
+    <form action="" method="GET" id="form_request">
         <table width="950">
             <tr><td>止损点数：<input type="number" style="width:100px;" min="10" name="zsds" value="{{ zsds }}" id="zsds"></td>
                 <td>移动止损：<input type="number" style="width:100px;" min="10" name="ydzs" value="{{ ydzs }}" id="ydzs"></td>
@@ -79,7 +79,8 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                 <td><input type="button" value="回测" onclick="huice()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="button" value="方案备注" onclick="openLogin('beizhu')"/></td>
                 <td><input type="submit" value="测试" style="background-color:#ff0323;width:50px;" />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/></td>
+                    <input type="submit" value="反测" name="reverse" style="background-color:#ff0323;width:50px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="button" value="买卖点"  onclick="form_request()" style="background-color:#ff0323;width:50px;"/></td>
 
         </table>
     </form><br/>
@@ -142,5 +143,14 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
         <!--$("tr:odd").css({"background-color": "#cccc33"});-->
         <!--$('tr:even').css({'background-color': '#00cc00'});-->
         $('tr').css({'height': '30'});
+
+        function form_request(){
+            var form = $("#form_request");
+            form.attr("target","_blank");
+            form.append('<input type="hidden" value="买卖点" name="maimaidian" onclick="form_request()">');
+            form.submit();
+            $("input[name='maimaidian']").remove();
+            form.attr("target","_self");
+        }
     </script>
 {% endblock %}

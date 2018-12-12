@@ -1899,6 +1899,7 @@ def moni(rq):
         ydzs = rq.GET.get('ydzs', '')  # 移动止损
         zyds = rq.GET.get('zyds', '')  # 止盈
         cqdc = rq.GET.get('cqdc', '')  # 点差
+        maimaidian = rq.GET.get('maimaidian', '')
         red = HSD.RedisPool()
         red_key = ''.join(('moni', dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc))
         if rq.is_ajax():
@@ -1921,6 +1922,61 @@ def moni(rq):
                 if resp:
                     if HSD.computer_name == 'doc':
                         red.delete(red_key)
+                    if maimaidian:
+                        ocda = resp['res']
+                        ocda = [i for j in ocda for i in j['datetimes']]
+                        mm = {}
+                        for ot, ct, ty, *_ in ocda:
+                            if ty == '空':
+                                mm[ot] = -1  # 开空
+                                mm[ct] = 2  # 平空
+                            else:
+                                mm[ot] = 1  # 开多
+                                mm[ct] = -2  # 平多
+                        sql = (
+                            f'SELECT DATE_FORMAT(DATETIME,"%Y-%m-%d %H:%i:%S"),OPEN,CLOSE,low,high,vol FROM '  # ADDDATE(datetime,INTERVAL 1 MINUTE)
+                            f'wh_same_month_min WHERE prodcode="HSI" and datetime>="{dates}" and datetime<="{end_date}"')
+                        data = HSD.runSqlData('carry_investment', sql)
+                        open_buy = []  # 开多仓
+                        flat_buy = []  # 平多仓
+                        open_sell = []  # 开空仓
+                        flat_sell = []  # 平空仓
+                        holds = {}  # 持多仓, 持空仓
+                        _ob, _fb, _os, _fs = '', '', '', ''
+                        _ccb, _ccs = 0, 0
+                        data2 = []
+                        data3 = viewUtil.future_macd(yd=True)
+                        data3.send(None)
+                        for _t,_o,_c,_l,_h,_v in data:
+                            data2.append(data3.send((_t,_o,_c,_l,_h,_v)))
+                            kp = mm.get(_t)
+                            if kp == 1:         # 开多
+                                _ob = int(_c)+0.001
+                                _ccb += 1
+                            elif kp == -2:      # 平多
+                                _fb = int(_c)+0.001
+                                _ccb -= 1
+                            elif kp == -1:      # 开空
+                                _os = int(_c)+0.001
+                                _ccs += 1
+                            elif kp == 2:       # 平空
+                                _fs = int(_c)+0.001
+                                _ccs -= 1
+
+                            open_buy.append(_ob)
+                            flat_buy.append(_fb)
+                            open_sell.append(_os)
+                            flat_sell.append(_fs)
+                            holds[_t] = [_ccb, _ccs]
+                            _ob, _fb, _os, _fs = '', '', '', ''
+
+
+                        resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
+                                'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds,
+                                'start_date': dates,
+                                'code': 'HSI', 'host': fa, 'code_name': 'HSI'}
+                        return render(rq, 'moni_bs.html', resp)
+
                     resp['user_name'] = user_name
                     return render(rq, 'moni.html', resp)
                 else:
