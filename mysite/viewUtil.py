@@ -921,9 +921,8 @@ def future_macd(short=12, long=26, phyd=9, yd=False):
                  'open': _o, 'high': _h, 'low': _l, 'close': _c})
             if i == 1:
                 ac = da[i - 1][2]
-                this_c = da[i][2]
-                dc[i]['ema_short'] = ac + (this_c - ac) * 2 / short
-                dc[i]['ema_long'] = ac + (this_c - ac) * 2 / long
+                dc[i]['ema_short'] = ac + (_c - ac) * 2 / short
+                dc[i]['ema_long'] = ac + (_c - ac) * 2 / long
                 dc[i]['diff'] = dc[i]['ema_short'] - dc[i]['ema_long']
                 dc[i]['dea'] = dc[i]['diff'] * 2 / phyd
                 dc[i]['macd'] = 2 * (dc[i]['diff'] - dc[i]['dea'])
@@ -936,8 +935,8 @@ def future_macd(short=12, long=26, phyd=9, yd=False):
 
             if i >= 60:
                 ma = 60
-                std_pj = sum(da[i - j][4] - da[i - j][1] for j in range(ma)) / ma
-                var = sum((da[i - j][4] - da[i - j][1] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
+                std_pj = sum(da[i - j][2] - da[i - j][1] for j in range(ma)) / ma
+                var = sum((da[i - j][2] - da[i - j][1] - std_pj) ** 2 for j in range(ma)) / ma  # 方差 i-ma+1,i+1
                 std = float(var ** 0.5)  # 标准差
                 _yd = round((_c - _o) / std, 2)  # 异动
             else:

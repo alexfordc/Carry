@@ -850,17 +850,16 @@ def sp_order_record(start_date=None, end_date=None):
     global IDS
     IDS = set()
     std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
-    endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
-
+    # endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
+    end2 = (datetime.datetime.strptime(end_date, '%Y-%m-%d')+datetime.timedelta(days=1)).timestamp()
     sql_trade = (
         "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,"
-        "OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo FROM sp_trade_records WHERE TradeDate>={} and "
-        "TradeDate<={} AND RecNo not in {}".format(std, endd, (14722630, 14722737))
+        "OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo,TradeDate FROM sp_trade_records WHERE TradeTime>={} AND "
+        "TradeTime<={} AND RecNo not in {} ORDER BY TradeTime".format(std, end2, (14722630, 14722737))   #  TradeTime<={} AND    endd
     )
+
     # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
     data = runSqlData('carry_investment', sql_trade)
-    # data = data[2:]  # 数据缺失导致
-    # conn.close()
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     users = {i[5] for i in data}
@@ -890,6 +889,7 @@ def sp_order_record(start_date=None, end_date=None):
                         if data2 and abs(dt[7]) < abs(data2[-1][7]):
                             stop = kc.pop()
                             start = kc.pop()
+
                             yk = 0
                             if dt[6] == 'B':  # 卖
                                 yk = (start[1] - stop[1])
@@ -915,6 +915,7 @@ def sp_order_record(start_date=None, end_date=None):
             res.sort(key=lambda x: x[2])
             resAll.extend(res)
         IDS.add(user)
+
     return resAll, huizong
 
 

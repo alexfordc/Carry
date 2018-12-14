@@ -3351,35 +3351,36 @@ class ZB(object):
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
+            len_last_gd = len(last_gd)
+            kctj_d = clo-ope>5 and (ope-low)/(clo-ope)>=1.5 and (high-clo)/(clo-ope)<1 and (len_last_gd>2 and low<last_gd[-2][1] and low<last_gd[-1][1])
+            kctj_k = ope-clo>5 and (high-ope)/(ope-clo)>=1.5 and (clo-low)/(ope-clo)<1 and (len_last_gd>2 and high>last_gd[-2][0] and high>last_gd[-1][0])
+            pctj_d = mul>2.5 or kctj_k # (len(last_gd)>2 and high>last_gd[-2][0] and high>last_gd[-1][0])
+            pctj_k = mul<-2.5 or kctj_d # (len(last_gd)>2 and low<last_gd[-2][1] and low<last_gd[-1][1])
+
             if sb != reg:
                 last_gd.append([high,low])
                 sb = reg
                 last_clo = clo
+                if len_last_gd > 8:
+                    last_gd.pop(0)
             else:
                 if high>last_gd[-1][0]:
                     last_gd[-1][0] = high
                 if low<last_gd[-1][1]:
                     last_gd[-1][1] = low
 
-            kctj_d = clo-ope>7 and (ope-low)/(clo-ope)>=1.5 and (len(last_gd)>2 and low<last_gd[-2][1])
-            kctj_k = ope-clo>7 and (high-ope)/(ope-clo)>=1.5 and (len(last_gd)>2 and high>last_gd[-2][0])
-            pctj_d = mul>2.5 or (len(last_gd)>2 and high>last_gd[-2][0])
-            pctj_k = mul<-2.5 or (len(last_gd)>2 and low<last_gd[-2][1])
-
-
-
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
                 pctj_d, pctj_k = pctj_k, pctj_d
 
-            if kctj_d and is_dk and 9 <= datetimes.hour < 16:
+            if kctj_d and is_dk and 9 < datetimes.hour < 13:
                 startMony_d = clo
                 str_time1 = str(datetimes)
                 is_d = 1
                 first_time = [str_time1, '多', clo]
                 zsjg = low - clo - 1 if zsjg2 >= -10 else zsjg
 
-            elif kctj_k and is_dk and 9 <= datetimes.hour < 16:
+            elif kctj_k and is_dk and 9 < datetimes.hour < 13:
                 startMony_k = clo
                 str_time2 = str(datetimes)
                 is_k = -1
@@ -3602,7 +3603,7 @@ class ZB(object):
             dt3 = data2.send(df2)
             date_hour = dt3[-1]['datetimes'].hour
             # date_min = datetimes.minute
-            if not (date_hour > 16 or date_hour < 9) or _fa == '24':  # (date_hour == 16 and date_min > 30) or
+            if 1:  # not (date_hour > 16 or date_hour < 9) or _fa == '24':  # (date_hour == 16 and date_min > 30) or
                 # continue
                 qzpc = True if (df2 == da_1 and str(df2[0])[:15] != is_date) else False
                 res, first_time = fa.send((True, dt3, dates, qzpc))

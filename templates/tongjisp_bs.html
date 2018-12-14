@@ -33,10 +33,12 @@
 <script type="text/javascript">
 $(".bs_top_div").css({'background':'#0A0A0A','color':'#ccc'});
 var the_color = '#0A0A0A';
+var sell_color = '#00BFFF';
 $("#the_colors").click(function(){
     if($(this).html()=='白色背景'){
         $(this).html('黑色背景');
         the_color = '#FDFDFD';
+        sell_color = 'blue';
         $(".bs_top_div").css({'background':'#FDFDFD','color':'black'});
         option = get_option();
 	    myChart.clear();
@@ -45,6 +47,7 @@ $("#the_colors").click(function(){
     }else{
         $(this).html('白色背景');
         the_color = '#0A0A0A';
+        sell_color = '#00BFFF';
         $(".bs_top_div").css({'background':'#0A0A0A','color':'#ccc'});
         option = get_option();
 	    myChart.clear();
@@ -448,7 +451,7 @@ function get_option(){
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return '#1E90FF'; //'blue';
+                    return sell_color; //'blue';  #0000CD
                  }
                 }
             },// '#FCCE10','#E87C25','#27727B','#9BCA63'
@@ -481,7 +484,7 @@ function get_option(){
             itemStyle:{
                 //symbolRotate:-90,
                 normal: { color:function(p){
-                    return 'blue';
+                    return sell_color;
                  }
                 }
             },
