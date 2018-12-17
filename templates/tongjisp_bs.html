@@ -618,6 +618,7 @@ function date_to_change(type){
         window.onresize = myChart.resize;
         $("#logins_infos").html('');
 	}else{
+	    $("#start_date").val(dt);
 	    $("#logins_infos").html('没有'+dt+'这一天的数据！');
 	}
 }
