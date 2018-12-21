@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% block title %}Macd数据统计{% endblock %}
+{% block script %}
+{% endblock %}
+{% block center_cen %}
+<div align="center">
+    <table border="1">
+        <tr><th>序号</th><th>开始时间</th><th>结束时间</th><th>开盘价</th><th>最高价</th><th>最低价</th><th>收盘价</th><th>K线数量</th>
+            <th>60均线上方K线数量</th><th>macd红区在60均线波号</th><th>macd绿区在60均线波号</th><th>异动大于1.5倍</th><th>异动小于-1.5倍</th><th>异动大于2倍</th><th>异动小于-2倍</th></tr>
+    {% for i in data %}
+        <tr bgcolor="{% cycle '#f6f6f6' '#ffffff' %}">
+            <td>{{ forloop.counter0 }}</td><td><a href="{% url 'hqzjzb' %}?sd={{i.0}}&ed={{i.1}}&db=mongodb&ttype=1min" target="_blank">{{ i.0 }}</a> </td><td>{{ i.1 }}</td><td>{{ i.2 }}</td><td>{{ i.3 }}</td><td>{{ i.4 }}</td><td>{{ i.5 }}</td><td>{{ i.6 }}</td>
+        <td>{{ i.7 }}</td><td>{{ i.8 }}</td><td>{{ i.9 }}</td><td>{{ i.10 }}</td><td>{{ i.11 }}</td><td>{{ i.12 }}</td><td>{{ i.13 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

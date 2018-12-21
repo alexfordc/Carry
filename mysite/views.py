@@ -1624,11 +1624,14 @@ def tongji_bs(rq):
         # print(bs)
         data3 = viewUtil.future_macd(yd=True)
         data3.send(None)
+        future_bl = viewUtil.future_bl()
+        future_bl.send(None)
         for i, bs in data2bs:  # data2:
             if not i:
                 continue
             # data3.append(i)
             data2.append(data3.send(i))
+            future_bl.send(i[2])
             _ob, _fb, _os, _fs = '', '', '', ''
             dt = i[0][:10]
             if dt not in _days:
@@ -1662,9 +1665,12 @@ def tongji_bs(rq):
                 _ccb,  #+ yesterday_hold[0],
                 _ccs   #+ yesterday_hold[1]
             ]
+
+        top, bottom = future_bl.send(None)
+
         resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
                 'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'start_date': data2[0][0][:10],
-                'code': code, 'host': host, 'code_name': code_name}
+                'code': code, 'host': host, 'code_name': code_name, 'top': top, 'bottom': bottom}
         # write_to_cache()
         return render(rq, 'tongjisp_bs.html', resp)
 
@@ -3354,8 +3360,9 @@ def hqzjzb(rq):
         db = rq.GET.get('db')
         ttype = rq.GET.get('ttype')
         if sd and ed and db and ttype:
-            sd = sd[:10]
-            ed = ed[:10]
+            # sd = sd[:10]
+            # ed = ed[:10]
+
             data = Wave.get_data(sd,ed,database=db)
 
             ec_name = {
@@ -3388,6 +3395,16 @@ def hqzjzb(rq):
             return render(rq, 'hqzjzb.html', resp)
 
     return redirect('index')
+
+
+# def macd_data(rq):
+#     """ macd分波数据 """
+#     user_name, qx = LogIn(rq)
+#     path = r'D:\tools\Tools\December_2018\2018-12-14\macd.pick'
+#     import pandas as pd
+#     data = pd.read_pickle(path)
+#     data = [list(i) for i in data.values[:300]]
+#     return render(rq,'macd_data.html',{'user_name': user_name, 'data': data})
 
 
 def systems(rq):

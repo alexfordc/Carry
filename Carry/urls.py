@@ -77,6 +77,7 @@ urlpatterns = [
     url(r'^hqzj/$', views.hqzj, name='hqzj'),
     url(r'^hqzjzb/$', views.hqzjzb, name='hqzjzb'),
     url(r'^tongji/bs/$', views.tongji_bs, name='tongji_bs'),
+    # url(r'^macd/data/$', views.macd_data, name='macd_data'),
     # url(r'^tongji/bs/(?P<param>\w+)/$', views.tongji_bs, name='tongji_bs'),
 
     url(r'^kline/$', views.kline, name='kline'),

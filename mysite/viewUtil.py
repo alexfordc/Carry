@@ -976,6 +976,25 @@ def future_macd(short=12, long=26, phyd=9, yd=False):
             i += 1
 
 
+def future_bl():
+    """ 恒指实盘买卖点布林带指标计算 布林线 """
+    data_b = []
+    # data_b.columns = ['time', 'oepn', 'high', 'low', 'close', 'amt', 'opi']
+    while 1:
+        data = yield None
+        if not data:
+            break
+        data_b.append(data)
+    # 处理数据
+    data_b = pd.DataFrame(data_b,columns=['close'])
+    data_b['mid'] = data_b['close'].rolling(30).mean()      # 布林中轨（30均线）
+    data_b['tmp2'] = data_b['close'].rolling(30).std()      # 标准差
+    data_b['top'] = data_b['mid'] + 2 * data_b['tmp2']      # 布林上轨
+    data_b['bottom'] = data_b['mid'] - 2 * data_b['tmp2']   # 布林下轨
+    data_b = data_b.round(2).fillna('-')
+    yield list(data_b.top), list(data_b.bottom)
+
+
 def this_day_week_month_year(when):
     """ 当日、当周、当月、当年的开始与结束时间计算"""
     this_d = datetime.datetime.now()
