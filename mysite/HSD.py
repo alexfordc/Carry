@@ -537,6 +537,21 @@ class MongoDBData:
             for i in d2:
                 yield i
 
+    def get_find(self, finds=None, userProd=False):
+        """ 获取指定查询语句的数据 """
+        data = self._coll.find(finds)
+        if userProd:
+            users = set()
+            prods = set()
+            # data = coll.find(projection={'execution.acctNumber': 1, 'contract.localSymbol': 1, '_id': 0})
+            [(users.add(i['execution']['acctNumber']), prods.add(i['contract']['localSymbol'])) for i in data]
+            yield users, prods
+        else:
+            for i in data:
+                yield [str(i['time']+datetime.timedelta(hours=8)), i['execution']['price'],
+                       i['execution']['execId'], int(i['execution']['shares']), i['contract']['localSymbol'],
+                       i['execution']['acctNumber'], i['execution']['side'][0]]
+
 
 def get_tcp():
     ''' 返回IP地址 '''
@@ -846,22 +861,26 @@ def sp_order_trade(size=None):
     return data, datagd
 
 
-def sp_order_record(start_date=None, end_date=None):
+def sp_order_record(start_date=None, end_date=None, types='SP'):
     global IDS
     IDS = set()
-    std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
-    # endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
-    end2 = (datetime.datetime.strptime(end_date, '%Y-%m-%d')+datetime.timedelta(days=1)).timestamp()
-    sql_trade = (
-        "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,"
-        "OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo,TradeDate FROM sp_trade_records WHERE TradeTime>={} AND "
-        "TradeTime<={} AND RecNo not in {} ORDER BY TradeTime".format(std, end2, (14722630, 14722737))   #  TradeTime<={} AND    endd
-    )
-
-    # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
-    data = runSqlData('carry_investment', sql_trade)
+    if types == 'SP':
+        std = time.mktime(time.strptime(start_date, '%Y-%m-%d'))
+        # endd = time.mktime(time.strptime(end_date, '%Y-%m-%d'))
+        end2 = (datetime.datetime.strptime(end_date, '%Y-%m-%d') + datetime.timedelta(days=1)).timestamp()
+        sql_trade = (
+            "SELECT FROM_UNIXTIME(TradeTime,'%Y-%m-%d %H:%i:%S'),AvgPrice,IntOrderNo,Qty,ProdCode,AccNo,BuySell,Status,"
+            "OrderPrice,TotalQty,RemainingQty,TradedQty,RecNo,TradeDate FROM sp_trade_records WHERE TradeTime>={} AND "
+            "TradeTime<={} AND RecNo not in {} ORDER BY TradeTime".format(std, end2, (14722630, 14722737))   #  TradeTime<={} AND    endd
+        )
+        # 时间，合约，价格，止损价，订单编号，剩余数量，已成交数量，总数量，用户，买卖，状态
+        data = runSqlData('carry_investment', sql_trade)
+    else:
+        mongodb = MongoDBData(db='IB', table='Trade')
+        data = [i for i in mongodb.get_find(None)]
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
+    # ('2018-11-05 14:30:21', 25939.0, 135, 2, 'HSIX8', 'DEMO201706051', 'B', 9, 25950.0, 2, 0, 2, 12097524, 1541347200),
     users = {i[5] for i in data}
     prods = {i[4] for i in data}
     resAll = []
@@ -917,7 +936,6 @@ def sp_order_record(start_date=None, end_date=None):
         IDS.add(user)
 
     return resAll, huizong
-
 
 
 def huice_order_record(user,datas):

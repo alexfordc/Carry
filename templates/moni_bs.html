@@ -507,11 +507,23 @@ function get_option(){
           itemStyle: {
 	    	  normal: {
 		          color: function(params) {
-		              var colorList;
-		              if (datas[params.dataIndex][1]>datas[params.dataIndex][0]) {
-		                  colorList = '#ef232a';
+		              var colorList,yd = vols[params.dataIndex];
+		              if (yd>0){
+		                  if(yd>=2){
+		                    colorList = 'red'; //'#ef232a';
+		                  }else if(yd>=1.5){
+		                    colorList = '#FF00FF';
+		                  }else{
+                            colorList = '#FFC0CB';
+		                  }
 		              } else {
-		                  colorList = '#14b143';
+		                  if(yd<=-2){
+		                    colorList = 'green'; //'#14b143';
+		                  }else if(yd<=-1.5){
+		                    colorList = '#1E90FF';
+		                  }else{
+                            colorList = '#737373';
+		                  }
 		              }
 		              return colorList;
 		          },

@@ -1530,6 +1530,7 @@ def tongji_bs(rq):
         ttype = rq.GET.get('ttype')
         host = rq.GET.get('host')
         start_date = rq.GET.get('start_date')
+        ib = rq.GET.get('ib')
 
         if not code or not host:
             return redirect('/')
@@ -1545,7 +1546,11 @@ def tongji_bs(rq):
         # bs = cfmmc.get_bs(code,ttype)
         # hold = cfmmc.get_yesterday_hold(code)
         end_date = HSD.get_date()
-        results2, _ = HSD.sp_order_record(start_date, end_date)
+        if ib == 'yes':
+            results2, _ = HSD.sp_order_record(start_date, end_date, types='IB')
+        else:
+            results2, _ = HSD.sp_order_record(start_date, end_date, types='SP')
+        # print(results2[:3])
         if host:
             results2 = [i for i in results2 if i[0] == host and i[1] == code]
         bs = []
@@ -1675,6 +1680,19 @@ def tongji_bs(rq):
         return render(rq, 'tongjisp_bs.html', resp)
 
     return redirect('/')
+
+
+def ib_bs(rq):
+    """ 盈透交易买卖点 """
+    user_name, qx = LogIn(rq)
+    mongo = HSD.MongoDBData('IB', 'Trade')
+    for users, prods in mongo.get_find(userProd=True):
+        pass
+    if user_name:
+        return render(rq, 'ib_bs.html', {'user_name': user_name, 'users': users, 'prods': prods})
+
+    return index(rq, False, user_name, qx)
+
 
 
 def tools(rq):

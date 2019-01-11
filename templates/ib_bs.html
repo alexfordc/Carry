@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block title %}买卖点{% endblock %}
+{% block script %}
+{% endblock %}
+{% block center_cen %}
+
+<div align="center">
+    <form action="{% url 'tongji_bs' %}" method="GET">
+        账户：
+        <select name="host">
+            {% for u in users %}
+            <option value="{{u}}">{{u}}</option>
+            {% endfor %}
+        </select>
+        合约：
+        <select name="code">
+            {% for p in prods %}
+            <option value="{{p}}">{{p}}</option>
+            {% endfor %}
+        </select>
+        开始日期：
+        <input type="date" name="start_date">
+        <input type="hidden" value="yes" name="ib">
+        <input type="submit">
+    </form>
+</div>
+
+{% endblock %}
