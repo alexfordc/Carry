@@ -2,6 +2,7 @@
 {% block title %}模拟表{% endblock %}
 {% block script %}
 {% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 <script>
 function openLogin(id){
    document.getElementById(id).style.display="";
@@ -47,7 +48,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     </ol><br/>
 <a href="javascript:closeLogin('beizhu');"><h2 style="background-color:green;">确 定</h2></a></div>
 </div>
-    <div align="center">
+    <div class="body_ykx" align="center">
     <form action="" method="GET" id="form_request">
         <table width="950">
             <tr><td>止损点数：<input type="number" style="width:100px;" min="10" name="zsds" value="{{ zsds }}" id="zsds"></td>
@@ -117,7 +118,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                 <table border="1" style="width:650px;">
                     {% for i in v.datetimes %}
                         <tr><td style="width:400px;"><a style="color:blue;" href="{% url 'kline' %}?date={{ v.time }}&database={{database}}">{{ i.0 }}--{{ i.1 }}</a></td>
-                            <td style="width:150px;">
+                            <td style="width:150px;" onclick="javascript:show_mmd('{{ i.0 }}','{{ i.1 }}','{{ i.2 }}')">
                                 {{ i.2 }}
                                 {% if i.4 == 1 %}
                                 --止盈
@@ -138,6 +139,12 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
     {% endfor %}
     </table>
     </div>
+<div class="show_mmd" style="display:none;">
+<!--<div id="khwxbg" style="display: block; position: fixed; top: 0%; left: 0%; width: 100%; height: 100%; background-color: black; z-index: 1001; opacity: 0.5;"></div>-->
+<div id="show_mmd" style="position: fixed; left: 50%; top: 50%; margin-left: -800px; margin-top: -500px;">
+</div>
+    <div style="width:50px;height:30px;border:3px solid #0f0;"></div>
+</div>
     <script type="text/javascript">
         $('div>table').css({'width': '1050px', 'cellpadding': 'auto', 'text-align': 'center', 'rules': 'all'});
         <!--$("tr:odd").css({"background-color": "#cccc33"});-->
@@ -152,5 +159,27 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
             $("input[name='maimaidian']").remove();
             form.attr("target","_self");
         }
+        function show_mmd(sd,ed,fx){
+            $.get("{% url 'moni_mmd_ajax' %}", {'sd': sd, 'ed': ed, 'fx': fx}, function(res){
+                $("#show_mmd").html(res);
+                $("#show_mmd").css({'width':'600px','height':'400px'});
+                $(".show_mmd").show();
+                $(".body_ykx").hide();
+            });
+        }
+
+        $(document).bind('click',function(e){
+            var e = e || window.event; //浏览器兼容性
+            var elem = e.target || e.srcElement;
+            while (elem) { //循环判断至跟节点，防止点击的是div子元素
+            if (elem.id && elem.id=='show_mmd') {
+                return;
+            }
+            elem = elem.parentNode;
+            }
+
+            $('.show_mmd').css('display','none'); //点击的不是div或其子元素
+            $(".body_ykx").show();
+        });
     </script>
 {% endblock %}

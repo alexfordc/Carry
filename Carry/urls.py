@@ -60,6 +60,7 @@ urlpatterns = [
     url(r'^user/cloud/public/delete/$', views.user_cloud_public_delete, name='user_cloud_public_delete'),
     url(r'^user/cloud/public/show/$', views.user_cloud_public_show, name='user_cloud_public_show'),
     url(r'^user/cloud/public/code/$', views.user_cloud_public_runcode, name='user_cloud_public_runcode'),
+    url(r'^moni/mmd/ajax/$', views.moni_mmd_ajax, name='moni_mmd_ajax'),
 
     url(r'^stockData/$', views.stockData, name='stockData'),
     url(r'^stockDatas/$', views.stockDatas, name='stockDatas'),

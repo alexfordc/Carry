@@ -2,6 +2,7 @@ import datetime
 import pandas as pd
 from sklearn.externals import joblib
 from collections import deque, namedtuple
+from mysite import Wave
 
 
 class ZB(object):
@@ -480,8 +481,8 @@ class ZB(object):
             # 开平仓条件
             kctj_d = clo < mas and mul < -1.5 #and last_date != str_date
             kctj_k = clo > mas and mul > 1.5 #and last_date != str_date
-            pctj_d = (macd > 0 and clo > mas and mul > 1.2) #and clo - startMony_d > 7  # and last_diff - diff>5)
-            pctj_k = (macd < 0 and clo < mas and mul < -1.2) #and startMony_k - clo > 7  # and diff - last_diff > 3)
+            pctj_d = (macd > 0 and clo > mas) #and clo - startMony_d > 7  # and last_diff - diff>5)  #  and mul > 1.2
+            pctj_k = (macd < 0 and clo < mas and startMony_k - clo > 7 and diff - last_diff > 3) #and startMony_k - clo > 7  # and diff - last_diff > 3)  #  and mul < -1.2
 
             last_diff = diff
 
@@ -3140,10 +3141,10 @@ class ZB(object):
             datetimes_hour = datetimes.hour
 
             if zts2 is None:
-                from mysite import Wave
                 zts2 = Wave.interval_ma60(str(datetimes)[:10],str(datetime.datetime.now() + datetime.timedelta(days=1))[:10],self.database)
                 zts = Wave.to_change(zts2)
             str_dt = str(datetimes)
+            # print(zts)
             while zts[0][0] < str_dt:
                 if zts[0][0] < str_dt and zts[1][0] >= str_dt:
                     break

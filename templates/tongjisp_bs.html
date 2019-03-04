@@ -56,7 +56,11 @@ $("#the_colors").click(function(){
     }
 });
     function kline_request(type){
-        location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date="+"{{start_date}}";
+        if('{{ib}}'=='yes'){
+            location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date={{start_date}}&ib=yes";
+        }else{
+            location.href="{% url 'tongji_bs' %}?host={{ host }}&code={{ code }}&ttype="+type+"&start_date={{start_date}}";
+        }
     }
 
 var datas2 = [],times2 = [], vols2 = [], macds2 = [], difs2 = [], deas2 = [], top2 = [], bottom2 = [];

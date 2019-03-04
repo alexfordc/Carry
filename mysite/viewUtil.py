@@ -1155,7 +1155,8 @@ def cfmmc_huice(data, host, start_date, end_date, hc_name, red_key):
         all_ykss.append([cc2 + 500 - cc2 % 500, cc3])
     if all_pcsj_max % 5:
         all_pcsj_max = all_pcsj_max + (5 - all_pcsj_max % 5)
-
+    if not hc_name:
+        hc_name = '**'
     hc_name = hc_name[0] + '*' * (len(hc_name) - 1)
     hc_name = host[:4] + '***' + host[-4:] + ' ( ' + hc_name + ' )'
     max_jz = 0  # 最大净值
@@ -1495,6 +1496,38 @@ def moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key
     except Exception as exc:
         error_log('viewUtil.py', sys._getframe().f_lineno, exc)
         red.set(red_key, 0, 300)
+
+
+def moni_mmd_ajax(req_d):
+    """ ajax 模拟买卖点"""
+    # req_d = ('2019-01-25 11:02:00', '2019-01-28 13:48:00', '多')
+
+    mongo = HSD.MongoDBData(db='HKFuture', table='future_1min')
+    coll = mongo._coll
+
+    sell_buys = {'空': ['SELL', 'BUY'], '多': ['BUY', 'SELL']}
+
+    e_d = req_d[1]
+
+    code = 'HSI' + e_d[2:7].replace('-', '')
+
+    s_dt = datetime.datetime.strptime(req_d[0], '%Y-%m-%d %H:%M:%S')
+    e_dt = datetime.datetime.strptime(e_d, '%Y-%m-%d %H:%M:%S')
+    try:
+        s_price = coll.find({'datetime': s_dt, 'code': code})[0]['close']
+        e_price = coll.find({'datetime': e_dt, 'code': code})[0]['close']
+    except IndexError:
+        sql = "SELECT close FROM wh_same_month_min WHERE prodcode = 'HSI' AND (datetime = '%s' OR datetime = '%s') ORDER BY datetime"%(req_d[0], req_d[1])
+        price = HSD.runSqlData('carry_investment', sql)
+        s_price, e_price = price[0][0], price[1][0]
+
+    url = 'http://192.168.2.237:8050/tradePoints/' + code
+
+    df = pd.DataFrame({'datetime': {0: s_dt, 1: e_dt}, 'price': {0: s_price, 1: e_price}, 'quantity': {0: 1, 1: 1},
+                       'side': {0: sell_buys[req_d[2]][0], 1: sell_buys[req_d[2]][1]}})
+    dfj = df.to_json()
+    data = requests.post(url, data=dfj).text
+    return data
 
 
 def get_interface_file(_folder):

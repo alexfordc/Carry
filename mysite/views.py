@@ -882,19 +882,19 @@ def user_cloud_public_runcode(rq):
         name = rq.POST.get('user_name')
         codes = rq.POST.get('codes')
         result = ''
-        if user_name == name and qx >= 2:
-            try:
-                folds = 'mysite\\log'
-                files = 'RunPy.py'
-                os.chdir(folds)
-                with open(files, 'w', encoding='utf-8') as f:
-                    f.write(codes)
-                result = str(os.popen(f'python {files}').read())
-                os.chdir('../../')
-            except Exception as exc:
-                result = str(exc)
-        result = result.replace('\n', '<br>').replace(r'D:\tools\Tools\Carry', 'My folder')
-        return JsonResponse({'result': result.replace('\n', '<br>')})
+        # if user_name == name and qx >= 2:
+        #     try:
+        #         folds = 'mysite\\log'
+        #         files = 'RunPy.py'
+        #         os.chdir(folds)
+        #         with open(files, 'w', encoding='utf-8') as f:
+        #             f.write(codes)
+        #         result = str(os.popen(f'python {files}').read())
+        #         os.chdir('../../')
+        #     except Exception as exc:
+        #         result = str(exc)
+        # result = result.replace('\n', '<br>').replace(r'D:\tools\Tools\Carry', 'My folder')
+        # return JsonResponse({'result': result.replace('\n', '<br>')})
     return JsonResponse({'result': 'no'})
 
 
@@ -1666,6 +1666,7 @@ def tongji_bs(rq):
             flat_buy.append(rounds(_fb))
             open_sell.append(rounds(_os))
             flat_sell.append(rounds(_fs))
+            # print(i[0],bs)
             holds[i[0]] = [
                 _ccb,  #+ yesterday_hold[0],
                 _ccs   #+ yesterday_hold[1]
@@ -1675,7 +1676,7 @@ def tongji_bs(rq):
 
         resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
                 'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds, 'start_date': data2[0][0][:10],
-                'code': code, 'host': host, 'code_name': code_name, 'top': top, 'bottom': bottom}
+                'code': code, 'host': host, 'code_name': code_name, 'top': top, 'bottom': bottom, 'ib': ib}
         # write_to_cache()
         return render(rq, 'tongjisp_bs.html', resp)
 
@@ -1944,6 +1945,9 @@ def moni(rq):
             if dates and end_date and fa:
                 resp = red.get(red_key)
                 if resp:
+                    # import pickle
+                    # with open('C:\\Users\\Administrator\\Desktop\\res.pkl', 'wb') as f:
+                    #     pickle.dump(resp['res'], f)
                     if HSD.computer_name == 'doc':
                         red.delete(red_key)
                     if maimaidian:
@@ -2023,6 +2027,16 @@ def moni(rq):
 
     return redirect('index')
 
+
+def moni_mmd_ajax(rq):
+    """ ajax 买卖点请求 """
+    sd = rq.GET.get('sd')
+    ed = rq.GET.get('ed')
+    fx = rq.GET.get('fx')
+    data = viewUtil.moni_mmd_ajax((sd,ed,fx))
+    with open(r'C:\Users\Administrator\Desktop\test.html', 'w') as f:
+        f.write(data)
+    return HttpResponse(data)
 
 def newMoni(rq):
     user_name, qx = LogIn(rq)
@@ -2555,7 +2569,10 @@ def cfmmc_login(rq):
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password, 'createTime': createTime}
                 cd2_ = f"cfmmc_login_d_{userID}"
                 cfmmc_login_ds[cd2_] = [True, cfmmc_login_d]  # 成功登陆
-                cfmmc_login_ds.pop(cd_)
+                try:
+                    cfmmc_login_ds.pop(cd_)
+                except:
+                    pass
                 response = {'logins': '期货监控系统登录成功！', 'user_name': user_name, 'success': 'success'}
             else:
                 rq.session['user_cfmmc'] = {'userID': userID, 'password': password}
@@ -2823,6 +2840,8 @@ def cfmmc_bs(rq, param=None):
         rq_url = rq_url[:rq_url.index('&ttype')] if '&ttype' in rq_url else (
             rq_url + '_'.join(param[:2]) if '=' not in rq_url else rq_url)
         _name = get_cfmmc_id_host(host + '_name')
+        if not _name:
+            _name = host
         _name = _name[0] + '*' * len(_name[1:])
         code_name = _name + ' ' + HSD.FUTURE_NAME.get(re.sub('\d', '', code)) + ' ' + code
 
@@ -3267,7 +3286,7 @@ def interface_huice(rq):
             # print('huice3......................')
             # from django.http import FileResponse
             # hc_name = r'CTP\dual_thrust\result.pkl'
-            return redirect('http://192.168.2.237:8666/backtest/'+hc_name.split('\\')[-1])
+            return redirect('http://192.168.2.226:8666/backtest/'+hc_name.split('\\')[-1])
 
         elif _type == 'down' and qx >= 2:
             path_file = os.path.join(_folder, hc_name)
