@@ -16,11 +16,13 @@ import socket
 import redis
 import sys
 import pymongo
+import pytz
 
 from sklearn.externals import joblib
 from collections import Counter
 from pyquery import PyQuery
 from copy import deepcopy
+from KRData.IBData import IBData
 # from DBUtils.PersistentDB import PersistentDB
 from DBUtils.PooledDB import PooledDB
 # from KRData.HKData import HKFuture
@@ -183,6 +185,18 @@ def dtf(d):
         d = datetime.datetime.strftime(d, '%Y-%m-%d')
         return d
 
+@caches
+def utc_to_local(utc_time_str, utc_format='%Y-%m-%d %H:%M:%S'):
+    """ UTC 时间转换为北京时间 """
+    if len(utc_time_str) > 19:
+        utc_format += '+00:00'
+    local_tz = pytz.timezone('Asia/Chongqing')
+    local_format = "%Y-%m-%d %H:%M:%S"
+    utc_dt = datetime.datetime.strptime(utc_time_str, utc_format)
+    local_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(local_tz)
+    # print(local_dt)
+    time_str = local_dt.strftime(local_format)
+    return time_str
 
 def get_external_folder(f=None):
     """ 获取外部保存文件的路径"""
@@ -878,6 +892,77 @@ def sp_order_record(start_date=None, end_date=None, types='SP'):
     else:
         mongodb = MongoDBData(db='IB', table='Trade')
         data = [i for i in mongodb.get_find(None)]
+    ran = range(len(data))
+    # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
+    # ('2018-11-05 14:30:21', 25939.0, 135, 2, 'HSIX8', 'DEMO201706051', 'B', 9, 25950.0, 2, 0, 2, 12097524, 1541347200),
+    users = {i[5] for i in data}
+    prods = {i[4] for i in data}
+    resAll = []
+    huizong = {}
+    for user in users:
+        for prod in prods:
+            kc = []
+            data2 = []
+            res = []
+            upk = user + prod
+            for i in ran:
+                if not (data[i][5] == user and data[i][4] == prod):
+                    continue
+                dt = list(data[i][:7])
+                # huizong: 日期，账号，合约，盈亏，多单数，空单数，总下单数，盈利单数
+                if upk not in huizong:
+                    huizong[upk] = [dt[0][:10], user, prod, 0, 0, 0, 0, 0]
+
+                dt.append(sum(data[j][3] if data[j][6] == 'B' else -data[j][3] for j in range(0, i + 1) if
+                              data[j][5] == user and data[j][4] == prod))
+                try:
+                    for j in range(dt[3]):
+                        kc.append(dt)
+                        # dt ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+                        if data2 and abs(dt[7]) < abs(data2[-1][7]):
+                            stop = kc.pop()
+                            start = kc.pop()
+
+                            yk = 0
+                            if dt[6] == 'B':  # 卖
+                                yk = (start[1] - stop[1])
+                                huizong[upk][5] += 1
+                            elif dt[6] == 'S':  # 买
+                                yk = (stop[1] - start[1])
+                                huizong[upk][4] += 1
+                            res.append(
+                                [user, prod, start[0], start[1], stop[0], stop[1], yk, '多' if dt[6] == 'S' else '空', 1,
+                                 '已平仓'])
+                            huizong[upk][3] += yk
+                            huizong[upk][6] += 1
+                            huizong[upk][7] += (1 if yk > 0 else 0)
+                    data2.append(dt)
+                except Exception as exc:
+                    logging.error("文件：{} 第{}行报错： {}".format(sys.argv[0], sys._getframe().f_lineno, exc))
+            if upk in huizong:
+                sl = round(huizong[upk][7] / huizong[upk][6] * 100, 1) if huizong[upk][6] > 0 else 0
+                huizong[upk].append(sl)
+            # ['2018-07-30 10:08:02', 28714.0, 5821, 1, 'HSIQ8', '01-0202975-00', 'B', 1]
+            kc = [[k[5], k[4], k[0], k[1], None, None, None, '多' if k[6] == 'B' else '空', 1, '未平仓'] for k in kc]
+            res.extend(kc)
+            res.sort(key=lambda x: x[2])
+            resAll.extend(res)
+        IDS.add(user)
+
+    return resAll, huizong
+
+
+def ib_order_record(start_date=None, end_date=None, types='SP'):
+    global IDS
+    IDS = set()
+    end2 = str(datetime.datetime.strptime(end_date, '%Y-%m-%d') + datetime.timedelta(days=1))
+    ib = IBData('krdata', 'kairuitouzi')
+    data = ib.get_trade_records()
+    data = [[utc_to_local(str(i['time'])),i['execution']['price'],i['execution']['permId'],int(i['execution']['shares']),
+             i['contract']['localSymbol'],i['execution']['acctNumber'],i['execution']['side'][0]]
+             for i in data if start_date<=utc_to_local(str(i['time']))<=end2]
+    data.sort(key=lambda x: x[0])
+
     ran = range(len(data))
     # data (1531271751, 28001.0, 630, 1, 'MHIN8', '01-0520186-00', 'S', 9, 28001.0, 1, 0, 1, 14726449)
     # ('2018-11-05 14:30:21', 25939.0, 135, 2, 'HSIX8', 'DEMO201706051', 'B', 9, 25950.0, 2, 0, 2, 12097524, 1541347200),

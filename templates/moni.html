@@ -84,7 +84,7 @@ border:1px solid #888; background-color:green; text-align:center"><span>方案�
                     <input type="button" value="买卖点"  onclick="form_request()" style="background-color:#ff0323;width:50px;"/></td>
 
         </table>
-    </form><br/>
+    </form><form action="http://192.168.2.226:8666" method="post" target="_blank">{% csrf_token %}<input type="hidden" value="{{ t_res_data }}" name="data"><input type="submit"></form><br/>
         <table border="1" align="center">
             {% if huizong %}
             <tr><th colspan="8"><span style="font-size: 20px;">汇 总&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:blue;" href="#" onclick="openLogin('beizhu_img')">方案{{fa}}</a></span><br/><span>做多：{{fa_one.0}}<br/>做空：{{fa_one.1}}<br/>止损：{{fa_one.2}}</span></th></tr>

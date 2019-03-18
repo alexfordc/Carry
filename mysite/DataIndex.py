@@ -533,7 +533,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -567,7 +567,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -650,7 +650,7 @@ class ZB(object):
                         zszy = 1  # 止盈
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     _zsjg_d = 0
@@ -677,7 +677,7 @@ class ZB(object):
                         zszy = 1  # 止盈
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     _zsjg_k = 0
@@ -757,7 +757,7 @@ class ZB(object):
                     _zsjg_d = 0
                     res[dates]['duo'] += 1
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -786,7 +786,7 @@ class ZB(object):
                     _zsjg_k = 0
                     res[dates]['kong'] += 1
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -862,7 +862,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -889,7 +889,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -965,7 +965,7 @@ class ZB(object):
                     zszy = -1  # 止损
                 else:
                     zszy = 0  # 正常平仓
-                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                 is_d = 0
                 first_time = []
 
@@ -988,7 +988,7 @@ class ZB(object):
                     zszy = -1  # 止损
                 else:
                     zszy = 0  # 正常平仓
-                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                 is_k = 0
                 first_time = []
 
@@ -1074,7 +1074,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -1102,7 +1102,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -1358,7 +1358,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -1386,7 +1386,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -1470,7 +1470,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     count = 0
@@ -1572,7 +1572,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     count = 0
@@ -1659,7 +1659,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     k5s = []
@@ -1739,7 +1739,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     k5s = []
@@ -1843,7 +1843,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -1871,7 +1871,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -1968,7 +1968,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -2000,7 +2000,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -2105,7 +2105,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -2133,7 +2133,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -2233,7 +2233,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -2261,7 +2261,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -2355,7 +2355,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -2383,7 +2383,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -2502,7 +2502,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -2534,7 +2534,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -2644,7 +2644,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -2676,7 +2676,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -2790,7 +2790,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -2825,7 +2825,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -2927,7 +2927,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -2958,7 +2958,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -3069,7 +3069,7 @@ class ZB(object):
 
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -3100,7 +3100,7 @@ class ZB(object):
                     # price = round(startMony_k - _zsjg_k if high>=_zsjg_k else (zyds if startMony_k-low>=zyds else startMony_k-clo))
                     price -= cqdc
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -3141,7 +3141,8 @@ class ZB(object):
             datetimes_hour = datetimes.hour
 
             if zts2 is None:
-                zts2 = Wave.interval_ma60(str(datetimes)[:10],str(datetime.datetime.now() + datetime.timedelta(days=1))[:10],self.database)
+                zts2 = Wave.interval_ma60(str(datetimes)[:10],
+                                          str(datetime.datetime.now() + datetime.timedelta(days=1))[:10], self.database)
                 zts = Wave.to_change(zts2)
             str_dt = str(datetimes)
             # print(zts)
@@ -3156,17 +3157,15 @@ class ZB(object):
                 res[dates]['xy'] += 1
             res[dates]['ch'] += 1 if cd != 0 else 0
 
-
             # 开平仓条件
             _zt = zts[0]
             len_startMony_d = len(startMony_d)
             len_startMony_k = len(startMony_k)
-            kctj_d = _zt[1] > 3 and _zt[2]<0 and last_pop==1 and len_startMony_d<8 and (16 > datetimes_hour > 9)
-            kctj_k = _zt[1] < -3 and _zt[2]>0 and last_pop==1 and len_startMony_k<8 and (16 > datetimes_hour > 9)
+            kctj_d = _zt[1] > 3 and _zt[2] < 0 and last_pop == 1 and len_startMony_d < 8 and (16 > datetimes_hour > 9)
+            kctj_k = _zt[1] < -3 and _zt[2] > 0 and last_pop == 1 and len_startMony_k < 8 and (16 > datetimes_hour > 9)
             last_pop = 0
-            pctj_d = _zt[2]>60
-            pctj_k = _zt[2]<-60
-
+            pctj_d = _zt[2] > 60
+            pctj_k = _zt[2] < -60
 
             if reverse:
                 kctj_d, kctj_k = kctj_k, kctj_d
@@ -3174,11 +3173,11 @@ class ZB(object):
 
             if kctj_d:
                 jg_d = clo
-                if len_startMony_d==1:
-                    startMony_d.append((str(datetimes),clo))
+                if len_startMony_d == 1:
                     startMony_d.append((str(datetimes), clo))
-                elif len_startMony_d==3:
-                    startMony_d.append((str(datetimes),clo))
+                    startMony_d.append((str(datetimes), clo))
+                elif len_startMony_d == 3:
+                    startMony_d.append((str(datetimes), clo))
                     startMony_d.append((str(datetimes), clo))
                     startMony_d.append((str(datetimes), clo))
                 else:
@@ -3195,7 +3194,7 @@ class ZB(object):
                         price = round(i[1] - clo, 2)
                         price -= cqdc
                         res[dates]['mony'] += price
-                        res[dates]['datetimes'].append([i[0], str(datetimes), '空', price, 0])
+                        res[dates]['datetimes'].append([i[0], str(datetimes), '空', price, 0, i[1], i[1] - price - cqdc])
                     is_k = 0
                     first_time = []
                     tj_k = 0
@@ -3204,10 +3203,10 @@ class ZB(object):
                     startMony_k = []
             elif kctj_k:
                 jg_k = clo
-                if len_startMony_k==1:
+                if len_startMony_k == 1:
                     startMony_k.append((str(datetimes), clo))
                     startMony_k.append((str(datetimes), clo))
-                elif len_startMony_k==3:
+                elif len_startMony_k == 3:
                     startMony_k.append((str(datetimes), clo))
                     startMony_k.append((str(datetimes), clo))
                     startMony_k.append((str(datetimes), clo))
@@ -3225,7 +3224,7 @@ class ZB(object):
                         price = round(clo - i[1], 2)
                         price -= cqdc
                         res[dates]['mony'] += price
-                        res[dates]['datetimes'].append([i[0], str(datetimes), '多', price, 0])
+                        res[dates]['datetimes'].append([i[0], str(datetimes), '多', price, 0, i[1], price + cqdc + i[1]])
                     is_d = 0
                     first_time = []
                     tj_d = 0
@@ -3235,14 +3234,14 @@ class ZB(object):
 
             if is_d == 1 and startMony_d:
                 ydzs_d = high if (ydzs_d == 0 or high > ydzs_d) else ydzs_d
-                _startMony_d = max(startMony_d,key=lambda xm:xm[1])[1]
+                _startMony_d = max(startMony_d, key=lambda xm: xm[1])[1]
                 high_zs = ydzs_d - _startMony_d
                 if high_zs >= ydzs:
                     _zsjg_d = _startMony_d + high_zs * 0.2  # 止损所在价格点，至少盈利20%
                 elif _zsjg_d == 0:
                     _zsjg_d = _startMony_d + zsjg  # 止损所在价格点
                 if ((pctj_d or low <= _zsjg_d) or qzpc) and str(
-                    datetimes) != str_time1:
+                        datetimes) != str_time1:
                     if low > _zsjg_d and high - _startMony_d < zyds:
                         zszy = 0  # 正常平仓
                         for i in startMony_d:
@@ -3250,7 +3249,8 @@ class ZB(object):
                             price = round(clo - i[1], 2)
                             price -= cqdc
                             res[dates]['mony'] += price
-                            res[dates]['datetimes'].append([i[0], str(datetimes), '多', price, zszy])
+                            res[dates]['datetimes'].append(
+                                [i[0], str(datetimes), '多', price, zszy, i[1], price + cqdc + i[1]])
                         is_d = 0
                         first_time = []
                         tj_d = 0
@@ -3267,7 +3267,8 @@ class ZB(object):
                                 price = round(clo - i[1], 2)
                             price -= cqdc
                             res[dates]['mony'] += price
-                            res[dates]['datetimes'].append([i[0], str(datetimes), '多', price, zszy])
+                            res[dates]['datetimes'].append(
+                                [i[0], str(datetimes), '多', price, zszy, i[1], price + cqdc + i[1]])
                         is_d = 0
                         first_time = []
                         tj_d = 0
@@ -3276,22 +3277,23 @@ class ZB(object):
                         startMony_d = []
             elif is_k == -1 and startMony_k:
                 ydzs_k = low if (ydzs_k == 0 or ydzs_k > low) else ydzs_k
-                _startMony_k = min(startMony_k,key=lambda xm:xm[1])[1]
+                _startMony_k = min(startMony_k, key=lambda xm: xm[1])[1]
                 low_zs = _startMony_k - ydzs_k
                 if low_zs >= ydzs:
                     _zsjg_k = _startMony_k - low_zs * 0.2  # 止损所在价格点，至少盈利20%
                 elif _zsjg_k == 0:
                     _zsjg_k = _startMony_k - zsjg  # 止损所在价格点
                 if ((pctj_k or high >= _zsjg_k) or qzpc) and str(
-                    datetimes) != str_time2:
+                        datetimes) != str_time2:
                     if high < _zsjg_k and _startMony_k - low < zyds:
                         zszy = 0  # 正常平仓
                         for i in startMony_k:
                             res[dates]['kong'] += 1
-                            price = round(i[1]-clo, 2)
+                            price = round(i[1] - clo, 2)
                             price -= cqdc
                             res[dates]['mony'] += price
-                            res[dates]['datetimes'].append([i[0], str(datetimes), '空', price, zszy])
+                            res[dates]['datetimes'].append(
+                                [i[0], str(datetimes), '空', price, zszy, i[1], i[1] - price - cqdc])
                         is_k = 0
                         first_time = []
                         tj_k = 0
@@ -3303,12 +3305,13 @@ class ZB(object):
                         for i in startMony_k:
                             res[dates]['kong'] += 1
                             if low <= _zsjg_k <= high:
-                                price = round(i[1]-_zsjg_k, 2)
+                                price = round(i[1] - _zsjg_k, 2)
                             else:
                                 price = round(i[1] - clo, 2)
                             price -= cqdc
                             res[dates]['mony'] += price
-                            res[dates]['datetimes'].append([i[0], str(datetimes), '空', price, zszy])
+                            res[dates]['datetimes'].append(
+                                [i[0], str(datetimes), '空', price, zszy, i[1], i[1] - price - cqdc])
                         is_k = 0
                         first_time = []
                         tj_k = 0
@@ -3412,7 +3415,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -3440,7 +3443,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0
@@ -3546,7 +3549,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_d = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy])
+                    res[dates]['datetimes'].append([str_time1, str(datetimes), '多', price, zszy, startMony_d, price+cqdc+startMony_d])
                     is_d = 0
                     first_time = []
                     ydzs_d = 0
@@ -3575,7 +3578,7 @@ class ZB(object):
                     price -= cqdc
                     _zsjg_k = 0
                     res[dates]['mony'] += price
-                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy])
+                    res[dates]['datetimes'].append([str_time2, str(datetimes), '空', price, zszy, startMony_k, startMony_k - price - cqdc])
                     is_k = 0
                     first_time = []
                     ydzs_k = 0

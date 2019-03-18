@@ -1163,7 +1163,7 @@ def tongji(rq):
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
 
     if rq_type == '5' and rq_date and end_date and rq_id != '0' and user_name:
-        results2, _ = HSD.sp_order_record(rq_date, end_date)
+        results2, _ = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(rq_date, end_date)
         results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
@@ -1207,8 +1207,8 @@ def tongji(rq):
                        'hc_name': hc_name})
 
     if rq_type == '4' and rq_date and end_date and user_name:
-        result9, huizong2 = HSD.sp_order_record(rq_date, end_date)
-
+        result9, huizong2 = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(rq_date, end_date)
+        # print(result9)
         huizong = {}
         results2 = []
         if result9:
@@ -1998,7 +1998,6 @@ def moni(rq):
                             holds[_t] = [_ccb, _ccs]
                             _ob, _fb, _os, _fs = '', '', '', ''
 
-
                         resp = {'user_name': user_name, 'data': data2, 'open_buy': open_buy, 'flat_buy': flat_buy,
                                 'open_sell': open_sell, 'flat_sell': flat_sell, 'holds': holds,
                                 'start_date': dates,
@@ -2006,6 +2005,8 @@ def moni(rq):
                         return render(rq, 'moni_bs.html', resp)
 
                     resp['user_name'] = user_name
+                    resp['t_res_data'] = viewUtil.moni_external(resp)
+                    resp['res'] = resp['res'][: 500]  # 限制最多显示500天交易详细记录
                     return render(rq, 'moni.html', resp)
                 else:
                     viewUtil.moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key)
@@ -2034,8 +2035,6 @@ def moni_mmd_ajax(rq):
     ed = rq.GET.get('ed')
     fx = rq.GET.get('fx')
     data = viewUtil.moni_mmd_ajax((sd,ed,fx))
-    with open(r'C:\Users\Administrator\Desktop\test.html', 'w') as f:
-        f.write(data)
     return HttpResponse(data)
 
 def newMoni(rq):

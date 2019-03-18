@@ -1482,7 +1482,7 @@ def moni(dates, end_date, fa, database, reverse, zsds, ydzs, zyds, cqdc, red_key
     try:
         keys = sorted(res.keys(), reverse=True)
         res_length = len(keys)
-        res = [dict(res[k], **{'time': k}) for k in keys if res[k]['datetimes']][:500]  # 限制最多显示500天交易详细记录
+        res = [dict(res[k], **{'time': k}) for k in keys if res[k]['datetimes']]
         fa_doc = zbjs.fa_doc
         resp = {'res': res, 'keys': keys, 'dates': dates, 'end_date': end_date, 'fa': fa, 'fas': list(zbjs.xzfa.keys()),
                 'fa_doc': fa_doc, 'fa_one': fa_doc.get(fa), 'huizong': huizong, 'database': database,
@@ -1521,13 +1521,46 @@ def moni_mmd_ajax(req_d):
         price = HSD.runSqlData('carry_investment', sql)
         s_price, e_price = price[0][0], price[1][0]
 
-    url = 'http://192.168.2.237:8050/tradePoints/' + code
+    url = 'http://192.168.2.226:8666/tradePoints/' + code
 
     df = pd.DataFrame({'datetime': {0: s_dt, 1: e_dt}, 'price': {0: s_price, 1: e_price}, 'quantity': {0: 1, 1: 1},
                        'side': {0: sell_buys[req_d[2]][0], 1: sell_buys[req_d[2]][1]}})
     dfj = df.to_json()
     data = requests.post(url, data=dfj).text
     return data
+
+
+def moni_external(resp):
+    """ 模拟测试，外部请求准备 """
+    rs_jz = {}  # 日期：净值
+    rs_record = []  # 交易记录
+    first_jz = 0
+    init_jz = 1000000
+    _hycs = 50  # 合约乘数
+    _hy = 'HSI'  # 合约
+    _fx = {'多': 'BUY', '空': 'SELL'}  # 开仓 买卖方向
+    t_fx = {'多': 'SELL', '空': 'BUY'}  # 平仓 买卖方向
+    cqdc = resp['cqdc']  # 点差
+    for i in resp['res'][::-1]:
+        for j in i['datetimes']:
+            t_hy = _hy + j[0][2:7].replace('-', '')
+            rs_record.append([j[0], t_hy, j[5], _fx[j[2]], 1, cqdc * _hycs / 2, _hycs])
+            rs_record.append([j[1], t_hy, j[6], t_fx[j[2]], 1, cqdc * _hycs / 2, _hycs])
+        mony = i['mony'] * _hycs  # 每日盈亏
+        t_jz = mony + init_jz + first_jz
+        first_jz += mony
+        rs_jz[i['time']] = t_jz / init_jz
+
+    rs_record.sort(key=lambda x: x[0])
+    start_date, end_date = rs_record[0][0], rs_record[-1][0]
+
+    t_res_data = {
+        'start_date': rs_record[0][0],
+        'end_date': rs_record[-1][0],
+        'portfolio': rs_jz,
+        'trades': rs_record
+    }
+    return t_res_data
 
 
 def get_interface_file(_folder):
