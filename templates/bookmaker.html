@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% block title %}博彩数据{% endblock %}
+{% block script %}
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+table.hovertable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.hovertable th {
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.hovertable tr {
+	background-color:#d4e3e5;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+</style>
+
+
+{% endblock %}
+{% block center_cen %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/radio.css' %}" />
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+
+
+<div align="center">
+    <span>更新时间：{{bet_time}}</span>
+    <table width="1200" class="hovertable">
+        {% if bet_1x2 %}
+        <tr><th>获利率</th><th>胜</th><th>平</th><th>负</th><th>下注比率</th><th>下注比率</th>
+            <th>下注比率</th><th>下注地址</th><th>下注地址</th><th>下注地址</th><th>主队</th><th>客队</th><th>时间</th></tr>
+        <tr><td colspan="13"><span style="font-size:14px;">全场</span></td></tr>
+    {% for v in bet_1x2 %}
+        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td><td>{{v.4}}</td><td>{{v.5}}</td>
+    <td>{{v.6}}</td><td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
+            <td><a target="_blank" href="{{v.8}}" style="color:blue;">平方</a> </td>
+            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td></tr>
+    {% endfor %}
+        <tr><td colspan="13"><span style="font-size:14px;">半场</span></td></tr>
+        {% for v in bet_1x21st %}
+        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td><td>{{v.4}}</td><td>{{v.5}}</td>
+    <td>{{v.6}}</td><td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
+            <td><a target="_blank" href="{{v.8}}" style="color:blue;">平方</a> </td>
+            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td></tr>
+    {% endfor %}
+        {% else %}
+        暂无数据，请过5分钟后再访问！
+        {% endif %}
+        </table>
+</div>
+
+
+{% endblock %}

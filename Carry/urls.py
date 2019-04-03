@@ -119,6 +119,7 @@ urlpatterns = [
 
     url(r'^files/upload/', views.fileupload,name='fileupload'),  # 图片分片上传
     url(r'^upload/complete/', views.fileMerge,name='fileMerge'),  # 上传成功合并
+    url(r'^bookmaker/', views.get_bookmaker, name='get_bookmaker'),  # 博彩网站数据统计
 
     # url(r'', views.page_not_found, name='page_not_found'),
 

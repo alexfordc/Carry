@@ -37,6 +37,7 @@ from mysite import models
 from mysite import viewUtil
 from mysite import pypass
 from mysite import Wave
+from mysite import bookmaker
 # from mysite import tasks
 # from mysite.tasks import tasks_record_log,down_day_data_sql
 from mysite.sub_client import sub_ticker, getTickData
@@ -3454,6 +3455,27 @@ def market_news(rq):
     """ 市场快讯 """
     user_name, qx = LogIn(rq)
     return render(rq, 'market_news.html', {'user_name': user_name})
+
+def get_bookmaker(rq):
+    """ 博彩网站数据 """
+    user_name, qx = LogIn(rq)
+    red = HSD.RedisPool()
+    res = red.get('bookmaker_odds', True)
+    if res:
+        if time.time() - res['time']>360:
+            is_run = red.get('is_bookmaker_odds', True)
+            if is_run != 1:
+                bookmaker.main()
+    else:
+        is_run = red.get('is_bookmaker_odds', True)
+        if is_run != 1:
+            bookmaker.main()
+    if res:
+        bet_1x2 = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[4]] for i in res['bet_1x2']]
+        bet_1x21st = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[4]] for i in res['bet_1x21st']]
+        bet_time = str(datetime.datetime.fromtimestamp(res['time']))[:19]
+    return render(rq, 'bookmaker.html', {'user_name': user_name,'bet_1x2':bet_1x2, 'bet_1x21st': bet_1x21st, 'bet_time':bet_time})
+
 
 
 def get_system(rq):
