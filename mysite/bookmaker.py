@@ -316,9 +316,9 @@ def hlzh(x, y, z):
 
 
 def gt_rs(rss, key, ks='1x2'):
-    c1 = {i[key][7][ks][0]: (i[key][-1], i[key][2], i[key][4]) for i in rss if key in i and i[key][7].get(ks)}
-    cx = {i[key][7][ks][1]: (i[key][-1], i[key][2], i[key][4]) for i in rss if key in i and i[key][7].get(ks)}
-    c2 = {i[key][7][ks][2]: (i[key][-1], i[key][2], i[key][4]) for i in rss if key in i and i[key][7].get(ks)}
+    c1 = {i[key][7][ks][0]: (i[key][-1], i[key][2], i[key][4], i[key][0]) for i in rss if key in i and i[key][7].get(ks)}
+    cx = {i[key][7][ks][1]: (i[key][-1], i[key][2], i[key][4], i[key][0]) for i in rss if key in i and i[key][7].get(ks)}
+    c2 = {i[key][7][ks][2]: (i[key][-1], i[key][2], i[key][4], i[key][0]) for i in rss if key in i and i[key][7].get(ks)}
     return c1, cx, c2
 
 

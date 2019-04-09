@@ -40,23 +40,27 @@ table.hovertable td {
 
 <div align="center">
     <span>更新时间：{{bet_time}}</span>
-    <table width="1200" class="hovertable">
+    <table width="1340" class="hovertable">
         {% if bet_1x2 %}
         <tr><th>获利率</th><th>胜</th><th>平</th><th>负</th><th>下注比率</th><th>下注比率</th>
-            <th>下注比率</th><th>下注地址</th><th>下注地址</th><th>下注地址</th><th>主队</th><th>客队</th><th>时间</th></tr>
-        <tr><td colspan="13"><span style="font-size:14px;">全场</span></td></tr>
+            <th>下注比率</th><th>下注总金额</th><th>下注地址</th><th>下注地址</th><th>下注地址</th><th>主队</th><th>客队</th><th>赛事名称</th><th>时间</th></tr>
+        <tr><td colspan="15"><span style="font-size:14px;">全场</span></td></tr>
     {% for v in bet_1x2 %}
-        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td><td>{{v.4}}</td><td>{{v.5}}</td>
-    <td>{{v.6}}</td><td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
+        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td>
+            <td style="color:red;">{{v.4}}</td><td style="color:blue;">{{v.5}}</td><td style="color:green;">{{v.6}}</td>
+            <td contenteditable="false" onclick="xiaZhuBiao({{v.4}},{{v.5}},{{v.6}})">100</td>
+            <td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
             <td><a target="_blank" href="{{v.8}}" style="color:blue;">平方</a> </td>
-            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td></tr>
+            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td><td>{{v.13}}</td></tr>
     {% endfor %}
-        <tr><td colspan="13"><span style="font-size:14px;">半场</span></td></tr>
+        <tr><td colspan="15"><span style="font-size:14px;">半场</span></td></tr>
         {% for v in bet_1x21st %}
-        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td><td>{{v.4}}</td><td>{{v.5}}</td>
-    <td>{{v.6}}</td><td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
+        <tr onmouseover="this.style.backgroundColor='#ffff66';" onmouseout="this.style.backgroundColor='#d4e3e5';"><td>{{v.0}}</td><td>{{v.1}}</td><td>{{v.2}}</td><td>{{v.3}}</td>
+            <td style="color:red;">{{v.4}}</td><td style="color:blue;">{{v.5}}</td><td style="color:green;">{{v.6}}</td>
+            <td contenteditable="false" class="xiaZhuBiao">100</td>
+            <td><a target="_blank" href="{{v.7}}" style="color:red;">胜方</a> </td>
             <td><a target="_blank" href="{{v.8}}" style="color:blue;">平方</a> </td>
-            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td></tr>
+            <td><a target="_blank" href="{{v.9}}" style="color:green;">负方</a> </td><td>{{v.10}}</td><td>{{v.11}}</td><td>{{v.12}}</td><td>{{v.13}}</td></tr>
     {% endfor %}
         {% else %}
         暂无数据，请过5分钟后再访问！
@@ -64,5 +68,13 @@ table.hovertable td {
         </table>
 </div>
 
-
+<script>
+function xiaZhuBiao(x,y,z){
+    var je=prompt("输入总金额：",'100');
+    if(je){
+        var s = Math.round(x/100*je)+'，'+Math.round(y/100*je)+'，'+Math.round(z/100*je);
+        alert(s);
+    }
+}
+</script>
 {% endblock %}

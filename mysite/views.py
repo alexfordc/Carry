@@ -1879,6 +1879,7 @@ def getwebsocket(rq):
 
 
 def zhangting(rq, t):
+    """ 涨停预测 """
     user_name, qx = LogIn(rq)
     if not user_name:
         return index(rq, False, user_name, qx)
@@ -3471,8 +3472,8 @@ def get_bookmaker(rq):
         if is_run != 1:
             bookmaker.main()
     if res:
-        bet_1x2 = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[4]] for i in res['bet_1x2']]
-        bet_1x21st = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[4]] for i in res['bet_1x21st']]
+        bet_1x2 = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3], i[4]] for i in res['bet_1x2']]
+        bet_1x21st = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3], i[4]] for i in res['bet_1x21st']]
         bet_time = str(datetime.datetime.fromtimestamp(res['time']))[:19]
     return render(rq, 'bookmaker.html', {'user_name': user_name,'bet_1x2':bet_1x2, 'bet_1x21st': bet_1x21st, 'bet_time':bet_time})
 
