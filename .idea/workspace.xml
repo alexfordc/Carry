@@ -7,11 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c0cd3161-1198-4ccf-83eb-cf8bb3797cf0" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Carry/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Carry/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/bookmaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/bookmaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" beforeDir="false" afterPath="$PROJECT_DIR$/nginx-1.12.2/logs/nginx.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,130 +16,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="2855" column="48" selection-start-line="2855" selection-start-column="31" selection-end-line="2855" selection-end-column="48" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kline.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/kline.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13400">
-              <caret line="537" column="30" selection-start-line="537" selection-start-column="30" selection-end-line="537" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataIndex.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/DataIndex.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71175">
-              <caret line="3323" column="20" selection-start-line="3323" selection-start-column="20" selection-end-line="3323" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#5085#20749#0" />
-                <element signature="e#20813#23372#0" />
-                <element signature="e#135280#141364#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bookmaker.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/bookmaker.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1725">
-              <caret line="69" selection-start-line="69" selection-end-line="69" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#2;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#5;n#tr#2;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#6;n#tr#2;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#8;n#tr#2;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#9;n#tr#2;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#4;n#tr#4;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#5;n#tr#4;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#6;n#tr#4;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#8;n#tr#4;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#9;n#tr#4;n#table#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Carry/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1175">
-              <caret line="80" column="62" selection-start-line="80" selection-start-column="62" selection-end-line="80" selection-end-column="62" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysite/models.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="bookmaker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/bookmaker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7625">
-              <caret line="313" column="20" selection-start-line="313" selection-start-column="20" selection-end-line="313" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="viewUtil.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="moni.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/moni.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2100">
-              <caret line="86" column="35" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="35" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#td#7;n#tr#2;n#table#1;n#div#2;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#3;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#3;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HSD.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="2325" column="5" selection-start-line="2325" selection-end-line="2325" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -289,7 +161,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -311,6 +182,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -459,13 +331,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1512565529734</updated>
-    </task>
-    <task id="LOCAL-00083" summary="功能完善">
-      <created>1539148412190</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1539148412191</updated>
     </task>
     <task id="LOCAL-00084" summary="功能完善">
       <created>1539171282031</created>
@@ -803,7 +668,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554780815866</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="2019年4月26日更新">
+      <created>1556267285015</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1556267285024</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -832,34 +704,33 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.18865867" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.1654373" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
       <window_info anchor="bottom" id="Changes" order="9" weight="0.32900432" />
-      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
+      <window_info anchor="bottom" id="Application Servers" order="11" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991276" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.19704953" side_tool="true" weight="0.12758997" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49894625" weight="0.32824427" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
-      <window_info anchor="bottom" id="Application Servers" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.50054526" side_tool="true" weight="0.12961012" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.16139586" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.8029505" weight="0.19847329" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="功能升级" />
     <MESSAGE value="系统升级" />
     <MESSAGE value="Macd指标" />
     <MESSAGE value="K线可视化" />
@@ -884,7 +755,8 @@
     <MESSAGE value="盈透证券交易买卖点" />
     <MESSAGE value="实盘交易买卖点更新" />
     <MESSAGE value="博彩网站数据统计" />
-    <option name="LAST_COMMIT_MESSAGE" value="博彩网站数据统计" />
+    <MESSAGE value="2019年4月26日更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="2019年4月26日更新" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -901,6 +773,16 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57425">
+          <caret line="2325" column="5" selection-start-line="2325" selection-end-line="2325" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../December_2018/2018-12-07/新闻信息提取.py" />
     <entry file="file://$PROJECT_DIR$/templates/cfmmc_tu.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -909,13 +791,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../EveryDay/GUPIAO.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../EveryDay/GUPIAO.py" />
     <entry file="file://$PROJECT_DIR$/templates/zhutu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-450" />
@@ -994,13 +870,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../December_2018/2018-12-26/testfa.py" />
     <entry file="file://$PROJECT_DIR$/../December_2018/2018-12-28/taobaos.py" />
-    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2019-1/tj.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1225">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2019-1/tj.py" />
     <entry file="file://$PROJECT_DIR$/templates/page/ib_bs.html" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/typing.pyi">
       <provider selected="true" editor-type-id="text-editor">
@@ -1030,36 +900,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../January_2019/2019-2-27/taobao.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="18" column="65" selection-start-line="18" selection-start-column="65" selection-end-line="18" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../January_2019/2019-2-27/taobao.py" />
     <entry file="file://$USER_HOME$/Desktop/tb/taobao_re_xpath_setting.py" />
     <entry file="file://$USER_HOME$/Desktop/tb/taobao_re_xpath.py" />
-    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-8/j解析二维码.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-8/e二维码生成与解析.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" column="7" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-1/ib_js.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3650">
-          <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-8/j解析二维码.py" />
+    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-8/e二维码生成与解析.py" />
+    <entry file="file://$PROJECT_DIR$/../March_2019/2019-3-1/ib_js.py" />
     <entry file="file://$PROJECT_DIR$/templates/moni_bs.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1068,20 +914,8 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/gp_html.py" />
-    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2018-6/file_monitor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2018-6/wh_dat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="348" column="38" lean-forward="true" selection-start-line="348" selection-start-column="38" selection-end-line="348" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2018-6/file_monitor.py" />
+    <entry file="file://$PROJECT_DIR$/../EveryDay/demo/2018-6/wh_dat.py" />
     <entry file="file://$PROJECT_DIR$/templates/tongjisp_bs.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2225">
@@ -1096,13 +930,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../April_2019/gp2019-4-23.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="717">
-          <caret line="192" column="21" lean-forward="true" selection-start-line="192" selection-start-column="21" selection-end-line="192" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../April_2019/gp2019-4-23.py" />
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4775">
@@ -1191,8 +1019,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="2855" column="48" selection-start-line="2855" selection-start-column="31" selection-end-line="2855" selection-end-column="48" />
+        <state relative-caret-position="775">
+          <caret line="2882" column="19" lean-forward="true" selection-start-line="2882" selection-start-column="19" selection-end-line="2882" selection-end-column="19" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1201,14 +1029,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/viewUtil.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
+        <state relative-caret-position="1175">
           <caret line="70" selection-start-line="70" selection-end-line="70" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/HSD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
+        <state relative-caret-position="57425">
           <caret line="2325" column="5" selection-start-line="2325" selection-end-line="2325" selection-end-column="5" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1218,13 +1046,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Carry/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1175">
+        <state relative-caret-position="1925">
           <caret line="80" column="62" selection-start-line="80" selection-start-column="62" selection-end-line="80" selection-end-column="62" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/models.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
