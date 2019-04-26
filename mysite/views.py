@@ -1164,7 +1164,8 @@ def tongji(rq):
     end_date = str(datetime.datetime.now())[:10] if not end_date else end_date  # + datetime.timedelta(days=1)
 
     if rq_type == '5' and rq_date and end_date and rq_id != '0' and user_name:
-        results2, _ = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(rq_date, end_date)
+        results2, _ = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(
+            rq_date, end_date)
         results2 = [i for i in results2 if i[0] == rq_id]
         res = {}
         huizong = {'yk': 0, 'shenglv': 0, 'zl': 0, 'least': [0, 1000], 'most': [0, -1000], 'avg': 0,
@@ -1208,7 +1209,8 @@ def tongji(rq):
                        'hc_name': hc_name})
 
     if rq_type == '4' and rq_date and end_date and user_name:
-        result9, huizong2 = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(rq_date, end_date)
+        result9, huizong2 = HSD.ib_order_record(rq_date, end_date) if rq_date >= '2018-12-25' else HSD.sp_order_record(
+            rq_date, end_date)
         # print(result9)
         huizong = {}
         results2 = []
@@ -1276,7 +1278,7 @@ def tongji(rq):
                         huizong[c][10] += 1
                         huizong[c][-1][dt][10] += 1
                         jc[c].append([i[2], jcyk])
-                results2.append(i[:9] + [name,])  # 交易明细
+                results2.append(i[:9] + [name, ])  # 交易明细
                 last[c].append(i)
                 # 最大持仓
                 # lzd = len(last[c])
@@ -1305,7 +1307,7 @@ def tongji(rq):
 
         ids = HSD.IDS
         results2 = tuple(reversed(results2))
-        huizong,huizong2 = huizong2,huizong
+        huizong, huizong2 = huizong2, huizong
         # results2 = [(i[0],)+(str(i[1]),)+(i[2],)+(str(i[3]),)+i[4:9]+(id_name.get(i[0],i[0]),) for i in results2]
         is_shipan = True  # 是否实盘
         if user:
@@ -1567,8 +1569,9 @@ def tongji_bs(rq):
             start_date = HSD.dtf(start_date)
             end_date = HSD.dtf(end_date)
         _days = (end_date - start_date).days
-        sql = (f'SELECT datetime,OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"' # ADDDATE(datetime,INTERVAL 1 MINUTE)
-               f' and datetime>="{start_date}" and datetime<="{end_date}"')
+        sql = (
+            f'SELECT datetime,OPEN,CLOSE,low,high,vol FROM wh_same_month_min WHERE prodcode="{code[:3]}"'  # ADDDATE(datetime,INTERVAL 1 MINUTE)
+            f' and datetime>="{start_date}" and datetime<="{end_date}"')
         data = HSD.runSqlData('carry_investment', sql)
 
         if not ttype:
@@ -1669,8 +1672,8 @@ def tongji_bs(rq):
             flat_sell.append(rounds(_fs))
             # print(i[0],bs)
             holds[i[0]] = [
-                _ccb,  #+ yesterday_hold[0],
-                _ccs   #+ yesterday_hold[1]
+                _ccb,  # + yesterday_hold[0],
+                _ccs  # + yesterday_hold[1]
             ]
 
         top, bottom = future_bl.send(None)
@@ -1694,7 +1697,6 @@ def ib_bs(rq):
         return render(rq, 'ib_bs.html', {'user_name': user_name, 'users': users, 'prods': prods})
 
     return index(rq, False, user_name, qx)
-
 
 
 def tools(rq):
@@ -1932,8 +1934,8 @@ def moni(rq):
         if rq.is_ajax():
             resp = red.get(red_key)
             if not resp:
-                data_line = red.get(red_key+'_line')
-                d = data_line if data_line else ['','','','']
+                data_line = red.get(red_key + '_line')
+                d = data_line if data_line else ['', '', '', '']
                 return JsonResponse({'s': -1, 't': d[0], 'm': d[1], 'd': d[2], 'k': d[3]})  # (-1)  # 继续请求
             elif resp == 0:
                 red.delete(red_key)
@@ -1977,20 +1979,20 @@ def moni(rq):
                         data2 = []
                         data3 = viewUtil.future_macd(yd=True)
                         data3.send(None)
-                        for _t,_o,_c,_l,_h,_v in data:
-                            data2.append(data3.send((_t,_o,_c,_l,_h,_v)))
+                        for _t, _o, _c, _l, _h, _v in data:
+                            data2.append(data3.send((_t, _o, _c, _l, _h, _v)))
                             kp = mm.get(_t)
-                            if kp == 1:         # 开多
-                                _ob = int(_c)+0.001
+                            if kp == 1:  # 开多
+                                _ob = int(_c) + 0.001
                                 _ccb += 1
-                            elif kp == -2:      # 平多
-                                _fb = int(_c)+0.001
+                            elif kp == -2:  # 平多
+                                _fb = int(_c) + 0.001
                                 _ccb -= 1
-                            elif kp == -1:      # 开空
-                                _os = int(_c)+0.001
+                            elif kp == -1:  # 开空
+                                _os = int(_c) + 0.001
                                 _ccs += 1
-                            elif kp == 2:       # 平空
-                                _fs = int(_c)+0.001
+                            elif kp == 2:  # 平空
+                                _fs = int(_c) + 0.001
                                 _ccs -= 1
 
                             open_buy.append(_ob)
@@ -2036,8 +2038,9 @@ def moni_mmd_ajax(rq):
     sd = rq.GET.get('sd')
     ed = rq.GET.get('ed')
     fx = rq.GET.get('fx')
-    data = viewUtil.moni_mmd_ajax((sd,ed,fx))
+    data = viewUtil.moni_mmd_ajax((sd, ed, fx))
     return HttpResponse(data)
+
 
 def newMoni(rq):
     user_name, qx = LogIn(rq)
@@ -2690,7 +2693,6 @@ def cfmmc_logout(rq):
                 cfmmc_login_ds.delete(cd_)
         del rq.session['user_cfmmc']
 
-
     trade, start_date, end_date = viewUtil.cfmmc_data_page(rq)
     resp = {'user_name': user_name, 'logins': logins, 'trade': trade, 'start_date': start_date, 'end_date': end_date}
     return render(rq, 'cfmmc_data.html', resp)
@@ -2971,7 +2973,7 @@ def cfmmc_huice(rq, param=None):
         if resp == 0:  # 错误
             red.delete(cfmmc_huice_key)
             return JsonResponse({'s': 0})
-        elif not resp: # 统计中
+        elif not resp:  # 统计中
             return JsonResponse({'s': -1, 't': ''})
         else:  # 统计完毕
             return JsonResponse({'s': 1})
@@ -3019,11 +3021,10 @@ def interface_huice(rq):
         _type = rq.GET.get('type')
         hc_name = rq.GET.get('id')
         if not hc_name:
-
-            clouds = viewUtil.get_interface_file(_folder) #[i for i in os.listdir(_folder) if i.endswith('.pkl')]
+            clouds = viewUtil.get_interface_file(_folder)  # [i for i in os.listdir(_folder) if i.endswith('.pkl')]
             return render(rq, 'interface_huice.html', {'user_name': user_name, 'clouds': clouds})
         if _type == 'huice':
-            data_huice = viewUtil.get_interface_huice(os.path.join(_folder,hc_name))
+            data_huice = viewUtil.get_interface_huice(os.path.join(_folder, hc_name))
             hc, huizong, init_money = data_huice.send(None)
             resp = {'hc': hc, 'huizong': huizong, 'init_money': init_money, 'hc_name': hc_name}
             resp['user_name'] = user_name
@@ -3031,7 +3032,7 @@ def interface_huice(rq):
         elif _type == 'huice2':  # 回测、画图
             clouds = viewUtil.get_interface_file(_folder)
 
-            datas = viewUtil.get_interface_datas(os.path.join(_folder,hc_name))
+            datas = viewUtil.get_interface_datas(os.path.join(_folder, hc_name))
             summary, trades, portfolio, future_account, future_positions = datas['summary'], datas['trades'], datas[
                 'portfolio'], datas['future_account'], datas['future_positions']
             start_date, end_date = summary['start_date'], summary['end_date']
@@ -3049,7 +3050,7 @@ def interface_huice(rq):
             eae = []  # 出入金
             zx_x, prices = [str(i)[:10] for i in future_account.index], []
 
-            data_huice = viewUtil.get_interface_huice(os.path.join(_folder,hc_name), start_date, end_date)
+            data_huice = viewUtil.get_interface_huice(os.path.join(_folder, hc_name), start_date, end_date)
             hc, huizong, init_money = data_huice.send(None)
             base_money = init_money  # 初始总资金
 
@@ -3287,7 +3288,7 @@ def interface_huice(rq):
             # print('huice3......................')
             # from django.http import FileResponse
             # hc_name = r'CTP\dual_thrust\result.pkl'
-            return redirect('http://192.168.2.226:8666/backtest/'+hc_name.split('\\')[-1])
+            return redirect('http://192.168.2.226:8666/backtest/' + hc_name.split('\\')[-1])
 
         elif _type == 'down' and qx >= 2:
             path_file = os.path.join(_folder, hc_name)
@@ -3303,7 +3304,7 @@ def interface_huice(rq):
             logins = ''
             if user_name and qx >= 2:
                 if os.path.isfile(path_file):
-                    with open(path_file,'rb') as f:
+                    with open(path_file, 'rb') as f:
                         pys = f.read()
                 else:
                     logins = '文件不存在！'
@@ -3366,7 +3367,7 @@ def hqzj(rq):
             parhead = list(zts[0])  # 字段名称
             zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name,'hengpan':hengpan}
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name, 'hengpan': hengpan}
             return render(rq, respUrl, resp)
         else:
             # 起止日期设置
@@ -3383,7 +3384,7 @@ def hqzj(rq):
             parhead = list(zts[0])  # 字段名称
             zts = {i[0]: list(i) for i in zts[1:]}
             resp = {'user_name': user_name, 'data': data, 'parhead': parhead, 'zts': zts,
-                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name,'hengpan':hengpan}
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name, 'hengpan': hengpan}
             return render(rq, respUrl, resp)
 
     return redirect('index')
@@ -3401,20 +3402,20 @@ def hqzjzb(rq):
             # sd = sd[:10]
             # ed = ed[:10]
 
-            data = Wave.get_data(sd,ed,database=db)
+            data = Wave.get_data(sd, ed, database=db)
 
             ec_name = {
-                'extreme':'macd背离','green':'绿异动','red':'红异动',
-                'std':'上下引线','1min':'1分钟行情'
+                'extreme': 'macd背离', 'green': '绿异动', 'red': '红异动',
+                'std': '上下引线', '1min': '1分钟行情'
             }.get(ttype, '')
 
             if ttype == '1min':
                 data = HSD.get_macd(data, yd=True)
             else:
                 ddict = viewUtil.get_hqzjzb(ttype)
-                data = HSD.get_macd(data,ddict=ddict)  # 计算Macd
+                data = HSD.get_macd(data, ddict=ddict)  # 计算Macd
             resp = {'user_name': user_name, 'data': data,
-                    'sd': sd, 'ed': ed, 'db': db,'ttype': ttype, 'ec_name': ec_name}
+                    'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzjzb.html', resp)
         else:
             # 起止日期设置
@@ -3427,7 +3428,7 @@ def hqzjzb(rq):
             # ddict = viewUtil.get_hqzjzb(ttype)
 
             ec_name = '1分钟行情'
-            data = HSD.get_macd(data,yd=True)  # 计算Macd
+            data = HSD.get_macd(data, yd=True)  # 计算Macd
             resp = {'user_name': user_name, 'data': data,
                     'sd': sd, 'ed': ed, 'db': db, 'ttype': ttype, 'ec_name': ec_name}
             return render(rq, 'hqzjzb.html', resp)
@@ -3435,17 +3436,8 @@ def hqzjzb(rq):
     return redirect('index')
 
 
-# def macd_data(rq):
-#     """ macd分波数据 """
-#     user_name, qx = LogIn(rq)
-#     path = r'D:\tools\Tools\December_2018\2018-12-14\macd.pick'
-#     import pandas as pd
-#     data = pd.read_pickle(path)
-#     data = [list(i) for i in data.values[:300]]
-#     return render(rq,'macd_data.html',{'user_name': user_name, 'data': data})
-
-
 def systems(rq):
+    """ 系统CPU与内存使用情况 """
     user_name, qx = LogIn(rq)
     if not user_name:
         return index(rq, False, user_name, qx)
@@ -3457,13 +3449,16 @@ def market_news(rq):
     user_name, qx = LogIn(rq)
     return render(rq, 'market_news.html', {'user_name': user_name})
 
+
 def get_bookmaker(rq):
     """ 博彩网站数据 """
     user_name, qx = LogIn(rq)
+    if not user_name:
+        return index(rq, False, user_name, qx)
     red = HSD.RedisPool()
     res = red.get('bookmaker_odds', True)
     if res:
-        if time.time() - res['time']>360:
+        if time.time() - res['time'] > 360:
             is_run = red.get('is_bookmaker_odds', True)
             if is_run != 1:
                 bookmaker.main()
@@ -3472,11 +3467,15 @@ def get_bookmaker(rq):
         if is_run != 1:
             bookmaker.main()
     if res:
-        bet_1x2 = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3], i[4]] for i in res['bet_1x2']]
-        bet_1x21st = [[i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3], i[4]] for i in res['bet_1x21st']]
+        bet_1x2 = [
+            [i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3],
+             i[4]] for i in res['bet_1x2']]
+        bet_1x21st = [
+            [i[0], *i[1], *i[2], *[j[0] for j in i[3]], i[3][0][1], i[3][0][2], i[3][0][3] or i[3][1][3] or i[3][2][3],
+             i[4]] for i in res['bet_1x21st']]
         bet_time = str(datetime.datetime.fromtimestamp(res['time']))[:19]
-    return render(rq, 'bookmaker.html', {'user_name': user_name,'bet_1x2':bet_1x2, 'bet_1x21st': bet_1x21st, 'bet_time':bet_time})
-
+    return render(rq, 'bookmaker.html',
+                  {'user_name': user_name, 'bet_1x2': bet_1x2, 'bet_1x21st': bet_1x21st, 'bet_time': bet_time})
 
 
 def get_system(rq):

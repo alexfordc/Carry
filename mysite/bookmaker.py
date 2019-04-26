@@ -38,82 +38,85 @@ def get_landing(page=0):
 
     res_frist = []
     for page in range(30):
-        post_data = {
-            'CompetitionID': -1,
-            'IsEventMenu': False,
-            'IsFirstLoad': True,
-            'LiveCenterEventId': 0,
-            'LiveCenterSportId': 0,
-            'SportID': 1,
-            'VersionF': -1,
-            'VersionH': 0,
-            'VersionL': -1,
-            'VersionS': -1,
-            'VersionT': -1,
-            'VersionU': 0,
-            'oIsFirstLoad': True,
-            'oIsInplayAll': False,
-            'oOddsType': 0,
-            'oPageNo': page,
-            'oSortBy': 1,
-            'reqUrl': ss['all'],
-        }
+        try:
+            post_data = {
+                'CompetitionID': -1,
+                'IsEventMenu': False,
+                'IsFirstLoad': True,
+                'LiveCenterEventId': 0,
+                'LiveCenterSportId': 0,
+                'SportID': 1,
+                'VersionF': -1,
+                'VersionH': 0,
+                'VersionL': -1,
+                'VersionS': -1,
+                'VersionT': -1,
+                'VersionU': 0,
+                'oIsFirstLoad': True,
+                'oIsInplayAll': False,
+                'oOddsType': 0,
+                'oPageNo': page,
+                'oSortBy': 1,
+                'reqUrl': ss['all'],
+            }
 
-        d = requests.post(url, data=post_data, headers=headers).text
-        d = json.loads(d)
+            d = requests.post(url, data=post_data, headers=headers).text
+            d = json.loads(d)
 
-        # 获得分类
-        # res = []
-        # res_dt = {}
+            # 获得分类
+            # res = []
+            # res_dt = {}
 
-        # for i in d['lpd']['psm']['psmd']:
-        # 	name = i['sen']
-        # 	yname = i['sn']
-        # 	for j in i['puc']:
-        # 		t_name = j['cn']
-        # 		for v in j['ces']:
-        # 			res.append((name,yname,t_name,v['at'],v['eid'],v['en'],v['esd'],v['est'],v['ht']))
-        # 			res_dt[v['eid']] = (name,yname,t_name,v['at'],v['eid'],v['en'],v['esd'],v['est'],v['ht'])
+            # for i in d['lpd']['psm']['psmd']:
+            # 	name = i['sen']
+            # 	yname = i['sn']
+            # 	for j in i['puc']:
+            # 		t_name = j['cn']
+            # 		for v in j['ces']:
+            # 			res.append((name,yname,t_name,v['at'],v['eid'],v['en'],v['esd'],v['est'],v['ht']))
+            # 			res_dt[v['eid']] = (name,yname,t_name,v['at'],v['eid'],v['en'],v['esd'],v['est'],v['ht'])
 
-        res_pl = []
+            res_pl = []
 
-        for i in d['mod']['d']:
-            for j in i['c']:
-                t_name = j['n']
-                for v in j['e']:
-                    try:
-                        x2st = v['o'].get('1x21st', ())
-                        if x2st:
-                            x2st = (float(x2st[1]), float(x2st[5]), float(x2st[3]))
-                        x1x = v['o'].get('1x2', ())
-                        if x1x:
-                            x1x = (float(x1x[1]), float(x1x[5]), float(x1x[3]))
-                        _id = v['k']
-                        _z, _k = v['i'][0], v['i'][1]  # 中文名称
-                        _yz, _yk = v['i'][-3].replace('-', ' ').split(' vs ')  # 英文名称
-                        address = f"https://www.18x8bet.com/zh-cn/sports/{_id}/{_z}-vs-{_k}"
-                        edt = str(
-                            datetime.datetime.strptime(v['edt'], '%Y-%m-%dT%H:%M:%S') + datetime.timedelta(hours=12))
-                        if x1x:
-                            res_pl.append((t_name, '', _z, _yz, _k, _yk, edt, {'1x2': x1x, '1x21st': x2st,
-                                                                               'dx': [float(v['o']['ou'][5]),
-                                                                                      float(v['o']['ou'][1]),
-                                                                                      float(v['o']['ou'][7])],
-                                                                               "hasParlay": v['hasParlay'],
-                                                                               "hide": v['hide'],
-                                                                               "egn": v['egn'],
-                                                                               "heid": v['heid'],
-                                                                               "l": v['l'],
-                                                                               "ibs": v['ibs'],
-                                                                               "ibsc": v['ibsc'],
-                                                                               "page": page},
-                                           address))
-                    except:
-                        pass
-        if res_pl and res_frist == res_pl:
-            return
-        res1.extend(res_pl)
-        res_frist = res_pl
+            for i in d['mod']['d']:
+                for j in i['c']:
+                    t_name = j['n']
+                    for v in j['e']:
+                        try:
+                            x2st = v['o'].get('1x21st', ())
+                            if x2st:
+                                x2st = (float(x2st[1]), float(x2st[5]), float(x2st[3]))
+                            x1x = v['o'].get('1x2', ())
+                            if x1x:
+                                x1x = (float(x1x[1]), float(x1x[5]), float(x1x[3]))
+                            _id = v['k']
+                            _z, _k = v['i'][0], v['i'][1]  # 中文名称
+                            _yz, _yk = v['i'][-3].replace('-', ' ').split(' vs ')  # 英文名称
+                            address = f"https://www.18x8bet.com/zh-cn/sports/{_id}/{_z}-vs-{_k}"
+                            edt = str(
+                                datetime.datetime.strptime(v['edt'], '%Y-%m-%dT%H:%M:%S') + datetime.timedelta(hours=12))
+                            if x1x:
+                                res_pl.append((t_name, '', _z, _yz, _k, _yk, edt, {'1x2': x1x, '1x21st': x2st,
+                                                                                   'dx': [float(v['o']['ou'][5]),
+                                                                                          float(v['o']['ou'][1]),
+                                                                                          float(v['o']['ou'][7])],
+                                                                                   "hasParlay": v['hasParlay'],
+                                                                                   "hide": v['hide'],
+                                                                                   "egn": v['egn'],
+                                                                                   "heid": v['heid'],
+                                                                                   "l": v['l'],
+                                                                                   "ibs": v['ibs'],
+                                                                                   "ibsc": v['ibsc'],
+                                                                                   "page": page},
+                                               address))
+                        except:
+                            pass
+            if res_pl and res_frist == res_pl:
+                return
+            res1.extend(res_pl)
+            res_frist = res_pl
+        except:
+            continue
 
 
 # print('get_landing Yes........')
@@ -200,55 +203,58 @@ def get_bwin9828():
 
     res_dict = {}
     for i in h3:
-        title = i.attrib['title']
-        n_url = bsUrl + i.attrib['href']
-        nh = requests.get(n_url, headers=headers).text
-        nh2 = PyQuery(nh)
-        divs = nh2('.multiple_markets')
+        try:
+            title = i.attrib['title']
+            n_url = bsUrl + i.attrib['href']
+            nh = requests.get(n_url, headers=headers).text
+            nh2 = PyQuery(nh)
+            divs = nh2('.multiple_markets')
 
-        for div in divs:
-            div = PyQuery(div)
-            qcbc = div('h4')[0].attrib.get('title', '')
-            if '90分钟' in qcbc:
-                qcbc = '1x2'
-            elif '上半场' in qcbc:
-                qcbc = '1x21st'
-            if qcbc in {'1x2', '1x21st'}:
-                nh3 = div('.body')
-                for j in nh3:
-                    try:
-                        if j.attrib.get('data-market-cash-out-elegible'):
-                            j = PyQuery(j)
-                            tds = j('td')
-                            td0 = PyQuery(tds[0])
-                            span = td0('span')
-                            dts = str(datetime.datetime.fromtimestamp(int(span.attr('data-time')) / 1000))
-                            td1 = PyQuery(tds[1])
-                            a = td1('a')
-                            n_title = a.attr('title')
-                            href = a.attr('href')
-                            td2 = PyQuery(tds[2])
-                            span2 = td2('span')
-                            price_1 = float(span2.attr('data-price'))
-                            td3 = PyQuery(tds[3])
-                            span3 = td3('span')
-                            price_x = float(span3.attr('data-price'))
-                            td4 = PyQuery(tds[4])
-                            span4 = td4('span')
-                            price_2 = float(span4.attr('data-price'))
-                            name = n_title.split('v')
-                            name0 = name[0].strip()
-                            name1 = name[1].strip()
-                            _key = f"{name0}{dts}{name1}"
-                            if _key not in res_dict:
-                                res_dict[_key] = [title, '', name0, '', name1, '', dts,
-                                                  {qcbc: [price_1, price_x, price_2], 'dx': []}, bsUrl + href]
-                            else:
-                                res_dict[_key][7][qcbc] = [price_1, price_x, price_2]
-                        # res3.append((title,name[0].strip(),name[1].strip(),dts,price_1,price_x,price_2,qcbc,bsUrl+href))
-                    except Exception as exc:
-                        pass
-                    # print(exc)
+            for div in divs:
+                div = PyQuery(div)
+                qcbc = div('h4')[0].attrib.get('title', '')
+                if '90分钟' in qcbc:
+                    qcbc = '1x2'
+                elif '上半场' in qcbc:
+                    qcbc = '1x21st'
+                if qcbc in {'1x2', '1x21st'}:
+                    nh3 = div('.body')
+                    for j in nh3:
+                        try:
+                            if j.attrib.get('data-market-cash-out-elegible'):
+                                j = PyQuery(j)
+                                tds = j('td')
+                                td0 = PyQuery(tds[0])
+                                span = td0('span')
+                                dts = str(datetime.datetime.fromtimestamp(int(span.attr('data-time')) / 1000))
+                                td1 = PyQuery(tds[1])
+                                a = td1('a')
+                                n_title = a.attr('title')
+                                href = a.attr('href')
+                                td2 = PyQuery(tds[2])
+                                span2 = td2('span')
+                                price_1 = float(span2.attr('data-price'))
+                                td3 = PyQuery(tds[3])
+                                span3 = td3('span')
+                                price_x = float(span3.attr('data-price'))
+                                td4 = PyQuery(tds[4])
+                                span4 = td4('span')
+                                price_2 = float(span4.attr('data-price'))
+                                name = n_title.split('v')
+                                name0 = name[0].strip()
+                                name1 = name[1].strip()
+                                _key = f"{name0}{dts}{name1}"
+                                if _key not in res_dict:
+                                    res_dict[_key] = [title, '', name0, '', name1, '', dts,
+                                                      {qcbc: [price_1, price_x, price_2], 'dx': []}, bsUrl + href]
+                                else:
+                                    res_dict[_key][7][qcbc] = [price_1, price_x, price_2]
+                            # res3.append((title,name[0].strip(),name[1].strip(),dts,price_1,price_x,price_2,qcbc,bsUrl+href))
+                        except Exception as exc:
+                            pass
+                        # print(exc)
+        except:
+            continue
     [res3.append(tuple(res_dict[i])) for i in res_dict]
 
 
@@ -321,6 +327,16 @@ def gt_rs(rss, key, ks='1x2'):
     c2 = {i[key][7][ks][2]: (i[key][-1], i[key][2], i[key][4], i[key][0]) for i in rss if key in i and i[key][7].get(ks)}
     return c1, cx, c2
 
+def write_name(ress):
+    names = {}
+    for res in ress:
+        for i in res:
+            if i[3] not in names:
+                names[i[3]] = i[2]
+            if i[5] not in names:
+                names[i[5]] = i[4]
+    with open('mysite\\namess.json','w') as f:
+        f.write(json.dumps(names))
 
 def js_1x2(ks='1x2'):
     res = []
@@ -382,6 +398,9 @@ def runs():
 
     res_1x2 = js_1x2('1x2')[:50]
     res_1x21st = js_1x2('1x21st')[:50]
+
+    write_name((res1, res2, res3, res4))
+
     res = {
         'bet_1x2': res_1x2,
         'bet_1x21st': res_1x21st,

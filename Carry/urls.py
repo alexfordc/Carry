@@ -19,7 +19,6 @@ from django.contrib import admin
 from mysite import views
 
 """
-
 from django.contrib import admin
 from django.urls import path
 from firstapp import views
